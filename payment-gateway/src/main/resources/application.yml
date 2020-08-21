@@ -1,0 +1,24 @@
+server:
+  port: 20001
+spring:
+  profiles:
+    active: local
+  cloud:
+    gateway:
+      routes:
+        - id: payment-tpl
+          uri: lb://payment-tpl
+          predicates:
+            - Path=/tpl/**
+          filters:
+            - SwaggerHeaderFilter
+            - Log
+            - StripPrefix=1
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            statuses: REQUEST_TIMEOUT, BAD_GATEWAY
+            methods: GET, DELETE, PUT
+      loadbalancer:
+        use404: true

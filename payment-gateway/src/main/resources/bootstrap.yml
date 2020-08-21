@@ -1,0 +1,21 @@
+logging:
+  level:
+    root: info
+spring:
+  application:
+    name: payment-gateway
+  cloud:
+    nacos:
+      config:
+        contextPath: /nacos
+        password: ${nacos.password}
+        server-addr: ${nacos.host}
+        username: ${nacos.username}
+        file-extension: yaml
+        namespace: ${nacos.namespace}
+      discovery:
+        password: ${nacos.password}
+        server-addr: ${nacos.host}
+        username: ${nacos.username}
+        namespace: ${nacos.namespace}
+
