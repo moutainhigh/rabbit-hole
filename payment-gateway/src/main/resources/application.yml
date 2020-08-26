@@ -12,7 +12,6 @@ spring:
             - Path=/tpl/**
           filters:
             - SwaggerHeaderFilter
-            - Log
             - StripPrefix=1
       default-filters:
         - name: Retry
