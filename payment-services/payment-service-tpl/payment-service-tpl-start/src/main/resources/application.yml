@@ -12,3 +12,8 @@ spring:
     druid:
       validation-query: SELECT 1
       test-while-idle: true
+  redis:
+    database: 0
+    host: redis.lotus.github.com
+    port: 6379
+    timeout: 100
