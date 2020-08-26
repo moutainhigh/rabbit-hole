@@ -16,7 +16,7 @@ import java.sql.Driver;
 @RequiredArgsConstructor
 public enum DataSource {
     DEFAULT(DbType.MYSQL,
-        "jdbc:mysql://mysql.lotus.github.com:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
+        "jdbc:mysql://mysql.lotus.github.com:13306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
         com.mysql.cj.jdbc.Driver.class, "root", "hocgin");
     private final DbType dbType;
     private final String url;
