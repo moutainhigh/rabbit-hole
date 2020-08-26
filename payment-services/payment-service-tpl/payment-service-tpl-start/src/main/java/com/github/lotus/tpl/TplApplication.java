@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author hocgin
  */
 @SpringBootApplication
-public class Application {
+public class TplApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(TplApplication.class, args);
     }
 }
