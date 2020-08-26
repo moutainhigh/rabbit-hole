@@ -21,3 +21,7 @@
 │       └── payment-service-tpl-start # 单体服务业务功能案例
 └── pom.xml
 ```
+
+## 相关内容
+### API 接口文档系列
+> API 接口文档使用的是`knife`可以按照`swagger`在服务群里面进行使用，文档的地址为`http://{网关地址:端口}/doc.html`
