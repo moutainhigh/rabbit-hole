@@ -25,6 +25,7 @@
     <module>payment-services</module>
     <module>payment-gateway</module>
     <module>payment-generator</module>
+    <module>payment-sso-server</module>
   </modules>
 
   <repositories>

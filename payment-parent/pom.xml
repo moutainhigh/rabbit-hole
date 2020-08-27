@@ -48,6 +48,16 @@
       <!-- 一方库 -->
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>payment-service-chaos-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>payment-service-chaos-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>payment-service-tpl-start</artifactId>
         <version>${project.version}</version>
       </dependency>
