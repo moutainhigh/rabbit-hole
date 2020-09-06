@@ -30,7 +30,7 @@ public class ExampleController {
     @GetMapping("/worked")
     public Object worked(Principal principal) {
         // This is sample
-        return principal;
+        return "This is sample: " + principal;
     }
 }
 
