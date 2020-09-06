@@ -19,6 +19,10 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>payment-service-tpl-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>payment-usercontext-autoconfigure</artifactId>
+    </dependency>
     <!--  二方库  -->
     <dependency>
       <groupId>in.hocg.boot</groupId>

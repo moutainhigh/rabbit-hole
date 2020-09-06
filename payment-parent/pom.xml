@@ -53,6 +53,11 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>payment-usercontext-autoconfigure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>payment-usercontext-interface</artifactId>
         <version>${project.version}</version>
       </dependency>

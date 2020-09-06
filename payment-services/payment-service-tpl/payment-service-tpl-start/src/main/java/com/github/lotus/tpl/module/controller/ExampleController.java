@@ -1,20 +1,20 @@
 package com.github.lotus.tpl.module.controller;
 
 
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import java.util.Optional;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author hocgin
@@ -28,9 +28,10 @@ public class ExampleController {
 
     @ApiOperation("测试接口")
     @GetMapping("/worked")
-    public Object worked(Principal principal) {
+    public Object worked() {
+        Optional<String> username = UserContextHolder.getUsername();
         // This is sample
-        return "This is sample: " + principal;
+        return "This is sample: " + username.orElse(null);
     }
 }
 

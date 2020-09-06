@@ -16,6 +16,7 @@
   <modules>
     <module>payment-usercontext-basic</module>
     <module>payment-usercontext-interface</module>
+    <module>payment-usercontext-autoconfigure</module>
   </modules>
 
 
