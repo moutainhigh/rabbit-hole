@@ -1,8 +1,6 @@
-server:
-  port: 20000
 sso:
   oauth:
     clients:
       - client-id: client_example
         client-secret: hocgin
-        redirect-uris: http://example.hocgin.local:20001/login/oauth2/code/
+        redirect-uris: http://localhost:20001/login/oauth2/code/

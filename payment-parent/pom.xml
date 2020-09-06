@@ -48,6 +48,21 @@
       <!-- 一方库 -->
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>payment-usercontext-basic</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>payment-usercontext-interface</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>payment-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>payment-service-chaos-api</artifactId>
         <version>${project.version}</version>
       </dependency>

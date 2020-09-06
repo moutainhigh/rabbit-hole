@@ -1,11 +1,13 @@
 package com.github.lotus.sso.config.security;
 
+
 import com.github.lotus.sso.config.security.autoconfiguration.SsoProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -28,9 +30,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         for (SsoProperties.Client client : properties.getClients()) {
-            clients.inMemory()
-                .withClient(client.getClientId())
+            builder.withClient(client.getClientId())
                 .secret(passwordEncoder.encode(client.getClientSecret()))
                 .authorizedGrantTypes("client_credentials", "authorization_code", "refresh_token", "password")
                 .scopes("user_info")
@@ -43,12 +45,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.allowFormAuthenticationForClients()
             .tokenKeyAccess("permitAll()")
-            .checkTokenAccess("isAuthenticated()");
+            .checkTokenAccess("isAuthenticated()")
+        ;
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager);
     }
-
 }

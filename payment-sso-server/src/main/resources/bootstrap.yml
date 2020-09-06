@@ -1,11 +1,11 @@
 server:
-  port: 21000
+  port: 20000
 logging:
   level:
     root: info
 spring:
   application:
-    name: payment-tpl
+    name: payment-sso-server
   cloud:
     nacos:
       config:

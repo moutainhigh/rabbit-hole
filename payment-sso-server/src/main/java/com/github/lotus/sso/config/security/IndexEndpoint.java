@@ -1,6 +1,7 @@
 package com.github.lotus.sso.config.security;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.security.Principal;
  *
  * @author hocgin
  */
+@Slf4j
 @Controller
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
@@ -36,7 +38,7 @@ public class IndexEndpoint {
         return new ModelAndView("index");
     }
 
-    @GetMapping("/user/me")
+    @RequestMapping("/oauth/user")
     @ResponseBody
     public Principal user(Principal principal) {
         return principal;

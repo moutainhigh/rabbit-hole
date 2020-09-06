@@ -21,6 +21,7 @@
   </properties>
 
   <modules>
+    <module>payment-basic</module>
     <module>payment-parent</module>
     <module>payment-services</module>
     <module>payment-gateway</module>
