@@ -2,7 +2,7 @@ server:
   port: 20000
 logging:
   level:
-    root: info
+    in.hocg: debug
 spring:
   application:
     name: payment-sso-server

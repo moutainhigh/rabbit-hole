@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * <p>
  *  前端控制器
@@ -26,8 +28,9 @@ public class ExampleController {
 
     @ApiOperation("测试接口")
     @GetMapping("/worked")
-    public void worked() {
+    public Object worked(Principal principal) {
         // This is sample
+        return principal;
     }
 }
 

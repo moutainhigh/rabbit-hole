@@ -3,4 +3,14 @@ sso:
     clients:
       - client-id: client_example
         client-secret: hocgin
-        redirect-uris: http://localhost:20001/login/oauth2/code/
+        redirect-uris: http://example.hocgin.local:20001/login/oauth2/code/custom
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 7c8f6909e7226d490bdb
+            client-secret: a8d3db4c25c9627e4bc5996f25c45f76a4b2214e
+            client-name: Github Login
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'

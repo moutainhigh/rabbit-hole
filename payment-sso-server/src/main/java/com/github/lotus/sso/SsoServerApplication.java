@@ -3,7 +3,11 @@ package com.github.lotus.sso;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 /**
  * Created by hocgin on 2020/8/15.
@@ -11,7 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  *
  * @author hocgin
  */
-@EnableResourceServer
+@RestController
 @EnableFeignClients
 @SpringBootApplication
 public class SsoServerApplication {
@@ -20,4 +24,9 @@ public class SsoServerApplication {
         SpringApplication.run(SsoServerApplication.class, args);
     }
 
+    @RequestMapping("/user")
+    @ResponseBody
+    public Principal me(Principal principal) {
+        return principal;
+    }
 }

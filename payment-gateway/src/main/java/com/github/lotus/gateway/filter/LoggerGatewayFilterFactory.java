@@ -43,6 +43,7 @@ public class LoggerGatewayFilterFactory extends AbstractGatewayFilterFactory<Log
             HttpHeaders headers = exchange.getRequest().getHeaders();
             String username = headers.getFirst(HeaderConstants.USERNAME);
             String source = headers.getFirst(HeaderConstants.SOURCE);
+            String version = headers.getFirst(HeaderConstants.VERSION);
 
             exchange.getAttributes().put(MY_LOG_START_TIME, System.currentTimeMillis());
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
@@ -56,6 +57,7 @@ public class LoggerGatewayFilterFactory extends AbstractGatewayFilterFactory<Log
                         .add("Request Params: " + serverHttpRequest.getQueryParams())
                         .add("Username: " + username)
                         .add("Source: " + source)
+                        .add("Version: " + version)
                         .add("Total time: " + (System.currentTimeMillis() - startTime) + "ms")
                         .add("=====================================================")
                         .toString();

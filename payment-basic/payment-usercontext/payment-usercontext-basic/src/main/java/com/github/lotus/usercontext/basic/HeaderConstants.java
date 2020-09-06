@@ -12,4 +12,5 @@ import lombok.experimental.UtilityClass;
 public class HeaderConstants {
     public final String USERNAME = "X-Username";
     public final String SOURCE = "X-Source";
+    public final String VERSION = "X-Version";
 }
