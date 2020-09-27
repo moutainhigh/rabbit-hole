@@ -5,10 +5,11 @@
   <parent>
     <artifactId>payment-usercontext</artifactId>
     <groupId>com.github.lotus</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
+  <name>Payment :: User Context :: Interface</name>
   <artifactId>payment-usercontext-interface</artifactId>
 
 
