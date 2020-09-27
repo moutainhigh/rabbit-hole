@@ -15,9 +15,12 @@ spec:
       containers:
         - name: gateway
           image: registry.cn-hangzhou.aliyuncs.com/hocgin/gateway
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 20001
+          envFrom:
+            - configMapRef:
+                name: cm-service-env
 ---
 apiVersion: v1
 kind: Service

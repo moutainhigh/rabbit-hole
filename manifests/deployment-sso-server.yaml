@@ -15,9 +15,12 @@ spec:
       containers:
         - name: sso-server
           image: registry.cn-hangzhou.aliyuncs.com/hocgin/sso-server
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 20000
+          envFrom:
+            - configMapRef:
+                name: cm-service-env
 ---
 apiVersion: v1
 kind: Service

@@ -15,9 +15,12 @@ spec:
       containers:
         - name: chaos
           image: registry.cn-hangzhou.aliyuncs.com/hocgin/chaos
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 21000
+          envFrom:
+            - configMapRef:
+                name: cm-service-env
 ---
 apiVersion: v1
 kind: Service
