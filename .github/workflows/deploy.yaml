@@ -7,11 +7,7 @@ on:
       - develop
       - rls-*
       - master
-    paths-ignore:
-      - '.github/**'
   create:
-    branches:
-      - master
     tags:
       - v*.*.*
 
