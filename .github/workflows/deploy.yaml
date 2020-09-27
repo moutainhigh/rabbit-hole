@@ -139,28 +139,28 @@ jobs:
             org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
       # 编译和发布镜像 => Services::Chaos
       - name: Build & Push Docker Image::Chaos
-          uses: docker/build-push-action@v2
-          with:
-            context: .
-            file: ./payment-services/payment-service-chaos/Dockerfile
-            push: true
-            tags: ${{ steps.prep.outputs.tags }}
-            labels: |
-              org.opencontainers.image.source=${{ github.repositoryUrl }}
-              org.opencontainers.image.revision=${{ github.sha }}
-              org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./payment-services/payment-service-chaos/Dockerfile
+          push: true
+          tags: ${{ steps.prep.outputs.tags }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
       # 编译和发布镜像 => Services::SSO-Server
       - name: Build & Push Docker Image::SSO-Server
-          uses: docker/build-push-action@v2
-          with:
-            context: .
-            file: ./payment-sso-server/Dockerfile
-            push: true
-            tags: ${{ steps.prep.outputs.tags }}
-            labels: |
-              org.opencontainers.image.source=${{ github.repositoryUrl }}
-              org.opencontainers.image.revision=${{ github.sha }}
-              org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./payment-sso-server/Dockerfile
+          push: true
+          tags: ${{ steps.prep.outputs.tags }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
 
 
       # 设置 k8s 环境
