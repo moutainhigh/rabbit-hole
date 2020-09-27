@@ -10,14 +10,14 @@ spring:
     nacos:
       config:
         contextPath: /nacos
-        password: ${nacos.password}
-        server-addr: ${nacos.host}
-        username: ${nacos.username}
+        password: ${NACOS_PASSWORD}
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
         file-extension: yaml
-        namespace: ${nacos.namespace}
+        namespace: ${NACOS_NAMESPACE}
       discovery:
-        password: ${nacos.password}
-        server-addr: ${nacos.host}
-        username: ${nacos.username}
-        namespace: ${nacos.namespace}
+        password: ${NACOS_PASSWORD}
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
+        namespace: ${NACOS_NAMESPACE}
 
