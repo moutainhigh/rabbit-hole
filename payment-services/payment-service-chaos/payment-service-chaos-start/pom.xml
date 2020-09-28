@@ -13,6 +13,10 @@
   <name>Payment :: Service :: Chaos Start</name>
   <artifactId>payment-service-chaos-start</artifactId>
 
+  <properties>
+    <main-class>com.github.lotus.chaos.ChaosApplication</main-class>
+  </properties>
+
   <dependencies>
     <!--  一方库  -->
     <dependency>
@@ -95,20 +99,12 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <layers>
-            <enabled>true</enabled>
-          </layers>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
