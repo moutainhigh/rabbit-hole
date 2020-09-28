@@ -35,11 +35,11 @@
       <name>sonatype</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
-    <repository>
-      <id>alibaba-maven</id>
-      <name>alibaba</name>
-      <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-    </repository>
+<!--    <repository>-->
+<!--      <id>alibaba-maven</id>-->
+<!--      <name>alibaba</name>-->
+<!--      <url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+<!--    </repository>-->
   </repositories>
 
   <build>
