@@ -143,8 +143,8 @@ jobs:
       - name: Build & Push Docker Image::Chaos
         uses: docker/build-push-action@v2
         with:
-          context: ./payment-services/payment-service-chaos
-          file: ./payment-services/payment-service-chaos/Dockerfile
+          context: ./payment-services/payment-service-chaos/payment-service-chaos-start
+          file: ./payment-services/payment-service-chaos/payment-service-chaos-start/Dockerfile
           push: true
           tags: ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.tags }}
           labels: |
