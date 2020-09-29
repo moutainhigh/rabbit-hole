@@ -174,6 +174,7 @@ jobs:
       - name: Create Container Registry Secret
         uses: Azure/k8s-create-secret@v1
         with:
+          namespace: ${{ steps.prep.outputs.env }}
           container-registry-url: ${{ env.IMAGES_HUB_REGISTRY_URL }}
           container-registry-username: ${{ env.IMAGES_HUB_USER_NAME }}
           container-registry-password: ${{ env.IMAGES_HUB_PASSWORD }}
