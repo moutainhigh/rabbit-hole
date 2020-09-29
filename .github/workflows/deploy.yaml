@@ -134,7 +134,7 @@ jobs:
           context: ./payment-gateway
           file: ./payment-gateway/Dockerfile
           push: true
-          tags: ${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -146,7 +146,7 @@ jobs:
           context: ./payment-services/payment-service-chaos
           file: ./payment-services/payment-service-chaos/Dockerfile
           push: true
-          tags: ${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -158,7 +158,7 @@ jobs:
           context: ./payment-sso-server
           file: ./payment-sso-server/Dockerfile
           push: true
-          tags: ${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
