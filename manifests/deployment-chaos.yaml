@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: chaos
-          image: registry.cn-hangzhou.aliyuncs.com/hocgin/chaos
+          image: registry.ap-northeast-1.aliyuncs.com/hocgin/chaos
           args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 21000
