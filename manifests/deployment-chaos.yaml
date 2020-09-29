@@ -15,6 +15,7 @@ spec:
       containers:
         - name: chaos
           image: registry.ap-northeast-1.aliyuncs.com/hocgin/chaos
+          imagePullPolicy: Always
           args: [ "--spring.profiles.active=dev" ]
           ports:
             - containerPort: 21000

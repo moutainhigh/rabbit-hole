@@ -15,6 +15,7 @@ spec:
       containers:
         - name: sso-server
           image: registry.ap-northeast-1.aliyuncs.com/hocgin/sso-server
+          imagePullPolicy: Always
           args: [ "--spring.profiles.active=dev" ]
           ports:
             - containerPort: 20000
