@@ -134,7 +134,7 @@ jobs:
           context: ./payment-gateway
           file: ./payment-gateway/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -146,7 +146,7 @@ jobs:
           context: ./payment-services/payment-service-chaos/payment-service-chaos-start
           file: ./payment-services/payment-service-chaos/payment-service-chaos-start/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -158,7 +158,7 @@ jobs:
           context: ./payment-sso-server
           file: ./payment-sso-server/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.tags }}
+          tags: ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -190,8 +190,8 @@ jobs:
             manifests/deployment-chaos.yaml
             manifests/deployment-sso-server.yaml
           images: |
-            ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.tags }}
-            ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.tags }}
-            ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.tags }}
+            ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
+            ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
+            ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.version }}
           imagepullsecrets: |
             k8s-secret
