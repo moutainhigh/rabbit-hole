@@ -22,7 +22,7 @@ spring:
         use404: true
   security:
     oauth2:
-      shostname: http://sso.hocgin.local:20000
+      shostname: http://sso.hocgin.top
       client:
         registration:
           custom:
