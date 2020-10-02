@@ -12,6 +12,14 @@ spring:
             - SwaggerHeaderFilter
             - Logger
             - StripPrefix=1
+        - id: payment-chaos
+          uri: lb://payment-chaos
+          predicates:
+            - Path=/chaos/**
+          filters:
+            - SwaggerHeaderFilter
+            - Logger
+            - StripPrefix=1
       default-filters:
         - name: Retry
           args:
