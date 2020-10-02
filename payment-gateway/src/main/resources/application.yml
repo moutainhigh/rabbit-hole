@@ -41,4 +41,7 @@ boot:
   sso:
     client:
       ignore-urls:
-        - '/ignore'
+        - /swagger-resources/configuration/ui
+        - /favicon.ico
+        - /*/v2/api-docs
+        - /ignore
