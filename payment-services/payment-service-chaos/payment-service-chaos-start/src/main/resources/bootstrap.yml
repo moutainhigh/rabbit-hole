@@ -5,7 +5,7 @@ logging:
     root: info
 spring:
   application:
-    name: payment-tpl
+    name: payment-chaos
   cloud:
     nacos:
       config:
