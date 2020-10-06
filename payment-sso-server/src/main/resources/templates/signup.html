@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>注册账号</title>
+    <style>
+        .container {
+            max-width: 544px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 7px;
+            text-align: left;
+            font-weight: 600;
+        }
+        label[required="required"]:after {
+            padding-left: 5px;
+            color: #cb2431;
+            content: "*";
+        }
+
+        .input-block {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-control {
+            padding: 5px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #24292e;
+            vertical-align: middle;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            outline: none;
+            box-shadow: inset 0 1px 0 rgba(225, 228, 232, .2);
+        }
+
+        .btn-submit {
+            margin-top: 20px;
+            padding: 16px 24px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            background-color: #1074e7;
+            border-color: rgba(27, 31, 35, .15);
+            box-shadow: 0 1px 0 rgba(27, 31, 35, .1), inset 0 1px 0 hsla(0, 0%, 100%, .03);
+        }
+    </style>
 </head>
 <body>
-注册页面
+<div class="container">
+    <form method="post" th:action="@{/join}">
+        <label for="login_field" required="required">账号</label>
+        <input class="input-block form-control" type="text" id="login_field" name="username"
+               value="hocgin" autocomplete="username" autofocus/>
+        <label for="login_phone" required="required">手机号码</label>
+        <input class="input-block form-control" type="text" id="login_phone" name="phone"
+               value="hocgin" autocomplete="phone" autofocus/>
+        <label for="password" required="required">密码</label>
+        <input class="input-block form-control" type="text" id="password" name="password" value="hocgin"/>
+        <input class="form-control btn-submit" type="submit" value="创建账号"/>
+    </form>
+</div>
 </body>
 </html>
