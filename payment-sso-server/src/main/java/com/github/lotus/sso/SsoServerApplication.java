@@ -1,5 +1,6 @@
 package com.github.lotus.sso;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -16,7 +17,7 @@ import java.security.Principal;
  * @author hocgin
  */
 @RestController
-@EnableFeignClients
+@EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 @SpringBootApplication
 public class SsoServerApplication {
 

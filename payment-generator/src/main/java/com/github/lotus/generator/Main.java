@@ -14,9 +14,9 @@ import com.github.lotus.generator.core.Module;
 public class Main {
 
     public static void main(String[] args) {
-        CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.TPL, false,
-            "t_example");
+        CodeGenerator.generateByTables(DataSource.Chaos,
+            Module.Chaos_UMS, false,
+            "ums_account");
     }
 
 }

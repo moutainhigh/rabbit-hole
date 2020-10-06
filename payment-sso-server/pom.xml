@@ -19,6 +19,14 @@
 
   <dependencies>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>payment-service-chaos-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>payment-common</artifactId>
+    </dependency>
+    <dependency>
       <groupId>in.hocg.boot</groupId>
       <artifactId>web-spring-boot-starter</artifactId>
     </dependency>

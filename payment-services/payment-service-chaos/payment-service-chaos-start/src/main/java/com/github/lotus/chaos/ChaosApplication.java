@@ -1,7 +1,9 @@
 package com.github.lotus.chaos;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * Created by hocgin on 2020/8/15
@@ -10,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author hocgin
  */
 @SpringBootApplication
+@EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class ChaosApplication {
 
     public static void main(String[] args) {

@@ -18,7 +18,10 @@ import java.util.List;
 public enum Module {
     TPL(Lists.newArrayList("T_"),
         "com.github.lotus.tpl.module",
-        "payment-services/payment-service-tpl/payment-service-tpl-start");
+        "payment-services/payment-service-tpl/payment-service-tpl-start"),
+    Chaos_UMS(Lists.newArrayList("ums_"),
+        "com.github.lotus.chaos.module.ums",
+        "payment-services/payment-service-chaos/payment-service-chaos-start");
 
     /**
      * 生成的 Entity 名称会忽略前缀
