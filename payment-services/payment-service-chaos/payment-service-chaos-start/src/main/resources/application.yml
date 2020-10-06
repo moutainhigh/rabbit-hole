@@ -4,9 +4,11 @@ logging:
     root: debug
 
 spring:
+  profiles:
+    active: local
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://mysql.lotus.github.com:13306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:p6spy:mysql://mysql.lotus.github.com:13306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: root
     password: hocgin
     druid:

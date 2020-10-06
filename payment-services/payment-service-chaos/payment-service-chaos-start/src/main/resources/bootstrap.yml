@@ -6,6 +6,9 @@ logging:
 spring:
   application:
     name: payment-chaos
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
   cloud:
     nacos:
       config:
