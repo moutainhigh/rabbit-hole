@@ -16,6 +16,7 @@
             text-align: left;
             font-weight: 600;
         }
+
         label[required="required"]:after {
             padding-left: 5px;
             color: #cb2431;
@@ -57,6 +58,19 @@
             border-color: rgba(27, 31, 35, .15);
             box-shadow: 0 1px 0 rgba(27, 31, 35, .1), inset 0 1px 0 hsla(0, 0%, 100%, .03);
         }
+        .input-phone {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .input-phone input {
+            flex: 1 1;
+        }
+        .input-phone span {
+            color: #1074e7;
+            padding-left: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -65,11 +79,18 @@
         <label for="login_field" required="required">账号</label>
         <input class="input-block form-control" type="text" id="login_field" name="username"
                value="hocgin" autocomplete="username" autofocus/>
-        <label for="login_phone" required="required">手机号码</label>
-        <input class="input-block form-control" type="text" id="login_phone" name="phone"
-               value="hocgin" autocomplete="phone" autofocus/>
         <label for="password" required="required">密码</label>
         <input class="input-block form-control" type="text" id="password" name="password" value="hocgin"/>
+        <label for="login_phone" required="required">手机号码</label>
+        <div class="input-block input-phone">
+            <input class="form-control" type="text" id="login_phone" name="phone"
+                   autocomplete="phone" autofocus/>
+            <span>获取验证码</span>
+        </div>
+
+        <label for="login_sms" required="required">验证码</label>
+        <input class="input-block form-control" type="text" id="login_sms" name="sms"
+               autocomplete="sms" autofocus/>
         <input class="form-control btn-submit" type="submit" value="创建账号"/>
     </form>
 </div>
