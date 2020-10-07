@@ -12,3 +12,11 @@ spring:
   redis:
     host: sv-redis.dev
     port: 6379
+
+boot:
+  oss:
+    accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
+    secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
+    space: daigou-test
+    domain: http://oss-cn-beijing.aliyuncs.com
+    type: AliYun

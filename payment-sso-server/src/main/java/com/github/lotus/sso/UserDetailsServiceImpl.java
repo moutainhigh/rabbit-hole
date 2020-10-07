@@ -1,8 +1,8 @@
 package com.github.lotus.sso;
 
 import cn.hutool.core.lang.Assert;
-import com.github.lotus.chaos.api.AccountApi;
-import com.github.lotus.chaos.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.AccountApi;
+import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetailVo user = accountApi.getUser(username);
-        Assert.notNull(user);
+        Assert.notNull(user, "账号或密码错误");
         return new User(username, user.getPassword(), Collections.emptyList());
     }
 

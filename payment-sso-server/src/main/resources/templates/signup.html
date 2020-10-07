@@ -58,14 +58,17 @@
             border-color: rgba(27, 31, 35, .15);
             box-shadow: 0 1px 0 rgba(27, 31, 35, .1), inset 0 1px 0 hsla(0, 0%, 100%, .03);
         }
+
         .input-phone {
             display: flex;
             flex-direction: row;
             align-items: center;
         }
+
         .input-phone input {
             flex: 1 1;
         }
+
         .input-phone span {
             color: #1074e7;
             padding-left: 10px;
@@ -77,8 +80,8 @@
 <div class="container">
     <form method="post" th:action="@{/join}">
         <label for="login_field" required="required">账号</label>
-        <input class="input-block form-control" type="text" id="login_field" name="username"
-               value="hocgin" autocomplete="username" autofocus/>
+        <input class="input-block form-control" type="text" id="login_field" name="nickname"
+               value="hocgin" autocomplete="nickname" autofocus/>
         <label for="password" required="required">密码</label>
         <input class="input-block form-control" type="text" id="password" name="password" value="hocgin"/>
         <label for="login_phone" required="required">手机号码</label>

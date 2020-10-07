@@ -1,9 +1,9 @@
 package com.github.lotus.chaos.module.ums.service;
 
 import com.github.lotus.chaos.module.ums.entity.Account;
+import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
+import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
-
-import java.util.Optional;
 
 /**
  * <p>
@@ -15,5 +15,7 @@ import java.util.Optional;
  */
 public interface AccountService extends AbstractService<Account> {
 
-    Optional<Account> getAccountByUsername(String username);
+    void createAccount(CreateAccountRo ro);
+
+    UserDetailVo getUser(String username);
 }

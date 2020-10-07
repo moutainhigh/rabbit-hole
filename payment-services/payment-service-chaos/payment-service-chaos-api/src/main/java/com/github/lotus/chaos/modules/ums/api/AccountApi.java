@@ -1,9 +1,11 @@
-package com.github.lotus.chaos.api;
+package com.github.lotus.chaos.modules.ums.api;
 
 import com.github.lotus.chaos.ServiceName;
-import com.github.lotus.chaos.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
+import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -18,4 +20,7 @@ public interface AccountApi {
 
     @GetMapping(CONTEXT_ID + "/getUser")
     UserDetailVo getUser(@RequestParam("username") String username);
+
+    @GetMapping(CONTEXT_ID + "/createAccount")
+    void createAccount(@RequestBody CreateAccountRo ro);
 }

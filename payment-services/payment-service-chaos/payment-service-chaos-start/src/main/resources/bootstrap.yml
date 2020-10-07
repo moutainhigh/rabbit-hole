@@ -1,3 +1,4 @@
+jasypt.encryptor.password: ${JASYPT_ENCRYPTOR_PASSWORD}
 server:
   port: 21000
 logging:

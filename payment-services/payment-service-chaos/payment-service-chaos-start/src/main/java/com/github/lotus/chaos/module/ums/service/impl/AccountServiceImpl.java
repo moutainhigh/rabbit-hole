@@ -1,13 +1,23 @@
 package com.github.lotus.chaos.module.ums.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.github.lotus.chaos.module.ums.entity.Account;
 import com.github.lotus.chaos.module.ums.mapper.AccountMapper;
+import com.github.lotus.chaos.module.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.module.ums.service.AccountService;
+import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
+import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.utils.Avatars;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.boot.oss.autoconfigure.core.OssFileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -22,9 +32,55 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Account>
     implements AccountService {
+    private final AccountMapping mapping;
+    private final OssFileService ossFileService;
 
     @Override
-    public Optional<Account> getAccountByUsername(String username) {
+    @Transactional(rollbackFor = Exception.class)
+    public void createAccount(CreateAccountRo ro) {
+        LocalDateTime createdAt = LocalDateTime.now();
+
+        Account entity = mapping.asAccount(ro);
+        entity.setUsername(ro.getPhone());
+        entity.setCreatedAt(createdAt);
+        validInsert(entity);
+
+        // 更新头像
+        final Long entityId = entity.getId();
+        final File file = Avatars.getAvatarAsPath(entityId).toFile();
+        String avatarUrl = ossFileService.upload(file, file.getName());
+        final Account update = new Account()
+            .setId(entityId)
+            .setAvatar(avatarUrl);
+        this.validUpdateById(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UserDetailVo getUser(String username) {
+        return getAccountByUsername(username)
+            .map(mapping::asUserDetailVo).orElse(null);
+    }
+
+    private Optional<Account> getAccountByUsername(String username) {
         return lambdaQuery().eq(Account::getUsername, username).oneOpt();
+    }
+
+    private Optional<Account> getAccountByPhone(String phone) {
+        return lambdaQuery().eq(Account::getPhone, phone).oneOpt();
+    }
+
+    @Override
+    public void validEntity(Account entity) {
+        super.validEntity(entity);
+        String phone = entity.getPhone();
+        String username = entity.getUsername();
+        if (Objects.nonNull(username)) {
+            Assert.isFalse(getAccountByUsername(username).isPresent(), "该用户名已被注册");
+        }
+        if (Objects.nonNull(phone)) {
+            Assert.isFalse(getAccountByPhone(phone).isPresent(), "该手机号已被注册");
+        }
+
     }
 }
