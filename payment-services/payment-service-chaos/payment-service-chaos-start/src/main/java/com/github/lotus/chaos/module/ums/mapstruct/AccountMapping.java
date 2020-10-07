@@ -27,7 +27,6 @@ public interface AccountMapping {
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "email", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createdIp", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "avatar", ignore = true)
     Account asAccount(CreateAccountRo ro);

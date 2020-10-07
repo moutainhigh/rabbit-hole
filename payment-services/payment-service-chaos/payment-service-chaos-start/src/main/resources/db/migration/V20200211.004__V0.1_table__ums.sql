@@ -15,13 +15,13 @@ CREATE TABLE `ums_account`
         COMMENT '密码',
     `avatar`          VARCHAR(255)
         COMMENT '头像地址',
-    `gender`          TINYINT(1) UNSIGNED NOT NULL
+    `gender`          TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '性别(0:女, 1:男)',
-    `expired`         TINYINT(1) UNSIGNED DEFAULT 1
+    `expired`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '过期状态(0:为过期状态;1:为正常状态)',
-    `locked`          TINYINT(1) UNSIGNED DEFAULT 1
+    `locked`          TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '锁定状态(0:为锁定状态;1:为正常状态)',
-    `enabled`         TINYINT(1) UNSIGNED DEFAULT 1
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态(0:为禁用状态;1:为正常状态)',
     `created_ip`      VARCHAR(15)
         COMMENT '注册时使用的IP',
