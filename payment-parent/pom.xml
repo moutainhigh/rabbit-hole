@@ -95,6 +95,11 @@
       <!-- 二方库 -->
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>openfeign-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>mybatis-plus-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
