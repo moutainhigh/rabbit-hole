@@ -17,7 +17,7 @@ public interface AccountMapping {
 
     UserDetailVo asUserDetailVo(Account account);
 
-    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "nickname", ignore = true)
     @Mapping(target = "locked", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)

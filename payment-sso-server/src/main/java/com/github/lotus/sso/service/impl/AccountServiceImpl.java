@@ -8,6 +8,7 @@ import com.github.lotus.sso.service.AccountService;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,10 +22,12 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService {
     private final AccountApi api;
     private final AccountMapping mapping;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public void createAccount(JoinRo ro) {
+        ro.setPassword(passwordEncoder.encode(ro.getPassword()));
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
         api.createAccount(createAccountRo);

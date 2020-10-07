@@ -41,7 +41,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         LocalDateTime createdAt = LocalDateTime.now();
 
         Account entity = mapping.asAccount(ro);
-        entity.setUsername(ro.getPhone());
+        entity.setNickname(ro.getUsername());
         entity.setCreatedAt(createdAt);
         validInsert(entity);
 

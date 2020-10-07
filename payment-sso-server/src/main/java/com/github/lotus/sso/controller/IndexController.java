@@ -4,8 +4,9 @@ import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class IndexController {
     private final AccountService accountService;
 
     @PostMapping("/join")
-    public void createAccount(@RequestBody JoinRo ro) {
+    public void createAccount(@Validated @ModelAttribute JoinRo ro) {
         accountService.createAccount(ro);
     }
 }

@@ -3,6 +3,7 @@ package com.github.lotus.sso.mapstruct;
 import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -12,5 +13,6 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface AccountMapping {
+    @Mapping(target = "createdIp", ignore = true)
     CreateAccountRo asCreateAccountRo(JoinRo ro);
 }
