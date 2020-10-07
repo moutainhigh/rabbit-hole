@@ -5,6 +5,8 @@ sso:
         client-secret: hocgin
         redirect-uris: http://api.hocgin.top/login/oauth2/code/custom
 spring:
+  profiles:
+    active: local
   security:
     oauth2:
       client:
