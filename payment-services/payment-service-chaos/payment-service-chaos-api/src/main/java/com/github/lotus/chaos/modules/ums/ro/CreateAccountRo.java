@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * Created by hocgin on 2020/10/7
  * email: hocgin@gmail.com
@@ -17,6 +19,7 @@ public class CreateAccountRo {
     private String phone;
     @ApiModelProperty("用户名")
     private String username;
+    @NotBlank(message = "密码不能为空")
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("注册IP")

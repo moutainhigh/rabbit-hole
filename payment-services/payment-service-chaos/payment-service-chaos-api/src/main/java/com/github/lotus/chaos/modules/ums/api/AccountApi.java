@@ -4,6 +4,7 @@ import com.github.lotus.chaos.ServiceName;
 import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
 import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,5 +24,5 @@ public interface AccountApi {
     UserDetailVo getUser(@RequestParam("username") String username);
 
     @PostMapping(CONTEXT_ID + "/createAccount")
-    void createAccount(@RequestBody CreateAccountRo ro);
+    void createAccount(@Validated @RequestBody CreateAccountRo ro);
 }

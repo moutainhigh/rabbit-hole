@@ -6,8 +6,6 @@ import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
 import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,12 +20,12 @@ public class AccountApiImpl implements AccountApi {
     private final AccountService service;
 
     @Override
-    public UserDetailVo getUser(@RequestParam("username") String username) {
+    public UserDetailVo getUser(String username) {
         return service.getUser(username);
     }
 
     @Override
-    public void createAccount(@RequestBody CreateAccountRo ro) {
+    public void createAccount(CreateAccountRo ro) {
         service.createAccount(ro);
     }
 }
