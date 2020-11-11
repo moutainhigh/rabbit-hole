@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.module.ums.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import com.github.lotus.chaos.module.ums.entity.Account;
 import com.github.lotus.chaos.module.ums.mapper.AccountMapper;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,6 +63,15 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public UserDetailVo getUser(String username) {
         return getAccountByUsername(username)
             .map(mapping::asUserDetailVo).orElse(null);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Account> listAccountByAccountId(List<Long> values) {
+        if (CollectionUtil.isEmpty(values)) {
+            return Collections.emptyList();
+        }
+        return lambdaQuery().in(Account::getId, values).list();
     }
 
     private Optional<Account> getAccountByUsername(String username) {

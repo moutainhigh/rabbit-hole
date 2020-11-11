@@ -32,6 +32,14 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public List<KeyValue> listDataDictItemDtoByDictIdAndCode(String typeCode, List<String> itemCodes) {
+        return baseMapper.listDataDictItemByDictIdAndCode(typeCode, itemCodes).stream()
+            .map(this::convertKeyValue)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<KeyValue> listKeyValueByCodeAndEnabledIsOn(String typeCode) {
         return this.listKeyValueByCodeAndEnabled(typeCode, (String) Enabled.On.getCode());
     }
@@ -44,10 +52,14 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
     private List<KeyValue> listKeyValueByCodeAndEnabled(String typeCode, String enabled) {
         return listDataDictItemByCodeAndEnabled(typeCode, enabled)
-            .stream().map(item -> new KeyValue()
-                .setValue(item.getCode())
-                .setKey(item.getTitle()))
+            .stream().map(this::convertKeyValue)
             .collect(Collectors.toList());
+    }
+
+    private KeyValue convertKeyValue(DataDictItem item) {
+        return new KeyValue()
+            .setValue(item.getCode())
+            .setKey(item.getTitle());
     }
 
     private List<DataDictItem> listDataDictItemByCodeAndEnabled(String typeCode, String enabled) {

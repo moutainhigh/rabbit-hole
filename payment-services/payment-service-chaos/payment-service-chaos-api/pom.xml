@@ -26,6 +26,10 @@
       <artifactId>named-annotation</artifactId>
     </dependency>
     <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>named-interface</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.swagger</groupId>
       <artifactId>swagger-annotations</artifactId>
     </dependency>

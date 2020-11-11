@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface DataDictService extends AbstractService<DataDict> {
 
+    List<KeyValue> listDataDictItemDtoByDictIdAndCode(String typeCode, List<String> itemCodes);
+
     /**
      * 查询启用的数据字典项
      *

@@ -140,6 +140,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>named-interface</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>named-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>

@@ -19,9 +19,10 @@ import java.util.List;
 @Mapper
 public interface DataDictMapper extends BaseMapper<DataDict> {
 
-    List<DataDict> listDataDictItemByDictIdAndCode(@Param("typeCode") String typeCode, @Param("itemCodes") List<String> itemCodes);
+    List<DataDictItem> listDataDictItemByDictIdAndCode(@Param("typeCode") String typeCode, @Param("itemCodes") List<String> itemCodes);
 
     List<DataDictItem> getDataDictItemByDictIdAndCode(@Param("typeCode") String typeCode, @Param("itemCode") String itemCode);
 
     List<DataDictItem> listDataDictItemByCodeAndEnabled(@Param("typeCode") String typeCode, @Param("enabled") String enabled);
+
 }
