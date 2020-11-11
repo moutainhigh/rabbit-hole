@@ -3,7 +3,7 @@ package com.github.lotus.chaos.module.com.service.impl;
 import com.github.lotus.chaos.module.com.entity.District;
 import com.github.lotus.chaos.module.com.mapper.DistrictMapper;
 import com.github.lotus.chaos.module.com.mapstruct.DistrictMapping;
-import com.github.lotus.chaos.module.com.pojo.ro.DistrictSearchRo;
+import com.github.lotus.chaos.module.com.pojo.ro.district.DistrictSearchRo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;

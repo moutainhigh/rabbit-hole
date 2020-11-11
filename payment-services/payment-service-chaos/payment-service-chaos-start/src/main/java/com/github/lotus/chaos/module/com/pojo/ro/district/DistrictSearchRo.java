@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.module.com.pojo.ro;
+package com.github.lotus.chaos.module.com.pojo.ro.district;
 
 /**
  * Created by hocgin on 2020/4/18.
