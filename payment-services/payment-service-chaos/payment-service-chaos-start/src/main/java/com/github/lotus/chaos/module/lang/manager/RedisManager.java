@@ -2,7 +2,7 @@ package com.github.lotus.chaos.module.lang.manager;
 
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.chaos.module.lang.constant.RedisConstants;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.LangUtils;
+import in.hocg.boot.utils.LangUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

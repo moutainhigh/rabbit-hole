@@ -15,8 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
         CodeGenerator.generateByTables(DataSource.Chaos,
-            Module.Chaos_UMS, false,
-            "ums_account");
+            Module.Chaos_COM, false,
+            "com_district");
     }
 
 }

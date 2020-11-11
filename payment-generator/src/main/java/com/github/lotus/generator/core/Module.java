@@ -21,6 +21,9 @@ public enum Module {
         "payment-services/payment-service-tpl/payment-service-tpl-start"),
     Chaos_UMS(Lists.newArrayList("ums_"),
         "com.github.lotus.chaos.module.ums",
+        "payment-services/payment-service-chaos/payment-service-chaos-start"),
+    Chaos_COM(Lists.newArrayList("com_"),
+        "com.github.lotus.chaos.module.com",
         "payment-services/payment-service-chaos/payment-service-chaos-start");
 
     /**

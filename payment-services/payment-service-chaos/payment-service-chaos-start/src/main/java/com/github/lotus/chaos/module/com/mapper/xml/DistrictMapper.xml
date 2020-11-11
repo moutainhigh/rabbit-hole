@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.chaos.module.com.mapper.DistrictMapper">
+  <select id="getChildrenDistrictByAdcode" resultType="java.lang.Object">
+    SELECT cd.*
+    FROM com_district cd
+           LEFT JOIN com_district cd2 ON cd.parent_id = cd2.id
+    WHERE cd2.ad_code = #{adcode}
+  </select>
+</mapper>
