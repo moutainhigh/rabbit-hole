@@ -11,4 +11,5 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class GlobalConstant {
     public static final String DEFAULT_FEIGN_BASE_PACKAGE = "com.github.lotus";
+    public static final Long SUPPER_ADMIN_USER_ID = 1L;
 }

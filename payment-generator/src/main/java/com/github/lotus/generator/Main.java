@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         CodeGenerator.generateByTables(DataSource.Chaos,
             Module.Chaos_COM, false,
-            "com_district");
+            "com_data_dict", "com_data_dict_item");
     }
 
 }

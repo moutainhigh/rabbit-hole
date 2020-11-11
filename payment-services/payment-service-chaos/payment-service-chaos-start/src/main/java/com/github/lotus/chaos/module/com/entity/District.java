@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -35,9 +39,9 @@ public class District extends AbstractEntity<District> {
     @ApiModelProperty("树路径，组成方式: /父路径/当前ID")
     @TableField("tree_path")
     private String treePath;
-    @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
+    @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private Integer enabled;
+    private String enabled;
     @ApiModelProperty("区域编码")
     @TableField("ad_code")
     private String adCode;
@@ -57,6 +61,11 @@ public class District extends AbstractEntity<District> {
     @TableField("title")
     private String title;
 
-
-
+    @Getter
+    @RequiredArgsConstructor
+    public enum FileRelType implements DataDictEnum {
+        unknown("unknown", "未知");
+        private final Serializable code;
+        private final String name;
+    }
 }
