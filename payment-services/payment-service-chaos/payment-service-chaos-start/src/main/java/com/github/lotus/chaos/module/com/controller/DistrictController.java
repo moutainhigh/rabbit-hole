@@ -4,6 +4,7 @@ package com.github.lotus.chaos.module.com.controller;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-11
  */
+@Api(tags = "地理位置")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/district")
