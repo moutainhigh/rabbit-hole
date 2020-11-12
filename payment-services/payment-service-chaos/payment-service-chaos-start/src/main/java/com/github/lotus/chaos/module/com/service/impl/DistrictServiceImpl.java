@@ -8,13 +8,14 @@ import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
 import com.github.lotus.chaos.module.lang.manager.LangManager;
 import com.github.lotus.chaos.module.lang.pojo.dto.AMapDistrictDto;
-import com.github.lotus.chaos.module.lang.pojo.dto.DistrictLevel;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import com.github.lotus.chaos.module.com.enums.DistrictLevel;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,12 +33,13 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class DistrictServiceImpl extends AbstractServiceImpl<DistrictMapper, District>
+public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, District>
     implements DistrictService {
 
     private final DistrictMapping mapping;
     private final LangManager langManager;
 
+    @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void importByAMapUrl() {
@@ -113,7 +115,7 @@ public class DistrictServiceImpl extends AbstractServiceImpl<DistrictMapper, Dis
     }
 
     private void removeAll() {
-        baseMapper.delete(lambdaQuery());
+        lambdaUpdate().remove();
     }
 
     private List<District> getAllDistrict() {

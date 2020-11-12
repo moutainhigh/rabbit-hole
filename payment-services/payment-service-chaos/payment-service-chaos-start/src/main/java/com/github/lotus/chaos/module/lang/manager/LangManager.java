@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.module.lang.manager;
 
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.chaos.module.lang.pojo.dto.AMapDistrictDto;
 import com.github.lotus.chaos.module.lang.pojo.dto.AMapDistrictResultDto;
@@ -48,7 +49,7 @@ public class LangManager {
         String token = "a17f4063f58d7fc70de9a205e22f2450";
         String subdistrict = "3";
         String url = String.format("https://restapi.amap.com/v3/config/district?key=%s&subdistrict=%s", token, subdistrict);
-        String resultText = restTemplate.getForObject(url, String.class);
+        String resultText = HttpUtil.get(url);
         final AMapDistrictResultDto result = JSON.parseObject(resultText, AMapDistrictResultDto.class);
         if (Objects.isNull(result) || !result.isOk()) {
             throw ServiceException.wrap("请求高德数据失败");

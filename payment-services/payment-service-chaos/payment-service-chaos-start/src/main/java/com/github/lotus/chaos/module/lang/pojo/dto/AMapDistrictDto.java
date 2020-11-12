@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.module.lang.pojo.dto;
 
+import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

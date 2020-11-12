@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.module.com.service.impl;
 
-import com.github.lotus.chaos.module.com.entity.District;
 import com.github.lotus.chaos.module.com.entity.File;
+import com.github.lotus.chaos.module.com.enums.FileRelType;
 import com.github.lotus.chaos.module.com.mapper.FileMapper;
 import com.github.lotus.chaos.module.com.service.FileService;
 import com.github.lotus.chaos.modules.com.ro.UploadFileRo;
@@ -47,7 +47,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     public void upload(UploadFileRo dto) {
         final Long relId = dto.getRelId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final District.FileRelType relType = CodeEnum.ofThrow(dto.getRelType(), District.FileRelType.class);
+        final FileRelType relType = CodeEnum.ofThrow(dto.getRelType(), FileRelType.class);
         final List<UploadFileRo.FileDto> files = dto.getFiles();
         deleteByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
@@ -72,17 +72,17 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     @Transactional(rollbackFor = Exception.class)
     public List<FileVo> listFileByRelTypeAndRelId(@NotNull String relType,
                                                   @NotNull Long relId) {
-        return listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(CodeEnum.ofThrow(relType, District.FileRelType.class), relId)
+        return listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(CodeEnum.ofThrow(relType, FileRelType.class), relId)
             .stream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
             .collect(Collectors.toList());
     }
 
-    private List<File> listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull District.FileRelType relType, @NotNull Long relId) {
+    private List<File> listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull FileRelType relType, @NotNull Long relId) {
         return baseMapper.listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType.getCode(), relId);
     }
 
-    private void deleteByRelTypeAndRelId(@NotNull District.FileRelType relType, @NotNull Long relId) {
+    private void deleteByRelTypeAndRelId(@NotNull FileRelType relType, @NotNull Long relId) {
         lambdaUpdate().eq(File::getRelType, relType.getCode())
             .eq(File::getRelId, relId)
             .remove();

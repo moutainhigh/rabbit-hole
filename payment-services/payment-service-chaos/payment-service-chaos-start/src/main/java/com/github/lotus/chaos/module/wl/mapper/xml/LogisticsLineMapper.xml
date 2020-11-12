@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.chaos.module.wl.mapper.LogisticsLineMapper">
+
+    <select id="complete" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
+      SELECT wll.* FROM wl_logistics_line wll
+      <where>
+        <if test="ro.keyword != null">
+          <bind name="keyword" value="ro.keyword"/>
+          AND wll.remark LIKE #{keyword}
+        </if>
+      </where>
+    </select>
+
+    <select id="paging" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
+      SELECT wll.* FROM wl_logistics_line wll
+  </select>
+</mapper>

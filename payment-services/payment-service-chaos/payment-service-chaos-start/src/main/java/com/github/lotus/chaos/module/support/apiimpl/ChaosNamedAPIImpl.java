@@ -1,8 +1,13 @@
 package com.github.lotus.chaos.module.support.apiimpl;
 
+import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.service.DataDictService;
+import com.github.lotus.chaos.module.com.service.DistrictService;
+import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import com.github.lotus.chaos.module.ums.entity.Account;
 import com.github.lotus.chaos.module.ums.service.AccountService;
+import com.github.lotus.chaos.module.wl.entity.Company;
+import com.github.lotus.chaos.module.wl.service.CompanyService;
 import com.github.lotus.chaos.modules.support.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
 import in.hocg.boot.utils.LangUtils;
@@ -11,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -26,6 +32,8 @@ import java.util.function.Function;
 public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     private final DataDictService dataDictService;
     private final AccountService accountService;
+    private final DistrictService districtService;
+    private final CompanyService companyService;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
@@ -44,6 +52,34 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     public Map<String, Object> loadByNickname(NamedArgs args) {
         final List<Account> result = accountService.listAccountByAccountId(args.getValues());
         return this.toMap(result, Account::getId, Account::getNickname);
+    }
+
+    @Override
+    public Map<String, Object> loadByCompanyName(NamedArgs args) {
+        final List<Company> result = companyService.listCompanyByCompanyId(args.getValues());
+        return this.toMap(result, Company::getId, Company::getTitle);
+    }
+
+    @Override
+    public Map<String, Object> loadByDistrictName(NamedArgs args) {
+        final String type = args.getArgs()[0];
+        List<DistrictComplexVo> result = Collections.emptyList();
+        switch (type) {
+            case DistrictLevel.PROVINCE_CODE: {
+                result = districtService.getProvince();
+                break;
+            }
+            case DistrictLevel.CITY_CODE: {
+                result = districtService.getCity();
+                break;
+            }
+            case DistrictLevel.DISTRICT_CODE: {
+                result = districtService.getDistrict();
+                break;
+            }
+            default:
+        }
+        return this.toMap(result, DistrictComplexVo::getId, DistrictComplexVo::getTitle);
     }
 
     private <K, V, Z> Map<String, Z> toMap(List<V> values,
