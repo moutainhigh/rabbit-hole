@@ -21,6 +21,10 @@
     <!--  一方库  -->
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>payment-usercontext-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>payment-service-chaos-api</artifactId>
     </dependency>
     <dependency>

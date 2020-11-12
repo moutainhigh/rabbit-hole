@@ -1,7 +1,15 @@
 package com.github.lotus.chaos.module.wl.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
+import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +21,15 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface LogisticsLineService extends AbstractService<LogisticsLine> {
 
+    void update(Long id, LogisticsLineUpdateRo ro);
+
+    void create(LogisticsLineCreateRo ro);
+
+    void delete(Long id);
+
+    LogisticsLineComplexVo getLogisticsLine(Long id);
+
+    IPage<LogisticsLineComplexVo> paging(LogisticsLinePagingRo ro);
+
+    List<LogisticsLineComplexVo> complete(LogisticsLineCompleteRo ro);
 }

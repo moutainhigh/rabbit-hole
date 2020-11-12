@@ -1,8 +1,13 @@
 package com.github.lotus.chaos.module.wl.mapper;
 
-import com.github.lotus.chaos.module.wl.entity.Company;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.lotus.chaos.module.wl.entity.Company;
+import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCompleteRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyPagingRo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +19,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CompanyMapper extends BaseMapper<Company> {
+    IPage<Company> paging(@Param("ro") CompanyPagingRo ro, @Param("ofPage") Page<Company> ofPage);
 
+    IPage<Company> complete(@Param("ro") CompanyCompleteRo ro, @Param("ofPage") Page ofPage);
 }
