@@ -24,6 +24,9 @@ public enum Module {
         "payment-services/payment-service-chaos/payment-service-chaos-start"),
     Chaos_COM(Lists.newArrayList("com_"),
         "com.github.lotus.chaos.module.com",
+        "payment-services/payment-service-chaos/payment-service-chaos-start"),
+    Chaos_WL(Lists.newArrayList("wl_"),
+        "com.github.lotus.chaos.module.wl",
         "payment-services/payment-service-chaos/payment-service-chaos-start");
 
     /**

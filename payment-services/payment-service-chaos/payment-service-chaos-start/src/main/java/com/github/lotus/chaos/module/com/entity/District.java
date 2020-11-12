@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_district")
-public class District extends AbstractEntity<District> {
+public class District extends TreeEntity<District> {
 
     private static final long serialVersionUID = 1L;
 
