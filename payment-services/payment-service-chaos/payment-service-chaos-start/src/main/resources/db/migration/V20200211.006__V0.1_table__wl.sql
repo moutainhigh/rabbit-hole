@@ -103,18 +103,3 @@ CREATE TABLE `wl_logistics_line`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[物流模块] 物流线路表';
 
-# DROP TABLE IF EXISTS `wl_warehouse_logistics_line_ref`;
-# CREATE TABLE `wl_warehouse_logistics_line_ref`
-# (
-#     id                BIGINT AUTO_INCREMENT,
-#     --
-#     warehouse_id      BIGINT NOT NULL
-#         COMMENT '物流仓库ID',
-#     logistics_line_id BIGINT NOT NULL
-#         COMMENT '线路ID',
-#     --
-#     PRIMARY KEY (id)
-# )
-#     ENGINE = InnoDB
-#     DEFAULT CHARSET = utf8mb4
-#     COMMENT '[物流模块] 仓库x线路表';
