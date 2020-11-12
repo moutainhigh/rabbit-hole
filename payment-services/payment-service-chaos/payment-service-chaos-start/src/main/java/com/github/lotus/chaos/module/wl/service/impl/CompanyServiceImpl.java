@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.module.wl.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.module.wl.entity.Company;
 import com.github.lotus.chaos.module.wl.mapper.CompanyMapper;
@@ -10,14 +11,17 @@ import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyPagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.CompanyComplexVo;
 import com.github.lotus.chaos.module.wl.service.CompanyService;
+import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,6 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Company> implements CompanyService {
     private final CompanyMapping mapping;
+    private final WarehouseService warehouseService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -68,6 +73,7 @@ public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Compa
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
+        ValidUtils.isFalse(warehouseService.hasWarehouseByCompanyId(id), "请先移除对应的仓库");
         removeById(id);
     }
 
@@ -83,6 +89,15 @@ public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Compa
     public List<CompanyComplexVo> complete(CompanyCompleteRo ro) {
         List<Company> records = baseMapper.complete(ro, ro.ofPage()).getRecords();
         return LangUtils.toList(records, this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Company> listCompanyByCompanyId(List<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return lambdaQuery().in(Company::getId, ids).list();
     }
 
     private CompanyComplexVo convertComplex(Company entity) {

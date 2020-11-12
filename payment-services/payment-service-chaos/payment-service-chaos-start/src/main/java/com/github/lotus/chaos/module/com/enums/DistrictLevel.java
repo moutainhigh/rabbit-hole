@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.module.lang.pojo.dto;
+package com.github.lotus.chaos.module.com.enums;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;

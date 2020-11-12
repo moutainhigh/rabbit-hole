@@ -1,20 +1,17 @@
 package com.github.lotus.chaos.module.wl.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -41,8 +38,8 @@ public class LogisticsLine extends AbstractEntity<LogisticsLine> {
     @TableField("city_adcode")
     private String cityAdcode;
     @ApiModelProperty("[终点]县区域编码")
-    @TableField("county_adcode")
-    private String countyAdcode;
+    @TableField("district_adcode")
+    private String districtAdcode;
     @ApiModelProperty("单价")
     @TableField("unit_price")
     private BigDecimal unitPrice;

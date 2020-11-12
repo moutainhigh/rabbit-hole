@@ -1,19 +1,16 @@
 package com.github.lotus.chaos.module.wl.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -40,8 +37,8 @@ public class Warehouse extends AbstractEntity<Warehouse> {
     @TableField("city_adcode")
     private String cityAdcode;
     @ApiModelProperty("县区域编码")
-    @TableField("county_adcode")
-    private String countyAdcode;
+    @TableField("district_adcode")
+    private String districtAdcode;
     @ApiModelProperty("公司ID")
     @TableField("company_id")
     private Long companyId;
@@ -51,6 +48,7 @@ public class Warehouse extends AbstractEntity<Warehouse> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

@@ -13,4 +13,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface WarehouseLogisticsLineRefService extends AbstractService<WarehouseLogisticsLineRef> {
 
+    boolean hasByWarehouseId(Long warehouseId);
 }

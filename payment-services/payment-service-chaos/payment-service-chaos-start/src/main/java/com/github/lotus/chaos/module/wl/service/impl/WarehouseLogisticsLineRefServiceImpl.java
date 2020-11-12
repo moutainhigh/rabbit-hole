@@ -20,4 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WarehouseLogisticsLineRefServiceImpl extends AbstractServiceImpl<WarehouseLogisticsLineRefMapper, WarehouseLogisticsLineRef> implements WarehouseLogisticsLineRefService {
 
+    @Override
+    public boolean hasByWarehouseId(Long warehouseId) {
+        return lambdaQuery().eq(WarehouseLogisticsLineRef::getWarehouseId, warehouseId).count() > 0;
+    }
 }

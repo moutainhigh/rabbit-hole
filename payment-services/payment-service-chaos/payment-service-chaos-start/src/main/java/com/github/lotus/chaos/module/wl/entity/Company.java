@@ -46,8 +46,8 @@ public class Company extends AbstractEntity<Company> {
     @TableField("city_adcode")
     private String cityAdcode;
     @ApiModelProperty("县区域编码")
-    @TableField("county_adcode")
-    private String countyAdcode;
+    @TableField("district_adcode")
+    private String districtAdcode;
 
     @ApiModelProperty("创建时间")
     @TableField("created_at")

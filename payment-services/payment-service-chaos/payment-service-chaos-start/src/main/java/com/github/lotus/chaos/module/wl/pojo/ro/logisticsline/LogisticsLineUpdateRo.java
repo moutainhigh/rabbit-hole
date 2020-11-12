@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 /**
@@ -23,7 +24,7 @@ public class LogisticsLineUpdateRo extends BasicRo {
     @ApiModelProperty("[终点]市区区域编码")
     private String cityAdcode;
     @ApiModelProperty("[终点]县区域编码")
-    private String countyAdcode;
+    private String districtAdcode;
     @ApiModelProperty("单价")
     private BigDecimal unitPrice;
     @ApiModelProperty("单位(元/方)")
@@ -32,6 +33,7 @@ public class LogisticsLineUpdateRo extends BasicRo {
     private Integer aging;
     @ApiModelProperty("物流方式")
     private String shippingMethods;
+    @Size(max = 255, message = "备注过长")
     @ApiModelProperty("备注")
     private String remark;
 

@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
 @Data
 @ApiModel("物流仓库")
 public class WarehouseCreateRo extends BasicRo {
-    @NotNull
-    @Size(min = 3, max = 10, message = "仓库名称名称错误")
+    @NotNull(message = "请填写仓库名称(3~10)")
+    @Size(min = 3, max = 10, message = "请填写仓库名称(3~10)")
     @ApiModelProperty("仓库名称")
     private String title;
     @NotNull
@@ -29,7 +29,10 @@ public class WarehouseCreateRo extends BasicRo {
     @ApiModelProperty("市")
     private String cityAdcode;
     @ApiModelProperty("县")
-    private String countyAdcode;
+    private String districtAdcode;
+    @Size(max = 255, message = "备注过长")
+    @ApiModelProperty("备注")
+    private String remark;
 
     @ApiModelProperty(hidden = true)
     private Long creator;

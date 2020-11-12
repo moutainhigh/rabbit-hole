@@ -20,14 +20,15 @@ public class CompanyUpdateRo {
     private String title;
     @ApiModelProperty("物流公司电话")
     private String tel;
-    @ApiModelProperty("公司备注")
+    @Size(max = 255, message = "备注过长")
+    @ApiModelProperty("备注")
     private String remark;
     @ApiModelProperty("省")
     private String provinceAdcode;
     @ApiModelProperty("市")
     private String cityAdcode;
     @ApiModelProperty("县")
-    private String countyAdcode;
+    private String districtAdcode;
 
     @ApiModelProperty(hidden = true)
     private Long updater;

@@ -4,17 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
-import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -62,11 +57,4 @@ public class District extends TreeEntity<District> {
     @TableField("title")
     private String title;
 
-    @Getter
-    @RequiredArgsConstructor
-    public enum FileRelType implements DataDictEnum {
-        unknown("unknown", "未知");
-        private final Serializable code;
-        private final String name;
-    }
 }

@@ -32,4 +32,6 @@ public interface CompanyService extends AbstractService<Company> {
     IPage<CompanyComplexVo> paging(CompanyPagingRo ro);
 
     List<CompanyComplexVo> complete(CompanyCompleteRo ro);
+
+    List<Company> listCompanyByCompanyId(List<Long> values);
 }

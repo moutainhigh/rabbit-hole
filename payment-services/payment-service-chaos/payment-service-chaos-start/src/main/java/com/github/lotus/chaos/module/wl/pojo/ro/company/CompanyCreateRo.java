@@ -17,20 +17,21 @@ import javax.validation.constraints.Size;
 @Data
 @ApiModel("创建物流公司")
 public class CompanyCreateRo extends BasicRo {
-    @NotNull(message = "物流公司名称错误")
-    @Size(min = 3, max = 10, message = "物流公司名称错误")
+    @NotNull(message = "请填写物流公司(3~10)")
+    @Size(min = 3, max = 10, message = "请填写物流公司(3~10)")
     @ApiModelProperty("物流公司名称")
     private String title;
     @ApiModelProperty("物流公司电话")
     private String tel;
-    @ApiModelProperty("公司备注")
+    @Size(max = 255, message = "备注过长")
+    @ApiModelProperty("备注")
     private String remark;
     @ApiModelProperty("省")
     private String provinceAdcode;
     @ApiModelProperty("市")
     private String cityAdcode;
     @ApiModelProperty("县")
-    private String countyAdcode;
+    private String districtAdcode;
 
     @ApiModelProperty(hidden = true)
     private Long creator;

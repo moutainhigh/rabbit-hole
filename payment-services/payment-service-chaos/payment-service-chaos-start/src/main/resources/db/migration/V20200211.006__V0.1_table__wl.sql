@@ -13,7 +13,7 @@ CREATE TABLE `wl_company`
         COMMENT '省区域编码',
     `city_adcode`     VARCHAR(32)
         COMMENT '市区区域编码',
-    `county_adcode`   VARCHAR(32)
+    `district_adcode`   VARCHAR(32)
         COMMENT '县区域编码',
     --
     `created_at`      DATETIME(6) NOT NULL
@@ -40,7 +40,7 @@ CREATE TABLE `wl_warehouse`
         COMMENT '省区域编码',
     `city_adcode`     VARCHAR(32) NOT NULL
         COMMENT '市区区域编码',
-    `county_adcode`   VARCHAR(32) NOT NULL
+    `district_adcode`   VARCHAR(32) NOT NULL
         COMMENT '县区域编码',
     company_id        BIGINT      NOT NULL
         COMMENT '公司ID',
@@ -73,7 +73,7 @@ CREATE TABLE `wl_logistics_line`
         COMMENT '[终点]省区域编码',
     `city_adcode`     VARCHAR(32) NOT NULL
         COMMENT '[终点]市区区域编码',
-    `county_adcode`   VARCHAR(32) NOT NULL
+    `district_adcode`   VARCHAR(32) NOT NULL
         COMMENT '[终点]县区域编码',
     unit_price        decimal(5, 2)
         COMMENT '单价',

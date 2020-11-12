@@ -32,4 +32,6 @@ public interface LogisticsLineService extends AbstractService<LogisticsLine> {
     IPage<LogisticsLineComplexVo> paging(LogisticsLinePagingRo ro);
 
     List<LogisticsLineComplexVo> complete(LogisticsLineCompleteRo ro);
+
+    boolean hasByWarehouseId(Long id);
 }

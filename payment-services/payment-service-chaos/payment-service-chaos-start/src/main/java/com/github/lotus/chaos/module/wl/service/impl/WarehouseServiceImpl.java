@@ -9,9 +9,11 @@ import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
+import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
 import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, Warehouse> implements WarehouseService {
     private final WarehouseMapping mapping;
+    private final LogisticsLineService logisticsLineService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -82,7 +85,13 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
+        ValidUtils.isFalse(logisticsLineService.hasByWarehouseId(id), "请先移除对应的线路");
         removeById(id);
+    }
+
+    @Override
+    public boolean hasWarehouseByCompanyId(Long companyId) {
+        return lambdaQuery().eq(Warehouse::getCompanyId, companyId).count() > 0;
     }
 
     private WarehouseComplexVo convertComplex(Warehouse entity) {

@@ -32,4 +32,6 @@ public interface WarehouseService extends AbstractService<Warehouse> {
     WarehouseComplexVo getWarehouse(Long id);
 
     void delete(Long id);
+
+    boolean hasWarehouseByCompanyId(Long companyId);
 }

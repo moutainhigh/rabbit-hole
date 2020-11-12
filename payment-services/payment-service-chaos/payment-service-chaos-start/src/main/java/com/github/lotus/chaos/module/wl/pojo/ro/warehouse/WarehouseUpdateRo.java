@@ -26,7 +26,10 @@ public class WarehouseUpdateRo extends BasicRo {
     @ApiModelProperty("市")
     private String cityAdcode;
     @ApiModelProperty("县")
-    private String countyAdcode;
+    private String districtAdcode;
+    @Size(max = 255, message = "备注过长")
+    @ApiModelProperty("备注")
+    private String remark;
 
     @ApiModelProperty(hidden = true)
     private Long updater;

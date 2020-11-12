@@ -10,6 +10,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagin
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
+import com.github.lotus.chaos.module.wl.service.WarehouseLogisticsLineRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineMapper, LogisticsLine> implements LogisticsLineService {
     private final LogisticsLineMapping mapping;
+    private final WarehouseLogisticsLineRefService warehouseLogisticsLineRefService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -83,6 +85,11 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
     public List<LogisticsLineComplexVo> complete(LogisticsLineCompleteRo ro) {
         List<LogisticsLine> records = baseMapper.complete(ro, ro.ofPage()).getRecords();
         return LangUtils.toList(records, this::convertComplex);
+    }
+
+    @Override
+    public boolean hasByWarehouseId(Long warehouseId) {
+        return warehouseLogisticsLineRefService.hasByWarehouseId(warehouseId);
     }
 
     private LogisticsLineComplexVo convertComplex(LogisticsLine entity) {

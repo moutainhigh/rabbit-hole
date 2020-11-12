@@ -15,11 +15,17 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface CompanyMapping {
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     Company asCompany(CompanyCreateRo ro);
 
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     Company asCompany(CompanyUpdateRo ro);
 
     CompanyComplexVo asCompanyComplexVo(Company entity);

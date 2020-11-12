@@ -8,7 +8,7 @@ import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
 import com.github.lotus.chaos.module.lang.manager.LangManager;
 import com.github.lotus.chaos.module.lang.pojo.dto.AMapDistrictDto;
-import com.github.lotus.chaos.module.lang.pojo.dto.DistrictLevel;
+import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;
