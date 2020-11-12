@@ -5,6 +5,8 @@ CREATE TABLE `wl_company`
     --
     title             VARCHAR(25) NOT NULL
         COMMENT '名称',
+    tel               VARCHAR(25)
+        COMMENT 'tel',
     remark            VARCHAR(255)
         COMMENT '备注',
     `province_adcode` VARCHAR(32)
