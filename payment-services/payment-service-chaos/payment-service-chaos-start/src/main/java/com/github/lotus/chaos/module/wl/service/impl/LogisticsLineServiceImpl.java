@@ -10,8 +10,10 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagin
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
+import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -32,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineMapper, LogisticsLine> implements LogisticsLineService {
     private final LogisticsLineMapping mapping;
+    private final WarehouseService warehouseService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -101,5 +105,15 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
 
     private LogisticsLineComplexVo convertComplex(LogisticsLine entity) {
         return mapping.asLogisticsLineComplexVo(entity);
+    }
+
+    @Override
+    public void validEntity(LogisticsLine entity) {
+        super.validEntity(entity);
+
+        Long warehouseId = entity.getWarehouseId();
+        if (Objects.nonNull(warehouseId)) {
+            ValidUtils.notNull(warehouseService.getById(warehouseId), "物流仓库填写错误");
+        }
     }
 }

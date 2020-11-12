@@ -9,6 +9,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
+import com.github.lotus.chaos.module.wl.service.CompanyService;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
 import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -35,6 +37,7 @@ import java.util.List;
 public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, Warehouse> implements WarehouseService {
     private final WarehouseMapping mapping;
     private final LogisticsLineService logisticsLineService;
+    private final CompanyService companyService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -108,5 +111,15 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
         WarehouseComplexVo result = mapping.asWarehouseComplexVo(entity);
         result.setLogisticsLines(logisticsLineService.listLogisticsLineComplexByWarehouseId(warehouseId));
         return result;
+    }
+
+    @Override
+    public void validEntity(Warehouse entity) {
+        super.validEntity(entity);
+
+        Long companyId = entity.getCompanyId();
+        if (Objects.nonNull(companyId)) {
+            ValidUtils.notNull(companyService.getById(companyId), "物流公司填写错误");
+        }
     }
 }
