@@ -30,5 +30,10 @@ public interface WarehouseMapping {
     @Mapping(target = "companyId", ignore = true)
     Warehouse asWarehouse(WarehouseUpdateRo ro);
 
+    @Mapping(target = "provinceName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "districtName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "cityName", ignore = true)
     WarehouseComplexVo asWarehouseComplexVo(Warehouse entity);
 }

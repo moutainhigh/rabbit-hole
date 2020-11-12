@@ -1,7 +1,6 @@
 package com.github.lotus.chaos.module.wl.mapstruct;
 
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
-import com.github.lotus.chaos.module.wl.entity.Warehouse;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
@@ -29,5 +28,10 @@ public interface LogisticsLineMapping {
     @Mapping(target = "createdAt", ignore = true)
     LogisticsLine asWarehouse(LogisticsLineCreateRo ro);
 
+    @Mapping(target = "provinceName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "districtName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "cityName", ignore = true)
     LogisticsLineComplexVo asLogisticsLineComplexVo(LogisticsLine entity);
 }

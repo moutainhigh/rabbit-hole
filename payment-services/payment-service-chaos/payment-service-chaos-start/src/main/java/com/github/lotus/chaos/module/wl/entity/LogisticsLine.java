@@ -31,15 +31,6 @@ public class LogisticsLine extends AbstractEntity<LogisticsLine> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    @ApiModelProperty("[终点]省区域编码")
-    @TableField("province_adcode")
-    private String provinceAdcode;
-    @ApiModelProperty("[终点]市区区域编码")
-    @TableField("city_adcode")
-    private String cityAdcode;
-    @ApiModelProperty("[终点]县区域编码")
-    @TableField("district_adcode")
-    private String districtAdcode;
     @ApiModelProperty("单价")
     @TableField("unit_price")
     private BigDecimal unitPrice;
@@ -55,6 +46,20 @@ public class LogisticsLine extends AbstractEntity<LogisticsLine> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+    @ApiModelProperty("物流线路")
+    @TableField("warehouse_id")
+    private Long warehouseId;
+
+    @ApiModelProperty("[终点]省区域编码")
+    @TableField("province_adcode")
+    private String provinceAdcode;
+    @ApiModelProperty("[终点]市区区域编码")
+    @TableField("city_adcode")
+    private String cityAdcode;
+    @ApiModelProperty("[终点]县区域编码")
+    @TableField("district_adcode")
+    private String districtAdcode;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

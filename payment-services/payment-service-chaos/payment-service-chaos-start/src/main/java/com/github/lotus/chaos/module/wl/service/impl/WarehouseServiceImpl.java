@@ -94,7 +94,19 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
         return lambdaQuery().eq(Warehouse::getCompanyId, companyId).count() > 0;
     }
 
+    @Override
+    public List<WarehouseComplexVo> listWarehousesComplexByCompanyId(Long companyId) {
+        return LangUtils.toList(listWarehouseByCompanyId(companyId), this::convertComplex);
+    }
+
+    private List<Warehouse> listWarehouseByCompanyId(Long companyId) {
+        return lambdaQuery().eq(Warehouse::getCompanyId, companyId).list();
+    }
+
     private WarehouseComplexVo convertComplex(Warehouse entity) {
-        return mapping.asWarehouseComplexVo(entity);
+        Long warehouseId = entity.getId();
+        WarehouseComplexVo result = mapping.asWarehouseComplexVo(entity);
+        result.setLogisticsLines(logisticsLineService.listLogisticsLineComplexByWarehouseId(warehouseId));
+        return result;
     }
 }

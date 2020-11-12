@@ -30,6 +30,16 @@ public class Warehouse extends AbstractEntity<Warehouse> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @ApiModelProperty("物流公司")
+    @TableField("company_id")
+    private Long companyId;
+    @ApiModelProperty("名称")
+    @TableField("title")
+    private String title;
+    @ApiModelProperty("备注")
+    @TableField("remark")
+    private String remark;
+
     @ApiModelProperty("省区域编码")
     @TableField("province_adcode")
     private String provinceAdcode;
@@ -39,15 +49,6 @@ public class Warehouse extends AbstractEntity<Warehouse> {
     @ApiModelProperty("县区域编码")
     @TableField("district_adcode")
     private String districtAdcode;
-    @ApiModelProperty("公司ID")
-    @TableField("company_id")
-    private Long companyId;
-    @ApiModelProperty("名称")
-    @TableField("title")
-    private String title;
-    @ApiModelProperty("备注")
-    @TableField("remark")
-    private String remark;
 
     @ApiModelProperty("创建时间")
     @TableField("created_at")

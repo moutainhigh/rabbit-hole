@@ -13,7 +13,7 @@ CREATE TABLE `wl_company`
         COMMENT '省区域编码',
     `city_adcode`     VARCHAR(32)
         COMMENT '市区区域编码',
-    `district_adcode`   VARCHAR(32)
+    `district_adcode` VARCHAR(32)
         COMMENT '县区域编码',
     --
     `created_at`      DATETIME(6) NOT NULL
@@ -40,7 +40,7 @@ CREATE TABLE `wl_warehouse`
         COMMENT '省区域编码',
     `city_adcode`     VARCHAR(32) NOT NULL
         COMMENT '市区区域编码',
-    `district_adcode`   VARCHAR(32) NOT NULL
+    `district_adcode` VARCHAR(32) NOT NULL
         COMMENT '县区域编码',
     company_id        BIGINT      NOT NULL
         COMMENT '公司ID',
@@ -69,13 +69,9 @@ CREATE TABLE `wl_logistics_line`
 (
     id                BIGINT AUTO_INCREMENT,
     --
-    `province_adcode` VARCHAR(32) NOT NULL
-        COMMENT '[终点]省区域编码',
-    `city_adcode`     VARCHAR(32) NOT NULL
-        COMMENT '[终点]市区区域编码',
-    `district_adcode`   VARCHAR(32) NOT NULL
-        COMMENT '[终点]县区域编码',
-    unit_price        decimal(5, 2)
+    warehouse_id      BIGINT      NOT NULL
+        COMMENT '公司ID',
+    unit_price        decimal(10, 2)
         COMMENT '单价',
     unit              VARCHAR(10)          DEFAULT 'unknown'
         COMMENT '单位(元/方)',
@@ -85,6 +81,12 @@ CREATE TABLE `wl_logistics_line`
         COMMENT '物流方式',
     remark            VARCHAR(255)
         COMMENT '备注',
+    `province_adcode` VARCHAR(32) NOT NULL
+        COMMENT '[终点]省区域编码',
+    `city_adcode`     VARCHAR(32) NOT NULL
+        COMMENT '[终点]市区区域编码',
+    `district_adcode` VARCHAR(32) NOT NULL
+        COMMENT '[终点]县区域编码',
     --
     `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
@@ -101,18 +103,18 @@ CREATE TABLE `wl_logistics_line`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[物流模块] 物流线路表';
 
-DROP TABLE IF EXISTS `wl_warehouse_logistics_line_ref`;
-CREATE TABLE `wl_warehouse_logistics_line_ref`
-(
-    id                BIGINT AUTO_INCREMENT,
-    --
-    warehouse_id      BIGINT NOT NULL
-        COMMENT '公司ID',
-    logistics_line_id BIGINT NOT NULL
-        COMMENT '线路ID',
-    --
-    PRIMARY KEY (id)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    COMMENT '[物流模块] 仓库表';
+# DROP TABLE IF EXISTS `wl_warehouse_logistics_line_ref`;
+# CREATE TABLE `wl_warehouse_logistics_line_ref`
+# (
+#     id                BIGINT AUTO_INCREMENT,
+#     --
+#     warehouse_id      BIGINT NOT NULL
+#         COMMENT '物流仓库ID',
+#     logistics_line_id BIGINT NOT NULL
+#         COMMENT '线路ID',
+#     --
+#     PRIMARY KEY (id)
+# )
+#     ENGINE = InnoDB
+#     DEFAULT CHARSET = utf8mb4
+#     COMMENT '[物流模块] 仓库x线路表';

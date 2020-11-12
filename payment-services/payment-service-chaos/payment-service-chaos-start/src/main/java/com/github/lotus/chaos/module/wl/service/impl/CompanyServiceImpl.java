@@ -101,7 +101,10 @@ public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Compa
     }
 
     private CompanyComplexVo convertComplex(Company entity) {
-        return mapping.asCompanyComplexVo(entity);
+        CompanyComplexVo result = mapping.asCompanyComplexVo(entity);
+        Long companyId = entity.getId();
+        result.setWarehouses(warehouseService.listWarehousesComplexByCompanyId(companyId));
+        return result;
     }
 
     @Override

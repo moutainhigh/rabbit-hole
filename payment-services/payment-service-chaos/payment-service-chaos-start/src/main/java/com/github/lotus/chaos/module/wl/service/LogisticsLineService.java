@@ -34,4 +34,6 @@ public interface LogisticsLineService extends AbstractService<LogisticsLine> {
     List<LogisticsLineComplexVo> complete(LogisticsLineCompleteRo ro);
 
     boolean hasByWarehouseId(Long id);
+
+    List<LogisticsLineComplexVo> listLogisticsLineComplexByWarehouseId(Long warehouseId);
 }
