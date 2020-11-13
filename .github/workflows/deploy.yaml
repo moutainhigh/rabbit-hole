@@ -3,7 +3,7 @@ name: 编译 & 发布 & 部署
 on:
   workflow_dispatch:
     inputs:
-      useCache:
+      use_cache:
         description: '是否使用 Maven 缓存'
         required: true
         default: true
@@ -104,7 +104,7 @@ jobs:
           java-version: 12.0
       # 缓存 Maven 仓库
       - name: Cache local Maven repository
-        if: github.event.inputs.useCache
+        if: ${{ github.event.inputs.use_cache == 'true' }}
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
