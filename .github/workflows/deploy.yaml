@@ -6,7 +6,7 @@ on:
       use_cache:
         description: '是否使用 Maven 缓存'
         required: true
-        default: true
+        default: 'true'
   push:
     branches:
       - develop
