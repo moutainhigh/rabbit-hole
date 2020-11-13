@@ -51,5 +51,6 @@ boot:
       ignore-urls:
         - /swagger-resources/configuration/ui
         - /favicon.ico
+        - /webjars/**
         - /*/v2/api-docs
         - /ignore
