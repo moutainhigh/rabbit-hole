@@ -88,7 +88,7 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        ValidUtils.isFalse(logisticsLineService.hasByWarehouseId(id), "请先移除对应的线路");
+        ValidUtils.isFalse(logisticsLineService.hasLogisticsLineByWarehouseId(id), "请先移除对应的线路");
         removeById(id);
     }
 

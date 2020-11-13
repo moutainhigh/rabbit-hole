@@ -15,18 +15,18 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface LogisticsLineMapping {
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     LogisticsLine asLogisticsLine(LogisticsLineUpdateRo ro);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    LogisticsLine asWarehouse(LogisticsLineCreateRo ro);
+    LogisticsLine asLogisticsLine(LogisticsLineCreateRo ro);
 
     @Mapping(target = "provinceName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)

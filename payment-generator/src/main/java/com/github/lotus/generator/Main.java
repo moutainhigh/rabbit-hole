@@ -16,8 +16,7 @@ public class Main {
     public static void main(String[] args) {
         CodeGenerator.generateByTables(DataSource.Chaos,
             Module.Chaos_WL, false,
-            "wl_warehouse_logistics_line_ref",
-            "wl_company", "wl_warehouse", "wl_logistics_line");
+            "wl_starting_point_ref");
     }
 
 }

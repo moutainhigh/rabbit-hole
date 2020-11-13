@@ -24,8 +24,6 @@ import java.time.LocalDateTime;
 public class LogisticsLineComplexVo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    @ApiModelProperty("物流线路")
-    private Long warehouseId;
     @ApiModelProperty("备注")
     private String remark;
 
