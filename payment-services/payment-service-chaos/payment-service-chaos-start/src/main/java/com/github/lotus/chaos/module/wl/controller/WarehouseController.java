@@ -43,7 +43,7 @@ public class WarehouseController {
 
     @PostMapping
     @ApiOperation("创建 - 物流仓库")
-    public void create(@Valid @RequestBody WarehouseCreateRo ro) {
+    public void create(@Validated @RequestBody WarehouseCreateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
@@ -53,7 +53,7 @@ public class WarehouseController {
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流仓库")
     public void update(@PathVariable("id") Long id,
-                       @Valid @RequestBody WarehouseUpdateRo ro) {
+                       @Validated @RequestBody WarehouseUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);
@@ -74,14 +74,14 @@ public class WarehouseController {
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流仓库")
-    public IPage<WarehouseComplexVo> paging(@Valid @RequestBody WarehousePagingRo ro) {
+    public IPage<WarehouseComplexVo> paging(@Validated @RequestBody WarehousePagingRo ro) {
         return service.paging(ro);
     }
 
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流仓库")
-    public List<WarehouseComplexVo> complete(@Valid @RequestBody WarehouseCompleteRo ro) {
+    public List<WarehouseComplexVo> complete(@Validated @RequestBody WarehouseCompleteRo ro) {
         return service.complete(ro);
     }
 

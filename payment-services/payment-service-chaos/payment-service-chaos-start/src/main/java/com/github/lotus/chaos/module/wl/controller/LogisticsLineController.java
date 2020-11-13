@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -43,7 +43,7 @@ public class LogisticsLineController {
 
     @PostMapping
     @ApiOperation("创建 - 物流线路")
-    public void create(@Valid @RequestBody LogisticsLineCreateRo ro) {
+    public void create(@Validated @RequestBody LogisticsLineCreateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
@@ -53,7 +53,7 @@ public class LogisticsLineController {
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流线路")
     public void update(@PathVariable("id") Long id,
-                       @Valid @RequestBody LogisticsLineUpdateRo ro) {
+                       @Validated @RequestBody LogisticsLineUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);
@@ -74,13 +74,13 @@ public class LogisticsLineController {
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流线路")
-    public IPage<LogisticsLineComplexVo> paging(@Valid @RequestBody LogisticsLinePagingRo ro) {
+    public IPage<LogisticsLineComplexVo> paging(@Validated @RequestBody LogisticsLinePagingRo ro) {
         return service.paging(ro);
     }
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流线路")
-    public List<LogisticsLineComplexVo> complete(@Valid @RequestBody LogisticsLineCompleteRo ro) {
+    public List<LogisticsLineComplexVo> complete(@Validated @RequestBody LogisticsLineCompleteRo ro) {
         return service.complete(ro);
     }
 }

@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -43,7 +43,7 @@ public class CompanyController {
 
     @PostMapping
     @ApiOperation("创建 - 物流公司")
-    public void create(@Valid @RequestBody CompanyCreateRo ro) {
+    public void create(@Validated @RequestBody CompanyCreateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
@@ -53,7 +53,7 @@ public class CompanyController {
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流公司")
     public void update(@PathVariable("id") Long id,
-                       @Valid @RequestBody CompanyUpdateRo ro) {
+                       @Validated @RequestBody CompanyUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);
@@ -74,13 +74,13 @@ public class CompanyController {
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流公司")
-    public IPage<CompanyComplexVo> paging(@Valid @RequestBody CompanyPagingRo ro) {
+    public IPage<CompanyComplexVo> paging(@Validated @RequestBody CompanyPagingRo ro) {
         return service.paging(ro);
     }
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流公司")
-    public List<CompanyComplexVo> complete(@Valid @RequestBody CompanyCompleteRo ro) {
+    public List<CompanyComplexVo> complete(@Validated @RequestBody CompanyCompleteRo ro) {
         return service.complete(ro);
     }
 
