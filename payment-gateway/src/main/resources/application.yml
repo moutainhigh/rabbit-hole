@@ -4,18 +4,18 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: payment-tpl
-          uri: lb://payment-tpl
-          predicates:
-            - Path=/tpl/**
-          filters:
-            - SwaggerHeaderFilter
-            - Logger
-            - StripPrefix=1
         - id: payment-chaos
           uri: lb://payment-chaos
           predicates:
             - Path=/chaos/**
+          filters:
+            - SwaggerHeaderFilter
+            - Logger
+            - StripPrefix=1
+        - id: payment-tpl
+          uri: lb://payment-tpl
+          predicates:
+            - Path=/tpl/**
           filters:
             - SwaggerHeaderFilter
             - Logger

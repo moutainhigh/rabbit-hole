@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/11/12
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
 @ApiModel("物流线路")
 public class LogisticsLineUpdateRo extends BasicRo {
     @ApiModelProperty("物流仓库")
-    private Long warehouseId;
+    private List<Long> warehouseId;
     @ApiModelProperty("[终点]省区域编码")
     private String provinceAdcode;
     @ApiModelProperty("[终点]市区区域编码")

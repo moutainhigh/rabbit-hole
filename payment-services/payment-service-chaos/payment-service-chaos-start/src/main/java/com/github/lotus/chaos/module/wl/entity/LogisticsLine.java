@@ -46,9 +46,6 @@ public class LogisticsLine extends AbstractEntity<LogisticsLine> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
-    @ApiModelProperty("物流线路")
-    @TableField("warehouse_id")
-    private Long warehouseId;
 
     @ApiModelProperty("[终点]省区域编码")
     @TableField("province_adcode")

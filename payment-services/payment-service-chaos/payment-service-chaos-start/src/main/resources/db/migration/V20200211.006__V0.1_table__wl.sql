@@ -29,7 +29,7 @@ CREATE TABLE `wl_company`
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[物流模块] 公司表';
+    COMMENT '[物流模块] 物流公司表';
 
 DROP TABLE IF EXISTS `wl_warehouse`;
 CREATE TABLE `wl_warehouse`
@@ -43,7 +43,7 @@ CREATE TABLE `wl_warehouse`
     `district_adcode` VARCHAR(32) NOT NULL
         COMMENT '县区域编码',
     company_id        BIGINT      NOT NULL
-        COMMENT '公司ID',
+        COMMENT '物流公司 ID',
     title             VARCHAR(25) NOT NULL
         COMMENT '名称',
     remark            VARCHAR(255)
@@ -69,8 +69,6 @@ CREATE TABLE `wl_logistics_line`
 (
     id                BIGINT AUTO_INCREMENT,
     --
-    warehouse_id      BIGINT      NOT NULL
-        COMMENT '公司ID',
     unit_price        decimal(10, 2)
         COMMENT '单价',
     unit              VARCHAR(10)          DEFAULT 'unknown'
@@ -102,4 +100,20 @@ CREATE TABLE `wl_logistics_line`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT '[物流模块] 物流线路表';
+
+DROP TABLE IF EXISTS `wl_starting_point_ref`;
+CREATE TABLE `wl_starting_point_ref`
+(
+    id                BIGINT AUTO_INCREMENT,
+    --
+    warehouse_id      BIGINT NOT NULL
+        COMMENT '物流仓库ID',
+    logistics_line_id BIGINT NOT NULL
+        COMMENT '物流线路ID',
+    --
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[物流模块] 物流起点表';
 
