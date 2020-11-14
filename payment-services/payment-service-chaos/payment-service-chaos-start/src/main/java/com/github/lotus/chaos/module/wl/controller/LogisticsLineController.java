@@ -2,6 +2,7 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatchCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
@@ -48,6 +49,15 @@ public class LogisticsLineController {
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
         service.create(ro);
+    }
+
+    @PostMapping("/batch")
+    @ApiOperation("创建 - 物流线路")
+    public void batchCreate(@Validated @RequestBody LogisticsLineBatchCreateRo ro) {
+        Long userId = UserContextHolder.getUserId()
+            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        ro.setCreator(userId);
+        service.batchCreate(ro);
     }
 
     @PutMapping("/{id}")

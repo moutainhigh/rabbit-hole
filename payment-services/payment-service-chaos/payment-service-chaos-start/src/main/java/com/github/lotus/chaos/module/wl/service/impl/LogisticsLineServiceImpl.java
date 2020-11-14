@@ -5,6 +5,7 @@ import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
 import com.github.lotus.chaos.module.wl.entity.StartingPointRef;
 import com.github.lotus.chaos.module.wl.mapper.LogisticsLineMapper;
 import com.github.lotus.chaos.module.wl.mapstruct.LogisticsLineMapping;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatchCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
@@ -114,8 +115,19 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<LogisticsLineComplexVo> listLogisticsLineComplexByWarehouseId(Long warehouseId) {
         return LangUtils.toList(listLogisticsLineByWarehouseId(warehouseId), this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchCreate(LogisticsLineBatchCreateRo ro) {
+        Long creator = ro.getCreator();
+        for (LogisticsLineCreateRo logisticsLineCreateRo : ro.getLogisticsLines()) {
+            logisticsLineCreateRo.setCreator(creator);
+            this.create(logisticsLineCreateRo);
+        }
     }
 
     private List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId) {
