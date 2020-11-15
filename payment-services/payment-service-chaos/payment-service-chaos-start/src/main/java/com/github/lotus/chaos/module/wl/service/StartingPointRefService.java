@@ -2,6 +2,7 @@ package com.github.lotus.chaos.module.wl.service;
 
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
 import com.github.lotus.chaos.module.wl.entity.StartingPointRef;
+import com.github.lotus.chaos.module.wl.entity.Warehouse;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface StartingPointRefService extends AbstractService<StartingPointRe
     boolean hasLogisticsLineByWarehouseId(Long warehouseId);
 
     List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId);
+
+    List<Warehouse> listWarehouseByLogisticsLineId(Long logisticsLineId);
 }

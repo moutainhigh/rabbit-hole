@@ -20,7 +20,7 @@ public class WarehouseUpdateRo extends BasicRo {
     @ApiModelProperty("仓库名称")
     private String title;
     @ApiModelProperty("物流公司")
-    private Long warehouseId;
+    private Long companyId;
     @ApiModelProperty("省")
     private String provinceAdcode;
     @ApiModelProperty("市")

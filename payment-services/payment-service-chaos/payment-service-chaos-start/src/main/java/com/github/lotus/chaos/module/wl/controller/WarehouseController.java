@@ -2,8 +2,10 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.chaos.basic.Result;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
@@ -43,27 +45,30 @@ public class WarehouseController {
 
     @PostMapping
     @ApiOperation("创建 - 物流仓库")
-    public void create(@Validated @RequestBody WarehouseCreateRo ro) {
+    public Result create(@Validated @RequestBody WarehouseCreateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
         service.create(ro);
+        return Result.success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流仓库")
-    public void update(@PathVariable("id") Long id,
+    public Result update(@PathVariable("id") Long id,
                        @Validated @RequestBody WarehouseUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);
         service.update(id, ro);
+        return Result.success();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @ApiOperation("删除 - 物流仓库")
-    public void delete(@PathVariable("id") Long id) {
-        service.delete(id);
+    public Result deletes(@Validated @RequestBody WarehouseDeleteRo ro) {
+        service.delete(ro);
+        return Result.success();
     }
 
     @GetMapping("/{id}")

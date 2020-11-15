@@ -6,11 +6,13 @@ import com.github.lotus.chaos.module.wl.mapper.WarehouseMapper;
 import com.github.lotus.chaos.module.wl.mapstruct.WarehouseMapping;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
 import com.github.lotus.chaos.module.wl.service.CompanyService;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
+import com.github.lotus.chaos.module.wl.service.StartingPointRefService;
 import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -38,6 +40,7 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
     private final WarehouseMapping mapping;
     private final LogisticsLineService logisticsLineService;
     private final CompanyService companyService;
+    private final StartingPointRefService startingPointRefService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -87,6 +90,14 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void delete(WarehouseDeleteRo ro) {
+        for (Long id : ro.getId()) {
+            this.delete(id);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         ValidUtils.isFalse(logisticsLineService.hasLogisticsLineByWarehouseId(id), "请先移除对应的线路");
         removeById(id);
@@ -97,19 +108,27 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
         return lambdaQuery().eq(Warehouse::getCompanyId, companyId).count() > 0;
     }
 
+    private List<Warehouse> listWarehouseByCompanyId(Long companyId) {
+        return lambdaQuery().eq(Warehouse::getCompanyId, companyId).list();
+    }
+
     @Override
     public List<WarehouseComplexVo> listWarehousesComplexByCompanyId(Long companyId) {
         return LangUtils.toList(listWarehouseByCompanyId(companyId), this::convertComplex);
     }
 
-    private List<Warehouse> listWarehouseByCompanyId(Long companyId) {
-        return lambdaQuery().eq(Warehouse::getCompanyId, companyId).list();
+    private List<Warehouse> listWarehouseByLogisticsLineId(Long logisticsLineId) {
+        return startingPointRefService.listWarehouseByLogisticsLineId(logisticsLineId);
+    }
+
+    @Override
+    public List<WarehouseComplexVo> listWarehouseComplexByLogisticsLineId(Long logisticsLineId) {
+        return LangUtils.toList(listWarehouseByLogisticsLineId(logisticsLineId), this::convertComplex);
     }
 
     private WarehouseComplexVo convertComplex(Warehouse entity) {
-        Long warehouseId = entity.getId();
         WarehouseComplexVo result = mapping.asWarehouseComplexVo(entity);
-        result.setLogisticsLines(logisticsLineService.listLogisticsLineComplexByWarehouseId(warehouseId));
+        result.setCompany(companyService.getCompany(entity.getCompanyId()));
         return result;
     }
 

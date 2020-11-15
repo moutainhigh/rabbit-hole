@@ -4,7 +4,6 @@ import com.github.lotus.chaos.module.com.entity.District;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +27,13 @@ public interface DistrictService extends AbstractService<District> {
 
     List<DistrictComplexVo> getCity();
 
+    List<DistrictComplexVo> getCity(List<String> adcode);
+
     List<DistrictComplexVo> getCounty();
 
     List<DistrictComplexVo> getDistrict();
+
+    List<DistrictComplexVo> getProvince(List<String> adcode);
+
+    List<DistrictComplexVo> getDistrict(List<String> adcode);
 }

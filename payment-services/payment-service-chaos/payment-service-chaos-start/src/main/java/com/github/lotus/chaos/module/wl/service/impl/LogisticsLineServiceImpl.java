@@ -124,8 +124,13 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
     @Transactional(rollbackFor = Exception.class)
     public void batchCreate(LogisticsLineBatchCreateRo ro) {
         Long creator = ro.getCreator();
-        for (LogisticsLineCreateRo logisticsLineCreateRo : ro.getLogisticsLines()) {
-            logisticsLineCreateRo.setCreator(creator);
+        List<Long> warehouseId = ro.getWarehouseId();
+        String provinceAdcode = ro.getProvinceAdcode();
+        String cityAdcode = ro.getCityAdcode();
+
+        for (LogisticsLineBatchCreateRo.LogisticsLineCreateRo logisticsLine : ro.getLogisticsLines()) {
+            LogisticsLineCreateRo logisticsLineCreateRo = mapping.aslogisticsLineCreateRo(logisticsLine,
+                provinceAdcode, cityAdcode, warehouseId, creator);
             this.create(logisticsLineCreateRo);
         }
     }
@@ -135,7 +140,9 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
     }
 
     private LogisticsLineComplexVo convertComplex(LogisticsLine entity) {
-        return mapping.asLogisticsLineComplexVo(entity);
+        LogisticsLineComplexVo result = mapping.asLogisticsLineComplexVo(entity);
+        result.setWarehouses(warehouseService.listWarehouseComplexByLogisticsLineId(entity.getId()));
+        return result;
     }
 
     @Override

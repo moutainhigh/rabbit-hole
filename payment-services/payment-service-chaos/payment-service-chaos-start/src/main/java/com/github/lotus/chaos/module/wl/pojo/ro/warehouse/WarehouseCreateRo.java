@@ -22,8 +22,8 @@ public class WarehouseCreateRo extends BasicRo {
     @ApiModelProperty("仓库名称")
     private String title;
     @NotNull
-    @ApiModelProperty("物流仓库")
-    private Long warehouseId;
+    @ApiModelProperty("物流公司")
+    private Long companyId;
     @ApiModelProperty("省")
     private String provinceAdcode;
     @ApiModelProperty("市")

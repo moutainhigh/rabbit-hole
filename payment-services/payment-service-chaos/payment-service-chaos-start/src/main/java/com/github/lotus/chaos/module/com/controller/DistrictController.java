@@ -44,7 +44,7 @@ public class DistrictController {
     }
 
     @ApiOperation("获取指定下一级区域列表 - 城市区域")
-    @GetMapping
+    @GetMapping("/next")
     public List<DistrictComplexVo> getChildrenDistrictByAdcode(@RequestParam(value = "adcode", required = false, defaultValue = "100000") String adcode) {
         return service.getChildrenDistrictByAdcode(adcode);
     }

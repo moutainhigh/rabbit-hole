@@ -71,9 +71,19 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
     }
 
     @Override
+    public List<DistrictComplexVo> getProvince(List<String> adcode) {
+        return LangUtils.toList(selectListByLevel(DistrictLevel.Province, adcode), this::convertComplex);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public List<DistrictComplexVo> getCity() {
         return LangUtils.toList(selectListByLevel(DistrictLevel.City), this::convertComplex);
+    }
+
+    @Override
+    public List<DistrictComplexVo> getCity(List<String> adcode) {
+        return LangUtils.toList(selectListByLevel(DistrictLevel.City, adcode), this::convertComplex);
     }
 
     @Override
@@ -88,8 +98,17 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
         return LangUtils.toList(selectListByLevel(DistrictLevel.District), this::convertComplex);
     }
 
+    @Override
+    public List<DistrictComplexVo> getDistrict(List<String> adcode) {
+        return LangUtils.toList(selectListByLevel(DistrictLevel.District, adcode), this::convertComplex);
+    }
+
     private List<District> selectListByLevel(@NonNull DistrictLevel level) {
         return lambdaQuery().eq(District::getLevel, level.getCode()).list();
+    }
+
+    private List<District> selectListByLevel(@NonNull DistrictLevel level, List<String> adcode) {
+        return lambdaQuery().eq(District::getLevel, level.getCode()).in(District::getAdCode, adcode).list();
     }
 
     private DistrictComplexVo convertComplex(District entity) {

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.module.wl.entity.Company;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyPagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.CompanyComplexVo;
@@ -34,4 +35,6 @@ public interface CompanyService extends AbstractService<Company> {
     List<CompanyComplexVo> complete(CompanyCompleteRo ro);
 
     List<Company> listCompanyByCompanyId(List<Long> values);
+
+    void delete(CompanyDeleteRo ro);
 }

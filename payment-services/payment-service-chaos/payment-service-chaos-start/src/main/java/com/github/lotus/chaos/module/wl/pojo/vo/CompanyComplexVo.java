@@ -9,8 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by hocgin on 2020/11/12
@@ -64,6 +62,4 @@ public class CompanyComplexVo {
         serviceClass = ChaosNamedAPI.class)
     private String lastUpdaterName;
 
-    @ApiModelProperty("物流仓库")
-    private List<WarehouseComplexVo> warehouses = Collections.emptyList();
 }

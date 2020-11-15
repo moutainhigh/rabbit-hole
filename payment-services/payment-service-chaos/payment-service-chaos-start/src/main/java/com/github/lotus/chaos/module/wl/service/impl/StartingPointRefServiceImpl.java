@@ -2,6 +2,7 @@ package com.github.lotus.chaos.module.wl.service.impl;
 
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
 import com.github.lotus.chaos.module.wl.entity.StartingPointRef;
+import com.github.lotus.chaos.module.wl.entity.Warehouse;
 import com.github.lotus.chaos.module.wl.mapper.StartingPointRefMapper;
 import com.github.lotus.chaos.module.wl.mapstruct.StartingPointRefMapping;
 import com.github.lotus.chaos.module.wl.service.StartingPointRefService;
@@ -61,6 +62,11 @@ public class StartingPointRefServiceImpl extends AbstractServiceImpl<StartingPoi
     @Override
     public List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId) {
         return baseMapper.listLogisticsLineByWarehouseId(warehouseId);
+    }
+
+    @Override
+    public List<Warehouse> listWarehouseByLogisticsLineId(Long logisticsLineId) {
+        return baseMapper.listWarehouseByLogisticsLineId(logisticsLineId);
     }
 
     private List<StartingPointRef> listStartingPointRefByLogisticsLineId(Long logisticsLineId) {

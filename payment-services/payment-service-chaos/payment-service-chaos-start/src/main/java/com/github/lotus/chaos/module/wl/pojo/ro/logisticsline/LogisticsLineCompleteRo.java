@@ -16,4 +16,6 @@ import lombok.Data;
 public class LogisticsLineCompleteRo extends CompleteRo {
     @ApiModelProperty("关键字")
     private String keyword;
+    @ApiModelProperty("物流公司ID")
+    private Long companyId;
 }

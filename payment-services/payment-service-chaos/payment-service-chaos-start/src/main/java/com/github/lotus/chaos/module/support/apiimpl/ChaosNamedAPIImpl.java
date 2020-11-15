@@ -63,23 +63,24 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     @Override
     public Map<String, Object> loadByDistrictName(NamedArgs args) {
         final String type = args.getArgs()[0];
+        List<String> values = args.getValues();
         List<DistrictComplexVo> result = Collections.emptyList();
         switch (type) {
             case DistrictLevel.PROVINCE_CODE: {
-                result = districtService.getProvince();
+                result = districtService.getProvince(values);
                 break;
             }
             case DistrictLevel.CITY_CODE: {
-                result = districtService.getCity();
+                result = districtService.getCity(values);
                 break;
             }
             case DistrictLevel.DISTRICT_CODE: {
-                result = districtService.getDistrict();
+                result = districtService.getDistrict(values);
                 break;
             }
             default:
         }
-        return this.toMap(result, DistrictComplexVo::getId, DistrictComplexVo::getTitle);
+        return this.toMap(result, DistrictComplexVo::getAdCode, DistrictComplexVo::getTitle);
     }
 
     private <K, V, Z> Map<String, Z> toMap(List<V> values,

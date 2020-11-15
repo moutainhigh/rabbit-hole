@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lotus.chaos.module.wl.mapper.LogisticsLineMapper">
+  <select id="complete" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
+    SELECT wll.*
+    FROM wl_logistics_line wll
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="ro.keyword"/>
+        AND wll.remark LIKE #{keyword}
+      </if>
+    </where>
+  </select>
 
-    <select id="complete" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
-      SELECT wll.* FROM wl_logistics_line wll
-      <where>
-        <if test="ro.keyword != null">
-          <bind name="keyword" value="ro.keyword"/>
-          AND wll.remark LIKE #{keyword}
-        </if>
-      </where>
-    </select>
-
-    <select id="paging" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
-      SELECT wll.* FROM wl_logistics_line wll
+  <select id="paging" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
+    SELECT DISTINCT wll.*
+    FROM wl_logistics_line wll
+           LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
+           LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+           LEFT JOIN wl_company wc on wc.id = ww.company_id
+    <where>
+      <if test="ro.companyId != null">
+        AND wc.id = #{ro.companyId}
+      </if>
+      <if test="ro.provinceAdcode != null">
+        AND wll.province_adcode = #{ro.provinceAdcode}
+      </if>
+      <if test="ro.cityAdcode != null">
+        AND wll.city_adcode = #{ro.cityAdcode}
+      </if>
+      <if test="ro.warehouseId != null">
+        <foreach collection="ro.warehouseId" item="item" separator="," open="AND wspr.warehouse_id IN(" close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
   </select>
 </mapper>
