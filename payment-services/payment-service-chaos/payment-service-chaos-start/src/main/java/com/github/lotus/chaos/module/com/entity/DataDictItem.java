@@ -1,19 +1,16 @@
 package com.github.lotus.chaos.module.com.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -49,9 +46,10 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
     @ApiModelProperty("排序, 从大到小降序")
     @TableField("sort")
     private Integer sort;
-    @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
+    @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private Integer enabled;
+    private String enabled;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

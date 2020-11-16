@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.module.wl.entity.Warehouse;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
@@ -31,9 +32,14 @@ public interface WarehouseService extends AbstractService<Warehouse> {
 
     WarehouseComplexVo getWarehouse(Long id);
 
-    void delete(Long id);
 
     boolean hasWarehouseByCompanyId(Long companyId);
 
     List<WarehouseComplexVo> listWarehousesComplexByCompanyId(Long companyId);
+
+    void delete(WarehouseDeleteRo ro);
+
+    void delete(Long id);
+
+    List<WarehouseComplexVo> listWarehouseComplexByLogisticsLineId(Long logisticsLineId);
 }

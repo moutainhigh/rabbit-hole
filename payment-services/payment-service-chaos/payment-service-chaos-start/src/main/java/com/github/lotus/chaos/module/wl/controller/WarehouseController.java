@@ -2,8 +2,10 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.chaos.basic.Result;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
@@ -14,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -43,27 +45,30 @@ public class WarehouseController {
 
     @PostMapping
     @ApiOperation("创建 - 物流仓库")
-    public void create(@Valid @RequestBody WarehouseCreateRo ro) {
+    public Result create(@Validated @RequestBody WarehouseCreateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setCreator(userId);
         service.create(ro);
+        return Result.success();
     }
 
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流仓库")
-    public void update(@PathVariable("id") Long id,
-                       @Valid @RequestBody WarehouseUpdateRo ro) {
+    public Result update(@PathVariable("id") Long id,
+                       @Validated @RequestBody WarehouseUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);
         service.update(id, ro);
+        return Result.success();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @ApiOperation("删除 - 物流仓库")
-    public void delete(@PathVariable("id") Long id) {
-        service.delete(id);
+    public Result deletes(@Validated @RequestBody WarehouseDeleteRo ro) {
+        service.delete(ro);
+        return Result.success();
     }
 
     @GetMapping("/{id}")
@@ -74,14 +79,14 @@ public class WarehouseController {
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流仓库")
-    public IPage<WarehouseComplexVo> paging(@Valid @RequestBody WarehousePagingRo ro) {
+    public IPage<WarehouseComplexVo> paging(@Validated @RequestBody WarehousePagingRo ro) {
         return service.paging(ro);
     }
 
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流仓库")
-    public List<WarehouseComplexVo> complete(@Valid @RequestBody WarehouseCompleteRo ro) {
+    public List<WarehouseComplexVo> complete(@Validated @RequestBody WarehouseCompleteRo ro) {
         return service.complete(ro);
     }
 

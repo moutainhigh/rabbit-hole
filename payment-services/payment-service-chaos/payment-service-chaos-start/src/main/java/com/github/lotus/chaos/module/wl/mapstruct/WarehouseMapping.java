@@ -19,7 +19,6 @@ public interface WarehouseMapping {
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "companyId", ignore = true)
     Warehouse asWarehouse(WarehouseCreateRo ro);
 
     @Mapping(target = "lastUpdater", ignore = true)
@@ -27,9 +26,9 @@ public interface WarehouseMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "companyId", ignore = true)
     Warehouse asWarehouse(WarehouseUpdateRo ro);
 
+    @Mapping(target = "logisticsLines", ignore = true)
     @Mapping(target = "provinceName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "districtName", ignore = true)

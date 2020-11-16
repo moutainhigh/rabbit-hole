@@ -13,6 +13,7 @@ import lombok.Data;
 @Data
 @ApiModel("用户详情")
 public class UserDetailVo {
+    private Long id;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("密码")

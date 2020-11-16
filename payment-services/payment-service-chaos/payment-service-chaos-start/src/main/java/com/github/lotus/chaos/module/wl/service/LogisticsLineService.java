@@ -2,6 +2,7 @@ package com.github.lotus.chaos.module.wl.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatchCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
@@ -36,4 +37,6 @@ public interface LogisticsLineService extends AbstractService<LogisticsLine> {
     boolean hasLogisticsLineByWarehouseId(Long id);
 
     List<LogisticsLineComplexVo> listLogisticsLineComplexByWarehouseId(Long warehouseId);
+
+    void batchCreate(LogisticsLineBatchCreateRo ro);
 }

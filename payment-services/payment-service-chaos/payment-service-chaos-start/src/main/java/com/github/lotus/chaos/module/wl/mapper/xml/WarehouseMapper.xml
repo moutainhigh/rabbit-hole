@@ -12,6 +12,9 @@
         <bind name="keyword" value="ro.keyword"/>
         AND (ww.remark LIKE #{keyword} OR ww.title LIKE #{keyword})
       </if>
+      <if test="ro.companyId != null">
+        AND ww.company_id = #{ro.companyId}
+      </if>
     </where>
   </select>
 </mapper>

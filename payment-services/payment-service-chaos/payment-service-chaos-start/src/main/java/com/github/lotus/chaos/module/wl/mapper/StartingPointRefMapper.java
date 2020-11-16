@@ -3,6 +3,7 @@ package com.github.lotus.chaos.module.wl.mapper;
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
 import com.github.lotus.chaos.module.wl.entity.StartingPointRef;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.lotus.chaos.module.wl.entity.Warehouse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,6 @@ import java.util.List;
 public interface StartingPointRefMapper extends BaseMapper<StartingPointRef> {
 
     List<LogisticsLine> listLogisticsLineByWarehouseId(@Param("warehouseId") Long warehouseId);
+
+    List<Warehouse> listWarehouseByLogisticsLineId(@Param("logisticsLineId") Long logisticsLineId);
 }

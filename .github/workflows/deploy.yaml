@@ -104,7 +104,7 @@ jobs:
           java-version: 12.0
       # 缓存 Maven 仓库
       - name: Cache local Maven repository
-        if: ${{ github.event.inputs.use_cache == 'true' }}
+        if: ${{ github.event.inputs.use_cache != 'false' }}
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository

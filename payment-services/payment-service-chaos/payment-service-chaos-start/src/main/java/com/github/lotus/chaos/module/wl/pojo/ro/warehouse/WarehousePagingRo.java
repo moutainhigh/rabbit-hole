@@ -9,4 +9,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.ro.PageRo;
  * @author hocgin
  */
 public class WarehousePagingRo extends PageRo {
+
 }

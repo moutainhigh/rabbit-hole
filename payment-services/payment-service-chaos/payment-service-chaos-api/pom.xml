@@ -37,5 +37,9 @@
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.lotus</groupId>
+      <artifactId>payment-usercontext-interface</artifactId>
+    </dependency>
   </dependencies>
 </project>

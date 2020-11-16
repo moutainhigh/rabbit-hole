@@ -2,6 +2,8 @@ package com.github.lotus.chaos.module.wl.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.github.lotus.chaos.enumns.ShippingMethods;
+import com.github.lotus.chaos.enumns.Unit;
 import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import com.github.lotus.chaos.modules.support.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
@@ -10,7 +12,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/11/12
@@ -24,6 +29,20 @@ import java.time.LocalDateTime;
 public class LogisticsLineComplexVo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @ApiModelProperty("单价")
+    private BigDecimal unitPrice;
+    @ApiModelProperty("单位(元/方)")
+    private String unit;
+    @Named(idFor = "unit", type = ChaosNamedAPI.DATA_DICT,
+        args = {Unit.KEY}, serviceClass = ChaosNamedAPI.class)
+    private String unitName;
+    @ApiModelProperty("时效(天)")
+    private Integer aging;
+    @ApiModelProperty("物流方式")
+    private String shippingMethods;
+    @Named(idFor = "shippingMethods", type = ChaosNamedAPI.DATA_DICT,
+        args = {ShippingMethods.KEY}, serviceClass = ChaosNamedAPI.class)
+    private String shippingMethodsName;
     @ApiModelProperty("备注")
     private String remark;
 
@@ -60,4 +79,7 @@ public class LogisticsLineComplexVo {
     @Named(idFor = "lastUpdater", type = ChaosNamedAPI.USERID2NICKNAME,
         serviceClass = ChaosNamedAPI.class)
     private String lastUpdaterName;
+
+    @ApiModelProperty("仓库")
+    private List<WarehouseComplexVo> warehouses = Collections.emptyList();
 }

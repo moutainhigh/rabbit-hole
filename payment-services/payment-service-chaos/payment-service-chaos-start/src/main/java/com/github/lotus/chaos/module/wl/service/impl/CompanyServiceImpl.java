@@ -7,6 +7,7 @@ import com.github.lotus.chaos.module.wl.mapper.CompanyMapper;
 import com.github.lotus.chaos.module.wl.mapstruct.CompanyMapping;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCreateRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyDeleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyPagingRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.CompanyComplexVo;
@@ -100,10 +101,17 @@ public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Compa
         return lambdaQuery().in(Company::getId, ids).list();
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(CompanyDeleteRo ro) {
+        for (Long id : ro.getId()) {
+            this.delete(id);
+        }
+    }
+
     private CompanyComplexVo convertComplex(Company entity) {
         CompanyComplexVo result = mapping.asCompanyComplexVo(entity);
         Long companyId = entity.getId();
-        result.setWarehouses(warehouseService.listWarehousesComplexByCompanyId(companyId));
         return result;
     }
 
