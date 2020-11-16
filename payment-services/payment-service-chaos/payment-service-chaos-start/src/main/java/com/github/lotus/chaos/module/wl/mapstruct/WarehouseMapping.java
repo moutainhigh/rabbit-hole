@@ -28,11 +28,11 @@ public interface WarehouseMapping {
     @Mapping(target = "createdAt", ignore = true)
     Warehouse asWarehouse(WarehouseUpdateRo ro);
 
-    @Mapping(target = "logisticsLines", ignore = true)
     @Mapping(target = "provinceName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "districtName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "company", ignore = true)
     @Mapping(target = "cityName", ignore = true)
     WarehouseComplexVo asWarehouseComplexVo(Warehouse entity);
 }
