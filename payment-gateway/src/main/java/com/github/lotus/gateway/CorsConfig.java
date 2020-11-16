@@ -21,7 +21,7 @@ public class CorsConfig {
         corsConfiguration.addAllowedOrigin("http://127.0.0.1:8000");
         corsConfiguration.addAllowedOrigin("http://localhost:8081");
         corsConfiguration.addAllowedOrigin("http://localhost:8000");
-        corsConfiguration.addAllowedOrigin("http://120.79.64.153");
+        corsConfiguration.addAllowedOrigin("http://logistics.hocgin.top");
         corsConfiguration.addAllowedOrigin("http://eagle.hocgin.top");
         corsConfiguration.addAllowedOrigin("https://eagle.hocgin.top");
         corsConfiguration.addAllowedOrigin("https://eagle.hocg.in");
