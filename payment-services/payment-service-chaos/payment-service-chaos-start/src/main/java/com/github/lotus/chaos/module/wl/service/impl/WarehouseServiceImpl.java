@@ -105,7 +105,7 @@ public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, W
 
     @Override
     public boolean hasWarehouseByCompanyId(Long companyId) {
-        return lambdaQuery().eq(Warehouse::getCompanyId, companyId).count() > 0;
+        return Objects.nonNull(baseMapper.hasWarehouseByCompanyId(companyId));
     }
 
     private List<Warehouse> listWarehouseByCompanyId(Long companyId) {

@@ -14,4 +14,11 @@
            LEFT JOIN wl_starting_point_ref wspr on wspr.warehouse_id = ww.id
     WHERE wspr.logistics_line_id = #{logisticsLineId}
   </select>
+
+  <select id="hasLogisticsLineByWarehouseId" resultType="java.lang.Integer">
+    SELECT 1
+    FROM wl_starting_point_ref wspr
+    WHERE wspr.warehouse_id = #{warehouseId}
+    LIMIT 1
+  </select>
 </mapper>

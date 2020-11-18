@@ -19,6 +19,12 @@ public interface StartingPointRefService extends AbstractService<StartingPointRe
 
     void validInsertOrUpdateByLogisticsLineId(Long logisticsLineId, List<StartingPointRef> entities);
 
+    /**
+     * 仓库是否关联线路
+     *
+     * @param warehouseId
+     * @return
+     */
     boolean hasLogisticsLineByWarehouseId(Long warehouseId);
 
     List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId);

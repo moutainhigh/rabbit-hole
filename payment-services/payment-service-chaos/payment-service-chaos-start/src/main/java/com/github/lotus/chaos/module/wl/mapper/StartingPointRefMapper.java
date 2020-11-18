@@ -23,4 +23,6 @@ public interface StartingPointRefMapper extends BaseMapper<StartingPointRef> {
     List<LogisticsLine> listLogisticsLineByWarehouseId(@Param("warehouseId") Long warehouseId);
 
     List<Warehouse> listWarehouseByLogisticsLineId(@Param("logisticsLineId") Long logisticsLineId);
+
+    Integer hasLogisticsLineByWarehouseId(@Param("warehouseId") Long warehouseId);
 }
