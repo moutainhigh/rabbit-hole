@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class StartingPointRefServiceImpl extends AbstractServiceImpl<StartingPoi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean hasLogisticsLineByWarehouseId(Long warehouseId) {
-        return lambdaQuery().eq(StartingPointRef::getWarehouseId, warehouseId).oneOpt().isPresent();
+        return Objects.nonNull(baseMapper.hasLogisticsLineByWarehouseId(warehouseId));
     }
 
     @Override

@@ -23,4 +23,6 @@ public interface WarehouseMapper extends BaseMapper<Warehouse> {
     IPage<Warehouse> paging(@Param("ro") WarehousePagingRo ro, @Param("ofPage") Page<Object> ofPage);
 
     IPage<Warehouse> complete(@Param("ro") WarehouseCompleteRo ro, @Param("ofPage") Page ofPage);
+
+    Integer hasWarehouseByCompanyId(@Param("companyId") Long companyId);
 }

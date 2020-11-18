@@ -32,7 +32,12 @@ public interface WarehouseService extends AbstractService<Warehouse> {
 
     WarehouseComplexVo getWarehouse(Long id);
 
-
+    /**
+     * 物流公司是否关联物流仓库
+     *
+     * @param companyId
+     * @return
+     */
     boolean hasWarehouseByCompanyId(Long companyId);
 
     List<WarehouseComplexVo> listWarehousesComplexByCompanyId(Long companyId);
