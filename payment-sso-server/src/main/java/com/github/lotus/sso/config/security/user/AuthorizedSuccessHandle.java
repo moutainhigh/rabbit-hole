@@ -1,6 +1,7 @@
 package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.json.JSONUtil;
+import com.github.lotus.sso.utils.ResponseUtils;
 import in.hocg.boot.web.result.ExceptionResult;
 import in.hocg.boot.web.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class AuthorizedSuccessHandle extends SavedRequestAwareAuthenticationSucc
         log.info("登录验证成功");
         final ResultCode resultCode = ResultCode.SUCCESS;
         ExceptionResult result = ExceptionResult.create(HttpServletResponse.SC_OK, resultCode.getMessage());
+        ResponseUtils.setUtf8(response);
         response.setStatus(HttpServletResponse.SC_OK);
         try (final PrintWriter writer = response.getWriter()) {
             writer.write(JSONUtil.toJsonStr(result));

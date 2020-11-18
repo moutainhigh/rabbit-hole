@@ -1,6 +1,7 @@
 package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.json.JSONUtil;
+import com.github.lotus.sso.utils.ResponseUtils;
 import in.hocg.boot.web.result.ExceptionResult;
 import in.hocg.boot.web.result.ResultCode;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class AuthorizedFailureHandle implements AuthenticationFailureHandler {
     private void handleAjaxRequest(HttpServletResponse response) throws IOException {
         log.warn("登录验证失败, 用户名或密码错误");
         ExceptionResult result = ExceptionResult.create(HttpServletResponse.SC_OK, ResultCode.PARAMS_ERROR.getMessage());
+        ResponseUtils.setUtf8(response);
         response.setStatus(HttpServletResponse.SC_OK);
         try (final PrintWriter writer = response.getWriter()) {
             writer.write(JSONUtil.toJsonStr(result));

@@ -1,6 +1,7 @@
 package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.json.JSONUtil;
+import com.github.lotus.sso.utils.ResponseUtils;
 import in.hocg.boot.web.result.ExceptionResult;
 import in.hocg.boot.web.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class AjaxAuthenticationEntryPoint extends OAuth2AuthenticationEntryPoint
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.warn("匿名访问被拒绝", authException);
         ExceptionResult result = ExceptionResult.create(HttpServletResponse.SC_UNAUTHORIZED, ResultCode.ACCESS_DENIED_ERROR.getMessage());
+        ResponseUtils.setUtf8(response);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         try (final PrintWriter writer = response.getWriter()) {
             writer.write(JSONUtil.toJsonStr(result));
