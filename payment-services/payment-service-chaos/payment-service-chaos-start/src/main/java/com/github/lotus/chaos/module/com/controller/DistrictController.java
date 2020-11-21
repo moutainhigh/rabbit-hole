@@ -1,6 +1,8 @@
 package com.github.lotus.chaos.module.com.controller;
 
 
+import com.github.lotus.chaos.module.com.pojo.ro.district.DistrictCompleteRo;
+import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictCompleteVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
@@ -8,8 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +75,12 @@ public class DistrictController {
     @GetMapping("/district")
     public List<DistrictComplexVo> getDistrict() {
         return service.getDistrict();
+    }
+
+    @PostMapping("/_complete")
+    @ApiOperation("检索 - 城市区域")
+    public List<DistrictCompleteVo> complete(@Validated @RequestBody DistrictCompleteRo ro) {
+        return service.complete(ro);
     }
 }
 

@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.enumns;
+package com.github.lotus.chaos.module.wl.enumns;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
 import lombok.Getter;
@@ -14,12 +14,11 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
-public enum ShippingMethods implements DataDictEnum {
-    Direct("direct", "直达"),
-    Transit("transit", "中转");
+public enum Unit implements DataDictEnum {
+    YuanCube("yuan_cube", "元每立方");
     private final Serializable code;
     private final String name;
 
-    public static final String KEY = "wl_shipping_methods";
+    public static final String KEY = "wl_unit";
 }
 
