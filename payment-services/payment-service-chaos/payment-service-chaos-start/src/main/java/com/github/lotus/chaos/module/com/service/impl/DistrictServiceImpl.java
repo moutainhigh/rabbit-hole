@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -101,6 +102,11 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
     @Override
     public List<DistrictComplexVo> getDistrict(List<String> adcode) {
         return LangUtils.toList(selectListByLevel(DistrictLevel.District, adcode), this::convertComplex);
+    }
+
+    @Override
+    public Optional<District> getCityByCityCode(String cityCode) {
+        return lambdaQuery().eq(District::getCityCode, cityCode).oneOpt();
     }
 
     private List<District> selectListByLevel(@NonNull DistrictLevel level) {
