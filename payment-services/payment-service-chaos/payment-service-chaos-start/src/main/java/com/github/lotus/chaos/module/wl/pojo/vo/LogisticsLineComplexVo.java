@@ -2,8 +2,8 @@ package com.github.lotus.chaos.module.wl.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.lotus.chaos.enumns.ShippingMethods;
-import com.github.lotus.chaos.enumns.Unit;
+import com.github.lotus.chaos.module.wl.enumns.ShippingMethods;
+import com.github.lotus.chaos.module.wl.enumns.Unit;
 import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import com.github.lotus.chaos.modules.support.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;

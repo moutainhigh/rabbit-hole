@@ -1,6 +1,8 @@
 package com.github.lotus.chaos.module.com.service;
 
 import com.github.lotus.chaos.module.com.entity.District;
+import com.github.lotus.chaos.module.com.pojo.ro.district.DistrictCompleteRo;
+import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictCompleteVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -39,4 +41,6 @@ public interface DistrictService extends AbstractService<District> {
     List<DistrictComplexVo> getDistrict(List<String> adcode);
 
     Optional<District> getCityByCityCode(String cityCode);
+
+    List<DistrictCompleteVo> complete(DistrictCompleteRo ro);
 }

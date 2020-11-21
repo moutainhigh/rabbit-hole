@@ -1,14 +1,16 @@
 package com.github.lotus.chaos.module.com.service.impl;
 
 import com.github.lotus.chaos.module.com.entity.District;
+import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import com.github.lotus.chaos.module.com.mapper.DistrictMapper;
 import com.github.lotus.chaos.module.com.mapstruct.DistrictMapping;
+import com.github.lotus.chaos.module.com.pojo.ro.district.DistrictCompleteRo;
+import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictCompleteVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
 import com.github.lotus.chaos.module.lang.manager.LangManager;
 import com.github.lotus.chaos.module.lang.pojo.dto.AMapDistrictDto;
-import com.github.lotus.chaos.module.com.enums.DistrictLevel;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;
@@ -107,6 +109,12 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
     @Override
     public Optional<District> getCityByCityCode(String cityCode) {
         return lambdaQuery().eq(District::getCityCode, cityCode).oneOpt();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<DistrictCompleteVo> complete(DistrictCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).getRecords();
     }
 
     private List<District> selectListByLevel(@NonNull DistrictLevel level) {
