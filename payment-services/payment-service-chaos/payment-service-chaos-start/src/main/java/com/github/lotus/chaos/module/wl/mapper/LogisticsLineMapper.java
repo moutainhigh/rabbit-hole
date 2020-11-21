@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.chaos.module.wl.entity.LogisticsLine;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +23,7 @@ public interface LogisticsLineMapper extends BaseMapper<LogisticsLine> {
 
     IPage<LogisticsLine> complete(@Param("ro") LogisticsLineCompleteRo ro, @Param("ofPage") Page ofPage);
 
-    IPage<LogisticsLine> paging(@Param("ro") LogisticsLinePagingRo ro, @Param("ofPage") Page<Object> ofPage);
+    IPage<LogisticsLine> paging(@Param("ro") LogisticsLinePagingRo ro, @Param("ofPage") Page ofPage);
+
+    IPage<LogisticsLine> search(@Param("starPoint") LogisticsLineSearchRo.Point starPoint, @Param("endPoint") LogisticsLineSearchRo.Point endPoint, @Param("ofPage") Page ofPage);
 }

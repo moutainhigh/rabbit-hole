@@ -7,6 +7,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatch
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
@@ -99,5 +100,10 @@ public class LogisticsLineController {
         return service.complete(ro);
     }
 
+    @PostMapping("/_search")
+    @ApiOperation("线路搜索 - 物流线路")
+    public IPage<LogisticsLineComplexVo> search(@Validated @RequestBody LogisticsLineSearchRo ro) {
+        return service.search(ro);
+    }
 }
 

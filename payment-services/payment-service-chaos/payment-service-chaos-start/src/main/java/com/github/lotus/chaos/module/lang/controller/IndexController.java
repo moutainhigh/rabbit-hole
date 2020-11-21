@@ -1,9 +1,11 @@
 package com.github.lotus.chaos.module.lang.controller;
 
 import com.github.lotus.chaos.module.lang.pojo.ro.SendSmsCodeRo;
-import com.github.lotus.chaos.module.lang.service.SmsService;
+import com.github.lotus.chaos.module.lang.pojo.vo.IpAddressVo;
+import com.github.lotus.chaos.module.lang.service.IndexService;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
+import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexController {
-    private final SmsService smsService;
+    private final IndexService service;
 
     @ApiOperation("发送短信验证码")
     @PostMapping("/sms-code")
     @ResponseBody
     public void sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
-        smsService.sendSmsCode(qo);
+        service.sendSmsCode(qo);
     }
 
     @ApiOperation("获取图形验证码")
@@ -48,5 +50,11 @@ public class IndexController {
         CaptchaUtil.out(130, 48, 5, request, response);
         GifCaptcha gifCaptcha = new GifCaptcha(130, 48, 4);
         CaptchaUtil.out(gifCaptcha, request, response);
+    }
+
+    @ApiOperation("获取当前用户的位置")
+    @GetMapping("/address4ip")
+    public IpAddressVo getCurrentAddress(HttpServletRequest request) {
+        return service.getAddress4ip(RequestUtils.getClientIp(request));
     }
 }

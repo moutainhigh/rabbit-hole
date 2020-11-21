@@ -6,6 +6,7 @@ import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -36,4 +37,6 @@ public interface DistrictService extends AbstractService<District> {
     List<DistrictComplexVo> getProvince(List<String> adcode);
 
     List<DistrictComplexVo> getDistrict(List<String> adcode);
+
+    Optional<District> getCityByCityCode(String cityCode);
 }

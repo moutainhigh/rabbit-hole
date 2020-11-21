@@ -9,6 +9,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatch
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagingRo;
+import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
@@ -133,6 +134,15 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
                 provinceAdcode, cityAdcode, warehouseId, creator);
             this.create(logisticsLineCreateRo);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<LogisticsLineComplexVo> search(LogisticsLineSearchRo ro) {
+        LogisticsLineSearchRo.Point starPoint = ro.getStarPoint();
+        LogisticsLineSearchRo.Point endPoint = ro.getEndPoint();
+        return baseMapper.search(starPoint, endPoint, ro.ofPage())
+            .convert(this::convertComplex);
     }
 
     private List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId) {
