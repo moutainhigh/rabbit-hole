@@ -2,7 +2,6 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.chaos.basic.Result;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineBatchCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineCreateRo;
@@ -13,6 +12,7 @@ import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
