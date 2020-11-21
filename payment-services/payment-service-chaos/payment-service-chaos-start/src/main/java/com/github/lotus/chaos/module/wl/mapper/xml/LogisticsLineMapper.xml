@@ -35,4 +35,38 @@
       </if>
     </where>
   </select>
+
+  <select id="search" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
+    SELECT DISTINCT wll.*
+    FROM wl_logistics_line wll
+           LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
+           LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+    <where>
+      <!--  终点  -->
+      <if test="endPoint != null">
+        <if test="endPoint.provinceAdcode != null">
+          AND wll.province_adcode = #{endPoint.provinceAdcode}
+        </if>
+        <if test="endPoint.cityAdcode != null">
+          AND wll.city_adcode = #{endPoint.cityAdcode}
+        </if>
+        <if test="endPoint.districtAdcode != null">
+          AND wll.district_adcode = #{endPoint.districtAdcode}
+        </if>
+      </if>
+      <!--  起点  -->
+      <if test="starPoint != null">
+        <if test="starPoint.provinceAdcode != null">
+          AND ww.province_adcode = #{starPoint.provinceAdcode}
+        </if>
+        <if test="starPoint.cityAdcode != null">
+          AND ww.city_adcode = #{starPoint.cityAdcode}
+        </if>
+        <if test="starPoint.districtAdcode != null">
+          AND ww.district_adcode = #{starPoint.districtAdcode}
+        </if>
+      </if>
+    </where>
+    ORDER BY wll.unit_price
+  </select>
 </mapper>
