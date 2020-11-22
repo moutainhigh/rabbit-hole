@@ -2,7 +2,6 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.chaos.basic.Result;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.warehouse.WarehouseDeleteRo;
@@ -12,6 +11,7 @@ import com.github.lotus.chaos.module.wl.pojo.vo.WarehouseComplexVo;
 import com.github.lotus.chaos.module.wl.service.WarehouseService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +56,7 @@ public class WarehouseController {
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流仓库")
     public Result update(@PathVariable("id") Long id,
-                       @Validated @RequestBody WarehouseUpdateRo ro) {
+                         @Validated @RequestBody WarehouseUpdateRo ro) {
         Long userId = UserContextHolder.getUserId()
             .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
         ro.setUpdater(userId);

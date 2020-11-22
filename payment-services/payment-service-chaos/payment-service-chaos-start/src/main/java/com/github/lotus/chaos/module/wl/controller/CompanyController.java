@@ -2,7 +2,6 @@ package com.github.lotus.chaos.module.wl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.chaos.basic.Result;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCompleteRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyCreateRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.company.CompanyDeleteRo;
@@ -12,6 +11,7 @@ import com.github.lotus.chaos.module.wl.pojo.vo.CompanyComplexVo;
 import com.github.lotus.chaos.module.wl.service.CompanyService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

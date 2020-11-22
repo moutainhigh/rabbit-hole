@@ -9,6 +9,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagin
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
+import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineSearchVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -41,5 +42,5 @@ public interface LogisticsLineService extends AbstractService<LogisticsLine> {
 
     void batchCreate(LogisticsLineBatchCreateRo ro);
 
-    IPage<LogisticsLineComplexVo> search(LogisticsLineSearchRo ro);
+    IPage<LogisticsLineSearchVo> search(LogisticsLineSearchRo ro);
 }

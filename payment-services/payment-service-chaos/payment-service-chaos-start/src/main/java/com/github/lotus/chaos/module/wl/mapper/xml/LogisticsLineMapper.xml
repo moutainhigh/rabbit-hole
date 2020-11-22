@@ -36,11 +36,30 @@
     </where>
   </select>
 
-  <select id="search" resultType="com.github.lotus.chaos.module.wl.entity.LogisticsLine">
-    SELECT DISTINCT wll.*
+  <select id="search" resultType="com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineSearchVo">
+    SELECT DISTINCT wc.remark                                   AS company_remark,
+                    wc.title                                    AS company_name,
+                    wc.tel                                      AS company_tel,
+
+                    ww.remark                                   AS warehouse_remark,
+                    ww.title                                    AS warehouse_name,
+                    ww.province_adcode                          AS warehouse_province,
+                    ww.city_adcode                              AS warehouse_city,
+                    ww.district_adcode                          AS warehouse_district,
+
+                    wll.unit,
+                    wll.unit_price,
+                    wll.shipping_methods,
+                    wll.remark                                  AS logistics_line_remark,
+                    wll.aging,
+                    wll.province_adcode                         AS logistics_line_province,
+                    wll.city_adcode                             AS logistics_line_city,
+                    wll.district_adcode                         AS logistics_line_district,
+                    ifnull(wll.last_updated_at, wll.created_at) AS last_updated_at
     FROM wl_logistics_line wll
            LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
            LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+           LEFT JOIN wl_company wc on wc.id = ww.company_id
     <where>
       <!--  终点  -->
       <if test="endPoint != null">

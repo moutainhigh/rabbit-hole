@@ -1,6 +1,7 @@
 package com.github.lotus.chaos.module.lang.pojo.dto;
 
 import lombok.Data;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -110,7 +111,12 @@ public class IpAndAddressDto {
             return Optional.empty();
         }
         try {
-            return Optional.of(String.join(",", data.subList(fromIndex, toIndex)));
+            String result = String.join(",", data.subList(fromIndex, toIndex));
+            if (Strings.isBlank(result)) {
+                return Optional.empty();
+            }
+
+            return Optional.of(result);
         } catch (Exception e) {
             return Optional.empty();
         }

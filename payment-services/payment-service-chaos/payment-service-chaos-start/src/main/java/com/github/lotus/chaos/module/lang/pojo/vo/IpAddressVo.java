@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.math.BigDecimal;
-
 /**
  * Created by hocgin on 2020/11/21
  * email: hocgin@gmail.com
@@ -25,7 +23,6 @@ public class IpAddressVo {
     private String city;
 
     @ApiModelProperty("区域编码")
-    private String adCode;
-    @ApiModelProperty("名称")
-    private String title;
+    private String cityAdcode;
+    private String provinceAdcode;
 }

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +24,6 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LangManager {
-    private final RestTemplate restTemplate;
     private final RedisManager redisManager;
 
     /**
@@ -37,7 +35,8 @@ public class LangManager {
     public IpAndAddressDto getAddressByIp(String ip) {
         String token = "34579df219c0eadf6c9f02f610c8169b";
         String url = String.format("http://api.ip138.com/query/?ip=%s&token=%s&datatype=jsonp", ip, token);
-        return restTemplate.getForObject(url, IpAndAddressDto.class);
+        String resultText = HttpUtil.get(url);
+        return JSON.parseObject(resultText, IpAndAddressDto.class);
     }
 
     /**

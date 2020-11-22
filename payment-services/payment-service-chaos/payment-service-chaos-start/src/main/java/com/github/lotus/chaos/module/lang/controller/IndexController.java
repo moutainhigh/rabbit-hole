@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -54,7 +55,19 @@ public class IndexController {
 
     @ApiOperation("获取当前用户的位置")
     @GetMapping("/address4ip")
+    @ResponseBody
     public IpAddressVo getCurrentAddress(HttpServletRequest request) {
-        return service.getAddress4ip(RequestUtils.getClientIp(request));
+        String clientIp = RequestUtils.getClientIp(request);
+        return service.getAddress4ip(getTestAddress(clientIp));
+    }
+
+    private String getTestAddress(String ip) {
+        if (Arrays.asList(new String[]{
+            "0:0:0:0:0:0:0:1",
+            "127.0.0.1"
+        }).contains(ip)) {
+            return "110.80.68.212";
+        }
+        return ip;
     }
 }

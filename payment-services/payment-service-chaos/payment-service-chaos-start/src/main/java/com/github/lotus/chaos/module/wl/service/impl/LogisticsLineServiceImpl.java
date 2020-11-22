@@ -12,6 +12,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagin
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
+import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineSearchVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
 import com.github.lotus.chaos.module.wl.service.StartingPointRefService;
 import com.github.lotus.chaos.module.wl.service.WarehouseService;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -138,11 +140,25 @@ public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<LogisticsLineComplexVo> search(LogisticsLineSearchRo ro) {
+    public IPage<LogisticsLineSearchVo> search(LogisticsLineSearchRo ro) {
         LogisticsLineSearchRo.Point starPoint = ro.getStarPoint();
         LogisticsLineSearchRo.Point endPoint = ro.getEndPoint();
+        List<LogisticsLineSearchRo.GoodsRo> goods = ro.getGoods();
+
         return baseMapper.search(starPoint, endPoint, ro.ofPage())
-            .convert(this::convertComplex);
+            .convert(item -> item.setGoods(goods.stream().map(ro1 -> new LogisticsLineSearchVo.GoodsVo()
+                .setH(ro1.getH())
+                .setW(ro1.getW())
+                .setL(ro1.getL())
+                .setWeigh(ro1.getWeigh())
+                .setQuantity(ro1.getQuantity())
+                .setTotalPrice(ro1.getTotalPrice(item.getUnitPrice())))
+                .collect(Collectors.toList()))
+                .setTotalPrice(item.getGoods().parallelStream()
+                    .map(LogisticsLineSearchVo.GoodsVo::getTotalPrice)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal::add)
+                    .orElse(null)));
     }
 
     private List<LogisticsLine> listLogisticsLineByWarehouseId(Long warehouseId) {
