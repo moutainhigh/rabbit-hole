@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +74,12 @@ public class LogisticsLineSearchRo extends PageRo {
 
         public BigDecimal getTotalPrice(BigDecimal unitPrice) {
             try {
-                return BigDecimal.valueOf(l/100 * w/100 * h/100 * quantity).multiply(unitPrice);
+                return BigDecimal.valueOf(l)
+                    .multiply(BigDecimal.valueOf(w))
+                    .multiply(BigDecimal.valueOf(h))
+                    .multiply(BigDecimal.valueOf(quantity))
+                    .multiply(unitPrice)
+                    .divide(BigDecimal.valueOf(100_00_00L), 2, RoundingMode.DOWN);
             } catch (Exception e) {
                 return null;
             }
