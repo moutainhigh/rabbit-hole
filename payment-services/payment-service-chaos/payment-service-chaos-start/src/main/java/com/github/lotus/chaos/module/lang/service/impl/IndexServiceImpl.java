@@ -42,8 +42,9 @@ public class IndexServiceImpl implements IndexService {
             Optional<District> districtOpt = districtService.getCityByCityCode(cityCode);
             if (districtOpt.isPresent()) {
                 District district = districtOpt.get();
-                result.setAdCode(district.getAdCode());
-                result.setTitle(district.getTitle());
+                District province = districtService.getById(districtOpt.get().getParentId());
+                result.setProvinceAdcode(province.getAdCode());
+                result.setCityAdcode(district.getAdCode());
             }
         });
         return result.setNation(dto.getNation().orElse(null))

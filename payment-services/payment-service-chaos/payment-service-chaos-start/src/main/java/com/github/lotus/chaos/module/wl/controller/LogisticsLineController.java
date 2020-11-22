@@ -9,6 +9,7 @@ import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLinePagin
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import com.github.lotus.chaos.module.wl.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineComplexVo;
+import com.github.lotus.chaos.module.wl.pojo.vo.LogisticsLineSearchVo;
 import com.github.lotus.chaos.module.wl.service.LogisticsLineService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.exception.ServiceException;
@@ -102,7 +103,7 @@ public class LogisticsLineController {
 
     @PostMapping("/_search")
     @ApiOperation("线路搜索 - 物流线路")
-    public IPage<LogisticsLineComplexVo> search(@Validated @RequestBody LogisticsLineSearchRo ro) {
+    public IPage<LogisticsLineSearchVo> search(@Validated @RequestBody LogisticsLineSearchRo ro) {
         return service.search(ro);
     }
 }

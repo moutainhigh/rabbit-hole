@@ -108,7 +108,8 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
 
     @Override
     public Optional<District> getCityByCityCode(String cityCode) {
-        return lambdaQuery().eq(District::getCityCode, cityCode).oneOpt();
+        return lambdaQuery().eq(District::getLevel, DistrictLevel.CITY_CODE)
+            .eq(District::getCityCode, cityCode).oneOpt();
     }
 
     @Override
