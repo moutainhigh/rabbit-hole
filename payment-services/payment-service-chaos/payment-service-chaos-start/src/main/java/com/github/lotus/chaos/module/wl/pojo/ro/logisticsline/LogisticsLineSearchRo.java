@@ -59,7 +59,7 @@ public class LogisticsLineSearchRo extends PageRo {
 
         public BigDecimal getTotalPrice(BigDecimal unitPrice) {
             try {
-                return BigDecimal.valueOf(l * w * h * quantity).multiply(unitPrice);
+                return BigDecimal.valueOf(l/100 * w/100 * h/100 * quantity).multiply(unitPrice);
             } catch (Exception e) {
                 return null;
             }
