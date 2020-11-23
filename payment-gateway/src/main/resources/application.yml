@@ -54,3 +54,6 @@ boot:
         - /webjars/**
         - /*/v2/api-docs
         - /ignore
+        - /chaos/district/tree
+        - /chaos/address4ip
+        - /chaos/logistics-line/_search
