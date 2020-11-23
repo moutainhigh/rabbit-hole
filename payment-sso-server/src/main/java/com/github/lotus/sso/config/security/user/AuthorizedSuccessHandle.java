@@ -37,7 +37,7 @@ public class AuthorizedSuccessHandle extends SavedRequestAwareAuthenticationSucc
             handleAjaxRequest(response, request);
         } else {
             String referer = request.getHeader("Referer");
-            if (Strings.isNotBlank(referer)) {
+            if (Strings.isNotBlank(referer) && referer.contains("redirectUrl")) {
                 String redirectUrl = UriComponentsBuilder.fromUriString(referer).build()
                     .getQueryParams().getFirst("redirectUrl");
 
