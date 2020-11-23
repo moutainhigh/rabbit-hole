@@ -4,8 +4,10 @@ import com.github.lotus.sso.config.security.AuthorizedSuccessResult;
 import com.github.lotus.sso.utils.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,14 @@ public class AuthorizedSuccessHandle extends SavedRequestAwareAuthenticationSucc
         if (IsAjaxRequestMatcher.THIS.matches(request)) {
             handleAjaxRequest(response, request);
         } else {
+            String referer = request.getHeader("Referer");
+            if (Strings.isNotBlank(referer)) {
+                String redirectUrl = UriComponentsBuilder.fromUriString(referer).build()
+                    .getQueryParams().getFirst("redirectUrl");
+
+                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+                return;
+            }
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }
