@@ -6,6 +6,7 @@ import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictCompleteVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictComplexVo;
 import com.github.lotus.chaos.module.com.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.chaos.module.com.service.DistrictService;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,7 @@ public class DistrictController {
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 城市区域")
+    @ApiOperationSupport(author = "hocgin")
     public List<DistrictCompleteVo> complete(@Validated @RequestBody DistrictCompleteRo ro) {
         return service.complete(ro);
     }

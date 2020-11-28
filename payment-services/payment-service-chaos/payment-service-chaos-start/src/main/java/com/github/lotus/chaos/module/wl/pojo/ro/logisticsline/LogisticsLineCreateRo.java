@@ -4,6 +4,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.ro.BasicRo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @Data
 @ApiModel("物流线路")
+@EqualsAndHashCode(callSuper = true)
 public class LogisticsLineCreateRo extends BasicRo {
     @Size(min = 1, message = "请填写物流仓库")
     @ApiModelProperty("物流仓库")

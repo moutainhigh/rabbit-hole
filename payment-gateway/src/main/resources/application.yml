@@ -3,6 +3,9 @@ spring:
     active: local
   cloud:
     gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
       routes:
         - id: payment-chaos
           uri: lb://payment-chaos
@@ -20,12 +23,12 @@ spring:
             - SwaggerHeaderFilter
             - Logger
             - StripPrefix=1
-#      default-filters:
-#        - name: Retry
-#          args:
-#            retries: 3
-#            statuses: REQUEST_TIMEOUT, BAD_GATEWAY
-#            methods: GET, DELETE, PUT
+      #      default-filters:
+      #        - name: Retry
+      #          args:
+      #            retries: 3
+      #            statuses: REQUEST_TIMEOUT, BAD_GATEWAY
+      #            methods: GET, DELETE, PUT
       loadbalancer:
         use404: true
   security:
