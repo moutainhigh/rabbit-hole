@@ -1,17 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:p6spy:mysql://sv-mysql.dev:3306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://sv-mysql.basic:3306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: root
     password: hocgin
   redis:
-    host: sv-redis.dev
+    host: sv-redis.basic
     port: 6379
-
-boot:
-  oss:
-    accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
-    secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
-    space: daigou-test
-    domain: http://oss-cn-beijing.aliyuncs.com
-    type: AliYun
+    database: 0
