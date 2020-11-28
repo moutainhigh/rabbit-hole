@@ -134,12 +134,22 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
         if (Objects.isNull(dtos)) {
             return;
         }
-        for (AMapDistrictDto dto : dtos) {
-            final District entity = new District();
+
+        AMapDistrictDto dto;
+        District entity;
+        for (int i = 0; i < dtos.size(); i++) {
+            dto = dtos.get(i);
+
+            String adcode = dto.getAdcode();
+            DistrictLevel districtLevel = dto.getDistrictLevel();
+            if (DistrictLevel.Street.equals(districtLevel)) {
+                adcode += String.format("%02d", i + 1);
+            }
+            entity = new District();
             entity.setParentId(parentId);
             entity.setCityCode(dto.getCitycode());
-            entity.setAdCode(dto.getAdcode());
-            entity.setLevel(dto.getDistrictLevel().getCode());
+            entity.setAdCode(adcode);
+            entity.setLevel(districtLevel.getCode());
             entity.setTitle(dto.getName());
             entity.setLat(dto.getLat());
             entity.setLng(dto.setLng());
