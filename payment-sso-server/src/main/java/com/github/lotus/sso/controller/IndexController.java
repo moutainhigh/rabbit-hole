@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  */
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexController {
     private final AccountService accountService;
 
