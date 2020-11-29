@@ -3,4 +3,6 @@ sso:
     clients:
       - client-id: client_example
         client-secret: hocgin
-        redirect-uris: http://example.hocgin.local:20001/login/oauth2/code/custom
+        redirect-uris:
+          - http://api.hocgin.local/login/oauth2/code/custom
+          - http://logistics.hocgin.local/login/oauth2/code/custom

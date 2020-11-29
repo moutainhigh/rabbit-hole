@@ -1,4 +1,4 @@
-package com.github.lotus.gateway;
+package com.github.lotus.gateway.basic;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

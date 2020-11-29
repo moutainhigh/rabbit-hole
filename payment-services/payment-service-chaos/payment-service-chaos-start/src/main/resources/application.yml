@@ -3,7 +3,6 @@ spring:
     active: local
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://mysql.lotus.github.com:13306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: root
     password: hocgin
     druid:
@@ -11,7 +10,6 @@ spring:
       test-while-idle: true
   redis:
     database: 0
-    host: redis.lotus.github.com
     port: 6379
     timeout: 100
 mybatis-plus:

@@ -1,7 +1,7 @@
 spring:
   security:
     oauth2:
-      shostname: http://sso.hocgin.local:20000
+      shostname: http://sso.hocgin.local
 boot:
   sso:
     client:
