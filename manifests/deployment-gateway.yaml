@@ -16,7 +16,7 @@ spec:
         - name: gateway
           image: registry.cn-hongkong.aliyuncs.com/hocgin/gateway:latest
           imagePullPolicy: Always
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 20001
           envFrom:

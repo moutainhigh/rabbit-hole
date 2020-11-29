@@ -16,7 +16,7 @@ spec:
         - name: sso-server
           image: registry.cn-hongkong.aliyuncs.com/hocgin/sso-server:latest
           imagePullPolicy: Always
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 20000
           envFrom:
