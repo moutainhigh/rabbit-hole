@@ -16,7 +16,7 @@ spec:
         - name: chaos
           image: registry.cn-hongkong.aliyuncs.com/hocgin/chaos:latest
           imagePullPolicy: Always
-          args: [ "--spring.profiles.active=dev" ]
+          args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
             - containerPort: 21000
           envFrom:

@@ -11,6 +11,7 @@ on:
     branches:
       - develop
       - rls-*
+      - features-*
       - master
   create:
     tags:
@@ -90,7 +91,7 @@ jobs:
           elif [[ $BRANCH_NAME =~ ^features-.* ]]; then
             ENV=dev
           elif [[ $BRANCH_NAME == master || $BRANCH_NAME =~ ^v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$  ]]; then
-            ENV=dev
+            ENV=prod
           fi
 
           echo ::set-output name=env::${ENV}

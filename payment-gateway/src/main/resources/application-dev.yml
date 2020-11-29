@@ -2,3 +2,7 @@ debug: true
 logging:
   level:
     root: debug
+spring:
+  security:
+    oauth2:
+      shostname: http://sso-dev.hocgin.top
