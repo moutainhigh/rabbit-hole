@@ -1,5 +1,5 @@
 # payment-projects
-> 
+> 文档
 
 ## 如何启动
 1. 配置环境变量，参照`env.example`
