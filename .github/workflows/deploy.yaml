@@ -84,6 +84,8 @@ jobs:
             BRANCH_NAME=${GITHUB_REF#refs/heads/}
           fi
 
+          echo $BRANCH_NAME
+
           if [[ $BRANCH_NAME == develop ]]; then
             ENV=test
           elif [[ $BRANCH_NAME =~ ^rls-.* ]]; then
@@ -93,6 +95,8 @@ jobs:
           elif [[ $BRANCH_NAME == master || $BRANCH_NAME =~ ^v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$  ]]; then
             ENV=prod
           fi
+
+          ENV=prod
 
           echo ::set-output name=env::${ENV}
           echo ::set-output name=branch_name::${BRANCH_NAME}
