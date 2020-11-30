@@ -25,4 +25,5 @@ public interface AccountApi {
 
     @PostMapping(CONTEXT_ID + "/createAccount")
     void createAccount(@Validated @RequestBody CreateAccountRo ro);
+
 }

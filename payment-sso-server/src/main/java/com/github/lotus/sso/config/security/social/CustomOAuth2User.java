@@ -1,5 +1,6 @@
 package com.github.lotus.sso.config.security.social;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -13,9 +14,12 @@ import java.util.Map;
  *
  * @author hocgin
  */
+@Data
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
+    private final String registrationId;
     private final OAuth2User oauth2User;
+    private final String username;
 
     @Override
     public Map<String, Object> getAttributes() {
