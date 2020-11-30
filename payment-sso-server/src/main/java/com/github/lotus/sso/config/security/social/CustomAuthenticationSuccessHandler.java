@@ -4,6 +4,7 @@ import com.github.lotus.chaos.modules.ums.api.AccountApi;
 import com.github.lotus.chaos.modules.ums.api.SocialApi;
 import com.github.lotus.chaos.modules.ums.ro.InsertSocialRo;
 import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 // 退出社交账号登陆
                 log.debug("==> 使用社交账号 [{}] 去注册 or 跳转注册页面", registrationId + principalName);
                 SecurityContext.signOut();
-                response.sendRedirect("/signup");
+                response.sendRedirect(PageConstants.SIGN_UP_PAGE);
                 return;
             }
         }
