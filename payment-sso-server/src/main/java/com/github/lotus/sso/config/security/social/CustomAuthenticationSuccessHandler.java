@@ -65,9 +65,9 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 社交账号已被绑定
         else {
             log.debug("==> 登陆社交账户(替换为Username登陆): [{}]", registrationId + principalName);
-            SecurityContext.signIn(userDetail.getUsername());
         }
 
+        SecurityContext.signIn(userDetail.getUsername());
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -11,6 +11,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PageConstants {
     public static final String LOGIN_PAGE = "/login";
-    public static final String SIGN_UP_PAGE = "/signup";
+    public static final String SIGN_UP_PAGE = "/login?action=sign-up";
     public static final String INDEX_PAGE = "/index";
 }

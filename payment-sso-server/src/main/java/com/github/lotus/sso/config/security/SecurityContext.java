@@ -3,6 +3,7 @@ package com.github.lotus.sso.config.security;
 import in.hocg.boot.web.SpringContext;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,15 @@ public class SecurityContext {
         if (Objects.isNull(auth) || auth instanceof AnonymousAuthenticationToken) {
             return Optional.empty();
         }
+
+        if (auth instanceof UsernamePasswordAuthenticationToken) {
+            User user = (User) auth.getPrincipal();
+            String username = user.getUsername();
+            if (Strings.isNotBlank(username)) {
+                return Optional.of(username);
+            }
+        }
+
         try {
             return Optional.of(((String) auth.getPrincipal()));
         } catch (Exception e) {
