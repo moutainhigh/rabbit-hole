@@ -1,4 +1,4 @@
-package com.github.lotus.sso;
+package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.core.lang.Assert;
 import com.github.lotus.chaos.modules.ums.api.AccountApi;
