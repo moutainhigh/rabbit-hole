@@ -1,7 +1,6 @@
 package com.github.lotus.chaos;
 
 import com.github.lotus.common.constant.GlobalConstant;
-import com.github.lotus.wx.WxApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
