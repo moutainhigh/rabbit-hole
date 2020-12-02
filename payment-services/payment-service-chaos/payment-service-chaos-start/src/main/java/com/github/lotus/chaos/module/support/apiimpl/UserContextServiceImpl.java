@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.module.support.apiimpl;
 
 import com.github.lotus.chaos.module.ums.service.AccountService;
-import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import lombok.RequiredArgsConstructor;

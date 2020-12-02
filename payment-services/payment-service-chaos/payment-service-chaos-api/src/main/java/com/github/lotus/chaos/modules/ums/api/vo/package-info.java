@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package com.github.lotus.chaos.modules.ums.vo;
+package com.github.lotus.chaos.modules.ums.api.vo;

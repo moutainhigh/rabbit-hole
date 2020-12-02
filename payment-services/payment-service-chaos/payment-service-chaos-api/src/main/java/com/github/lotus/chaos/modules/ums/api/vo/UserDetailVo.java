@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.modules.ums.vo;
+package com.github.lotus.chaos.modules.ums.api.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

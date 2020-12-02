@@ -2,8 +2,8 @@ package com.github.lotus.chaos.module.ums.apiimpl;
 
 import com.github.lotus.chaos.module.ums.service.SocialService;
 import com.github.lotus.chaos.modules.ums.api.SocialApi;
-import com.github.lotus.chaos.modules.ums.ro.InsertSocialRo;
-import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.ro.InsertSocialRo;
+import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;

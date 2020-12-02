@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.module.com.service;
 
 import com.github.lotus.chaos.module.com.entity.File;
-import com.github.lotus.chaos.modules.com.ro.UploadFileRo;
-import com.github.lotus.chaos.modules.com.vo.FileVo;
+import com.github.lotus.chaos.modules.com.api.ro.UploadFileRo;
+import com.github.lotus.chaos.modules.com.api.vo.FileVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 import org.springframework.web.multipart.MultipartFile;
 

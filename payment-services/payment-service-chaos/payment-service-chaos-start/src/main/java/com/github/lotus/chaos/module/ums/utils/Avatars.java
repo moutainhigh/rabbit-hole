@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.utils;
+package com.github.lotus.chaos.module.ums.utils;
 
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.GitHubAvatar;

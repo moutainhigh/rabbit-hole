@@ -8,7 +8,7 @@ import com.github.lotus.chaos.module.ums.entity.Account;
 import com.github.lotus.chaos.module.ums.service.AccountService;
 import com.github.lotus.chaos.module.wl.entity.Company;
 import com.github.lotus.chaos.module.wl.service.CompanyService;
-import com.github.lotus.chaos.modules.support.ChaosNamedAPI;
+import com.github.lotus.chaos.modules.support.api.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.KeyValue;

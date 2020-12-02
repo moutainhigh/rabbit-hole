@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.modules.com.vo;
+package com.github.lotus.chaos.modules.com.api.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.github.lotus.chaos.module.wl.enumns.ShippingMethods;
 import com.github.lotus.chaos.module.wl.enumns.Unit;
 import com.github.lotus.chaos.module.com.enums.DistrictLevel;
-import com.github.lotus.chaos.modules.support.ChaosNamedAPI;
+import com.github.lotus.chaos.modules.support.api.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import io.swagger.annotations.ApiModel;

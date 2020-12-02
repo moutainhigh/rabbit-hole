@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.modules.support;
+package com.github.lotus.chaos.modules.support.api;
 
 import in.hocg.boot.named.autoconfiguration.annotation.NamedService;
 import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
