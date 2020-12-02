@@ -2,7 +2,7 @@ package com.github.lotus.chaos.modules.lang.api;
 
 import com.github.lotus.chaos.ServiceName;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SmsApi {
     String CONTEXT_ID = "SmsApi";
 
-    @GetMapping(CONTEXT_ID + "/validSmsCode")
+    @PostMapping(CONTEXT_ID + "/validSmsCode")
     boolean validSmsCode(@RequestParam("phone") String phone,
                          @RequestParam("smsCode") String smsCode);
+
+    @PostMapping(CONTEXT_ID + "/sendSmsCode")
+    void sendSmsCode(@RequestParam("phone") String phone,
+                     @RequestParam("smsCode") String code);
 }

@@ -33,7 +33,7 @@ public class AuthorizedFailureHandle implements AuthenticationFailureHandler {
         if (IsAjaxRequestMatcher.THIS.matches(request)) {
             handleAjaxRequest(response);
         } else {
-            response.sendRedirect(loginPage + "?error");
+            response.sendRedirect(loginPage + "?error=failure");
         }
     }
 

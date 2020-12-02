@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
  *
  * @author hocgin
  */
-@ApiModel
 @Data
+@ApiModel
 public class JoinRo {
     @NotBlank(message = "手机号码不能为空")
     private String phone;

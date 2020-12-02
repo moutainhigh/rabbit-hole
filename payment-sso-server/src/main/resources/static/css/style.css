@@ -276,6 +276,7 @@ form.sign-in-form {
 .login-info {
     display: flex;
     margin: 8px 0 15px;
+    align-items: center;
 }
 
 .login-info .forgot {
@@ -451,4 +452,20 @@ form.sign-in-form {
 .wrapper-box {
     width: 100%;
     max-width: 380px;
+}
+
+.error-info {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #DB4948;
+}
+
+.error-info::before {
+    content: '❌';
+    margin-right: 5px;
+}
+
+#join-error {
+    display: none;
 }
