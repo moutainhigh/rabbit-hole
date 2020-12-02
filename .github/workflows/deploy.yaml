@@ -10,10 +10,9 @@ on:
   push:
     branches:
       - develop
-      - rls-*
-      - features-*
       - master
-  create:
+      - rls-**
+      - features-**
     tags:
       - v*.*.*
 
