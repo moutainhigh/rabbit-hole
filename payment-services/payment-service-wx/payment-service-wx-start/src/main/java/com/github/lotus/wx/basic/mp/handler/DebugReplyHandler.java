@@ -1,4 +1,4 @@
-package com.github.lotus.wx.basic.support.handler;
+package com.github.lotus.wx.basic.mp.handler;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;

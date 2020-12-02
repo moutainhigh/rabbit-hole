@@ -1,6 +1,7 @@
-package com.github.lotus.wx.basic.support.handler;
+package com.github.lotus.wx.basic.mp.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -17,15 +18,16 @@ import java.util.Map;
  *
  * @author hocgin
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class UnSubscriptionHandler extends AbstractHandler {
+public class SubscriptionHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
         final String appId = wxMpService.getWxMpConfigStorage().getAppId();
         final String fromUser = wxMessage.getFromUser();
-//        wxUserService.unsubscribe(appId, fromUser);
+
         return null;
     }
 }

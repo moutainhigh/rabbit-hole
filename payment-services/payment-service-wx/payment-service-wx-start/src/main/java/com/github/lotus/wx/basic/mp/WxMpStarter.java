@@ -1,8 +1,8 @@
-package com.github.lotus.wx.basic.support;
+package com.github.lotus.wx.basic.mp;
 
-import com.github.lotus.wx.basic.support.handler.DebugReplyHandler;
-import com.github.lotus.wx.basic.support.handler.SubscriptionHandler;
-import com.github.lotus.wx.basic.support.handler.UnSubscriptionHandler;
+import com.github.lotus.wx.basic.mp.handler.DebugReplyHandler;
+import com.github.lotus.wx.basic.mp.handler.SubscriptionHandler;
+import com.github.lotus.wx.basic.mp.handler.UnSubscriptionHandler;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
