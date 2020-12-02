@@ -14,48 +14,56 @@
     <div class="forms-container">
         <div class="signin-signup">
             <form method="post" th:action="@{/login}" class="sign-in-form">
-                <h2 class="title">登录</h2>
-                <div class="input-field">
-                    <i class="fa fa-user"></i>
-                    <input type="text" name="username" value="hocgin" placeholder="账号"/>
-                </div>
-                <div class="input-field">
-                    <i class="fa fa-lock"></i>
-                    <input type="password" name="password" value="hocgin" placeholder="密码"/>
-                </div>
-                <input type="submit" value="登陆" class="btn solid"/>
-                <p class="social-text">社交帐号登录</p>
-                <div class="social-media">
-<!--                    <form th:action="@{/oauth2/authorization/github}" method="GET">-->
-<!--                        &lt;!&ndash;    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>&ndash;&gt;-->
-<!--                        <input type="hidden" name="scope" value="read_stream,user_posts,user_photos"/>-->
-<!--                        <button type="submit">GitHub</button>-->
-<!--                    </form>-->
-                    <a th:href="@{/oauth2/authorization/github(scope='read_stream,user_posts,user_photos')}" class="social-icon">
-                        <i class="fa fa-github"></i>
-                    </a>
+                <div class="wrapper-box">
+                    <h2 class="title">登录</h2>
+                    <div class="input-field">
+                        <i class="fa fa-user"></i>
+                        <input type="text" name="username" value="hocgin" placeholder="账号"/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="password" value="hocgin" placeholder="密码"/>
+                    </div>
+                    <div class="login-info"><a class="forgot">忘记密码？</a></div>
+                    <button type="submit" class="btn solid">登陆</button>
+                    <div class="social-text">
+                        <div>社交帐号登录</div>
+                        <div class="social-media">
+                            <!--                    <form th:action="@{/oauth2/authorization/github}" method="GET">-->
+                            <!--                        &lt;!&ndash;    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>&ndash;&gt;-->
+                            <!--                        <input type="hidden" name="scope" value="read_stream,user_posts,user_photos"/>-->
+                            <!--                        <button type="submit">GitHub</button>-->
+                            <!--                    </form>-->
+                            <a th:href="@{/oauth2/authorization/github(scope='read_stream,user_posts,user_photos')}"
+                               class="social-icon">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </form>
             <form method="post" th:action="@{/join}" class="sign-up-form">
-                <h2 class="title">注册账户</h2>
-                <div class="input-field">
-                    <i class="fa fa-user"></i>
-                    <input type="text" name="username" placeholder="用户名"/>
+                <div class="wrapper-box">
+                    <h2 class="title">注册账户</h2>
+                    <div class="input-field">
+                        <i class="fa fa-user"></i>
+                        <input type="text" name="username" placeholder="用户名"/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa fa-phone"></i>
+                        <input type="text" name="phone" placeholder="手机号"/>
+                    </div>
+                    <div class="input-field sms">
+                        <i class="fa fa-keyboard-o"></i>
+                        <input type="text" name="sms" placeholder="验证码"/>
+                        <span class="verification-code">获取验证码</span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="password" placeholder="密码"/>
+                    </div>
+                    <button type="submit" class="btn">注册</button>
                 </div>
-                <div class="input-field">
-                    <i class="fa fa-phone"></i>
-                    <input type="text" name="phone" placeholder="手机号"/>
-                </div>
-                <div class="input-field sms">
-                    <i class="fa fa-keyboard-o"></i>
-                    <input type="text" name="sms" placeholder="验证码"/>
-                    <span class="verification-code">获取验证码</span>
-                </div>
-                <div class="input-field">
-                    <i class="fa fa-lock"></i>
-                    <input type="password" name="password" placeholder="密码"/>
-                </div>
-                <input type="submit" class="btn" value="注册"/>
             </form>
         </div>
     </div>
