@@ -3,20 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
+    <artifactId>payment-services</artifactId>
     <groupId>com.github.lotus</groupId>
-    <artifactId>payment-parent</artifactId>
     <version>${revision}</version>
-    <relativePath>../payment-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+
+  <name>Payment :: Service :: WX</name>
+  <artifactId>payment-service-wx</artifactId>
   <packaging>pom</packaging>
 
-  <name>Payment :: Services</name>
-  <artifactId>payment-services</artifactId>
   <modules>
-    <module>payment-service-tpl</module>
-    <module>payment-service-chaos</module>
-    <module>payment-service-wx</module>
+    <module>payment-service-wx-api</module>
+    <module>payment-service-wx-start</module>
   </modules>
-
 </project>
