@@ -1,6 +1,6 @@
-package com.github.lotus.tpl.module.service;
+package com.github.lotus.tpl.biz.service;
 
-import com.github.lotus.tpl.module.entity.Example;
+import com.github.lotus.tpl.biz.entity.Example;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**

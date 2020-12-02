@@ -1,23 +1,19 @@
-package com.github.lotus.tpl.module.entity;
+package com.github.lotus.tpl.biz.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
-import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hocgin

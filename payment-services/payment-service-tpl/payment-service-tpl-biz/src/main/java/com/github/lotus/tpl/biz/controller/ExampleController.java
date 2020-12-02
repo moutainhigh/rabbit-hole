@@ -1,4 +1,4 @@
-package com.github.lotus.tpl.module.controller;
+package com.github.lotus.tpl.biz.controller;
 
 
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;

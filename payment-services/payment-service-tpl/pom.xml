@@ -15,6 +15,7 @@
 
   <modules>
     <module>payment-service-tpl-api</module>
+    <module>payment-service-tpl-biz</module>
     <module>payment-service-tpl-start</module>
   </modules>
 </project>

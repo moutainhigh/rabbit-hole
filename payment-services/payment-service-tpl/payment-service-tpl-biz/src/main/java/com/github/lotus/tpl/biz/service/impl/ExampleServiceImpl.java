@@ -1,8 +1,8 @@
-package com.github.lotus.tpl.module.service.impl;
+package com.github.lotus.tpl.biz.service.impl;
 
-import com.github.lotus.tpl.module.entity.Example;
-import com.github.lotus.tpl.module.mapper.ExampleMapper;
-import com.github.lotus.tpl.module.service.ExampleService;
+import com.github.lotus.tpl.biz.entity.Example;
+import com.github.lotus.tpl.biz.mapper.ExampleMapper;
+import com.github.lotus.tpl.biz.service.ExampleService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
