@@ -12,23 +12,22 @@ spring:
           predicates:
             - Path=/chaos/**
           filters:
-            - SwaggerHeaderFilter
-            - Logger
             - StripPrefix=1
         - id: payment-tpl
           uri: lb://payment-tpl
           predicates:
             - Path=/tpl/**
           filters:
-            - SwaggerHeaderFilter
-            - Logger
             - StripPrefix=1
-      #      default-filters:
-      #        - name: Retry
-      #          args:
-      #            retries: 3
-      #            statuses: REQUEST_TIMEOUT, BAD_GATEWAY
-      #            methods: GET, DELETE, PUT
+        - id: payment-wx
+          uri: lb://payment-wx
+          predicates:
+            - Path=/wx/**
+          filters:
+            - StripPrefix=1
+          default-filters:
+            - name: SwaggerHeaderFilter
+            - name: Logger
       loadbalancer:
         use404: true
   security:

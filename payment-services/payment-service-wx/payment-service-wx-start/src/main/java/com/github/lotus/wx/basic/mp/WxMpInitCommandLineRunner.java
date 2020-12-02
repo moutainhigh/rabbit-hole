@@ -29,6 +29,6 @@ public class WxMpInitCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Map<String, WxMpConfigStorage> wxMpConfigMaps = Maps.newHashMap();
-        wxMpService.setMultiConfigStorages(wxMpConfigMaps, "default");
+//        wxMpService.setMultiConfigStorages(wxMpConfigMaps, "default");
     }
 }
