@@ -16,6 +16,7 @@
   <modules>
     <module>payment-service-tpl</module>
     <module>payment-service-chaos</module>
+    <module>payment-service-wx</module>
   </modules>
 
 </project>

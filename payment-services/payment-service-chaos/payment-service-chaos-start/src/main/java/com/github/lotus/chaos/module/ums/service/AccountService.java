@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.module.ums.service;
 
 import com.github.lotus.chaos.module.ums.entity.Account;
-import com.github.lotus.chaos.modules.ums.ro.CreateAccountRo;
-import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.ro.CreateAccountRo;
+import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;

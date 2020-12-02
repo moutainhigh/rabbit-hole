@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.modules.ums.api;
 
 import com.github.lotus.chaos.ServiceName;
-import com.github.lotus.chaos.modules.ums.ro.InsertSocialRo;
-import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.ro.InsertSocialRo;
+import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

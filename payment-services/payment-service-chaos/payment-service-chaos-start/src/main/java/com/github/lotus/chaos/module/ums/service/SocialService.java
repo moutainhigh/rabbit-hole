@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.module.ums.service;
 
 import com.github.lotus.chaos.module.ums.entity.Social;
-import com.github.lotus.chaos.modules.ums.ro.InsertSocialRo;
-import com.github.lotus.chaos.modules.ums.vo.UserDetailVo;
+import com.github.lotus.chaos.modules.ums.api.ro.InsertSocialRo;
+import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**

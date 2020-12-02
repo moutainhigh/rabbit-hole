@@ -1,9 +1,9 @@
 package com.github.lotus.chaos.module.com.apiimpl;
 
 import com.github.lotus.chaos.module.com.service.FileService;
-import com.github.lotus.chaos.modules.com.FileAPI;
-import com.github.lotus.chaos.modules.com.ro.UploadFileRo;
-import com.github.lotus.chaos.modules.com.vo.FileVo;
+import com.github.lotus.chaos.modules.com.api.FileAPI;
+import com.github.lotus.chaos.modules.com.api.ro.UploadFileRo;
+import com.github.lotus.chaos.modules.com.api.vo.FileVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
