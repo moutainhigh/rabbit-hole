@@ -1,10 +1,13 @@
 package com.github.lotus.sso.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
+import com.github.lotus.chaos.modules.lang.api.SmsApi;
 import com.github.lotus.chaos.modules.ums.api.AccountApi;
 import com.github.lotus.chaos.modules.ums.api.ro.CreateAccountRo;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
-import com.github.lotus.sso.service.AccountService;
+import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -19,8 +22,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AccountServiceImpl implements AccountService {
-    private final AccountApi api;
+public class SsoInexServiceImpl implements SsoIndexService {
+    private final AccountApi accountApi;
+    private final SmsApi smsApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,6 +34,12 @@ public class AccountServiceImpl implements AccountService {
         ro.setPassword(passwordEncoder.encode(ro.getPassword()));
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
-        api.createAccount(createAccountRo);
+        accountApi.createAccount(createAccountRo);
+    }
+
+    @Override
+    public void sendSmsCode(SendSmsCodeRo ro) {
+        int smsCode = RandomUtil.randomInt(6);
+        smsApi.sendSmsCode(ro.getPhone(), String.valueOf(smsCode));
     }
 }

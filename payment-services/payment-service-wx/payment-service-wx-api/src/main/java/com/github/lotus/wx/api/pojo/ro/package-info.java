@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package com.github.lotus.tpl.pojo.ro;
+package com.github.lotus.wx.api.pojo.ro;

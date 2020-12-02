@@ -1,6 +1,7 @@
 package com.github.lotus.sso.service;
 
 import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -8,7 +9,9 @@ import com.github.lotus.sso.pojo.ro.JoinRo;
  *
  * @author hocgin
  */
-public interface AccountService {
+public interface SsoIndexService {
 
     void createAccount(JoinRo ro);
+
+    void sendSmsCode(SendSmsCodeRo ro);
 }

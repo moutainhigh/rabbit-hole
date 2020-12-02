@@ -21,4 +21,9 @@ public class SmsApiImpl implements SmsApi {
     public boolean validSmsCode(String phone, String smsCode) {
         return smsManager.validSmsCode(phone, smsCode);
     }
+
+    @Override
+    public void sendSmsCode(String phone, String code) {
+        smsManager.sendSmsCode(phone, code);
+    }
 }
