@@ -5,6 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.github.lotus.chaos.module.lang.manager.sms.SmsManager;
 import com.github.lotus.chaos.module.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.module.lang.service.SmsService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -26,6 +27,11 @@ public class SmsServiceImpl implements SmsService {
     public void sendSmsCode(SendSmsCodeRo qo) {
         final String phone = qo.getPhone();
         Assert.notBlank(phone, "手机号不能为空");
-        smsManager.sendSmsCode(phone, RandomUtil.randomNumbers(4));
+        smsManager.sendSmsCode(phone, RandomUtil.randomNumbers(6));
+    }
+
+    @Override
+    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
+        return smsManager.validSmsCode(phone, smsCode);
     }
 }
