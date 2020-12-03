@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.module.lang.apiimpl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.github.lotus.chaos.module.lang.manager.SmsManager;
 import com.github.lotus.chaos.modules.lang.api.SmsApi;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ public class SmsApiImpl implements SmsApi {
     }
 
     @Override
-    public void sendSmsCode(String phone, String code) {
-        smsManager.sendSmsCode(phone, code);
+    public void sendSmsCode(String phone) {
+        int smsCode = RandomUtil.randomInt(6);
+        smsManager.sendSmsCode(phone, String.valueOf(smsCode));
     }
 }
