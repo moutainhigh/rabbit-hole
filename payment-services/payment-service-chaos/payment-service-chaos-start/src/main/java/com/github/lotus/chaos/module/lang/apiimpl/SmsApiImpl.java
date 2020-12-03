@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.module.lang.apiimpl;
 
 import cn.hutool.core.util.RandomUtil;
-import com.github.lotus.chaos.module.lang.manager.SmsManager;
+import com.github.lotus.chaos.module.lang.manager.sms.SmsManager;
 import com.github.lotus.chaos.modules.lang.api.SmsApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

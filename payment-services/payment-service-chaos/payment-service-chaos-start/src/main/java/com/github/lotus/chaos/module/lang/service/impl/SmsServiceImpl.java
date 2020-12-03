@@ -2,7 +2,7 @@ package com.github.lotus.chaos.module.lang.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
-import com.github.lotus.chaos.module.lang.manager.SmsManager;
+import com.github.lotus.chaos.module.lang.manager.sms.SmsManager;
 import com.github.lotus.chaos.module.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.module.lang.service.SmsService;
 import lombok.RequiredArgsConstructor;
