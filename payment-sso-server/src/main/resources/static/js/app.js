@@ -42,6 +42,7 @@ $(function () {
     let joinError = $('#join-error');
     let $phone = $('#sign-up-form input[name="phone"]');
     $('#join-btn').bind('click', () => {
+        joinError.css('display', 'none');
         let href = $('#sign-up-form').attr('href');
         let username = $('#sign-up-form input[name="username"]').val();
         let phone = $phone.val();
@@ -66,6 +67,7 @@ $(function () {
 
     const $getVerifyCode = $('#get-verify-code');
     $getVerifyCode.on('click', () => {
+        joinError.css('display', 'none');
         if ($getVerifyCode.val()) {
             // 正在获取, 请稍后
             return;

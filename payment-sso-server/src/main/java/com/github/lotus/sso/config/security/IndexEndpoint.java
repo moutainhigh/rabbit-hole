@@ -28,6 +28,11 @@ public class IndexEndpoint {
         return new ModelAndView("login");
     }
 
+    @RequestMapping("/forgot")
+    public ModelAndView forgot() {
+        return new ModelAndView("forgot");
+    }
+
     @RequestMapping("/logout")
     public ModelAndView logout() {
         SecurityContext.signOut();
