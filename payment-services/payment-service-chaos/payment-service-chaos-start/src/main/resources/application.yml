@@ -22,3 +22,7 @@ boot:
     space: daigou-test
     domain: http://oss-cn-beijing.aliyuncs.com
     type: AliYun
+  sms:
+    regionId: cn-hangzhou
+    secretKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
+    accessKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)

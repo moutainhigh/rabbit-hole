@@ -6,11 +6,13 @@ import com.github.lotus.chaos.module.ums.entity.Account;
 import com.github.lotus.chaos.module.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.module.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.module.ums.service.AccountService;
+import com.github.lotus.chaos.modules.lang.api.SmsApi;
 import com.github.lotus.chaos.modules.ums.api.ro.CreateAccountRo;
 import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
 import com.github.lotus.chaos.module.ums.utils.Avatars;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,13 +39,19 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     implements AccountService {
     private final AccountMapping mapping;
     private final OssFileService ossFileService;
+    private final SmsApi smsApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createAccount(CreateAccountRo ro) {
-        LocalDateTime createdAt = LocalDateTime.now();
+        String smsCode = ro.getSms();
+        String phone = ro.getPhone();
+        boolean isOk = smsApi.validSmsCode(phone, smsCode);
+        ValidUtils.isTrue(isOk, "验证码错误");
 
+        LocalDateTime createdAt = LocalDateTime.now();
         Account entity = mapping.asAccount(ro);
+
         entity.setNickname(ro.getUsername());
         entity.setCreatedAt(createdAt);
         validInsert(entity);

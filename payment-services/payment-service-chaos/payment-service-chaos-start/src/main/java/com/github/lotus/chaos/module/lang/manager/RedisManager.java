@@ -3,6 +3,7 @@ package com.github.lotus.chaos.module.lang.manager;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.chaos.module.lang.constant.RedisConstants;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,10 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -121,6 +124,23 @@ public class RedisManager {
         final String smsKey = RedisConstants.getSmsKey(phone);
         opsForValue.set(smsKey, smsCode, 1, TimeUnit.MINUTES);
         log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
+    }
+
+    /**
+     * 检查并递增短信发送频率
+     * - 24小时内
+     *
+     * @param phone
+     * @return
+     */
+    public void tryCheckAndAddSmsCount(@NonNull String phone) {
+        String key = RedisConstants.getSmsCountKey(phone);
+        RedisAtomicInteger redisSmsCount = new RedisAtomicInteger(key, Objects.requireNonNull(template.getConnectionFactory()));
+        if (redisSmsCount.get() == 0) {
+            redisSmsCount.expire(1, TimeUnit.DAYS);
+        }
+        int smsCount = redisSmsCount.getAndIncrement();
+        ValidUtils.isTrue(smsCount < 5, "今日短信发送已达到上限");
     }
 
 }

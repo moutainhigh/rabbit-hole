@@ -20,6 +20,5 @@ public interface SmsApi {
                          @RequestParam("smsCode") String smsCode);
 
     @PostMapping(CONTEXT_ID + "/sendSmsCode")
-    void sendSmsCode(@RequestParam("phone") String phone,
-                     @RequestParam("smsCode") String code);
+    void sendSmsCode(@RequestParam("phone") String phone);
 }

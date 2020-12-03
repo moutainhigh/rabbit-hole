@@ -1,6 +1,5 @@
 package com.github.lotus.sso.service.impl;
 
-import cn.hutool.core.util.RandomUtil;
 import com.github.lotus.chaos.modules.lang.api.SmsApi;
 import com.github.lotus.chaos.modules.ums.api.AccountApi;
 import com.github.lotus.chaos.modules.ums.api.ro.CreateAccountRo;
@@ -39,7 +38,6 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
     @Override
     public void sendSmsCode(SendSmsCodeRo ro) {
-        int smsCode = RandomUtil.randomInt(6);
-        smsApi.sendSmsCode(ro.getPhone(), String.valueOf(smsCode));
+        smsApi.sendSmsCode(ro.getPhone());
     }
 }

@@ -163,6 +163,11 @@
         <artifactId>cache-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>sms-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
       <!-- Spring Boot -->
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
