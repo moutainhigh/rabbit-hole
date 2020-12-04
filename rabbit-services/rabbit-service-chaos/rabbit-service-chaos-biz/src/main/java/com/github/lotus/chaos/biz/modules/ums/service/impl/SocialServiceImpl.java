@@ -27,7 +27,8 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social> implements SocialService {
+public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
+    implements SocialService {
     private final AccountService accountService;
     private final SocialMapping mapping;
 

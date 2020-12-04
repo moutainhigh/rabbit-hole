@@ -1,6 +1,7 @@
 package com.github.lotus.chaos;
 
 import com.github.lotus.common.constant.GlobalConstant;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
     "com.github.lotus.chaos",
     "com.github.lotus.wl"
 })
-@MapperScan({"com.github.lotus"})
+@MapperScan(value = {"com.github.lotus.chaos", "com.github.lotus.wl"}, annotationClass = Mapper.class)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class ChaosApplication {
 
