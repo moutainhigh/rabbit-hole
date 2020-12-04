@@ -11,7 +11,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *
  * @author hocgin
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+    "com.github.lotus.chaos",
+    "com.github.lotus.wl"
+})
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class ChaosApplication {
 

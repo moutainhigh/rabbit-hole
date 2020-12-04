@@ -12,17 +12,32 @@ spring:
           predicates:
             - Path=/chaos/**
           filters:
-            - SwaggerHeaderFilter
-            - Logger
             - StripPrefix=1
+
+        - id: rabbit-wl
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/wl/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-wx
+          uri: lb://rabbit-wx
+          predicates:
+            - Path=/wx/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-tpl
           uri: lb://rabbit-tpl
           predicates:
             - Path=/tpl/**
           filters:
-            - SwaggerHeaderFilter
-            - Logger
             - StripPrefix=1
+
+          default-filters:
+            - name: SwaggerHeaderFilter
+            - name: Logger
       loadbalancer:
         use404: true
   security:
