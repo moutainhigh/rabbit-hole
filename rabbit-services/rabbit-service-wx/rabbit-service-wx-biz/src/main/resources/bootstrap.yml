@@ -1,11 +1,11 @@
 server:
-  port: 20001
+  port: 21002
 logging:
   level:
-    in.hocg: debug
+    root: info
 spring:
   application:
-    name: rabbit-gateway
+    name: rabbit-tpl
   cloud:
     nacos:
       config:

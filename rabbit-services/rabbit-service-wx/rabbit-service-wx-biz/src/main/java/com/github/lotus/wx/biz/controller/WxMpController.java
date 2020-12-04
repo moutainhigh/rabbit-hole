@@ -1,4 +1,4 @@
-package com.github.lotus.wx.controller;
+package com.github.lotus.wx.biz.controller;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;

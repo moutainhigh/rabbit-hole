@@ -1,8 +1,8 @@
-package com.github.lotus.wx.service.impl;
+package com.github.lotus.wx.biz.service.impl;
 
-import com.github.lotus.wx.entity.Example;
-import com.github.lotus.wx.mapper.ExampleMapper;
-import com.github.lotus.wx.service.ExampleService;
+import com.github.lotus.wx.biz.entity.Example;
+import com.github.lotus.wx.biz.mapper.ExampleMapper;
+import com.github.lotus.wx.biz.service.ExampleService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

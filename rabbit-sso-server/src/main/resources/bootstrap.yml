@@ -5,7 +5,7 @@ logging:
     in.hocg: debug
 spring:
   application:
-    name: payment-sso-server
+    name: rabbit-sso-server
   cloud:
     nacos:
       config:

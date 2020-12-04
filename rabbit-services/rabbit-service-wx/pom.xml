@@ -15,6 +15,7 @@
 
   <modules>
     <module>rabbit-service-wx-api</module>
+    <module>rabbit-service-wx-biz</module>
     <module>rabbit-service-wx-start</module>
   </modules>
 </project>

@@ -1,7 +1,7 @@
-package com.github.lotus.wx.controller;
+package com.github.lotus.wx.biz.controller;
 
 
-import com.github.lotus.wx.service.WxIndexService;
+import com.github.lotus.wx.biz.service.WxIndexService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

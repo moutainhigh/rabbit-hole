@@ -1,7 +1,7 @@
-package com.github.lotus.wx.mapper;
+package com.github.lotus.wx.biz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.lotus.wx.entity.Example;
+import com.github.lotus.wx.biz.entity.Example;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

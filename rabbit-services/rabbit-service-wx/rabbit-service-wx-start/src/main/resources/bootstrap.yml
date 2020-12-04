@@ -1,11 +1,11 @@
 server:
-  port: 21002
+  port: 21000
 logging:
   level:
     root: info
 spring:
   application:
-    name: payment-tpl
+    name: rabbit-tpl
   cloud:
     nacos:
       config:

@@ -1,6 +1,6 @@
-package com.github.lotus.wx.service.impl;
+package com.github.lotus.wx.biz.service.impl;
 
-import com.github.lotus.wx.service.WxIndexService;
+import com.github.lotus.wx.biz.service.WxIndexService;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;

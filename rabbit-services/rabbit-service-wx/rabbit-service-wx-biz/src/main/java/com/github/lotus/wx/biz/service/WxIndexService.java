@@ -1,4 +1,4 @@
-package com.github.lotus.wx.service;
+package com.github.lotus.wx.biz.service;
 
 /**
  * Created by hocgin on 2020/12/2

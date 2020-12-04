@@ -10,5 +10,5 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class ServiceName {
-    public final String NAME = "payment-chaos";
+    public final String NAME = "rabbit-chaos";
 }

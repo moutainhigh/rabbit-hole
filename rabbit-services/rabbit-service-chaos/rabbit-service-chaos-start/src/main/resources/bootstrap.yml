@@ -6,7 +6,7 @@ logging:
     root: info
 spring:
   application:
-    name: payment-chaos
+    name: rabbit-chaos
   cloud:
     nacos:
       config:

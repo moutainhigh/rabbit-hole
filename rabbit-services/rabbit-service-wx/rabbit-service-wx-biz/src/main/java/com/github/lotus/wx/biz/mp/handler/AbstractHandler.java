@@ -1,4 +1,4 @@
-package com.github.lotus.wx.basic.mp.handler;
+package com.github.lotus.wx.biz.mp.handler;
 
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 

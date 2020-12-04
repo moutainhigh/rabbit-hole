@@ -1,6 +1,6 @@
-package com.github.lotus.wx.service;
+package com.github.lotus.wx.biz.service;
 
-import com.github.lotus.wx.entity.Example;
+import com.github.lotus.wx.biz.entity.Example;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**

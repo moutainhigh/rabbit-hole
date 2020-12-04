@@ -1,4 +1,4 @@
-package com.github.lotus.wx.entity;
+package com.github.lotus.wx.biz.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

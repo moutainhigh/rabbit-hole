@@ -7,28 +7,22 @@ spring:
         locator:
           lowerCaseServiceId: true
       routes:
-        - id: payment-chaos
-          uri: lb://payment-chaos
+        - id: rabbit-chaos
+          uri: lb://rabbit-chaos
           predicates:
             - Path=/chaos/**
           filters:
             - SwaggerHeaderFilter
             - Logger
             - StripPrefix=1
-        - id: payment-tpl
-          uri: lb://payment-tpl
+        - id: rabbit-tpl
+          uri: lb://rabbit-tpl
           predicates:
             - Path=/tpl/**
           filters:
             - SwaggerHeaderFilter
             - Logger
             - StripPrefix=1
-      #      default-filters:
-      #        - name: Retry
-      #          args:
-      #            retries: 3
-      #            statuses: REQUEST_TIMEOUT, BAD_GATEWAY
-      #            methods: GET, DELETE, PUT
       loadbalancer:
         use404: true
   security:

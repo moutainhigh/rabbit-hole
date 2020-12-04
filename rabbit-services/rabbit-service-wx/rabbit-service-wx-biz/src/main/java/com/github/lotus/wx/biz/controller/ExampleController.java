@@ -1,4 +1,4 @@
-package com.github.lotus.wx.controller;
+package com.github.lotus.wx.biz.controller;
 
 
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;

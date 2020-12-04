@@ -18,16 +18,16 @@ import java.util.List;
 public enum Module {
     TPL(Lists.newArrayList("T_"),
         "com.github.lotus.tpl.module",
-        "payment-services/payment-service-tpl/payment-service-tpl-start"),
+        "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-start"),
     Chaos_UMS(Lists.newArrayList("ums_"),
         "com.github.lotus.chaos.module.ums",
-        "payment-services/payment-service-chaos/payment-service-chaos-start"),
+        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
     Chaos_COM(Lists.newArrayList("com_"),
         "com.github.lotus.chaos.module.com",
-        "payment-services/payment-service-chaos/payment-service-chaos-start"),
+        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
     Chaos_WL(Lists.newArrayList("wl_"),
         "com.github.lotus.chaos.module.wl",
-        "payment-services/payment-service-chaos/payment-service-chaos-start");
+        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start");
 
     /**
      * 生成的 Entity 名称会忽略前缀
