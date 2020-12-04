@@ -4,6 +4,11 @@
   <select id="paging" resultType="com.github.lotus.wl.biz.entity.Warehouse">
     SELECT ww.*
     FROM wl_warehouse ww
+    <where>
+      <if test="ro.companyId != null">
+        AND ww.company_id = #{ro.companyId}
+      </if>
+    </where>
   </select>
 
   <select id="complete" resultType="com.github.lotus.wl.biz.entity.Warehouse">
