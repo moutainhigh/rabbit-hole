@@ -10,7 +10,7 @@
   </parent>
 
   <groupId>com.github.lotus</groupId>
-  <name>Rabbit :: Projects</name>
+  <name>Rabbit :: Hole</name>
   <artifactId>rabbit-hole</artifactId>
   <packaging>pom</packaging>
   <version>${revision}</version>
