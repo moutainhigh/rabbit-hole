@@ -1,7 +1,7 @@
 package com.github.lotus.wl.biz.pojo.vo;
 
-import com.github.lotus.chaos.modules.com.constant.DistrictLevel;
-import com.github.lotus.chaos.modules.support.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.modules.com.constant.DistrictLevel;
+import com.github.lotus.chaos.api.modules.support.api.ChaosNamedAPI;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import io.swagger.annotations.ApiModel;

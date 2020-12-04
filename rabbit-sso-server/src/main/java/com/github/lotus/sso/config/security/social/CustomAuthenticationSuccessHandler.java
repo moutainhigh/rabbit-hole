@@ -1,9 +1,9 @@
 package com.github.lotus.sso.config.security.social;
 
-import com.github.lotus.chaos.modules.ums.api.AccountApi;
-import com.github.lotus.chaos.modules.ums.api.SocialApi;
-import com.github.lotus.chaos.modules.ums.api.ro.InsertSocialRo;
-import com.github.lotus.chaos.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.api.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.api.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.api.ro.InsertSocialRo;
+import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
 import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import lombok.RequiredArgsConstructor;
