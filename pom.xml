@@ -10,8 +10,8 @@
   </parent>
 
   <groupId>com.github.lotus</groupId>
-  <name>Payment :: Projects</name>
-  <artifactId>payment-projects</artifactId>
+  <name>Rabbit :: Projects</name>
+  <artifactId>rabbit-hole</artifactId>
   <packaging>pom</packaging>
   <version>${revision}</version>
 
@@ -21,12 +21,12 @@
   </properties>
 
   <modules>
-    <module>payment-basic</module>
-    <module>payment-parent</module>
-    <module>payment-services</module>
-    <module>payment-gateway</module>
-    <module>payment-generator</module>
-    <module>payment-sso-server</module>
+    <module>rabbit-basic</module>
+    <module>rabbit-parent</module>
+    <module>rabbit-services</module>
+    <module>rabbit-gateway</module>
+    <module>rabbit-generator</module>
+    <module>rabbit-sso-server</module>
   </modules>
 
   <repositories>
@@ -35,11 +35,11 @@
       <name>sonatype</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
-<!--    <repository>-->
-<!--      <id>alibaba-maven</id>-->
-<!--      <name>alibaba</name>-->
-<!--      <url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
-<!--    </repository>-->
+    <!--    <repository>-->
+    <!--      <id>alibaba-maven</id>-->
+    <!--      <name>alibaba</name>-->
+    <!--      <url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
+    <!--    </repository>-->
   </repositories>
 
   <build>
