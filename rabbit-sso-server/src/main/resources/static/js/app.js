@@ -37,6 +37,76 @@ $(function () {
             container.classList.remove("sign-up-mode");
         }
     }
-
     hashChangeFire();
+
+    let joinError = $('#join-error');
+    let $phone = $('#sign-up-form input[name="phone"]');
+    $('#join-btn').bind('click', () => {
+        joinError.css('display', 'none');
+        let href = $('#sign-up-form').attr('href');
+        let username = $('#sign-up-form input[name="username"]').val();
+        let phone = $phone.val();
+        let sms = $('#sign-up-form input[name="sms"]').val();
+        let password = $('#sign-up-form input[name="password"]').val();
+
+        let callback = ({success, message}) => {
+            joinError.css('display', 'block');
+            if (!success) {
+                joinError.text(message || '注册失败');
+            } else {
+                window.location.href = '/login';
+            }
+        };
+        $.ajax({
+            type: "POST", url: href, dataType: 'json',
+            data: {username, phone, sms, password},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    });
+
+    const $getVerifyCode = $('#get-verify-code');
+    $getVerifyCode.on('click', () => {
+        joinError.css('display', 'none');
+        if ($getVerifyCode.val()) {
+            // 正在获取, 请稍后
+            return;
+        }
+
+        let phone = $phone.val();
+
+        // 倒计时
+        let handler = () => {
+            let value = $getVerifyCode.val();
+            if (value <= 0) {
+                $getVerifyCode.text($getVerifyCode.attr('deftext') || '获取验证码');
+                $getVerifyCode.val(null);
+                return;
+            } else {
+                let targetValue = value - 1;
+                $getVerifyCode.val(targetValue);
+                $getVerifyCode.text(`${targetValue} 秒`)
+            }
+            setTimeout(handler, 1000);
+        };
+
+        // 发送短信
+        let callback = ({success, message}) => {
+            joinError.css('display', 'block');
+            if (!success) {
+                joinError.text(message || '注册失败');
+            } else {
+                $getVerifyCode.val(59);
+                $getVerifyCode.text(`59 秒`)
+                setTimeout(handler, 1000);
+            }
+        };
+        $.ajax({
+            type: "POST", url: '/get-code', dataType: 'json',
+            data: {phone: phone},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    });
+
 });
