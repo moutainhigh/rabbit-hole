@@ -1,7 +1,9 @@
 package com.github.lotus.sso.controller;
 
 import com.github.lotus.sso.pojo.ro.JoinRo;
-import com.github.lotus.sso.service.AccountService;
+import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.sso.service.SsoIndexService;
+import in.hocg.boot.web.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -20,10 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexController {
-    private final AccountService accountService;
+    private final SsoIndexService indexService;
 
     @PostMapping("/join")
-    public void createAccount(@Validated @ModelAttribute JoinRo ro) {
-        accountService.createAccount(ro);
+    public Result<Void> createAccount(@Validated @ModelAttribute JoinRo ro) {
+        indexService.createAccount(ro);
+        return Result.success();
+    }
+
+    @PostMapping("/get-code")
+    public Result<Void> sendSmsCode(@Validated @ModelAttribute SendSmsCodeRo ro) {
+        indexService.sendSmsCode(ro);
+        return Result.success();
     }
 }

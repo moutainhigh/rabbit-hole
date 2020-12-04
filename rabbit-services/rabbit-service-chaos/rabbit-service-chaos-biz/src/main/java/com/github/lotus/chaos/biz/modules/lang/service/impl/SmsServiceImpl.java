@@ -28,4 +28,9 @@ public class SmsServiceImpl implements SmsService {
         Assert.notBlank(phone, "手机号不能为空");
         smsManager.sendSmsCode(phone, RandomUtil.randomNumbers(4));
     }
+
+    @Override
+    public boolean validSmsCode(String phone, String smsCode) {
+        return smsManager.validSmsCode(phone, smsCode);
+    }
 }
