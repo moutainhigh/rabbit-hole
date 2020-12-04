@@ -17,6 +17,7 @@
     <module>rabbit-service-tpl</module>
     <module>rabbit-service-chaos</module>
     <module>rabbit-service-wx</module>
+    <module>rabbit-service-wl</module>
   </modules>
 
 </project>

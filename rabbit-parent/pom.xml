@@ -79,6 +79,11 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-chaos-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-chaos-start</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -110,6 +115,21 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-wx-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!-- 二方库 -->

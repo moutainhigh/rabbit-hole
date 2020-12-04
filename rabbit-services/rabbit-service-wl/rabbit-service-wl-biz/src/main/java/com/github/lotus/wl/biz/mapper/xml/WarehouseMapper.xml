@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.wl.biz.mapper.WarehouseMapper">
+  <select id="paging" resultType="com.github.lotus.wl.biz.entity.Warehouse">
+    SELECT ww.*
+    FROM wl_warehouse ww
+    <where>
+      <if test="ro.companyId != null">
+        AND ww.company_id = #{ro.companyId}
+      </if>
+    </where>
+  </select>
+
+  <select id="complete" resultType="com.github.lotus.wl.biz.entity.Warehouse">
+    SELECT ww.*
+    FROM wl_warehouse ww
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="ro.keyword"/>
+        AND (ww.remark LIKE #{keyword} OR ww.title LIKE #{keyword})
+      </if>
+      <if test="ro.companyId != null">
+        AND ww.company_id = #{ro.companyId}
+      </if>
+    </where>
+  </select>
+
+  <select id="hasWarehouseByCompanyId" resultType="java.lang.Integer">
+    SELECT 1
+    FROM wl_warehouse ww
+    WHERE ww.company_id = #{companyId}
+    LIMIT 1
+  </select>
+</mapper>

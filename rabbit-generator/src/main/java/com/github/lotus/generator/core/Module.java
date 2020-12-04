@@ -20,13 +20,13 @@ public enum Module {
         "com.github.lotus.tpl.module",
         "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-start"),
     Chaos_UMS(Lists.newArrayList("ums_"),
-        "com.github.lotus.chaos.module.ums",
+        "com.github.lotus.chaos.biz.module.ums",
         "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
     Chaos_COM(Lists.newArrayList("com_"),
-        "com.github.lotus.chaos.module.com",
+        "com.github.lotus.chaos.biz.module.com",
         "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
     Chaos_WL(Lists.newArrayList("wl_"),
-        "com.github.lotus.chaos.module.wl",
+        "com.github.lotus.chaos.biz.module.wl",
         "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start");
 
     /**
