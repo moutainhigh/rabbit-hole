@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.chaos.biz.modules.com.mapper.DistrictMapper">
+  <select id="getChildrenDistrictByAdcode" resultType="com.github.lotus.chaos.biz.modules.com.entity.District">
+    SELECT cd.*
+    FROM com_district cd
+           LEFT JOIN com_district cd2 ON cd.parent_id = cd2.id
+    WHERE cd2.ad_code = #{adcode}
+  </select>
+
+  <select id="complete" resultType="com.github.lotus.chaos.biz.modules.com.pojo.vo.district.DistrictCompleteVo">
+    SELECT country.title    country,
+           country.ad_code  country_adcode,
+           province.title   province,
+           province.ad_code province_adcode,
+           city.title       city,
+           city.ad_code     city_adcode,
+           district.title   district,
+           district.ad_code district_adcode,
+           street.title     street,
+           street.ad_code   street_adcode
+    FROM com_district country
+           LEFT JOIN com_district province ON province.parent_id = country.id
+           LEFT JOIN com_district city ON city.parent_id = province.id
+           LEFT JOIN com_district district ON district.parent_id = city.id
+           LEFT JOIN com_district street ON street.parent_id = district.id
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="ro.keyword"/>
+        AND (country.title LIKE #{keyword}
+        OR province.title LIKE #{keyword}
+        OR city.title LIKE #{keyword}
+        OR district.title LIKE #{keyword}
+        OR street.title LIKE #{keyword})
+      </if>
+    </where>
+  </select>
+</mapper>

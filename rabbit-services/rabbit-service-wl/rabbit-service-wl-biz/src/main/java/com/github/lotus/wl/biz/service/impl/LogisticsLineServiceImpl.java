@@ -39,7 +39,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineMapper, LogisticsLine> implements LogisticsLineService {
+public class LogisticsLineServiceImpl extends AbstractServiceImpl<LogisticsLineMapper, LogisticsLine>
+    implements LogisticsLineService {
     private final LogisticsLineMapping mapping;
     private final WarehouseService warehouseService;
     private final StartingPointRefService startingPointRefService;

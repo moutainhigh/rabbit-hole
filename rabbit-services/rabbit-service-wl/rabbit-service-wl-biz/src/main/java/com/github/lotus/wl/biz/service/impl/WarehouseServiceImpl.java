@@ -36,7 +36,8 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, Warehouse> implements WarehouseService {
+public class WarehouseServiceImpl extends AbstractServiceImpl<WarehouseMapper, Warehouse>
+    implements WarehouseService {
     private final WarehouseMapping mapping;
     private final LogisticsLineService logisticsLineService;
     private final CompanyService companyService;
