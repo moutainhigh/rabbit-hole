@@ -1,4 +1,4 @@
-# payment-projects
+# rabbit-hole
 > 文档
 
 ## 如何启动
@@ -13,13 +13,13 @@
 ├── docs # 相关文档
 ├── env.example # 环境变量案例
 ├── host.example # DNS映射案例
-├── payment-gateway # 系统网关
-├── payment-generator # 代码生成器
-├── payment-parent # 依赖管理
-├── payment-services # 服务群
-│   └── payment-service-tpl # 单体服务案例
-│       ├── payment-service-tpl-api # 单体服务内部接口案例
-│       └── payment-service-tpl-start # 单体服务业务功能案例
+├── rabbit-gateway # 系统网关
+├── rabbit-generator # 代码生成器
+├── rabbit-parent # 依赖管理
+├── rabbit-services # 服务群
+│   └── rabbit-service-tpl # 单体服务案例
+│       ├── rabbit-service-tpl-api # 单体服务内部接口案例
+│       └── rabbit-service-tpl-start # 单体服务业务功能案例
 └── pom.xml
 ```
 
