@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class StartingPointRefServiceImpl extends AbstractServiceImpl<StartingPointRefMapper, StartingPointRef> implements StartingPointRefService {
+public class StartingPointRefServiceImpl extends AbstractServiceImpl<StartingPointRefMapper, StartingPointRef>
+    implements StartingPointRefService {
     private final StartingPointRefMapping mapping;
 
     @Override

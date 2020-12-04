@@ -35,7 +35,8 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Company> implements CompanyService {
+public class CompanyServiceImpl extends AbstractServiceImpl<CompanyMapper, Company>
+    implements CompanyService {
     private final CompanyMapping mapping;
     private final WarehouseService warehouseService;
 

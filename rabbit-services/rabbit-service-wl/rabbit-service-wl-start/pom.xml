@@ -13,6 +13,10 @@
   <name>Rabbit :: Service :: WL Start</name>
   <artifactId>rabbit-service-wl-start</artifactId>
 
+  <properties>
+    <main-class>com.github.lotus.wl.WlApplication</main-class>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>

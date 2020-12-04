@@ -13,6 +13,11 @@
   <name>Rabbit :: Service :: WX Start</name>
   <artifactId>rabbit-service-wx-start</artifactId>
 
+  <properties>
+    <main-class>com.github.lotus.wx.WxApplication</main-class>
+  </properties>
+
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
