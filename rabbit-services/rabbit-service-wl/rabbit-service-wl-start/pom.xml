@@ -3,21 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
+    <artifactId>rabbit-service-wl</artifactId>
     <groupId>com.github.lotus</groupId>
-    <artifactId>rabbit-parent</artifactId>
     <version>${revision}</version>
-    <relativePath>../rabbit-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
-  <name>Rabbit :: Services</name>
-  <artifactId>rabbit-services</artifactId>
-  <modules>
-    <module>rabbit-service-tpl</module>
-    <module>rabbit-service-chaos</module>
-    <module>rabbit-service-wx</module>
-    <module>rabbit-service-wl</module>
-  </modules>
+  <name>Rabbit :: Service :: WL Start</name>
+  <artifactId>rabbit-service-wl-start</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-wl-biz</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

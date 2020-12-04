@@ -112,6 +112,21 @@
         <artifactId>rabbit-service-wx-api</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!-- 二方库 -->
       <dependency>
         <groupId>in.hocg.boot</groupId>
