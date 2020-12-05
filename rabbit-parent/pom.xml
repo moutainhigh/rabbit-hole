@@ -47,6 +47,7 @@
     <avatar-generator.version>1.1.0</avatar-generator.version>
     <javase.version>3.4.0</javase.version>
     <weixin-java-mp.version>3.7.0</weixin-java-mp.version>
+    <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
   </properties>
 
   <dependencyManagement>
@@ -291,6 +292,21 @@
         <groupId>p6spy</groupId>
         <artifactId>p6spy</artifactId>
         <version>${p6spy.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-starter-server</artifactId>
+        <version>${spring-boot-admin-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-server-ui</artifactId>
+        <version>${spring-boot-admin-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-starter-client</artifactId>
+        <version>${spring-boot-admin-starter.version}</version>
       </dependency>
       <dependency>
         <groupId>com.alibaba</groupId>

@@ -1,0 +1,23 @@
+server:
+  port: 20002
+logging:
+  level:
+    in.hocg: debug
+spring:
+  application:
+    name: rabbit-sba
+  cloud:
+    nacos:
+      config:
+        contextPath: /nacos
+        password: ${NACOS_PASSWORD}
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
+        file-extension: yaml
+        namespace: ${NACOS_NAMESPACE}
+      discovery:
+        password: ${NACOS_PASSWORD}
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
+        namespace: ${NACOS_NAMESPACE}
+
