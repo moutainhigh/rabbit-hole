@@ -29,7 +29,7 @@ import java.util.Objects;
 @Api(tags = "微信公众号(配置)")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/mp/{appid}")
+@RequestMapping("/wx/mp/{appid}")
 public class WxMpController {
 
     private final WxMpService wxMpService;

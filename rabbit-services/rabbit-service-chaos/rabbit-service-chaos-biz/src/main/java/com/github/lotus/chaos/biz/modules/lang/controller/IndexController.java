@@ -5,11 +5,13 @@ import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
 import com.github.lotus.chaos.biz.modules.lang.service.IndexService;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
+import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -17,11 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -36,6 +38,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexController {
     private final IndexService service;
+    private final StringEncryptor stringEncryptor;
 
     @ApiOperation("发送短信验证码")
     @PostMapping("/sms-code")
@@ -58,16 +61,16 @@ public class IndexController {
     @ResponseBody
     public IpAddressVo getCurrentAddress(HttpServletRequest request) {
         String clientIp = RequestUtils.getClientIp(request);
-        return service.getAddress4ip(getTestAddress(clientIp));
+        return service.getAddress4ip(clientIp);
     }
 
-    private String getTestAddress(String ip) {
-        if (Arrays.asList(new String[]{
-            "0:0:0:0:0:0:0:1",
-            "127.0.0.1"
-        }).contains(ip)) {
-            return "110.80.68.212";
-        }
-        return ip;
+
+    @ApiOperation("获取数据加密后的值")
+    @GetMapping("/encrypt")
+    @ResponseBody
+    public Result<String> get(@RequestParam(name = "data") String data) {
+        return Result.success(stringEncryptor.encrypt(data));
     }
+
+
 }
