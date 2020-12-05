@@ -1,11 +1,17 @@
 server:
-  port: 21000
+  port: 20002
 logging:
   level:
-    root: info
+    in.hocg: debug
+  config: classpath:log4j2-boot-local.xml
+  file:
+    path: /data/logs/app/${spring.application.name:unknown}
+    name: ${logging.file.path}/${spring.application.name:unknown}.log
+  pattern:
+    level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   application:
-    name: rabbit-wl
+    name: rabbit-sba
   cloud:
     nacos:
       config:
@@ -20,4 +26,11 @@ spring:
         server-addr: ${NACOS_HOST}
         username: ${NACOS_USERNAME}
         namespace: ${NACOS_NAMESPACE}
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

@@ -35,7 +35,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .cors().disable()
             .authorizeRequests()
             .antMatchers("/js/*.js", "/css/*.css", "/images/*.svg").permitAll()
-            .antMatchers("/login", "/signup", "/join").permitAll()
+            .antMatchers("/login", "/signup", "/join", "/actuator/**").permitAll()
             .antMatchers("/login/oauth2/code/github").permitAll()
             .anyRequest().authenticated().and()
         ;
