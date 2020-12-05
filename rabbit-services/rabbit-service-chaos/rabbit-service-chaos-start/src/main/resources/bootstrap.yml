@@ -4,6 +4,12 @@ server:
 logging:
   level:
     root: info
+  config: classpath:log4j2-boot.xml
+  file:
+    path: /data/logs/app/${spring.application.name:unknown}
+    name: ${logging.file.path}/${spring.application.name:unknown}.log
+  pattern:
+    level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   application:
     name: rabbit-chaos
@@ -37,3 +43,7 @@ feign:
       default:
         connectTimeout: 60000
         readTimeout: 60000
+boot:
+  logging:
+    topic: ${spring.application.name:unknow}
+    source: ${spring.cloud.client.ip-address}

@@ -3,6 +3,12 @@ server:
 logging:
   level:
     in.hocg: debug
+  config: classpath:log4j2-boot.xml
+  file:
+    path: /data/logs/app/${spring.application.name:unknown}
+    name: ${logging.file.path}/${spring.application.name:unknown}.log
+  pattern:
+    level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   application:
     name: rabbit-sba
@@ -20,4 +26,12 @@ spring:
         server-addr: ${NACOS_HOST}
         username: ${NACOS_USERNAME}
         namespace: ${NACOS_NAMESPACE}
-
+boot:
+  logging:
+    topic: ${spring.application.name:unknow}
+    source: ${spring.cloud.client.ip-address}
+    log-store: boot
+    project-name: rabbit-hole
+    endpoint: "-"
+    secretKey: "-"
+    accessKey: "-"
