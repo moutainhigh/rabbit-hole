@@ -120,17 +120,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-start</artifactId>
+        <artifactId>rabbit-service-docking-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-biz</artifactId>
+        <artifactId>rabbit-service-docking-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-api</artifactId>
+        <artifactId>rabbit-service-docking-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

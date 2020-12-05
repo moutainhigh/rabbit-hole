@@ -21,10 +21,10 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: rabbit-wx
-          uri: lb://rabbit-wx
+        - id: rabbit-docking
+          uri: lb://rabbit-docking
           predicates:
-            - Path=/wx/**
+            - Path=/docking/**
           filters:
             - StripPrefix=1
 
