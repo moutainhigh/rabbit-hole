@@ -22,3 +22,9 @@ boot:
     space: daigou-test
     domain: http://oss-cn-beijing.aliyuncs.com
     type: AliYun
+
+rabbit:
+  wx:
+    appid: ENC(NkKW1P8WBF4h3NfP860Kj2IOTe5Jo1HEIEUvn/Ktm2A=)
+    secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
+    token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
