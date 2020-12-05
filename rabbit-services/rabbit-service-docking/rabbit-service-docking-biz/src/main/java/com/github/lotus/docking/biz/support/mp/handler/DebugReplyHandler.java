@@ -1,4 +1,4 @@
-package com.github.lotus.docking.biz.mp.handler;
+package com.github.lotus.docking.biz.support.mp.handler;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;

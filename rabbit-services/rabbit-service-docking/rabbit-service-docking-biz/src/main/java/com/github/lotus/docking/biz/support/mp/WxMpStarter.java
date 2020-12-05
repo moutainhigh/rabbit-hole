@@ -1,8 +1,8 @@
-package com.github.lotus.docking.biz.mp;
+package com.github.lotus.docking.biz.support.mp;
 
-import com.github.lotus.docking.biz.mp.handler.DebugReplyHandler;
-import com.github.lotus.docking.biz.mp.handler.SubscriptionHandler;
-import com.github.lotus.docking.biz.mp.handler.UnSubscriptionHandler;
+import com.github.lotus.docking.biz.support.mp.handler.DebugReplyHandler;
+import com.github.lotus.docking.biz.support.mp.handler.SubscriptionHandler;
+import com.github.lotus.docking.biz.support.mp.handler.UnSubscriptionHandler;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;

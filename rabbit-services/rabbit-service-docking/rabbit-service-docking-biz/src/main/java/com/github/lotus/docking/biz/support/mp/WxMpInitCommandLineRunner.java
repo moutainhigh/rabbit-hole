@@ -1,4 +1,4 @@
-package com.github.lotus.docking.biz.mp;
+package com.github.lotus.docking.biz.support.mp;
 
 import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
