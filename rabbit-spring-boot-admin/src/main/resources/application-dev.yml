@@ -2,8 +2,8 @@ spring:
   security:
     oauth2:
       shostname: http://sso-dev.hocgin.top
-boot:
-  sso:
-    client:
-      ignore-urls:
-        - /**
+#boot:
+#  sso:
+#    client:
+#      ignore-urls:
+#        - /**
