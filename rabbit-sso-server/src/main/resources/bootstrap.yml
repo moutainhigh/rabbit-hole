@@ -28,3 +28,11 @@ management:
   endpoint:
     health:
       show-details: always
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
