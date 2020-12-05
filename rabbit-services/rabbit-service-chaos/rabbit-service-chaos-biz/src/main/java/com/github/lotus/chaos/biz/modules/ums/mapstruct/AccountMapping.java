@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.modules.ums.mapstruct;
 
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

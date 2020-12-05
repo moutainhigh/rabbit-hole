@@ -28,8 +28,8 @@ public class SmsManager {
         if (Boolean.TRUE.compareTo(redisManager.exitsSmsCode(phone)) == 0) {
             throw ServiceException.wrap("验证码已发送，请注意查收");
         }
-        redisManager.setSmsCode(phone, code);
         this.sendSms(phone, StrUtil.format("短信验证码: {}", code));
+        redisManager.setSmsCode(phone, code);
     }
 
     public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {

@@ -1,8 +1,8 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.lang.api.SmsApi;
-import com.github.lotus.chaos.api.modules.ums.api.AccountApi;
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.lang.SmsApi;
+import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;

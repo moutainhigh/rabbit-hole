@@ -2,8 +2,8 @@ package com.github.lotus.chaos.biz.modules.ums.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import com.github.lotus.chaos.biz.modules.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
@@ -85,13 +85,18 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public void validEntity(Account entity) {
         super.validEntity(entity);
+        Long id = entity.getId();
         String phone = entity.getPhone();
         String username = entity.getUsername();
-        if (Objects.nonNull(username)) {
-            Assert.isFalse(getAccountByUsername(username).isPresent(), "该用户名已被注册");
-        }
-        if (Objects.nonNull(phone)) {
-            Assert.isFalse(getAccountByPhone(phone).isPresent(), "该手机号已被注册");
+        boolean isInsert = Objects.isNull(id);
+
+        if (isInsert) {
+            if (Objects.nonNull(username)) {
+                Assert.isFalse(getAccountByUsername(username).isPresent(), "该用户名已被注册");
+            }
+            if (Objects.nonNull(phone)) {
+                Assert.isFalse(getAccountByPhone(phone).isPresent(), "该手机号已被注册");
+            }
         }
 
     }

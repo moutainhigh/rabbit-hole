@@ -1,6 +1,6 @@
 package com.github.lotus.chaos.biz.modules.ums.mapstruct;
 
-import com.github.lotus.chaos.api.modules.ums.api.ro.InsertSocialRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Social;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

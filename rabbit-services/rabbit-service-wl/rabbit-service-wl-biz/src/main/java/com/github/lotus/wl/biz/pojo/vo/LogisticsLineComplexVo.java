@@ -3,7 +3,7 @@ package com.github.lotus.wl.biz.pojo.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.github.lotus.chaos.api.modules.com.constant.DistrictLevel;
-import com.github.lotus.chaos.api.modules.support.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.modules.support.ChaosNamedAPI;
 import com.github.lotus.wl.biz.enumns.ShippingMethods;
 import com.github.lotus.wl.biz.enumns.Unit;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;

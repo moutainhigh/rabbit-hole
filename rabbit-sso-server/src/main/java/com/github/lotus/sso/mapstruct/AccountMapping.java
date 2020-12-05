@@ -1,6 +1,6 @@
 package com.github.lotus.sso.mapstruct;
 
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

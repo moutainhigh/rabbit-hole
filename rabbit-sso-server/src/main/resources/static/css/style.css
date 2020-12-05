@@ -286,6 +286,7 @@ form.sign-in-form {
     color: rgb(125, 134, 149);
     margin-left: auto;
     cursor: pointer;
+    text-decoration: none;
 }
 
 @media (max-width: 870px) {

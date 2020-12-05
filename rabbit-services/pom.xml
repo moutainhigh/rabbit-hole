@@ -18,6 +18,7 @@
     <module>rabbit-service-chaos</module>
     <module>rabbit-service-wx</module>
     <module>rabbit-service-wl</module>
+    <module>rabbit-service-pay</module>
   </modules>
 
 </project>

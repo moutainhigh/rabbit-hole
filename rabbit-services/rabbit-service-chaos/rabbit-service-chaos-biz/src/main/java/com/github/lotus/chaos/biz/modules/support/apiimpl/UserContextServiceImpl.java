@@ -1,6 +1,6 @@
 package com.github.lotus.chaos.biz.modules.support.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
