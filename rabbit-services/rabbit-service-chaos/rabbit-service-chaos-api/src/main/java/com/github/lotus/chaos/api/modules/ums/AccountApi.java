@@ -1,8 +1,8 @@
-package com.github.lotus.chaos.api.modules.ums.api;
+package com.github.lotus.chaos.api.modules.ums;
 
 import com.github.lotus.chaos.api.ServiceName;
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

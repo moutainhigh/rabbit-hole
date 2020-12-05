@@ -17,17 +17,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public enum Module {
     TPL(Lists.newArrayList("T_"),
-        "com.github.lotus.tpl.module",
-        "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-start"),
+        "com.github.lotus.tpl.biz",
+        "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-biz"),
+    WL(Lists.newArrayList("wl_"),
+        "com.github.lotus.wl.biz",
+        "rabbit-services/rabbit-service-wl/rabbit-service-wl-biz"),
+
     Chaos_UMS(Lists.newArrayList("ums_"),
         "com.github.lotus.chaos.biz.module.ums",
-        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
+        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-biz"),
     Chaos_COM(Lists.newArrayList("com_"),
         "com.github.lotus.chaos.biz.module.com",
-        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start"),
-    Chaos_WL(Lists.newArrayList("wl_"),
-        "com.github.lotus.chaos.biz.module.wl",
-        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start");
+        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-biz");
 
     /**
      * 生成的 Entity 名称会忽略前缀

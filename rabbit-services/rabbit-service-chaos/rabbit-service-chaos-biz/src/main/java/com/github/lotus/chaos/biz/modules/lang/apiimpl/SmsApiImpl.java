@@ -1,7 +1,6 @@
 package com.github.lotus.chaos.biz.modules.lang.apiimpl;
 
-import com.github.lotus.chaos.api.modules.lang.api.SmsApi;
-import com.github.lotus.chaos.biz.modules.lang.manager.SmsManager;
+import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.service.SmsService;
 import lombok.RequiredArgsConstructor;

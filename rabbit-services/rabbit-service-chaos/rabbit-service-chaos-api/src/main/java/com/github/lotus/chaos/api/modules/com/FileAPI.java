@@ -1,9 +1,9 @@
-package com.github.lotus.chaos.api.modules.com.api;
+package com.github.lotus.chaos.api.modules.com;
 
 
 
-import com.github.lotus.chaos.api.modules.com.api.ro.UploadFileRo;
-import com.github.lotus.chaos.api.modules.com.api.vo.FileVo;
+import com.github.lotus.chaos.api.modules.com.pojo.ro.UploadFileRo;
+import com.github.lotus.chaos.api.modules.com.pojo.vo.FileVo;
 
 import java.util.List;
 

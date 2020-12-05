@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.modules.com.service.impl;
 
-import com.github.lotus.chaos.api.modules.com.api.ro.UploadFileRo;
-import com.github.lotus.chaos.api.modules.com.api.vo.FileVo;
+import com.github.lotus.chaos.api.modules.com.pojo.ro.UploadFileRo;
+import com.github.lotus.chaos.api.modules.com.pojo.vo.FileVo;
 import com.github.lotus.chaos.biz.modules.com.entity.File;
 import com.github.lotus.chaos.biz.modules.com.enums.FileRelType;
 import com.github.lotus.chaos.biz.modules.com.mapper.FileMapper;

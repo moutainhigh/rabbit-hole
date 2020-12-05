@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.modules.ums.service.impl;
 
-import com.github.lotus.chaos.api.modules.ums.api.ro.InsertSocialRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import com.github.lotus.chaos.biz.modules.ums.entity.Social;
 import com.github.lotus.chaos.biz.modules.ums.mapper.SocialMapper;

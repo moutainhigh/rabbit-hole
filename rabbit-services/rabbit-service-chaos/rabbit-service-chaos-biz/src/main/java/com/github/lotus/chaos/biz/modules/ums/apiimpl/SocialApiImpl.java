@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.biz.modules.ums.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.api.SocialApi;
-import com.github.lotus.chaos.api.modules.ums.api.ro.InsertSocialRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.service.SocialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

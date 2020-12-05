@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.biz.modules.ums.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.api.AccountApi;
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

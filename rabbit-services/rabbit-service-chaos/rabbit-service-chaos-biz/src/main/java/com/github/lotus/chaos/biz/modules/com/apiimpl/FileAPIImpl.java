@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.biz.modules.com.apiimpl;
 
-import com.github.lotus.chaos.api.modules.com.api.FileAPI;
-import com.github.lotus.chaos.api.modules.com.api.ro.UploadFileRo;
-import com.github.lotus.chaos.api.modules.com.api.vo.FileVo;
+import com.github.lotus.chaos.api.modules.com.FileAPI;
+import com.github.lotus.chaos.api.modules.com.pojo.ro.UploadFileRo;
+import com.github.lotus.chaos.api.modules.com.pojo.vo.FileVo;
 import com.github.lotus.chaos.biz.modules.com.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

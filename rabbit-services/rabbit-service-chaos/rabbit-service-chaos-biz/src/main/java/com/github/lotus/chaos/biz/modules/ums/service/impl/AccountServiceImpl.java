@@ -2,8 +2,8 @@ package com.github.lotus.chaos.biz.modules.ums.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
-import com.github.lotus.chaos.api.modules.ums.api.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.api.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import com.github.lotus.chaos.biz.modules.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
