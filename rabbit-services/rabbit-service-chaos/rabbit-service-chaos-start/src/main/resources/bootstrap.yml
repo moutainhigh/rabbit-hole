@@ -3,8 +3,8 @@ server:
   port: 21000
 logging:
   level:
-    root: info
-  config: classpath:log4j2-boot.xml
+    in.hocg: debug
+  config: classpath:log4j2-boot-local.xml
   file:
     path: /data/logs/app/${spring.application.name:unknown}
     name: ${logging.file.path}/${spring.application.name:unknown}.log
@@ -43,7 +43,3 @@ feign:
       default:
         connectTimeout: 60000
         readTimeout: 60000
-boot:
-  logging:
-    topic: ${spring.application.name:unknow}
-    source: ${spring.cloud.client.ip-address}
