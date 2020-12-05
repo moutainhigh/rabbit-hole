@@ -5,4 +5,5 @@ sso:
         client-secret: hocgin
         redirect-uris:
           - http://api-dev.hocgin.top/login/oauth2/code/custom
+          - http://sba-dev.hocgin.top/login/oauth2/code/custom
           - http://logistics-dev.hocgin.top/login/oauth2/code/custom
