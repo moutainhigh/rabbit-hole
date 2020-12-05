@@ -12,17 +12,6 @@ spring:
     database: 0
     port: 6379
     timeout: 100
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
-  server:
-    ssl:
-      enabled: false
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
