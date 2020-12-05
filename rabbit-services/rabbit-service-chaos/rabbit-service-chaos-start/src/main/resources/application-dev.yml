@@ -10,6 +10,6 @@ spring:
     username: root
     password: hocgin
   redis:
-    host: sv-redis.dev
+    host: sv-redis.basic
     port: 6379
     database: 1
