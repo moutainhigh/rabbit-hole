@@ -2,7 +2,8 @@
 1. 配置 hostname
 ```shell script
 127.0.0.1 sso.hocgin.local
-127.0.0.1 example.hocgin.local
+127.0.0.1 api.hocgin.local
+127.0.0.1 logistics.hocgin.local
 ```
 2. 启动服务
 
