@@ -69,3 +69,4 @@ boot:
         - /chaos/district/tree
         - /chaos/address4ip
         - /chaos/logistics-line/_search
+        - /actuator/**
