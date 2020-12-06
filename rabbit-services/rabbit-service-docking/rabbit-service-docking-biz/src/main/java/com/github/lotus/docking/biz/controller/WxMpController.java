@@ -26,7 +26,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Slf4j
-@Api(tags = "微信公众号(配置)")
+@Api(tags = {"对接", "微信公众号(配置)"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/wx/mp/{appid}")

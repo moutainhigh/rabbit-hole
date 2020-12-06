@@ -1,10 +1,9 @@
 package com.github.lotus.docking.biz.service.impl;
 
-import com.github.lotus.docking.biz.service.WxIndexService;
+import com.github.lotus.docking.biz.service.WxMpService;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class WxIndexServiceImpl implements WxIndexService {
-    private WxMpService wxMpService;
+public class WxMpServiceImpl implements WxMpService {
+    private me.chanjar.weixin.mp.api.WxMpService wxMpService;
 
     @Override
     public String getWxMpQrcodeUrl() {

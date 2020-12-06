@@ -1,7 +1,7 @@
 package com.github.lotus.docking.biz.controller;
 
 
-import com.github.lotus.docking.biz.service.WxIndexService;
+import com.github.lotus.docking.biz.service.WxMpService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  * @since 2020-08-21
  */
-@Api(tags = {"微信", "通用"})
+@Api(tags = {"对接", "微信小程序"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping
-public class WxIndexController {
-    private final WxIndexService indexService;
+public class WxMiniController {
+    private final WxMpService indexService;
 
 }
 
