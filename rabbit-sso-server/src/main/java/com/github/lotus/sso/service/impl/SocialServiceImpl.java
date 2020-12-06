@@ -7,13 +7,19 @@ import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
+import in.hocg.boot.web.SpringContext;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -66,7 +72,7 @@ public class SocialServiceImpl implements SocialService {
             log.debug("==> 登陆社交账户(替换为Username登陆): [{}]", socialType + socialId);
         }
 
-        SecurityContext.signIn(userDetail.getUsername());
+        SecurityContext.signIn(username);
     }
 
 }

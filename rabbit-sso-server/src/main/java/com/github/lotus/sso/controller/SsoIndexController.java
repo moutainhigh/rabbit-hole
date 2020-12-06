@@ -58,7 +58,8 @@ public class SsoIndexController {
     @ApiOperation("获取微信登陆状态")
     @GetMapping("/wx/login-status")
     @ResponseBody
-    public Result<WxLoginStatusVo> getWxLoginStatus(@RequestParam("idFlag") String idFlag) {
-        return Result.success(indexService.getWxLoginStatus(idFlag));
+    public Result<WxLoginStatusVo> getWxLoginStatus(@RequestParam("idFlag") String idFlag,
+                                                    @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
+        return Result.success(indexService.getWxLoginStatus(idFlag, redirectUrl));
     }
 }

@@ -7,6 +7,7 @@ import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.docking.api.WxApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
+import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
@@ -14,6 +15,7 @@ import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -56,7 +58,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
     }
 
     @Override
-    public WxLoginStatusVo getWxLoginStatus(String idFlag) {
+    public WxLoginStatusVo getWxLoginStatus(String idFlag, String redirectUrl) {
         String socialType = (String) SocialType.WxMp.getCode();
         WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
         String socialId = wxLoginStatus.getOpenid();
@@ -68,6 +70,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
         if (WxLoginInfoVo.WxLoginStatus.Success.equals(status)) {
             socialService.onAuthenticationSuccess(socialType, socialId, username);
+            result.setRedirectUrl(LangUtils.getOrDefault(redirectUrl, PageConstants.INDEX_PAGE));
         }
         return result;
     }

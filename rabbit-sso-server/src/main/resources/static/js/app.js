@@ -98,7 +98,7 @@ $(function () {
             } else {
                 $getVerifyCode.val(59);
                 $getVerifyCode.text(`59 秒`)
-                setTimeout(handler, 1000);
+                handler();
             }
         };
         $.ajax({
@@ -110,12 +110,46 @@ $(function () {
     });
 
 
+    // 点击获取微信二维码
+    let $wxQrcode = $('#wx-qrcode');
     const $getWxQrCode = $('#get-wx-qrcode');
+    let reWxLoginStatus = () => {
+        let idflag = $wxQrcode.data('idflag');
+        console.log('idflag', idflag);
+        let callback = ({data}) => {
+            let status = data?.status;
+            let redirectUrl = data?.redirectUrl;
+            if ('success' === status) {
+                window.location.href = redirectUrl;
+            } else if ('fail' === status) {
+                // 重新点击获取二维码
+                $wxQrcode.attr('src', null);
+                $wxQrcode.data('idflag', null);
+                return;
+            }
+            setTimeout(reWxLoginStatus, 500);
+        };
+        $.ajax({
+            type: "GET", url: `/wx/login-status`, dataType: 'json',
+            data: {idFlag: idflag, redirectUrl: getUrlParam('redirectUrl') || null},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    };
     $getWxQrCode.on('click', () => {
-        let $wxQrcode = $('#wx-qrcode');
-        let callback = ({data: {qrCodeUrl, idFlag}}) => {
+        if ($wxQrcode.data('idflag')) {
+            return;
+        }
+
+        let callback = ({data}) => {
+            let qrCodeUrl = data?.qrCodeUrl;
+            let idFlag = data?.idFlag;
+
             $wxQrcode.attr('src', qrCodeUrl);
-            $wxQrcode.attr('idflag', idFlag);
+            $wxQrcode.data('idflag', idFlag);
+            if (idFlag && qrCodeUrl) {
+                reWxLoginStatus();
+            }
         };
         $.ajax({
             type: "GET", url: '/wx/qrcode', dataType: 'json',

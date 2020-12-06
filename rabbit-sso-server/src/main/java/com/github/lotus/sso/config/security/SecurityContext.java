@@ -55,8 +55,15 @@ public class SecurityContext {
         }
 
         if (auth instanceof UsernamePasswordAuthenticationToken) {
-            User user = (User) auth.getPrincipal();
-            String username = user.getUsername();
+            Object principal = auth.getPrincipal();
+            String username = null;
+            if (principal instanceof User) {
+                User user = (User) principal;
+                username = user.getUsername();
+            } else if (principal instanceof String) {
+                username = (String) principal;
+            }
+
             if (Strings.isNotBlank(username)) {
                 return Optional.of(username);
             }
