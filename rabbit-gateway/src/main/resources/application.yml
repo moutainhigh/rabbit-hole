@@ -70,3 +70,4 @@ boot:
         - /chaos/address4ip
         - /chaos/logistics-line/_search
         - /actuator/**
+        - /docking/wx/mp/*

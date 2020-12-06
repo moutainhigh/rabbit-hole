@@ -109,4 +109,20 @@ $(function () {
         });
     });
 
+
+    const $getWxQrCode = $('#get-wx-qrcode');
+    $getWxQrCode.on('click', () => {
+        let $wxQrcode = $('#wx-qrcode');
+        let callback = ({data: {qrCodeUrl, idFlag}}) => {
+            $wxQrcode.attr('src', qrCodeUrl);
+            $wxQrcode.attr('idflag', idFlag);
+        };
+        $.ajax({
+            type: "GET", url: '/wx/qrcode', dataType: 'json',
+            data: {},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    });
+
 });
