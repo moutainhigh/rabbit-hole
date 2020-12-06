@@ -22,7 +22,7 @@ spring:
             - StripPrefix=1
 
         - id: rabbit-docking
-          uri: lb://rabbit-docking
+          uri: lb://rabbit-chaos
           predicates:
             - Path=/docking/**
           filters:

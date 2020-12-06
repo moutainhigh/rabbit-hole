@@ -11,7 +11,7 @@ spring:
   redis:
     database: 0
     port: 6379
-    timeout: 100
+    timeout: 1000
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
@@ -25,6 +25,8 @@ boot:
 
 rabbit:
   wx:
-    appid: ENC(NkKW1P8WBF4h3NfP860Kj2IOTe5Jo1HEIEUvn/Ktm2A=)
-    secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
-    token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
+    # https://developers.weixin.qq.com/sandbox
+    miniapp:
+      configs:
+        - appid: wx5b633a935cc7c105
+          secret: cc31e7128952ca15f53e9704d87dc43d

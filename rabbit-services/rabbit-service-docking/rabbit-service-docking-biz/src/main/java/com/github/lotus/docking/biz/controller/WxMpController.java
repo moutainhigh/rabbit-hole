@@ -1,6 +1,7 @@
 package com.github.lotus.docking.biz.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
@@ -26,7 +27,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Slf4j
-@Api(tags = {"对接", "微信公众号(配置)"})
+@Api(tags = {"docking::微信公众号"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/wx/mp/{appid}")
@@ -35,6 +36,7 @@ public class WxMpController {
     private final WxMpService wxMpService;
     private final WxMpMessageRouter wxMpMessageRouter;
 
+    @ApiOperation("配置")
     @GetMapping(produces = "text/plain;charset=utf-8")
     public String connect(@PathVariable String appid,
                           @RequestParam(name = "signature", required = false) String signature,
@@ -56,6 +58,7 @@ public class WxMpController {
         return "非法请求";
     }
 
+    @ApiOperation("配置")
     @PostMapping(produces = "application/xml; charset=UTF-8")
     public String connect(@PathVariable String appid,
                           @RequestBody String requestBody,

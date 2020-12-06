@@ -1,10 +1,12 @@
 package com.github.lotus.docking.biz.controller;
 
 
-import com.github.lotus.docking.biz.service.WxMpService;
+import com.github.lotus.docking.biz.service.WxMpIndexService;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,12 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  * @since 2020-08-21
  */
-@Api(tags = {"对接", "通用"})
+@Api(tags = {"docking::通用"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping
 public class DockingController {
-    private final WxMpService indexService;
+    private final WxMpIndexService indexService;
+
+    @GetMapping("/worked")
+    public Result<String> worked() {
+        return Result.success();
+    }
 
 }
 

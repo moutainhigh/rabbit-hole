@@ -6,7 +6,7 @@ package com.github.lotus.docking.biz.service;
  *
  * @author hocgin
  */
-public interface WxMpService {
+public interface WxMpIndexService {
 
     String getWxMpQrcodeUrl();
 }
