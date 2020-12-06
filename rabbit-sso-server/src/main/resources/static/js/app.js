@@ -115,7 +115,6 @@ $(function () {
     const $getWxQrCode = $('#get-wx-qrcode');
     let reWxLoginStatus = () => {
         let idflag = $wxQrcode.data('idflag');
-        console.log('idflag', idflag);
         let callback = ({data}) => {
             let status = data?.status;
             let redirectUrl = data?.redirectUrl;
