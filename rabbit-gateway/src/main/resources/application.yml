@@ -7,6 +7,13 @@ spring:
         locator:
           lowerCaseServiceId: true
       routes:
+        - id: rabbit-sso
+          uri: lb://rabbit-sso
+          predicates:
+            - Path=/sso/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-chaos
           uri: lb://rabbit-chaos
           predicates:

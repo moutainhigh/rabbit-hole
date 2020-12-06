@@ -11,7 +11,7 @@ logging:
     level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   application:
-    name: rabbit-sso-server
+    name: rabbit-sso
   cloud:
     nacos:
       config:

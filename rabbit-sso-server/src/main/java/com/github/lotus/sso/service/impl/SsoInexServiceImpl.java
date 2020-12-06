@@ -39,7 +39,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
     @Value("${rabbit.wx.use}")
-    private final String useWxAppid;
+    private String useWxAppid;
 
 
     @Override
