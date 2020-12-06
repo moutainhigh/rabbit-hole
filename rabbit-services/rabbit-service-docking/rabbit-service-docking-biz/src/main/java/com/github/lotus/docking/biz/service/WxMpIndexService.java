@@ -1,5 +1,7 @@
 package com.github.lotus.docking.biz.service;
 
+import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
+
 /**
  * Created by hocgin on 2020/12/2
  * email: hocgin@gmail.com
@@ -8,5 +10,5 @@ package com.github.lotus.docking.biz.service;
  */
 public interface WxMpIndexService {
 
-    String getWxMpQrcodeUrl();
+    WxMpQrCodeVo getWxMpQrcodeUrl(String appid);
 }

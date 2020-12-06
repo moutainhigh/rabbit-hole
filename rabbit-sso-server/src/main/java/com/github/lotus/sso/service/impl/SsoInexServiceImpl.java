@@ -3,6 +3,8 @@ package com.github.lotus.sso.service.impl;
 import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.api.modules.ums.AccountApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.docking.api.WxApi;
+import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SsoInexServiceImpl implements SsoIndexService {
     private final AccountApi accountApi;
+    private final WxApi wxApi;
     private final SmsApi smsApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
@@ -39,5 +42,10 @@ public class SsoInexServiceImpl implements SsoIndexService {
     @Override
     public void sendSmsCode(SendSmsCodeRo ro) {
         smsApi.sendSmsCode(ro.getPhone());
+    }
+
+    @Override
+    public WxMpQrCodeVo getWxQrCode() {
+        return wxApi.getQrCode("");
     }
 }

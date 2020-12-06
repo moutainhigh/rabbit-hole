@@ -1,6 +1,9 @@
 package com.github.lotus.docking.biz.service.impl;
 
+import cn.hutool.core.util.IdUtil;
+import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.docking.biz.service.WxMpIndexService;
+import com.github.lotus.docking.biz.support.wxmp.WxMpConfiguration;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -18,17 +21,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMpIndexServiceImpl implements WxMpIndexService {
-    private WxMpService wxMpService;
 
     @Override
-    public String getWxMpQrcodeUrl() {
+    public WxMpQrCodeVo getWxMpQrcodeUrl(String appid) {
+        String idFlag = IdUtil.randomUUID();
+        WxMpService service = WxMpConfiguration.getMaService(appid);
         WxMpQrCodeTicket ticket;
         try {
-            ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket("", 1000);
+            ticket = service.getQrcodeService().qrCodeCreateTmpTicket(idFlag, 1000);
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e);
         }
-        return ticket.getUrl();
+        return new WxMpQrCodeVo()
+            .setIdFlag(idFlag)
+            .setQrCodeUrl(ticket.getUrl());
     }
 
 }
