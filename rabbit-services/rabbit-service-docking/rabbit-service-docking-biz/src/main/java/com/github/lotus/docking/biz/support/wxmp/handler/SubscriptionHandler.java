@@ -1,4 +1,4 @@
-package com.github.lotus.docking.biz.support.mp.handler;
+package com.github.lotus.docking.biz.support.wxmp.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.github.lotus.docking.biz.support.mp.handler;
+package com.github.lotus.docking.biz.support.wxmp.handler;
 
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 
