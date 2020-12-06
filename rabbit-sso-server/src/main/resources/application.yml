@@ -10,3 +10,4 @@ spring:
             client-secret: a8d3db4c25c9627e4bc5996f25c45f76a4b2214e
             client-name: Github Login
             redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+rabbit.wx.use: wx6c554c6d25b19c4a

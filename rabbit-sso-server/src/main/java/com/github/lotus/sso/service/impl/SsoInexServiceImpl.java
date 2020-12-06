@@ -18,6 +18,7 @@ import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class SsoInexServiceImpl implements SsoIndexService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
+    @Value("${rabbit.wx.use}")
+    private final String useWxAppid;
 
 
     @Override
@@ -54,7 +57,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
     @Override
     public WxMpQrCodeVo getWxQrCode() {
-        return wxApi.getQrCode("wx6c554c6d25b19c4a");
+        return wxApi.getQrCode(useWxAppid);
     }
 
     @Override
