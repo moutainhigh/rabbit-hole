@@ -36,7 +36,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-12
  */
-@Api(tags = "物流公司")
+@Api(tags = "wl::物流公司")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/company")

@@ -7,3 +7,4 @@ sso:
           - http://api.hocgin.top/login/oauth2/code/custom
           - http://sba.hocgin.top/login/oauth2/code/custom
           - http://logistics.hocgin.top/login/oauth2/code/custom
+rabbit.wx.use: wxb4df1f0c3dc96256

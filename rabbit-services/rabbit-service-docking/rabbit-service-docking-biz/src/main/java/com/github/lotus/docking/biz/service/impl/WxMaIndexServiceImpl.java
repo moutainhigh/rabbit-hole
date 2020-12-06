@@ -39,6 +39,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
     @Override
     public WxMaLoginVo login(String appid, String code) {
         ValidUtils.notNull(code, "参数错误");
+        WxMaLoginVo result = new WxMaLoginVo();
 
         final WxMaService wxService = WxMaConfiguration.getMaService(appid);
 
@@ -50,14 +51,15 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             String socialType = (String) SocialType.WxMa.getCode();
             UserDetailVo userDetailVo = socialApi.getAccountBySocialTypeAndSocialId(socialType, openid);
             if (Objects.isNull(userDetailVo)) {
-                return null;
+                return result.setHasBind(false);
             }
             wxMaCacheService.updateWxMaSessionUser(sessionKey, userDetailVo.getUsername());
             // 关联账号
-            return new WxMaLoginVo()
-                .setSessionKey(sessionKey)
+            WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
                 .setUsername(userDetailVo.getUsername())
                 .setId(userDetailVo.getId());
+            return result.setHasBind(true)
+                .setUserDetail(userDetail);
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
             throw ServiceException.wrap(e);
