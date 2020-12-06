@@ -20,7 +20,7 @@ import java.io.Serializable;
 @ApiModel("微信登陆状态")
 public class WxLoginInfoVo {
     @ApiModelProperty("账号")
-    private String username;
+    private String openid;
     @ApiModelProperty("当前登陆状态")
     private WxLoginStatus status;
 

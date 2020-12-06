@@ -2,16 +2,17 @@ package com.github.lotus.sso.service.impl;
 
 import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.docking.api.WxApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
-import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
+import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
     private final SmsApi smsApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
+    private final SocialService socialService;
 
 
     @Override
@@ -55,15 +57,17 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
     @Override
     public WxLoginStatusVo getWxLoginStatus(String idFlag) {
+        String socialType = (String) SocialType.WxMp.getCode();
         WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
-        String username = wxLoginStatus.getUsername();
+        String socialId = wxLoginStatus.getOpenid();
         WxLoginInfoVo.WxLoginStatus status = wxLoginStatus.getStatus();
+        String username = SecurityContext.getCurrentUsername().orElse(null);
 
         WxLoginStatusVo result = new WxLoginStatusVo();
         result.setStatus((String) status.getCode());
+
         if (WxLoginInfoVo.WxLoginStatus.Success.equals(status)) {
-            SecurityContext.signIn(username);
-            result.setRedirectUrl(PageConstants.INDEX_PAGE);
+            socialService.onAuthenticationSuccess(socialType, socialId, username);
         }
         return result;
     }

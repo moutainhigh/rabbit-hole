@@ -2,8 +2,6 @@ package com.github.lotus.docking.biz.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.github.lotus.chaos.api.modules.ums.SocialApi;
-import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
-import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.docking.biz.cache.WxMpCacheService;
@@ -51,11 +49,11 @@ public class WxMpIndexServiceImpl implements WxMpIndexService {
     @Override
     public WxLoginInfoVo getWxLoginStatus(String idFlag) {
         WxLoginInfoVo result = new WxLoginInfoVo();
-        String username = wxMpCacheService.getWxLoginKey(idFlag);
-        if (Strings.isNotBlank(username)) {
-            result.setUsername(username);
+        String openid = wxMpCacheService.getWxLoginKey(idFlag);
+        if (Strings.isNotBlank(openid)) {
+            result.setOpenid(openid);
             result.setStatus(WxLoginInfoVo.WxLoginStatus.Success);
-        } else if (Objects.isNull(username)) {
+        } else if (Objects.isNull(openid)) {
             result.setStatus(WxLoginInfoVo.WxLoginStatus.Fail);
         } else {
             result.setStatus(WxLoginInfoVo.WxLoginStatus.Processing);
@@ -64,18 +62,8 @@ public class WxMpIndexServiceImpl implements WxMpIndexService {
     }
 
     @Override
-    public void handleWxMpLoginOnSubscription(String appid, String fromUser, String scene) {
-        String registrationId = SocialType.WxMp.getName();
-
-        // 1. 查找 openid 绑定的用户
-        UserDetailVo userDetail = socialApi.getAccountBySocialTypeAndSocialId(registrationId, fromUser);
-        if (Objects.isNull(userDetail)) {
-            return;
-        }
-        String username = userDetail.getUsername();
-
-        // 2. 更新用户的登陆状态
-        wxMpCacheService.updateWxLoginKey(scene, username);
+    public void handleWxMpLoginOnSubscription(String appid, String fromUserOpenid, String scene) {
+        wxMpCacheService.updateWxLoginKey(scene, fromUserOpenid);
     }
 
 }
