@@ -36,14 +36,17 @@ public class WxMpIndexServiceImpl implements WxMpIndexService {
         String idFlag = appid + "#" + IdUtil.randomUUID();
         WxMpQrCodeTicket ticket;
         wxMpCacheService.applyWxLoginKey(idFlag);
+        String qrCodeUrl;
+        int expireSeconds = 1000;
         try {
-            ticket = service.getQrcodeService().qrCodeCreateTmpTicket(idFlag, 1000);
+            ticket = service.getQrcodeService().qrCodeCreateTmpTicket(idFlag, expireSeconds);
+            qrCodeUrl = service.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e);
         }
         return new WxMpQrCodeVo()
             .setIdFlag(idFlag)
-            .setQrCodeUrl(ticket.getUrl());
+            .setQrCodeUrl(qrCodeUrl);
     }
 
     @Override
