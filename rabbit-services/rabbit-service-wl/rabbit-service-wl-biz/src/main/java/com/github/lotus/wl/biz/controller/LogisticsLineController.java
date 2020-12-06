@@ -38,7 +38,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-12
  */
-@Api(tags = "物流线路")
+@Api(tags = "wl::物流线路")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/logistics-line")

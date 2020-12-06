@@ -36,7 +36,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-12
  */
-@Api(tags = "物流仓库")
+@Api(tags = "wl::物流仓库")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/warehouse")
