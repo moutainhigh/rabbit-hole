@@ -17,9 +17,9 @@
   <properties>
     <!-- Maven plugins -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>
-    <java.source.version>1.8</java.source.version>
-    <java.target.version>1.8</java.target.version>
+    <java.version>8</java.version>
+    <java.source.version>8</java.source.version>
+    <java.target.version>8</java.target.version>
     <main-class/>
 
     <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
@@ -46,7 +46,7 @@
     <jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
     <avatar-generator.version>1.1.0</avatar-generator.version>
     <javase.version>3.4.0</javase.version>
-    <weixin-java-mp.version>3.7.0</weixin-java-mp.version>
+    <weixin-java.version>3.7.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
   </properties>
 
@@ -120,17 +120,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-start</artifactId>
+        <artifactId>rabbit-service-docking-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-biz</artifactId>
+        <artifactId>rabbit-service-docking-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wx-api</artifactId>
+        <artifactId>rabbit-service-docking-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -177,6 +177,11 @@
       <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>logging-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>spring-boot-utils</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
@@ -240,7 +245,12 @@
       <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-mp</artifactId>
-        <version>${weixin-java-mp.version}</version>
+        <version>${weixin-java.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-miniapp</artifactId>
+        <version>${weixin-java.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.zxing</groupId>

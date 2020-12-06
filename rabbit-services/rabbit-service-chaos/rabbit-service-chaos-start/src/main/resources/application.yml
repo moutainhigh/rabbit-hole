@@ -11,7 +11,7 @@ spring:
   redis:
     database: 0
     port: 6379
-    timeout: 100
+    timeout: 1000
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
@@ -22,3 +22,17 @@ boot:
     space: daigou-test
     domain: http://oss-cn-beijing.aliyuncs.com
     type: AliYun
+
+rabbit:
+  wx:
+    # https://developers.weixin.qq.com/sandbox
+    miniapp:
+      configs:
+        - appid: wx5b633a935cc7c105
+          secret: cc31e7128952ca15f53e9704d87dc43d
+    # https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+    mp:
+      configs:
+        - appid: wx6c554c6d25b19c4a
+          secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
+          token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)

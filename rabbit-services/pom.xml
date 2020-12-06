@@ -16,7 +16,7 @@
   <modules>
     <module>rabbit-service-tpl</module>
     <module>rabbit-service-chaos</module>
-    <module>rabbit-service-wx</module>
+    <module>rabbit-service-docking</module>
     <module>rabbit-service-wl</module>
     <module>rabbit-service-pay</module>
   </modules>

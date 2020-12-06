@@ -115,17 +115,29 @@ form.sign-in-form {
 
 .social-icon {
     padding: 5px;
-    display: flex;
-    margin: 0 0.45rem;
     color: #333;
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     transition: 0.3s;
+    display: inline-block;
+    position: relative;
 }
 
 .social-icon:hover {
     color: #4481eb;
     border-color: #4481eb;
+}
+.social-icon:hover .social-qrcode {
+    display: inline-block;
+}
+.social-qrcode {
+    position: absolute;
+    top: -4px;
+    margin-left: 8px;
+    border: 1px solid #d9dadc;
+    display: none;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 .btn {

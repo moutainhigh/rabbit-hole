@@ -1,7 +1,5 @@
 package com.github.lotus.sso.service;
 
-import java.util.Optional;
-
 /**
  * Created by hocgin on 2020/11/30
  * email: hocgin@gmail.com
@@ -9,5 +7,6 @@ import java.util.Optional;
  * @author hocgin
  */
 public interface SocialService {
-    Optional<Object> getAccountBySocial(String registrationId, String principalName);
+
+    void onAuthenticationSuccess(String socialType, String socialId, String username);
 }

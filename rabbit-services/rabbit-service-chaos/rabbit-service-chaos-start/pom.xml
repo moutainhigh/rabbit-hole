@@ -26,6 +26,10 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-wl-biz</artifactId>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-docking-biz</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

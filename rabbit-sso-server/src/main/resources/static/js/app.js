@@ -98,12 +98,62 @@ $(function () {
             } else {
                 $getVerifyCode.val(59);
                 $getVerifyCode.text(`59 秒`)
-                setTimeout(handler, 1000);
+                handler();
             }
         };
         $.ajax({
             type: "POST", url: '/get-code', dataType: 'json',
             data: {phone: phone},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    });
+
+
+    // 点击获取微信二维码
+    let $wxQrcode = $('#wx-qrcode');
+    const $getWxQrCode = $('#get-wx-qrcode');
+    let reWxLoginStatus = () => {
+        let idflag = $wxQrcode.data('idflag');
+        let callback = ({data}) => {
+            let status = data?.status;
+            let redirectUrl = data?.redirectUrl;
+            if ('success' === status) {
+                window.location.href = redirectUrl;
+            } else if ('fail' === status) {
+                // 重新点击获取二维码
+                $wxQrcode.attr('src', null);
+                $wxQrcode.data('idflag', null);
+                return;
+            }
+            setTimeout(reWxLoginStatus, 500);
+        };
+        let redirectUrl = getUrlParam('redirectUrl') || null;
+        $.ajax({
+            type: "GET", url: `/wx/login-status`, dataType: 'json',
+            data: {idFlag: idflag, redirectUrl},
+            success: callback,
+            error: ({responseJSON}) => callback(responseJSON)
+        });
+    };
+    $getWxQrCode.on('click', () => {
+        if ($wxQrcode.data('idflag')) {
+            return;
+        }
+
+        let callback = ({data}) => {
+            let qrCodeUrl = data?.qrCodeUrl;
+            let idFlag = data?.idFlag;
+
+            $wxQrcode.attr('src', qrCodeUrl);
+            $wxQrcode.data('idflag', idFlag);
+            if (idFlag && qrCodeUrl) {
+                reWxLoginStatus();
+            }
+        };
+        $.ajax({
+            type: "GET", url: '/wx/qrcode', dataType: 'json',
+            data: {},
             success: callback,
             error: ({responseJSON}) => callback(responseJSON)
         });
