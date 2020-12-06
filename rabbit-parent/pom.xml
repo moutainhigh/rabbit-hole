@@ -181,6 +181,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>spring-boot-utils</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>sso-client-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>

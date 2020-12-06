@@ -1,6 +1,7 @@
 package com.github.lotus.docking.biz.apiimpl;
 
 import com.github.lotus.docking.api.WxApi;
+import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.docking.biz.service.WxMpIndexService;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class WxApiImpl implements WxApi {
     @Override
     public WxMpQrCodeVo getQrCode(String appid) {
         return service.getWxMpQrcodeUrl(appid);
+    }
+
+    @Override
+    public WxLoginInfoVo getWxLoginStatus(String idFlag) {
+        return service.getWxLoginStatus(idFlag);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.lotus.docking.api;
 
+import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,4 +19,7 @@ public interface WxApi {
 
     @GetMapping(CONTEXT_ID + "/getQrCode")
     WxMpQrCodeVo getQrCode(@RequestParam("appid") String appid);
+
+    @GetMapping(CONTEXT_ID + "/getWxLoginStatus")
+    WxLoginInfoVo getWxLoginStatus(@RequestParam("idFlag") String idFlag);
 }

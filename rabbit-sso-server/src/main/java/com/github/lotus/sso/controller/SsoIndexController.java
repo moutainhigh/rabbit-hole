@@ -3,6 +3,7 @@ package com.github.lotus.sso.controller;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -47,5 +49,11 @@ public class SsoIndexController {
     @GetMapping("/wx-qrcode")
     public Result<WxMpQrCodeVo> getWxQrCode() {
         return Result.success(indexService.getWxQrCode());
+    }
+
+    @ApiOperation("获取微信登陆状态")
+    @GetMapping("/wx-login-status")
+    public Result<WxLoginStatusVo> getWxLoginStatus(@RequestParam("idFlag") String idFlag) {
+        return Result.success(indexService.getWxLoginStatus(idFlag));
     }
 }

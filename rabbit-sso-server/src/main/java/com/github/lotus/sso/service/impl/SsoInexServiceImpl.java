@@ -4,10 +4,14 @@ import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.api.modules.ums.AccountApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.docking.api.WxApi;
+import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
+import com.github.lotus.sso.config.security.PageConstants;
+import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +51,20 @@ public class SsoInexServiceImpl implements SsoIndexService {
     @Override
     public WxMpQrCodeVo getWxQrCode() {
         return wxApi.getQrCode("");
+    }
+
+    @Override
+    public WxLoginStatusVo getWxLoginStatus(String idFlag) {
+        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
+        String username = wxLoginStatus.getUsername();
+        WxLoginInfoVo.WxLoginStatus status = wxLoginStatus.getStatus();
+
+        WxLoginStatusVo result = new WxLoginStatusVo();
+        result.setStatus((String) status.getCode());
+        if (WxLoginInfoVo.WxLoginStatus.Success.equals(status)) {
+            SecurityContext.signIn(username);
+            result.setRedirectUrl(PageConstants.INDEX_PAGE);
+        }
+        return result;
     }
 }
