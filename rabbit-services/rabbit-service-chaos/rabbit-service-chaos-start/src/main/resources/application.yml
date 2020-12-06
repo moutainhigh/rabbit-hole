@@ -30,3 +30,9 @@ rabbit:
       configs:
         - appid: wx5b633a935cc7c105
           secret: cc31e7128952ca15f53e9704d87dc43d
+    # https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+    mp:
+      configs:
+        - appid: wx6c554c6d25b19c4a
+          secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
+          token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)

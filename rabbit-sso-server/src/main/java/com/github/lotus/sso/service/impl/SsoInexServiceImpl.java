@@ -50,12 +50,12 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
     @Override
     public WxMpQrCodeVo getWxQrCode() {
-        return wxApi.getQrCode("");
+        return wxApi.getQrCode("wx6c554c6d25b19c4a");
     }
 
     @Override
     public WxLoginStatusVo getWxLoginStatus(String idFlag) {
-        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus( idFlag);
+        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
         String username = wxLoginStatus.getUsername();
         WxLoginInfoVo.WxLoginStatus status = wxLoginStatus.getStatus();
 
