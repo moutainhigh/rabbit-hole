@@ -129,9 +129,10 @@ $(function () {
             }
             setTimeout(reWxLoginStatus, 500);
         };
+        let redirectUrl = getUrlParam('redirectUrl') || null;
         $.ajax({
             type: "GET", url: `/wx/login-status`, dataType: 'json',
-            data: {idFlag: idflag, redirectUrl: getUrlParam('redirectUrl') || null},
+            data: {idFlag: idflag, redirectUrl},
             success: callback,
             error: ({responseJSON}) => callback(responseJSON)
         });

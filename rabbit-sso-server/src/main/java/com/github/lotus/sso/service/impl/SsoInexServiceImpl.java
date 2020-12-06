@@ -15,9 +15,9 @@ import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
-import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,7 +70,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
         if (WxLoginInfoVo.WxLoginStatus.Success.equals(status)) {
             socialService.onAuthenticationSuccess(socialType, socialId, username);
-            result.setRedirectUrl(LangUtils.getOrDefault(redirectUrl, PageConstants.INDEX_PAGE));
+            result.setRedirectUrl(Strings.isBlank(redirectUrl) ? PageConstants.INDEX_PAGE : redirectUrl);
         }
         return result;
     }
