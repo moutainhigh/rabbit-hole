@@ -55,7 +55,6 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             wxMaCacheService.updateWxMaSessionUser(sessionKey, userDetailVo.getUsername());
             // 关联账号
             return new WxMaLoginVo()
-                .setSessionKey(sessionKey)
                 .setUsername(userDetailVo.getUsername())
                 .setId(userDetailVo.getId());
         } catch (WxErrorException e) {

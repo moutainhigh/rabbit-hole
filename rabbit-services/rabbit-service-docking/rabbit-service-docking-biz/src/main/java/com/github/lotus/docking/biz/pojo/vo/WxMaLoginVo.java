@@ -16,5 +16,4 @@ import lombok.experimental.Accessors;
 public class WxMaLoginVo {
     private Long id;
     private String username;
-    private String sessionKey;
 }
