@@ -4,6 +4,10 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
+import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
+import com.github.lotus.docking.biz.cache.WxMaCacheService;
 import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaUserInfoVo;
@@ -17,6 +21,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  * Created by hocgin on 2020/12/6
  * email: hocgin@gmail.com
@@ -27,6 +33,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMaIndexServiceImpl implements WxMaIndexService {
+    private final SocialApi socialApi;
+    private final WxMaCacheService wxMaCacheService;
 
     @Override
     public WxMaLoginVo login(String appid, String code) {
@@ -39,8 +47,17 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             String sessionKey = session.getSessionKey();
             String openid = session.getOpenid();
             log.debug("sessionkey: [{}]; openid: [{}]", sessionKey, openid);
+            String socialType = (String) SocialType.WxMa.getCode();
+            UserDetailVo userDetailVo = socialApi.getAccountBySocialTypeAndSocialId(socialType, openid);
+            if (Objects.isNull(userDetailVo)) {
+                return null;
+            }
+            wxMaCacheService.updateWxMaSessionUser(sessionKey, userDetailVo.getUsername());
             // 关联账号
-            return new WxMaLoginVo();
+            return new WxMaLoginVo()
+                .setSessionKey(sessionKey)
+                .setUsername(userDetailVo.getUsername())
+                .setId(userDetailVo.getId());
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
             throw ServiceException.wrap(e);
@@ -59,7 +76,9 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
         // 解密用户信息
         WxMaUserInfo userInfo = wxService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
-        return new WxMaUserInfoVo();
+        return new WxMaUserInfoVo()
+            .setGender(userInfo.getGender())
+            .setNickName(userInfo.getGender());
     }
 
     @Override
@@ -74,6 +93,9 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
         // 解密
         WxMaPhoneNumberInfo phoneNoInfo = wxService.getUserService().getPhoneNoInfo(sessionKey, encryptedData, iv);
-        return new WxMaPhoneNumberInfoVo();
+        return new WxMaPhoneNumberInfoVo()
+            .setPurePhoneNumber(phoneNoInfo.getPurePhoneNumber())
+            .setPhoneNumber(phoneNoInfo.getPhoneNumber())
+            .setCountryCode(phoneNoInfo.getCountryCode());
     }
 }

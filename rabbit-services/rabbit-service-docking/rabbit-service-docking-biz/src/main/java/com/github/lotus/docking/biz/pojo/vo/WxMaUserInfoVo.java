@@ -14,4 +14,6 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 public class WxMaUserInfoVo {
+    private String nickName;
+    private String gender;
 }

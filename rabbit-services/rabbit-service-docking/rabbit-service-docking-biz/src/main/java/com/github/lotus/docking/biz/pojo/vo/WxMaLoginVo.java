@@ -14,5 +14,7 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 public class WxMaLoginVo {
-    private String token;
+    private Long id;
+    private String username;
+    private String sessionKey;
 }

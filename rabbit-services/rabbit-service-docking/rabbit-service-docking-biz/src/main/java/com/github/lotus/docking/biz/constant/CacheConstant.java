@@ -11,11 +11,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CacheConstant {
     public enum Prefix {
-        WxLogin
+        WxMpLogin,
+        WxMaSession
     }
 
-    public String getWxLoginKey(String randomStr) {
-        return prefix(Prefix.WxLogin, randomStr);
+    public String getWxMaSessionKey(String sessionKey) {
+        return prefix(Prefix.WxMaSession, sessionKey);
+    }
+
+    public String getWxMpLoginKey(String randomStr) {
+        return prefix(Prefix.WxMpLogin, randomStr);
     }
 
     private String prefix(Prefix prefix, String suffix) {

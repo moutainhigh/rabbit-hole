@@ -14,5 +14,7 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 public class WxMaPhoneNumberInfoVo {
-
+    private String phoneNumber;
+    private String purePhoneNumber;
+    private String countryCode;
 }

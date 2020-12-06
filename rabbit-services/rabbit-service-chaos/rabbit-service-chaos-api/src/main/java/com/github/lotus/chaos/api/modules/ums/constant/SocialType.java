@@ -1,6 +1,5 @@
 package com.github.lotus.chaos.api.modules.ums.constant;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +14,8 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum SocialType {
-    WxMp("wxmp", "微信公众号");
+    WxMp("wxmp", "微信公众号"),
+    WxMa("wxma", "微信小程序");
     private final Serializable code;
     private final String name;
 }
