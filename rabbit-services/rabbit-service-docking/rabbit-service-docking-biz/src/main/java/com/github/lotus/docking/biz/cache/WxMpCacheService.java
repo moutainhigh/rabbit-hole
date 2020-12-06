@@ -23,16 +23,22 @@ import java.util.concurrent.TimeUnit;
 public class WxMpCacheService {
     private final StringRedisTemplate template;
 
-    public void applyWxLoginKey(@NonNull String randomStr) {
+    public void applyWxLoginKey(@NonNull String sceneStr) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
-        String key = CacheConstant.getWxLoginKey(randomStr);
+        String key = CacheConstant.getWxLoginKey(sceneStr);
         opsForValue.set(key, "", 1, TimeUnit.MINUTES);
         log.debug("初始化微信扫码登陆的KEY: [{}]", key);
     }
 
-    public String getWxLoginKey(@NonNull String randomStr) {
+    public String getWxLoginKey(@NonNull String sceneStr) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
-        String key = CacheConstant.getWxLoginKey(randomStr);
+        String key = CacheConstant.getWxLoginKey(sceneStr);
         return opsForValue.get(key);
+    }
+
+    public void updateWxLoginKey(@NonNull String sceneStr, @NonNull String username) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        String key = CacheConstant.getWxLoginKey(sceneStr);
+        opsForValue.set(key, username);
     }
 }

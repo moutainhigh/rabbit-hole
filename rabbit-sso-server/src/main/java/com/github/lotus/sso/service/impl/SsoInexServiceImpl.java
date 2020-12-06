@@ -55,7 +55,7 @@ public class SsoInexServiceImpl implements SsoIndexService {
 
     @Override
     public WxLoginStatusVo getWxLoginStatus(String idFlag) {
-        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
+        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus( idFlag);
         String username = wxLoginStatus.getUsername();
         WxLoginInfoVo.WxLoginStatus status = wxLoginStatus.getStatus();
 

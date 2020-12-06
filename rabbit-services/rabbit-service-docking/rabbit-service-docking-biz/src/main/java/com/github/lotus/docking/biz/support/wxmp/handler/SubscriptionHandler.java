@@ -1,5 +1,6 @@
 package com.github.lotus.docking.biz.support.wxmp.handler;
 
+import com.github.lotus.docking.biz.service.WxMpIndexService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -22,12 +23,23 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SubscriptionHandler extends AbstractHandler {
+    private final WxMpIndexService service;
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
-        final String appId = wxMpService.getWxMpConfigStorage().getAppId();
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context,
+                                    WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
+        final String appid = wxMpService.getWxMpConfigStorage().getAppId();
+        String scene = wxMessage.getEventKey();
         final String fromUser = wxMessage.getFromUser();
 
+        if (this.isLoginScene(scene)) {
+            service.handleWxMpLoginOnSubscription(appid, fromUser, scene);
+        }
+
         return null;
+    }
+
+    private boolean isLoginScene(String scene) {
+        return true;
     }
 }

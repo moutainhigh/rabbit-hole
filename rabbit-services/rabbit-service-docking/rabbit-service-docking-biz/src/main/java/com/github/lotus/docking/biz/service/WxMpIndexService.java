@@ -14,4 +14,13 @@ public interface WxMpIndexService {
     WxMpQrCodeVo getWxMpQrcodeUrl(String appid);
 
     WxLoginInfoVo getWxLoginStatus(String idFlag);
+
+    /**
+     * 处理微信公众号订阅登陆
+     *
+     * @param appid
+     * @param fromUser
+     * @param scene
+     */
+    void handleWxMpLoginOnSubscription(String appid, String fromUser, String scene);
 }

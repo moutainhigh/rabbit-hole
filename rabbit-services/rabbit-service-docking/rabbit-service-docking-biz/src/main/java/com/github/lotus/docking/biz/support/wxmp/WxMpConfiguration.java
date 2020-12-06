@@ -1,5 +1,6 @@
 package com.github.lotus.docking.biz.support.wxmp;
 
+import com.github.lotus.docking.biz.support.wxmp.handler.SubscriptionHandler;
 import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -70,10 +71,15 @@ public class WxMpConfiguration {
         return new WxMpServiceImpl();
     }
 
+    private final SubscriptionHandler subscriptionHandler;
     public WxMpMessageRouter newRouter(WxMpService mpService) {
         return new WxMpMessageRouter(mpService)
             // 关注事件
-            .rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SUBSCRIBE)
+            .rule().async(false)
+                .msgType(WxConsts.XmlMsgType.EVENT)
+                .event(WxConsts.EventType.SCAN)
+                .event(WxConsts.EventType.SUBSCRIBE)
+                .handler(subscriptionHandler)
             .handler(null).next()
             // 取消关注事件
             .rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.UNSUBSCRIBE).handler(null).next()

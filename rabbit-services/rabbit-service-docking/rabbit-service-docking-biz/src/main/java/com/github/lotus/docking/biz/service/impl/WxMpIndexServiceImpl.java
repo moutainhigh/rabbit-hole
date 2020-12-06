@@ -1,6 +1,9 @@
 package com.github.lotus.docking.biz.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.docking.biz.cache.WxMpCacheService;
@@ -27,11 +30,12 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMpIndexServiceImpl implements WxMpIndexService {
     private final WxMpCacheService wxMpCacheService;
+    private final SocialApi socialApi;
 
     @Override
     public WxMpQrCodeVo getWxMpQrcodeUrl(String appid) {
         WxMpService service = WxMpConfiguration.getMaService(appid);
-        String idFlag = IdUtil.randomUUID();
+        String idFlag = appid + "#" + IdUtil.randomUUID();
         WxMpQrCodeTicket ticket;
         wxMpCacheService.applyWxLoginKey(idFlag);
         try {
@@ -57,6 +61,21 @@ public class WxMpIndexServiceImpl implements WxMpIndexService {
             result.setStatus(WxLoginInfoVo.WxLoginStatus.Processing);
         }
         return result;
+    }
+
+    @Override
+    public void handleWxMpLoginOnSubscription(String appid, String fromUser, String scene) {
+        String registrationId = SocialType.WxMp.getName();
+
+        // 1. 查找 openid 绑定的用户
+        UserDetailVo userDetail = socialApi.getAccountBySocialTypeAndSocialId(registrationId, fromUser);
+        if (Objects.isNull(userDetail)) {
+            return;
+        }
+        String username = userDetail.getUsername();
+
+        // 2. 更新用户的登陆状态
+        wxMpCacheService.updateWxLoginKey(scene, username);
     }
 
 }
