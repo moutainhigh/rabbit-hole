@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * 前端控制器
@@ -35,9 +37,10 @@ public class WxMaController {
 
     @ApiOperation("登陆接口")
     @GetMapping("/login")
-    public Result<WxMaLoginVo> login(@PathVariable String appid,
-                                     @RequestParam("code") String code) {
-        return Result.success(service.login(appid, code));
+    public Result<WxMaLoginVo> login(@PathVariable String appid, @RequestParam("code") String code,
+                                     HttpServletRequest request) {
+        String sessionId = request.getSession().getId();
+        return Result.success(service.login(appid, code).setSessionId(sessionId));
     }
 
     @ApiOperation("获取用户信息接口")
