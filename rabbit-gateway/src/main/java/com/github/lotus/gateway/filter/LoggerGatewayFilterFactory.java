@@ -54,11 +54,11 @@ public class LoggerGatewayFilterFactory extends AbstractGatewayFilterFactory<Log
                         .add("")
                         .add("=====================================================")
                         .add("URI: " + serverHttpRequest.getURI().getRawPath())
-                        .add("Request Params: " + serverHttpRequest.getQueryParams())
+                        .add("RequestParams: " + serverHttpRequest.getQueryParams())
                         .add("Username: " + username)
                         .add("Source: " + source)
                         .add("Version: " + version)
-                        .add("Total time: " + (System.currentTimeMillis() - startTime) + "ms")
+                        .add("TotalTime: " + (System.currentTimeMillis() - startTime) + "ms")
                         .add("=====================================================")
                         .toString();
                     log.info(logStr);

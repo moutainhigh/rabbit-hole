@@ -42,9 +42,10 @@ spring:
           filters:
             - StripPrefix=1
 
-          default-filters:
-            - name: SwaggerHeaderFilter
-            - name: Logger
+      default-filters:
+        - name: SwaggerHeaderFilter
+        - name: Logger
+        - name: SaveSession
       loadbalancer:
         use404: true
   security:
