@@ -9,16 +9,14 @@ import com.github.lotus.chaos.biz.modules.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
 import com.github.lotus.chaos.biz.modules.ums.utils.Avatars;
-import com.github.lotus.chaos.biz.modules.ums.utils.JwtUtils;
+import com.github.lotus.common.utils.JwtUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
-import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.login.AccountExpiredException;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -84,11 +82,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     public String getUsername(String token) {
-        try {
-            return JwtUtils.decode(token);
-        } catch (AccountExpiredException e) {
-            throw ServiceException.wrap(e.getMessage());
-        }
+        return JwtUtils.decode(token);
     }
 
     @Override

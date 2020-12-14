@@ -12,5 +12,11 @@
   <name>Rabbit :: Common</name>
   <artifactId>rabbit-common</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
