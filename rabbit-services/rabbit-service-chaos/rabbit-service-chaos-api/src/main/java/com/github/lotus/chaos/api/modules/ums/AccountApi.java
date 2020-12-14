@@ -23,6 +23,9 @@ public interface AccountApi {
     @GetMapping(CONTEXT_ID + "/getUser")
     UserDetailVo getUser(@RequestParam("username") String username);
 
+    @GetMapping(CONTEXT_ID + "/getUserByPhone")
+    UserDetailVo getUserByPhone(@RequestParam("phone") String phone);
+
     @PostMapping(CONTEXT_ID + "/createAccount")
     void createAccount(@Validated @RequestBody CreateAccountRo ro);
 

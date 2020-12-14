@@ -25,7 +25,22 @@ public class AccountApiImpl implements AccountApi {
     }
 
     @Override
+    public UserDetailVo getUserByPhone(String phone) {
+        return service.getUserByPhone(phone);
+    }
+
+    @Override
     public void createAccount(CreateAccountRo ro) {
         service.createAccount(ro);
+    }
+
+    @Override
+    public String getToken(String username) {
+        return service.getToken(username);
+    }
+
+    @Override
+    public String getUsername(String token) {
+        return service.getUsername(token);
     }
 }

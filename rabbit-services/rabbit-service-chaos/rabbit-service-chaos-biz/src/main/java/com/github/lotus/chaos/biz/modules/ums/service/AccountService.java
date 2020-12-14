@@ -22,4 +22,10 @@ public interface AccountService extends AbstractService<Account> {
     UserDetailVo getUser(String username);
 
     List<Account> listAccountByAccountId(List<Long> values);
+
+    String getToken(String username);
+
+    String getUsername(String token);
+
+    UserDetailVo getUserByPhone(String phone);
 }

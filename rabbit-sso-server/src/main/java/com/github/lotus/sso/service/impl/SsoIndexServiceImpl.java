@@ -4,6 +4,7 @@ import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.api.modules.ums.AccountApi;
 import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.docking.api.WxApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
@@ -11,11 +12,13 @@ import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
-import com.github.lotus.sso.pojo.ro.LoginRo;
+import com.github.lotus.sso.pojo.ro.LoginUsePhoneRo;
+import com.github.lotus.sso.pojo.ro.LoginUseUsernameRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +46,9 @@ public class SsoIndexServiceImpl implements SsoIndexService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
-    private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
     @Value("${rabbit.wx.use}")
     private String useWxAppid;
-
-
-    @Override
-    public String getUserToken(String username) {
-        return accountApi.getToken(username);
-    }
 
     @Override
     public void createAccount(JoinRo ro) {
@@ -92,7 +87,7 @@ public class SsoIndexServiceImpl implements SsoIndexService {
     }
 
     @Override
-    public String login(LoginRo ro) {
+    public String loginUseUsername(LoginUseUsernameRo ro) {
         String username = ro.getUsername();
         String password = ro.getPassword();
         try {
@@ -101,5 +96,17 @@ public class SsoIndexServiceImpl implements SsoIndexService {
             throw ServiceException.wrap("用户名或密码错误");
         }
         return accountApi.getToken(username);
+    }
+
+    @Override
+    public String loginUsePhone(LoginUsePhoneRo ro) {
+        String phone = ro.getPhone();
+        String sms = ro.getSms();
+        if (!smsApi.validSmsCode(phone, sms)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+        UserDetailVo userDetail = accountApi.getUserByPhone(phone);
+        ValidUtils.notNull(userDetail, "手机号码错误");
+        return accountApi.getToken(userDetail.getUsername());
     }
 }

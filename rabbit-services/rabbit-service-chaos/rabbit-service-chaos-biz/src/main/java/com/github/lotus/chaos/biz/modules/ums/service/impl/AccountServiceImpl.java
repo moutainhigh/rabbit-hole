@@ -9,13 +9,16 @@ import com.github.lotus.chaos.biz.modules.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
 import com.github.lotus.chaos.biz.modules.ums.utils.Avatars;
+import com.github.lotus.chaos.biz.modules.ums.utils.JwtUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.security.auth.login.AccountExpiredException;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -72,6 +75,27 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             return Collections.emptyList();
         }
         return lambdaQuery().in(Account::getId, values).list();
+    }
+
+    @Override
+    public String getToken(String username) {
+        return JwtUtils.encode(username);
+    }
+
+    @Override
+    public String getUsername(String token) {
+        try {
+            return JwtUtils.decode(token);
+        } catch (AccountExpiredException e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
+    }
+
+    @Override
+    public UserDetailVo getUserByPhone(String phone) {
+        return getAccountByPhone(phone)
+            .map(mapping::asUserDetailVo)
+            .orElse(null);
     }
 
     private Optional<Account> getAccountByUsername(String username) {
