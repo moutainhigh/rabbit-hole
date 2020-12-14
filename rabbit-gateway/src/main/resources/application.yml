@@ -71,11 +71,12 @@ boot:
       ignore-urls:
         - /swagger-resources/configuration/ui
         - /favicon.ico
+        - /actuator/**
         - /webjars/**
-        - /*/v2/api-docs
         - /ignore
+        - /*/v2/api-docs
         - /chaos/district/tree
         - /chaos/address4ip
         - /chaos/logistics-line/_search
-        - /actuator/**
+        - /wl/logistics-line/_search
         - /docking/wx/mp/*
