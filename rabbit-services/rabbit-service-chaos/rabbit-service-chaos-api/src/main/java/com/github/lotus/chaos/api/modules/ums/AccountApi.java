@@ -26,4 +26,9 @@ public interface AccountApi {
     @PostMapping(CONTEXT_ID + "/createAccount")
     void createAccount(@Validated @RequestBody CreateAccountRo ro);
 
+    @PostMapping(CONTEXT_ID + "/getToken")
+    String getToken(@RequestParam("username") String username);
+
+    @PostMapping(CONTEXT_ID + "/getUsername")
+    String getUsername(@RequestParam("token") String token);
 }

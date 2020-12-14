@@ -2,6 +2,7 @@ package com.github.lotus.sso.controller;
 
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.sso.pojo.ro.LoginRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SsoIndexService;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,5 +63,12 @@ public class SsoIndexController {
     public Result<WxLoginStatusVo> getWxLoginStatus(@RequestParam("idFlag") String idFlag,
                                                     @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
         return Result.success(indexService.getWxLoginStatus(idFlag, redirectUrl));
+    }
+
+    @ApiOperation("获取用户 Token")
+    @PostMapping("/login/token")
+    @ResponseBody
+    public Result<String> login(@Validated @RequestBody LoginRo ro) {
+        return Result.success(indexService.login(ro));
     }
 }

@@ -11,15 +11,21 @@ import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.sso.pojo.ro.LoginRo;
 import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
+import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,16 +37,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SsoInexServiceImpl implements SsoIndexService {
+public class SsoIndexServiceImpl implements SsoIndexService {
     private final AccountApi accountApi;
     private final WxApi wxApi;
     private final SmsApi smsApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
     @Value("${rabbit.wx.use}")
     private String useWxAppid;
 
+
+    @Override
+    public String getUserToken(String username) {
+        return accountApi.getToken(username);
+    }
 
     @Override
     public void createAccount(JoinRo ro) {
@@ -76,5 +89,17 @@ public class SsoInexServiceImpl implements SsoIndexService {
             result.setRedirectUrl(Strings.isBlank(redirectUrl) ? PageConstants.INDEX_PAGE : redirectUrl);
         }
         return result;
+    }
+
+    @Override
+    public String login(LoginRo ro) {
+        String username = ro.getUsername();
+        String password = ro.getPassword();
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (AuthenticationException e) {
+            throw ServiceException.wrap("用户名或密码错误");
+        }
+        return accountApi.getToken(username);
     }
 }
