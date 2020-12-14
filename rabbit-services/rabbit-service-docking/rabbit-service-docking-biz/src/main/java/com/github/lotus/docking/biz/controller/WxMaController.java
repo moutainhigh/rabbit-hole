@@ -40,8 +40,7 @@ public class WxMaController {
     @PostMapping("/login")
     public Result<WxMaLoginVo> login(@PathVariable String appid, @RequestParam("code") String code,
                                      HttpServletRequest request) {
-        String sessionId = request.getSession().getId();
-        return Result.success(service.login(appid, code).setSessionId(sessionId));
+        return Result.success(service.login(appid, code));
     }
 
     @ApiOperation("获取用户信息接口")

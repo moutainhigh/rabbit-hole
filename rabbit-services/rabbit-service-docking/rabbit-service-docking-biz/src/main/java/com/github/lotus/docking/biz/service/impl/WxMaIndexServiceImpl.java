@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
+import com.github.lotus.chaos.api.modules.ums.AccountApi;
 import com.github.lotus.chaos.api.modules.ums.SocialApi;
 import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
@@ -34,6 +35,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMaIndexServiceImpl implements WxMaIndexService {
     private final SocialApi socialApi;
+    private final AccountApi accountApi;
     private final WxMaCacheService wxMaCacheService;
 
     @Override
@@ -53,12 +55,14 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             if (Objects.isNull(userDetailVo)) {
                 return result.setHasBind(false);
             }
-            wxMaCacheService.updateWxMaSessionUser(sessionKey, userDetailVo.getUsername());
+            String username = userDetailVo.getUsername();
+            wxMaCacheService.updateWxMaSessionUser(sessionKey, username);
             // 关联账号
             WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
-                .setUsername(userDetailVo.getUsername())
+                .setUsername(username)
                 .setId(userDetailVo.getId());
             return result.setHasBind(true)
+                .setToken(accountApi.getToken(username))
                 .setUserDetail(userDetail);
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);

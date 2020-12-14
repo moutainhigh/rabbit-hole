@@ -20,7 +20,7 @@ public class WxMaLoginVo {
     @ApiModelProperty("账号")
     private UserDetailVo userDetail;
     @ApiModelProperty("会话标记")
-    private String sessionId;
+    private String token;
 
     @Data
     @Accessors(chain = true)
