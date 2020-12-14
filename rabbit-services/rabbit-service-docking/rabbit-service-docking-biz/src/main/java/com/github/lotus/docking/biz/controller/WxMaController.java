@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class WxMaController {
     private final WxMaIndexService service;
 
     @ApiOperation("登陆接口")
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Result<WxMaLoginVo> login(@PathVariable String appid, @RequestParam("code") String code,
                                      HttpServletRequest request) {
         String sessionId = request.getSession().getId();
