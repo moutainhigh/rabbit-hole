@@ -7,13 +7,9 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedHeaders: "*"
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-                POST
-                DELETE
-                PUT
-                OPTION
+            allowedOrigins:
+              - 'http://127.0.0.1:28250'
+            allowedMethods: "*"
       discovery:
         locator:
           lowerCaseServiceId: true
