@@ -19,7 +19,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@ApiModel("物流线路")
+@ApiModel(description = "物流线路")
 public class LogisticsLineBatchCreateRo extends BasicRo {
     @Size(min = 1, message = "请填写物流仓库")
     @ApiModelProperty("物流仓库")
@@ -39,7 +39,7 @@ public class LogisticsLineBatchCreateRo extends BasicRo {
     private Long creator;
 
     @Data
-    @ApiModel("物流线路")
+    @ApiModel(description = "物流线路")
     public static class LogisticsLineCreateRo {
         @ApiModelProperty("单价")
         private BigDecimal unitPrice;

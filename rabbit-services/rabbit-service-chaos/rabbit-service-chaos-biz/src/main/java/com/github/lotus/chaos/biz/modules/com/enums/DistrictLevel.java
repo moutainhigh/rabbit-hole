@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("城市规划级别")
+@ApiModel(description = "城市规划级别")
 @RequiredArgsConstructor
 public enum DistrictLevel {
     Country(com.github.lotus.chaos.api.modules.com.constant.DistrictLevel.COUNTRY_CODE, "国家"),

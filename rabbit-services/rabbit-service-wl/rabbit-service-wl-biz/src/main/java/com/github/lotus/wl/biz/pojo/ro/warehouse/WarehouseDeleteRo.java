@@ -15,7 +15,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@ApiModel("物流仓库")
+@ApiModel(description = "物流仓库")
 public class WarehouseDeleteRo {
     @Size(min = 1, max = 10, message = "请选择要删除的仓库")
     @ApiModelProperty("物流仓库")

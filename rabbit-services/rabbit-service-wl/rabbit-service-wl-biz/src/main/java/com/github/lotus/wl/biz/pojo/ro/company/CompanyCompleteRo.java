@@ -12,7 +12,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-@ApiModel("搜索 - 物流公司")
+@ApiModel(description = "搜索 - 物流公司")
 public class CompanyCompleteRo extends CompleteRo {
     @ApiModelProperty("关键字")
     private String keyword;

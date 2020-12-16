@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-@ApiModel("分页查询 - 物流公司")
+@ApiModel(description = "分页查询 - 物流公司")
 public class CompanyPagingRo extends PageRo {
 
 }
