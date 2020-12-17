@@ -1,5 +1,6 @@
 package com.github.lotus.sso.pojo.ro;
 
+import com.github.lotus.common.constant.RegexpConstant;
 import in.hocg.boot.validation.autoconfigure.core.ICode;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
@@ -21,30 +22,40 @@ import javax.validation.constraints.Pattern;
  * @author hocgin
  */
 @Data
-@ApiModel(description = "新增账户")
+@ApiModel(description = "注册")
 public class JoinAccountRo {
-    @NotNull(groups = {EmailMode.class, PhoneMode.class}, message = "该注册方式暂不支持")
-    @EnumRange(groups = {EmailMode.class, PhoneMode.class}, enumClass = Mode.class, message = "该注册方式暂不支持")
+    @NotNull(groups = {EmailMode.class, PhoneMode.class, UsernameMode.class}, message = "该注册方式暂不支持")
+    @EnumRange(groups = {EmailMode.class, PhoneMode.class, UsernameMode.class}, enumClass = Mode.class, message = "该注册方式暂不支持")
     @ApiModelProperty(value = "模式", required = true)
     private String mode = Mode.UsePhone.getCode();
 
-    @Pattern(regexp = "^\\w{6,12}$", message = "用户名仅支持6~12位的字母、数字或下划线")
-    @ApiModelProperty(value = "指定用户名(默认自动生成)")
-    private String username;
-    @Pattern(regexp = "^.{6,32}$", message = "请输入6~32位的密码")
-    @ApiModelProperty(value = "指定密码(默认自动生成)")
-    private String password;
-
     @Valid
-    @NotNull(groups = {EmailMode.class})
-    @ApiModelProperty(value = "仅邮件方式使用")
+    @NotNull(message = "邮件信息不能为空", groups = {EmailMode.class})
+    @ApiModelProperty(value = "仅邮件模式使用")
     private EmailMode emailMode;
 
     @Valid
-    @NotNull(groups = {PhoneMode.class})
-    @ApiModelProperty(value = "仅手机号方式使用")
+    @NotNull(message = "手机信息不能为空", groups = {PhoneMode.class})
+    @ApiModelProperty(value = "仅手机号模式使用")
     private PhoneMode phoneMode;
 
+    @Valid
+    @NotNull(message = "账户信息不能为空", groups = {UsernameMode.class})
+    @ApiModelProperty(value = "仅账户模式使用")
+    private UsernameMode usernameMode;
+
+    @Data
+    @ApiModel(description = "账户模式")
+    public static class UsernameMode {
+        @Pattern(groups = {UsernameMode.class}, regexp = RegexpConstant.USERNAME, message = "账户仅支持6~12位的字母、数字或下划线")
+        @NotBlank(groups = {UsernameMode.class}, message = "账户不能为空")
+        @ApiModelProperty(value = "指定用户名(默认自动生成)")
+        private String username;
+        @Pattern(groups = {UsernameMode.class}, regexp = RegexpConstant.PASSWORD, message = "请输入6~32位的密码")
+        @NotBlank(groups = {UsernameMode.class}, message = "密码不能为空")
+        @ApiModelProperty(value = "指定密码(默认自动生成)")
+        private String password;
+    }
 
     @Data
     @ApiModel(description = "邮件模式")
@@ -53,7 +64,7 @@ public class JoinAccountRo {
         @NotBlank(groups = {PhoneMode.class}, message = "邮件地址不能为空")
         @ApiModelProperty(value = "邮件地址")
         private String email;
-        @Pattern(groups = {EmailMode.class}, regexp = "^\\d{6}$", message = "请输入6位验证码")
+        @Pattern(groups = {EmailMode.class}, regexp = RegexpConstant.VERIFY_CODE, message = "请输入6位验证码")
         @NotBlank(groups = {EmailMode.class}, message = "验证码不能为空")
         @ApiModelProperty(value = "验证码")
         private String verifyCode;
@@ -62,11 +73,11 @@ public class JoinAccountRo {
     @Data
     @ApiModel(description = "手机号模式")
     public static class PhoneMode {
-        @Pattern(groups = {PhoneMode.class}, regexp = "^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$", message = "请输入正确的手机号码")
+        @Pattern(groups = {PhoneMode.class}, regexp = RegexpConstant.PHONE, message = "请输入正确的手机号码")
         @NotBlank(groups = {PhoneMode.class}, message = "手机号码不能为空")
         @ApiModelProperty(value = "手机号码")
         private String phone;
-        @Pattern(groups = {PhoneMode.class}, regexp = "^\\d{6}$", message = "请输入6位验证码")
+        @Pattern(groups = {PhoneMode.class}, regexp = RegexpConstant.VERIFY_CODE, message = "请输入6位验证码")
         @NotBlank(groups = {PhoneMode.class}, message = "验证码不能为空")
         @ApiModelProperty(value = "验证码")
         private String verifyCode;
@@ -75,6 +86,7 @@ public class JoinAccountRo {
     @Getter
     @RequiredArgsConstructor
     public enum Mode implements ICode {
+        UseUsername("use_username"),
         UsePhone("use_phone"),
         UseEmail("use_email");
         private final String code;
