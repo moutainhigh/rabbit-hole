@@ -1,6 +1,6 @@
 package com.github.lotus.chaos.biz.modules.ums.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class AccountApiImpl implements AccountApi {
+public class AccountApiImpl implements AccountServiceApi {
     private final AccountService service;
 
     @Override

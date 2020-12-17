@@ -1,7 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
 import com.github.lotus.chaos.api.modules.lang.SmsApi;
-import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
 import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.docking.api.WxApi;
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SsoIndexServiceImpl implements SsoIndexService {
-    private final AccountApi accountApi;
+    private final AccountServiceApi accountApi;
     private final WxApi wxApi;
     private final SmsApi smsApi;
     private final AccountMapping mapping;

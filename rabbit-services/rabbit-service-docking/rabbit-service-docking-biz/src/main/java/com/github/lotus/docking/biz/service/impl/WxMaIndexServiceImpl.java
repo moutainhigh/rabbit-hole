@@ -4,8 +4,8 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import com.github.lotus.chaos.api.modules.ums.AccountApi;
-import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
+import com.github.lotus.chaos.api.modules.ums.SocialServiceApi;
 import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.docking.biz.cache.WxMaCacheService;
@@ -34,8 +34,8 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMaIndexServiceImpl implements WxMaIndexService {
-    private final SocialApi socialApi;
-    private final AccountApi accountApi;
+    private final SocialServiceApi socialApi;
+    private final AccountServiceApi accountApi;
     private final WxMaCacheService wxMaCacheService;
 
     @Override

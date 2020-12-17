@@ -1,25 +1,19 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.ums.AccountApi;
-import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
+import com.github.lotus.chaos.api.modules.ums.SocialServiceApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
-import in.hocg.boot.web.SpringContext;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -33,8 +27,8 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SocialServiceImpl implements SocialService {
-    private final SocialApi socialApi;
-    private final AccountApi accountApi;
+    private final SocialServiceApi socialApi;
+    private final AccountServiceApi accountApi;
 
     @Override
     public void onAuthenticationSuccess(String socialType, String socialId, String username) {

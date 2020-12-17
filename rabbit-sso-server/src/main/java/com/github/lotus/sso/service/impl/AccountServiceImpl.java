@@ -1,7 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
 import com.github.lotus.chaos.api.modules.lang.SmsApi;
-import com.github.lotus.chaos.api.modules.ums.AccountApi;
+import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.sso.mapstruct.AccountMapping;
@@ -34,9 +34,9 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    private final AccountApi api;
+    private final AccountServiceApi api;
     private final SmsApi smsApi;
-    private final AccountApi accountApi;
+    private final AccountServiceApi accountApi;
 
     @Override
     public String join(JoinAccountRo ro) {

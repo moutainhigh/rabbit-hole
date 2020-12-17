@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = SocialApi.CONTEXT_ID)
-public interface SocialApi {
-    String CONTEXT_ID = "SocialApi";
+@FeignClient(value = ServiceName.NAME, contextId = SocialServiceApi.CONTEXT_ID)
+public interface SocialServiceApi {
+    String CONTEXT_ID = "SocialServiceApi";
 
     @GetMapping(CONTEXT_ID + "/getAccountBySocialTypeAndSocialId")
     UserDetailVo getAccountBySocialTypeAndSocialId(@RequestParam("socialType") String socialType,

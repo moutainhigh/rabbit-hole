@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = AccountApi.CONTEXT_ID)
-public interface AccountApi {
-    String CONTEXT_ID = "AccountApi";
+@FeignClient(value = ServiceName.NAME, contextId = AccountServiceApi.CONTEXT_ID)
+public interface AccountServiceApi {
+    String CONTEXT_ID = "AccountServiceApi";
 
     @GetMapping(CONTEXT_ID + "/getUser")
     UserDetailVo getUser(@RequestParam("username") String username);
