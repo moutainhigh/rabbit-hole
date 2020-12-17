@@ -27,7 +27,7 @@ public interface AccountApi {
     UserDetailVo getUserByPhone(@RequestParam("phone") String phone);
 
     @PostMapping(CONTEXT_ID + "/createAccount")
-    void createAccount(@Validated @RequestBody CreateAccountRo ro);
+    UserDetailVo createAccount(@Validated @RequestBody CreateAccountRo ro);
 
     @PostMapping(CONTEXT_ID + "/getToken")
     String getToken(@RequestParam("username") String username);

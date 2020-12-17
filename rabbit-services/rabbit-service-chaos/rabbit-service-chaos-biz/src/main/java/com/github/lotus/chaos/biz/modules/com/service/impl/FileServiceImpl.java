@@ -8,10 +8,10 @@ import com.github.lotus.chaos.biz.modules.com.mapper.FileMapper;
 import com.github.lotus.chaos.biz.modules.com.service.FileService;
 import com.github.lotus.common.constant.GlobalConstant;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.constant.CodeEnum;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
+import in.hocg.boot.validation.autoconfigure.core.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -47,7 +47,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     public void upload(UploadFileRo dto) {
         final Long relId = dto.getRelId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final FileRelType relType = CodeEnum.ofThrow(dto.getRelType(), FileRelType.class);
+        final FileRelType relType = ICode.ofThrow(dto.getRelType(), FileRelType.class);
         final List<UploadFileRo.FileDto> files = dto.getFiles();
         deleteByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
@@ -72,7 +72,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     @Transactional(rollbackFor = Exception.class)
     public List<FileVo> listFileByRelTypeAndRelId(@NotNull String relType,
                                                   @NotNull Long relId) {
-        return listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(CodeEnum.ofThrow(relType, FileRelType.class), relId)
+        return listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(ICode.ofThrow(relType, FileRelType.class), relId)
             .stream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
             .collect(Collectors.toList());

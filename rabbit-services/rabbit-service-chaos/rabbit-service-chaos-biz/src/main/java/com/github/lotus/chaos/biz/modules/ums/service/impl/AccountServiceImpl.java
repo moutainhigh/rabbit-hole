@@ -2,6 +2,9 @@ package com.github.lotus.chaos.biz.modules.ums.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
@@ -10,8 +13,10 @@ import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
 import com.github.lotus.chaos.biz.modules.ums.utils.Avatars;
 import com.github.lotus.common.utils.JwtUtils;
+import com.github.lotus.common.utils.RabbitUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -41,11 +46,25 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createAccount(CreateAccountRo ro) {
+    public UserDetailVo createAccount(CreateAccountRo ro) {
+        String username = ro.getUsername();
+        boolean isUseDefaultUsername = StrUtil.isBlank(username);
+        username = LangUtils.getOrDefault(username, RandomUtil.randomString(18));
+
+        String phone = ro.getPhone();
+        String email = ro.getEmail();
+        String password = LangUtils.getOrDefault(ro.getPassword(), IdUtil.fastSimpleUUID());
+        String createdIp = ro.getCreatedIp();
+
         LocalDateTime createdAt = LocalDateTime.now();
 
-        Account entity = mapping.asAccount(ro);
-        entity.setNickname(ro.getUsername());
+        Account entity = new Account();
+        entity.setNickname("暂未设置");
+        entity.setUsername(username);
+        entity.setPhone(phone);
+        entity.setEmail(email);
+        entity.setPassword(password);
+        entity.setCreatedIp(createdIp);
         entity.setCreatedAt(createdAt);
         validInsert(entity);
 
@@ -56,7 +75,18 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         final Account update = new Account()
             .setId(entityId)
             .setAvatar(avatarUrl);
+        if (isUseDefaultUsername) {
+            username = RabbitUtils.getDefaultUsername(entityId);
+            update.setUsername(username);
+            update.setNickname(username);
+        }
+
         this.validUpdateById(update);
+        return getUser(username);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(IdUtil.fastSimpleUUID());
     }
 
     @Override

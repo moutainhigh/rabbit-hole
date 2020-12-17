@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface AccountService extends AbstractService<Account> {
 
-    void createAccount(CreateAccountRo ro);
+    UserDetailVo createAccount(CreateAccountRo ro);
 
     UserDetailVo getUser(String username);
 

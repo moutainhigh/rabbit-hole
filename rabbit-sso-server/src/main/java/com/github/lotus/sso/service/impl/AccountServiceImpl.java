@@ -1,13 +1,23 @@
 package com.github.lotus.sso.service.impl;
 
+import com.github.lotus.chaos.api.modules.lang.SmsApi;
 import com.github.lotus.chaos.api.modules.ums.AccountApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.sso.mapstruct.AccountMapping;
-import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.sso.pojo.ro.JoinAccountRo;
+import com.github.lotus.sso.pojo.ro.LoginRo;
 import com.github.lotus.sso.service.AccountService;
+import in.hocg.boot.utils.ValidUtils;
+import in.hocg.boot.validation.autoconfigure.core.ICode;
+import in.hocg.boot.validation.autoconfigure.core.ValidatorUtils;
+import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +30,111 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl implements AccountService {
-    private final AccountApi api;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
+    private final AccountApi api;
+    private final SmsApi smsApi;
+    private final AccountApi accountApi;
 
     @Override
-    public void createAccount(JoinRo ro) {
-        ro.setPassword(passwordEncoder.encode(ro.getPassword()));
-        CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
-        createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
-        api.createAccount(createAccountRo);
+    public String join(JoinAccountRo ro) {
+        JoinAccountRo.Mode mode = ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class);
+        switch (mode) {
+            case UsePhone: {
+                ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneMode.class);
+                return this.joinUsePhone(ro.getPhoneMode());
+            }
+            case UseUsername: {
+                ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameMode.class);
+                return this.joinUseUsername(ro.getUsernameMode());
+            }
+            case UseEmail:
+                ValidatorUtils.validThrow(ro, JoinAccountRo.EmailMode.class);
+                return this.joinUseEmail(ro.getEmailMode());
+            default:
+                throw ServiceException.wrap("该注册方式暂不支持");
+        }
     }
+
+    private String joinUseEmail(JoinAccountRo.EmailMode ro) {
+        String email = ro.getEmail();
+        String verifyCode = ro.getVerifyCode();
+        String password = ro.getPassword();
+
+        // todo: 后续添加校验邮件验证码 verifyCode
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setPassword(passwordEncoder.encode(password))
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setEmail(email);
+        UserDetailVo userDetailVo = api.createAccount(newRo);
+        return accountApi.getToken(userDetailVo.getUsername());
+    }
+
+    private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
+        String username = ro.getUsername();
+        String password = ro.getPassword();
+
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setPassword(passwordEncoder.encode(password))
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setUsername(username);
+        UserDetailVo userDetailVo = api.createAccount(newRo);
+        return accountApi.getToken(userDetailVo.getUsername());
+    }
+
+    private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
+        String phone = ro.getPhone();
+        String verifyCode = ro.getVerifyCode();
+
+        if (!smsApi.validSmsCode(phone, verifyCode)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setPhone(phone);
+        UserDetailVo userDetailVo = api.createAccount(newRo);
+        return accountApi.getToken(userDetailVo.getUsername());
+    }
+
+    @Override
+    public String login(LoginRo ro) {
+        LoginRo.Mode mode = ICode.ofThrow(ro.getMode(), LoginRo.Mode.class);
+        switch (mode) {
+            case UseSms: {
+                ValidatorUtils.validThrow(ro, LoginRo.SmsMode.class);
+                return this.loginUseSms(ro.getSmsMode());
+            }
+            case UsePassword: {
+                ValidatorUtils.validThrow(ro, LoginRo.PasswordMode.class);
+                return this.loginUsePassword(ro.getPasswordMode());
+            }
+            default:
+                throw ServiceException.wrap("该登录方式暂不支持");
+        }
+    }
+
+    private String loginUseSms(LoginRo.SmsMode ro) {
+        String phone = ro.getPhone();
+        String verifyCode = ro.getVerifyCode();
+        if (!smsApi.validSmsCode(phone, verifyCode)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+        UserDetailVo userDetail = accountApi.getUserByPhone(phone);
+        ValidUtils.notNull(userDetail, "手机号码错误");
+        return accountApi.getToken(userDetail.getUsername());
+    }
+
+    private String loginUsePassword(LoginRo.PasswordMode ro) {
+        String username = ro.getUsername();
+        String password = ro.getPassword();
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (AuthenticationException e) {
+            throw ServiceException.wrap("用户名或密码错误");
+        }
+        return accountApi.getToken(username);
+    }
+
 }

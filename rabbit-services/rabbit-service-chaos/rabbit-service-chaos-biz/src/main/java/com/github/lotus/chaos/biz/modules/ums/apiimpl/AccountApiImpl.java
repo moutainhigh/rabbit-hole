@@ -30,8 +30,8 @@ public class AccountApiImpl implements AccountApi {
     }
 
     @Override
-    public void createAccount(CreateAccountRo ro) {
-        service.createAccount(ro);
+    public UserDetailVo createAccount(CreateAccountRo ro) {
+        return service.createAccount(ro);
     }
 
     @Override

@@ -49,11 +49,11 @@ public class JoinAccountRo {
     public static class UsernameMode {
         @Pattern(groups = {UsernameMode.class}, regexp = RegexpConstant.USERNAME, message = "账户仅支持6~12位的字母、数字或下划线")
         @NotBlank(groups = {UsernameMode.class}, message = "账户不能为空")
-        @ApiModelProperty(value = "指定用户名(默认自动生成)")
+        @ApiModelProperty(value = "指定用户名")
         private String username;
         @Pattern(groups = {UsernameMode.class}, regexp = RegexpConstant.PASSWORD, message = "请输入6~32位的密码")
         @NotBlank(groups = {UsernameMode.class}, message = "密码不能为空")
-        @ApiModelProperty(value = "指定密码(默认自动生成)")
+        @ApiModelProperty(value = "指定密码")
         private String password;
     }
 
@@ -64,6 +64,10 @@ public class JoinAccountRo {
         @NotBlank(groups = {PhoneMode.class}, message = "邮件地址不能为空")
         @ApiModelProperty(value = "邮件地址")
         private String email;
+        @Pattern(groups = {UsernameMode.class}, regexp = RegexpConstant.PASSWORD, message = "请输入6~32位的密码")
+        @NotBlank(groups = {UsernameMode.class}, message = "密码不能为空")
+        @ApiModelProperty(value = "指定密码")
+        private String password;
         @Pattern(groups = {EmailMode.class}, regexp = RegexpConstant.VERIFY_CODE, message = "请输入6位验证码")
         @NotBlank(groups = {EmailMode.class}, message = "验证码不能为空")
         @ApiModelProperty(value = "验证码")
