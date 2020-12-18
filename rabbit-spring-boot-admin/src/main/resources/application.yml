@@ -21,4 +21,5 @@ boot:
   sso:
     client:
       ignore-urls:
+        - /favicon.ico
         - /actuator/**
