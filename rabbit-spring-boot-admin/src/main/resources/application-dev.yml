@@ -1,4 +1,4 @@
 spring:
   security:
     oauth2:
-      shostname: http://sso-dev.hocgin.top
+      shostname: https://sso-dev.hocgin.top
