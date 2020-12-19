@@ -5,4 +5,4 @@ spring:
   boot:
     admin:
       ui:
-        public-url: https://sba-dev.hocgin.top
+        public-url: 'https:'
