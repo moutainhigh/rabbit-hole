@@ -3,7 +3,7 @@ spring:
     active: local
   security:
     oauth2:
-      shostname: http://sso.hocgin.top
+      shostname: https://sso.hocgin.top
       client:
         registration:
           custom:
@@ -17,6 +17,7 @@ spring:
             authorization-uri: ${spring.security.oauth2.shostname}/oauth/authorize
             token-uri: ${spring.security.oauth2.shostname}/oauth/token
             user-name-attribute: name
+
 boot:
   sso:
     client:
