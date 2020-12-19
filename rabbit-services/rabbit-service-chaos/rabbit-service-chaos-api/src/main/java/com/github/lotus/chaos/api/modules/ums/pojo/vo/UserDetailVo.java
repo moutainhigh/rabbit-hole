@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-@ApiModel("用户详情")
+@ApiModel(description = "用户详情")
 public class UserDetailVo {
     private Long id;
     @ApiModelProperty("用户名")

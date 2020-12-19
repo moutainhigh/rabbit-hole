@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @InjectNamed
-@ApiModel("物流仓库")
+@ApiModel(description = "物流仓库")
 public class WarehouseComplexVo {
 
     @TableId(value = "id", type = IdType.AUTO)

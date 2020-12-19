@@ -16,7 +16,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@ApiModel("物流线路")
+@ApiModel(description = "物流线路")
 public class LogisticsLineUpdateRo extends BasicRo {
     @ApiModelProperty("物流仓库")
     private List<Long> warehouseId;

@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  * @author hocgin
  */
 @Data
-@ApiModel("创建物流公司")
+@ApiModel(description = "创建物流公司")
 public class CompanyCreateRo extends BasicRo {
     @NotNull(message = "请填写物流公司(3~10)")
     @Size(min = 3, max = 10, message = "请填写物流公司(3~10)")

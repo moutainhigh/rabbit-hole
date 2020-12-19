@@ -1,6 +1,6 @@
 package com.github.lotus.chaos.biz.modules.ums.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.SocialApi;
+import com.github.lotus.chaos.api.modules.ums.SocialServiceApi;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.service.SocialService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class SocialApiImpl implements SocialApi {
+public class SocialApiImpl implements SocialServiceApi {
     private final SocialService service;
 
     @Override

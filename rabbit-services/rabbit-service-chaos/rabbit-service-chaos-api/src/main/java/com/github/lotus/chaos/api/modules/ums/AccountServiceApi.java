@@ -16,14 +16,22 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = AccountApi.CONTEXT_ID)
-public interface AccountApi {
-    String CONTEXT_ID = "AccountApi";
+@FeignClient(value = ServiceName.NAME, contextId = AccountServiceApi.CONTEXT_ID)
+public interface AccountServiceApi {
+    String CONTEXT_ID = "AccountServiceApi";
 
     @GetMapping(CONTEXT_ID + "/getUser")
     UserDetailVo getUser(@RequestParam("username") String username);
 
-    @PostMapping(CONTEXT_ID + "/createAccount")
-    void createAccount(@Validated @RequestBody CreateAccountRo ro);
+    @GetMapping(CONTEXT_ID + "/getUserByPhone")
+    UserDetailVo getUserByPhone(@RequestParam("phone") String phone);
 
+    @PostMapping(CONTEXT_ID + "/createAccount")
+    UserDetailVo createAccount(@Validated @RequestBody CreateAccountRo ro);
+
+    @PostMapping(CONTEXT_ID + "/getToken")
+    String getToken(@RequestParam("username") String username);
+
+    @PostMapping(CONTEXT_ID + "/getUsername")
+    String getUsername(@RequestParam("token") String token);
 }

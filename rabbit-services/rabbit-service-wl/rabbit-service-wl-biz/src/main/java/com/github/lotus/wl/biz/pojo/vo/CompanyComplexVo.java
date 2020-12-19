@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @InjectNamed
-@ApiModel("公司信息")
+@ApiModel(description = "公司信息")
 public class CompanyComplexVo {
     private Long id;
     @ApiModelProperty("名称")

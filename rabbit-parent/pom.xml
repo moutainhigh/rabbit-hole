@@ -156,6 +156,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>validation-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>mybatis-plus-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>

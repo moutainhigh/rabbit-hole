@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Data
 @InjectNamed
-@ApiModel("物流线路")
+@ApiModel(description = "物流线路")
 public class LogisticsLineComplexVo {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

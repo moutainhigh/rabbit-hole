@@ -1,6 +1,7 @@
 package com.github.lotus.sso.service;
 
-import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.sso.pojo.ro.JoinAccountRo;
+import com.github.lotus.sso.pojo.ro.LoginRo;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -10,5 +11,7 @@ import com.github.lotus.sso.pojo.ro.JoinRo;
  */
 public interface AccountService {
 
-    void createAccount(JoinRo ro);
+    String login(LoginRo ro);
+
+    String join(JoinAccountRo ro);
 }

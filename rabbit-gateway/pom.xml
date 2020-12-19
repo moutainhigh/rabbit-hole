@@ -23,6 +23,10 @@
       <artifactId>rabbit-usercontext-basic</artifactId>
     </dependency>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-common</artifactId>
+    </dependency>
+    <dependency>
       <groupId>in.hocg.boot</groupId>
       <artifactId>knife-gateway-spring-boot-starter</artifactId>
     </dependency>

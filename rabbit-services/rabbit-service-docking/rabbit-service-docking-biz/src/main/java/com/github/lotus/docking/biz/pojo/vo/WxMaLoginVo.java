@@ -19,6 +19,8 @@ public class WxMaLoginVo {
     private Boolean hasBind;
     @ApiModelProperty("账号")
     private UserDetailVo userDetail;
+    @ApiModelProperty("会话标记")
+    private String token;
 
     @Data
     @Accessors(chain = true)

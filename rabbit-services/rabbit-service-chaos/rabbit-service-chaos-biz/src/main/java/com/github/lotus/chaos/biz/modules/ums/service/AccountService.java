@@ -17,9 +17,15 @@ import java.util.List;
  */
 public interface AccountService extends AbstractService<Account> {
 
-    void createAccount(CreateAccountRo ro);
+    UserDetailVo createAccount(CreateAccountRo ro);
 
     UserDetailVo getUser(String username);
 
     List<Account> listAccountByAccountId(List<Long> values);
+
+    String getToken(String username);
+
+    String getUsername(String token);
+
+    UserDetailVo getUserByPhone(String phone);
 }

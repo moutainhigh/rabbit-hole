@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
  * @author hocgin
  */
 @Data
-@ApiModel("物流公司")
+@ApiModel(description = "物流公司")
 public class CompanyUpdateRo {
     @Size(min = 3, max = 10, message = "物流公司名称错误")
     @ApiModelProperty("物流公司名称")

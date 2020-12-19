@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("微信登陆状态")
+@ApiModel(description = "微信登陆状态")
 public class WxLoginInfoVo {
     @ApiModelProperty("账号")
     private String openid;

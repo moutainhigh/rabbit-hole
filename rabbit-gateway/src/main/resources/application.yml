@@ -3,6 +3,13 @@ spring:
     active: local
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins:
+              - 'http://127.0.0.1:28250'
+            allowedMethods: "*"
       discovery:
         locator:
           lowerCaseServiceId: true
@@ -42,9 +49,10 @@ spring:
           filters:
             - StripPrefix=1
 
-          default-filters:
-            - name: SwaggerHeaderFilter
-            - name: Logger
+      default-filters:
+        - name: SwaggerHeaderFilter
+        - name: Logger
+        - name: SaveSession
       loadbalancer:
         use404: true
   security:
@@ -70,11 +78,13 @@ boot:
       ignore-urls:
         - /swagger-resources/configuration/ui
         - /favicon.ico
+        - /actuator/**
         - /webjars/**
-        - /*/v2/api-docs
         - /ignore
+        - /*/v2/api-docs
         - /chaos/district/tree
         - /chaos/address4ip
         - /chaos/logistics-line/_search
-        - /actuator/**
+        - /wl/logistics-line/_search
         - /docking/wx/mp/*
+        - /docking/wx/miniapp/*/login

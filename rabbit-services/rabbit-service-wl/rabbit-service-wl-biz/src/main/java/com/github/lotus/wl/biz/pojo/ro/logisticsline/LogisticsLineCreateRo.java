@@ -19,7 +19,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@ApiModel("物流线路")
+@ApiModel(description = "物流线路")
 @EqualsAndHashCode(callSuper = true)
 public class LogisticsLineCreateRo extends BasicRo {
     @Size(min = 1, message = "请填写物流仓库")

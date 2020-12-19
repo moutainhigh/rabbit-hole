@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("发送验证码")
+@ApiModel(description = "发送验证码")
 public class SendSmsCodeRo {
     @NotBlank(message = "手机号码错误")
     @ApiModelProperty("手机号码")

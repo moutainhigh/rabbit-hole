@@ -20,4 +20,5 @@ public interface SsoIndexService {
     WxMpQrCodeVo getWxQrCode();
 
     WxLoginStatusVo getWxLoginStatus(String idFlag, String redirectUrl);
+
 }

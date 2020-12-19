@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  * @author hocgin
  */
 @Data
-@ApiModel("物流仓库")
+@ApiModel(description = "物流仓库")
 public class WarehouseUpdateRo extends BasicRo {
     @Size(min = 3, max = 10, message = "仓库名称名称错误")
     @ApiModelProperty("仓库名称")
