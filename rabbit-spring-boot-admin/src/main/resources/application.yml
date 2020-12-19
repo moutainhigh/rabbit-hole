@@ -3,7 +3,7 @@ spring:
     active: local
   security:
     oauth2:
-      shostname: http://sso.hocgin.top
+      shostname: https://sso.hocgin.top
       client:
         registration:
           custom:
