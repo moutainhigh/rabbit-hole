@@ -63,7 +63,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
             // 如果没有关联则自动创建一个账号
             if (Objects.isNull(userDetailVo)) {
-                WxMaUserInfo userInfo = getUserInfo(appid, code, signature, rawData, encryptedData, iv);
+                WxMaUserInfo userInfo = getUserInfo(appid, sessionKey, signature, rawData, encryptedData, iv);
                 CreateAccountRo createAccountRo = new CreateAccountRo()
                     .setAvatar(userInfo.getAvatarUrl())
                     .setNickname(userInfo.getNickName())
