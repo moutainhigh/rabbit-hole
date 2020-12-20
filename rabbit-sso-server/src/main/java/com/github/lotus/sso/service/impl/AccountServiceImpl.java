@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setEmail(email);
         UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getToken(userDetailVo.getUsername());
+        return accountApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setUsername(username);
         UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getToken(userDetailVo.getUsername());
+        return accountApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
@@ -95,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setPhone(phone);
         UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getToken(userDetailVo.getUsername());
+        return accountApi.getUserToken(userDetailVo.getUsername());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class AccountServiceImpl implements AccountService {
         }
         UserDetailVo userDetail = accountApi.getUserByPhone(phone);
         ValidUtils.notNull(userDetail, "手机号码错误");
-        return accountApi.getToken(userDetail.getUsername());
+        return accountApi.getUserToken(userDetail.getUsername());
     }
 
     private String loginUsePassword(LoginRo.PasswordMode ro) {
@@ -134,7 +134,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (AuthenticationException e) {
             throw ServiceException.wrap("用户名或密码错误");
         }
-        return accountApi.getToken(username);
+        return accountApi.getUserToken(username);
     }
 
 }

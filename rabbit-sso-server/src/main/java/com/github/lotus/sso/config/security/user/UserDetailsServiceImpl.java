@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetailVo user = accountApi.getUser(username);
+        UserDetailVo user = accountApi.getUserByUsernameOrEmailOrPhone(username);
         Assert.notNull(user, "账号或密码错误");
         return new User(username, user.getPassword(), Collections.emptyList());
     }

@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AccountServiceApi {
     String CONTEXT_ID = "AccountServiceApi";
 
-    @GetMapping(CONTEXT_ID + "/getUser")
-    UserDetailVo getUser(@RequestParam("username") String username);
+    @GetMapping(CONTEXT_ID + "/getUserByUsername")
+    UserDetailVo getUserByUsername(@RequestParam("username") String username);
+
+    @GetMapping(CONTEXT_ID + "/getUserByUsernameOrEmailOrPhone")
+    UserDetailVo getUserByUsernameOrEmailOrPhone(@RequestParam("unique") String unique);
 
     @GetMapping(CONTEXT_ID + "/getUserByPhone")
     UserDetailVo getUserByPhone(@RequestParam("phone") String phone);
@@ -29,8 +32,8 @@ public interface AccountServiceApi {
     @PostMapping(CONTEXT_ID + "/createAccount")
     UserDetailVo createAccount(@Validated @RequestBody CreateAccountRo ro);
 
-    @PostMapping(CONTEXT_ID + "/getToken")
-    String getToken(@RequestParam("username") String username);
+    @PostMapping(CONTEXT_ID + "/getUserToken")
+    String getUserToken(@RequestParam("username") String username);
 
     @PostMapping(CONTEXT_ID + "/getUsername")
     String getUsername(@RequestParam("token") String token);

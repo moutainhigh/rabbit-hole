@@ -19,7 +19,9 @@ public interface AccountService extends AbstractService<Account> {
 
     UserDetailVo createAccount(CreateAccountRo ro);
 
-    UserDetailVo getUserDetailVo(String username);
+    UserDetailVo getUserDetailVoByUsername(String username);
+
+    UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique);
 
     List<Account> listAccountByAccountId(List<Long> values);
 

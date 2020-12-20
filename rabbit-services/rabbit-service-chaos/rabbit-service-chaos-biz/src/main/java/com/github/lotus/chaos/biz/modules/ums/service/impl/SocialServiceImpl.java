@@ -38,7 +38,7 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
         Optional<Account> accountOpt = getAccountBySocialTypeAndSocialId(socialType, socialId);
         if (accountOpt.isPresent()) {
             Account account = accountOpt.get();
-            return accountService.getUserDetailVo(account.getUsername());
+            return accountService.getUserDetailVoByUsername(account.getUsername());
         }
         return null;
     }

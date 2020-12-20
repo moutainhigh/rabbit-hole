@@ -108,14 +108,28 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
         boolean isOk = this.validUpdateById(update);
         ValidUtils.isTrue(isOk, "系统繁忙，注册失败");
-        return getUserDetailVo(username);
+        return getUserDetailVoByUsername(username);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserDetailVo getUserDetailVo(String username) {
+    public UserDetailVo getUserDetailVoByUsername(String username) {
         return getAccountByUsername(username)
             .map(mapping::asUserDetailVo).orElse(null);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique) {
+        return getAccountByUsernameOrEmailOrPhone(unique)
+            .map(mapping::asUserDetailVo).orElse(null);
+    }
+
+    public Optional<Account> getAccountByUsernameOrEmailOrPhone(String unique) {
+        return lambdaQuery()
+            .or().eq(Account::getUsername, unique)
+            .or().eq(Account::getEmail, unique)
+            .or().eq(Account::getPhone, unique).oneOpt();
     }
 
     @Override

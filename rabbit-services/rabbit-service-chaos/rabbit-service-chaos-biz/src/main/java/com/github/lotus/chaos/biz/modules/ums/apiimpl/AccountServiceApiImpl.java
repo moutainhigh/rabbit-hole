@@ -20,8 +20,13 @@ public class AccountServiceApiImpl implements AccountServiceApi {
     private final AccountService service;
 
     @Override
-    public UserDetailVo getUser(String username) {
-        return service.getUserDetailVo(username);
+    public UserDetailVo getUserByUsername(String username) {
+        return service.getUserDetailVoByUsername(username);
+    }
+
+    @Override
+    public UserDetailVo getUserByUsernameOrEmailOrPhone(String unique) {
+        return service.getUserDetailVoByUsernameOrEmailOrPhone(unique);
     }
 
     @Override
@@ -35,7 +40,7 @@ public class AccountServiceApiImpl implements AccountServiceApi {
     }
 
     @Override
-    public String getToken(String username) {
+    public String getUserToken(String username) {
         return service.getToken(username);
     }
 

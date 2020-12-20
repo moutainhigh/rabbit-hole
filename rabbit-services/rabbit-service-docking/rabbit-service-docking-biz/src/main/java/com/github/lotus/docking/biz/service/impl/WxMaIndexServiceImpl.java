@@ -82,7 +82,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
                 .setNickname(userDetailVo.getNickname())
                 .setUsername(username)
                 .setId(userDetailVo.getId());
-            return result.setToken(accountServiceApi.getToken(username))
+            return result.setToken(accountServiceApi.getUserToken(username))
                 .setUserDetail(userDetail);
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
