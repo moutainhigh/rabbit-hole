@@ -15,8 +15,6 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 public class WxMaLoginVo {
-    @ApiModelProperty("是否绑定账号")
-    private Boolean hasBind;
     @ApiModelProperty("账号")
     private UserDetailVo userDetail;
     @ApiModelProperty("会话标记")

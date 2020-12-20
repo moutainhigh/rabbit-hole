@@ -65,6 +65,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             if (Objects.isNull(userDetailVo)) {
                 WxMaUserInfo userInfo = getUserInfo(appid, code, signature, rawData, encryptedData, iv);
                 CreateAccountRo createAccountRo = new CreateAccountRo()
+                    .setAvatar(userInfo.getAvatarUrl())
                     .setNickname(userInfo.getNickName())
                     .setSocials(Collections.singletonList(new CreateAccountRo.SocialItem()
                         .setSocialType(socialType)
@@ -74,12 +75,12 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
             String username = userDetailVo.getUsername();
             wxMaCacheService.updateWxMaSessionUser(sessionKey, username);
+
             // 关联账号
             WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
                 .setUsername(username)
                 .setId(userDetailVo.getId());
-            return result.setHasBind(true)
-                .setToken(accountServiceApi.getToken(username))
+            return result.setToken(accountServiceApi.getToken(username))
                 .setUserDetail(userDetail);
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);

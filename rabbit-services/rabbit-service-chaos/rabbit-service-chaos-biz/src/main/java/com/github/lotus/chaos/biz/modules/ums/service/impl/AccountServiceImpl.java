@@ -19,7 +19,9 @@ import com.github.lotus.common.utils.RabbitUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +54,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public UserDetailVo createAccount(CreateAccountRo ro) {
         String username = ro.getUsername();
         String nickname = ro.getNickname();
+        String avatar = ro.getAvatar();
         List<CreateAccountRo.SocialItem> socials = ro.getSocials();
         boolean isUseDefaultUsername = StrUtil.isBlank(username);
         boolean isUseDefaultNickname = StrUtil.isBlank(nickname);
@@ -65,15 +68,16 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
         LocalDateTime createdAt = LocalDateTime.now();
 
-        Account entity = new Account();
-        entity.setNickname(nickname);
-        entity.setUsername(username);
-        entity.setPhone(phone);
-        entity.setEmail(email);
-        entity.setPassword(password);
-        entity.setCreatedIp(createdIp);
-        entity.setCreatedAt(createdAt);
-        validInsert(entity);
+        Account entity = new Account()
+            .setNickname(nickname)
+            .setUsername(username)
+            .setPhone(phone)
+            .setEmail(email)
+            .setAvatar(avatar)
+            .setPassword(password)
+            .setCreatedIp(createdIp)
+            .setCreatedAt(createdAt);
+        ValidUtils.isTrue(validInsert(entity), "系统繁忙，注册失败");
         final Long entityId = entity.getId();
 
         // 关联社交账号，如果有的话
@@ -86,28 +90,30 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             }
         }
 
-        // 更新头像
-        final File file = Avatars.getAvatarAsPath(entityId).toFile();
-        String avatarUrl = ossFileService.upload(file, file.getName());
         final Account update = new Account()
-            .setId(entityId)
-            .setAvatar(avatarUrl);
+            .setId(entityId);
+
+        // 设置默认头像，如果没有指定头像的话
+        if (Strings.isBlank(avatar)) {
+            final File file = Avatars.getAvatarAsPath(entityId).toFile();
+            String avatarUrl = ossFileService.upload(file, file.getName());
+            update.setAvatar(avatarUrl);
+        }
+
+        // 设置默认账号，如果没有指定账号的话
         if (isUseDefaultUsername) {
             username = RabbitUtils.getDefaultUsername(entityId);
             update.setUsername(username);
         }
 
-        this.validUpdateById(update);
-        return getUser(username);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(IdUtil.fastSimpleUUID());
+        boolean isOk = this.validUpdateById(update);
+        ValidUtils.isTrue(isOk, "系统繁忙，注册失败");
+        return getUserDetailVo(username);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserDetailVo getUser(String username) {
+    public UserDetailVo getUserDetailVo(String username) {
         return getAccountByUsername(username)
             .map(mapping::asUserDetailVo).orElse(null);
     }

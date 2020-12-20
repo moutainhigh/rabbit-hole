@@ -25,6 +25,8 @@ public class CreateAccountRo {
     private String username;
     @ApiModelProperty("昵称")
     private String nickname;
+    @ApiModelProperty("头像")
+    private String avatar;
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("注册IP")

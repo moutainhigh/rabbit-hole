@@ -23,7 +23,7 @@ public class UserContextServiceImpl implements UserContextService {
 
     @Override
     public UserDetail getUserDetail(String username) {
-        UserDetailVo userDetail = accountService.getUser(username);
+        UserDetailVo userDetail = accountService.getUserDetailVo(username);
         if (Objects.isNull(userDetail)) {
             return null;
         }

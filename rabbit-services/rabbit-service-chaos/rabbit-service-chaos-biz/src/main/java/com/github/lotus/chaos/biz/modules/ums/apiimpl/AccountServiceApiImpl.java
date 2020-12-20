@@ -21,7 +21,7 @@ public class AccountServiceApiImpl implements AccountServiceApi {
 
     @Override
     public UserDetailVo getUser(String username) {
-        return service.getUser(username);
+        return service.getUserDetailVo(username);
     }
 
     @Override
