@@ -27,5 +27,9 @@ public class WxMaLoginVo {
         private Long id;
         @ApiModelProperty("账号")
         private String username;
+        @ApiModelProperty("昵称")
+        private String nickname;
+        @ApiModelProperty("头像")
+        private String avatar;
     }
 }

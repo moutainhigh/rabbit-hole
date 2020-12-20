@@ -12,6 +12,13 @@ import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
  */
 public interface WxMaIndexService {
 
+    /**
+     * 获取账号 Token 如果没有账号会自动创建
+     *
+     * @param appid
+     * @param ro
+     * @return
+     */
     WxMaLoginVo getUserToken(String appid, GetMaUserTokenRo ro);
 
     WxMaPhoneNumberInfoVo getUserPhone(String appid, String sessionKey, String signature, String rawData, String encryptedData, String iv);

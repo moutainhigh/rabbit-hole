@@ -78,6 +78,8 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
             // 关联账号
             WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
+                .setAvatar(userDetailVo.getAvatar())
+                .setNickname(userDetailVo.getNickname())
                 .setUsername(username)
                 .setId(userDetailVo.getId());
             return result.setToken(accountServiceApi.getToken(username))
