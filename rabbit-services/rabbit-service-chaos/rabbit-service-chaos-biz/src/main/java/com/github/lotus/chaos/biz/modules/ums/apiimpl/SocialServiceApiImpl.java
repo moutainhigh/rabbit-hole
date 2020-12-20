@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class SocialApiImpl implements SocialServiceApi {
+public class SocialServiceApiImpl implements SocialServiceApi {
     private final SocialService service;
 
     @Override

@@ -6,11 +6,13 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
+import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import com.github.lotus.chaos.biz.modules.ums.mapper.AccountMapper;
 import com.github.lotus.chaos.biz.modules.ums.mapstruct.AccountMapping;
 import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
+import com.github.lotus.chaos.biz.modules.ums.service.SocialService;
 import com.github.lotus.chaos.biz.modules.ums.utils.Avatars;
 import com.github.lotus.common.utils.JwtUtils;
 import com.github.lotus.common.utils.RabbitUtils;
@@ -42,13 +44,18 @@ import java.util.Optional;
 public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Account>
     implements AccountService {
     private final AccountMapping mapping;
+    private final SocialService socialService;
     private final OssFileService ossFileService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserDetailVo createAccount(CreateAccountRo ro) {
         String username = ro.getUsername();
+        String nickname = ro.getNickname();
+        List<CreateAccountRo.SocialItem> socials = ro.getSocials();
         boolean isUseDefaultUsername = StrUtil.isBlank(username);
+        boolean isUseDefaultNickname = StrUtil.isBlank(nickname);
+        nickname = LangUtils.getOrDefault(nickname, "暂未设置");
         username = LangUtils.getOrDefault(username, RandomUtil.randomString(18));
 
         String phone = ro.getPhone();
@@ -59,7 +66,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         LocalDateTime createdAt = LocalDateTime.now();
 
         Account entity = new Account();
-        entity.setNickname("暂未设置");
+        entity.setNickname(nickname);
         entity.setUsername(username);
         entity.setPhone(phone);
         entity.setEmail(email);
@@ -67,9 +74,19 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         entity.setCreatedIp(createdIp);
         entity.setCreatedAt(createdAt);
         validInsert(entity);
+        final Long entityId = entity.getId();
+
+        // 关联社交账号，如果有的话
+        if (CollectionUtil.isNotEmpty(socials)) {
+            for (CreateAccountRo.SocialItem item : socials) {
+                socialService.insertOne(new InsertSocialRo()
+                    .setSocialType(item.getSocialType())
+                    .setSocialId(item.getSocialId())
+                    .setAccountId(entityId));
+            }
+        }
 
         // 更新头像
-        final Long entityId = entity.getId();
         final File file = Avatars.getAvatarAsPath(entityId).toFile();
         String avatarUrl = ossFileService.upload(file, file.getName());
         final Account update = new Account()
@@ -78,7 +95,6 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         if (isUseDefaultUsername) {
             username = RabbitUtils.getDefaultUsername(entityId);
             update.setUsername(username);
-            update.setNickname(username);
         }
 
         this.validUpdateById(update);

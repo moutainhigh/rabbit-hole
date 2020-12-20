@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel
+@ApiModel(description = "创建账号")
 public class CreateAccountRo {
     @ApiModelProperty("手机号")
     private String phone;
@@ -23,8 +23,22 @@ public class CreateAccountRo {
     private String email;
     @ApiModelProperty("用户名")
     private String username;
+    @ApiModelProperty("昵称")
+    private String nickname;
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("注册IP")
     private String createdIp;
+    @ApiModelProperty("社交账号")
+    private List<SocialItem> socials;
+
+    @Data
+    @Accessors(chain = true)
+    @ApiModel(description = "关联社交账号")
+    public static class SocialItem {
+        @ApiModelProperty("社交类型")
+        private String socialType;
+        @ApiModelProperty("社交账号id")
+        private String socialId;
+    }
 }

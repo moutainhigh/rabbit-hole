@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class AccountApiImpl implements AccountServiceApi {
+public class AccountServiceApiImpl implements AccountServiceApi {
     private final AccountService service;
 
     @Override
