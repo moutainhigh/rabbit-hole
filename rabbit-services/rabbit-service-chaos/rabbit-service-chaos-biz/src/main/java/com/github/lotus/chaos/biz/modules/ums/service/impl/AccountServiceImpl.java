@@ -125,6 +125,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             .map(mapping::asUserDetailVo).orElse(null);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public Optional<Account> getAccountByUsernameOrEmailOrPhone(String unique) {
         return lambdaQuery()
             .or().eq(Account::getUsername, unique)

@@ -4,8 +4,10 @@ import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.chaos.biz.modules.ums.entity.Account;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -22,6 +24,8 @@ public interface AccountService extends AbstractService<Account> {
     UserDetailVo getUserDetailVoByUsername(String username);
 
     UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique);
+
+    Optional<Account> getAccountByUsernameOrEmailOrPhone(String unique);
 
     List<Account> listAccountByAccountId(List<Long> values);
 
