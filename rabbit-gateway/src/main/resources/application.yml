@@ -43,7 +43,7 @@ spring:
             - StripPrefix=1
 
         - id: rabbit-ums
-          uri: lb://rabbit-ums
+          uri: lb://rabbit-chaos
           predicates:
             - Path=/ums/**
           filters:
