@@ -15,6 +15,7 @@
   <artifactId>rabbit-services</artifactId>
   <modules>
     <module>rabbit-service-tpl</module>
+    <module>rabbit-service-ums</module>
     <module>rabbit-service-chaos</module>
     <module>rabbit-service-docking</module>
     <module>rabbit-service-wl</module>

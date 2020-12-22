@@ -1,13 +1,13 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.lang.SmsApi;
-import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
-import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
-import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
+import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinAccountRo;
 import com.github.lotus.sso.pojo.ro.LoginRo;
 import com.github.lotus.sso.service.AccountService;
+import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.validation.autoconfigure.core.ICode;
 import in.hocg.boot.validation.autoconfigure.core.ValidatorUtils;
@@ -33,10 +33,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
-    private final AccountServiceApi api;
-    private final SmsApi smsApi;
-    private final AccountServiceApi accountApi;
+    private final SmsServiceApi smsApi;
+    private final AccountServiceApi accountServiceApi;
 
     @Override
     public String join(JoinAccountRo ro) {
@@ -68,8 +66,8 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setEmail(email);
-        UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
+        return accountServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
@@ -80,8 +78,8 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setUsername(username);
-        UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
+        return accountServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
@@ -94,8 +92,8 @@ public class AccountServiceImpl implements AccountService {
         CreateAccountRo newRo = new CreateAccountRo()
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setPhone(phone);
-        UserDetailVo userDetailVo = api.createAccount(newRo);
-        return accountApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
+        return accountServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     @Override
@@ -121,9 +119,9 @@ public class AccountServiceImpl implements AccountService {
         if (!smsApi.validSmsCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
-        UserDetailVo userDetail = accountApi.getUserByPhone(phone);
+        UserDetailVo userDetail = accountServiceApi.getUserByPhone(phone);
         ValidUtils.notNull(userDetail, "手机号码错误");
-        return accountApi.getUserToken(userDetail.getUsername());
+        return accountServiceApi.getUserToken(userDetail.getUsername());
     }
 
     private String loginUsePassword(LoginRo.PasswordMode ro) {
@@ -134,7 +132,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (AuthenticationException e) {
             throw ServiceException.wrap("用户名或密码错误");
         }
-        return accountApi.getUserToken(username);
+        return accountServiceApi.getUserToken(username);
     }
 
 }

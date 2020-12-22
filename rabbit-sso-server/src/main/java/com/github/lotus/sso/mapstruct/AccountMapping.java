@@ -1,7 +1,7 @@
 package com.github.lotus.sso.mapstruct;
 
-import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
+import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,6 +13,10 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface AccountMapping {
+    @Mapping(target = "socials", ignore = true)
+    @Mapping(target = "nickname", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "avatar", ignore = true)
     @Mapping(target = "createdIp", ignore = true)
     CreateAccountRo asCreateAccountRo(JoinRo ro);
 }

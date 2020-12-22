@@ -1,8 +1,8 @@
 package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.core.lang.Assert;
-import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
-import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
+import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
