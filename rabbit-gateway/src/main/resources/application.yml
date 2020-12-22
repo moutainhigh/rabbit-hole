@@ -95,3 +95,4 @@ boot:
         - /wl/logistics-line/_search
         - /docking/wx/mp/*
         - /docking/wx/miniapp/*/login
+        - /ums/account/*:avatar
