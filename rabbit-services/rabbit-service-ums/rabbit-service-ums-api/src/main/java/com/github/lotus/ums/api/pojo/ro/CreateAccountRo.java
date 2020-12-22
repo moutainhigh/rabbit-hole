@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class CreateAccountRo {
     @ApiModelProperty("注册IP")
     private String createdIp;
     @ApiModelProperty("社交账号")
-    private List<SocialItem> socials;
+    private List<SocialItem> socials = Collections.emptyList();
 
     @Data
     @Accessors(chain = true)
