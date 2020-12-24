@@ -2,8 +2,12 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -34,6 +38,15 @@ public class AccountController {
     public ResponseEntity<?> getAvatarUrl(@PathVariable String username) {
         return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
             .map(Account::getAvatar).orElse(null));
+    }
+
+    @UseLogger("获取当前用户信息")
+    @GetMapping
+    @ResponseBody
+    public Result<AccountComplexVo> getCurrentAccount() {
+        Long userId = UserContextHolder.getUserId()
+            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        return Result.success(service.getAccountVoById(userId));
     }
 }
 

@@ -15,6 +15,7 @@ import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Account;
 import com.github.lotus.ums.biz.mapper.AccountMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
+import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.ums.biz.service.SocialService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -160,6 +161,12 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public List<AccountVo> listAccountVoByAccountId(List<Long> id) {
         return LangUtils.toList(this.listAccountByAccountId(id), mapping::asAccountVo);
+    }
+
+    @Override
+    public AccountComplexVo getAccountVoById(Long userId) {
+        Account entity = baseMapper.selectById(userId);
+        return mapping.asComplex(entity);
     }
 
     private Optional<Account> getAccountByUsername(String username) {
