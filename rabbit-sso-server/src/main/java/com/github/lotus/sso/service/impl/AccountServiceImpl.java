@@ -41,15 +41,15 @@ public class AccountServiceImpl implements AccountService {
         JoinAccountRo.Mode mode = ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class);
         switch (mode) {
             case UsePhone: {
-                ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneMode.class);
+                ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneModeGroup.class);
                 return this.joinUsePhone(ro.getPhoneMode());
             }
             case UseUsername: {
-                ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameMode.class);
+                ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameModeGroup.class);
                 return this.joinUseUsername(ro.getUsernameMode());
             }
             case UseEmail:
-                ValidatorUtils.validThrow(ro, JoinAccountRo.EmailMode.class);
+                ValidatorUtils.validThrow(ro, JoinAccountRo.EmailModeGroup.class);
                 return this.joinUseEmail(ro.getEmailMode());
             default:
                 throw ServiceException.wrap("该注册方式暂不支持");
@@ -101,11 +101,11 @@ public class AccountServiceImpl implements AccountService {
         LoginRo.Mode mode = ICode.ofThrow(ro.getMode(), LoginRo.Mode.class);
         switch (mode) {
             case UseSms: {
-                ValidatorUtils.validThrow(ro, LoginRo.SmsMode.class);
+                ValidatorUtils.validThrow(ro, LoginRo.SmsModeGroup.class);
                 return this.loginUseSms(ro.getSmsMode());
             }
             case UsePassword: {
-                ValidatorUtils.validThrow(ro, LoginRo.PasswordMode.class);
+                ValidatorUtils.validThrow(ro, LoginRo.PasswordModeGroup.class);
                 return this.loginUsePassword(ro.getPasswordMode());
             }
             default:
