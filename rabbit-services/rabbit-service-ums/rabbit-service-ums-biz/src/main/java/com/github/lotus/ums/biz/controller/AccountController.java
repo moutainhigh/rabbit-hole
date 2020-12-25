@@ -9,6 +9,7 @@ import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.ResponseUtils;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author hocgin
  * @since 2020-10-06
  */
+@Api(tags = "ums::账号")
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/account")

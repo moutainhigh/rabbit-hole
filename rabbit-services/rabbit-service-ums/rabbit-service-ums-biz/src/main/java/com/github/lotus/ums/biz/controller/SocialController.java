@@ -1,10 +1,10 @@
 package com.github.lotus.ums.biz.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author hocgin
- * @since 2020-11-30
+ * @since2020-11-30
  */
+@Api(tags = "ums::社交账号")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/social")
