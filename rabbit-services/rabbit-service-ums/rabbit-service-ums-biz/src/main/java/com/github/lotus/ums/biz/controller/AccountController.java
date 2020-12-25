@@ -6,7 +6,6 @@ import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.ResponseUtils;
 import io.swagger.annotations.Api;
@@ -46,8 +45,7 @@ public class AccountController {
     @GetMapping
     @ResponseBody
     public Result<AccountComplexVo> getCurrentAccount() {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.getAccountVoById(userId));
     }
 }

@@ -2,6 +2,7 @@ package com.github.lotus.wl.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import com.github.lotus.wl.biz.pojo.ro.company.CompanyCompleteRo;
 import com.github.lotus.wl.biz.pojo.ro.company.CompanyCreateRo;
 import com.github.lotus.wl.biz.pojo.ro.company.CompanyDeleteRo;
@@ -9,8 +10,6 @@ import com.github.lotus.wl.biz.pojo.ro.company.CompanyPagingRo;
 import com.github.lotus.wl.biz.pojo.ro.company.CompanyUpdateRo;
 import com.github.lotus.wl.biz.pojo.vo.CompanyComplexVo;
 import com.github.lotus.wl.biz.service.CompanyService;
-import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +45,7 @@ public class CompanyController {
     @PostMapping
     @ApiOperation("创建 - 物流公司")
     public Result create(@Validated @RequestBody CompanyCreateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
         return Result.success();
@@ -57,8 +55,7 @@ public class CompanyController {
     @ApiOperation("更新 - 物流公司")
     public Result update(@PathVariable("id") Long id,
                        @Validated @RequestBody CompanyUpdateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
         service.update(id, ro);
         return Result.success();

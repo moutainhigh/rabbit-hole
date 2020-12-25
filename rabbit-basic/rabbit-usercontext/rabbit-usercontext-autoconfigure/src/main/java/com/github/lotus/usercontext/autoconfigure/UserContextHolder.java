@@ -4,6 +4,7 @@ import com.github.lotus.usercontext.basic.HeaderConstants;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.exception.UnAuthenticationException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.experimental.UtilityClass;
 
@@ -33,6 +34,10 @@ public class UserContextHolder {
 
     public Optional<Long> getUserId() {
         return getUserDetail().map(UserDetail::getId);
+    }
+
+    public Long getUserIdThrow() {
+        return getUserId().orElseThrow(UnAuthenticationException::new);
     }
 
     public Optional<String> getSource() {
