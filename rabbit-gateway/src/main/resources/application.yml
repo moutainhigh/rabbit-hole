@@ -94,6 +94,6 @@ boot:
         - /chaos/logistics-line/_search
         - /wl/logistics-line/_search
         - /docking/wx/mp/*
-        - /docking/wx/miniapp/*/login
+        - /docking/wx/miniapp/*/token
         - /ums/account/*:avatar
         - /sso/account/login/token
