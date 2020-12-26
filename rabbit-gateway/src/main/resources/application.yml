@@ -42,6 +42,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: rabbit-ums
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/ums/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-tpl
           uri: lb://rabbit-tpl
           predicates:
@@ -88,3 +95,4 @@ boot:
         - /wl/logistics-line/_search
         - /docking/wx/mp/*
         - /docking/wx/miniapp/*/login
+        - /ums/account/*:avatar

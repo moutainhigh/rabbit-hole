@@ -1,12 +1,12 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
-import com.github.lotus.chaos.api.modules.ums.SocialServiceApi;
-import com.github.lotus.chaos.api.modules.ums.pojo.ro.InsertSocialRo;
-import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
 import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
+import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.SocialServiceApi;
+import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class SocialServiceImpl implements SocialService {
             if (Objects.nonNull(username)) {
                 // 这个用户需要未绑定改类型的社交账号
                 log.debug("==> 绑定社交账号 [{}] 到 [{}]", socialType + socialId, username);
-                UserDetailVo user = accountApi.getUser(username);
+                UserDetailVo user = accountApi.getUserByUsername(username);
                 socialApi.insertOne(new InsertSocialRo()
                     .setSocialType(socialType)
                     .setSocialId(socialId)

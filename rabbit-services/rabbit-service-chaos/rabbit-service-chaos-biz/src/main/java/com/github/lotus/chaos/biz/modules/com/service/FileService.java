@@ -23,6 +23,8 @@ public interface FileService extends AbstractService<File> {
 
     void upload(UploadFileRo dto);
 
+    String getAvatarUrl(Long id);
+
     List<FileVo> listFileByRelTypeAndRelId(@NotNull String relType,
                                            @NotNull Long relId);
 }

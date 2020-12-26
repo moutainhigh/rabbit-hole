@@ -1,10 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.lang.SmsApi;
-import com.github.lotus.chaos.api.modules.ums.AccountServiceApi;
-import com.github.lotus.chaos.api.modules.ums.constant.SocialType;
-import com.github.lotus.chaos.api.modules.ums.pojo.ro.CreateAccountRo;
-import com.github.lotus.docking.api.WxApi;
+import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
+import com.github.lotus.docking.api.WxServiceApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.sso.config.security.PageConstants;
@@ -15,6 +12,9 @@ import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
+import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.constant.SocialType;
+import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -33,8 +33,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SsoIndexServiceImpl implements SsoIndexService {
     private final AccountServiceApi accountApi;
-    private final WxApi wxApi;
-    private final SmsApi smsApi;
+    private final WxServiceApi wxApi;
+    private final SmsServiceApi smsApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;

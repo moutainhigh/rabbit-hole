@@ -6,6 +6,7 @@ import com.github.lotus.chaos.biz.modules.com.entity.File;
 import com.github.lotus.chaos.biz.modules.com.enums.FileRelType;
 import com.github.lotus.chaos.biz.modules.com.mapper.FileMapper;
 import com.github.lotus.chaos.biz.modules.com.service.FileService;
+import com.github.lotus.chaos.biz.modules.com.utils.Avatars;
 import com.github.lotus.common.constant.GlobalConstant;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
@@ -66,6 +67,12 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
                 .setFileUrl(item.getUrl())
             ).collect(Collectors.toList());
         this.saveBatch(list);
+    }
+
+    @Override
+    public String getAvatarUrl(Long id) {
+        final java.io.File file = Avatars.getAvatarAsPath(id).toFile();
+        return ossFileService.upload(file, file.getName());
     }
 
     @Override

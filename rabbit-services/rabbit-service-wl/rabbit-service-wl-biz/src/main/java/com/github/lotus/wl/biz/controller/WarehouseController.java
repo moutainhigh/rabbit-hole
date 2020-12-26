@@ -46,8 +46,7 @@ public class WarehouseController {
     @PostMapping
     @ApiOperation("创建 - 物流仓库")
     public Result create(@Validated @RequestBody WarehouseCreateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
         return Result.success();
@@ -57,8 +56,7 @@ public class WarehouseController {
     @ApiOperation("更新 - 物流仓库")
     public Result update(@PathVariable("id") Long id,
                          @Validated @RequestBody WarehouseUpdateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
         service.update(id, ro);
         return Result.success();

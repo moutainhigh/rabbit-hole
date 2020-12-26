@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.ums.biz.mapper.SocialMapper">
+
+    <select id="getAccountBySocialTypeAndSocialId" resultType="com.github.lotus.ums.biz.entity.Account">
+      SELECT ua.* FROM ums_account ua
+        LEFT JOIN ums_social us ON us.account_id = ua.id
+      <where>
+        us.social_type = #{socialType}
+        AND us.social_id = #{socialId}
+      </where>
+    </select>
+</mapper>

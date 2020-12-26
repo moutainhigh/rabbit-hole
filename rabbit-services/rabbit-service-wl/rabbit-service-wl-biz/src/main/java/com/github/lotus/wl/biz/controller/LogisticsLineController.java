@@ -48,8 +48,7 @@ public class LogisticsLineController {
     @PostMapping
     @ApiOperation("创建 - 物流线路")
     public Result create(@Validated @RequestBody LogisticsLineCreateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
         return Result.success();
@@ -58,8 +57,7 @@ public class LogisticsLineController {
     @PostMapping("/batch")
     @ApiOperation("创建 - 物流线路")
     public Result batchCreate(@Validated @RequestBody LogisticsLineBatchCreateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.batchCreate(ro);
         return Result.success();
@@ -69,8 +67,7 @@ public class LogisticsLineController {
     @ApiOperation("更新 - 物流线路")
     public Result update(@PathVariable("id") Long id,
                          @Validated @RequestBody LogisticsLineUpdateRo ro) {
-        Long userId = UserContextHolder.getUserId()
-            .orElseThrow(() -> ServiceException.wrap("请先进行登陆"));
+        Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
         service.update(id, ro);
         return Result.success();

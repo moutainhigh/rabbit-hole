@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.modules.support.apiimpl;
 
-import com.github.lotus.chaos.api.modules.ums.pojo.vo.UserDetailVo;
-import com.github.lotus.chaos.biz.modules.ums.service.AccountService;
+import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,11 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class UserContextServiceImpl implements UserContextService {
-    private final AccountService accountService;
+    private final AccountServiceApi accountService;
 
     @Override
     public UserDetail getUserDetail(String username) {
-        UserDetailVo userDetail = accountService.getUser(username);
+        UserDetailVo userDetail = accountService.getUserDetailVoByUsername(username);
         if (Objects.isNull(userDetail)) {
             return null;
         }
