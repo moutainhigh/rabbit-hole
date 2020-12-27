@@ -8,4 +8,5 @@ package com.github.lotus.chaos.biz.modules.lang.constant;
  */
 public class ChaosCacheKeys {
     public static final String GUMBALLS_GIFT = "GUMBALLS_GIFT";
+    public static final String PAGING_WALLPAPER = "PAGING_WALLPAPER";
 }

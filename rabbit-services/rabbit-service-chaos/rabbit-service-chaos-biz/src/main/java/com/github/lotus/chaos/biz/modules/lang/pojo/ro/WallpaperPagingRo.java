@@ -10,8 +10,8 @@ import lombok.Data;
  *
  * @author hocgin
  */
-@ApiModel
 @Data
+@ApiModel
 public class WallpaperPagingRo extends PageRo {
 
 }

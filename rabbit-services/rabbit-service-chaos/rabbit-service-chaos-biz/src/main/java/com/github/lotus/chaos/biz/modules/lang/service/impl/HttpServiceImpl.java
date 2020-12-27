@@ -34,6 +34,7 @@ public class HttpServiceImpl implements HttpService {
     private final WallpaperMapping mapping;
 
     @Override
+    @Cacheable(cacheNames = ChaosCacheKeys.PAGING_WALLPAPER, key = "#ro.page")
     public List<WallpaperComplexVo> pagingWallpaper(WallpaperPagingRo ro) {
         List<UnsplashPhotoDto> result = unsplashManager.paging(ro.getPage(), ro.getSize());
         return LangUtils.toList(result, mapping::asWallpaperComplexVo);
