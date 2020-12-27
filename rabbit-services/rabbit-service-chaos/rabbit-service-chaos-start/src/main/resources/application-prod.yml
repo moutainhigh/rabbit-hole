@@ -14,6 +14,8 @@ rabbit:
       configs:
         - appid: wx19d2028bfdc4decf
           secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)
+        - appid: wx2388ca4e8e51be62
+          secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
     mp:
       configs:
         - appid: wxb4df1f0c3dc96256
