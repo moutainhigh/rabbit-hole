@@ -12,9 +12,11 @@ import java.util.List;
  *
  * @author hocgin
  */
-public interface WallpaperService {
+public interface HttpService {
 
-    List<WallpaperComplexVo> paging(WallpaperPagingRo ro);
+    List<WallpaperComplexVo> pagingWallpaper(WallpaperPagingRo ro);
 
-    List<WallpaperComplexVo> complete(WallpaperCompleteRo ro);
+    List<WallpaperComplexVo> completeWallpaper(WallpaperCompleteRo ro);
+
+    String getGumballsGift(String day);
 }

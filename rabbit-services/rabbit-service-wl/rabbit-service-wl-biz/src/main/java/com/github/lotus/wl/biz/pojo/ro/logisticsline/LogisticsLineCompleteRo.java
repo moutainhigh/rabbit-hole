@@ -18,4 +18,6 @@ public class LogisticsLineCompleteRo extends CompleteRo {
     private String keyword;
     @ApiModelProperty("物流公司ID")
     private Long companyId;
+    @ApiModelProperty("仓库ID")
+    private Long warehouseId;
 }
