@@ -13,16 +13,20 @@ import lombok.Data;
 @Data
 @ApiModel
 public class WallpaperComplexVo {
+    @ApiModelProperty("id")
+    private String id;
     @ApiModelProperty("图片url")
     private String url;
     @ApiModelProperty("图片标题")
     private String title;
+    @ApiModelProperty("备注")
+    private String remark;
     @ApiModelProperty("作者信息")
     private AuthorInfoVo author;
 
     @Data
     @ApiModel
-    public class AuthorInfoVo {
+    public static class AuthorInfoVo {
         @ApiModelProperty("昵称")
         private String nickname;
         @ApiModelProperty("头像")

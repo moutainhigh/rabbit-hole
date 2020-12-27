@@ -3,6 +3,8 @@ package com.github.lotus.chaos.biz.modules.lang.service.impl;
 import com.github.lotus.chaos.biz.modules.lang.manager.UnsplashManager;
 import com.github.lotus.chaos.biz.modules.lang.mapstruct.WallpaperMapping;
 import com.github.lotus.chaos.biz.modules.lang.pojo.dto.UnsplashPagingDto;
+import com.github.lotus.chaos.biz.modules.lang.pojo.dto.UnsplashPhotoDto;
+import com.github.lotus.chaos.biz.modules.lang.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.WallpaperComplexVo;
 import com.github.lotus.chaos.biz.modules.lang.service.WallpaperService;
@@ -29,9 +31,16 @@ public class WallpaperServiceImpl implements WallpaperService {
 
     @Override
     public List<WallpaperComplexVo> paging(WallpaperPagingRo ro) {
-        List<UnsplashPagingDto> result = unsplashManager.paging(ro.getPage(), ro.getSize());
+        List<UnsplashPhotoDto> result = unsplashManager.paging(ro.getPage(), ro.getSize());
         return LangUtils.toList(result, mapping::asWallpaperComplexVo);
     }
 
+    @Override
+    public List<WallpaperComplexVo> complete(WallpaperCompleteRo ro) {
+        String keyword = ro.getKeyword();
+        int size = ro.getSize();
+        UnsplashPagingDto result = unsplashManager.search(keyword, null, size);
+        return LangUtils.toList(result.getResults(), mapping::asWallpaperComplexVo);
+    }
 
 }

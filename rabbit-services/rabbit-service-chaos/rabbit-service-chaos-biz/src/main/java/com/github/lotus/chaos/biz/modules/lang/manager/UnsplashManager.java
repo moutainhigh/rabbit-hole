@@ -5,6 +5,8 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.chaos.biz.modules.lang.pojo.dto.UnsplashPagingDto;
+import com.github.lotus.chaos.biz.modules.lang.pojo.dto.UnsplashPhotoDto;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,24 +29,24 @@ import java.util.Objects;
 public class UnsplashManager {
     private static final String CLIENT_ID = "PHul2POuZ6gLBi0wL3mP6GZ_beuXPtMeF5hN4SDD6LA";
 
-    public List<UnsplashPagingDto> paging(Integer page, Integer pageSize) {
+    public List<UnsplashPhotoDto> paging(Integer page, Integer pageSize) {
         String photosUrl = getUnsplashPhotosUrl(page, pageSize);
         HttpRequest request = HttpUtil.createGet(photosUrl);
         HttpResponse response = request.execute();
 
         String bodyStr = response.body();
         ValidUtils.isTrue(Strings.isNotBlank(bodyStr), "请求失败");
-        return JSON.parseArray(bodyStr, UnsplashPagingDto.class);
+        return JSON.parseArray(bodyStr, UnsplashPhotoDto.class);
     }
 
-    public List<UnsplashPagingDto> search(String keyword, Integer page, Integer pageSize) {
+    public UnsplashPagingDto search(String keyword, Integer page, Integer pageSize) {
         String photosUrl = getSearchPhotosUrl(keyword, page, pageSize);
         HttpRequest request = HttpUtil.createGet(photosUrl);
         HttpResponse response = request.execute();
 
         String bodyStr = response.body();
         ValidUtils.isTrue(Strings.isNotBlank(bodyStr), "请求失败");
-        return JSON.parseArray(bodyStr, UnsplashPagingDto.class);
+        return JSON.parseObject(bodyStr, UnsplashPagingDto.class);
 
     }
 
@@ -56,9 +58,7 @@ public class UnsplashManager {
         if (Objects.nonNull(pageSize)) {
             baseUrl += "&per_page=" + pageSize;
         }
-        if (Objects.nonNull(query)) {
-            baseUrl += "&query=" + query;
-        }
+        baseUrl += "&query=" + LangUtils.getOrDefault(query, "");
         return baseUrl;
     }
 

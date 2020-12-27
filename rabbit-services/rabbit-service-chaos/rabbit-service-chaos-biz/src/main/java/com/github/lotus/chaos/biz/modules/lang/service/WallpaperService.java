@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.modules.lang.service;
 
+import com.github.lotus.chaos.biz.modules.lang.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.WallpaperComplexVo;
 
@@ -14,4 +15,6 @@ import java.util.List;
 public interface WallpaperService {
 
     List<WallpaperComplexVo> paging(WallpaperPagingRo ro);
+
+    List<WallpaperComplexVo> complete(WallpaperCompleteRo ro);
 }
