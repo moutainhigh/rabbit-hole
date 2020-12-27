@@ -10,7 +10,7 @@ import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
  *
  * @author hocgin
  */
-public interface IndexService {
+public interface ChaosService {
 
     void sendSmsCode(SendSmsCodeRo ro);
 

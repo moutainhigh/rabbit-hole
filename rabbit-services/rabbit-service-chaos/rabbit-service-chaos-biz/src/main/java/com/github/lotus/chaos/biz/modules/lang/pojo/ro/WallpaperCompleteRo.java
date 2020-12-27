@@ -11,8 +11,8 @@ import lombok.Data;
  *
  * @author hocgin
  */
-@ApiModel
 @Data
+@ApiModel
 public class WallpaperCompleteRo extends CompleteRo {
     @ApiModelProperty("关键字")
     private String keyword;

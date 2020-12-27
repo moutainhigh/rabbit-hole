@@ -6,7 +6,7 @@ import com.github.lotus.chaos.biz.modules.lang.manager.LangManager;
 import com.github.lotus.chaos.biz.modules.lang.pojo.dto.IpAndAddressDto;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
-import com.github.lotus.chaos.biz.modules.lang.service.IndexService;
+import com.github.lotus.chaos.biz.modules.lang.service.ChaosService;
 import com.github.lotus.chaos.biz.modules.lang.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class IndexServiceImpl implements IndexService {
+public class IndexServiceImpl implements ChaosService {
     private final SmsService smsService;
     private final DistrictService districtService;
     private final LangManager langManager;

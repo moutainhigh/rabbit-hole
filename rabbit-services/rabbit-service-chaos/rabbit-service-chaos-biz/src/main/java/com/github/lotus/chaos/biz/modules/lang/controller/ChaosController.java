@@ -2,7 +2,7 @@ package com.github.lotus.chaos.biz.modules.lang.controller;
 
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
-import com.github.lotus.chaos.biz.modules.lang.service.IndexService;
+import com.github.lotus.chaos.biz.modules.lang.service.ChaosService;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.boot.web.result.Result;
@@ -32,12 +32,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author hocgin
  */
 @Slf4j
-@Api(tags = "通用")
+@Api(tags = "chaos::通用")
 @Controller
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class IndexController {
-    private final IndexService service;
+public class ChaosController {
+    private final ChaosService service;
     private final StringEncryptor stringEncryptor;
 
     @ApiOperation("发送短信验证码")
@@ -64,13 +64,11 @@ public class IndexController {
         return service.getAddress4ip(clientIp);
     }
 
-
     @ApiOperation("获取数据加密后的值")
     @GetMapping("/encrypt")
     @ResponseBody
-    public Result<String> get(@RequestParam(name = "data") String data) {
+    public Result<String> encrypt(@RequestParam(name = "data") String data) {
         return Result.success(stringEncryptor.encrypt(data));
     }
-
 
 }

@@ -22,7 +22,12 @@ boot:
     space: daigou-test
     domain: http://oss-cn-beijing.aliyuncs.com
     type: AliYun
-
+  cache:
+    names:
+      - name: GUMBALLS_GIFT
+        ttl: 1D
+      - name: PAGING_WALLPAPER
+        ttl: 1D
 rabbit:
   wx:
     # https://developers.weixin.qq.com/sandbox

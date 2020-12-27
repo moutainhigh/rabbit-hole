@@ -92,8 +92,15 @@ boot:
         - /chaos/district/tree
         - /chaos/address4ip
         - /chaos/logistics-line/_search
+        - /chaos/gumballs/gift
+        - /chaos/wallpaper/_complete
+        - /chaos/wallpaper/_paging
+
         - /wl/logistics-line/_search
+
         - /docking/wx/mp/*
         - /docking/wx/miniapp/*/token
+
         - /ums/account/*:avatar
+
         - /sso/account/login/token
