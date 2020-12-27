@@ -48,6 +48,7 @@
     <javase.version>3.4.0</javase.version>
     <weixin-java.version>3.7.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
+    <jsoup.version>1.13.1</jsoup.version>
   </properties>
 
   <dependencyManagement>
@@ -262,6 +263,11 @@
         <scope>import</scope>
       </dependency>
       <!--Jar-->
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>${jsoup.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-mp</artifactId>

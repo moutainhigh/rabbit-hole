@@ -12,8 +12,8 @@ rabbit:
   wx:
     miniapp:
       configs:
-        - appid: wx5b633a935cc7c105
-          secret: cc31e7128952ca15f53e9704d87dc43d
+        - appid: wx19d2028bfdc4decf
+          secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)
     mp:
       configs:
         - appid: wxb4df1f0c3dc96256
