@@ -48,7 +48,12 @@ public class AuthorizeTokenFilter implements GlobalFilter, Ordered {
 
     private Optional<String> getUsername(String bearerToken) {
         String token = bearerToken.replaceFirst(BEARER_PREFIX, "");
-        String username = JwtUtils.decode(token);
+        String username = null;
+        try {
+            username = JwtUtils.decode(token);
+        } catch (Exception e) {
+            log.warn("JWT解码失败: ", e);
+        }
         if (Strings.isBlank(username)) {
             return Optional.empty();
         }

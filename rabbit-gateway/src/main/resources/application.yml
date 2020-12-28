@@ -9,6 +9,7 @@ spring:
             allowedHeaders: "*"
             allowedOrigins:
               - '*'
+              - '127.0.0.1:8000'
             allowedMethods: "*"
       discovery:
         locator:
@@ -95,6 +96,7 @@ boot:
         - /chaos/gumballs/gift
         - /chaos/wallpaper/_complete
         - /chaos/wallpaper/_paging
+        - /chaos/download
 
         - /wl/logistics-line/_search
 

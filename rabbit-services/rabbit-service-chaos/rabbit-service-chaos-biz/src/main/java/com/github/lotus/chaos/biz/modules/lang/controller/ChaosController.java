@@ -7,12 +7,14 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.RequestUtils;
+import in.hocg.boot.web.utils.web.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,4 +73,10 @@ public class ChaosController {
         return Result.success(stringEncryptor.encrypt(data));
     }
 
+    @ApiOperation("文件下载")
+    @GetMapping("/download")
+    public ResponseEntity<?> download(@RequestParam("url") String url,
+                                      @RequestParam(value = "filename", required = false) String filename) {
+        return ResponseUtils.download(url, filename);
+    }
 }

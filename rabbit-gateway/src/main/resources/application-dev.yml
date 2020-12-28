@@ -6,15 +6,6 @@ spring:
   security:
     oauth2:
       shostname: https://sso-dev.hocgin.top
-  cloud:
-    gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedHeaders: "*"
-            allowedOrigins:
-              - '*'
-            allowedMethods: "*"
 boot:
   sso:
     client:
