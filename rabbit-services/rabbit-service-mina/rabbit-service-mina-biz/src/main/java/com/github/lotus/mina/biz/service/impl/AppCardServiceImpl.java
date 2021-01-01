@@ -45,6 +45,7 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
 
         AppComplexVo.Href href = new AppComplexVo.Href();
         href.setMini(new AppComplexVo.Href.Mini().setPath(pageUrl));
+        result.setHref(href);
 
         return result;
     }
