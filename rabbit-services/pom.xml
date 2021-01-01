@@ -20,6 +20,7 @@
     <module>rabbit-service-docking</module>
     <module>rabbit-service-wl</module>
     <module>rabbit-service-pay</module>
+    <module>rabbit-service-mina</module>
   </modules>
 
 </project>

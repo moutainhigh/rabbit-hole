@@ -14,9 +14,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author hocgin
  */
 @SpringBootApplication(scanBasePackages = {
-    "com.github.lotus.chaos", "com.github.lotus.wl", "com.github.lotus.docking", "com.github.lotus.ums"})
+    "com.github.lotus.chaos", "com.github.lotus.wl", "com.github.lotus.docking", "com.github.lotus.ums", "com.github.lotus.mina"})
 @MapperScan(value = {
-    "com.github.lotus.chaos", "com.github.lotus.wl", "com.github.lotus.docking", "com.github.lotus.ums"}, annotationClass = Mapper.class)
+    "com.github.lotus.chaos", "com.github.lotus.wl", "com.github.lotus.docking", "com.github.lotus.ums", "com.github.lotus.mina"}
+    , annotationClass = Mapper.class)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class ChaosApplication {
 
