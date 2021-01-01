@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class AppController {
     @ApiOperation("应用 - 分页查询")
     @PostMapping("/_paging")
     public Result<List<AppComplexVo>> index(@PathVariable String appid,
-                                            @RequestBody AppCardPageRo ro) {
+                                            @Validated @RequestBody AppCardPageRo ro) {
         return Result.success(service.paging(ro).getRecords());
     }
 }

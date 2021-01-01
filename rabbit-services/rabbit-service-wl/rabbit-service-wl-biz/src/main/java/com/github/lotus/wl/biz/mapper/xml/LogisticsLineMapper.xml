@@ -15,7 +15,7 @@
         AND wspr.warehouse_id = #{ro.warehouseId}
       </if>
       <if test="ro.keyword != null">
-        <bind name="keyword" value="ro.keyword"/>
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
         AND wll.remark LIKE #{keyword}
       </if>
     </where>

@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class GameController {
     @ApiOperation("游戏 - 分页查询")
     @PostMapping("/_paging")
     public Result<List<GameComplexVo>> paging(@PathVariable String appid,
-                                              @RequestBody GameCardPageRo ro) {
+                                              @Validated @RequestBody GameCardPageRo ro) {
         return Result.success(service.paging(ro).getRecords());
     }
 }

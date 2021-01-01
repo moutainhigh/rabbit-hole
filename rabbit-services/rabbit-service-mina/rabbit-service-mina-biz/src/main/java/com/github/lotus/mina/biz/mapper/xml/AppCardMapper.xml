@@ -6,7 +6,7 @@
     FROM mina_app_card mac
     <where>
       <if test="ro.keyword != null">
-        <bind name="keyword" value="ro.keyword"/>
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
         AND (mac.remark LIKE #{keyword} OR mac.title LIKE #{keyword} OR mac.tags LIKE #{keyword})
       </if>
       <if test="ro.enabled != null">
