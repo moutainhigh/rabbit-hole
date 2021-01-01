@@ -22,6 +22,9 @@ public enum Module {
     WL(Lists.newArrayList("wl_"),
         "com.github.lotus.wl.biz",
         "rabbit-services/rabbit-service-wl/rabbit-service-wl-biz"),
+    MINA(Lists.newArrayList("MINA_"),
+        "com.github.lotus.mina.biz",
+        "rabbit-services/rabbit-service-mina/rabbit-service-mina-biz"),
 
     Chaos_UMS(Lists.newArrayList("ums_"),
         "com.github.lotus.chaos.biz.module.ums",

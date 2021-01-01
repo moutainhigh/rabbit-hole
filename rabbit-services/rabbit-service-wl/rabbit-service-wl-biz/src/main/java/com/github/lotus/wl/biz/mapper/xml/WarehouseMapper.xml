@@ -16,7 +16,7 @@
     FROM wl_warehouse ww
     <where>
       <if test="ro.keyword != null">
-        <bind name="keyword" value="ro.keyword"/>
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
         AND (ww.remark LIKE #{keyword} OR ww.title LIKE #{keyword})
       </if>
       <if test="ro.companyId != null">
