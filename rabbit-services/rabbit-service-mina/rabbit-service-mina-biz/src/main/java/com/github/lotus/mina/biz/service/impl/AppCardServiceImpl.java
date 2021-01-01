@@ -9,6 +9,7 @@ import com.github.lotus.mina.biz.pojo.vo.AppComplexVo;
 import com.github.lotus.mina.biz.service.AppCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
@@ -30,6 +31,7 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
 
     @Override
     public IPage<AppComplexVo> paging(AppCardPageRo ro) {
+        ro.setEnabled(Enabled.On.getCode());
         return baseMapper.paging(ro, ro.ofPage())
             .convert(this::convert);
     }
