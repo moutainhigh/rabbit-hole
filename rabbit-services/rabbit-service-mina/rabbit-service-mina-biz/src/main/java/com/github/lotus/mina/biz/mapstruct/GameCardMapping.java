@@ -15,6 +15,5 @@ import org.mapstruct.Mapping;
 public interface GameCardMapping {
     @Mapping(target = "tags", ignore = true)
     @Mapping(target = "viewUrls", ignore = true)
-    @Mapping(target = "href", ignore = true)
     GameComplexVo asGameComplexVo(GameCard entity);
 }
