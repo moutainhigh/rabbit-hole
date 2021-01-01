@@ -4,11 +4,11 @@ CREATE TABLE `mina_game_card`
     id                BIGINT AUTO_INCREMENT,
     title             VARCHAR(32)
         COMMENT '名称',
-    logo_url          VARCHAR(32)
+    logo_url          VARCHAR(255)
         COMMENT 'LOGO',
-    game_url          VARCHAR(32)
+    game_url          VARCHAR(255)
         COMMENT 'ROM链接',
-    remark            VARCHAR(32)
+    remark            VARCHAR(255)
         COMMENT '备注',
     tags              VARCHAR(125)
         COMMENT '标签(暂用;分隔)',
@@ -37,11 +37,11 @@ CREATE TABLE `mina_app_card`
     id                BIGINT AUTO_INCREMENT,
     title             VARCHAR(32)
         COMMENT '名称',
-    logo_url          VARCHAR(32)
+    logo_url          VARCHAR(255)
         COMMENT 'LOGO',
-    page_url          VARCHAR(32)
+    page_url          VARCHAR(255)
         COMMENT '小程序链接',
-    remark            VARCHAR(32)
+    remark            VARCHAR(255)
         COMMENT '备注',
     tags              VARCHAR(125)
         COMMENT '标签(暂用;分隔)',
