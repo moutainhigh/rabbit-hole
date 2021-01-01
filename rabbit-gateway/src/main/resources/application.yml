@@ -112,4 +112,7 @@ boot:
 
         - /ums/account/*:avatar
 
+        - /mina/*/game/_paging
+        - /mina/*/app/_paging
+
         - /sso/account/login/token

@@ -11,12 +11,12 @@ import com.github.lotus.generator.core.Module;
  *
  * @author hocgin
  */
-public class Main {
+public class GeneratorMain {
 
     public static void main(String[] args) {
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.Chaos_UMS, false,
-            "ums_social");
+            Module.MINA, false,
+            "mina_game_card", "mina_app_card");
     }
 
 }
