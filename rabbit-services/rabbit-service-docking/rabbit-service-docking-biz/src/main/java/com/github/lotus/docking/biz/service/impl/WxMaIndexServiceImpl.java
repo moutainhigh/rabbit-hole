@@ -121,4 +121,26 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
             .setPhoneNumber(phoneNoInfo.getPhoneNumber())
             .setCountryCode(phoneNoInfo.getCountryCode());
     }
+
+    @Override
+    public boolean checkMessage(String appid, String text) {
+        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        try {
+            return wxService.getSecCheckService().checkMessage(text);
+        } catch (WxErrorException e) {
+            log.error(e.getMessage(), e);
+            throw ServiceException.wrap(e);
+        }
+    }
+
+    @Override
+    public boolean checkImage(String appid, String imageUrl) {
+        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        try {
+            return wxService.getSecCheckService().checkImage(imageUrl);
+        } catch (WxErrorException e) {
+            log.error(e.getMessage(), e);
+            throw ServiceException.wrap(e);
+        }
+    }
 }

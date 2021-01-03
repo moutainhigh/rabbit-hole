@@ -23,4 +23,7 @@ public interface WxMaIndexService {
 
     WxMaPhoneNumberInfoVo getUserPhone(String appid, String sessionKey, String signature, String rawData, String encryptedData, String iv);
 
+    boolean checkMessage(String appid, String text);
+
+    boolean checkImage(String appid, String imageUrl);
 }
