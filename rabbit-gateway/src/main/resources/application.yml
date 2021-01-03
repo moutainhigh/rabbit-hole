@@ -114,5 +114,7 @@ boot:
 
         - /mina/*/game/_paging
         - /mina/*/app/_paging
+        - /mina/*/check-message
+        - /mina/*/check-image
 
         - /sso/account/login/token
