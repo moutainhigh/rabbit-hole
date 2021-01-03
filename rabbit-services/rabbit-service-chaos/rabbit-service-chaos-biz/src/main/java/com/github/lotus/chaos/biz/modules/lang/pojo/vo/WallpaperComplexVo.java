@@ -17,6 +17,8 @@ public class WallpaperComplexVo {
     private String id;
     @ApiModelProperty("图片url")
     private String url;
+    private String rawUrl;
+    private String fullUrl;
     @ApiModelProperty("图片标题")
     private String title;
     @ApiModelProperty("备注")

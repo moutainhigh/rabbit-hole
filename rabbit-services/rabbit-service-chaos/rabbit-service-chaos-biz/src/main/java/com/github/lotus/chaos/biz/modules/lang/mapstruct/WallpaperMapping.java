@@ -16,7 +16,9 @@ public interface WallpaperMapping {
 
     @Mapping(target = "id", source = "dto.id")
     @Mapping(target = "remark", source = "dto.altDescription")
-    @Mapping(target = "url", source = "dto.urls.raw")
+    @Mapping(target = "url", source = "dto.urls.small")
+    @Mapping(target = "rawUrl", source = "dto.urls.raw")
+    @Mapping(target = "fullUrl", source = "dto.urls.full")
     @Mapping(target = "title", source = "dto.description")
     @Mapping(target = "author.nickname", source = "dto.user.name")
     @Mapping(target = "author.avatarUrl", source = "dto.user.profileImage.large")
