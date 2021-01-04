@@ -4,12 +4,15 @@ import com.github.lotus.chaos.biz.modules.com.entity.District;
 import com.github.lotus.chaos.biz.modules.com.service.DistrictService;
 import com.github.lotus.chaos.biz.modules.lang.manager.LangManager;
 import com.github.lotus.chaos.biz.modules.lang.pojo.dto.IpAndAddressDto;
+import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendEmailCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
 import com.github.lotus.chaos.biz.modules.lang.service.ChaosService;
+import com.github.lotus.chaos.biz.modules.lang.service.EmailService;
 import com.github.lotus.chaos.biz.modules.lang.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,9 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexServiceImpl implements ChaosService {
     private final SmsService smsService;
+    private final EmailService emailService;
     private final DistrictService districtService;
+    private final StringEncryptor stringEncryptor;
     private final LangManager langManager;
 
     @Override
@@ -51,5 +56,16 @@ public class IndexServiceImpl implements ChaosService {
             .setProvince(dto.getProvince().orElse(null))
             .setCity(dto.getCity().orElse(null))
             .setIp(ip);
+    }
+
+    @Override
+    public void sendEmailCode(SendEmailCodeRo ro) {
+        String email = ro.getEmail();
+        emailService.sendVerifyCode(email);
+    }
+
+    @Override
+    public String encrypt(String data) {
+        return stringEncryptor.encrypt(data);
     }
 }
