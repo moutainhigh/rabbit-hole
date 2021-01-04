@@ -51,7 +51,7 @@ public class SsoIndexServiceImpl implements SsoIndexService {
 
     @Override
     public void sendSmsCode(SendSmsCodeRo ro) {
-        smsApi.sendSmsCode(ro.getPhone());
+        smsApi.sendVerifyCode(ro.getPhone());
     }
 
     @Override

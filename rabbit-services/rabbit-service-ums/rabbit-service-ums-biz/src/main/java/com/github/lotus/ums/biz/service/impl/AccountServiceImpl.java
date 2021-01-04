@@ -6,6 +6,8 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.lotus.chaos.api.modules.com.FileServiceApi;
+import com.github.lotus.chaos.api.modules.lang.EmailServiceApi;
+import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
 import com.github.lotus.common.utils.JwtUtils;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
@@ -16,6 +18,8 @@ import com.github.lotus.ums.biz.entity.Account;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.mapper.AccountMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
@@ -50,6 +54,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     implements AccountService {
     private final AccountMapping mapping;
     private final SocialService socialService;
+    private final SmsServiceApi smsServiceApi;
+    private final EmailServiceApi emailServiceApi;
     private final FileServiceApi fileServiceApi;
 
     @Override
@@ -181,6 +187,50 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         entity.setLastUpdater(updaterId);
         validUpdateById(entity);
         return userId;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long updatePhone(UpdateAccountPhoneRo ro) {
+        Long id = ro.getId();
+        String phone = ro.getPhone();
+        String verifyCode = ro.getVerifyCode();
+        Long updaterId = ro.getUpdaterId();
+        LocalDateTime now = LocalDateTime.now();
+
+        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
+            ValidUtils.fail("验证码错误");
+        }
+
+        Account updated = new Account()
+            .setId(id)
+            .setPhone(phone)
+            .setLastUpdater(updaterId)
+            .setLastUpdatedAt(now);
+        ValidUtils.isTrue(validUpdateById(updated), "操作失败");
+        return id;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long updateEmail(UpdateAccountEmailRo ro) {
+        Long id = ro.getId();
+        String email = ro.getEmail();
+        String verifyCode = ro.getVerifyCode();
+        Long updaterId = ro.getUpdaterId();
+        LocalDateTime now = LocalDateTime.now();
+
+        if (!emailServiceApi.validVerifyCode(email, verifyCode)) {
+            ValidUtils.fail("验证码错误");
+        }
+
+        Account updated = new Account()
+            .setId(id)
+            .setEmail(email)
+            .setLastUpdater(updaterId)
+            .setLastUpdatedAt(now);
+        ValidUtils.isTrue(validUpdateById(updated), "操作失败");
+        return id;
     }
 
     @Override

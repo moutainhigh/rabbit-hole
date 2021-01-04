@@ -21,13 +21,15 @@ public interface AccountMapping {
 
     AccountVo asAccountVo(Account entity);
 
+    @Mapping(target = "social", ignore = true)
     @Mapping(target = "genderName", ignore = true)
     AccountComplexVo asComplex(Account entity);
 
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "email", ignore = true)
     @Mapping(target = "locked", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "expired", ignore = true)
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "creator", ignore = true)

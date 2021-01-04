@@ -19,12 +19,12 @@ public class SmsServiceApiImpl implements SmsServiceApi {
     private final SmsService service;
 
     @Override
-    public boolean validSmsCode(String phone, String smsCode) {
+    public boolean validVerifyCode(String phone, String smsCode) {
         return service.validSmsCode(phone, smsCode);
     }
 
     @Override
-    public void sendSmsCode(String phone) {
+    public void sendVerifyCode(String phone) {
         service.sendSmsCode(new SendSmsCodeRo()
             .setPhone(phone));
     }

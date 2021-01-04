@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 /**
  * Created by hocgin on 2021/1/4
  * email: hocgin@gmail.com
@@ -12,19 +15,16 @@ import lombok.Data;
  */
 @Data
 @ApiModel(description = "用户信息 - 修改")
-public class UpdateAccountRo {
+public class UpdateAccountEmailRo {
     @ApiModelProperty(hidden = true)
     private Long id;
-    @ApiModelProperty("昵称;显示使用")
-    private String nickname;
-    @ApiModelProperty("用户名;唯一,登录使用")
-    private String username;
-    @ApiModelProperty("密码")
-    private String password;
-    @ApiModelProperty("头像地址")
-    private String avatar;
-    @ApiModelProperty("性别(0:女, 1:男)")
-    private Integer gender;
+    @Email(message = "邮箱号错误")
+    @NotBlank(message = "邮箱号不能为空")
+    @ApiModelProperty("邮箱号")
+    private String email;
+    @NotBlank(message = "验证码不能为空")
+    @ApiModelProperty("验证码")
+    private String verifyCode;
     @ApiModelProperty(value = "更新人", hidden = true)
     private Long updaterId;
 }

@@ -12,7 +12,12 @@ import lombok.experimental.UtilityClass;
 public class RedisConstants {
     public enum Prefix {
         SMS,
-        TOKEN
+        TOKEN,
+        EMAIL
+    }
+
+    public String getEmailKey(String email) {
+        return prefix(Prefix.EMAIL, email);
     }
 
     public String getTokenKey(String username) {

@@ -4,6 +4,8 @@ import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -42,4 +44,8 @@ public interface AccountService extends AbstractService<Account> {
     AccountComplexVo getAccountVoById(Long userId);
 
     Long updateAccount(Long userId, UpdateAccountRo ro);
+
+    Long updatePhone(UpdateAccountPhoneRo ro);
+
+    Long updateEmail(UpdateAccountEmailRo ro);
 }
