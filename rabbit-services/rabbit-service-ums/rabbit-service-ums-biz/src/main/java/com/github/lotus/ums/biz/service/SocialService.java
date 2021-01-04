@@ -5,6 +5,8 @@ import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Social;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
+
 /**
  * <p>
  * [用户模块] 绑定社交账号表 服务类
@@ -18,4 +20,6 @@ public interface SocialService extends AbstractService<Social> {
     UserDetailVo getUserBySocialTypeAndSocialId(String socialType, String socialId);
 
     void insertOne(InsertSocialRo ro);
+
+    List<Social> listSocialByAccountId(Long entityId);
 }

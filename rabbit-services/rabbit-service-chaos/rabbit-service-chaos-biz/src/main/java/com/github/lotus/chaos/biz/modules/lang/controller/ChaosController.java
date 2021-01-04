@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.modules.lang.controller;
 
+import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendEmailCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.modules.lang.pojo.vo.IpAddressVo;
 import com.github.lotus.chaos.biz.modules.lang.service.ChaosService;
@@ -12,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.encryption.StringEncryptor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,13 +40,21 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ChaosController {
     private final ChaosService service;
-    private final StringEncryptor stringEncryptor;
 
     @ApiOperation("发送短信验证码")
     @PostMapping("/sms-code")
     @ResponseBody
-    public void sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
+    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
         service.sendSmsCode(qo);
+        return Result.success();
+    }
+
+    @ApiOperation("发送邮箱验证码")
+    @PostMapping("/email-code")
+    @ResponseBody
+    public Result<Void> sendEmailCode(@Validated @RequestBody SendEmailCodeRo ro) {
+        service.sendEmailCode(ro);
+        return Result.success();
     }
 
     @ApiOperation("获取图形验证码")
@@ -70,7 +78,7 @@ public class ChaosController {
     @GetMapping("/encrypt")
     @ResponseBody
     public Result<String> encrypt(@RequestParam(name = "data") String data) {
-        return Result.success(stringEncryptor.encrypt(data));
+        return Result.success(service.encrypt(data));
     }
 
     @ApiOperation("文件下载")

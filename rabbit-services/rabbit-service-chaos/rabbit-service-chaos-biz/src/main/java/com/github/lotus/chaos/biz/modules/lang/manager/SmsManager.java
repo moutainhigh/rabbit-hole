@@ -24,15 +24,15 @@ public class SmsManager {
         log.info("发送短信, 接收人: [{}], 内容: [{}]", phone, text);
     }
 
-    public void sendSmsCode(String phone, String code) {
-        if (Boolean.TRUE.compareTo(redisManager.exitsSmsCode(phone)) == 0) {
+    public void sendVerifyCode(String phone, String code) {
+        if (Boolean.TRUE.compareTo(redisManager.exitsVerifyCodeByPhone(phone)) == 0) {
             throw ServiceException.wrap("验证码已发送，请注意查收");
         }
         this.sendSms(phone, StrUtil.format("短信验证码: {}", code));
-        redisManager.setSmsCode(phone, code);
+        redisManager.setVerifyCodeByPhone(phone, code);
     }
 
-    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
-        return redisManager.validSmsCode(phone, smsCode);
+    public boolean validVerifyCode(@NonNull String phone, @NonNull String smsCode) {
+        return redisManager.validVerifyCodeByPhone(phone, smsCode);
     }
 }

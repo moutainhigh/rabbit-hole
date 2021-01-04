@@ -88,7 +88,7 @@ public class RedisManager {
      * @param phone
      * @return
      */
-    public Boolean exitsSmsCode(@NonNull String phone) {
+    public Boolean exitsVerifyCodeByPhone(@NonNull String phone) {
         final String smsKey = RedisConstants.getSmsKey(phone);
         return template.hasKey(smsKey);
     }
@@ -100,7 +100,7 @@ public class RedisManager {
      * @param smsCode
      * @return
      */
-    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
+    public boolean validVerifyCodeByPhone(@NonNull String phone, @NonNull String smsCode) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String smsKey = RedisConstants.getSmsKey(phone);
         if (LangUtils.equals(opsForValue.get(smsKey), smsCode)) {
@@ -116,11 +116,31 @@ public class RedisManager {
      * @param phone
      * @param smsCode
      */
-    public void setSmsCode(@NonNull String phone, @NonNull String smsCode) {
+    public void setVerifyCodeByPhone(@NonNull String phone, @NonNull String smsCode) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String smsKey = RedisConstants.getSmsKey(phone);
         opsForValue.set(smsKey, smsCode, 1, TimeUnit.MINUTES);
         log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
     }
 
+    public boolean exitsVerifyCodeByEmail(String email) {
+        return template.hasKey(RedisConstants.getEmailKey(email));
+    }
+
+    public boolean validVerifyCodeByEmail(String email, String verifyCode) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        final String key = RedisConstants.getEmailKey(email);
+        if (LangUtils.equals(opsForValue.get(key), verifyCode)) {
+            template.delete(key);
+            return true;
+        }
+        return false;
+    }
+
+    public void setVerifyCodeByEmail(String email, String code) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        final String key = RedisConstants.getEmailKey(email);
+        opsForValue.set(key, code, 1, TimeUnit.MINUTES);
+        log.debug("验证码设置[邮箱号: {}, Token: {}]", email, code);
+    }
 }

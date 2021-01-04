@@ -26,11 +26,11 @@ public class SmsServiceImpl implements SmsService {
     public void sendSmsCode(SendSmsCodeRo qo) {
         final String phone = qo.getPhone();
         Assert.notBlank(phone, "手机号不能为空");
-        smsManager.sendSmsCode(phone, RandomUtil.randomNumbers(4));
+        smsManager.sendVerifyCode(phone, RandomUtil.randomNumbers(4));
     }
 
     @Override
     public boolean validSmsCode(String phone, String smsCode) {
-        return smsManager.validSmsCode(phone, smsCode);
+        return smsManager.validVerifyCode(phone, smsCode);
     }
 }

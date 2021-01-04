@@ -6,31 +6,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Created by hocgin on 2020/10/7
+ * Created by hocgin on 2021/1/4
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = SmsServiceApi.CONTEXT_ID)
-public interface SmsServiceApi {
-    String CONTEXT_ID = "SmsServiceApi";
+@FeignClient(value = ServiceName.NAME, contextId = EmailServiceApi.CONTEXT_ID)
+public interface EmailServiceApi {
+    String CONTEXT_ID = "EmailServiceApi";
 
     /**
      * 发送验证码
      *
-     * @param phone
-     * @param smsCode
+     * @param email
+     * @param verifyCode
      * @return
      */
     @PostMapping(CONTEXT_ID + "/validVerifyCode")
-    boolean validVerifyCode(@RequestParam("phone") String phone,
-                            @RequestParam("smsCode") String smsCode);
+    boolean validVerifyCode(@RequestParam("email") String email,
+                            @RequestParam("verifyCode") String verifyCode);
 
     /**
      * 验证验证码
      *
-     * @param phone
+     * @param email
      */
     @PostMapping(CONTEXT_ID + "/sendVerifyCode")
-    void sendVerifyCode(@RequestParam("phone") String phone);
+    void sendVerifyCode(@RequestParam("email") String email);
+
 }

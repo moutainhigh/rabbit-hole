@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
 
-        if (!smsApi.validSmsCode(phone, verifyCode)) {
+        if (!smsApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
         CreateAccountRo newRo = new CreateAccountRo()
@@ -116,7 +116,7 @@ public class AccountServiceImpl implements AccountService {
     private String loginUseSms(LoginRo.SmsMode ro) {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
-        if (!smsApi.validSmsCode(phone, verifyCode)) {
+        if (!smsApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
         UserDetailVo userDetail = accountServiceApi.getUserByPhone(phone);
