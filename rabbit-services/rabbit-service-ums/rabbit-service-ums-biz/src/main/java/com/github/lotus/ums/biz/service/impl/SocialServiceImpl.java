@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -49,6 +50,12 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
         Social entity = mapping.asSocial(ro);
         entity.setCreatedAt(LocalDateTime.now());
         validInsertOrUpdate(entity);
+    }
+
+    @Override
+    public List<Social> listSocialByAccountId(Long accountId) {
+        return lambdaQuery().eq(Social::getAccountId, accountId)
+            .list();
     }
 
     private Optional<Account> getAccountBySocialTypeAndSocialId(String socialType, String socialId) {

@@ -13,6 +13,7 @@ import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.mapper.AccountMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -167,7 +169,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public AccountComplexVo getAccountVoById(Long userId) {
         Account entity = baseMapper.selectById(userId);
-        return mapping.asComplex(entity);
+        return this.convert(entity);
     }
 
     @Override
@@ -199,6 +201,20 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         if (Objects.nonNull(email)) {
             Assert.isFalse(hasEmail(email, id), "该邮箱已被注册");
         }
+    }
+
+    private AccountComplexVo convert(Account entity) {
+        Long entityId = entity.getId();
+
+        AccountComplexVo result = mapping.asComplex(entity);
+
+        // 已绑定的社交方式
+        List<Social> socials = socialService.listSocialByAccountId(entityId);
+        result.setSocial(socials.parallelStream().map(social ->
+            new AccountComplexVo.SocialItem().setSocialType(social.getSocialType())
+        ).collect(Collectors.toList()));
+
+        return result;
     }
 
     private boolean hasUsername(String username, Long... ignoreId) {
