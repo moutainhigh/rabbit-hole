@@ -15,6 +15,7 @@ import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Account;
 import com.github.lotus.ums.biz.mapper.AccountMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.ums.biz.service.SocialService;
@@ -169,12 +170,15 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         return mapping.asComplex(entity);
     }
 
-    private Optional<Account> getAccountByUsername(String username) {
-        return lambdaQuery().eq(Account::getUsername, username).oneOpt();
-    }
-
-    private Optional<Account> getAccountByPhone(String phone) {
-        return lambdaQuery().eq(Account::getPhone, phone).oneOpt();
+    @Override
+    public Long updateAccount(Long userId, UpdateAccountRo ro) {
+        Long updaterId = ro.getUpdaterId();
+        Account entity = mapping.asAccount(ro);
+        entity.setId(userId);
+        entity.setLastUpdatedAt(LocalDateTime.now());
+        entity.setLastUpdater(updaterId);
+        validUpdateById(entity);
+        return userId;
     }
 
     @Override
@@ -183,16 +187,37 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         Long id = entity.getId();
         String phone = entity.getPhone();
         String username = entity.getUsername();
+        String email = entity.getEmail();
         boolean isInsert = Objects.isNull(id);
 
-        if (isInsert) {
-            if (Objects.nonNull(username)) {
-                Assert.isFalse(getAccountByUsername(username).isPresent(), "该用户名已被注册");
-            }
-            if (Objects.nonNull(phone)) {
-                Assert.isFalse(getAccountByPhone(phone).isPresent(), "该手机号已被注册");
-            }
+        if (Objects.nonNull(username)) {
+            Assert.isFalse(hasUsername(username, id), "该用户名已被注册");
         }
+        if (Objects.nonNull(phone)) {
+            Assert.isFalse(hasPhone(phone, id), "该手机号已被注册");
+        }
+        if (Objects.nonNull(email)) {
+            Assert.isFalse(hasEmail(email, id), "该邮箱已被注册");
+        }
+    }
 
+    private boolean hasUsername(String username, Long... ignoreId) {
+        return has(Account::getUsername, username, Account::getId, ignoreId);
+    }
+
+    private boolean hasPhone(String phone, Long... ignoreId) {
+        return has(Account::getPhone, phone, Account::getId, ignoreId);
+    }
+
+    private boolean hasEmail(String email, Long... ignoreId) {
+        return has(Account::getEmail, email, Account::getId, ignoreId);
+    }
+
+    private Optional<Account> getAccountByUsername(String username) {
+        return lambdaQuery().eq(Account::getUsername, username).oneOpt();
+    }
+
+    private Optional<Account> getAccountByPhone(String phone) {
+        return lambdaQuery().eq(Account::getPhone, phone).oneOpt();
     }
 }

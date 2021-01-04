@@ -2,6 +2,7 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
@@ -13,8 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,6 +50,15 @@ public class AccountController {
     public Result<AccountComplexVo> getCurrentAccount() {
         Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.getAccountVoById(userId));
+    }
+
+    @UseLogger("账号信息 - 修改")
+    @GetMapping
+    @ResponseBody
+    public Result<Long> updateAccount(@Validated @RequestBody UpdateAccountRo ro) {
+        Long userId = UserContextHolder.getUserIdThrow();
+        ro.setUpdaterId(userId);
+        return Result.success(service.updateAccount(userId, ro));
     }
 }
 
