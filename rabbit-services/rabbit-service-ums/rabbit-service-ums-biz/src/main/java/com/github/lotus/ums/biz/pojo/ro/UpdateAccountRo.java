@@ -27,5 +27,6 @@ public class UpdateAccountRo {
     private String avatar;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
+    @ApiModelProperty(value = "更新人", hidden = true)
     private Long updaterId;
 }
