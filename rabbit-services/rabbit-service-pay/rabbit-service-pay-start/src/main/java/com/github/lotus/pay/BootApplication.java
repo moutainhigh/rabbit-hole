@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author hocgin
  */
 @SpringBootApplication
-public class PayApplication {
+public class BootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PayApplication.class, args);
+        SpringApplication.run(BootApplication.class, args);
     }
 }
