@@ -49,6 +49,7 @@
     <weixin-java.version>3.7.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <jsoup.version>1.13.1</jsoup.version>
+    <payment.version>0.1.2-SNAPSHOT</payment.version>
   </properties>
 
   <dependencyManagement>
@@ -204,6 +205,16 @@
         <groupId>in.hocg.boot</groupId>
         <artifactId>mail-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.payment</groupId>
+        <artifactId>payment-module-alipay</artifactId>
+        <version>${payment.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.payment</groupId>
+        <artifactId>payment-module-wxpay</artifactId>
+        <version>${payment.version}</version>
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>

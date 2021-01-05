@@ -25,6 +25,14 @@
     </dependency>
     <!--  二方库  -->
     <dependency>
+      <groupId>in.hocg.payment</groupId>
+      <artifactId>payment-module-alipay</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.payment</groupId>
+      <artifactId>payment-module-wxpay</artifactId>
+    </dependency>
+    <dependency>
       <groupId>in.hocg.boot</groupId>
       <artifactId>knife-service-spring-boot-starter</artifactId>
     </dependency>
