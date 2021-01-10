@@ -51,6 +51,7 @@ public class Feedback extends AbstractEntity<Feedback> {
     @ApiModelProperty("扩展信息")
     @TableField("expand")
     private String expand;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

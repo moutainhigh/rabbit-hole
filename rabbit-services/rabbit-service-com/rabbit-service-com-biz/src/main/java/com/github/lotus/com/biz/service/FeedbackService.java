@@ -1,6 +1,7 @@
 package com.github.lotus.com.biz.service;
 
 import com.github.lotus.com.biz.entity.Feedback;
+import com.github.lotus.com.biz.pojo.ro.FeedbackPostRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
@@ -13,4 +14,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface FeedbackService extends AbstractService<Feedback> {
 
+    void insertOne(FeedbackPostRo ro);
 }
