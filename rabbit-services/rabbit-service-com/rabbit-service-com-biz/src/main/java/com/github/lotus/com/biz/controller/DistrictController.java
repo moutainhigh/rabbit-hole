@@ -29,7 +29,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-11
  */
-@Api(tags = "地理位置")
+@Api(tags = "com::地理位置")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/district")

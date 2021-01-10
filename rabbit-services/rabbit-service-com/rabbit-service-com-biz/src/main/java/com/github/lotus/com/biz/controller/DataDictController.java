@@ -23,7 +23,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-11
  */
-@Api(tags = "数据字典")
+@Api(tags = "com::数据字典")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/data-dict")

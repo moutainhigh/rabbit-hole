@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author hocgin
  * @since 2020-11-11
  */
-@Api(tags = "文件")
+@Api(tags = "com::文件")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/file")
