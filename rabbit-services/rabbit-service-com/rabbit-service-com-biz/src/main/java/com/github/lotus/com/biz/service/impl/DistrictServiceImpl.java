@@ -167,7 +167,7 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
             entity.setParentId(parentId);
             entity.setCityCode(dto.getCitycode());
             entity.setAdCode(adcode);
-            entity.setLevel(districtLevel.getCode());
+            entity.setLevel((String) districtLevel.getCode());
             entity.setTitle(dto.getName());
             entity.setLat(lat);
             entity.setLng(lng);

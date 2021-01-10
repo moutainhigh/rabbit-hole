@@ -13,7 +13,7 @@ import com.github.lotus.pay.biz.service.PaymentTradeService;
 import com.github.lotus.pay.biz.service.RefundRecordService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.validation.autoconfigure.core.ICode;
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

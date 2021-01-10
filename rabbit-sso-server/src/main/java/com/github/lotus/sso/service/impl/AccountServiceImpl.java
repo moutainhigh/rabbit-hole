@@ -9,7 +9,7 @@ import com.github.lotus.ums.api.AccountServiceApi;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.validation.autoconfigure.core.ICode;
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.validation.autoconfigure.core.ValidatorUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.servlet.SpringServletContext;

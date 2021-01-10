@@ -1,7 +1,7 @@
 package com.github.lotus.sso.pojo.ro;
 
 import com.github.lotus.common.constant.RegexpConstant;
-import in.hocg.boot.validation.autoconfigure.core.ICode;
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

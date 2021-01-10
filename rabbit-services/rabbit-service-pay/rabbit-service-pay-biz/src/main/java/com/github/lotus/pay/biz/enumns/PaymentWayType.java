@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.enumns;
 
 import com.github.lotus.pay.biz.support.payment.resolve.message.FeatureType;
-import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
+import in.hocg.boot.utils.enums.DataDictEnum;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.github.lotus.wl.biz.enumns;
+package com.github.lotus.common.datadict;
 
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
@@ -7,19 +7,15 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Created by hocgin on 2020/11/16
+ * Created by hocgin on 2020/11/12
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Getter
 @RequiredArgsConstructor
-public enum ShippingMethods implements DataDictEnum {
-    Direct("direct", "直达"),
-    Transit("transit", "中转");
+public enum FileRelType implements DataDictEnum {
+    Unknown("unknown", "未知");
     private final Serializable code;
     private final String name;
-
-    public static final String KEY = "wl_shipping_methods";
 }
-
