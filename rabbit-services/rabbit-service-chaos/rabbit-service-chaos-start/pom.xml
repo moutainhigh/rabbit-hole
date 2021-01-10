@@ -14,13 +14,17 @@
   <artifactId>rabbit-service-chaos-start</artifactId>
 
   <properties>
-    <main-class>com.github.lotus.chaos.ChaosApplication</main-class>
+    <main-class>com.github.lotus.chaos.BootApplication</main-class>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-chaos-biz</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-com-biz</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>

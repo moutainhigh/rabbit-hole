@@ -1,6 +1,6 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
+import com.github.lotus.chaos.api.SmsServiceApi;
 import com.github.lotus.docking.api.WxServiceApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;

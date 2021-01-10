@@ -1,7 +1,7 @@
 package com.github.lotus.wl.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.modules.com.constant.DistrictLevel;
-import com.github.lotus.chaos.api.modules.support.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.common.constant.DistrictLevelConstant;
 import com.github.lotus.wl.biz.enumns.ShippingMethods;
 import com.github.lotus.wl.biz.enumns.Unit;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
@@ -42,19 +42,19 @@ public class LogisticsLineSearchVo {
     @ApiModelProperty("仓库省")
     private String warehouseProvince;
     @Named(idFor = "warehouseProvince", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.PROVINCE_CODE},
+        args = {DistrictLevelConstant.PROVINCE_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String warehouseProvinceName;
     @ApiModelProperty("仓库市")
     private String warehouseCity;
     @Named(idFor = "warehouseCity", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.CITY_CODE},
+        args = {DistrictLevelConstant.CITY_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String warehouseCityName;
     @ApiModelProperty("仓库县")
     private String warehouseDistrict;
     @Named(idFor = "warehouseDistrict", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.DISTRICT_CODE},
+        args = {DistrictLevelConstant.DISTRICT_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String warehouseDistrictName;
 
@@ -78,19 +78,19 @@ public class LogisticsLineSearchVo {
     @ApiModelProperty("线路省")
     private String logisticsLineProvince;
     @Named(idFor = "logisticsLineProvince", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.PROVINCE_CODE},
+        args = {DistrictLevelConstant.PROVINCE_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String logisticsLineProvinceName;
     @ApiModelProperty("线路市")
     private String logisticsLineCity;
     @Named(idFor = "logisticsLineCity", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.CITY_CODE},
+        args = {DistrictLevelConstant.CITY_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String logisticsLineCityName;
     @ApiModelProperty("线路县")
     private String logisticsLineDistrict;
     @Named(idFor = "logisticsLineDistrict", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.DISTRICT_CODE},
+        args = {DistrictLevelConstant.DISTRICT_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String logisticsLineDistrictName;
 

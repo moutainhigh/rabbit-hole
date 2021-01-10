@@ -1,6 +1,6 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
+import com.github.lotus.chaos.api.SmsServiceApi;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinAccountRo;
 import com.github.lotus.sso.pojo.ro.LoginRo;
