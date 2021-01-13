@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author hocgin
- * @since 2021-01-10
+ * @since 2021-01-13
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,6 +30,9 @@ public class Feedback extends AbstractEntity<Feedback> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @ApiModelProperty("项目")
+    @TableField("project_id")
+    private Long projectId;
     @ApiModelProperty("类型: issues=>问题; propose=>建议")
     @TableField("type")
     private String type;
@@ -48,10 +51,12 @@ public class Feedback extends AbstractEntity<Feedback> {
     @ApiModelProperty("联系方式")
     @TableField("contact_info")
     private String contactInfo;
+    @ApiModelProperty("版本号")
+    @TableField("version")
+    private String version;
     @ApiModelProperty("扩展信息")
     @TableField("expand")
     private String expand;
-
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

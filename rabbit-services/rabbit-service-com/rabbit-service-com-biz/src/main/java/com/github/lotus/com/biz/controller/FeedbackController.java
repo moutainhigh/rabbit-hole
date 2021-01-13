@@ -36,7 +36,8 @@ public class FeedbackController {
     @PostMapping
     public Result<Void> insertOne(@Validated @RequestBody FeedbackPostRo ro) {
         ro.setUserId(UserContextHolder.getUserId().orElse(null));
-        SpringServletContext.getRequest().ifPresent(request -> ro.setCreatedIp(RequestUtils.getClientIp(request)));
+        SpringServletContext.getRequest()
+            .ifPresent(request -> ro.setCreatedIp(RequestUtils.getClientIp(request)));
         service.insertOne(ro);
         return Result.success();
     }

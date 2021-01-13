@@ -13,6 +13,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface FeedbackMapping {
+    @Mapping(target = "projectId", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", source = "ro.userId")
     @Mapping(target = "createdAt", ignore = true)

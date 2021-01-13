@@ -18,6 +18,9 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel(description = "用户反馈")
 public class FeedbackPostRo {
+    @NotBlank(message = "请填写项目编号")
+    @ApiModelProperty("项目编号")
+    private String projectSn;
     @EnumRange(enumClass = FeedbackType.class, message = "反馈类型错误")
     @NotNull(message = "反馈类型错误")
     @ApiModelProperty("类型: issues=>问题; propose=>建议")
@@ -36,6 +39,8 @@ public class FeedbackPostRo {
     private String contactInfo;
     @ApiModelProperty("扩展信息")
     private String expand;
+    @ApiModelProperty("版本号")
+    private String version;
 
     @ApiModelProperty(hidden = true)
     private String createdIp;
