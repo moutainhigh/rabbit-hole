@@ -23,7 +23,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class LBSManager {
+public class LbsManager {
     private final RedisManager redisManager;
 
     /**
