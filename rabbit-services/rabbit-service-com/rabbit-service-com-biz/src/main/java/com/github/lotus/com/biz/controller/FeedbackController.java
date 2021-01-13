@@ -5,6 +5,8 @@ import com.github.lotus.com.biz.pojo.ro.FeedbackPostRo;
 import com.github.lotus.com.biz.service.FeedbackService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.result.Result;
+import in.hocg.boot.web.servlet.SpringServletContext;
+import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,7 @@ public class FeedbackController {
     @PostMapping
     public Result<Void> insertOne(@Validated @RequestBody FeedbackPostRo ro) {
         ro.setUserId(UserContextHolder.getUserId().orElse(null));
+        SpringServletContext.getRequest().ifPresent(request -> ro.setCreatedIp(RequestUtils.getClientIp(request)));
         service.insertOne(ro);
         return Result.success();
     }
