@@ -43,6 +43,9 @@ public interface AccountServiceApi {
     @PostMapping(CONTEXT_ID + "/listAccountByAccountId")
     List<AccountVo> listAccountVoByAccountId(@RequestParam("id") List<Long> id);
 
+    @PostMapping(CONTEXT_ID + "/getById")
+    AccountVo getById(@RequestParam("id") Long id);
+
     @PostMapping(CONTEXT_ID + "/getUserDetailVoByUsername")
     UserDetailVo getUserDetailVoByUsername(@RequestParam("username") String username);
 }

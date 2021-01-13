@@ -173,7 +173,13 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     }
 
     @Override
-    public AccountComplexVo getAccountVoById(Long userId) {
+    public AccountVo getAccountVoById(Long userId) {
+        Account entity = getById(userId);
+        return mapping.asAccountVo(entity);
+    }
+
+    @Override
+    public AccountComplexVo getComplexById(Long userId) {
         Account entity = baseMapper.selectById(userId);
         return this.convert(entity);
     }

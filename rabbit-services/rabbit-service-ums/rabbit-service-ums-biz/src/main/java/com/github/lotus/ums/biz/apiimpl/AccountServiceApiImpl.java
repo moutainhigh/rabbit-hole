@@ -58,6 +58,11 @@ public class AccountServiceApiImpl implements AccountServiceApi {
     }
 
     @Override
+    public AccountVo getById(Long id) {
+        return service.getAccountVoById(id);
+    }
+
+    @Override
     public UserDetailVo getUserDetailVoByUsername(String username) {
         return service.getUserDetailVoByUsername(username);
     }

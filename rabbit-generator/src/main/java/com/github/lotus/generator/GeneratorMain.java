@@ -14,10 +14,10 @@ import com.github.lotus.generator.core.Module;
 public class GeneratorMain {
 
     public static void main(String[] args) {
-        // com_comment_target com_comment
+        //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.COM, false,
-            "com_project", "com_feedback");
+            "com_comment_target", "com_comment");
     }
 
 }

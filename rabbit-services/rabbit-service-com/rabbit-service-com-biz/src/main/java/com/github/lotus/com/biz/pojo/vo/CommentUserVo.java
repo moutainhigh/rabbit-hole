@@ -1,19 +1,20 @@
-package com.github.lotus.ums.api.pojo.vo;
+package com.github.lotus.com.biz.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
- * Created by hocgin on 2020/12/22
+ * Created by hocgin on 2021/1/13
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @ApiModel
-public class AccountVo {
+@Accessors(chain = true)
+public class CommentUserVo {
     private Long id;
     private String nickname;
-    private String username;
     private String avatarUrl;
 }

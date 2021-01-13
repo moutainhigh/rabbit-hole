@@ -55,7 +55,7 @@ public class AccountController {
     @ResponseBody
     public Result<AccountComplexVo> getCurrentAccount() {
         Long userId = UserContextHolder.getUserIdThrow();
-        return Result.success(service.getAccountVoById(userId));
+        return Result.success(service.getComplexById(userId));
     }
 
     @UseLogger("账号信息 - 修改")

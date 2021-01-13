@@ -1,0 +1,70 @@
+package com.github.lotus.com.biz.controller;
+
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
+import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
+import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
+import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
+import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
+import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
+import com.github.lotus.com.biz.service.CommentService;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.web.result.Result;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * <p>
+ * [通用模块] 评论表 前端控制器
+ * </p>
+ *
+ * @author hocgin
+ * @since 2021-01-13
+ */
+@RestController
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequestMapping("/comment")
+public class CommentController {
+    private final CommentService service;
+
+    @PutMapping("/{id:\\d+}")
+    @UseLogger("更新 - 评论")
+    public Result<Void> updateOne(@PathVariable("id") Long id,
+                                  @Validated @RequestBody CommentUpdateRo ro) {
+        UserContextHolder.getUserId().ifPresent(ro::setUserId);
+        service.updateOne(id, ro);
+        return Result.success();
+    }
+
+    @PostMapping
+    @UseLogger("新增 - 评论")
+    public Result<Void> insertOne(@Validated @RequestBody CommentInsertRo ro) {
+        UserContextHolder.getUserId().ifPresent(ro::setUserId);
+        service.insertOne(ro);
+        return Result.success();
+    }
+
+    @PostMapping("/_paging")
+    @UseLogger("分页查询根 - 根评论")
+    public Result<IPage<RootCommentComplexVo>> pagingRootComment(@Validated @RequestBody RootCommentPagingRo ro) {
+        return Result.success(service.pagingRootComment(ro));
+    }
+
+    @PostMapping("/{parentId:\\d+}/_paging")
+    @UseLogger("分页查询 - 子评论")
+    public Result<IPage<CommentComplexVo>> pagingChildComment(@PathVariable("parentId") Long parentId,
+                                                              @RequestBody ChildCommentPagingRo ro) {
+        ro.setParentId(parentId);
+        return Result.success(service.pagingChildComment(ro));
+    }
+}
+
