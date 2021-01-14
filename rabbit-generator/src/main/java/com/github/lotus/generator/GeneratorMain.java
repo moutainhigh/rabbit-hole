@@ -17,7 +17,7 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.COM, false,
-            "com_comment_target", "com_comment");
+            "com_short_url");
     }
 
 }
