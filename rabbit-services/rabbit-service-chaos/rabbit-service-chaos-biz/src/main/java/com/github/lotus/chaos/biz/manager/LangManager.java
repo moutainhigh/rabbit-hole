@@ -1,10 +1,13 @@
 package com.github.lotus.chaos.biz.manager;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -22,7 +25,6 @@ import java.util.HashMap;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LangManager {
-    private final RedisManager redisManager;
 
     /**
      * 获取冈布奥每日密令
@@ -36,6 +38,26 @@ public class LangManager {
             .form(formMap);
         HttpResponse response = request.execute();
         return JSON.parseObject(response.body()).getJSONArray("message").getString(0);
+    }
+
+    /**
+     * 同步小米步数
+     *
+     * @param username username
+     * @param password password
+     * @param count    count
+     */
+    public void syncMiStepCount(String username, String password, Integer count) {
+        String url = StrUtil.format("https://api.5173kk.com/cloudApi/sport/mi/submit?mobile={}&password={}&count={}", username, password, count);
+        HttpRequest request = HttpUtil.createPost(url);
+        HttpResponse response = request.execute();
+
+        JSONObject result = JSON.parseObject(response.body());
+        String msg = result.getString("msg");
+        Integer code = result.getInteger("code");
+        if (code != 0) {
+            ValidUtils.fail(msg);
+        }
     }
 
 }

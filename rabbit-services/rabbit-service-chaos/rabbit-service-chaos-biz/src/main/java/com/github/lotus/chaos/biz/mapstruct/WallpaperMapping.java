@@ -14,13 +14,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface WallpaperMapping {
 
-    @Mapping(target = "id", source = "dto.id")
-    @Mapping(target = "remark", source = "dto.altDescription")
-    @Mapping(target = "url", source = "dto.urls.small")
-    @Mapping(target = "rawUrl", source = "dto.urls.raw")
-    @Mapping(target = "fullUrl", source = "dto.urls.full")
-    @Mapping(target = "title", source = "dto.description")
-    @Mapping(target = "author.nickname", source = "dto.user.name")
-    @Mapping(target = "author.avatarUrl", source = "dto.user.profileImage.large")
+    @Mapping(target = "author", ignore = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "remark", source = "altDescription")
+    @Mapping(target = "url", source = "urls.small")
+    @Mapping(target = "rawUrl", source = "urls.raw")
+    @Mapping(target = "fullUrl", source = "urls.full")
+    @Mapping(target = "title", source = "description")
+    @Mapping(target = "author.nickname", source = "user.name")
+    @Mapping(target = "author.avatarUrl", source = "user.profileImage.large")
     WallpaperComplexVo asWallpaperComplexVo(UnsplashPhotoDto dto);
 }
