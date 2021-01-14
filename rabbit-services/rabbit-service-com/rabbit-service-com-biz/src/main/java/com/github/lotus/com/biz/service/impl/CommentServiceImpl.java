@@ -6,6 +6,7 @@ import com.github.lotus.com.biz.mapper.CommentMapper;
 import com.github.lotus.com.biz.mapstruct.CommentMapping;
 import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
+import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
 import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
 import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
@@ -16,7 +17,7 @@ import com.github.lotus.com.biz.service.CommentTargetService;
 import com.github.lotus.common.datadict.CommentTargetType;
 import com.github.lotus.ums.api.AccountServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -40,7 +41,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comment>
+public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     implements CommentService {
     private final CommentTargetService commentTargetService;
     private final AccountServiceApi accountServiceApi;
@@ -123,6 +124,19 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final String regexTreePath = String.format("%s/.*", treePath);
         final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, ro.ofPage());
         return result.convert(this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void like(CommentLikeRo ro) {
+        Long id = ro.getId();
+        Comment entity = getById(id);
+        Long likesCount = entity.getLikesCount();
+
+        Comment update = new Comment();
+        update.setId(id);
+        update.setLikesCount(likesCount + 1);
+        this.validUpdateById(update);
     }
 
     private CommentComplexVo convertComplex(Comment entity) {

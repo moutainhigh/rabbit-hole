@@ -4,6 +4,7 @@ package com.github.lotus.com.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
+import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
 import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
 import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
@@ -50,6 +51,15 @@ public class CommentController {
     public Result<Void> insertOne(@Validated @RequestBody CommentInsertRo ro) {
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
         service.insertOne(ro);
+        return Result.success();
+    }
+
+    @UseLogger("喜欢 - 评论")
+    @PostMapping("/{id:\\d+}/like")
+    public Result<Void> like(@PathVariable("id") Long id) {
+        CommentLikeRo ro = new CommentLikeRo().setId(id);
+        UserContextHolder.getUserId().ifPresent(ro::setUserId);
+        service.like(ro);
         return Result.success();
     }
 

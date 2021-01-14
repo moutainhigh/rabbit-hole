@@ -9,6 +9,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,26 +28,16 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_comment")
-public class Comment extends AbstractEntity<Comment> {
+public class Comment extends TreeEntity<Comment> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-    @TableField("parent_id")
-    private Long parentId;
-    @ApiModelProperty("树路径，组成方式: /父路径/当前ID")
-    @TableField("tree_path")
-    private String treePath;
     @ApiModelProperty("评论对象ID")
     @TableField("target_id")
     private Long targetId;
     @ApiModelProperty("评论内容")
     @TableField("content")
     private String content;
-    @ApiModelProperty("启用状态")
-    @TableField("enabled")
-    private String enabled;
     @ApiModelProperty("点赞数量")
     @TableField("likes_count")
     private Long likesCount;
