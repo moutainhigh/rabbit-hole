@@ -1,7 +1,7 @@
 package com.github.lotus.com.biz.mapstruct;
 
 import com.github.lotus.com.biz.entity.Feedback;
-import com.github.lotus.com.biz.pojo.ro.FeedbackPostRo;
+import com.github.lotus.com.biz.pojo.ro.FeedbackInsertRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,5 +17,5 @@ public interface FeedbackMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", source = "ro.userId")
     @Mapping(target = "createdAt", ignore = true)
-    Feedback asFeedback(FeedbackPostRo ro);
+    Feedback asFeedback(FeedbackInsertRo ro);
 }

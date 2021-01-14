@@ -7,6 +7,7 @@ import com.github.lotus.com.biz.mapstruct.CommentMapping;
 import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
 import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
+import com.github.lotus.com.biz.pojo.ro.CommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
 import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
@@ -137,6 +138,13 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         update.setId(id);
         update.setLikesCount(likesCount + 1);
         this.validUpdateById(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CommentComplexVo> paging(CommentPagingRo ro) {
+        IPage<Comment> result = baseMapper.paging(ro, ro.ofPage());
+        return result.convert(this::convertComplex);
     }
 
     private CommentComplexVo convertComplex(Comment entity) {

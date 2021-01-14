@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.com.biz.entity.Comment;
+import com.github.lotus.com.biz.pojo.ro.CommentPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,6 @@ public interface CommentMapper extends BaseMapper<Comment> {
                                      Page page);
 
     IPage<Comment> pagingByRegexTreePath(@Param("regexTreePath") String regexTreePath, Page page);
+
+    IPage<Comment> paging(@Param("ro") CommentPagingRo ro, @Param("page") Page page);
 }

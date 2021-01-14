@@ -18,4 +18,10 @@
     FROM com_comment tc
     WHERE tc.tree_path REGEXP #{regexTreePath}
   </select>
+
+  <select id="paging" resultType="com.github.lotus.com.biz.entity.Comment">
+    SELECT tc.*
+    FROM com_comment tc
+    ORDER BY tc.created_at desc
+  </select>
 </mapper>

@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(description = "用户反馈")
-public class FeedbackPostRo {
+public class FeedbackInsertRo {
     @NotBlank(message = "请填写项目编号")
     @ApiModelProperty("项目编号")
     private String projectSn;

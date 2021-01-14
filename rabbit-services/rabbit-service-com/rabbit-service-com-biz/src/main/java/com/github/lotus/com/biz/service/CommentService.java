@@ -5,6 +5,7 @@ import com.github.lotus.com.biz.entity.Comment;
 import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
 import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
+import com.github.lotus.com.biz.pojo.ro.CommentPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
 import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
@@ -53,4 +54,6 @@ public interface CommentService extends AbstractService<Comment> {
     IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingRo ro);
 
     void like(CommentLikeRo ro);
+
+    IPage<CommentComplexVo> paging(CommentPagingRo ro);
 }

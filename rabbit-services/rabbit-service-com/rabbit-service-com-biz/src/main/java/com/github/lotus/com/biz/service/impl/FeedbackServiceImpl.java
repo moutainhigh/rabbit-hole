@@ -4,7 +4,7 @@ import com.github.lotus.com.biz.entity.Feedback;
 import com.github.lotus.com.biz.entity.Project;
 import com.github.lotus.com.biz.mapper.FeedbackMapper;
 import com.github.lotus.com.biz.mapstruct.FeedbackMapping;
-import com.github.lotus.com.biz.pojo.ro.FeedbackPostRo;
+import com.github.lotus.com.biz.pojo.ro.FeedbackInsertRo;
 import com.github.lotus.com.biz.service.FeedbackService;
 import com.github.lotus.com.biz.service.ProjectService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -31,7 +31,7 @@ public class FeedbackServiceImpl extends AbstractServiceImpl<FeedbackMapper, Fee
     private final ProjectService projectService;
 
     @Override
-    public void insertOne(FeedbackPostRo ro) {
+    public void insertOne(FeedbackInsertRo ro) {
         LocalDateTime now = LocalDateTime.now();
         String projectSn = ro.getProjectSn();
         Optional<Project> projectOpt = projectService.getByProjectSn(projectSn);
