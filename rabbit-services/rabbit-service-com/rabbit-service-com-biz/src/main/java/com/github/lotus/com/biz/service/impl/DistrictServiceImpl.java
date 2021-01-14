@@ -152,22 +152,21 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
         District entity;
         for (int i = 0; i < dtos.size(); i++) {
             dto = dtos.get(i);
-
             String adcode = dto.getAdcode();
 
             DistrictLevel districtLevel = LBSHelper.ofLevel(dto.getLevel());
             BigDecimal lat = LBSHelper.getLat(dto.getCenter());
             BigDecimal lng = LBSHelper.getLng(dto.getCenter());
-
+            String citycode = LBSHelper.getCitycode(dto.getCitycode());
 
             if (DistrictLevel.Street.equals(districtLevel)) {
                 adcode += String.format("%02d", i + 1);
             }
             entity = new District();
             entity.setParentId(parentId);
-            entity.setCityCode(dto.getCitycode());
+            entity.setCityCode(citycode);
             entity.setAdCode(adcode);
-            entity.setLevel((String) districtLevel.getCode());
+            entity.setLevel(districtLevel.getCodeStr());
             entity.setTitle(dto.getName());
             entity.setLat(lat);
             entity.setLng(lng);
