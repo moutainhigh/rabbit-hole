@@ -8,8 +8,10 @@ import com.github.lotus.chaos.biz.pojo.dto.UnsplashPagingDto;
 import com.github.lotus.chaos.biz.pojo.dto.UnsplashPhotoDto;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
+import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
 import com.github.lotus.chaos.biz.pojo.vo.WallpaperComplexVo;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -40,6 +42,19 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
+    @Cacheable(cacheNames = ChaosCacheKeys.PAGING_TOPIC_WALLPAPER, key = "#topicId + #ro.page + #ro.size")
+    public List<WallpaperComplexVo> pagingByTopic(String topicId, WallpaperTopicPagingRo ro) {
+        List<UnsplashPhotoDto> result = unsplashManager.pagingByTopic(topicId, ro.getPage(), ro.getSize());
+        return LangUtils.toList(result, mapping::asWallpaperComplexVo);
+    }
+
+    @Override
+    public WallpaperComplexVo random() {
+        UnsplashPhotoDto result = unsplashManager.random();
+        return mapping.asWallpaperComplexVo(result);
+    }
+
+    @Override
     public List<WallpaperComplexVo> completeWallpaper(WallpaperCompleteRo ro) {
         String keyword = ro.getKeyword();
         int size = ro.getSize();
@@ -51,6 +66,11 @@ public class HttpServiceImpl implements HttpService {
     @Cacheable(cacheNames = ChaosCacheKeys.GUMBALLS_GIFT, key = "#day")
     public String getGumballsGift(String day) {
         return langManager.getGumballsGift();
+    }
+
+    @Override
+    public List<KeyValue> getTopic() {
+        return unsplashManager.topics();
     }
 
 }

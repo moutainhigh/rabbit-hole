@@ -3,9 +3,11 @@ package com.github.lotus.chaos.biz.controller;
 import cn.hutool.core.date.DateUtil;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
+import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
 import com.github.lotus.chaos.biz.pojo.vo.WallpaperComplexVo;
 import com.github.lotus.chaos.biz.support.http.HttpService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,28 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class HttpController {
     private final HttpService service;
+
+    @UseLogger("获取主题 - 壁纸")
+    @ApiOperation("获取主题 - 壁纸")
+    @GetMapping("/wallpaper/topic")
+    public Result<List<KeyValue>> topic() {
+        return Result.success(service.getTopic());
+    }
+
+    @UseLogger("随机获取 - 壁纸")
+    @ApiOperation("随机获取 - 壁纸")
+    @GetMapping("/wallpaper/random")
+    public Result<WallpaperComplexVo> random() {
+        return Result.success(service.random());
+    }
+
+    @UseLogger("查询主题 - 壁纸")
+    @ApiOperation("查询主题 - 壁纸")
+    @PostMapping("/wallpaper/topic/{topicId}/_paging")
+    public Result<List<WallpaperComplexVo>> pagingByTopic(@PathVariable("topicId") String topicId,
+                                                          @Validated @RequestBody WallpaperTopicPagingRo ro) {
+        return Result.success(service.pagingByTopic(topicId, ro));
+    }
 
     @UseLogger("分页查询 - 壁纸")
     @ApiOperation("分页查询 - 壁纸")

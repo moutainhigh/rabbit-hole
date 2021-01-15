@@ -9,4 +9,5 @@ package com.github.lotus.chaos.biz.constant;
 public class ChaosCacheKeys {
     public static final String GUMBALLS_GIFT = "GUMBALLS_GIFT";
     public static final String PAGING_WALLPAPER = "PAGING_WALLPAPER";
+    public static final String PAGING_TOPIC_WALLPAPER = "PAGING_TOPIC_WALLPAPER";
 }
