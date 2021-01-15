@@ -15,6 +15,9 @@ import lombok.Data;
 public class WallpaperComplexVo {
     @ApiModelProperty("id")
     private String id;
+    @ApiModelProperty("图片主色")
+    private String color;
+    private String blurHash;
     @ApiModelProperty("图片url")
     private String url;
     private String rawUrl;
