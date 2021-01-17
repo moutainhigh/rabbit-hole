@@ -6,6 +6,7 @@ import com.github.lotus.chaos.biz.manager.UnsplashManager;
 import com.github.lotus.chaos.biz.mapstruct.WallpaperMapping;
 import com.github.lotus.chaos.biz.pojo.dto.UnsplashPagingDto;
 import com.github.lotus.chaos.biz.pojo.dto.UnsplashPhotoDto;
+import com.github.lotus.chaos.biz.pojo.ro.UploadMiStepRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
@@ -52,6 +53,14 @@ public class HttpServiceImpl implements HttpService {
     public WallpaperComplexVo random() {
         UnsplashPhotoDto result = unsplashManager.random();
         return mapping.asWallpaperComplexVo(result);
+    }
+
+    @Override
+    public void uploadMiStep(UploadMiStepRo ro) {
+        String username = ro.getUsername();
+        String password = ro.getPassword();
+        Integer count = ro.getCount();
+        langManager.uploadMiStep(username, password, count);
     }
 
     @Override

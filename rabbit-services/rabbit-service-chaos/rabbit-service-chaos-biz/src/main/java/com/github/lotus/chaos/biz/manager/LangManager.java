@@ -47,7 +47,7 @@ public class LangManager {
      * @param password password
      * @param count    count
      */
-    public void syncMiStepCount(String username, String password, Integer count) {
+    public void uploadMiStep(String username, String password, Integer count) {
         String url = StrUtil.format("https://api.5173kk.com/cloudApi/sport/mi/submit?mobile={}&password={}&count={}", username, password, count);
         HttpRequest request = HttpUtil.createPost(url);
         HttpResponse response = request.execute();

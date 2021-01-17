@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.support.http;
 
+import com.github.lotus.chaos.biz.pojo.ro.UploadMiStepRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
@@ -27,4 +28,6 @@ public interface HttpService {
     List<WallpaperComplexVo> pagingByTopic(String topicId, WallpaperTopicPagingRo ro);
 
     WallpaperComplexVo random();
+
+    void uploadMiStep(UploadMiStepRo ro);
 }

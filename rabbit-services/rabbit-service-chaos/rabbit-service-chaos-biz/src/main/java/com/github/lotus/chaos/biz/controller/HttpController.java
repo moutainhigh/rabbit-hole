@@ -1,6 +1,7 @@
 package com.github.lotus.chaos.biz.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.github.lotus.chaos.biz.pojo.ro.UploadMiStepRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
@@ -80,5 +81,13 @@ public class HttpController {
     @GetMapping("/gumballs/gift")
     public Result<String> getGumballsGift() {
         return Result.success(service.getGumballsGift(DateUtil.today()));
+    }
+
+    @UseLogger("上传小米步数")
+    @ApiOperation("上传小米步数")
+    @GetMapping("/mi/step")
+    public Result<Void> uploadMiStep(@Validated @RequestBody UploadMiStepRo ro) {
+        service.uploadMiStep(ro);
+        return Result.success();
     }
 }
