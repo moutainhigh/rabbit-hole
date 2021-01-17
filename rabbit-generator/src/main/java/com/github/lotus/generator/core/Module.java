@@ -25,12 +25,12 @@ public enum Module {
     MINA(Lists.newArrayList("MINA_"),
         "com.github.lotus.mina.biz",
         "rabbit-services/rabbit-service-mina/rabbit-service-mina-biz"),
+    COM(Lists.newArrayList("com_"),
+        "com.github.lotus.com.biz",
+        "rabbit-services/rabbit-service-com/rabbit-service-com-biz"),
 
     Chaos_UMS(Lists.newArrayList("ums_"),
         "com.github.lotus.chaos.biz.module.ums",
-        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-biz"),
-    Chaos_COM(Lists.newArrayList("com_"),
-        "com.github.lotus.chaos.biz.module.com",
         "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-biz");
 
     /**

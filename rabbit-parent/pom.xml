@@ -40,7 +40,7 @@
     <jjwt.version>0.9.1</jjwt.version>
     <boot.version>1.0.0-SNAPSHOT</boot.version>
     <velocity-engine-core.version>2.2</velocity-engine-core.version>
-    <mapstruct.version>1.3.1.Final</mapstruct.version>
+    <mapstruct.version>1.4.1.Final</mapstruct.version>
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <easypoi.version>3.2.0</easypoi.version>
     <jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
@@ -49,6 +49,7 @@
     <weixin-java.version>3.7.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <jsoup.version>1.13.1</jsoup.version>
+    <payment.version>0.1.2-SNAPSHOT</payment.version>
   </properties>
 
   <dependencyManagement>
@@ -136,6 +137,21 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-pay-start</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -204,6 +220,16 @@
         <groupId>in.hocg.boot</groupId>
         <artifactId>mail-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.payment</groupId>
+        <artifactId>payment-module-alipay</artifactId>
+        <version>${payment.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.payment</groupId>
+        <artifactId>payment-module-wxpay</artifactId>
+        <version>${payment.version}</version>
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>

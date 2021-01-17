@@ -14,7 +14,7 @@
   <artifactId>rabbit-service-wl-start</artifactId>
 
   <properties>
-    <main-class>com.github.lotus.wl.WlApplication</main-class>
+    <main-class>com.github.lotus.wl.BootApplication</main-class>
   </properties>
 
   <dependencies>

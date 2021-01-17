@@ -15,4 +15,5 @@ public class AccountVo {
     private Long id;
     private String nickname;
     private String username;
+    private String avatarUrl;
 }

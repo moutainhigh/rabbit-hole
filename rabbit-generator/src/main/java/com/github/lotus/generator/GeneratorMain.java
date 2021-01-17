@@ -14,9 +14,10 @@ import com.github.lotus.generator.core.Module;
 public class GeneratorMain {
 
     public static void main(String[] args) {
+        //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MINA, false,
-            "mina_game_card", "mina_app_card");
+            Module.COM, false,
+            "com_short_url");
     }
 
 }

@@ -1,6 +1,6 @@
 package com.github.lotus.wl.biz.enumns;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.constant.DataDictEnum;
+import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

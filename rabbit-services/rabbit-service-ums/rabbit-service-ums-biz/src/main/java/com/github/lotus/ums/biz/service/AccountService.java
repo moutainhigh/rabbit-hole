@@ -41,7 +41,9 @@ public interface AccountService extends AbstractService<Account> {
 
     List<AccountVo> listAccountVoByAccountId(List<Long> id);
 
-    AccountComplexVo getAccountVoById(Long userId);
+    AccountVo getAccountVoById(Long userId);
+
+    AccountComplexVo getComplexById(Long userId);
 
     Long updateAccount(Long userId, UpdateAccountRo ro);
 

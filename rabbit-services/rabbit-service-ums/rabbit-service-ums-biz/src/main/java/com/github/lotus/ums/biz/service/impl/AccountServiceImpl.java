@@ -5,9 +5,9 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.lotus.chaos.api.modules.com.FileServiceApi;
-import com.github.lotus.chaos.api.modules.lang.EmailServiceApi;
-import com.github.lotus.chaos.api.modules.lang.SmsServiceApi;
+import com.github.lotus.chaos.api.EmailServiceApi;
+import com.github.lotus.chaos.api.SmsServiceApi;
+import com.github.lotus.com.api.FileServiceApi;
 import com.github.lotus.common.utils.JwtUtils;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
@@ -173,7 +173,13 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     }
 
     @Override
-    public AccountComplexVo getAccountVoById(Long userId) {
+    public AccountVo getAccountVoById(Long userId) {
+        Account entity = getById(userId);
+        return mapping.asAccountVo(entity);
+    }
+
+    @Override
+    public AccountComplexVo getComplexById(Long userId) {
         Account entity = baseMapper.selectById(userId);
         return this.convert(entity);
     }

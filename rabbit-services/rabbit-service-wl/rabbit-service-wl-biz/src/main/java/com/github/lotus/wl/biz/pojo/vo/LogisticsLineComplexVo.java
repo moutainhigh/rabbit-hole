@@ -2,8 +2,8 @@ package com.github.lotus.wl.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.lotus.chaos.api.modules.com.constant.DistrictLevel;
-import com.github.lotus.chaos.api.modules.support.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.common.constant.DistrictLevelConstant;
 import com.github.lotus.wl.biz.enumns.ShippingMethods;
 import com.github.lotus.wl.biz.enumns.Unit;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
@@ -49,19 +49,19 @@ public class LogisticsLineComplexVo {
     @ApiModelProperty("省区域编码")
     private String provinceAdcode;
     @Named(idFor = "provinceAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.PROVINCE_CODE},
+        args = {DistrictLevelConstant.PROVINCE_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String provinceName;
     @ApiModelProperty("市区区域编码")
     private String cityAdcode;
     @Named(idFor = "cityAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.CITY_CODE},
+        args = {DistrictLevelConstant.CITY_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String cityName;
     @ApiModelProperty("县区域编码")
     private String districtAdcode;
     @Named(idFor = "districtAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevel.DISTRICT_CODE},
+        args = {DistrictLevelConstant.DISTRICT_CODE},
         serviceClass = ChaosNamedAPI.class)
     private String districtName;
 

@@ -25,6 +25,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-com-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-ums-api</artifactId>
     </dependency>
     <dependency>
@@ -66,20 +70,12 @@
     </dependency>
     <!--  三方库  -->
     <dependency>
-      <groupId>in.hocg.boot</groupId>
-      <artifactId>oss-spring-boot-starter</artifactId>
+      <groupId>com.github.whvcse</groupId>
+      <artifactId>easy-captcha</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.talanlabs</groupId>
-      <artifactId>avatar-generator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.github.whvcse</groupId>
-      <artifactId>easy-captcha</artifactId>
     </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>

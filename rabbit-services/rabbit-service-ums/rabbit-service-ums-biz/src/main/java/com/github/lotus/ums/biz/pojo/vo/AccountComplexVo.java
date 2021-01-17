@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.modules.support.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.ums.biz.enumns.Gender;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
