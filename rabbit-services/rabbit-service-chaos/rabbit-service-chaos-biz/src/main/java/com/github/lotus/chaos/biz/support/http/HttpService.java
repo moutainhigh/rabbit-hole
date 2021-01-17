@@ -1,11 +1,10 @@
 package com.github.lotus.chaos.biz.support.http;
 
-import com.github.lotus.chaos.biz.pojo.dto.UnsplashPhotoDto;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
 import com.github.lotus.chaos.biz.pojo.vo.WallpaperComplexVo;
-import in.hocg.boot.web.datastruct.KeyValue;
+import com.github.lotus.chaos.biz.pojo.vo.WallpaperTopicVo;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface HttpService {
 
     String getGumballsGift(String day);
 
-    List<KeyValue> getTopic();
+    List<WallpaperTopicVo> getTopic();
 
     List<WallpaperComplexVo> pagingByTopic(String topicId, WallpaperTopicPagingRo ro);
 

@@ -6,11 +6,10 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.chaos.biz.pojo.dto.UnsplashPagingDto;
 import com.github.lotus.chaos.biz.pojo.dto.UnsplashPhotoDto;
+import com.github.lotus.chaos.biz.pojo.vo.WallpaperTopicVo;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -32,24 +31,26 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UnsplashManager {
-    private static final String CLIENT_ID = "PHul2POuZ6gLBi0wL3mP6GZ_beuXPtMeF5hN4SDD6LA";
+    private static final String CLIENT_ID = "U0vJgDo2jk4THIohlf-bhDYpgBINd3WPu0dkPvhELEk";
 
-    public List<KeyValue> topics() {
-        Map<String, String> topics = Maps.newHashMap();
-        topics.put("推荐", "wallpapers");
-        topics.put("科技", "technology");
-        topics.put("旅行", "travel");
-        topics.put("纹理", "textures-patterns");
-        topics.put("动物", "animals");
-        topics.put("食物", "food-drink");
-        topics.put("运动", "athletics");
-        topics.put("灵感", "spirituality");
-
-        List<KeyValue> result = Lists.newArrayList();
-        for (Map.Entry<String, String> entry : topics.entrySet()) {
-            result.add(new KeyValue().setKey(entry.getKey()).setValue(entry.getValue()));
-        }
-
+    public List<WallpaperTopicVo> topics() {
+        List<WallpaperTopicVo> result = Lists.newArrayList();
+        result.add(new WallpaperTopicVo().setTitle("推荐").setCode("wallpapers")
+            .setColor("#26260c").setBlurHash("LEBpFJRk5TR+5toJ^ia#0KfPIoxY").setImageUrl("https://images.unsplash.com/12/gladiator.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("科技").setCode("technology")
+            .setColor("#d9d9d9").setImageUrl("https://images.unsplash.com/27/type-set.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("旅行").setCode("travel")
+            .setColor("#d9f3f3").setImageUrl("https://images.unsplash.com/24/flashlight.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("纹理").setCode("textures-patterns")
+            .setColor("#a68c73").setImageUrl("https://images.unsplash.com/22/brick-wall.JPG?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("动物").setCode("animals")
+            .setColor("#404040").setImageUrl("https://images.unsplash.com/44/MIbCzcvxQdahamZSNQ26_12082014-IMG_3526.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("食物").setCode("food-drink")
+            .setColor("#f3f3f3").setImageUrl("https://images.unsplash.com/33/IR8nDBZETv6aM6HdJ7RD_IMG_5784.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("运动").setCode("athletics")
+            .setColor("#735940").setImageUrl("https://images.unsplash.com/reserve/bIdO4DDS4qwVF6pHN4qr__MG_1605.jpg?ixlib=rb-1.2.1"));
+        result.add(new WallpaperTopicVo().setTitle("灵感").setCode("spirituality")
+            .setColor("#c0a6a6").setImageUrl("https://images.unsplash.com/16/unsplash_526360a842e20_1.JPG?ixlib=rb-1.2.1"));
         return result;
     }
 

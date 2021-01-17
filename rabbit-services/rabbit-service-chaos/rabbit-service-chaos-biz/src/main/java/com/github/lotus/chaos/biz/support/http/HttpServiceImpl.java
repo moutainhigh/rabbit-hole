@@ -10,8 +10,8 @@ import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
 import com.github.lotus.chaos.biz.pojo.vo.WallpaperComplexVo;
+import com.github.lotus.chaos.biz.pojo.vo.WallpaperTopicVo;
 import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -69,7 +69,7 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    public List<KeyValue> getTopic() {
+    public List<WallpaperTopicVo> getTopic() {
         return unsplashManager.topics();
     }
 

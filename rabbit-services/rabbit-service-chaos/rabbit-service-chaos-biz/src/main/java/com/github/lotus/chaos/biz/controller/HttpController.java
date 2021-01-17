@@ -5,9 +5,9 @@ import com.github.lotus.chaos.biz.pojo.ro.WallpaperCompleteRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperPagingRo;
 import com.github.lotus.chaos.biz.pojo.ro.WallpaperTopicPagingRo;
 import com.github.lotus.chaos.biz.pojo.vo.WallpaperComplexVo;
+import com.github.lotus.chaos.biz.pojo.vo.WallpaperTopicVo;
 import com.github.lotus.chaos.biz.support.http.HttpService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ public class HttpController {
     @UseLogger("获取主题 - 壁纸")
     @ApiOperation("获取主题 - 壁纸")
     @GetMapping("/wallpaper/topic")
-    public Result<List<KeyValue>> topic() {
+    public Result<List<WallpaperTopicVo>> topic() {
         return Result.success(service.getTopic());
     }
 
