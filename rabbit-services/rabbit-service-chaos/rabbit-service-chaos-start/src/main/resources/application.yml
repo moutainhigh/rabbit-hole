@@ -44,6 +44,8 @@ rabbit:
           secret: ENC(eEehzvffiZzLYkmuxfT0yQdaI2xSaq8kps67HUdLsE9Jpt+ybZCom9du6FSwLwY+)
         - appid: wx2388ca4e8e51be62
           secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
+        - appid: wx515efe8f906a5e69
+          secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
     # https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
     mp:
       configs:
