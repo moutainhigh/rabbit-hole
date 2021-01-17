@@ -101,8 +101,7 @@ boot:
         - /chaos/address4ip
         - /chaos/logistics-line/_search
         - /chaos/gumballs/gift
-        - /chaos/wallpaper/_complete
-        - /chaos/wallpaper/_paging
+        - /chaos/wallpaper/**
         - /chaos/download
 
         - /wl/logistics-line/_search

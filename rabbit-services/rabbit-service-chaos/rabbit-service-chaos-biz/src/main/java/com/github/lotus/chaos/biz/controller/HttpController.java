@@ -85,7 +85,7 @@ public class HttpController {
 
     @UseLogger("上传小米步数")
     @ApiOperation("上传小米步数")
-    @GetMapping("/mi/step")
+    @PostMapping("/mi/step")
     public Result<Void> uploadMiStep(@Validated @RequestBody UploadMiStepRo ro) {
         service.uploadMiStep(ro);
         return Result.success();
