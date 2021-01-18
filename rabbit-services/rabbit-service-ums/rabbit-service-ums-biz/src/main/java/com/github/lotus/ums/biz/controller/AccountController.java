@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * <p>
  * [用户模块] 账号表 前端控制器
@@ -56,6 +59,14 @@ public class AccountController {
     public Result<AccountComplexVo> getCurrentAccount() {
         Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.getComplexById(userId));
+    }
+
+    @UseLogger("获取当前用户权限")
+    @ApiOperation("获取当前用户权限")
+    @GetMapping("/authority")
+    @ResponseBody
+    public Result<List<Object>> getCurrentAuthority() {
+        return Result.success(Collections.emptyList());
     }
 
     @UseLogger("账号信息 - 修改")
