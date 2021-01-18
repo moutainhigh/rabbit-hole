@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -65,8 +66,11 @@ public class AccountController {
     @ApiOperation("获取当前用户权限")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<Object>> getCurrentAuthority() {
-        return Result.success(Collections.emptyList());
+    public Result<List<AuthorityTreeNodeVo>> getCurrentAuthority() {
+        AuthorityTreeNodeVo nodeVo = new AuthorityTreeNodeVo();
+        nodeVo.setAuthorityCode("index");
+        nodeVo.setTitle("首页");
+        return Result.success(Collections.singletonList(nodeVo));
     }
 
     @UseLogger("账号信息 - 修改")
