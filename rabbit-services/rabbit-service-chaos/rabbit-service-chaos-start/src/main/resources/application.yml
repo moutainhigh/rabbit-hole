@@ -28,6 +28,10 @@ boot:
         ttl: 1D
       - name: PAGING_WALLPAPER
         ttl: 1D
+      - name: PAGING_TOPIC_WALLPAPER
+        ttl: 1D
+      - name: GET_ADDRESS_BY_IP
+        ttl: 1H
   mail:
     host: smtp.163.com
     from: "HOCGIN 官方邮件<13600747016@163.com>"
