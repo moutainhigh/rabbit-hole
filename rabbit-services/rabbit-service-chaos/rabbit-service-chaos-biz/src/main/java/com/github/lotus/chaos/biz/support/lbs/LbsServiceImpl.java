@@ -30,7 +30,6 @@ public class LbsServiceImpl implements LbsService {
     }
 
     @Override
-    @Cacheable(cacheNames = ChaosCacheKeys.GET_ADDRESS_BY_IP, key = "#ip")
     public IpAndAddressDto getAddressByIp(String ip) {
         return lbsManager.getAddressByIp(ip);
     }

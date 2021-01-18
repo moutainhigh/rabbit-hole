@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.service.impl;
 
+import com.github.lotus.chaos.biz.constant.ChaosCacheKeys;
 import com.github.lotus.chaos.biz.pojo.dto.IpAndAddressDto;
 import com.github.lotus.chaos.biz.pojo.ro.SendEmailCodeRo;
 import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
@@ -13,6 +14,7 @@ import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,7 @@ public class ChaosServiceImpl implements ChaosService {
     }
 
     @Override
+    @Cacheable(cacheNames = ChaosCacheKeys.GET_ADDRESS_BY_IP, key = "#ip")
     public IpAddressVo getAddress4ip(String ip) {
         log.info("正在查询IP:[{}]的物理地址", ip);
         IpAddressVo result = new IpAddressVo();
