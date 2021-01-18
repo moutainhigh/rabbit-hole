@@ -5,7 +5,7 @@ import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
 import com.github.lotus.com.biz.service.DistrictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Service
+@RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class DistrictServiceApiImpl implements DistrictServiceApi {
     private final DistrictService service;

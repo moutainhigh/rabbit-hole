@@ -12,7 +12,7 @@ import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.function.Function;
  *
  * @author hocgin
  */
-@Component
+@RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     private final DataDictServiceApi dataDictServiceApi;
