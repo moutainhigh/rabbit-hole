@@ -8,6 +8,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
@@ -50,11 +51,14 @@ public class LoggerGatewayFilterFactory extends AbstractGatewayFilterFactory<Log
                 Long startTime = exchange.getAttribute(MY_LOG_START_TIME);
                 if (null != startTime) {
                     ServerHttpRequest serverHttpRequest = exchange.getRequest();
+                    String methodName = serverHttpRequest.getMethodValue();
+                    String uri = serverHttpRequest.getURI().getRawPath();
+                    MultiValueMap<String, String> queryParams = serverHttpRequest.getQueryParams();
                     String logStr = new StringJoiner(System.lineSeparator())
                         .add("")
                         .add("=====================================================")
-                        .add("URI: " + serverHttpRequest.getURI().getRawPath())
-                        .add("RequestParams: " + serverHttpRequest.getQueryParams())
+                        .add(String.format("URI: %s %s", methodName, uri))
+                        .add("RequestParams: " + queryParams)
                         .add("Username: " + username)
                         .add("Source: " + source)
                         .add("Version: " + version)
