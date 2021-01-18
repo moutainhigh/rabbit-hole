@@ -152,7 +152,7 @@ $(function () {
             }
         };
         $.ajax({
-            type: "GET", url: '/wx/qrcode', dataType: 'json',
+            type: "GET", url: '/wx/wxb4df1f0c3dc96256/qrcode', dataType: 'json',
             data: {},
             success: callback,
             error: ({responseJSON}) => callback(responseJSON)

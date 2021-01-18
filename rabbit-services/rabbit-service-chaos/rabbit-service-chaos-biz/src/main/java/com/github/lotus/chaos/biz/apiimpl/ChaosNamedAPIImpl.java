@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.apiimpl;
 
+import cn.hutool.core.convert.Convert;
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.com.api.DataDictServiceApi;
 import com.github.lotus.com.api.DistrictServiceApi;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/11/11
@@ -29,25 +31,28 @@ import java.util.function.Function;
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     private final DataDictServiceApi dataDictServiceApi;
-    private final AccountServiceApi accountService;
+    private final AccountServiceApi accountServiceApi;
     private final DistrictServiceApi districtServiceApi;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
         final String type = args.getArgs()[0];
-        final List<DataDictItemVo> result = dataDictServiceApi.listDataDictItemVoByDictIdAndCode(type, args.getValues());
+        List<String> values = args.getValues();
+        final List<DataDictItemVo> result = dataDictServiceApi.listDataDictItemVoByDictIdAndCode(type, values);
         return this.toMap(result, DataDictItemVo::getCode, DataDictItemVo::getTitle);
     }
 
     @Override
     public Map<String, Object> loadByUserName(NamedArgs args) {
-        final List<AccountVo> result = accountService.listAccountVoByAccountId(args.getValues());
+        List<Long> values = getValues(args.getValues(), Long.class);
+        final List<AccountVo> result = accountServiceApi.listAccountVoByAccountId(values);
         return this.toMap(result, AccountVo::getId, AccountVo::getUsername);
     }
 
     @Override
     public Map<String, Object> loadByNickname(NamedArgs args) {
-        final List<AccountVo> result = accountService.listAccountVoByAccountId(args.getValues());
+        List<Long> values = getValues(args.getValues(), Long.class);
+        final List<AccountVo> result = accountServiceApi.listAccountVoByAccountId(values);
         return this.toMap(result, AccountVo::getId, AccountVo::getNickname);
     }
 
@@ -72,6 +77,10 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
             default:
         }
         return this.toMap(result, DistrictComplexVo::getAdCode, DistrictComplexVo::getTitle);
+    }
+
+    private <T> List<T> getValues(List<?> values, Class<T> clazz) {
+        return values.parallelStream().map(o -> Convert.convert(clazz, o)).collect(Collectors.toList());
     }
 
     private <K, V, Z> Map<String, Z> toMap(List<V> values,

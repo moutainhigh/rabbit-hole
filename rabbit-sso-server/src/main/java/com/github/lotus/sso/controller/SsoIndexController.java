@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,10 +50,10 @@ public class SsoIndexController {
     }
 
     @ApiOperation("微信公众号二维码")
-    @GetMapping("/wx/qrcode")
+    @GetMapping("/wx/{appid}/qrcode")
     @ResponseBody
-    public Result<WxMpQrCodeVo> getWxQrCode() {
-        return Result.success(indexService.getWxQrCode());
+    public Result<WxMpQrCodeVo> getWxQrCode(@PathVariable("appid") String appid) {
+        return Result.success(indexService.getWxQrCode(appid));
     }
 
     @ApiOperation("获取微信登陆状态")

@@ -17,7 +17,7 @@ public interface SsoIndexService {
 
     void sendSmsCode(SendSmsCodeRo ro);
 
-    WxMpQrCodeVo getWxQrCode();
+    WxMpQrCodeVo getWxQrCode(String appid);
 
     WxLoginStatusVo getWxLoginStatus(String idFlag, String redirectUrl);
 

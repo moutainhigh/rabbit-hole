@@ -38,8 +38,6 @@ public class SsoIndexServiceImpl implements SsoIndexService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
-    @Value("${rabbit.wx.use}")
-    private String useWxAppid;
 
     @Override
     public void createAccount(JoinRo ro) {
@@ -55,8 +53,8 @@ public class SsoIndexServiceImpl implements SsoIndexService {
     }
 
     @Override
-    public WxMpQrCodeVo getWxQrCode() {
-        return wxApi.getQrCode(useWxAppid);
+    public WxMpQrCodeVo getWxQrCode(String appid) {
+        return wxApi.getQrCode(appid);
     }
 
     @Override

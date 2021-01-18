@@ -10,4 +10,5 @@ sso:
           - https://sba.hocgin.top/login/oauth2/code/custom
           - http://logistics.hocgin.top/login/oauth2/code/custom
           - https://logistics.hocgin.top/login/oauth2/code/custom
-rabbit.wx.use: wxb4df1f0c3dc96256
+          - http://manage.hocgin.top/login/oauth2/code/custom
+          - https://manage.hocgin.top/login/oauth2/code/custom
