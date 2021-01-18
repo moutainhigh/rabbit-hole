@@ -41,6 +41,7 @@ public class ChaosServiceImpl implements ChaosService {
 
     @Override
     public IpAddressVo getAddress4ip(String ip) {
+        log.info("正在查询IP:[{}]的物理地址", ip);
         IpAddressVo result = new IpAddressVo();
         IpAndAddressDto dto = lbsService.getAddressByIp(ip);
         dto.getCityCode().ifPresent(cityCode -> {
