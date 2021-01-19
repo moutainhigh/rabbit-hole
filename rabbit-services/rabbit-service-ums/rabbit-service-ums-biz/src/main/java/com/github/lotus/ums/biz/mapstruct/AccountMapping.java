@@ -19,6 +19,7 @@ public interface AccountMapping {
 
     UserDetailVo asUserDetailVo(Account account);
 
+    @Mapping(target = "avatarUrl", source = "avatar")
     AccountVo asAccountVo(Account entity);
 
     @Mapping(target = "social", ignore = true)
