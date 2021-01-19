@@ -38,20 +38,20 @@ DROP TABLE IF EXISTS `ams_role`;
 CREATE TABLE `ams_role`
 (
     `id`              BIGINT AUTO_INCREMENT,
-    `title`           varchar(25) NOT NULL
+    `title`           varchar(25)     NOT NULL
         COMMENT '角色名称',
-    `encoding`        varchar(64) NOT NULL UNIQUE
+    `encoding`        varchar(64)     NOT NULL UNIQUE
         COMMENT '角色授权码',
     `remark`          varchar(255)
         COMMENT '角色描述',
-    `enabled`         VARCHAR(8)  NOT NULL DEFAULT 'on'
+    `enabled`         VARCHAR(8)      NOT NULL DEFAULT 'on'
         COMMENT '启用状态',
-    `is_persist`      VARCHAR(8)  NOT NULL DEFAULT 'yes'
+    is_persist        INT(2) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否保留',
     --
-    `created_at`      DATETIME(6) NOT NULL
+    `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT      NOT NULL
+    `creator`         BIGINT          NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -99,28 +99,28 @@ DROP TABLE IF EXISTS `ams_api`;
 CREATE TABLE `ams_api`
 (
     id                BIGINT UNSIGNED AUTO_INCREMENT,
-    encoding          VARCHAR(64)  NOT NULL
+    encoding          VARCHAR(64)     NOT NULL
         COMMENT '接口编码',
-    title             VARCHAR(64)  NOT NULL
+    title             VARCHAR(64)     NOT NULL
         COMMENT '接口名称',
     remark            VARCHAR(255)
         COMMENT '接口描述',
-    request_method    VARCHAR(64)  NOT NULL
+    request_method    VARCHAR(64)     NOT NULL
         COMMENT '请求方式: 比如: GET,POST 或者 *',
-    service_prefix    VARCHAR(100) NOT NULL
+    service_prefix    VARCHAR(100)    NOT NULL
         COMMENT '服务接口前缀, 比如: /chaos 或者 *',
-    request_uri       VARCHAR(255) NOT NULL
+    request_uri       VARCHAR(255)    NOT NULL
         COMMENT '请求URI, 比如: /xx/{id}  或者 /**',
-    enabled           VARCHAR(8)   NOT NULL DEFAULT 'on'
+    enabled           VARCHAR(8)      NOT NULL DEFAULT 'on'
         COMMENT '启用状态',
-    priority          INT(5)                DEFAULT 1000
+    priority          INT(5)                   DEFAULT 1000
         COMMENT '优先级, 越大优先级越低',
-    `is_persist`      VARCHAR(8)   NOT NULL DEFAULT 'yes'
+    is_persist        INT(2) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否保留权限',
     --
-    `created_at`      DATETIME(6)  NOT NULL
+    `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT       NOT NULL
+    `creator`         BIGINT          NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -152,20 +152,20 @@ DROP TABLE IF EXISTS `ams_user_group`;
 CREATE TABLE `ams_user_group`
 (
     `id`              BIGINT UNSIGNED AUTO_INCREMENT,
-    `title`           varchar(25) NOT NULL
+    `title`           varchar(25)     NOT NULL
         COMMENT '名称',
-    `encoding`        varchar(64) NOT NULL UNIQUE
+    `encoding`        varchar(64)     NOT NULL UNIQUE
         COMMENT '编码',
     `remark`          varchar(255)
         COMMENT '描述',
-    `enabled`         VARCHAR(8)  NOT NULL DEFAULT 'on'
+    `enabled`         VARCHAR(8)      NOT NULL DEFAULT 'on'
         COMMENT '启用状态',
-    `is_persist`      VARCHAR(8)  NOT NULL DEFAULT 'yes'
+    is_persist        INT(2) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否保留',
     --
-    `created_at`      DATETIME(6) NOT NULL
+    `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT      NOT NULL
+    `creator`         BIGINT          NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
