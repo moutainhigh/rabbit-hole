@@ -16,8 +16,16 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.COM, false,
-            "com_short_url");
+            Module.UMS, false,
+            "ams_role",
+            "ams_role_authority_ref",
+            "ams_role_user_ref",
+            "ams_api",
+            "ams_authority_api_ref",
+            "ams_user_group",
+            "ams_user_group_user_ref",
+            "ams_user_group_authority_ref",
+            "ams_authority");
     }
 
 }
