@@ -16,22 +16,21 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum Module {
-    TPL(Lists.newArrayList("T_"),
+    TPL(Lists.newArrayList("t_"),
         "com.github.lotus.tpl.biz",
         "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-biz"),
     WL(Lists.newArrayList("wl_"),
         "com.github.lotus.wl.biz",
         "rabbit-services/rabbit-service-wl/rabbit-service-wl-biz"),
-    MINA(Lists.newArrayList("MINA_"),
+    MINA(Lists.newArrayList("mina_"),
         "com.github.lotus.mina.biz",
         "rabbit-services/rabbit-service-mina/rabbit-service-mina-biz"),
     COM(Lists.newArrayList("com_"),
         "com.github.lotus.com.biz",
         "rabbit-services/rabbit-service-com/rabbit-service-com-biz"),
-
-    Chaos_UMS(Lists.newArrayList("ums_"),
-        "com.github.lotus.chaos.biz.module.ums",
-        "rabbit-services/rabbit-service-chaos/rabbit-service-chaos-biz");
+    UMS(Lists.newArrayList("ums_", "ams_"),
+        "com.github.lotus.ums.biz",
+        "rabbit-services/rabbit-service-ums/rabbit-service-ums-biz");
 
     /**
      * 生成的 Entity 名称会忽略前缀

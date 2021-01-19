@@ -1,14 +1,15 @@
 DROP TABLE IF EXISTS `ams_authority`;
 CREATE TABLE `ams_authority`
 (
-    `id`              BIGINT AUTO_INCREMENT
-        COMMENT 'ID',
+    `id`              BIGINT AUTO_INCREMENT,
     `title`           varchar(25)  NOT NULL
         COMMENT '权限名称',
     `encoding`        varchar(64)  NOT NULL UNIQUE
-        COMMENT '权限授权码',
+        COMMENT '编码',
     `project_id`      BIGINT       NOT NULL
         COMMENT '项目ID',
+    `remark`          varchar(255)
+        COMMENT '描述',
     `priority`        INT(5)       NOT NULL DEFAULT 1000
         COMMENT '优先级, 越大优先级越低',
     --
@@ -36,8 +37,7 @@ CREATE TABLE `ams_authority`
 DROP TABLE IF EXISTS `ams_role`;
 CREATE TABLE `ams_role`
 (
-    `id`              BIGINT AUTO_INCREMENT
-        COMMENT 'ID',
+    `id`              BIGINT AUTO_INCREMENT,
     `title`           varchar(25) NOT NULL
         COMMENT '角色名称',
     `encoding`        varchar(64) NOT NULL UNIQUE
@@ -66,8 +66,7 @@ CREATE TABLE `ams_role`
 DROP TABLE IF EXISTS `ams_role_authority_ref`;
 CREATE TABLE `ams_role_authority_ref`
 (
-    `id`           BIGINT AUTO_INCREMENT
-        COMMENT 'ID',
+    `id`           BIGINT AUTO_INCREMENT,
     `role_id`      BIGINT NOT NULL
         COMMENT '角色',
     `authority_id` BIGINT NOT NULL
@@ -86,9 +85,9 @@ CREATE TABLE `ams_role_user_ref`
     `id`      BIGINT AUTO_INCREMENT
         COMMENT 'ID',
     `role_id` BIGINT NOT NULL
-        COMMENT 'ams_role ID',
+        COMMENT '角色',
     `user_id` BIGINT NOT NULL
-        COMMENT 'ams_user ID',
+        COMMENT '用户',
     UNIQUE (`role_id`, `user_id`),
     PRIMARY KEY (`id`)
 )
@@ -178,7 +177,6 @@ CREATE TABLE `ams_user_group`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[权限模块] 用户组表';
 
-
 DROP TABLE IF EXISTS `ams_user_group_user_ref`;
 CREATE TABLE `ams_user_group_user_ref`
 (
@@ -197,8 +195,7 @@ CREATE TABLE `ams_user_group_user_ref`
 DROP TABLE IF EXISTS `ams_user_group_authority_ref`;
 CREATE TABLE `ams_user_group_authority_ref`
 (
-    `id`            BIGINT AUTO_INCREMENT
-        COMMENT 'ID',
+    `id`            BIGINT AUTO_INCREMENT,
     `user_group_id` BIGINT NOT NULL
         COMMENT '用户组',
     `authority_id`  BIGINT NOT NULL
