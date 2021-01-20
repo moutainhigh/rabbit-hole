@@ -87,6 +87,10 @@ spring:
             token-uri: ${spring.security.oauth2.shostname}/oauth/token
             user-name-attribute: name
 debug: true
+rabbit:
+  gateway:
+    authorize:
+      ignore-urls: ${boot.sso.client.ignore-urls}
 boot:
   sso:
     client:
