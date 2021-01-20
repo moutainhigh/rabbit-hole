@@ -35,4 +35,5 @@ public interface AuthorityService extends AbstractService<Authority> {
 
     String generateSql();
 
+    boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri);
 }

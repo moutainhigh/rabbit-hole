@@ -1,4 +1,4 @@
-package com.github.lotus.gateway.filter;
+package com.github.lotus.gateway.filter.authentication;
 
 import com.github.lotus.common.utils.JwtUtils;
 import com.github.lotus.usercontext.basic.HeaderConstants;
@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Component
-public class AuthorizeTokenFilter implements GlobalFilter, Ordered {
+public class AuthenticationTokenFilter implements GlobalFilter, Ordered {
     static final String AUTHORIZATION_HEADER = "Authorization";
     static final String BEARER_PREFIX = "Bearer ";
 
@@ -54,9 +54,6 @@ public class AuthorizeTokenFilter implements GlobalFilter, Ordered {
         } catch (Exception e) {
             log.warn("JWT解码失败: ", e);
         }
-        if (Strings.isBlank(username)) {
-            return Optional.empty();
-        }
-        return Optional.of(username);
+        return Optional.ofNullable(Strings.trimToNull(username));
     }
 }

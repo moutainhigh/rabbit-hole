@@ -1,5 +1,6 @@
 package com.github.lotus.ums.biz.service.impl;
 
+import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.RoleUserRef;
 import com.github.lotus.ums.biz.mapper.RoleUserRefMapper;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
@@ -7,6 +8,8 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,5 +31,10 @@ public class RoleUserRefServiceImpl extends AbstractServiceImpl<RoleUserRefMappe
     @Override
     public Integer countUseByRoleId(Long id) {
         return lambdaQuery().eq(RoleUserRef::getRoleId, id).count();
+    }
+
+    @Override
+    public List<Role> listByUserId(Long userId) {
+        return baseMapper.listByUserId(userId);
     }
 }

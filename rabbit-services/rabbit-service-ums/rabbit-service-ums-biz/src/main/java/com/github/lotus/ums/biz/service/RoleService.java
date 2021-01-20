@@ -7,6 +7,8 @@ import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 角色表 服务类
@@ -26,4 +28,6 @@ public interface RoleService extends AbstractService<Role> {
     void updateOne(Long id, SaveRoleRo ro);
 
     void deleteOne(Long id);
+
+    List<Role> listByUserId(Long userId);
 }

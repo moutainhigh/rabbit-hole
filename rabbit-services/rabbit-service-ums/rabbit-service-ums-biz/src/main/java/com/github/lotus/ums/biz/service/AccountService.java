@@ -3,7 +3,7 @@ package com.github.lotus.ums.biz.service;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author hocgin
  * @since 2020-10-06
  */
-public interface AccountService extends AbstractService<Account> {
+public interface AccountService extends AbstractService<User> {
 
     UserDetailVo createAccount(CreateAccountRo ro);
 
@@ -29,9 +29,9 @@ public interface AccountService extends AbstractService<Account> {
 
     UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique);
 
-    Optional<Account> getAccountByUsernameOrEmailOrPhone(String unique);
+    Optional<User> getAccountByUsernameOrEmailOrPhone(String unique);
 
-    List<Account> listAccountByAccountId(List<Long> values);
+    List<User> listAccountByAccountId(List<Long> values);
 
     String getToken(String username);
 
@@ -50,4 +50,6 @@ public interface AccountService extends AbstractService<Account> {
     Long updatePhone(UpdateAccountPhoneRo ro);
 
     Long updateEmail(UpdateAccountEmailRo ro);
+
+    Optional<User> getByUsername(String username);
 }

@@ -25,4 +25,8 @@ public class RabbitUtils {
     public String getDefaultUsername(Long id) {
         return "hi_" + DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATE_PATTERN) + id;
     }
+
+    public boolean isSuperAdmin(String username) {
+        return false;
+    }
 }

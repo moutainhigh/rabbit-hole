@@ -1,7 +1,7 @@
 package com.github.lotus.ums.biz.controller;
 
 
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
@@ -50,7 +50,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<?> getAvatarUrl(@PathVariable String username) {
         return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
-            .map(Account::getAvatar).orElse(null));
+            .map(User::getAvatar).orElse(null));
     }
 
     @UseLogger("获取当前用户信息")

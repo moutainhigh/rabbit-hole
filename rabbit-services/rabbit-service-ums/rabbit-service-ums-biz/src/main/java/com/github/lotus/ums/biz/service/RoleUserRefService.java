@@ -1,7 +1,10 @@
 package com.github.lotus.ums.biz.service;
 
+import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.RoleUserRef;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,6 @@ public interface RoleUserRefService extends AbstractService<RoleUserRef> {
     boolean hasUserByRoleId(Long roleId);
 
     Integer countUseByRoleId(Long id);
+
+    List<Role> listByUserId(Long userId);
 }

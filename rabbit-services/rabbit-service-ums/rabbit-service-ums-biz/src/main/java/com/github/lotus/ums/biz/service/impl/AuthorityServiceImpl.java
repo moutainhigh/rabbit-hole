@@ -1,8 +1,10 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
+import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.entity.Authority;
+import com.github.lotus.ums.biz.helper.AuthorityHelper;
 import com.github.lotus.ums.biz.mapper.AuthorityMapper;
 import com.github.lotus.ums.biz.mapstruct.AuthorityMapping;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
@@ -10,6 +12,7 @@ import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
+import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.AuthorityApiRefService;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
@@ -39,6 +42,7 @@ import java.util.StringJoiner;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
     private final AuthorityMapping mapping;
+    private final ApiService apiService;
     private final AuthorityApiRefService authorityApiRefService;
     private final RoleAuthorityRefService roleAuthorityRefService;
 
@@ -101,7 +105,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<UserRoleComplexVo> pagingUserByAuthorityId(Long authorityId, GetAuthorityUserPagingRo ro) {
-        IPage<Account> result = baseMapper.pagingUserByAuthorityId(authorityId, ro, ro.ofPage());
+        IPage<User> result = baseMapper.pagingUserByAuthorityId(authorityId, ro, ro.ofPage());
         return result.convert(mapping::asUserRoleComplexVo);
     }
 
@@ -116,6 +120,13 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         stringJoiner.add(insertSql);
         stringJoiner.add(checkSql);
         return stringJoiner.toString();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri) {
+        List<Api> apis = apiService.listByUsername(username);
+        return AuthorityHelper.isPassAuthority(servicePrefix, methodName, uri, apis);
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {

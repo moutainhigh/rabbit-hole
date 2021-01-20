@@ -93,6 +93,12 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
         this.removeById(id);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Role> listByUserId(Long userId) {
+        return roleUserRefService.listByUserId(userId);
+    }
+
     private RoleComplexVo covertComplex(Role entity) {
         return mapping.asComplex(entity)
             .setUseUserCount(roleUserRefService.countUseByRoleId(entity.getId()));

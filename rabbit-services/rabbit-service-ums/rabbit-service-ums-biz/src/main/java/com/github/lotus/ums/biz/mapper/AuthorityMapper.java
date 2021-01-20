@@ -2,7 +2,7 @@ package com.github.lotus.ums.biz.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
@@ -20,5 +20,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AuthorityMapper extends BaseMapper<Authority> {
 
-    IPage<Account> pagingUserByAuthorityId(@Param("authorityId") Long authorityId, @Param("ro") GetAuthorityUserPagingRo ro, @Param("ofPage") Page<Object> ofPage);
+    IPage<User> pagingUserByAuthorityId(@Param("authorityId") Long authorityId, @Param("ro") GetAuthorityUserPagingRo ro, @Param("ofPage") Page<Object> ofPage);
 }

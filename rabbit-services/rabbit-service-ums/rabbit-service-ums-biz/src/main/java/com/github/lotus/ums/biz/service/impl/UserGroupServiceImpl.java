@@ -3,10 +3,13 @@ package com.github.lotus.ums.biz.service.impl;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.UserGroupMapper;
 import com.github.lotus.ums.biz.service.UserGroupService;
+import com.github.lotus.ums.biz.service.UserGroupUserRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,5 +22,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, UserGroup> implements UserGroupService {
+    private final UserGroupUserRefService userGroupUserRefService;
 
+    @Override
+    public List<UserGroup> listByUserId(Long userId) {
+        return userGroupUserRefService.listByUserId(userId);
+    }
 }

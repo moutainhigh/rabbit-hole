@@ -1,7 +1,7 @@
 package com.github.lotus.ums.biz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Social;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,5 +19,5 @@ import java.util.Optional;
 @Mapper
 public interface SocialMapper extends BaseMapper<Social> {
 
-    Optional<Account> getAccountBySocialTypeAndSocialId(@Param("socialType") String socialType, @Param("socialId") String socialId);
+    Optional<User> getAccountBySocialTypeAndSocialId(@Param("socialType") String socialType, @Param("socialId") String socialId);
 }

@@ -1,4 +1,4 @@
-package com.github.lotus.gateway.filter;
+package com.github.lotus.gateway.filter.authentication;
 
 import com.github.lotus.usercontext.basic.HeaderConstants;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.security.Principal;
  */
 @Slf4j
 @Component
-public class AuthorizeFilter implements GlobalFilter, Ordered {
+public class AuthenticationFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         return exchange.getPrincipal().map(Principal::getName).defaultIfEmpty("")
