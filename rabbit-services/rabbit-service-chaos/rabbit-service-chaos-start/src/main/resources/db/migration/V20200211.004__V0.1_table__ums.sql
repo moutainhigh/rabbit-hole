@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `ums_account`;
-CREATE TABLE `ums_account`
+DROP TABLE IF EXISTS `ums_user`;
+CREATE TABLE `ums_user`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
