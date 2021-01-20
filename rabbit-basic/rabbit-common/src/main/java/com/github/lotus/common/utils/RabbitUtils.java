@@ -19,8 +19,8 @@ public class RabbitUtils {
      * 默认用户名
      * hi_20201011ID
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return hi_20201011ID
      */
     public String getDefaultUsername(Long id) {
         return "hi_" + DateUtil.format(LocalDateTime.now(), DatePattern.PURE_DATE_PATTERN) + id;

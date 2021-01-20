@@ -1,5 +1,6 @@
 package com.github.lotus.gateway.filter.authorize;
 
+import in.hocg.boot.utils.LangUtils;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -7,6 +8,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/8/17
@@ -49,7 +52,8 @@ public abstract class BaseAuthorizeFilter implements GlobalFilter, Ordered {
      */
     protected boolean isPermitAllWithUri(ServerHttpRequest request) {
         String path = request.getPath().toString();
-        return properties.getIgnoreUris().parallelStream()
+        List<String> ignoreUrls = LangUtils.getOrDefault(properties.getIgnoreUrls(), Collections.emptyList());
+        return ignoreUrls.parallelStream()
             .anyMatch(pattern -> matcher.match(pattern, path));
     }
 
