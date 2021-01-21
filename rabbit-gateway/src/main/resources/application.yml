@@ -87,37 +87,37 @@ spring:
             token-uri: ${spring.security.oauth2.shostname}/oauth/token
             user-name-attribute: name
 debug: true
+boot:
+  sso:
+    client:
+      ignore-urls: >
+        ,/swagger-resources/configuration/ui
+        ,/favicon.ico
+        ,/actuator/**
+        ,/webjars/**
+        ,/ignore
+        ,/*/v2/api-docs
+        ,/chaos/district/tree
+        ,/chaos/address4ip
+        ,/chaos/logistics-line/_search
+        ,/chaos/gumballs/gift
+        ,/chaos/wallpaper/**
+        ,/chaos/download
+
+        ,/wl/logistics-line/_search
+
+        ,/docking/wx/mp/*
+        ,/docking/wx/miniapp/*/token
+
+        ,/ums/account/*:avatar
+
+        ,/mina/*/game/_paging
+        ,/mina/*/app/_paging
+        ,/mina/*/check-message
+        ,/mina/*/check-image
+
+        ,/sso/account/login/token
 rabbit:
   gateway:
     authorize:
       ignore-urls: ${boot.sso.client.ignore-urls}
-boot:
-  sso:
-    client:
-      ignore-urls:
-        - /swagger-resources/configuration/ui
-        - /favicon.ico
-        - /actuator/**
-        - /webjars/**
-        - /ignore
-        - /*/v2/api-docs
-        - /chaos/district/tree
-        - /chaos/address4ip
-        - /chaos/logistics-line/_search
-        - /chaos/gumballs/gift
-        - /chaos/wallpaper/**
-        - /chaos/download
-
-        - /wl/logistics-line/_search
-
-        - /docking/wx/mp/*
-        - /docking/wx/miniapp/*/token
-
-        - /ums/account/*:avatar
-
-        - /mina/*/game/_paging
-        - /mina/*/app/_paging
-        - /mina/*/check-message
-        - /mina/*/check-image
-
-        - /sso/account/login/token

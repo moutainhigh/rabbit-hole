@@ -1,7 +1,9 @@
 package com.github.lotus.gateway;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +17,7 @@ import java.security.Principal;
  */
 @RestController
 @SpringBootApplication
+@EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class GatewayApplication {
 
     public static void main(String[] args) {
