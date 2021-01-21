@@ -26,8 +26,8 @@ public class ResultUtils {
     /**
      * 被拒绝访问, 没有权限
      *
-     * @param exchange
-     * @return
+     * @param exchange exchange
+     * @return Mono<Void>
      */
     public Mono<Void> accessDenied(ServerWebExchange exchange) {
         if (CommonUtils.isAjaxRequest(exchange)) {
@@ -40,8 +40,8 @@ public class ResultUtils {
     /**
      * 未登陆
      *
-     * @param exchange
-     * @return
+     * @param exchange exchange
+     * @return Mono<Void>
      */
     public Mono<Void> notLogin(ServerWebExchange exchange) {
         if (CommonUtils.isAjaxRequest(exchange)) {
