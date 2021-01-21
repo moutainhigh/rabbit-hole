@@ -43,7 +43,7 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
 
         if (Strings.isBlank(username)) {
             log.warn("用户未登陆");
-            return ResultUtils.accountError(exchange);
+            return ResultUtils.notLogin(exchange);
         }
 
         if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
