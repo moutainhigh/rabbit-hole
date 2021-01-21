@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 /**
  * Created by hocgin on 2021/1/19
  * email: hocgin@gmail.com
@@ -32,22 +34,23 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        URI uri = request.getURI();
 
         // 如果不需要认证
         if (isPermitAllWithIp(request) || isPermitAllWithUri(request)) {
-            log.debug("Request is ignored.");
+            log.debug("无需认证, 访问URL=[{}]", uri);
             return chain.filter(exchange);
         }
 
         String username = request.getHeaders().getFirst(HeaderConstants.USERNAME);
 
         if (Strings.isBlank(username)) {
-            log.warn("用户未登陆");
+            log.warn("未登陆, 访问URL=[{}]", uri);
             return ResultUtils.notLogin(exchange);
         }
 
         if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
-            log.warn("Username:[{}]不具备访问[{}]的权限", username, request.getURI());
+            log.warn("username:[{}], 访问URL=[{}]", username, uri);
             return ResultUtils.accessDenied(exchange);
         }
 
