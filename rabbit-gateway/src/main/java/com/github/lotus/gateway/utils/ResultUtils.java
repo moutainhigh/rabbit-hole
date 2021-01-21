@@ -25,6 +25,7 @@ public class ResultUtils {
 
     /**
      * 被拒绝访问, 没有权限
+     *
      * @param exchange
      * @return
      */
@@ -34,6 +35,15 @@ public class ResultUtils {
         }
         log.warn("暂未配置[被拒绝访问, 没有权限]的页面");
         throw new RuntimeException("暂未配置[被拒绝访问, 没有权限]的页面");
+    }
+
+
+    public Mono<Void> accountError(ServerWebExchange exchange) {
+        if (CommonUtils.isAjaxRequest(exchange)) {
+            return result(exchange, Result.fail("不具备访问权限"));
+        }
+        log.warn("暂未配置[账号错误]的页面");
+        throw new RuntimeException("暂未配置[账号错误]的页面");
     }
 
     public Mono<Void> result(ServerWebExchange exchange, Object result) {

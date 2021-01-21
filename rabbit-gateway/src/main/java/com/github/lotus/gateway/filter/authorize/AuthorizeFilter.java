@@ -5,6 +5,7 @@ import com.github.lotus.gateway.service.UserService;
 import com.github.lotus.gateway.utils.ResultUtils;
 import com.github.lotus.usercontext.basic.HeaderConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -39,6 +40,12 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
         }
 
         String username = request.getHeaders().getFirst(HeaderConstants.USERNAME);
+
+        if (Strings.isBlank(username)) {
+            log.warn("用户未登陆");
+            return ResultUtils.accountError(exchange);
+        }
+
         if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
             log.warn("Username:[{}]不具备访问[{}]的权限", username, request.getURI());
             return ResultUtils.accessDenied(exchange);
