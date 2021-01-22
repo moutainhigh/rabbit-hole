@@ -16,4 +16,5 @@ import java.util.List;
 public interface UserGroupService extends AbstractService<UserGroup> {
 
     List<UserGroup> listByUserId(Long userId);
+
 }

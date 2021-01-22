@@ -13,4 +13,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface UserGroupAuthorityRefService extends AbstractService<UserGroupAuthorityRef> {
 
+    void grantAuthority(Long userGroupId, Long authorityId);
+
+    boolean hasUserGroupByAuthorityId(Long authorityId);
 }

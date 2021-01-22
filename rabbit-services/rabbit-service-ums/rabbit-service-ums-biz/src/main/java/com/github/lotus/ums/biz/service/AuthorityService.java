@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
@@ -40,4 +41,5 @@ public interface AuthorityService extends AbstractService<Authority> {
 
     void grantRole(Long authorityId, GrantRoleRo ro);
 
+    void grantUserGroup(Long authorityId, GrantUserGroupRo ro);
 }

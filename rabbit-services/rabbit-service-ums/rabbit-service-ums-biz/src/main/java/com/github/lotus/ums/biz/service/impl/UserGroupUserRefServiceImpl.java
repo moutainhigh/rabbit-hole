@@ -5,9 +5,9 @@ import com.github.lotus.ums.biz.entity.UserGroupUserRef;
 import com.github.lotus.ums.biz.mapper.UserGroupUserRefMapper;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

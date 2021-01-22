@@ -8,6 +8,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     private final UserGroupUserRefService userGroupUserRefService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<UserGroup> listByUserId(Long userId) {
         return userGroupUserRefService.listByUserId(userId);
     }

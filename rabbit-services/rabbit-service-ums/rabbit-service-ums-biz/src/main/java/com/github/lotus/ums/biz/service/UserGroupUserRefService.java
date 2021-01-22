@@ -3,7 +3,6 @@ package com.github.lotus.ums.biz.service;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.entity.UserGroupUserRef;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +16,6 @@ import java.util.List;
  */
 public interface UserGroupUserRefService extends AbstractService<UserGroupUserRef> {
 
-    List<UserGroup> listByUserId(@Param("userId") Long userId);
+    List<UserGroup> listByUserId(Long userId);
+
 }

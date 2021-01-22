@@ -4,6 +4,7 @@ package com.github.lotus.ums.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
@@ -115,6 +116,14 @@ public class AuthorityController {
     public Result<Void> grantRole(@PathVariable Long authorityId,
                                   @Validated @RequestBody GrantRoleRo ro) {
         service.grantRole(authorityId, ro);
+        return Result.success();
+    }
+
+    @UseLogger("给用户组授权权限")
+    @PostMapping("/{authorityId}/grant/user-group")
+    public Result<Void> grantUserGroup(@PathVariable Long authorityId,
+                                       @Validated @RequestBody GrantUserGroupRo ro) {
+        service.grantUserGroup(authorityId, ro);
         return Result.success();
     }
 
