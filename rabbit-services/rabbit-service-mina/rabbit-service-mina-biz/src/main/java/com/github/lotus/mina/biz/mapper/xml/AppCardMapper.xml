@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.mina.biz.mapper.AppCardMapper">
+  <select id="paging" resultType="com.github.lotus.mina.biz.entity.AppCard">
+    SELECT mac.*
+    FROM mina_app_card mac
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (mac.remark LIKE #{keyword} OR mac.title LIKE #{keyword} OR mac.tags LIKE #{keyword})
+      </if>
+      <if test="ro.enabled != null">
+        AND mac.enabled = #{ro.enabled}
+      </if>
+    </where>
+    ORDER BY mac.sort DESC, mac.created_at DESC
+  </select>
+</mapper>

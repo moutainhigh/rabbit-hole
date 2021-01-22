@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>rabbit-services</artifactId>
+    <groupId>com.github.lotus</groupId>
+    <version>${revision}</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>Rabbit :: Service :: Chaos</name>
+  <artifactId>rabbit-service-chaos</artifactId>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>rabbit-service-chaos-api</module>
+    <module>rabbit-service-chaos-biz</module>
+    <module>rabbit-service-chaos-start</module>
+  </modules>
+</project>

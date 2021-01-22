@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sv-mysql.basic:3306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: hocgin
+  redis:
+    host: sv-redis.basic
+    port: 6379
+    database: 0
+rabbit:
+  wx:
+    miniapp:
+      configs:
+        - appid: wx19d2028bfdc4decf
+          secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)
+        - appid: wxd9f7de635166d8c8
+          secret: ENC(eEehzvffiZzLYkmuxfT0yQdaI2xSaq8kps67HUdLsE9Jpt+ybZCom9du6FSwLwY+)
+        - appid: wx2388ca4e8e51be62
+          secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
+        - appid: wx515efe8f906a5e69
+          secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
+    mp:
+      configs:
+        - appid: wxb4df1f0c3dc96256
+          secret: ENC(qWrZg5B1aiIwRld5B3JuCnUd0AuV9GPgTVUqA9w5lysRLncaJ0W3rfmj6yWLGHD4)
+          token: ENC(u4Zbme+gFwVMKRcU8fT+mGbdJVhsX5PF)

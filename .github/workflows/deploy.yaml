@@ -7,6 +7,22 @@ on:
         description: '是否使用 Maven 缓存'
         required: true
         default: 'true'
+      re_chaos:
+        description: '是否重发 chaos'
+        required: true
+        default: 'true'
+      re_gateway:
+        description: '是否重发 gateway'
+        required: true
+        default: 'true'
+      re_sso_server:
+        description: '是否重发 sso-server'
+        required: true
+        default: 'true'
+      re_spring_boot_admin:
+        description: '是否重发 spring-boot-admin'
+        required: true
+        default: 'false'
   push:
     branches:
       - develop
@@ -29,6 +45,7 @@ env:
   IMAGE_CHAOS: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/chaos
   IMAGE_GATEWAY: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/gateway
   IMAGE_SSO_SERVER: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/sso-server
+  IMAGE_SPRING_BOOT_ADMIN: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/spring-boot-admin
 
 jobs:
   build-publish-deploy:
@@ -141,8 +158,8 @@ jobs:
       - name: Build & Push Docker Image::Gateway
         uses: docker/build-push-action@v2
         with:
-          context: ./payment-gateway
-          file: ./payment-gateway/Dockerfile
+          context: ./rabbit-gateway
+          file: ./rabbit-gateway/Dockerfile
           push: true
           tags: ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
           labels: |
@@ -153,8 +170,8 @@ jobs:
       - name: Build & Push Docker Image::Chaos
         uses: docker/build-push-action@v2
         with:
-          context: ./payment-services/payment-service-chaos/payment-service-chaos-start
-          file: ./payment-services/payment-service-chaos/payment-service-chaos-start/Dockerfile
+          context: ./rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start
+          file: ./rabbit-services/rabbit-service-chaos/rabbit-service-chaos-start/Dockerfile
           push: true
           tags: ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
           labels: |
@@ -165,15 +182,26 @@ jobs:
       - name: Build & Push Docker Image::SSO-Server
         uses: docker/build-push-action@v2
         with:
-          context: ./payment-sso-server
-          file: ./payment-sso-server/Dockerfile
+          context: ./rabbit-sso-server
+          file: ./rabbit-sso-server/Dockerfile
           push: true
           tags: ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
-
+      # 编译和发布镜像 => Services::Spring-Boot-Admin
+      - name: Build & Push Docker Image::Spring-Boot-Admin
+        uses: docker/build-push-action@v2
+        with:
+          context: ./rabbit-spring-boot-admin
+          file: ./rabbit-spring-boot-admin/Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_SPRING_BOOT_ADMIN }}:${{ steps.prep.outputs.version }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
 
       # 设置 k8s 环境
       - name: Set up k8s Context
@@ -199,9 +227,11 @@ jobs:
             manifests/deployment-gateway.yaml
             manifests/deployment-chaos.yaml
             manifests/deployment-sso-server.yaml
+            manifests/deployment-spring-boot-admin.yaml
           images: |
             ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
             ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
             ${{ env.IMAGE_SSO_SERVER }}:${{ steps.prep.outputs.version }}
+            ${{ env.IMAGE_SPRING_BOOT_ADMIN }}:${{ steps.prep.outputs.version }}
           imagepullsecrets: |
             k8s-secret

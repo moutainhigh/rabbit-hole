@@ -1,0 +1,123 @@
+spring:
+  profiles:
+    active: local
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins:
+              - '*'
+              - '127.0.0.1:8000'
+            allowedMethods: "*"
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+      routes:
+        - id: rabbit-sso
+          uri: lb://rabbit-sso
+          predicates:
+            - Path=/sso/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-chaos
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/chaos/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-wl
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/wl/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-docking
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/docking/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-ums
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/ums/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-mina
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/mina/**
+          filters:
+            - StripPrefix=1
+
+        - id: rabbit-tpl
+          uri: lb://rabbit-tpl
+          predicates:
+            - Path=/tpl/**
+          filters:
+            - StripPrefix=1
+
+      default-filters:
+        - name: SwaggerHeaderFilter
+        - name: Logger
+        - name: SaveSession
+      loadbalancer:
+        use404: true
+  security:
+    oauth2:
+      shostname: http://sso.hocgin.top
+      client:
+        registration:
+          custom:
+            client-id: client_example
+            client-secret: hocgin
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+            authorization-grant-type: authorization_code
+        provider:
+          custom:
+            user-info-uri: ${spring.security.oauth2.shostname}/oauth/user
+            authorization-uri: ${spring.security.oauth2.shostname}/oauth/authorize
+            token-uri: ${spring.security.oauth2.shostname}/oauth/token
+            user-name-attribute: name
+debug: true
+boot:
+  sso:
+    client:
+      ignore-urls: >
+        ,/swagger-resources/configuration/ui
+        ,/favicon.ico
+        ,/actuator/**
+        ,/webjars/**
+        ,/ignore
+        ,/*/v2/api-docs
+        ,/chaos/district/tree
+        ,/chaos/address4ip
+        ,/chaos/logistics-line/_search
+        ,/chaos/gumballs/gift
+        ,/chaos/wallpaper/**
+        ,/chaos/download
+
+        ,/wl/logistics-line/_search
+
+        ,/docking/wx/mp/*
+        ,/docking/wx/miniapp/*/token
+
+        ,/ums/account/*:avatar
+
+        ,/mina/*/game/_paging
+        ,/mina/*/app/_paging
+        ,/mina/*/check-message
+        ,/mina/*/check-image
+
+        ,/sso/account/login/token
+rabbit:
+  gateway:
+    authorize:
+      ignore-urls: ${boot.sso.client.ignore-urls}

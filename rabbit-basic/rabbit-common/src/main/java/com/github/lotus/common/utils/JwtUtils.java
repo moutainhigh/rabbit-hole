@@ -1,0 +1,48 @@
+package com.github.lotus.common.utils;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.experimental.UtilityClass;
+
+import java.util.Date;
+import java.util.HashMap;
+
+/**
+ * Created by hocgin on 2020/12/14
+ * email: hocgin@gmail.com
+ *
+ * @author hocgin
+ */
+@UtilityClass
+public class JwtUtils {
+    private static final long EXPIRE_MILLIS = 1000 * 60 * 60 * 10L;
+    private static final String KEY = "HOCGIN";
+
+    /**
+     * 编码 Token
+     *
+     * @param username
+     * @return
+     */
+    public String encode(String username) {
+        final long currentTimeMillis = System.currentTimeMillis();
+        final long expirationTimeMillis = currentTimeMillis + EXPIRE_MILLIS;
+        return Jwts.builder().setClaims(new HashMap<>()).setSubject(username)
+            .setIssuedAt(new Date(currentTimeMillis))
+            .setExpiration(new Date(expirationTimeMillis))
+            .signWith(SignatureAlgorithm.HS256, KEY).compact();
+    }
+
+    /**
+     * 解码 Token
+     *
+     * @param token
+     * @return
+     */
+    public String decode(String token) {
+        return Jwts.parser().setSigningKey(KEY)
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
+}
