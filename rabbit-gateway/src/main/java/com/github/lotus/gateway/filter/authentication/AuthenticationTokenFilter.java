@@ -52,7 +52,7 @@ public class AuthenticationTokenFilter implements GlobalFilter, Ordered {
         try {
             username = JwtUtils.decode(token);
         } catch (Exception e) {
-            log.warn("JWT解码失败: ", e);
+            log.warn("JWT解码token=[{}]失败: ", token, e);
         }
         return Optional.ofNullable(Strings.trimToNull(username));
     }
