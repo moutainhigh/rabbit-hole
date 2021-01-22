@@ -13,6 +13,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ import java.util.List;
  * @author hocgin
  * @since 2021-01-19
  */
+@Api(tags = "ums::权限")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/authority")

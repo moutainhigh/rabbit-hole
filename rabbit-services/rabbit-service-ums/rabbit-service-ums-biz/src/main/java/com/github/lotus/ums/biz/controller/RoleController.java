@@ -10,6 +10,7 @@ import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  * @since 2021-01-19
  */
+@Api(tags = "ums::角色")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/role")

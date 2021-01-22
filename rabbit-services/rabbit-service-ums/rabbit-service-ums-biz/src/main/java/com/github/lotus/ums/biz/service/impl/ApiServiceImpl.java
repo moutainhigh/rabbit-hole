@@ -44,7 +44,7 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long insertOne(SaveApiRo ro) {
+    public void insertOne(SaveApiRo ro) {
         Long userId = ro.getUserId();
         LocalDateTime now = LocalDateTime.now();
 
@@ -52,7 +52,6 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
         entity.setCreatedAt(now);
         entity.setCreator(userId);
         validInsert(entity);
-        return entity.getId();
     }
 
     @Override

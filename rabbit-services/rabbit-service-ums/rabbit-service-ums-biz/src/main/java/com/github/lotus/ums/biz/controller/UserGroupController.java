@@ -2,10 +2,10 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.github.lotus.ums.biz.service.UserGroupService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  * @since 2021-01-19
  */
+@Api(tags = "ums::用户组")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/user-group")

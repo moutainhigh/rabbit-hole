@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ApiService extends AbstractService<Api> {
 
-    Long insertOne(SaveApiRo ro);
+    void insertOne(SaveApiRo ro);
 
     void updateOne(Long id, SaveApiRo ro);
 
