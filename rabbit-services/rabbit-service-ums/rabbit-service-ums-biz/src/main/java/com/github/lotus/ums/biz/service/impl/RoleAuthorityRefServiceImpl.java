@@ -1,10 +1,16 @@
 package com.github.lotus.ums.biz.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.lotus.ums.biz.entity.Authority;
+import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.RoleAuthorityRef;
 import com.github.lotus.ums.biz.mapper.RoleAuthorityRefMapper;
+import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
+import com.github.lotus.ums.biz.service.RoleService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthorityRefMapper, RoleAuthorityRef> implements RoleAuthorityRefService {
+    private final RoleService roleService;
+    private final AuthorityService authorityService;
 
     @Override
     public boolean hasRoleByAuthorityId(Long id) {
@@ -55,6 +63,30 @@ public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthori
 
         // 更新
         mixedList.forEach(this::validInsertOrUpdate);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantAuthority(Long roleId, Long authorityId) {
+        final Role role = roleService.getById(roleId);
+        ValidUtils.notNull(role, "授权失败");
+        Authority authority = authorityService.getById(authorityId);
+        ValidUtils.notNull(authority, "授权失败");
+
+        // 已经具备权限
+        if (hasByRoleIdAndAuthorityId(roleId, authorityId)) {
+            return;
+        }
+
+        RoleAuthorityRef entity = new RoleAuthorityRef()
+            .setAuthorityId(authorityId).setRoleId(roleId);
+        validInsert(entity);
+    }
+
+    private boolean hasByRoleIdAndAuthorityId(Long roleId, Long authorityId) {
+        return !lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId)
+            .eq(RoleAuthorityRef::getAuthorityId, authorityId)
+            .page(new Page<>(1, 1, false)).getRecords().isEmpty();
     }
 
     private List<RoleAuthorityRef> listRoleAuthorityByAuthorityId(Long roleId) {

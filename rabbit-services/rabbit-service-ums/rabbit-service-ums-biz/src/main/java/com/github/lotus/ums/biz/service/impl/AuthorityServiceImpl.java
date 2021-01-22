@@ -8,6 +8,7 @@ import com.github.lotus.ums.biz.helper.AuthorityHelper;
 import com.github.lotus.ums.biz.mapper.AuthorityMapper;
 import com.github.lotus.ums.biz.mapstruct.AuthorityMapping;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
@@ -127,6 +128,13 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     public boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri) {
         List<Api> apis = apiService.listByUsername(username);
         return AuthorityHelper.isPassAuthority(servicePrefix, methodName, uri, apis);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantRole(Long authorityId, GrantRoleRo ro) {
+        List<Long> roles = ro.getRoles();
+        roles.forEach(roleId -> roleAuthorityRefService.grantAuthority(roleId, authorityId));
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {

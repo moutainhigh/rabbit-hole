@@ -3,12 +3,14 @@ package com.github.lotus.ums.biz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
@@ -108,10 +110,18 @@ public class AuthorityController {
         return Result.success(service.pagingUserByAuthorityId(id, ro));
     }
 
+    @UseLogger("给角色授权权限")
+    @PostMapping("/{authorityId}/grant/role")
+    public Result<Void> grantRole(@PathVariable Long authorityId,
+                                  @Validated @RequestBody GrantRoleRo ro) {
+        service.grantRole(authorityId, ro);
+        return Result.success();
+    }
+
     @ApiOperation("导出权限sql - 权限")
     @GetMapping("/export")
     @ResponseBody
-    public ResponseEntity<?> exportSql(@ApiParam(value = "文件名", required = false)
+    public ResponseEntity<?> exportSql(@ApiParam(value = "文件名")
                                        @RequestParam(value = "filename", required = false, defaultValue = "all_authority_sql.sql") String filename) {
         String sql = service.generateSql();
         return ResponseEntity

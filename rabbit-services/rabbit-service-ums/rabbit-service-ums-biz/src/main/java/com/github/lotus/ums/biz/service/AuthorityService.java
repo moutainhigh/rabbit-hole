@@ -3,6 +3,7 @@ package com.github.lotus.ums.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
@@ -36,4 +37,7 @@ public interface AuthorityService extends AbstractService<Authority> {
     String generateSql();
 
     boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri);
+
+    void grantRole(Long authorityId, GrantRoleRo ro);
+
 }

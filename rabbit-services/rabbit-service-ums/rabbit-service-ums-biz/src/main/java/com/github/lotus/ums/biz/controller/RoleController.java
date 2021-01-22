@@ -2,6 +2,7 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
@@ -73,6 +74,14 @@ public class RoleController {
     @DeleteMapping("/{id}")
     public Result<Void> deleteOne(@ApiParam(value = "角色", required = true) @PathVariable Long id) {
         service.deleteOne(id);
+        return Result.success();
+    }
+
+    @ApiOperation("分配用户 - 角色")
+    @PostMapping("/{id}/assign")
+    public Result<Void> assignRole(@ApiParam(value = "角色", required = true) @PathVariable Long id,
+                                   @Validated @RequestBody AssignRoleRo ro) {
+        service.assignRole(id, ro);
         return Result.success();
     }
 

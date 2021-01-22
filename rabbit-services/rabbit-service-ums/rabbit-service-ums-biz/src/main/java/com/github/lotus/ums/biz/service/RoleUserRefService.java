@@ -21,4 +21,6 @@ public interface RoleUserRefService extends AbstractService<RoleUserRef> {
     Integer countUseByRoleId(Long id);
 
     List<Role> listByUserId(Long userId);
+
+    void assignRole(Long roleId, List<Long> assignUser, List<Long> clearUser);
 }
