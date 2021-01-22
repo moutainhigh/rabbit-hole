@@ -1,7 +1,7 @@
 package com.github.lotus.ums.biz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2020-10-06
  */
 @Mapper
-public interface AccountMapper extends BaseMapper<Account> {
+public interface AccountMapper extends BaseMapper<User> {
 
 }

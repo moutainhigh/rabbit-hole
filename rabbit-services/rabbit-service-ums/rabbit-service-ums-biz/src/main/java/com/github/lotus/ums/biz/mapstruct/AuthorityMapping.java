@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.mapstruct;
 
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
@@ -29,5 +29,5 @@ public interface AuthorityMapping {
     AuthorityComplexVo asAuthorityComplexVo(Authority entity);
 
     @Mapping(target = "userId", source = "id")
-    UserRoleComplexVo asUserRoleComplexVo(Account account);
+    UserRoleComplexVo asUserRoleComplexVo(User account);
 }

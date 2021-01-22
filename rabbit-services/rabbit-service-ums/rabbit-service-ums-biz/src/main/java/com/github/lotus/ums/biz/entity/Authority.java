@@ -1,10 +1,8 @@
 package com.github.lotus.ums.biz.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,12 +22,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("ams_authority")
-public class Authority extends AbstractEntity<Authority> {
+public class Authority extends TreeEntity<Authority> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("权限名称")
     @TableField("title")
     private String title;
@@ -45,15 +41,6 @@ public class Authority extends AbstractEntity<Authority> {
     @ApiModelProperty("优先级, 越大优先级越低")
     @TableField("priority")
     private Integer priority;
-    @ApiModelProperty("父级ID, 顶级为 NULL")
-    @TableField("parent_id")
-    private Long parentId;
-    @ApiModelProperty("树路径，组成方式: /父路径/当前ID")
-    @TableField("tree_path")
-    private String treePath;
-    @ApiModelProperty("启用状态")
-    @TableField("enabled")
-    private String enabled;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

@@ -18,4 +18,6 @@ public interface RoleAuthorityRefService extends AbstractService<RoleAuthorityRe
     boolean hasRoleByAuthorityId(Long id);
 
     void grantAuthorities(Long roleId, List<Long> authorities);
+
+    void grantAuthority(Long roleId, Long authorityId);
 }

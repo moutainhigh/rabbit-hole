@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.entity.Social;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public interface SocialService extends AbstractService<Social> {
 
-    UserDetailVo getUserBySocialTypeAndSocialId(String socialType, String socialId);
+    Optional<UserDetailVo> getUserBySocialTypeAndSocialId(String socialType, String socialId);
 
     void insertOne(InsertSocialRo ro);
 

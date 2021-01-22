@@ -1,8 +1,12 @@
 package com.github.lotus.ums.biz.mapper;
 
+import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.entity.UserGroupUserRef;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserGroupUserRefMapper extends BaseMapper<UserGroupUserRef> {
 
+    List<UserGroup> listByUserId(@Param("userId") Long userId);
 }

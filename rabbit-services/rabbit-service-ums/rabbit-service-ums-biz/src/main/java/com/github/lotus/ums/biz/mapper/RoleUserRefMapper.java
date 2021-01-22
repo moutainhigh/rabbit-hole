@@ -1,8 +1,12 @@
 package com.github.lotus.ums.biz.mapper;
 
+import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.RoleUserRef;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoleUserRefMapper extends BaseMapper<RoleUserRef> {
 
+    List<Role> listByUserId(@Param("userId") Long userId);
 }

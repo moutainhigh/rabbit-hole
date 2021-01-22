@@ -2,7 +2,7 @@ package com.github.lotus.ums.biz.service.impl;
 
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.mapper.SocialMapper;
 import com.github.lotus.ums.biz.mapstruct.SocialMapping;
@@ -35,13 +35,10 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserDetailVo getUserBySocialTypeAndSocialId(String socialType, String socialId) {
-        Optional<Account> accountOpt = getAccountBySocialTypeAndSocialId(socialType, socialId);
-        if (accountOpt.isPresent()) {
-            Account account = accountOpt.get();
-            return accountService.getUserDetailVoByUsername(account.getUsername());
-        }
-        return null;
+    public Optional<UserDetailVo> getUserBySocialTypeAndSocialId(String socialType, String socialId) {
+        Optional<User> accountOpt = getAccountBySocialTypeAndSocialId(socialType, socialId);
+        return accountOpt.map(User::getUsername)
+            .map(accountService::getUserDetailVoByUsername);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
             .list();
     }
 
-    private Optional<Account> getAccountBySocialTypeAndSocialId(String socialType, String socialId) {
+    private Optional<User> getAccountBySocialTypeAndSocialId(String socialType, String socialId) {
         return baseMapper.getAccountBySocialTypeAndSocialId(socialType, socialId);
     }
 }

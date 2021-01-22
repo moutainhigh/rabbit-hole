@@ -2,7 +2,7 @@ package com.github.lotus.ums.biz.mapstruct;
 
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import org.mapstruct.Mapper;
@@ -17,13 +17,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AccountMapping {
 
-    UserDetailVo asUserDetailVo(Account account);
+    UserDetailVo asUserDetailVo(User account);
 
-    AccountVo asAccountVo(Account entity);
+    @Mapping(target = "avatarUrl", source = "avatar")
+    AccountVo asAccountVo(User entity);
 
     @Mapping(target = "social", ignore = true)
     @Mapping(target = "genderName", ignore = true)
-    AccountComplexVo asComplex(Account entity);
+    AccountComplexVo asComplex(User entity);
 
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "email", ignore = true)
@@ -35,5 +36,5 @@ public interface AccountMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdIp", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    Account asAccount(UpdateAccountRo ro);
+    User asAccount(UpdateAccountRo ro);
 }

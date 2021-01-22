@@ -9,5 +9,5 @@ spring:
 boot:
   sso:
     client:
-      ignore-urls:
-        - /**
+      ignore-urls: >
+        /**

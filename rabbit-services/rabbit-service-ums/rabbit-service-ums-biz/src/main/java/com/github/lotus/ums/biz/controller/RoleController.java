@@ -2,6 +2,7 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
@@ -10,6 +11,7 @@ import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  * @since 2021-01-19
  */
+@Api(tags = "ums::角色")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/role")
@@ -71,6 +74,14 @@ public class RoleController {
     @DeleteMapping("/{id}")
     public Result<Void> deleteOne(@ApiParam(value = "角色", required = true) @PathVariable Long id) {
         service.deleteOne(id);
+        return Result.success();
+    }
+
+    @ApiOperation("分配用户 - 角色")
+    @PostMapping("/{id}/assign")
+    public Result<Void> assignRole(@ApiParam(value = "角色", required = true) @PathVariable Long id,
+                                   @Validated @RequestBody AssignRoleRo ro) {
+        service.assignRole(id, ro);
         return Result.success();
     }
 

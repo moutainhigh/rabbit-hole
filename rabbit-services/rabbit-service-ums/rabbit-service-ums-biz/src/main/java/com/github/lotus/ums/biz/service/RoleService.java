@@ -2,10 +2,13 @@ package com.github.lotus.ums.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Role;
+import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,4 +29,8 @@ public interface RoleService extends AbstractService<Role> {
     void updateOne(Long id, SaveRoleRo ro);
 
     void deleteOne(Long id);
+
+    List<Role> listByUserId(Long userId);
+
+    void assignRole(Long id, AssignRoleRo ro);
 }

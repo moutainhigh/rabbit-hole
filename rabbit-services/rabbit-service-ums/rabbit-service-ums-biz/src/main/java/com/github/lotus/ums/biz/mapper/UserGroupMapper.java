@@ -1,7 +1,10 @@
 package com.github.lotus.ums.biz.mapper;
 
-import com.github.lotus.ums.biz.entity.UserGroup;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.entity.UserGroup;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
+import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserGroupMapper extends BaseMapper<UserGroup> {
 
+    IPage<UserGroup> paging(UserGroupPagingRo ro);
 }

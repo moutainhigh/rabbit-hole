@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.mapper.RoleMapper;
 import com.github.lotus.ums.biz.mapstruct.RoleMapping;
+import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
@@ -91,6 +92,20 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     public void deleteOne(Long id) {
         ValidUtils.isFalse(roleUserRefService.hasUserByRoleId(id), "该角色有用户正在使用");
         this.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Role> listByUserId(Long userId) {
+        return roleUserRefService.listByUserId(userId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void assignRole(Long id, AssignRoleRo ro) {
+        Role role = this.getById(id);
+        ValidUtils.notNull(role, "角色不存在");
+        roleUserRefService.assignRole(id, ro.getAssignUser(), ro.getClearUser());
     }
 
     private RoleComplexVo covertComplex(Role entity) {

@@ -1,12 +1,11 @@
 package com.github.lotus.ums.biz.controller;
 
 
-import com.github.lotus.ums.biz.entity.Account;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
-import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -24,9 +23,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,7 +49,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<?> getAvatarUrl(@PathVariable String username) {
         return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
-            .map(Account::getAvatar).orElse(null));
+            .map(User::getAvatar).orElse(null));
     }
 
     @UseLogger("获取当前用户信息")
@@ -66,11 +65,9 @@ public class AccountController {
     @ApiOperation("获取当前用户权限")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<AuthorityTreeNodeVo>> getCurrentAuthority() {
-        AuthorityTreeNodeVo nodeVo = new AuthorityTreeNodeVo();
-        nodeVo.setAuthorityCode("index");
-        nodeVo.setTitle("首页");
-        return Result.success(Collections.singletonList(nodeVo));
+    public Result<List<String>> listCurrentAuthority(@RequestParam("project") String projectSn) {
+        Long userId = UserContextHolder.getUserIdThrow();
+        return Result.success(service.listAuthorityCodeByProjectSnAndUserId(projectSn, userId));
     }
 
     @UseLogger("账号信息 - 修改")

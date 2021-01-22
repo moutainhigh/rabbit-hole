@@ -1,7 +1,10 @@
 package com.github.lotus.ums.biz.service;
 
+import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.entity.UserGroupUserRef;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface UserGroupUserRefService extends AbstractService<UserGroupUserRef> {
 
+    List<UserGroup> listByUserId(Long userId);
+
+    boolean hasUserByUserGroupId(Long userGroupId);
+
+    void assignUserGroup(Long userGroupId, List<Long> assignUser, List<Long> clearUser);
 }

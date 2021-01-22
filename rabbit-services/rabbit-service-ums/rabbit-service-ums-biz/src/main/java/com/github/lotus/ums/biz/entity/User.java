@@ -23,8 +23,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("ums_account")
-public class Account extends AbstractEntity<Account> {
+@TableName("ums_user")
+public class User extends AbstractEntity<User> {
 
     private static final long serialVersionUID = 1L;
 
