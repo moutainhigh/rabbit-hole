@@ -8,6 +8,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -53,5 +54,5 @@ public interface AccountService extends AbstractService<User> {
 
     Optional<User> getByUsername(String username);
 
-    List<String> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId);
+    List<AuthorityTreeNodeVo> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId);
 }

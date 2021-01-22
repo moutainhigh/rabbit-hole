@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -13,6 +14,7 @@ import in.hocg.boot.web.result.Result;
 import in.hocg.boot.web.utils.web.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +49,7 @@ public class AccountController {
     @ApiOperation("获取用户头像")
     @GetMapping("/{username}:avatar")
     @ResponseBody
-    public ResponseEntity<?> getAvatarUrl(@PathVariable String username) {
+    public ResponseEntity<?> getAvatarUrl(@ApiParam("用户名") @PathVariable String username) {
         return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
             .map(User::getAvatar).orElse(null));
     }
@@ -65,7 +67,7 @@ public class AccountController {
     @ApiOperation("获取当前用户权限")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<String>> listCurrentAuthority(@RequestParam(value = "project", required = false) String projectSn) {
+    public Result<List<AuthorityTreeNodeVo>> listCurrentAuthority(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
         Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.listAuthorityCodeByProjectSnAndUserId(projectSn, userId));
     }
