@@ -8,21 +8,25 @@ import cn.hutool.core.util.StrUtil;
 import com.github.lotus.chaos.api.EmailServiceApi;
 import com.github.lotus.chaos.api.SmsServiceApi;
 import com.github.lotus.com.api.FileServiceApi;
+import com.github.lotus.com.api.ProjectServiceApi;
+import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.common.utils.JwtUtils;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Social;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.mapper.AccountMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.SocialService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -57,6 +61,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
     private final SmsServiceApi smsServiceApi;
     private final EmailServiceApi emailServiceApi;
     private final FileServiceApi fileServiceApi;
+    private final ProjectServiceApi projectServiceApi;
+    private final AuthorityService authorityService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -288,6 +294,20 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
     @Override
     public Optional<User> getByUsername(String username) {
         return lambdaQuery().eq(User::getUsername, username).oneOpt();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<String> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId) {
+        Long projectId = null;
+        if (Strings.isBlank(projectSn)) {
+            ProjectComplexVo project = projectServiceApi.getComplexByProjectSn(projectSn);
+            if (Objects.isNull(project)) {
+                return Collections.emptyList();
+            }
+            projectId = project.getId();
+        }
+        return authorityService.listByProjectIdAndUserId(projectId, userId);
     }
 
     private Optional<User> getAccountByPhone(String phone) {

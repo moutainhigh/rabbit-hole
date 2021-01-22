@@ -52,4 +52,6 @@ public interface AccountService extends AbstractService<User> {
     Long updateEmail(UpdateAccountEmailRo ro);
 
     Optional<User> getByUsername(String username);
+
+    List<String> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId);
 }

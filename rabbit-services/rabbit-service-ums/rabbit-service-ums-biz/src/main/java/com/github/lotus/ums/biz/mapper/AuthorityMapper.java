@@ -9,6 +9,8 @@ import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 权限表 Mapper 接口
@@ -21,4 +23,6 @@ import org.apache.ibatis.annotations.Param;
 public interface AuthorityMapper extends BaseMapper<Authority> {
 
     IPage<User> pagingUserByAuthorityId(@Param("authorityId") Long authorityId, @Param("ro") GetAuthorityUserPagingRo ro, @Param("ofPage") Page<Object> ofPage);
+
+    List<Authority> listByProjectIdAndUserId(@Param("projectId") Long projectId, @Param("userId") Long userId);
 }

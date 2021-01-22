@@ -34,6 +34,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -150,6 +151,13 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     public void grantUserGroup(Long authorityId, GrantUserGroupRo ro) {
         List<Long> userGroups = ro.getUserGroup();
         userGroups.forEach(userGroupId -> userGroupAuthorityRefService.grantAuthority(userGroupId, authorityId));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<String> listByProjectIdAndUserId(Long projectId, Long userId) {
+        List<Authority> authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
+        return authorities.stream().map(Authority::getEncoding).collect(Collectors.toList());
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {
