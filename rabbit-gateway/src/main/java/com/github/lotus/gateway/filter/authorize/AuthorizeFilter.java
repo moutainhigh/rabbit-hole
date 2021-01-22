@@ -7,6 +7,7 @@ import com.github.lotus.usercontext.basic.HeaderConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.core.Ordered;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -65,5 +66,10 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
         String requestUriPath = pathContainer.subPath(2).toString();
         String requestMethodName = request.getMethodValue();
         return userService.isPassAuthorize(username, servicePrefixPath, requestMethodName, requestUriPath);
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + 3;
     }
 }
