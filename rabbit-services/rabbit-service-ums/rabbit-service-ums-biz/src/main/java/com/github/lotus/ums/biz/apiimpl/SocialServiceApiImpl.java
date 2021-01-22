@@ -21,7 +21,7 @@ public class SocialServiceApiImpl implements SocialServiceApi {
 
     @Override
     public UserDetailVo getAccountBySocialTypeAndSocialId(String socialType, String socialId) {
-        return service.getUserBySocialTypeAndSocialId(socialType, socialId);
+        return service.getUserBySocialTypeAndSocialId(socialType, socialId).orElse(null);
     }
 
     @Override
