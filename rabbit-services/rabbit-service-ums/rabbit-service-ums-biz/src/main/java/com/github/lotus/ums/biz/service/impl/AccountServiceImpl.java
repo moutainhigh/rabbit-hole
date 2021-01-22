@@ -24,6 +24,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.service.AccountService;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.SocialService;
@@ -297,7 +298,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<String> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId) {
+    public List<AuthorityTreeNodeVo> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId) {
         Long projectId = null;
         if (Strings.isNotBlank(projectSn)) {
             ProjectComplexVo project = projectServiceApi.getComplexByProjectSn(projectSn);
