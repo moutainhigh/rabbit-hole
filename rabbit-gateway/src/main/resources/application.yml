@@ -120,4 +120,6 @@ boot:
 rabbit:
   gateway:
     authorize:
-      ignore-urls: ${boot.sso.client.ignore-urls}
+      # ${boot.sso.client.ignore-urls}
+      ignore-urls: >
+        /**
