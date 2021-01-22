@@ -35,13 +35,10 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserDetailVo getUserBySocialTypeAndSocialId(String socialType, String socialId) {
+    public Optional<UserDetailVo> getUserBySocialTypeAndSocialId(String socialType, String socialId) {
         Optional<User> accountOpt = getAccountBySocialTypeAndSocialId(socialType, socialId);
-        if (accountOpt.isPresent()) {
-            User account = accountOpt.get();
-            return accountService.getUserDetailVoByUsername(account.getUsername());
-        }
-        return null;
+        return accountOpt.map(User::getUsername)
+            .map(accountService::getUserDetailVoByUsername);
     }
 
     @Override
