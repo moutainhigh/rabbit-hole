@@ -80,8 +80,8 @@ public class UserGroupController {
 
     @ApiOperation("分配用户 - 用户组")
     @PostMapping("/{id}/assign")
-    public Result<Void> assignRole(@ApiParam(value = "用户组", required = true) @PathVariable Long id,
-                                   @Validated @RequestBody AssignUserGroupRo ro) {
+    public Result<Void> assignUserGroup(@ApiParam(value = "用户组", required = true) @PathVariable Long id,
+                                        @Validated @RequestBody AssignUserGroupRo ro) {
         service.assignUserGroup(id, ro);
         return Result.success();
     }
