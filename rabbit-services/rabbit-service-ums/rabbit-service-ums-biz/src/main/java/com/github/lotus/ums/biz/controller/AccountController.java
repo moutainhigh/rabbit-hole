@@ -65,7 +65,7 @@ public class AccountController {
     @ApiOperation("获取当前用户权限")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<String>> listCurrentAuthority(@RequestParam("project") String projectSn) {
+    public Result<List<String>> listCurrentAuthority(@RequestParam(value = "project", required = false) String projectSn) {
         Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.listAuthorityCodeByProjectSnAndUserId(projectSn, userId));
     }
