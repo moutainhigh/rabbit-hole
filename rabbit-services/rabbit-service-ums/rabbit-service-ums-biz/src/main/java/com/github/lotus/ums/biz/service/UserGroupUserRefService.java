@@ -18,4 +18,7 @@ public interface UserGroupUserRefService extends AbstractService<UserGroupUserRe
 
     List<UserGroup> listByUserId(Long userId);
 
+    boolean hasUserByUserGroupId(Long userGroupId);
+
+    void assignUserGroup(Long userGroupId, List<Long> assignUser, List<Long> clearUser);
 }
