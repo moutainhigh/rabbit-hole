@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.github.lotus.common.constant.GlobalConstant;
 import lombok.experimental.UtilityClass;
+import sun.nio.ch.Util;
 
 import java.time.LocalDateTime;
 
@@ -29,5 +30,9 @@ public class RabbitUtils {
 
     public boolean isSuperAdmin(String username) {
         return GlobalConstant.SUPPER_ADMIN_USERNAMES.contains(username);
+    }
+
+    public boolean isSuperAdmin(Long id) {
+        return GlobalConstant.SUPPER_ADMIN_USER_ID.equals(id);
     }
 }

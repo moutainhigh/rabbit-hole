@@ -1,6 +1,7 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.entity.User;
@@ -156,7 +157,12 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<String> listByProjectIdAndUserId(Long projectId, Long userId) {
-        List<Authority> authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
+        List<Authority> authorities;
+        if (RabbitUtils.isSuperAdmin(userId)) {
+            authorities = baseMapper.listByProjectIdAndUserId(projectId, null);
+        } else {
+            authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
+        }
         return authorities.stream().map(Authority::getEncoding).collect(Collectors.toList());
     }
 
