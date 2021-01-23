@@ -1,11 +1,21 @@
 package com.github.lotus.com.biz.controller;
 
 
+import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
+import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
+import com.github.lotus.com.biz.service.ProjectService;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,6 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/project")
 public class ProjectController {
+    private final ProjectService service;
 
+    @PostMapping("/_complete")
+    @ApiOperation("检索 - 项目")
+    @ApiOperationSupport(author = "hocgin")
+    public List<ProjectComplexVo> complete(@Validated @RequestBody ProjectCompleteRo ro) {
+        return service.complete(ro);
+    }
 }
 

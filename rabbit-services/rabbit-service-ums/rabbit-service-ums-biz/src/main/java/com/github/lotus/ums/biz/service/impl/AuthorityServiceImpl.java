@@ -156,14 +156,25 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<AuthorityTreeNodeVo> listByProjectIdAndUserId(Long projectId, Long userId) {
+        List<Authority> authorities = listAuthoritiesByProjectIdAndUserId(projectId, userId);
+        return Tree.getChild(null, LangUtils.toList(authorities, this::convertTreeNode));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<String> listAuthorityCodeByProjectIdAndUserId(Long projectId, Long userId) {
+        List<Authority> authorities = listAuthoritiesByProjectIdAndUserId(projectId, userId);
+        return LangUtils.toList(authorities, Authority::getEncoding);
+    }
+
+    private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities;
         if (RabbitUtils.isSuperAdmin(userId)) {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, null);
         } else {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
         }
-
-        return Tree.getChild(null, LangUtils.toList(authorities, this::convertTreeNode));
+        return authorities;
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {

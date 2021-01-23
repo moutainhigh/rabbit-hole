@@ -65,11 +65,20 @@ public class AccountController {
 
     @UseLogger("获取当前用户权限")
     @ApiOperation("获取当前用户权限")
+    @GetMapping("/authority/tree")
+    @ResponseBody
+    public Result<List<AuthorityTreeNodeVo>> listTreeCurrentAuthority(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
+        Long userId = UserContextHolder.getUserIdThrow();
+        return Result.success(service.listTreeCurrentAuthority(projectSn, userId));
+    }
+
+    @UseLogger("获取当前用户权限编码")
+    @ApiOperation("获取当前用户权限编码")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<AuthorityTreeNodeVo>> listCurrentAuthority(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
+    public Result<List<String>> listCurrentAuthorityCode(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
         Long userId = UserContextHolder.getUserIdThrow();
-        return Result.success(service.listAuthorityCodeByProjectSnAndUserId(projectSn, userId));
+        return Result.success(service.listCurrentAuthorityCode(projectSn, userId));
     }
 
     @UseLogger("账号信息 - 修改")

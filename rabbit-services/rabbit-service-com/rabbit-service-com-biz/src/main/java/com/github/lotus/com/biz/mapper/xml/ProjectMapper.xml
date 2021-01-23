@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lotus.com.biz.mapper.ProjectMapper">
-
+  <select id="complete" resultType="com.github.lotus.com.api.pojo.vo.ProjectComplexVo">
+    SELECT cp.*
+    FROM com_project cp
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (cp.remark LIKE #{keyword} OR cp.title LIKE #{keyword} OR cp.project_sn LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

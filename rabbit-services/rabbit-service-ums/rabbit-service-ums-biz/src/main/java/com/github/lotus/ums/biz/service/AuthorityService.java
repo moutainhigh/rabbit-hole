@@ -44,4 +44,6 @@ public interface AuthorityService extends AbstractService<Authority> {
     void grantUserGroup(Long authorityId, GrantUserGroupRo ro);
 
     List<AuthorityTreeNodeVo> listByProjectIdAndUserId(Long projectId, Long userId);
+
+    List<String> listAuthorityCodeByProjectIdAndUserId(Long projectId, Long userId);
 }

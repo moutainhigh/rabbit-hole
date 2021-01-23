@@ -298,7 +298,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<AuthorityTreeNodeVo> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId) {
+    public List<AuthorityTreeNodeVo> listTreeCurrentAuthority(String projectSn, Long userId) {
         Long projectId = null;
         if (Strings.isNotBlank(projectSn)) {
             ProjectComplexVo project = projectServiceApi.getComplexByProjectSn(projectSn);
@@ -308,6 +308,19 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
             projectId = project.getId();
         }
         return authorityService.listByProjectIdAndUserId(projectId, userId);
+    }
+
+    @Override
+    public List<String> listCurrentAuthorityCode(String projectSn, Long userId) {
+        Long projectId = null;
+        if (Strings.isNotBlank(projectSn)) {
+            ProjectComplexVo project = projectServiceApi.getComplexByProjectSn(projectSn);
+            if (Objects.isNull(project)) {
+                return Collections.emptyList();
+            }
+            projectId = project.getId();
+        }
+        return authorityService.listAuthorityCodeByProjectIdAndUserId(projectId, userId);
     }
 
     private Optional<User> getAccountByPhone(String phone) {

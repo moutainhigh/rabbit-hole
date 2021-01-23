@@ -54,5 +54,7 @@ public interface AccountService extends AbstractService<User> {
 
     Optional<User> getByUsername(String username);
 
-    List<AuthorityTreeNodeVo> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId);
+    List<AuthorityTreeNodeVo> listTreeCurrentAuthority(String projectSn, Long userId);
+
+    List<String> listCurrentAuthorityCode(String projectSn, Long userId);
 }
