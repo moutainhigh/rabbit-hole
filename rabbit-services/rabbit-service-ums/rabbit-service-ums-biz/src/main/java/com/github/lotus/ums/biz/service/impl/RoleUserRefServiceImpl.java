@@ -4,7 +4,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.RoleUserRef;
 import com.github.lotus.ums.biz.mapper.RoleUserRefMapper;
+import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
+import com.github.lotus.ums.biz.service.UserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleUserRefServiceImpl extends AbstractServiceImpl<RoleUserRefMapper, RoleUserRef> implements RoleUserRefService {
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Override
     public boolean hasUserByRoleId(Long roleId) {
@@ -64,5 +69,35 @@ public class RoleUserRefServiceImpl extends AbstractServiceImpl<RoleUserRefMappe
             lambdaUpdate().eq(RoleUserRef::getRoleId, roleId)
                 .in(RoleUserRef::getUserId, clearUser).remove();
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantRole(Long userId, List<Long> roles) {
+        List<RoleUserRef> entities = roles.parallelStream()
+            .map(roleId -> new RoleUserRef().setUserId(userId).setRoleId(roleId))
+            .collect(Collectors.toList());
+        List<RoleUserRef> allData = this.listRoleUserByUserId(userId);
+
+        final BiFunction<RoleUserRef, RoleUserRef, Boolean> isSame =
+            (t1, t2) -> LangUtils.equals(t1.getRoleId(), t2.getRoleId());
+        final List<RoleUserRef> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<RoleUserRef> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<RoleUserRef> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
+
+        // 删除
+        this.removeByIds(deleteList.parallelStream()
+            .map(RoleUserRef::getId)
+            .collect(Collectors.toList()));
+
+        // 新增
+        addList.forEach(this::validInsertOrUpdate);
+
+        // 更新
+        mixedList.forEach(this::validInsertOrUpdate);
+    }
+
+    private List<RoleUserRef> listRoleUserByUserId(Long userId) {
+        return lambdaQuery().eq(RoleUserRef::getUserId, userId).list();
     }
 }

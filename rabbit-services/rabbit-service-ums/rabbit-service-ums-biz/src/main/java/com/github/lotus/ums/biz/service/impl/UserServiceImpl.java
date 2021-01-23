@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.api.EmailServiceApi;
 import com.github.lotus.chaos.api.SmsServiceApi;
 import com.github.lotus.com.api.FileServiceApi;
@@ -18,15 +19,19 @@ import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.entity.User;
-import com.github.lotus.ums.biz.mapper.AccountMapper;
+import com.github.lotus.ums.biz.mapper.UserMapper;
 import com.github.lotus.ums.biz.mapstruct.AccountMapping;
+import com.github.lotus.ums.biz.pojo.ro.RoleGrantUserRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
+import com.github.lotus.ums.biz.pojo.ro.UserCompleteRo;
+import com.github.lotus.ums.biz.pojo.ro.UserPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.AuthorityService;
+import com.github.lotus.ums.biz.service.RoleUserRefService;
 import com.github.lotus.ums.biz.service.SocialService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -54,8 +59,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
-    implements AccountService {
+public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
+    implements UserService {
     private final AccountMapping mapping;
     private final SocialService socialService;
     private final SmsServiceApi smsServiceApi;
@@ -63,6 +68,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
     private final FileServiceApi fileServiceApi;
     private final ProjectServiceApi projectServiceApi;
     private final AuthorityService authorityService;
+    private final RoleUserRefService roleUserRefService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -311,6 +317,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<String> listCurrentAuthorityCode(String projectSn, Long userId) {
         Long projectId = null;
         if (Strings.isNotBlank(projectSn)) {
@@ -321,6 +328,32 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, User>
             projectId = project.getId();
         }
         return authorityService.listAuthorityCodeByProjectIdAndUserId(projectId, userId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<AccountComplexVo> paging(UserPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage())
+            .convert(this::convert);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<AccountComplexVo> complete(UserCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage())
+            .convert(this::convert).getRecords();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantRole(Long userId, RoleGrantUserRo ro) {
+        roleUserRefService.grantRole(userId, ro.getRoles());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AccountComplexVo getComplex(Long id) {
+        return this.convert(getById(id));
     }
 
     private Optional<User> getAccountByPhone(String phone) {

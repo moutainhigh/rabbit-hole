@@ -7,7 +7,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
@@ -43,7 +43,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/account")
 public class AccountController {
-    private final AccountService service;
+    private final UserService service;
 
     @UseLogger("获取用户头像")
     @ApiOperation("获取用户头像")
