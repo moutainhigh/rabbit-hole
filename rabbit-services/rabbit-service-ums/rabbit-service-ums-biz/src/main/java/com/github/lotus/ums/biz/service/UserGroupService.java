@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
@@ -34,4 +35,6 @@ public interface UserGroupService extends AbstractService<UserGroup> {
     void deleteOne(Long userGroupId);
 
     void assignUserGroup(Long userGroupId, AssignUserGroupRo ro);
+
+    List<UserGroupComplexVo> complete(UserGroupCompleteRo ro);
 }

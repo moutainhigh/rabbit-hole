@@ -1,5 +1,6 @@
 package com.github.lotus.ums.biz.pojo.ro;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.ro.PageRo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -13,5 +14,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel
-public class UserGroupPagingRo {
+public class UserGroupPagingRo extends PageRo {
+    private String keyword;
 }
