@@ -6,7 +6,7 @@ import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.mapper.SocialMapper;
 import com.github.lotus.ums.biz.mapstruct.SocialMapping;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.SocialService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
     implements SocialService {
-    private final AccountService accountService;
+    private final UserService accountService;
     private final SocialMapping mapping;
 
     @Override

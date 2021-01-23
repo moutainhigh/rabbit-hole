@@ -20,8 +20,11 @@ public class AuthorityComplexVo {
     private Long parentId;
     @ApiModelProperty("权限编码")
     private String encoding;
+    private Long projectId;
     @ApiModelProperty("权限名称")
     private String title;
     @ApiModelProperty("权限描述")
     private String remark;
+    @ApiModelProperty("开启状态")
+    private String enabled;
 }

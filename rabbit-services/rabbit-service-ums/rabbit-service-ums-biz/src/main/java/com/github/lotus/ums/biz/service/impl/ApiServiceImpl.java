@@ -7,7 +7,7 @@ import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.ApiMapper;
 import com.github.lotus.ums.biz.mapstruct.ApiMapping;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupService;
@@ -38,7 +38,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implements ApiService {
     private final ApiMapping mapping;
-    private final AccountService accountService;
+    private final UserService accountService;
     private final RoleService roleService;
     private final UserGroupService userGroupService;
 

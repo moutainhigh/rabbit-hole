@@ -22,7 +22,7 @@ import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;
@@ -46,7 +46,8 @@ import java.util.StringJoiner;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
+public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Authority>
+    implements AuthorityService {
     private final AuthorityMapping mapping;
     private final ApiService apiService;
     private final AuthorityApiRefService authorityApiRefService;
@@ -57,7 +58,11 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
 
     @Override
     public AuthorityComplexVo getAuthority(Long id) {
-        return null;
+        return convert(getById(id));
+    }
+
+    private AuthorityComplexVo convert(Authority entity) {
+        return mapping.asComplex(entity);
     }
 
     @Override
@@ -156,14 +161,25 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<AuthorityTreeNodeVo> listByProjectIdAndUserId(Long projectId, Long userId) {
+        List<Authority> authorities = listAuthoritiesByProjectIdAndUserId(projectId, userId);
+        return Tree.getChild(null, LangUtils.toList(authorities, this::convertTreeNode));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<String> listAuthorityCodeByProjectIdAndUserId(Long projectId, Long userId) {
+        List<Authority> authorities = listAuthoritiesByProjectIdAndUserId(projectId, userId);
+        return LangUtils.toList(authorities, Authority::getEncoding);
+    }
+
+    private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities;
         if (RabbitUtils.isSuperAdmin(userId)) {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, null);
         } else {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
         }
-
-        return Tree.getChild(null, LangUtils.toList(authorities, this::convertTreeNode));
+        return authorities;
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {

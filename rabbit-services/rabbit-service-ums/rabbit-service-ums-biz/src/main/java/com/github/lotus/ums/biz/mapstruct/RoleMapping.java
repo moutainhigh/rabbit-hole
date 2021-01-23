@@ -23,15 +23,7 @@ public interface RoleMapping {
     Role asRole(SaveRoleRo ro);
 
     @Mapping(target = "useUserCount", ignore = true)
-    @Mapping(target = "title", ignore = true)
-    @Mapping(target = "remark", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
-    @Mapping(target = "lastUpdater", ignore = true)
-    @Mapping(target = "isPersist", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "encoding", ignore = true)
-    @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
-    @Mapping(target = "creator", ignore = true)
     RoleComplexVo asComplex(Role role);
 }

@@ -4,7 +4,7 @@ import com.github.lotus.ums.api.AccountServiceApi;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class AccountServiceApiImpl implements AccountServiceApi {
-    private final AccountService service;
+    private final UserService service;
 
     @Override
     public UserDetailVo getUserByUsername(String username) {

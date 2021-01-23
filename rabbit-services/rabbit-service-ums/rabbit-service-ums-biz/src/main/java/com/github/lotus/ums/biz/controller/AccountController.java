@@ -7,7 +7,7 @@ import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.service.AccountService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
@@ -43,7 +43,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/account")
 public class AccountController {
-    private final AccountService service;
+    private final UserService service;
 
     @UseLogger("获取用户头像")
     @ApiOperation("获取用户头像")
@@ -65,11 +65,20 @@ public class AccountController {
 
     @UseLogger("获取当前用户权限")
     @ApiOperation("获取当前用户权限")
+    @GetMapping("/authority/tree")
+    @ResponseBody
+    public Result<List<AuthorityTreeNodeVo>> listTreeCurrentAuthority(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
+        Long userId = UserContextHolder.getUserIdThrow();
+        return Result.success(service.listTreeCurrentAuthority(projectSn, userId));
+    }
+
+    @UseLogger("获取当前用户权限编码")
+    @ApiOperation("获取当前用户权限编码")
     @GetMapping("/authority")
     @ResponseBody
-    public Result<List<AuthorityTreeNodeVo>> listCurrentAuthority(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
+    public Result<List<String>> listCurrentAuthorityCode(@ApiParam("项目编号") @RequestParam(value = "project", required = false) String projectSn) {
         Long userId = UserContextHolder.getUserIdThrow();
-        return Result.success(service.listAuthorityCodeByProjectSnAndUserId(projectSn, userId));
+        return Result.success(service.listCurrentAuthorityCode(projectSn, userId));
     }
 
     @UseLogger("账号信息 - 修改")

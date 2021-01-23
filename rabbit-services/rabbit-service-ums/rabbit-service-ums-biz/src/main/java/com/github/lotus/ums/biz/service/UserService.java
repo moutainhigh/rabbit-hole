@@ -1,12 +1,16 @@
 package com.github.lotus.ums.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.User;
+import com.github.lotus.ums.biz.pojo.ro.RoleGrantUserRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountRo;
+import com.github.lotus.ums.biz.pojo.ro.UserCompleteRo;
+import com.github.lotus.ums.biz.pojo.ro.UserPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -22,7 +26,7 @@ import java.util.Optional;
  * @author hocgin
  * @since 2020-10-06
  */
-public interface AccountService extends AbstractService<User> {
+public interface UserService extends AbstractService<User> {
 
     UserDetailVo createAccount(CreateAccountRo ro);
 
@@ -54,5 +58,15 @@ public interface AccountService extends AbstractService<User> {
 
     Optional<User> getByUsername(String username);
 
-    List<AuthorityTreeNodeVo> listAuthorityCodeByProjectSnAndUserId(String projectSn, Long userId);
+    List<AuthorityTreeNodeVo> listTreeCurrentAuthority(String projectSn, Long userId);
+
+    List<String> listCurrentAuthorityCode(String projectSn, Long userId);
+
+    IPage<AccountComplexVo> paging(UserPagingRo ro);
+
+    List<AccountComplexVo> complete(UserCompleteRo ro);
+
+    void grantRole(Long userId, RoleGrantUserRo ro);
+
+    AccountComplexVo getComplex(Long id);
 }
