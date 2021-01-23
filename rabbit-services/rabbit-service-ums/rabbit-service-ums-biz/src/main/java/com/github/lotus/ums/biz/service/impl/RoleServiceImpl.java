@@ -5,6 +5,8 @@ import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.mapper.RoleMapper;
 import com.github.lotus.ums.biz.mapstruct.RoleMapping;
 import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantAuthorityRo;
+import com.github.lotus.ums.biz.pojo.ro.RoleCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
@@ -40,7 +42,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoleComplexVo getRole(Long roleId) {
-        return this.covertComplex(getById(roleId));
+        return this.convert(getById(roleId));
     }
 
     @Override
@@ -66,7 +68,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Transactional(rollbackFor = Exception.class)
     public IPage<RoleComplexVo> paging(RolePagingRo ro) {
         IPage<Role> result = baseMapper.paging(ro, ro.ofPage());
-        return result.convert(this::covertComplex);
+        return result.convert(this::convert);
     }
 
     @Override
@@ -108,7 +110,21 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
         roleUserRefService.assignRole(id, ro.getAssignUser(), ro.getClearUser());
     }
 
-    private RoleComplexVo covertComplex(Role entity) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<RoleComplexVo> complete(RoleCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage())
+            .convert(this::convert).getRecords();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantAuthority(Long roleId, GrantAuthorityRo ro) {
+        final List<Long> authorities = ro.getAuthorities();
+        roleAuthorityRefService.grantAuthorities(roleId, authorities);
+    }
+
+    private RoleComplexVo convert(Role entity) {
         return mapping.asComplex(entity)
             .setUseUserCount(roleUserRefService.countUseByRoleId(entity.getId()));
     }

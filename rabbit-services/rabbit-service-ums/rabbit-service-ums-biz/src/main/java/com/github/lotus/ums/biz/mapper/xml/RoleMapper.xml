@@ -11,4 +11,15 @@
       </if>
     </where>
   </select>
+
+  <select id="complete" resultType="com.github.lotus.ums.biz.entity.Role">
+    SELECT ar.*
+    FROM ams_role ar
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (ar.remark LIKE #{keyword} OR ar.title LIKE #{keyword} OR ar.encoding LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

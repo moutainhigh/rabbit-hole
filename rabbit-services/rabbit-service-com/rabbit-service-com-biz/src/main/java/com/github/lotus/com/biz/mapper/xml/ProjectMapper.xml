@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lotus.com.biz.mapper.ProjectMapper">
-  <select id="complete" resultType="com.github.lotus.com.api.pojo.vo.ProjectComplexVo">
+  <select id="complete" resultType="com.github.lotus.com.biz.entity.Project">
     SELECT cp.*
     FROM com_project cp
     <where>

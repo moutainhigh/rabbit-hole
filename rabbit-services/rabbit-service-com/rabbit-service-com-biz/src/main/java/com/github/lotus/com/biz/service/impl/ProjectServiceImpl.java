@@ -39,7 +39,8 @@ public class ProjectServiceImpl extends AbstractServiceImpl<ProjectMapper, Proje
 
     @Override
     public List<ProjectComplexVo> complete(ProjectCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage()).getRecords();
+        return baseMapper.complete(ro, ro.ofPage())
+            .convert(this::convert).getRecords();
     }
 
     private ProjectComplexVo convert(Project entity) {

@@ -3,11 +3,15 @@ package com.github.lotus.ums.biz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
+import com.github.lotus.ums.biz.pojo.ro.GrantAuthorityRo;
+import com.github.lotus.ums.biz.pojo.ro.RoleCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
@@ -26,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 角色表 前端控制器
@@ -40,6 +46,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/role")
 public class RoleController {
     private final RoleService service;
+
+    @PostMapping("/_complete")
+    @ApiOperation("检索 - 角色")
+    @ApiOperationSupport(author = "hocgin")
+    public Result<List<RoleComplexVo>> complete(@Validated @RequestBody RoleCompleteRo ro) {
+        return Result.success(service.complete(ro));
+    }
 
     @ApiOperation("查询详情 - 角色")
     @GetMapping("/{id}")
@@ -85,5 +98,12 @@ public class RoleController {
         return Result.success();
     }
 
+    @PostMapping("/{roleId}/grant/authority")
+    @UseLogger("给角色授权权限")
+    public Result<Void> grantAuthority(@PathVariable Long roleId,
+                                       @Validated @RequestBody GrantAuthorityRo ro) {
+        service.grantAuthority(roleId, ro);
+        return Result.success();
+    }
 }
 

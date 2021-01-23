@@ -25,8 +25,8 @@ public interface AuthorityMapping {
     @Mapping(target = "id", ignore = true)
     Authority asAuthority(SaveAuthorityRo ro);
 
-    AuthorityComplexVo asAuthorityComplexVo(Authority entity);
-
     @Mapping(target = "userId", source = "id")
     UserRoleComplexVo asUserRoleComplexVo(User account);
+
+    AuthorityComplexVo asComplex(Authority entity);
 }
