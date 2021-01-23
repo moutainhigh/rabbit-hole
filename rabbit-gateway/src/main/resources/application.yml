@@ -50,6 +50,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: rabbit-com
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/com/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-mina
           uri: lb://rabbit-chaos
           predicates:

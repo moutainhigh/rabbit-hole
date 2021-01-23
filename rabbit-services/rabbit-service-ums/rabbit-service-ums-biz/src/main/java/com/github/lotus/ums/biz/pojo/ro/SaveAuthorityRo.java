@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -27,14 +26,13 @@ public class SaveAuthorityRo {
     @NotNull(message = "权限编码不能为空", groups = {Insert.class})
     @ApiModelProperty(value = "权限编码", required = true)
     private String encoding;
+    @NotNull(message = "关联项目不能为空", groups = {Insert.class})
+    @ApiModelProperty(value = "关联项目", required = true)
+    private Long projectId;
     @Size(max = 20, groups = {Insert.class, Update.class}, message = "权限名称过长")
     @NotNull(message = "权限名称不能为空", groups = {Insert.class})
     @ApiModelProperty(value = "权限名称", required = true)
     private String title;
-    @Size(max = 20, groups = {Insert.class, Update.class}, message = "权限类型过长")
-    @NotBlank(message = "权限类型不能为空", groups = {Insert.class})
-    @ApiModelProperty("权限类型: [General=>普通;Button=>按钮]")
-    private String type;
     @Size(max = 255, groups = {Insert.class, Update.class}, message = "权限描述过长")
     @NotNull(message = "权限描述不能为空")
     @ApiModelProperty("权限描述")

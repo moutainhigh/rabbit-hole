@@ -5,6 +5,7 @@ import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
 import com.github.lotus.com.biz.service.ProjectService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,8 @@ public class ProjectController {
     @PostMapping("/_complete")
     @ApiOperation("检索 - 项目")
     @ApiOperationSupport(author = "hocgin")
-    public List<ProjectComplexVo> complete(@Validated @RequestBody ProjectCompleteRo ro) {
-        return service.complete(ro);
+    public Result<List<ProjectComplexVo>> complete(@Validated @RequestBody ProjectCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 }
 

@@ -17,7 +17,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AuthorityMapping {
 
-    @Mapping(target = "projectId", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "creator", ignore = true)
