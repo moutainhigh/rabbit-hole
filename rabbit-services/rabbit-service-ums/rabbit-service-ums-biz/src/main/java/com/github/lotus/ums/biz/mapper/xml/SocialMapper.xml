@@ -4,7 +4,7 @@
 
     <select id="getAccountBySocialTypeAndSocialId" resultType="com.github.lotus.ums.biz.entity.User">
       SELECT ua.* FROM ums_user ua
-        LEFT JOIN ums_social us ON us.account_id = ua.id
+        LEFT JOIN ums_social us ON us.user_id = ua.id
       <where>
         us.social_type = #{socialType}
         AND us.social_id = #{socialId}

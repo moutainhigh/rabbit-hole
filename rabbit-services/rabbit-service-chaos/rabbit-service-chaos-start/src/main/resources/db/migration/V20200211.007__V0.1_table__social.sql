@@ -3,7 +3,7 @@ CREATE TABLE `ums_social`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `account_id`      BIGINT      NOT NULL
+    `user_id`      BIGINT      NOT NULL
         COMMENT '账号ID',
     `social_type`     VARCHAR(16) NOT NULL
         COMMENT '社交媒体类型',
@@ -15,7 +15,7 @@ CREATE TABLE `ums_social`
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
 
-    UNIQUE KEY (account_id, social_type),
+    UNIQUE KEY (user_id, social_type),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB

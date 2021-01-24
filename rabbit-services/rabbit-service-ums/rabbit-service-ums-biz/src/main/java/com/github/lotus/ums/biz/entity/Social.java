@@ -32,8 +32,8 @@ public class Social extends AbstractEntity<Social> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     @ApiModelProperty("账号ID")
-    @TableField("account_id")
-    private Long accountId;
+    @TableField("user_id")
+    private Long userId;
     @ApiModelProperty("社交媒体类型")
     @TableField("social_type")
     private String socialType;
