@@ -1,12 +1,15 @@
 package com.github.lotus.ums.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.ApiMapper;
 import com.github.lotus.ums.biz.mapstruct.ApiMapping;
+import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
+import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.RoleService;
@@ -93,6 +96,17 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
         result.addAll(roleApis);
         result.addAll(userGroupApis);
         return result;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<ApiComplexVo> paging(ApiPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage())
+            .convert(this::convert);
+    }
+
+    private ApiComplexVo convert(Api entity) {
+        return mapping.asComplex(entity);
     }
 
     private boolean hasApiTitle(String title, Long... ignoreId) {

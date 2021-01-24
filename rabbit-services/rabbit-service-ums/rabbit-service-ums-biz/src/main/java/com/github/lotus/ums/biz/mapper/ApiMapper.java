@@ -1,7 +1,10 @@
 package com.github.lotus.ums.biz.mapper;
 
-import com.github.lotus.ums.biz.entity.Api;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.lotus.ums.biz.entity.Api;
+import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +24,6 @@ public interface ApiMapper extends BaseMapper<Api> {
     List<Api> listByRoleIds(@Param("roleIds") List<Long> roleIds);
 
     List<Api> listByUserGroupIds(@Param("userGroupIds") List<Long> userGroupIds);
+
+    IPage<Api> paging(@Param("ro") ApiPagingRo ro, @Param("page") Page page);
 }

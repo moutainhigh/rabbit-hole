@@ -7,3 +7,4 @@ last_updater
 title
 remark
 encoding
+is_persist
