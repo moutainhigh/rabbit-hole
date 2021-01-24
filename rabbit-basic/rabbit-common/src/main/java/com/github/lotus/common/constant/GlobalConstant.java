@@ -15,5 +15,5 @@ import java.util.List;
 public class GlobalConstant {
     public static final String DEFAULT_FEIGN_BASE_PACKAGE = "com.github.lotus";
     public static final Long SUPPER_ADMIN_USER_ID = 1L;
-    public static final List<String> SUPPER_ADMIN_USERNAMES = Lists.newArrayList("hocgin");
+    public static final List<String> SUPPER_ADMIN_USERNAMES = Lists.newArrayList("super_admin");
 }

@@ -24,4 +24,26 @@
       </foreach>
     </where>
   </select>
+
+  <select id="paging" resultType="com.github.lotus.ums.biz.entity.Api">
+    SELECT aa.*
+    FROM ams_api aa
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (aa.title LIKE #{keyword})
+      </if>
+    </where>
+  </select>
+
+  <select id="complete" resultType="com.github.lotus.ums.biz.entity.Api">
+    SELECT aa.*
+    FROM ams_api aa
+    <where>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (aa.title LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

@@ -64,8 +64,8 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<DistrictComplexVo> getChildrenDistrictByAdcode(String adCode) {
-        return baseMapper.getChildrenDistrictByAdcode(adCode)
+    public List<DistrictComplexVo> getChildrenDistrictByAdcode(String adcode) {
+        return baseMapper.getChildrenDistrictByAdcode(adcode)
             .stream().map(this::convertComplex)
             .collect(Collectors.toList());
     }
@@ -136,7 +136,7 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
     }
 
     private List<District> selectListByLevel(@NonNull DistrictLevel level, List<String> adcode) {
-        return lambdaQuery().eq(District::getLevel, level.getCode()).in(District::getAdCode, adcode).list();
+        return lambdaQuery().eq(District::getLevel, level.getCode()).in(District::getAdcode, adcode).list();
     }
 
     private DistrictComplexVo convertComplex(District entity) {
@@ -165,7 +165,7 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
             entity = new District();
             entity.setParentId(parentId);
             entity.setCityCode(citycode);
-            entity.setAdCode(adcode);
+            entity.setAdcode(adcode);
             entity.setLevel(districtLevel.getCodeStr());
             entity.setTitle(dto.getName());
             entity.setLat(lat);

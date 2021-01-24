@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.ro;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
@@ -37,9 +37,8 @@ public class SaveAuthorityRo {
     @NotNull(message = "权限描述不能为空")
     @ApiModelProperty("权限描述")
     private String remark;
-    @EnumRange(enumClass = Enabled.class, message = "启用状态错误")
     @ApiModelProperty("启用状态")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("接口列表")
     private List<Long> apis;
 

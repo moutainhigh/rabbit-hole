@@ -9,7 +9,7 @@ import com.github.lotus.mina.biz.pojo.vo.GameComplexVo;
 import com.github.lotus.mina.biz.service.GameCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
@@ -31,7 +31,7 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
 
     @Override
     public IPage<GameComplexVo> paging(GameCardPageRo ro) {
-        ro.setEnabled(Enabled.On.getCode());
+        ro.setEnabled(true);
         return baseMapper.paging(ro, ro.ofPage())
             .convert(this::convert);
     }

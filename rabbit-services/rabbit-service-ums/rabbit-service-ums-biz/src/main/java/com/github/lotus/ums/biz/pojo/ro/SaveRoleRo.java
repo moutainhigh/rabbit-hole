@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.ro;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
@@ -36,9 +36,8 @@ public class SaveRoleRo {
     @ApiModelProperty("权限列表")
     private List<Long> authorities;
 
-    @EnumRange(enumClass = Enabled.class, message = "启用状态错误")
     @ApiModelProperty("启用状态")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("是否保留角色")
     private Boolean isPersist;
     @ApiModelProperty(value = "创建者", hidden = true)

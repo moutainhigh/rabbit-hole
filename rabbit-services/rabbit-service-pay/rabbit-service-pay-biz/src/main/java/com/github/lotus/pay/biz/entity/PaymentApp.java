@@ -38,7 +38,7 @@ public class PaymentApp extends AbstractEntity<PaymentApp> {
     private String title;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

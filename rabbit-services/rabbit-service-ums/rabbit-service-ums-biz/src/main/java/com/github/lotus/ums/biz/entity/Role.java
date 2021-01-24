@@ -41,7 +41,7 @@ public class Role extends AbstractEntity<Role> {
     private String remark;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("是否保留")
     @TableField("is_persist")
     private Boolean isPersist;

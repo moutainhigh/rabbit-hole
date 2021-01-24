@@ -16,7 +16,7 @@ public class DistrictComplexVo {
     private Long id;
     private Long parentId;
     @ApiModelProperty("区域编码")
-    private String adCode;
+    private String adcode;
     @ApiModelProperty("城市编码")
     private String cityCode;
     @ApiModelProperty("名称")

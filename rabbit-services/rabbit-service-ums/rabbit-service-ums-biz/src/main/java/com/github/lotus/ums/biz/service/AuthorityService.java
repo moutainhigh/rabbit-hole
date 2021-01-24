@@ -31,7 +31,7 @@ public interface AuthorityService extends AbstractService<Authority> {
 
     void deleteOne(Long id);
 
-    List<AuthorityTreeNodeVo> listAuthorityTree(String enabled);
+    List<AuthorityTreeNodeVo> listAuthorityTree(Boolean enabled);
 
     IPage<UserRoleComplexVo> pagingUserByAuthorityId(Long id, GetAuthorityUserPagingRo ro);
 

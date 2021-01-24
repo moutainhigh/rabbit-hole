@@ -5,7 +5,7 @@ import com.github.lotus.pay.biz.enumns.PaymentWayType;
 import com.github.lotus.pay.biz.mapper.PaymentPlatformMapper;
 import com.github.lotus.pay.biz.service.PaymentPlatformService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
     implements PaymentPlatformService {
 
     @Override
-    public Optional<PaymentPlatform> selectOneByTradeIdAndPaymentWayAndStatus(Long tradeId, PaymentWayType paymentWay, Enabled enabled) {
+    public Optional<PaymentPlatform> selectOneByTradeIdAndPaymentWayAndStatus(Long tradeId, PaymentWayType paymentWay, Boolean enabled) {
         final Integer platformCode = paymentWay.getPlatform().getCode();
         final List<PaymentPlatform> result = this.selectListByPlatformTypeAndEnabled(platformCode, enabled);
         return result.isEmpty()
@@ -40,7 +40,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
         return lambdaQuery().eq(PaymentPlatform::getPlatformAppid, platformAppid).eq(PaymentPlatform::getPlatformType, platformType).oneOpt();
     }
 
-    public List<PaymentPlatform> selectListByPlatformTypeAndEnabled(Integer platformType, Enabled enabled) {
-        return lambdaQuery().eq(PaymentPlatform::getPlatformType, platformType).eq(PaymentPlatform::getEnabled, enabled.getCode()).list();
+    public List<PaymentPlatform> selectListByPlatformTypeAndEnabled(Integer platformType, Boolean enabled) {
+        return lambdaQuery().eq(PaymentPlatform::getPlatformType, platformType).eq(PaymentPlatform::getEnabled, enabled).list();
     }
 }

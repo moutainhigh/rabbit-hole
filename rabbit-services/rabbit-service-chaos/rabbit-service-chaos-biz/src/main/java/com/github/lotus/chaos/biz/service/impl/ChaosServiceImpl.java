@@ -51,8 +51,8 @@ public class ChaosServiceImpl implements ChaosService {
             DistrictComplexVo district = districtServiceApi.getComplexByCityCode(cityCode);
             if (Objects.nonNull(district)) {
                 DistrictComplexVo province = districtServiceApi.getComplexById(district.getParentId());
-                result.setProvinceAdcode(province.getAdCode());
-                result.setCityAdcode(district.getAdCode());
+                result.setProvinceAdcode(province.getAdcode());
+                result.setCityAdcode(district.getAdcode());
             }
         });
         return result.setNation(dto.getNation().orElse(null))

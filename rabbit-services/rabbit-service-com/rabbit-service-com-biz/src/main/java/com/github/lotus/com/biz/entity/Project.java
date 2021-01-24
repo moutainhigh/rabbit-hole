@@ -31,8 +31,8 @@ public class Project extends AbstractEntity<Project> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     @ApiModelProperty("编码")
-    @TableField("project_sn")
-    private String projectSn;
+    @TableField("encoding")
+    private String encoding;
     @ApiModelProperty("图章地址")
     @TableField("logo_url")
     private String logoUrl;

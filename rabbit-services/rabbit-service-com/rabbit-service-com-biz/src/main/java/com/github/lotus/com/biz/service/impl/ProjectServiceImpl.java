@@ -29,7 +29,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl<ProjectMapper, Proje
 
     @Override
     public Optional<Project> getByProjectSn(String projectSn) {
-        return lambdaQuery().eq(Project::getProjectSn, projectSn).oneOpt();
+        return lambdaQuery().eq(Project::getEncoding, projectSn).oneOpt();
     }
 
     @Override

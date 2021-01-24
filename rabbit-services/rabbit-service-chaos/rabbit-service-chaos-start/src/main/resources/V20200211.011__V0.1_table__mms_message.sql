@@ -97,7 +97,7 @@ CREATE TABLE mms_notice
         comment '内容类型: text=>文本',
     content         varchar(255) not null
         comment '内容',
-    enabled         VARCHAR(10)  NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
     creator         BIGINT       not null,

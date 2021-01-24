@@ -1,9 +1,14 @@
 package com.github.lotus.ums.biz.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
+import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
+import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
@@ -21,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 接口表 前端控制器
@@ -35,6 +42,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ApiController {
     private final ApiService service;
+
+    @ApiOperation("新增接口 - 接口")
+    @PostMapping("/_paging")
+    public Result<IPage<ApiComplexVo>> paging(@Validated @RequestBody ApiPagingRo ro) {
+        return Result.success(service.paging(ro));
+    }
+
+    @ApiOperation("查询列表 - 接口")
+    @UseLogger("查询列表 - 接口")
+    @PostMapping("/_complete")
+    public Result<List<ApiComplexVo>> complete(@Validated @RequestBody ApiCompleteRo ro) {
+        return Result.success(service.complete(ro));
+    }
 
     @ApiOperation("新增接口 - 接口")
     @PostMapping

@@ -23,10 +23,10 @@ public class UserGroupComplexVo {
     private String encoding;
     @ApiModelProperty("描述")
     private String remark;
-    @ApiModelProperty("启用状态")
-    private String enabled;
+    @ApiModelProperty("开启状态")
+    private Boolean enabled;
     @ApiModelProperty("是否保留")
-    private String isPersist;
+    private Boolean isPersist;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")

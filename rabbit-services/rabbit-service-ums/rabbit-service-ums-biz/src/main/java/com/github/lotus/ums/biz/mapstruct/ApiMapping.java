@@ -2,6 +2,7 @@ package com.github.lotus.ums.biz.mapstruct;
 
 import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
+import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,4 +21,6 @@ public interface ApiMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     Api asApi(SaveApiRo ro);
+
+    ApiComplexVo asComplex(Api entity);
 }

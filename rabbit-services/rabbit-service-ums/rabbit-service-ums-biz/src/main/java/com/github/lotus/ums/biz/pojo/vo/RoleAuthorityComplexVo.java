@@ -22,4 +22,6 @@ public class RoleAuthorityComplexVo {
     private String title;
     @ApiModelProperty("角色描述")
     private String remark;
+    @ApiModelProperty("开启状态")
+    private Boolean enabled;
 }

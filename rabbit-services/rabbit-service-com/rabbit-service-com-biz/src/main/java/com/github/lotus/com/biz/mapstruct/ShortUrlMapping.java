@@ -23,7 +23,6 @@ public interface ShortUrlMapping {
     @Mapping(target = "creator", ignore = true)
     ShortUrl asShortUrl(ShortUrlUpdateRo qo);
 
-    @Mapping(target = "enabledName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     ShortUrlComplexVo asShortUrlComplexVo(ShortUrl entity);
 }

@@ -4,21 +4,21 @@ CREATE TABLE `com_district`
     id        BIGINT AUTO_INCREMENT,
     parent_id bigint,
     --
-    tree_path varchar(255) NOT NULL
+    tree_path varchar(255)        NOT NULL
         COMMENT '树路径，组成方式: /父路径/当前ID',
-    enabled   VARCHAR(10)  NOT NULL DEFAULT 'on'
+    `enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    ad_code   VARCHAR(32)  NOT NULL
+    adcode    VARCHAR(32)         NOT NULL
         COMMENT '区域编码',
     city_code VARCHAR(32)
         COMMENT '城市编码',
-    level     VARCHAR(32)  NOT NULL
+    level     VARCHAR(32)         NOT NULL
         COMMENT '城市规划级别',
     lat       decimal(10, 6)
         COMMENT '中心(纬度)',
     lng       decimal(10, 6)
         COMMENT '中心(经度)',
-    title     VARCHAR(32)  NOT NULL
+    title     VARCHAR(32)         NOT NULL
         COMMENT '名称',
     --
     UNIQUE KEY (tree_path),
@@ -40,7 +40,7 @@ CREATE TABLE `com_file`
         COMMENT '业务ID',
     rel_type   VARCHAR(10)  NOT NULL DEFAULT 'unknown'
         COMMENT '业务类型',
-    sort       INT(10)      NOT NULL DEFAULT 1000
+    priority       INT      NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',
     created_at TIMESTAMP(6) NOT NULL
         COMMENT '创建时间',
@@ -58,16 +58,16 @@ CREATE TABLE `com_data_dict`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `title`           VARCHAR(64) NOT NULL
+    `title`           VARCHAR(64)         NOT NULL
         COMMENT '字典名称',
-    `code`            VARCHAR(64) NOT NULL UNIQUE
+    `code`            VARCHAR(64)         NOT NULL UNIQUE
         COMMENT '字典标识',
     `remark`          VARCHAR(255)
         COMMENT '备注',
-    enabled           VARCHAR(10) NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    `created_at`      DATETIME(6) NOT NULL
+    `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
     `creator`         BIGINT
         COMMENT '创建者',
@@ -88,20 +88,20 @@ CREATE TABLE `com_data_dict_item`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `dict_id`         BIGINT      NOT NULL
+    `dict_id`         BIGINT              NOT NULL
         COMMENT 'com_data_dict id',
-    `title`           varchar(64) NOT NULL
+    `title`           varchar(64)         NOT NULL
         COMMENT '字典项名称',
-    `code`            varchar(64) NOT NULL
+    `code`            varchar(64)         NOT NULL
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
-    `sort`            INT(10)     NOT NULL DEFAULT 1000
+    `priority`            INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序, 从大到小降序',
-    enabled           VARCHAR(10) NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    `created_at`      DATETIME(6) NOT NULL
+    `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
     `creator`         BIGINT
         COMMENT '创建者',

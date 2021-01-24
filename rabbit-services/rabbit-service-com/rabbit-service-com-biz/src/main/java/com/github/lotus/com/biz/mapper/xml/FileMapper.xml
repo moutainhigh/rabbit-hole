@@ -7,6 +7,6 @@
     FROM com_file tf
     WHERE tf.rel_type = #{relType}
       AND tf.rel_id = #{relId}
-    ORDER BY tf.sort DESC, tf.created_at DESC
+    ORDER BY tf.priority DESC, tf.created_at DESC
   </select>
 </mapper>

@@ -41,10 +41,10 @@ public class PaymentWayRuleItem extends AbstractEntity<PaymentWayRuleItem> {
     private String paymentWayCode;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("排序, 从大到小降序")
-    @TableField("sort")
-    private Integer sort;
+    @TableField("priority")
+    private Integer priority;
     @TableField("created_at")
     private LocalDateTime createdAt;
     @TableField("updated_at")

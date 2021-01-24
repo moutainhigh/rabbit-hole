@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 public class DistrictTreeVo extends AbstractTreeNode<DistrictTreeVo> {
     private Long id;
     @ApiModelProperty("区域编码")
-    private String adCode;
+    private String adcode;
     @ApiModelProperty("城市编码")
     private String cityCode;
     @ApiModelProperty("名称")

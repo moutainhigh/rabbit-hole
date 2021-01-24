@@ -35,7 +35,7 @@
         AND tddi.enabled = #{enabled}
       </if>
     </where>
-    ORDER BY tddi.sort DESC, tddi.created_at DESC
+    ORDER BY tddi.priority DESC, tddi.created_at DESC
   </select>
 
 </mapper>

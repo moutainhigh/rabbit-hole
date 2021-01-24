@@ -4,10 +4,12 @@ package com.github.lotus.ums.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -60,6 +64,13 @@ public class UserGroupController {
     @PostMapping("/_paging")
     public Result<IPage<UserGroupComplexVo>> paging(@Validated @RequestBody UserGroupPagingRo ro) {
         return Result.success(service.paging(ro));
+    }
+
+    @ApiOperation("查询列表 - 用户组")
+    @UseLogger("查询列表 - 用户组")
+    @PostMapping("/_complete")
+    public Result<List<UserGroupComplexVo>> complete(@Validated @RequestBody UserGroupCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 
     @ApiOperation("修改用户组 - 用户组")
