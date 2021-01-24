@@ -50,7 +50,7 @@ public class Api extends AbstractEntity<Api> {
     private String requestUri;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("优先级, 越大优先级越低")
     @TableField("priority")
     private Integer priority;

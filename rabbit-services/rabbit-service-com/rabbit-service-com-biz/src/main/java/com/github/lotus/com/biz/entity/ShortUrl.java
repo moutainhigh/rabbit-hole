@@ -38,7 +38,7 @@ public class ShortUrl extends AbstractEntity<ShortUrl> {
     private String originalUrl;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("创建人")
     @TableField("creator")
     private Long creator;

@@ -46,8 +46,8 @@ public class GameCard extends AbstractEntity<GameCard> {
     @TableField("tags")
     private String tags;
     @ApiModelProperty("排序,默认:1000")
-    @TableField("sort")
-    private Integer sort;
+    @TableField("priority")
+    private Integer priority;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
@@ -62,7 +62,7 @@ public class GameCard extends AbstractEntity<GameCard> {
     private Long lastUpdater;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
 
 
 

@@ -6,7 +6,7 @@ CREATE TABLE `bmw_payment_app`
         comment '接入方编号',
     title      VARCHAR(255) NOT NULL
         COMMENT '标题',
-    enabled    VARCHAR(10)  NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
     created_at datetime(6)  not null
@@ -29,7 +29,7 @@ CREATE TABLE `bmw_payment_platform`
         COMMENT '标题',
     platform_type  tinyint unsigned not null
         comment '支付平台类型: 0=>AliPay; 1=>WxPay',
-    enabled        VARCHAR(10)      NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
     created_at     datetime(6)      not null
@@ -249,7 +249,7 @@ CREATE TABLE `bmw_payment_way_rule`
         COMMENT '规则名称',
     scene_code VARCHAR(32) NOT NULL
         COMMENT '场景码',
-    enabled    VARCHAR(10) NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     created_at DATETIME(6) NOT NULL,
     updated_at DATETIME(6) NULL,
@@ -270,9 +270,9 @@ CREATE TABLE `bmw_payment_way_rule_item`
         COMMENT '支付渠道名称',
     payment_way_code VARCHAR(32) NOT NULL
         COMMENT '支付渠道码',
-    enabled          VARCHAR(10) NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    sort             INT                  DEFAULT 1000 NOT NULL
+    priority             INT                  DEFAULT 1000 NOT NULL
         COMMENT '排序, 从大到小降序',
     created_at       datetime(6) not null,
     updated_at       datetime(6) null,

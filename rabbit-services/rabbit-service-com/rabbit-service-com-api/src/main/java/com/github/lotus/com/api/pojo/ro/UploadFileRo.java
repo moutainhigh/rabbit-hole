@@ -31,7 +31,7 @@ public class UploadFileRo implements Serializable {
     @Accessors(chain = true)
     public static class FileDto implements Serializable {
         @ApiModelProperty("排序(可选)")
-        private Integer sort;
+        private Integer priority;
         @ApiModelProperty("地址(必须)")
         private String url;
         @ApiModelProperty("文件名(可选)")

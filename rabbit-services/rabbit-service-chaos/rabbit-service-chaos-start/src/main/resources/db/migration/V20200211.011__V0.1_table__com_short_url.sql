@@ -6,7 +6,7 @@ CREATE TABLE `com_short_url`
         COMMENT '短链码',
     original_url    VARCHAR(1024) NOT NULL
         COMMENT '原链',
-    enabled         VARCHAR(8)    NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
     creator         BIGINT        not null

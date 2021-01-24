@@ -13,6 +13,6 @@
         AND mac.enabled = #{ro.enabled}
       </if>
     </where>
-    ORDER BY mac.sort DESC, mac.created_at DESC
+    ORDER BY mac.priority DESC, mac.created_at DESC
   </select>
 </mapper>

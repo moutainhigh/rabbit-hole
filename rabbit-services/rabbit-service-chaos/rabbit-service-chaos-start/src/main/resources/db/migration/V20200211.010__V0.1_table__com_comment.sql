@@ -6,7 +6,7 @@ CREATE TABLE com_comment_target
         COMMENT '评论对象ID',
     rel_type VARCHAR(32) NOT NULL
         COMMENT '评论对象类型',
-    enabled  VARCHAR(10) NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     UNIQUE KEY (rel_id, rel_type),
     PRIMARY KEY (id)
@@ -27,7 +27,7 @@ CREATE TABLE com_comment
     --
     content         VARCHAR(255) NOT NULL
         COMMENT '评论内容',
-    enabled         VARCHAR(10)  NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     likes_count     BIGINT       NOT NULL DEFAULT 0
         comment '点赞数量',

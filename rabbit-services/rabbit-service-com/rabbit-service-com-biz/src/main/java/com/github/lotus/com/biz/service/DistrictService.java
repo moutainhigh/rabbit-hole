@@ -24,7 +24,7 @@ public interface DistrictService extends AbstractService<District> {
 
     List<DistrictTreeVo> tree();
 
-    List<DistrictComplexVo> getChildrenDistrictByAdcode(String adCode);
+    List<DistrictComplexVo> getChildrenDistrictByAdcode(String adcode);
 
     List<DistrictComplexVo> listProvince();
 

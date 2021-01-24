@@ -2,7 +2,7 @@ package com.github.lotus.ums.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.ums.biz.enumns.Gender;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import io.swagger.annotations.ApiModel;
@@ -36,10 +36,7 @@ public class AccountComplexVo {
     @ApiModelProperty("手机号码")
     private String phone;
     @ApiModelProperty("开启状态")
-    private String enabled;
-    @Named(idFor = "enabled", type = ChaosNamedAPI.DATA_DICT,
-        args = {Enabled.KEY}, serviceClass = ChaosNamedAPI.class)
-    private String enabledName;
+    private Boolean enabled;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
     @Named(idFor = "gender", type = ChaosNamedAPI.DATA_DICT,

@@ -42,7 +42,7 @@ public class DataDict extends AbstractEntity<DataDict> {
     private String remark;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
 
     @ApiModelProperty("创建时间")
     @TableField("created_at")

@@ -37,10 +37,10 @@ public class District extends TreeEntity<District> {
     private String treePath;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("区域编码")
-    @TableField("ad_code")
-    private String adCode;
+    @TableField("adcode")
+    private String adcode;
     @ApiModelProperty("城市编码")
     @TableField("city_code")
     private String cityCode;

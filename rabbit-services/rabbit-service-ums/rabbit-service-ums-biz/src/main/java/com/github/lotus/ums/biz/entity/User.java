@@ -47,20 +47,20 @@ public class User extends AbstractEntity<User> {
     @TableField("password")
     private String password;
     @ApiModelProperty("头像地址")
-    @TableField("avatar")
+    @TableField("avatar_url")
     private String avatar;
     @ApiModelProperty("性别(0:女, 1:男)")
     @TableField("gender")
     private Integer gender;
-    @ApiModelProperty("过期状态(0:为过期状态;1:为正常状态)")
+    @ApiModelProperty("过期状态")
     @TableField("expired")
-    private Integer expired;
-    @ApiModelProperty("锁定状态(0:为锁定状态;1:为正常状态)")
+    private Boolean expired;
+    @ApiModelProperty("锁定状态")
     @TableField("locked")
-    private Integer locked;
-    @ApiModelProperty("启用状态(0:为禁用状态;1:为正常状态)")
+    private Boolean locked;
+    @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private Integer enabled;
+    private Boolean enabled;
     @ApiModelProperty("注册时使用的IP")
     @TableField("created_ip")
     private String createdIp;

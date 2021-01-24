@@ -12,7 +12,7 @@ import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import in.hocg.boot.web.result.Result;
@@ -93,7 +93,7 @@ public class AuthorityController {
     @GetMapping("/tree")
     @ResponseBody
     public Result<List<AuthorityTreeNodeVo>> tree() {
-        return Result.success(service.listAuthorityTree(Enabled.On.getCodeStr()));
+        return Result.success(service.listAuthorityTree(true));
     }
 
     @ApiOperation("获取权限树(所有) - 权限")
