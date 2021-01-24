@@ -51,7 +51,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<?> getAvatarUrl(@ApiParam("用户名") @PathVariable String username) {
         return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
-            .map(User::getAvatar).orElse(null));
+            .map(User::getAvatarUrl).orElse(null));
     }
 
     @UseLogger("获取当前用户信息")

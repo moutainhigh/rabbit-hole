@@ -48,7 +48,7 @@ public class User extends AbstractEntity<User> {
     private String password;
     @ApiModelProperty("头像地址")
     @TableField("avatar_url")
-    private String avatar;
+    private String avatarUrl;
     @ApiModelProperty("性别(0:女, 1:男)")
     @TableField("gender")
     private Integer gender;

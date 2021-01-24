@@ -19,9 +19,10 @@ public interface AccountMapping {
 
     UserDetailVo asUserDetailVo(User account);
 
-    @Mapping(target = "avatarUrl", source = "avatar")
+    @Mapping(target = "avatarUrl", source = "avatarUrl")
     AccountVo asAccountVo(User entity);
 
+    @Mapping(target = "avatar", source = "avatarUrl")
     @Mapping(target = "social", ignore = true)
     @Mapping(target = "genderName", ignore = true)
     AccountComplexVo asComplex(User entity);

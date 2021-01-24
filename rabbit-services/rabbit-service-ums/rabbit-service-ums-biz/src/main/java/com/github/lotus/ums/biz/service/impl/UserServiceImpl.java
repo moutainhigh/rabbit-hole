@@ -94,7 +94,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
             .setUsername(username)
             .setPhone(phone)
             .setEmail(email)
-            .setAvatar(avatar)
+            .setAvatarUrl(avatar)
             .setPassword(password)
             .setCreatedIp(createdIp)
             .setCreatedAt(createdAt);
@@ -116,7 +116,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
         // 设置默认头像，如果没有指定头像的话
         if (Strings.isBlank(avatar)) {
-            update.setAvatar(fileServiceApi.getAvatarUrl(entityId));
+            update.setAvatarUrl(fileServiceApi.getAvatarUrl(entityId));
         }
 
         // 设置默认账号，如果没有指定账号的话
