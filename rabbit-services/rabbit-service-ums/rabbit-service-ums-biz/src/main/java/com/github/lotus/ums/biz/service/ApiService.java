@@ -2,6 +2,7 @@ package com.github.lotus.ums.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Api;
+import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
@@ -28,4 +29,6 @@ public interface ApiService extends AbstractService<Api> {
     List<Api> listByUsername(String username);
 
     IPage<ApiComplexVo> paging(ApiPagingRo ro);
+
+    List<ApiComplexVo> complete(ApiCompleteRo ro);
 }
