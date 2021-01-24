@@ -7,7 +7,7 @@
     <where>
       <if test="ro.keyword != null">
         <bind name="keyword" value="'%' + ro.keyword + '%'"/>
-        AND (cp.remark LIKE #{keyword} OR cp.title LIKE #{keyword} OR cp.project_sn LIKE #{keyword})
+        AND (cp.remark LIKE #{keyword} OR cp.title LIKE #{keyword} OR cp.encoding LIKE #{keyword})
       </if>
     </where>
   </select>

@@ -76,7 +76,7 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
             }
             default:
         }
-        return this.toMap(result, DistrictComplexVo::getAdCode, DistrictComplexVo::getTitle);
+        return this.toMap(result, DistrictComplexVo::getAdcode, DistrictComplexVo::getTitle);
     }
 
     private <T> List<T> getValues(List<?> values, Class<T> clazz) {

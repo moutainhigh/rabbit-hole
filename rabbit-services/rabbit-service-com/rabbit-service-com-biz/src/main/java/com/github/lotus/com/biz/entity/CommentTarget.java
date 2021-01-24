@@ -36,6 +36,6 @@ public class CommentTarget extends AbstractEntity<CommentTarget> {
     private String relType;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
 
 }

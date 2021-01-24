@@ -1,12 +1,12 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.UserGroupMapper;
 import com.github.lotus.ums.biz.mapstruct.UserGroupMapping;
 import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
 import com.github.lotus.ums.biz.service.UserGroupService;
@@ -45,7 +45,7 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     @Transactional(rollbackFor = Exception.class)
     public UserGroupComplexVo getUserGroup(Long userGroupId) {
         UserGroup entity = getById(userGroupId);
-        return this.convertComplex(entity);
+        return this.convert(entity);
     }
 
     @Override
@@ -63,7 +63,13 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<UserGroupComplexVo> paging(UserGroupPagingRo ro) {
-        return baseMapper.paging(ro).convert(this::convertComplex);
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convert);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<UserGroupComplexVo> complete(UserGroupCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convert).getRecords();
     }
 
     @Override
@@ -94,7 +100,7 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
         userGroupUserRefService.assignUserGroup(userGroupId, ro.getAssignUser(), ro.getClearUser());
     }
 
-    private UserGroupComplexVo convertComplex(UserGroup entity) {
+    private UserGroupComplexVo convert(UserGroup entity) {
         return mapping.asComplex(entity);
     }
 }

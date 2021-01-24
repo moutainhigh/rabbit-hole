@@ -43,8 +43,8 @@ public class File extends AbstractEntity<File> {
     @TableField("rel_type")
     private String relType;
     @ApiModelProperty("排序,默认:1000")
-    @TableField("sort")
-    private Integer sort;
+    @TableField("priority")
+    private Integer priority;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

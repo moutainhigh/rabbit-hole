@@ -112,7 +112,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<AuthorityTreeNodeVo> listAuthorityTree(String enabled) {
+    public List<AuthorityTreeNodeVo> listAuthorityTree(Boolean enabled) {
         List<Authority> data = this.listAuthorityByEnabled(enabled);
         return Tree.getChild(null, LangUtils.toList(data, this::convertTreeNode));
     }
@@ -191,7 +191,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
         return result;
     }
 
-    private List<Authority> listAuthorityByEnabled(String enabled) {
+    private List<Authority> listAuthorityByEnabled(Boolean enabled) {
         return lambdaQuery().eq(Objects.nonNull(enabled), Authority::getEnabled, enabled).list();
     }
 }

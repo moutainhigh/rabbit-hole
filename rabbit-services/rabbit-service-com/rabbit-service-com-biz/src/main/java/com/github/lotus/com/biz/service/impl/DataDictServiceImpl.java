@@ -8,7 +8,7 @@ import com.github.lotus.com.biz.mapstruct.DataDictItemMapping;
 import com.github.lotus.com.biz.service.DataDictItemService;
 import com.github.lotus.com.biz.service.DataDictService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<KeyValue> listKeyValueByCodeAndEnabledIsOn(String typeCode) {
-        return this.listKeyValueByCodeAndEnabled(typeCode, (String) Enabled.On.getCode());
+        return this.listKeyValueByCodeAndEnabled(typeCode, Boolean.TRUE);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         return this.listKeyValueByCodeAndEnabled(typeCode, null);
     }
 
-    private List<KeyValue> listKeyValueByCodeAndEnabled(String typeCode, String enabled) {
+    private List<KeyValue> listKeyValueByCodeAndEnabled(String typeCode, Boolean enabled) {
         return listDataDictItemByCodeAndEnabled(typeCode, enabled)
             .stream().map(this::convertKeyValue)
             .collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
             .setKey(item.getTitle());
     }
 
-    private List<DataDictItem> listDataDictItemByCodeAndEnabled(String typeCode, String enabled) {
+    private List<DataDictItem> listDataDictItemByCodeAndEnabled(String typeCode, Boolean enabled) {
         return baseMapper.listDataDictItemByCodeAndEnabled(typeCode, enabled);
     }
 }

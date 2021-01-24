@@ -5,20 +5,20 @@
     SELECT cd.*
     FROM com_district cd
            LEFT JOIN com_district cd2 ON cd.parent_id = cd2.id
-    WHERE cd2.ad_code = #{adcode}
+    WHERE cd2.adcode = #{adcode}
   </select>
 
   <select id="complete" resultType="com.github.lotus.com.biz.pojo.vo.district.DistrictCompleteVo">
     SELECT country.title    country,
-           country.ad_code  country_adcode,
+           country.adcode  country_adcode,
            province.title   province,
-           province.ad_code province_adcode,
+           province.adcode province_adcode,
            city.title       city,
-           city.ad_code     city_adcode,
+           city.adcode     city_adcode,
            district.title   district,
-           district.ad_code district_adcode,
+           district.adcode district_adcode,
            street.title     street,
-           street.ad_code   street_adcode
+           street.adcode   street_adcode
     FROM com_district country
            LEFT JOIN com_district province ON province.parent_id = country.id
            LEFT JOIN com_district city ON city.parent_id = province.id

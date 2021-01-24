@@ -44,11 +44,11 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
     @TableField("remark")
     private String remark;
     @ApiModelProperty("排序, 从大到小降序")
-    @TableField("sort")
-    private Integer sort;
+    @TableField("priority")
+    private Integer priority;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
 
     @ApiModelProperty("创建时间")
     @TableField("created_at")

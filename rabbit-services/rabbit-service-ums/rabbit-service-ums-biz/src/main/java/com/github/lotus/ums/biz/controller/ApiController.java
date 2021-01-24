@@ -1,7 +1,10 @@
 package com.github.lotus.ums.biz.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
+import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
@@ -35,6 +38,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ApiController {
     private final ApiService service;
+
+    @ApiOperation("新增接口 - 接口")
+    @PostMapping("/_paging")
+    public Result<IPage<ApiComplexVo>> paging(@Validated @RequestBody ApiPagingRo ro) {
+        return Result.success(service.paging(ro));
+    }
 
     @ApiOperation("新增接口 - 接口")
     @PostMapping

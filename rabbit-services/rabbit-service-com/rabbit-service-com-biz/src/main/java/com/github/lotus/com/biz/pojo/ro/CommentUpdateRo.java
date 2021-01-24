@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.ro;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,8 +19,7 @@ public class CommentUpdateRo {
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;
     @ApiModelProperty("启用状态")
-    @EnumRange(enumClass = Enabled.class)
-    private String enabled;
+    private Boolean enabled;
 
     @ApiModelProperty(required = true, hidden = true)
     private Long userId;

@@ -27,7 +27,7 @@ public class SaveUserGroupRo {
     @ApiModelProperty("描述")
     private String remark;
     @ApiModelProperty("启用状态")
-    private String enabled;
+    private Boolean enabled;
     @ApiModelProperty("是否保留")
     private Boolean isPersist;
 

@@ -1,6 +1,6 @@
 INSERT INTO mina_game_card (title, logo_url,
                             game_url,
-                            remark, tags, sort, created_at, creator, last_updated_at,
+                            remark, tags, priority, created_at, creator, last_updated_at,
                             last_updater, enabled)
 VALUES ('90坦克',
         'http://cdn.hocgin.top/fontapplogo.png',
@@ -10,7 +10,7 @@ VALUES ('90坦克',
 
 INSERT INTO mina_game_card (title, logo_url,
                             game_url,
-                            remark, tags, sort, created_at, creator, last_updated_at,
+                            remark, tags, priority, created_at, creator, last_updated_at,
                             last_updater, enabled)
 VALUES ('马里奥16代',
         'http://cdn.hocgin.top/fontapplogo.png',
@@ -20,7 +20,7 @@ VALUES ('马里奥16代',
 
 INSERT INTO mina_game_card (title, logo_url,
                             game_url,
-                            remark, tags, sort, created_at, creator, last_updated_at,
+                            remark, tags, priority, created_at, creator, last_updated_at,
                             last_updater, enabled)
 VALUES ('魂斗罗1',
         'http://cdn.hocgin.top/fontapplogo.png',
@@ -30,7 +30,7 @@ VALUES ('魂斗罗1',
 
 INSERT INTO mina_game_card (title, logo_url,
                             game_url,
-                            remark, tags, sort, created_at, creator, last_updated_at,
+                            remark, tags, priority, created_at, creator, last_updated_at,
                             last_updater, enabled)
 VALUES ('冒险岛',
         'http://cdn.hocgin.top/fontapplogo.png',
@@ -41,7 +41,7 @@ VALUES ('冒险岛',
 
 INSERT INTO mina_game_card (title, logo_url,
                             game_url,
-                            remark, tags, sort, created_at, creator, last_updated_at,
+                            remark, tags, priority, created_at, creator, last_updated_at,
                             last_updater, enabled)
 VALUES ('洛克人',
         'http://cdn.hocgin.top/fontapplogo.png',

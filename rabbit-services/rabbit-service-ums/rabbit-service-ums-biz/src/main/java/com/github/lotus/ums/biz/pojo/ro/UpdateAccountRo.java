@@ -22,7 +22,7 @@ public class UpdateAccountRo {
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("头像地址")
-    private String avatar;
+    private String avatarUrl;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
     @ApiModelProperty(value = "更新人", hidden = true)

@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.ro;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
@@ -39,9 +39,8 @@ public class SaveApiRo {
     @ApiModelProperty("请求URI, 比如: /xx/{id}")
     @NotNull(message = "请求URI不能为空", groups = {Insert.class})
     private String requestUri;
-    @EnumRange(enumClass = Enabled.class, message = "启用状态错误")
     @ApiModelProperty("启用状态")
-    private String enabled;
+    private Boolean enabled;
 
     @ApiModelProperty("优先级, 越大优先级越低")
     private Integer priority;

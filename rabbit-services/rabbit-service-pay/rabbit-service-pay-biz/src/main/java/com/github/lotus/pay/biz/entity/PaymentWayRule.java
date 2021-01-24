@@ -41,7 +41,7 @@ public class PaymentWayRule extends AbstractEntity<PaymentWayRule> {
     private String sceneCode;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private String enabled;
+    private Boolean enabled;
     @TableField("created_at")
     private LocalDateTime createdAt;
     @TableField("updated_at")

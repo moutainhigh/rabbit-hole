@@ -60,7 +60,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
             .map(item -> new File()
                 .setRelId(relId)
                 .setRelType((String) relType.getCode())
-                .setSort(item.getSort())
+                .setPriority(item.getPriority())
                 .setCreator(creator)
                 .setFilename(item.getFilename())
                 .setCreatedAt(now)

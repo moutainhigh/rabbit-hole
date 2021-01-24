@@ -1,6 +1,9 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
+import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,5 +29,5 @@ public class AuthorityComplexVo {
     @ApiModelProperty("权限描述")
     private String remark;
     @ApiModelProperty("开启状态")
-    private String enabled;
+    private Boolean enabled;
 }

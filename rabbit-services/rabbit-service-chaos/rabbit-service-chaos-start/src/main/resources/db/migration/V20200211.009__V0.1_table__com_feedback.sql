@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `com_project`;
 create table com_project
 (
     id                BIGINT auto_increment,
-    project_sn        VARCHAR(32) UNIQUE NOT NULL
+    encoding        VARCHAR(32) UNIQUE NOT NULL
         COMMENT '编码',
     `logo_url`        VARCHAR(64)
         COMMENT '图章地址',

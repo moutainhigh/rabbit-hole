@@ -17,7 +17,7 @@ CREATE TABLE `ams_authority`
         COMMENT '父级ID, 顶级为 NULL',
     `tree_path`       varchar(255) NOT NULL
         COMMENT '树路径，组成方式: /父路径/当前ID',
-    `enabled`         VARCHAR(8)   NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
     `created_at`      DATETIME(6)  NOT NULL
@@ -44,7 +44,7 @@ CREATE TABLE `ams_role`
         COMMENT '角色授权码',
     `remark`          varchar(255)
         COMMENT '角色描述',
-    `enabled`         VARCHAR(8)      NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     is_persist        INT(2) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否保留',
@@ -111,7 +111,7 @@ CREATE TABLE `ams_api`
         COMMENT '服务接口前缀, 比如: /chaos 或者 *',
     request_uri       VARCHAR(255)    NOT NULL
         COMMENT '请求URI, 比如: /xx/{id}  或者 /**',
-    enabled           VARCHAR(8)      NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     priority          INT(5)                   DEFAULT 1000
         COMMENT '优先级, 越大优先级越低',
@@ -158,7 +158,7 @@ CREATE TABLE `ams_user_group`
         COMMENT '编码',
     `remark`          varchar(255)
         COMMENT '描述',
-    `enabled`         VARCHAR(8)      NOT NULL DEFAULT 'on'
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     is_persist        INT(2) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否保留',

@@ -19,7 +19,7 @@ import com.github.lotus.common.datadict.CommentTargetType;
 import com.github.lotus.ums.api.AccountServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
@@ -71,7 +71,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final Long targetId = commentTargetService.getOrCreateCommentTarget(refType, refId);
 
         final Comment entity = mapping.asComment(ro);
-        entity.setEnabled(Enabled.On.getCodeStr());
+        entity.setEnabled(true);
         entity.setTargetId(targetId);
         entity.setCreatedAt(now);
         entity.setCreator(creatorId);
@@ -103,7 +103,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         }
 
         final Long targetId = targetIdOpt.get();
-        final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), ro.ofPage());
+        final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, true, ro.ofPage());
         return result.convert(entity -> {
             final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
             final String treePath = entity.getTreePath() + "/";
@@ -117,7 +117,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     public IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingRo ro) {
         final Comment pComment = baseMapper.selectById(ro.getParentId());
         if (Objects.isNull(pComment) || Objects.isNull(pComment.getParentId())
-            || Enabled.Off.eq(pComment.getEnabled())) {
+            || Boolean.FALSE.equals(pComment.getEnabled())) {
             return PageUtils.emptyPage(ro);
         }
 
@@ -149,7 +149,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
-        final String content = Enabled.On.eq(entity.getEnabled())
+        final String content = Boolean.FALSE.equals(entity.getEnabled())
             ? result.getContent() : "已删除";
         result.setContent(content);
         final Long parentId = entity.getParentId();

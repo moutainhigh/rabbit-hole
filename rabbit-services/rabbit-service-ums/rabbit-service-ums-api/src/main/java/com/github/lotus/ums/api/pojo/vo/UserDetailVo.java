@@ -17,7 +17,7 @@ public class UserDetailVo {
     @ApiModelProperty("昵称")
     private String nickname;
     @ApiModelProperty("头像")
-    private String avatar;
+    private String avatarUrl;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("密码")

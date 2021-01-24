@@ -13,6 +13,6 @@
         AND mgc.enabled = #{ro.enabled}
       </if>
     </where>
-    ORDER BY mgc.sort DESC, mgc.created_at DESC
+    ORDER BY mgc.priority DESC, mgc.created_at DESC
   </select>
 </mapper>

@@ -48,7 +48,7 @@ import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoRefundResponse;
 import com.github.lotus.pay.biz.support.payment.resolve.message.AllInMessageResolve;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
+
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
@@ -186,7 +186,7 @@ public class PaymentServiceImpl implements AllPaymentService {
             throw ServiceException.wrap("系统繁忙");
         }
 
-        PaymentPlatform paymentPlatform = paymentPlatformService.selectOneByTradeIdAndPaymentWayAndStatus(tradeId, paymentWay, Enabled.On)
+        PaymentPlatform paymentPlatform = paymentPlatformService.selectOneByTradeIdAndPaymentWayAndStatus(tradeId, paymentWay, true)
             .orElseThrow(() -> ServiceException.wrap("未找到匹配的支付平台"));
         final Long paymentPlatformId = paymentPlatform.getId();
 

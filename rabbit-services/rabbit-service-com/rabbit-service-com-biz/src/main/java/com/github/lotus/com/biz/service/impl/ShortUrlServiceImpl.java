@@ -11,8 +11,6 @@ import com.github.lotus.com.biz.pojo.vo.ShortUrlComplexVo;
 import com.github.lotus.com.biz.service.ShortUrlService;
 import com.github.lotus.com.biz.utils.ShortUrlUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.Enabled;
-import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.framework.AopContext;
@@ -53,7 +51,7 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
         entity.setOriginalUrl(originalUrl);
         entity.setCreatedAt(now);
         entity.setCreator(userId);
-        entity.setEnabled(Enabled.On.getCodeStr());
+        entity.setEnabled(true);
         validInsert(entity);
 
         final Long id = entity.getId();
@@ -83,7 +81,7 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
     public void insertOne(ShortUrlInsertRo ro) {
         Long userId = ro.getUserId();
         String originalUrl = ro.getOriginalUrl();
-        String enabled = ro.getEnabled();
+        Boolean enabled = ro.getEnabled();
 
         final String code = getOrCreateShortUrlCodeUseRetry(originalUrl, userId, 3);
         final Optional<ShortUrl> shortUrlOpt = getByCode(code);
@@ -91,7 +89,7 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
             return;
         }
         final ShortUrl shortUrl = shortUrlOpt.get();
-        if (LangUtils.equals(shortUrl.getEnabled(), enabled)) {
+        if (enabled.equals(shortUrl.getEnabled())) {
             return;
         }
 

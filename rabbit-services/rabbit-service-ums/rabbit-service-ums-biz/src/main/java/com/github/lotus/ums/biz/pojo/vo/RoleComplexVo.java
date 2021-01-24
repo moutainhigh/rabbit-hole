@@ -28,8 +28,8 @@ public class RoleComplexVo {
     private String title;
     @ApiModelProperty("角色描述")
     private String remark;
-    @ApiModelProperty("启用状态")
-    private String enabled;
+    @ApiModelProperty("开启状态")
+    private Boolean enabled;
     @ApiModelProperty("是否保留角色")
     private Boolean isPersist;
     @ApiModelProperty("角色使用的用户数量")

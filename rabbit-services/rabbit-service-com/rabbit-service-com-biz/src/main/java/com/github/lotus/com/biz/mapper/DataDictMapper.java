@@ -6,6 +6,7 @@ import com.github.lotus.com.biz.entity.DataDictItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,6 +24,6 @@ public interface DataDictMapper extends BaseMapper<DataDict> {
 
     List<DataDictItem> getDataDictItemByDictIdAndCode(@Param("typeCode") String typeCode, @Param("itemCode") String itemCode);
 
-    List<DataDictItem> listDataDictItemByCodeAndEnabled(@Param("typeCode") String typeCode, @Param("enabled") String enabled);
+    List<DataDictItem> listDataDictItemByCodeAndEnabled(@Param("typeCode") String typeCode, @Param("enabled") Serializable enabled);
 
 }

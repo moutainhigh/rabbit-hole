@@ -10,6 +10,6 @@
         AND bpwr.enabled = 1
         AND bpwr.scene_code = #{sceneCode}
         AND bpwr.app_id = #{appId}
-      ORDER BY bpwri.sort DESC
+      ORDER BY bpwri.priority DESC
     </select>
 </mapper>
