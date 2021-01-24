@@ -7,6 +7,7 @@ import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.ApiMapper;
 import com.github.lotus.ums.biz.mapstruct.ApiMapping;
+import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
@@ -103,6 +104,13 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
     public IPage<ApiComplexVo> paging(ApiPagingRo ro) {
         return baseMapper.paging(ro, ro.ofPage())
             .convert(this::convert);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<ApiComplexVo> complete(ApiCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage())
+            .convert(this::convert).getRecords();
     }
 
     private ApiComplexVo convert(Api entity) {

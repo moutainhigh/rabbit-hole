@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.ums.biz.entity.Api;
+import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
+import com.github.lotus.ums.biz.service.impl.ApiServiceImpl;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +28,6 @@ public interface ApiMapper extends BaseMapper<Api> {
     List<Api> listByUserGroupIds(@Param("userGroupIds") List<Long> userGroupIds);
 
     IPage<Api> paging(@Param("ro") ApiPagingRo ro, @Param("page") Page page);
+
+    IPage<Api> complete(@Param("ro") ApiCompleteRo ro, @Param("page") Page ofPage);
 }
