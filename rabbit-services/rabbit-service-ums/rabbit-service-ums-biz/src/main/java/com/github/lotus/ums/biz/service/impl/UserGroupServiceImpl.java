@@ -43,9 +43,8 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserGroupComplexVo getUserGroup(Long userGroupId) {
-        UserGroup entity = getById(userGroupId);
-        return this.convert(entity);
+    public UserGroupComplexVo getComplex(Long userGroupId) {
+        return this.convert(getById(userGroupId));
     }
 
     @Override

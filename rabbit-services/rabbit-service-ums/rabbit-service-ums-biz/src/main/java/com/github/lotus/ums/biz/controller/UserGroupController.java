@@ -48,7 +48,7 @@ public class UserGroupController {
     @ApiOperation("查询详情 - 用户组")
     @GetMapping("/{id}")
     public Result<UserGroupComplexVo> get(@ApiParam(value = "用户组", required = true) @PathVariable Long id) {
-        return Result.success(service.getUserGroup(id));
+        return Result.success(service.getComplex(id));
     }
 
 
