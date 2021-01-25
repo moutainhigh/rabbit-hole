@@ -69,9 +69,9 @@ public class ChaosController {
     @ApiOperation("获取当前用户的位置")
     @GetMapping("/address4ip")
     @ResponseBody
-    public IpAddressVo getCurrentAddress(HttpServletRequest request) {
+    public Result<IpAddressVo> getCurrentAddress(HttpServletRequest request) {
         String clientIp = RequestUtils.getClientIp(request);
-        return service.getAddress4ip(clientIp);
+        return Result.success(service.getAddress4ip(clientIp));
     }
 
     @ApiOperation("获取数据加密后的值")
