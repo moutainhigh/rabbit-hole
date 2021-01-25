@@ -97,6 +97,8 @@ debug: true
 boot:
   sso:
     client:
+      authenticated-urls:
+        - /login
       ignore-urls: >
         ,/swagger-resources/configuration/ui
         ,/favicon.ico
