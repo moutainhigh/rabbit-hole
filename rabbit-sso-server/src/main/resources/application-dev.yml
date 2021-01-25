@@ -4,11 +4,7 @@ sso:
       - client-id: client_example
         client-secret: hocgin
         redirect-uris:
-          # HTTP
           - https://api-dev.hocgin.top/login/oauth2/code/custom
           - https://sba-dev.hocgin.top/login/oauth2/code/custom
           - https://logistics-dev.hocgin.top/login/oauth2/code/custom
-          # HTTPS
-          - http://api-dev.hocgin.top/login/oauth2/code/custom
-          - http://sba-dev.hocgin.top/login/oauth2/code/custom
-          - http://logistics-dev.hocgin.top/login/oauth2/code/custom
+          - https://manage-dev.hocgin.top/login/oauth2/code/custom
