@@ -2,6 +2,7 @@ package com.github.lotus.wl.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import com.github.lotus.wl.biz.pojo.ro.warehouse.WarehouseCompleteRo;
 import com.github.lotus.wl.biz.pojo.ro.warehouse.WarehouseCreateRo;
 import com.github.lotus.wl.biz.pojo.ro.warehouse.WarehouseDeleteRo;
@@ -9,8 +10,6 @@ import com.github.lotus.wl.biz.pojo.ro.warehouse.WarehousePagingRo;
 import com.github.lotus.wl.biz.pojo.ro.warehouse.WarehouseUpdateRo;
 import com.github.lotus.wl.biz.pojo.vo.WarehouseComplexVo;
 import com.github.lotus.wl.biz.service.WarehouseService;
-import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +44,7 @@ public class WarehouseController {
 
     @PostMapping
     @ApiOperation("创建 - 物流仓库")
-    public Result create(@Validated @RequestBody WarehouseCreateRo ro) {
+    public Result<Void> create(@Validated @RequestBody WarehouseCreateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
@@ -54,8 +53,7 @@ public class WarehouseController {
 
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流仓库")
-    public Result update(@PathVariable("id") Long id,
-                         @Validated @RequestBody WarehouseUpdateRo ro) {
+    public Result<Void> update(@PathVariable("id") Long id, @Validated @RequestBody WarehouseUpdateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
         service.update(id, ro);
@@ -64,28 +62,28 @@ public class WarehouseController {
 
     @DeleteMapping
     @ApiOperation("删除 - 物流仓库")
-    public Result deletes(@Validated @RequestBody WarehouseDeleteRo ro) {
+    public Result<Void> deletes(@Validated @RequestBody WarehouseDeleteRo ro) {
         service.delete(ro);
         return Result.success();
     }
 
     @GetMapping("/{id}")
     @ApiOperation("详情 - 物流仓库")
-    public WarehouseComplexVo query(@PathVariable("id") Long id) {
-        return service.getWarehouse(id);
+    public Result<WarehouseComplexVo> query(@PathVariable("id") Long id) {
+        return Result.success(service.getWarehouse(id));
     }
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流仓库")
-    public IPage<WarehouseComplexVo> paging(@Validated @RequestBody WarehousePagingRo ro) {
-        return service.paging(ro);
+    public Result<IPage<WarehouseComplexVo>> paging(@Validated @RequestBody WarehousePagingRo ro) {
+        return Result.success(service.paging(ro));
     }
 
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流仓库")
-    public List<WarehouseComplexVo> complete(@Validated @RequestBody WarehouseCompleteRo ro) {
-        return service.complete(ro);
+    public Result<List<WarehouseComplexVo>> complete(@Validated @RequestBody WarehouseCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 
 }

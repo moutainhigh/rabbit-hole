@@ -2,6 +2,7 @@ package com.github.lotus.wl.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import com.github.lotus.wl.biz.pojo.ro.logisticsline.LogisticsLineBatchCreateRo;
 import com.github.lotus.wl.biz.pojo.ro.logisticsline.LogisticsLineCompleteRo;
 import com.github.lotus.wl.biz.pojo.ro.logisticsline.LogisticsLineCreateRo;
@@ -11,8 +12,6 @@ import com.github.lotus.wl.biz.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import com.github.lotus.wl.biz.pojo.vo.LogisticsLineComplexVo;
 import com.github.lotus.wl.biz.pojo.vo.LogisticsLineSearchVo;
 import com.github.lotus.wl.biz.service.LogisticsLineService;
-import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +46,7 @@ public class LogisticsLineController {
 
     @PostMapping
     @ApiOperation("创建 - 物流线路")
-    public Result create(@Validated @RequestBody LogisticsLineCreateRo ro) {
+    public Result<Void> create(@Validated @RequestBody LogisticsLineCreateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
@@ -56,7 +55,7 @@ public class LogisticsLineController {
 
     @PostMapping("/batch")
     @ApiOperation("创建 - 物流线路")
-    public Result batchCreate(@Validated @RequestBody LogisticsLineBatchCreateRo ro) {
+    public Result<Void> batchCreate(@Validated @RequestBody LogisticsLineBatchCreateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.batchCreate(ro);
@@ -65,8 +64,8 @@ public class LogisticsLineController {
 
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流线路")
-    public Result update(@PathVariable("id") Long id,
-                         @Validated @RequestBody LogisticsLineUpdateRo ro) {
+    public Result<Void> update(@PathVariable("id") Long id,
+                               @Validated @RequestBody LogisticsLineUpdateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
         service.update(id, ro);
@@ -75,33 +74,33 @@ public class LogisticsLineController {
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除 - 物流线路")
-    public Result delete(@PathVariable("id") Long id) {
+    public Result<Void> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return Result.success();
     }
 
     @GetMapping("/{id}")
     @ApiOperation("详情 - 物流线路")
-    public LogisticsLineComplexVo query(@PathVariable("id") Long id) {
-        return service.getLogisticsLine(id);
+    public Result<LogisticsLineComplexVo> query(@PathVariable("id") Long id) {
+        return Result.success(service.getLogisticsLine(id));
     }
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流线路")
-    public IPage<LogisticsLineComplexVo> paging(@Validated @RequestBody LogisticsLinePagingRo ro) {
-        return service.paging(ro);
+    public Result<IPage<LogisticsLineComplexVo>> paging(@Validated @RequestBody LogisticsLinePagingRo ro) {
+        return Result.success(service.paging(ro));
     }
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流线路")
-    public List<LogisticsLineComplexVo> complete(@Validated @RequestBody LogisticsLineCompleteRo ro) {
-        return service.complete(ro);
+    public Result<List<LogisticsLineComplexVo>> complete(@Validated @RequestBody LogisticsLineCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 
     @PostMapping("/_search")
     @ApiOperation("线路搜索 - 物流线路")
-    public IPage<LogisticsLineSearchVo> search(@Validated @RequestBody LogisticsLineSearchRo ro) {
-        return service.search(ro);
+    public Result<IPage<LogisticsLineSearchVo>> search(@Validated @RequestBody LogisticsLineSearchRo ro) {
+        return Result.success(service.search(ro));
     }
 }
 
