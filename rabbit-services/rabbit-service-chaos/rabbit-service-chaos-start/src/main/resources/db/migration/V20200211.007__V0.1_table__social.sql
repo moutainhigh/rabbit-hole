@@ -15,7 +15,7 @@ CREATE TABLE `ums_social`
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
 
-    UNIQUE KEY (user_id, social_type),
+    UNIQUE KEY (user_id, social_type, social_id),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB

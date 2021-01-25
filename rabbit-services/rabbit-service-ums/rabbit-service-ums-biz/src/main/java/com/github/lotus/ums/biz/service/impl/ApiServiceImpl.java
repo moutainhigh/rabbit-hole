@@ -113,6 +113,12 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
             .convert(this::convert).getRecords();
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ApiComplexVo getComplex(Long id) {
+        return this.convert(getById(id));
+    }
+
     private ApiComplexVo convert(Api entity) {
         return mapping.asComplex(entity);
     }

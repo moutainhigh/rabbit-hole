@@ -24,7 +24,7 @@ public interface UserGroupService extends AbstractService<UserGroup> {
 
     List<UserGroup> listByUserId(Long userId);
 
-    UserGroupComplexVo getUserGroup(Long userGroupId);
+    UserGroupComplexVo getComplex(Long userGroupId);
 
     void insertOne(SaveUserGroupRo ro);
 

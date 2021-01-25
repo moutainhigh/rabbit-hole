@@ -44,7 +44,7 @@ public class CompanyController {
 
     @PostMapping
     @ApiOperation("创建 - 物流公司")
-    public Result create(@Validated @RequestBody CompanyCreateRo ro) {
+    public Result<Void> create(@Validated @RequestBody CompanyCreateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setCreator(userId);
         service.create(ro);
@@ -53,7 +53,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @ApiOperation("更新 - 物流公司")
-    public Result update(@PathVariable("id") Long id,
+    public Result<Void> update(@PathVariable("id") Long id,
                        @Validated @RequestBody CompanyUpdateRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         ro.setUpdater(userId);
@@ -63,27 +63,27 @@ public class CompanyController {
 
     @DeleteMapping
     @ApiOperation("删除 - 物流公司")
-    public Result deletes(@Validated @RequestBody CompanyDeleteRo ro) {
+    public Result<Void> deletes(@Validated @RequestBody CompanyDeleteRo ro) {
         service.delete(ro);
         return Result.success();
     }
 
     @GetMapping("/{id}")
     @ApiOperation("详情 - 物流公司")
-    public CompanyComplexVo query(@PathVariable("id") Long id) {
-        return service.getCompany(id);
+    public Result<CompanyComplexVo> query(@PathVariable("id") Long id) {
+        return Result.success(service.getCompany(id));
     }
 
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 物流公司")
-    public IPage<CompanyComplexVo> paging(@Validated @RequestBody CompanyPagingRo ro) {
-        return service.paging(ro);
+    public Result<IPage<CompanyComplexVo>> paging(@Validated @RequestBody CompanyPagingRo ro) {
+        return Result.success(service.paging(ro));
     }
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 物流公司")
-    public List<CompanyComplexVo> complete(@Validated @RequestBody CompanyCompleteRo ro) {
-        return service.complete(ro);
+    public Result<List<CompanyComplexVo>> complete(@Validated @RequestBody CompanyCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 
 }

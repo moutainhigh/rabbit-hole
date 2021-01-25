@@ -31,4 +31,6 @@ public interface ApiService extends AbstractService<Api> {
     IPage<ApiComplexVo> paging(ApiPagingRo ro);
 
     List<ApiComplexVo> complete(ApiCompleteRo ro);
+
+    ApiComplexVo getComplex(Long id);
 }
