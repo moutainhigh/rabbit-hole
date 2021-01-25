@@ -50,9 +50,8 @@ public class SocialServiceImpl extends AbstractServiceImpl<SocialMapper, Social>
     }
 
     @Override
-    public List<Social> listSocialByAccountId(Long accountId) {
-        return lambdaQuery().eq(Social::getUserId, accountId)
-            .list();
+    public List<Social> listSocialByUserId(Long userId) {
+        return lambdaQuery().eq(Social::getUserId, userId).list();
     }
 
     private Optional<User> getAccountBySocialTypeAndSocialId(String socialType, String socialId) {

@@ -22,5 +22,5 @@ public interface SocialService extends AbstractService<Social> {
 
     void insertOne(InsertSocialRo ro);
 
-    List<Social> listSocialByAccountId(Long entityId);
+    List<Social> listSocialByUserId(Long entityId);
 }

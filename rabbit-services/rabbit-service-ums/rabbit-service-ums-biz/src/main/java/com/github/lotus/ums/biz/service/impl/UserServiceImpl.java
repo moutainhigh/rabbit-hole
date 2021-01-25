@@ -107,7 +107,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
                 socialService.insertOne(new InsertSocialRo()
                     .setSocialType(item.getSocialType())
                     .setSocialId(item.getSocialId())
-                    .setAccountId(entityId));
+                    .setUserId(entityId));
             }
         }
 
@@ -277,7 +277,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         AccountComplexVo result = mapping.asComplex(entity);
 
         // 已绑定的社交方式
-        List<Social> socials = socialService.listSocialByAccountId(entityId);
+        List<Social> socials = socialService.listSocialByUserId(entityId);
         result.setSocial(socials.parallelStream().map(social ->
             new AccountComplexVo.SocialItem().setSocialType(social.getSocialType())
         ).collect(Collectors.toList()));

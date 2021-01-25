@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class InsertSocialRo {
     @ApiModelProperty("账号")
-    private Long accountId;
+    private Long userId;
     @ApiModelProperty("社交类型")
     private String socialType;
     @ApiModelProperty("社交账号")

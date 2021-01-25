@@ -44,7 +44,7 @@ public class SocialServiceImpl implements SocialService {
                 socialApi.insertOne(new InsertSocialRo()
                     .setSocialType(socialType)
                     .setSocialId(socialId)
-                    .setAccountId(user.getId()));
+                    .setUserId(user.getId()));
             }
             // 未有用户登陆
             else {
