@@ -11,3 +11,5 @@ boot:
     client:
       ignore-urls: >
         /**
+      authenticated-urls:
+        - /login
