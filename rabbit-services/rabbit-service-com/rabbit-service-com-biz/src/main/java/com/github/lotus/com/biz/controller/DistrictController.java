@@ -7,6 +7,7 @@ import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
 import com.github.lotus.com.biz.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.com.biz.service.DistrictService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -44,45 +45,45 @@ public class DistrictController {
 
     @ApiOperation("获取省/市/区(树型) - 城市区域")
     @GetMapping("/tree")
-    public List<DistrictTreeVo> tree() {
-        return service.tree();
+    public Result<List<DistrictTreeVo>> tree() {
+        return Result.success(service.tree());
     }
 
     @ApiOperation("获取指定下一级区域列表 - 城市区域")
     @GetMapping("/next")
-    public List<DistrictComplexVo> getChildrenDistrictByAdcode(@RequestParam(value = "adcode", required = false, defaultValue = "100000") String adcode) {
-        return service.getChildrenDistrictByAdcode(adcode);
+    public Result<List<DistrictComplexVo>> getChildrenDistrictByAdcode(@RequestParam(value = "adcode", required = false, defaultValue = "100000") String adcode) {
+        return Result.success(service.getChildrenDistrictByAdcode(adcode));
     }
 
     @ApiOperation("获取省份列表 - 城市区域")
     @GetMapping("/province")
-    public List<DistrictComplexVo> getProvince() {
-        return service.listProvince();
+    public Result<List<DistrictComplexVo>> getProvince() {
+        return Result.success(service.listProvince());
     }
 
     @ApiOperation("获取城市列表 - 城市区域")
     @GetMapping("/city")
-    public List<DistrictComplexVo> getCity() {
-        return service.listCity();
+    public Result<List<DistrictComplexVo>> getCity() {
+        return Result.success(service.listCity());
     }
 
     @ApiOperation("获取国家列表 - 城市区域")
     @GetMapping("/county")
-    public List<DistrictComplexVo> getCounty() {
-        return service.listCounty();
+    public Result<List<DistrictComplexVo>> getCounty() {
+        return Result.success(service.listCounty());
     }
 
     @ApiOperation("获取地区列表 - 城市区域")
     @GetMapping("/district")
-    public List<DistrictComplexVo> getDistrict() {
-        return service.listDistrict();
+    public Result<List<DistrictComplexVo>> getDistrict() {
+        return Result.success(service.listDistrict());
     }
 
     @PostMapping("/_complete")
     @ApiOperation("检索 - 城市区域")
     @ApiOperationSupport(author = "hocgin")
-    public List<DistrictCompleteVo> complete(@Validated @RequestBody DistrictCompleteRo ro) {
-        return service.complete(ro);
+    public Result<List<DistrictCompleteVo>> complete(@Validated @RequestBody DistrictCompleteRo ro) {
+        return Result.success(service.complete(ro));
     }
 }
 
