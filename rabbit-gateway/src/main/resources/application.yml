@@ -107,7 +107,7 @@ boot:
         ,/ignore
         ,/*/v2/api-docs
         ,/com/district/tree
-        ,/com/address4ip
+        ,/chaos/address4ip
 
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift
