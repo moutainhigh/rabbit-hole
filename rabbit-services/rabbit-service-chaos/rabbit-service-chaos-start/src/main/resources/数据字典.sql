@@ -10,3 +10,18 @@ INSERT INTO com_data_dict(`id`, `title`, `code`, `remark`, `created_at`)
 VALUES (2, '单位', 'wl_unit', '物流|单位', now());
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
 VALUES (2, '元/方', 'yuan_cube', '单位#元/方', now());
+
+# ums
+INSERT INTO com_data_dict(`id`, `title`, `code`, `remark`, `created_at`)
+VALUES (3, '请求方式', 'request_method', '请求方式', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (3, 'GET', 'get', 'GET', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (3, 'POST', 'post', 'POST', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (3, 'DELETE', 'delete', 'DELETE', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (3, 'PUT', 'put', 'PUT', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (3, 'ALL', '*', 'all', now());
+

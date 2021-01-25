@@ -37,7 +37,7 @@ public class DataDictController {
     }
 
     @ApiOperation("查询 - 数据字典项(所有)")
-    @GetMapping("/{code}:all")
+    @GetMapping("/{code}/all")
     public List<KeyValue> selectListDictItemByCode(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
         return service.listKeyValueByCode(code);
     }
