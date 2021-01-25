@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -71,6 +73,12 @@ public class ApiController {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.updateOne(id, ro);
         return Result.success();
+    }
+
+    @ApiOperation("查询接口 - 接口")
+    @GetMapping("/{id}")
+    public Result<ApiComplexVo> getComplex(@ApiParam(value = "接口", required = true) @PathVariable Long id) {
+        return Result.success(service.getComplex(id));
     }
 
     @ApiOperation("删除接口 - 接口")
