@@ -3,6 +3,7 @@ package com.github.lotus.com.biz.controller;
 
 import com.github.lotus.com.biz.service.DataDictService;
 import in.hocg.boot.web.datastruct.KeyValue;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,14 +33,14 @@ public class DataDictController {
 
     @ApiOperation("查询 - 数据字典项")
     @GetMapping("/{code}")
-    public List<KeyValue> listKeyValueByCodeAndEnabledIsOn(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
-        return service.listKeyValueByCodeAndEnabledIsOn(code);
+    public Result<List<KeyValue>> listKeyValueByCodeAndEnabledIsOn(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
+        return Result.success(service.listKeyValueByCodeAndEnabledIsOn(code));
     }
 
     @ApiOperation("查询 - 数据字典项(所有)")
     @GetMapping("/{code}/all")
-    public List<KeyValue> selectListDictItemByCode(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
-        return service.listKeyValueByCode(code);
+    public Result<List<KeyValue>> selectListDictItemByCode(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
+        return Result.success(service.listKeyValueByCode(code));
     }
 
 }
