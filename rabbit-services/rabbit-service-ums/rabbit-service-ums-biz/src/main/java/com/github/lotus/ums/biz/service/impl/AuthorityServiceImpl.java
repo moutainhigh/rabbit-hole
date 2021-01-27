@@ -22,6 +22,7 @@ import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -175,11 +176,17 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities;
         if (RabbitUtils.isSuperAdmin(userId)) {
-            authorities = baseMapper.listByProjectIdAndUserId(projectId, null);
+            authorities = this.listByProjectId(projectId, true);
         } else {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);
         }
         return authorities;
+    }
+
+    private List<Authority> listByProjectId(Long projectId, Boolean enabled) {
+        return lambdaQuery().eq(Authority::getProjectId, projectId)
+            .eq(Objects.nonNull(enabled), TreeEntity::getEnabled, enabled)
+            .orderByAsc(Authority::getPriority).list();
     }
 
     private AuthorityTreeNodeVo convertTreeNode(Authority entity) {

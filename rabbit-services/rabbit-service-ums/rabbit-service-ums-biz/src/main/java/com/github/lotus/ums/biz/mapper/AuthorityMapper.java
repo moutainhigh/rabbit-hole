@@ -25,4 +25,5 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
     IPage<User> pagingUserByAuthorityId(@Param("authorityId") Long authorityId, @Param("ro") GetAuthorityUserPagingRo ro, @Param("ofPage") Page<Object> ofPage);
 
     List<Authority> listByProjectIdAndUserId(@Param("projectId") Long projectId, @Param("userId") Long userId);
+
 }

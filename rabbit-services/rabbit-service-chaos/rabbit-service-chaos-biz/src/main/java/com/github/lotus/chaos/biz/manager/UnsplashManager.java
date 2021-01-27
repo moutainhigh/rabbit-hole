@@ -31,7 +31,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UnsplashManager {
-    private static final String CLIENT_ID = "U0vJgDo2jk4THIohlf-bhDYpgBINd3WPu0dkPvhELEk";
+    private static final String CLIENT_ID = "ntccF6YUpBY_4-Z1Ko4VIZ2xFEJxUYWfgABXyQb4WwI";
 
     public List<WallpaperTopicVo> topics() {
         List<WallpaperTopicVo> result = Lists.newArrayList();
