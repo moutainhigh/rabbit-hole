@@ -15,11 +15,13 @@ import java.time.LocalDateTime;
 public class ProjectComplexVo {
     private Long id;
     @ApiModelProperty("编码")
-    private String projectSn;
+    private String encoding;
     @ApiModelProperty("图章地址")
     private String logoUrl;
     @ApiModelProperty("标题")
     private String title;
+    @ApiModelProperty("当前版本号")
+    private String version;
     @ApiModelProperty("备注")
     private String remark;
     @ApiModelProperty("创建时间")
