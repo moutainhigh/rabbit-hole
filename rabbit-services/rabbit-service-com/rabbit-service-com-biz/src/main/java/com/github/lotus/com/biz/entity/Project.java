@@ -42,6 +42,9 @@ public class Project extends AbstractEntity<Project> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+    @ApiModelProperty("当前版本号")
+    @TableField("version")
+    private String version;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
@@ -54,6 +57,5 @@ public class Project extends AbstractEntity<Project> {
     @ApiModelProperty("更新者")
     @TableField("last_updater")
     private Long lastUpdater;
-
 
 }

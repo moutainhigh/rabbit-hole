@@ -20,7 +20,7 @@ public interface ProjectService extends AbstractService<Project> {
 
     Optional<Project> getByProjectSn(String projectSn);
 
-    ProjectComplexVo getProjectByProjectSn(String projectSn);
+    ProjectComplexVo getByEncoding(String projectSn);
 
     List<ProjectComplexVo> complete(ProjectCompleteRo ro);
 }

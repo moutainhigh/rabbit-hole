@@ -20,6 +20,6 @@ public class ProjectServiceApiImpl implements ProjectServiceApi {
 
     @Override
     public ProjectComplexVo getComplexByProjectSn(String projectSn) {
-        return service.getProjectByProjectSn(projectSn);
+        return service.getByEncoding(projectSn);
     }
 }

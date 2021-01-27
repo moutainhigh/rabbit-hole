@@ -33,7 +33,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl<ProjectMapper, Proje
     }
 
     @Override
-    public ProjectComplexVo getProjectByProjectSn(String projectSn) {
+    public ProjectComplexVo getByEncoding(String projectSn) {
         return getByProjectSn(projectSn).map(this::convert).orElse(null);
     }
 

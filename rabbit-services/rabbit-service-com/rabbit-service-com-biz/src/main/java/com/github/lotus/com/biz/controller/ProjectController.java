@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,13 @@ public class ProjectController {
     @ApiOperationSupport(author = "hocgin")
     public Result<List<ProjectComplexVo>> complete(@Validated @RequestBody ProjectCompleteRo ro) {
         return Result.success(service.complete(ro));
+    }
+
+    @PostMapping("/{encoding:\\w+}")
+    @ApiOperation("详情 - 项目")
+    @ApiOperationSupport(author = "hocgin")
+    public Result<ProjectComplexVo> getByEncoding(@PathVariable("encoding") String encoding) {
+        return Result.success(service.getByEncoding(encoding));
     }
 }
 
