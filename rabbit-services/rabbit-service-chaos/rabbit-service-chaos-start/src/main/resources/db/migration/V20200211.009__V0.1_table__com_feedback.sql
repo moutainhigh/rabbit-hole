@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `com_project`;
 create table com_project
 (
     id                BIGINT auto_increment,
-    encoding        VARCHAR(32) UNIQUE NOT NULL
+    encoding          VARCHAR(32) UNIQUE NOT NULL
         COMMENT '编码',
     `logo_url`        VARCHAR(64)
         COMMENT '图章地址',
@@ -10,6 +10,8 @@ create table com_project
         COMMENT '标题',
     `remark`          VARCHAR(255)
         COMMENT '备注',
+    `version`         VARCHAR(16)        NOT NULL DEFAULT 'v1.0.0'
+        COMMENT '当前版本',
 --
     created_at        TIMESTAMP(6)       NOT NULL
         COMMENT '创建时间',
