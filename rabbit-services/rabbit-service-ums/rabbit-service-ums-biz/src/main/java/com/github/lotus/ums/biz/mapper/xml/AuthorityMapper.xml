@@ -12,18 +12,25 @@
 
   <select id="listByProjectIdAndUserId" resultType="com.github.lotus.ums.biz.entity.Authority">
     SELECT DISTINCT aa.*
-    FROM ams_authority aa
-           LEFT JOIN ams_user_group_authority_ref augar ON augar.authority_id = aa.id
-           LEFT JOIN ams_role_authority_ref arar ON arar.authority_id = aa.id
-           LEFT JOIN ams_user_group_user_ref augur ON augur.user_group_id = augar.user_group_id
-           LEFT JOIN ams_role_user_ref arur ON arur.role_id = arar.role_id
+    FROM (SELECT DISTINCT aa.*
+          FROM ams_authority aa
+                 LEFT JOIN ams_role_authority_ref arar ON arar.authority_id = aa.id
+                 LEFT JOIN ams_role_user_ref arur ON arur.role_id = arar.role_id
+                 LEFT JOIN ams_role ar ON ar.id = arar.role_id
+          WHERE ar.enabled = 1
+            AND arur.user_id = #{userId}
+          UNION
+          SELECT DISTINCT aa.*
+          FROM ams_authority aa
+                 LEFT JOIN ams_user_group_authority_ref augar ON augar.authority_id = aa.id
+                 LEFT JOIN ams_user_group_user_ref augur ON augur.user_group_id = augar.user_group_id
+                 LEFT JOIN ams_user_group aug ON aug.id = augur.user_group_id
+          WHERE aug.enabled = 1
+            AND augur.user_id = #{userId}) aa
     <where>
+      aa.enabled = 1
       <if test="projectId != null">
         AND aa.project_id = #{projectId}
-      </if>
-      <if test="userId != null ">
-        AND augur.user_id = #{userId}
-        AND arur.user_id = #{userId}
       </if>
     </where>
     ORDER BY aa.priority
