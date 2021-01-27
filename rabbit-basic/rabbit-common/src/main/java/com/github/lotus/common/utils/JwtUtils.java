@@ -15,7 +15,10 @@ import java.util.HashMap;
  */
 @UtilityClass
 public class JwtUtils {
-    private static final long EXPIRE_MILLIS = 1000 * 60 * 60 * 10L;
+    /**
+     * 10年
+     */
+    private static final long EXPIRE_MILLIS = 10 * 365 * 24 * 60 * 60 * 1000L;
     private static final String KEY = "HOCGIN";
 
     /**
