@@ -3,6 +3,7 @@ server:
 logging:
   level:
     in.hocg: debug
+    com.github.lotus: debug
   config: classpath:log4j2-boot-local.xml
   file:
     path: /data/logs/app/${spring.application.name:unknown}
