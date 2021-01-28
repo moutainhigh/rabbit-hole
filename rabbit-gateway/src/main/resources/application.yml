@@ -1,7 +1,3 @@
-logging:
-  level:
-    in.hocg: debug
-    com.github.lotus: debug
 spring:
   profiles:
     active: local

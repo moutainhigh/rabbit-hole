@@ -26,7 +26,7 @@ public class AuthenticationTokenFilter implements BearerTokenAuthentication {
             username = JwtUtils.decode(token);
         } catch (Exception e) {
             log.warn("JWT解码token=[{}]失败: ", token, e);
-            return null;
+            return new UsernamePasswordAuthenticationToken("", null, Collections.emptyList());
         }
         return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
     }
