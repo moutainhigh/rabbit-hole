@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 
+import com.github.lotus.pay.api.pojo.ro.CreateTradeGoPayRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.ro.QueryPaymentWayRo;
@@ -119,4 +120,6 @@ public interface AllPaymentService {
      * @return
      */
     List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro);
+
+    GoPayVo createAndGoPay(CreateTradeGoPayRo ro);
 }

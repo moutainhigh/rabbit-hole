@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
+import com.github.lotus.pay.api.pojo.ro.CreateTradeGoPayRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.ro.QueryPaymentWayRo;
@@ -389,6 +390,17 @@ public class PaymentServiceImpl implements AllPaymentService {
             .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
         final String sceneCode = ro.getSceneCode();
         return paymentWayRuleService.queryPaymentWay(appId, sceneCode);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public GoPayVo createAndGoPay(CreateTradeGoPayRo ro) {
+        Integer paymentWay = ro.getPaymentWay();
+        String trade = this.createTrade(ro);
+        GoPayRo goPayRo = new GoPayRo();
+        goPayRo.setTradeSn(trade);
+        goPayRo.setPaymentWay(paymentWay);
+        return this.goPay(goPayRo);
     }
 
     @Override

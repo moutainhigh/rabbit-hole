@@ -1,14 +1,17 @@
 package com.github.lotus.pay.biz.controller;
 
+import com.github.lotus.pay.api.pojo.ro.CreateTradeGoPayRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.ro.QueryPaymentWayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
 import com.github.lotus.pay.api.pojo.vo.PaymentWayVo;
+import com.github.lotus.pay.biz.constant.PaymentConstants;
 import com.github.lotus.pay.biz.pojo.vo.WaitPaymentTradeVo;
 import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +34,10 @@ import java.util.List;
  *
  * @author hocgin
  */
+@ApiOperation("pay::支付网关")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping
+@RequestMapping(PaymentConstants.PAYMENT_PREFIX)
 public class PaymentController {
     private final AllPaymentService service;
 
@@ -65,7 +69,14 @@ public class PaymentController {
 
     @UseLogger("发起去支付")
     @ResponseBody
-    @PostMapping("/pay")
+    @PostMapping("/once-pay")
+    public Result<GoPayVo> createAndGoPay(@Validated @RequestBody CreateTradeGoPayRo ro) {
+        return Result.success(service.createAndGoPay(ro));
+    }
+
+    @UseLogger("发起去支付")
+    @ResponseBody
+    @PostMapping("/go-pay")
     public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro) {
         return Result.success(service.goPay(ro));
     }
