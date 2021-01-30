@@ -20,10 +20,11 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class PaymentAppServiceImpl extends AbstractServiceImpl<PaymentAppMapper, PaymentApp> implements PaymentAppService {
+public class PaymentAppServiceImpl extends AbstractServiceImpl<PaymentAppMapper, PaymentApp>
+    implements PaymentAppService {
 
     @Override
-    public Optional<PaymentApp> selectOneByAppSn(Long appSn) {
-        return lambdaQuery().eq(PaymentApp::getAppSn, appSn).oneOpt();
+    public Optional<PaymentApp> getByAppid(String appid) {
+        return lambdaQuery().eq(PaymentApp::getAppid, appid).oneOpt();
     }
 }

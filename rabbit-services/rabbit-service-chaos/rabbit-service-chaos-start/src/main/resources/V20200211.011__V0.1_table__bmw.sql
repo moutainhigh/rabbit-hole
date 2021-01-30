@@ -2,18 +2,18 @@ DROP TABLE IF EXISTS `bmw_payment_app`;
 CREATE TABLE `bmw_payment_app`
 (
     id         bigint auto_increment,
-    app_sn     bigint       not null
-        comment '接入方编号',
-    title      VARCHAR(255) NOT NULL
+    appid      varchar(32)         not null
+        comment '应用编号',
+    title      VARCHAR(255)        NOT NULL
         COMMENT '标题',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    enabled    TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    created_at datetime(6)  not null
+    created_at datetime(6)         not null
         comment '创建时间',
     created_ip varchar(32)
         comment '创建ip',
-    UNIQUE KEY (app_sn),
+    UNIQUE KEY (appid),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `bmw_payment_platform`;
 CREATE TABLE `bmw_payment_platform`
 (
     id             bigint auto_increment,
-    platform_appid varchar(255)     not null
+    platform_appid varchar(255)        not null
         comment '支付平台的唯一标识',
-    title          VARCHAR(255)     NOT NULL
+    title          VARCHAR(255)        NOT NULL
         COMMENT '标题',
-    platform_type  tinyint unsigned not null
+    platform_type  tinyint unsigned    not null
         comment '支付平台类型: 0=>AliPay; 1=>WxPay',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `enabled`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    created_at     datetime(6)      not null
+    created_at     datetime(6)         not null
         comment '创建时间',
     created_ip     varchar(32)
         comment '创建ip',
@@ -243,16 +243,16 @@ DROP TABLE IF EXISTS `bmw_payment_way_rule`;
 CREATE TABLE `bmw_payment_way_rule`
 (
     id         BIGINT AUTO_INCREMENT,
-    app_id     BIGINT      NOT NULL
+    app_id     BIGINT              NOT NULL
         COMMENT '接入方应用',
-    title      VARCHAR(64) NOT NULL
+    title      VARCHAR(64)         NOT NULL
         COMMENT '规则名称',
-    scene_code VARCHAR(32) NOT NULL
+    scene_code VARCHAR(32)         NOT NULL
         COMMENT '场景码',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `enabled`  TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    created_at DATETIME(6) NOT NULL,
-    updated_at DATETIME(6) NULL,
+    created_at DATETIME(6)         NOT NULL,
+    updated_at DATETIME(6)         NULL,
     UNIQUE KEY (scene_code),
     PRIMARY KEY (id)
 )
@@ -264,18 +264,18 @@ DROP TABLE IF EXISTS `bmw_payment_way_rule_item`;
 CREATE TABLE `bmw_payment_way_rule_item`
 (
     id               BIGINT AUTO_INCREMENT,
-    rule_id          BIGINT      NOT NULL
+    rule_id          BIGINT              NOT NULL
         COMMENT '支付渠道规则',
-    title            VARCHAR(64) NOT NULL
+    title            VARCHAR(64)         NOT NULL
         COMMENT '支付渠道名称',
-    payment_way_code VARCHAR(32) NOT NULL
+    payment_way_code VARCHAR(32)         NOT NULL
         COMMENT '支付渠道码',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `enabled`        TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    priority             INT                  DEFAULT 1000 NOT NULL
+    priority         INT                          DEFAULT 1000 NOT NULL
         COMMENT '排序, 从大到小降序',
-    created_at       datetime(6) not null,
-    updated_at       datetime(6) null,
+    created_at       datetime(6)         not null,
+    updated_at       datetime(6)         null,
     UNIQUE KEY (rule_id, payment_way_code),
     PRIMARY KEY (id)
 )

@@ -146,7 +146,7 @@ public class PaymentServiceImpl implements AllPaymentService {
         LocalDateTime now = LocalDateTime.now();
         final String clientIp = RequestUtils.getClientIp(SpringServletContext.getRequest().orElseThrow(RuntimeException::new));
 
-        final Long appid = paymentAppService.selectOneByAppSn(ro.getAppSn())
+        final Long appid = paymentAppService.getByAppid(ro.getAppid())
             .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
 
         final String tradeSn = snCode.getTransactionSNCode();
@@ -386,7 +386,7 @@ public class PaymentServiceImpl implements AllPaymentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro) {
-        final Long appId = paymentAppService.selectOneByAppSn(ro.getAppSn())
+        final Long appId = paymentAppService.getByAppid(ro.getAppid())
             .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
         final String sceneCode = ro.getSceneCode();
         return paymentWayRuleService.queryPaymentWay(appId, sceneCode);

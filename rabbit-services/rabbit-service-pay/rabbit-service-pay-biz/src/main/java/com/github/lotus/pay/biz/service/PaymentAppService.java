@@ -16,5 +16,5 @@ import java.util.Optional;
  */
 public interface PaymentAppService extends AbstractService<PaymentApp> {
 
-    Optional<PaymentApp> selectOneByAppSn(Long appSn);
+    Optional<PaymentApp> getByAppid(String appid);
 }

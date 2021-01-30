@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class QueryPaymentWayRo {
     @NotNull(message = "应用编号不能为空")
     @ApiModelProperty(value = "接入应用编号", required = true)
-    private Long appSn;
+    private String appid;
     @NotNull(message = "场景码不能为空")
     @ApiModelProperty(value = "场景码", required = true)
     private String sceneCode;

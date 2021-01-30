@@ -31,8 +31,8 @@ public class PaymentApp extends AbstractEntity<PaymentApp> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     @ApiModelProperty("接入方编号")
-    @TableField("app_sn")
-    private Long appSn;
+    @TableField("appid")
+    private String appid;
     @ApiModelProperty("标题")
     @TableField("title")
     private String title;
