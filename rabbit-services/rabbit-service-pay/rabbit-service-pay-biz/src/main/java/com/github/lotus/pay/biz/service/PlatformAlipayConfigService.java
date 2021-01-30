@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 import com.github.lotus.pay.biz.entity.PlatformAlipayConfig;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
@@ -13,4 +14,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface PlatformAlipayConfigService extends AbstractService<PlatformAlipayConfig> {
 
+    Long insert(AccessPlatformInsertRo.AliPayConfig aliPayConfig);
 }

@@ -12,6 +12,8 @@ import com.github.lotus.pay.biz.entity.NotifyAccessAppLog;
 import com.github.lotus.pay.biz.entity.RefundRecord;
 import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.mapper.AccessAppMapper;
+import com.github.lotus.pay.biz.mapstruct.AccessAppMapping;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
 import com.github.lotus.pay.biz.pojo.vo.NotifyAppAsyncVo;
 import com.github.lotus.pay.biz.service.AccessAppService;
 import com.github.lotus.pay.biz.service.AllPaymentService;
@@ -28,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -50,6 +53,7 @@ public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, A
     private final NotifyAccessAppLogService notifyAccessAppLogService;
     private final AllPaymentService allPaymentService;
     private final TradeService tradeService;
+    private final AccessAppMapping mapping;
     private final RefundRecordService refundRecordService;
 
     @Override
@@ -129,5 +133,12 @@ public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, A
             final NotifyAccessApp update = new NotifyAccessApp().setId(notifyAccessAppId).setFinishAt(finishAt).setUpdatedAt(finishAt);
             notifyAccessAppService.updateById(update);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertOne(AccessAppInsertRo ro) {
+        AccessApp entity = mapping.asAccessApp(ro);
+        validInsert(entity);
     }
 }

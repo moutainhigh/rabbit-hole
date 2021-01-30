@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 import com.github.lotus.pay.biz.entity.PlatformWxpayConfig;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
@@ -12,5 +13,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  * @since 2021-01-30
  */
 public interface PlatformWxpayConfigService extends AbstractService<PlatformWxpayConfig> {
+
+    Long insert(AccessPlatformInsertRo.WxPayConfig config);
 
 }
