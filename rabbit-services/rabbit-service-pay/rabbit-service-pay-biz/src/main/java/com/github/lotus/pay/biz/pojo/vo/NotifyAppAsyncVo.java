@@ -21,7 +21,7 @@ public class NotifyAppAsyncVo<T> extends QueryAsyncVo<T> {
     @ApiModelProperty("通知ID")
     private Long notifyId;
     @ApiModelProperty("通知类型")
-    private Integer notifyType;
+    private String notifyType;
     @ApiModelProperty("通知时间")
     private LocalDateTime notifyAt;
 }

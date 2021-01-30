@@ -23,22 +23,4 @@ public enum TradeStatus implements DataDictEnum {
     private final Integer code;
     private final String name;
 
-    public static final String KEY = "tradeStatus";
-
-    public PaymentNotifyStatus asPaymentNotifyStatus() {
-        switch (this) {
-            case Init:
-                return PaymentNotifyStatus.Init;
-            case Wait:
-                return PaymentNotifyStatus.Pending;
-            case Success:
-                return PaymentNotifyStatus.Success;
-            case Closed:
-                return PaymentNotifyStatus.Closed;
-            case Fail:
-                return PaymentNotifyStatus.Fail;
-            default:
-                throw new IllegalArgumentException("转换失败");
-        }
-    }
 }

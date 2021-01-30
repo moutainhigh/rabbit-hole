@@ -1,6 +1,5 @@
 package com.github.lotus.pay.biz.service;
 
-
 import com.github.lotus.pay.biz.entity.RefundRecord;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -12,11 +11,11 @@ import java.util.Optional;
  * </p>
  *
  * @author hocgin
- * @since 2020-06-06
+ * @since 2021-01-30
  */
 public interface RefundRecordService extends AbstractService<RefundRecord> {
 
-    Optional<RefundRecord> selectOneByRefundSn(String refundSn);
+    Optional<RefundRecord> getByRefundSn(String refundSn);
 
-    boolean updateOneByIdAndTradeStatus(RefundRecord updated, Long id, Integer refundStatus);
+    boolean updateByIdAndRefundStatus(RefundRecord updated, Long refundRecordId, String... refundStatus);
 }

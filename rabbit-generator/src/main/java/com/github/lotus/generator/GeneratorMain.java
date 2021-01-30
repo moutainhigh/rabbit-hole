@@ -16,16 +16,19 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.UMS, false,
-            "ams_role",
-            "ams_role_authority_ref",
-            "ams_role_user_ref",
-            "ams_api",
-            "ams_authority_api_ref",
-            "ams_user_group",
-            "ams_user_group_user_ref",
-            "ams_user_group_authority_ref",
-            "ams_authority");
+            Module.PAY, false,
+            "bmw_platform_alipay_config",
+            "bmw_platform_wxpay_config",
+            "bmw_notify_access_app_log",
+            "bmw_request_platform_log",
+            "bmw_access_app",
+            "bmw_access_platform",
+            "bmw_notify_access_app",
+            "bmw_trade",
+            "bmw_pay_record",
+            "bmw_refund_record",
+            "bmw_payment_platform",
+            "bmw_payment_mode");
     }
 
 }

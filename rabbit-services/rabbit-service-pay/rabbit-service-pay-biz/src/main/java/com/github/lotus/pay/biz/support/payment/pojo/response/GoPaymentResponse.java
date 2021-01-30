@@ -15,8 +15,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class GoPaymentResponse {
-    private Integer platform;
-    private Integer paymentWay;
+    private String platformType;
+    private String paymentMode;
     private String url;
     private String method;
 

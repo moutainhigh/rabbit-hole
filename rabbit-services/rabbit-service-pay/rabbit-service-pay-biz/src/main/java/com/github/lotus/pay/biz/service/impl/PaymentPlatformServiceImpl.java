@@ -1,17 +1,41 @@
 package com.github.lotus.pay.biz.service.impl;
 
+import com.github.lotus.common.datadict.bmw.RefundStatus;
+import com.github.lotus.pay.api.pojo.ro.GoPayRo;
+import com.github.lotus.pay.api.pojo.vo.GoPayVo;
+import com.github.lotus.pay.biz.entity.AccessPlatform;
+import com.github.lotus.pay.biz.entity.PayRecord;
 import com.github.lotus.pay.biz.entity.PaymentPlatform;
-import com.github.lotus.pay.biz.enumns.PaymentWayType;
+import com.github.lotus.pay.biz.entity.RefundRecord;
+import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.mapper.PaymentPlatformMapper;
+import com.github.lotus.pay.biz.mapstruct.PaymentPlatformMapping;
+import com.github.lotus.pay.biz.mapstruct.RefundRecordMapping;
+import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
+import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
+import com.github.lotus.pay.biz.service.AccessPlatformService;
+import com.github.lotus.pay.biz.service.PayRecordService;
 import com.github.lotus.pay.biz.service.PaymentPlatformService;
+import com.github.lotus.pay.biz.service.RefundRecordService;
+import com.github.lotus.pay.biz.service.TradeService;
+import com.github.lotus.pay.biz.support.SNCodeService;
+import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
+import com.github.lotus.pay.biz.support.payment.pojo.request.CloseTradeRequest;
+import com.github.lotus.pay.biz.support.payment.pojo.request.GoPaymentRequest;
+import com.github.lotus.pay.biz.support.payment.pojo.request.GoRefundRequest;
+import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;
+import com.github.lotus.pay.biz.support.payment.pojo.response.GoRefundResponse;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-
+import in.hocg.boot.utils.ValidUtils;
+import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -21,26 +45,88 @@ import java.util.Optional;
  * @author hocgin
  * @since 2020-06-06
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatformMapper, PaymentPlatform>
     implements PaymentPlatformService {
+    private final AccessPlatformService accessPlatformService;
+    private final TradeService tradeService;
+    private final PayRecordService payRecordService;
+    private final PaymentPlatformMapping mapping;
+    private final SNCodeService codeService;
+    private final RefundRecordService refundRecordService;
+    private final RefundRecordMapping refundRecordMapping;
 
     @Override
-    public Optional<PaymentPlatform> selectOneByTradeIdAndPaymentWayAndStatus(Long tradeId, PaymentWayType paymentWay, Boolean enabled) {
-        final Integer platformCode = paymentWay.getPlatform().getCode();
-        final List<PaymentPlatform> result = this.selectListByPlatformTypeAndEnabled(platformCode, enabled);
-        return result.isEmpty()
-            ? Optional.empty()
-            : Optional.ofNullable(result.get(0));
+    public boolean closeTrade(Long accessPlatformId, String tradeSn) {
+        ConfigStorageDto configStorage = accessPlatformService.getConfigStorage(accessPlatformId);
+        return CloseTradeRequest.builder().configStorage(configStorage).tradeSn(tradeSn).build().request();
     }
 
     @Override
-    public Optional<PaymentPlatform> selectOneByPlatformAppidAndPlatformType(String platformAppid, Integer platformType) {
-        return lambdaQuery().eq(PaymentPlatform::getPlatformAppid, platformAppid).eq(PaymentPlatform::getPlatformType, platformType).oneOpt();
+    public GoPayVo payTrade(GoPayRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        String tradeSn = ro.getTradeSn();
+        String paymentMode = ro.getPaymentMode();
+        String clientIp = ro.getClientIp();
+
+        Trade trade = tradeService.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易账单"));
+        ValidUtils.notNull(trade);
+        Long tradeId = trade.getId();
+        Long accessAppId = trade.getAccessAppId();
+        AccessPlatform accessPlatform = accessPlatformService.getByAccessAppIdAndRefType(accessAppId, paymentMode).orElseThrow(() -> ServiceException.wrap("未授权接入该支付方式"));
+        Long accessPlatformId = accessPlatform.getId();
+        ConfigStorageDto configStorage = accessPlatformService.getConfigStorage(accessPlatformId);
+
+        // 新增支付记录
+        PayRecord payRecord = new PayRecord()
+            .setAccessPlatformId(accessPlatformId)
+            .setPaymentMode(paymentMode)
+            .setTradeId(tradeId)
+            .setCreatedAt(now)
+            .setCreatedIp(clientIp);
+        payRecordService.validInsert(payRecord);
+
+        BigDecimal totalFee = trade.getTotalFee();
+        final GoPaymentResponse result = GoPaymentRequest.builder()
+            .configStorage(configStorage).paymentMode(paymentMode).payAmount(totalFee)
+            .tradeSn(tradeSn).wxOpenId(null).quitUrl(null)
+            .build().request();
+        return mapping.asGoPayVo(result);
     }
 
-    public List<PaymentPlatform> selectListByPlatformTypeAndEnabled(Integer platformType, Boolean enabled) {
-        return lambdaQuery().eq(PaymentPlatform::getPlatformType, platformType).eq(PaymentPlatform::getEnabled, enabled).list();
+    @Override
+    public GoRefundVo refundTrade(GoRefundRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        String clientIp = ro.getClientIp();
+        final String tradeSn = ro.getTradeSn();
+
+        Trade trade = tradeService.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易账单"));
+        Long accessPlatformId = trade.getAccessPlatformId();
+
+        final AccessPlatform accessPlatform = accessPlatformService.getById(accessPlatformId);
+        if (Objects.isNull(accessPlatform)) {
+            log.info("交易单:[{}]上的支付平台[id={}]未找到", trade.getTradeSn(), accessPlatformId);
+            ValidUtils.fail("交易单支付平台未找到");
+        }
+
+        final String refundSn = codeService.getRefundSNCode();
+        RefundRecord entity = refundRecordMapping.asRefundRecord(ro)
+            .setRefundSn(refundSn)
+            .setRefundStatus(RefundStatus.Pending.getCode())
+            .setCreatedAt(now)
+            .setCreatedIp(clientIp);
+
+        final GoRefundResponse result = GoRefundRequest.builder()
+            .tradeSn(trade.getTradeSn())
+            .tradeNo(trade.getTradeNo())
+            .refundSn(entity.getRefundSn())
+            .totalFee(trade.getTotalFee())
+            .refundFee(entity.getRefundFee())
+            .build().request();
+        entity.setRefundTradeNo(result.getRefundTradeNo());
+        refundRecordService.validInsert(entity);
+        return new GoRefundVo().setRefundSn(entity.getRefundSn());
     }
 }

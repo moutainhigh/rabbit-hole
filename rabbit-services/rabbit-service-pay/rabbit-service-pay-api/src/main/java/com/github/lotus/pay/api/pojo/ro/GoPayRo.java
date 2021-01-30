@@ -22,7 +22,8 @@ public class GoPayRo {
     private String tradeSn;
     @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
-    private Integer paymentWay;
-    @ApiModelProperty(value = "[可选]微信支付")
-    private String wxOpenId;
+    private String paymentMode;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 }

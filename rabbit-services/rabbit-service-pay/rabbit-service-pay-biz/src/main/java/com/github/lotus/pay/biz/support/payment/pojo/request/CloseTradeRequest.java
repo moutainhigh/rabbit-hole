@@ -1,16 +1,16 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.pay.biz.enumns.PaymentPlatformType;
+import com.github.lotus.pay.biz.support.payment.helper.RequestHelper;
+import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeCloseRequest;
-import in.hocg.payment.alipay.v2.response.TradeCloseResponse;
 import in.hocg.payment.wxpay.v2.request.CloseOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
-import in.hocg.payment.wxpay.v2.response.CloseOrderResponse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -19,37 +19,27 @@ import lombok.NonNull;
  * @author hocgin
  */
 @Data
+@Builder
 @ApiModel("关闭交易单")
+@EqualsAndHashCode(callSuper = true)
 public class CloseTradeRequest extends AbsRequest {
-    @NonNull
+    @ApiModelProperty
+    protected final ConfigStorageDto configStorage;
     @ApiModelProperty(value = "交易单号(网关)", required = true)
-    private String tradeSn;
-    @NonNull
-    @ApiModelProperty(value = "支付平台AppId", required = true)
-    private String platformAppid;
-    @NonNull
-    @ApiModelProperty(value = "支付平台", required = true)
-    private PaymentPlatformType platform;
+    private final String tradeSn;
 
     public boolean request() {
-        boolean result;
-        switch (platform) {
+        switch (this.getPlatform()) {
             case WxPay: {
-                final CloseOrderResponse response = this.request(this.wxPayRequest());
-                result = this.isSuccess(response);
-                break;
+                return RequestHelper.isSuccess(this.request(this.wxPayRequest()));
             }
             case AliPay: {
-                final TradeCloseResponse response = this.request(this.aliPayRequest());
-                result = this.isSuccess(response);
-                break;
+                return RequestHelper.isSuccess(this.request(this.aliPayRequest()));
             }
             default:
                 throw new UnsupportedOperationException();
         }
-        return result;
     }
-
 
     private AliPayRequest aliPayRequest() {
         final TradeCloseRequest request = new TradeCloseRequest();
@@ -61,10 +51,5 @@ public class CloseTradeRequest extends AbsRequest {
         final CloseOrderRequest request = new CloseOrderRequest();
         request.setOutTradeNo(getTradeSn());
         return request;
-    }
-
-    @Override
-    protected PaymentPlatformType getPaymentPlatform() {
-        return this.platform;
     }
 }

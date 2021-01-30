@@ -2,10 +2,7 @@ package com.github.lotus.pay.biz.support.payment.resolve.message;
 
 import com.github.lotus.pay.biz.enumns.PaymentPlatformType;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
 
 /**
  * Created by hocgin on 2019/12/24.
@@ -26,12 +23,4 @@ public enum MessageType {
     private final Integer feature;
     private final String name;
 
-    public static Optional<MessageType> of(@NonNull Integer channel, @NonNull Integer feature) {
-        for (MessageType type : MessageType.values()) {
-            if (type.channel.equals(channel) && type.feature.equals(feature)) {
-                return Optional.ofNullable(type);
-            }
-        }
-        return Optional.empty();
-    }
 }

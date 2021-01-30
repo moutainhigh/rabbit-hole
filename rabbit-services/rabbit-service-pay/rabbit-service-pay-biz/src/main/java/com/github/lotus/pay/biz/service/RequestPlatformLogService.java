@@ -1,6 +1,5 @@
 package com.github.lotus.pay.biz.service;
 
-
 import com.github.lotus.pay.biz.entity.RequestPlatformLog;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -10,7 +9,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  * </p>
  *
  * @author hocgin
- * @since 2020-06-06
+ * @since 2021-01-30
  */
 public interface RequestPlatformLogService extends AbstractService<RequestPlatformLog> {
 

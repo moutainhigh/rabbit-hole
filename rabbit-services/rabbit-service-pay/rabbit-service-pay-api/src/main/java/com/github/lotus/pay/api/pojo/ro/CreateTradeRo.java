@@ -29,4 +29,7 @@ public class CreateTradeRo {
     private BigDecimal totalFee;
     @ApiModelProperty("通知地址")
     private String notifyUrl;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 }

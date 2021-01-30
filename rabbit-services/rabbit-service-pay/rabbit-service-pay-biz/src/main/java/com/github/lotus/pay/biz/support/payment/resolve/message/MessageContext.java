@@ -1,8 +1,12 @@
 package com.github.lotus.pay.biz.support.payment.resolve.message;
 
-import in.hocg.boot.web.exception.ServiceException;
+import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -13,12 +17,29 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class MessageContext {
-    private String appid;
-    private Integer platformTyp;
-    private Integer feature;
-    private Integer paymentWay;
+    private String accessAppSn;
+    private String platform;
+    private String feature;
 
-    public MessageType asMessageType() {
-        return MessageType.of(platformTyp, feature).orElseThrow(() -> ServiceException.wrap("回调处理失败"));
+    public Optional<MessageType> asMessageType() {
+        for (MessageType type : MessageType.values()) {
+            if (type.getPlatform().getCode().equals(platform) && type.feature.equals(feature)) {
+                return Optional.of(type);
+            }
+        }
+        return Optional.empty();
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum MessageType {
+        WxPayWithPay(PaymentPlatform.WxPay, "pay", "支付通知 - 微信"),
+        WxPayWithRefund(PaymentPlatform.WxPay, "refund", "退款通知 - 微信"),
+        AliPayWithPay(PaymentPlatform.AliPay, "pay", "支付通知 - 支付宝"),
+        AliPayWithRefund(PaymentPlatform.AliPay, "refund", "退款通知 - 支付宝");
+        private final PaymentPlatform platform;
+        private final String feature;
+        private final String name;
+    }
+
 }

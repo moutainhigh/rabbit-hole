@@ -19,5 +19,5 @@ import javax.validation.constraints.NotNull;
 public class CreateTradeGoPayRo extends CreateTradeRo {
     @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
-    private Integer paymentWay;
+    private String paymentMode;
 }

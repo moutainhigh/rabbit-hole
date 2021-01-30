@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @ApiModel("查询信息")
 public class QueryAsyncVo<T> {
     @ApiModelProperty("平台")
-    private Integer platformType;
+    private String platformType;
     @ApiModelProperty("状态同步")
     private T data;
 }

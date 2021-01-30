@@ -4,9 +4,9 @@ import com.github.lotus.pay.biz.entity.RequestPlatformLog;
 import com.github.lotus.pay.biz.mapper.RequestPlatformLogMapper;
 import com.github.lotus.pay.biz.service.RequestPlatformLogService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <p>
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author hocgin
- * @since 2020-06-06
+ * @since 2021-01-30
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))

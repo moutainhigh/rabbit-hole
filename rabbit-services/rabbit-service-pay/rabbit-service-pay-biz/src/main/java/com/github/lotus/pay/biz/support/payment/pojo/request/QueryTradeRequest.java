@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.pay.biz.enumns.PaymentPlatformType;
+import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.QueryTradeResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeQueryRequest;
@@ -8,7 +8,9 @@ import in.hocg.payment.alipay.v2.response.TradeQueryResponse;
 import in.hocg.payment.wxpay.v2.request.OrderQueryRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.OrderQueryResponse;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -20,21 +22,19 @@ import lombok.NonNull;
  * @author hocgin
  */
 @Data
+@Builder
+@ApiModel
 @EqualsAndHashCode(callSuper = true)
 public class QueryTradeRequest extends AbsRequest {
+    @ApiModelProperty
+    protected final ConfigStorageDto configStorage;
     @NonNull
     @ApiModelProperty(value = "交易单号(第三方)", required = true)
     private String tradeNo;
-    @NonNull
-    @ApiModelProperty(value = "支付平台AppId", required = true)
-    private String platformAppid;
-    @NonNull
-    @ApiModelProperty(value = "支付平台", required = true)
-    private PaymentPlatformType platform;
 
     public QueryTradeResponse request() {
         final QueryTradeResponse result = new QueryTradeResponse();
-        switch (platform) {
+        switch (getPlatform()) {
             case WxPay: {
                 final OrderQueryResponse response = this.request(this.wxPayRequest());
                 break;
@@ -49,7 +49,6 @@ public class QueryTradeRequest extends AbsRequest {
         return result;
     }
 
-
     private AliPayRequest aliPayRequest() {
         final TradeQueryRequest request = new TradeQueryRequest();
         request.setBizContent2(new TradeQueryRequest.BizContent().setTradeNo(tradeNo));
@@ -60,10 +59,5 @@ public class QueryTradeRequest extends AbsRequest {
         final OrderQueryRequest request = new OrderQueryRequest();
         request.setTransactionId(tradeNo);
         return request;
-    }
-
-    @Override
-    protected PaymentPlatformType getPaymentPlatform() {
-        return this.platform;
     }
 }

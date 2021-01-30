@@ -30,11 +30,9 @@ public class RefundStatusSync {
     @ApiModelProperty("商户退费单号")
     private String outRefundSn;
     @ApiModelProperty("退费状态")
-    private Integer refundStatus;
+    private String refundStatus;
     @ApiModelProperty("退款时间")
     private LocalDateTime refundAt;
-    @ApiModelProperty("(微信用户OPEN-ID)仅微信")
-    private String openid;
     @ApiModelProperty("申请退款金额")
     private BigDecimal refundFee;
     @ApiModelProperty("实际退款金额")

@@ -30,7 +30,10 @@ public enum Module {
         "rabbit-services/rabbit-service-com/rabbit-service-com-biz"),
     UMS(Lists.newArrayList("ums_", "ams_"),
         "com.github.lotus.ums.biz",
-        "rabbit-services/rabbit-service-ums/rabbit-service-ums-biz");
+        "rabbit-services/rabbit-service-ums/rabbit-service-ums-biz"),
+    PAY(Lists.newArrayList("bmw_"),
+        "com.github.lotus.pay.biz",
+            "rabbit-services/rabbit-service-pay/rabbit-service-pay-biz");
 
     /**
      * 生成的 Entity 名称会忽略前缀

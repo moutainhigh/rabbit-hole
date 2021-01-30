@@ -1,9 +1,10 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.pay.biz.enumns.PaymentPlatformType;
-import com.github.lotus.pay.biz.enumns.PaymentWayType;
+import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;
 import in.hocg.boot.utils.ValidUtils;
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
@@ -14,9 +15,11 @@ import in.hocg.payment.alipay.v2.response.TradePreCreateResponse;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.UnifiedOrderResponse;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
@@ -29,23 +32,24 @@ import java.math.BigDecimal;
  */
 @Data
 @Builder
+@ApiModel
+@EqualsAndHashCode(callSuper = true)
 public class GoPaymentRequest extends AbsRequest {
-    @NonNull
-    @ApiModelProperty(value = "支付平台AppId", required = true)
-    private String platformAppid;
+    @ApiModelProperty
+    protected final ConfigStorageDto configStorage;
     @NonNull
     @ApiModelProperty(value = "支付方式", required = true)
-    private PaymentWayType paymentWay;
+    private final String paymentMode;
     @NonNull
     @ApiModelProperty(value = "订单支付金额", required = true)
-    private BigDecimal payAmount;
+    private final BigDecimal payAmount;
     @NonNull
     @ApiModelProperty("交易单号(网关)")
-    private String tradeSn;
+    private final String tradeSn;
     @ApiModelProperty(value = "[可选] 微信用户(微信支付必须)")
-    private String wxOpenId;
+    private final String wxOpenId;
     @ApiModelProperty(value = "[可选] (支付宝Wap支付)")
-    private String quitUrl;
+    private final String quitUrl;
 
     private String getSubject() {
         return String.format("订单: %s", this.tradeSn);
@@ -138,12 +142,11 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     public GoPaymentResponse request() {
-        final PaymentPlatformType platform = paymentWay.getPlatform();
         final GoPaymentResponse result = new GoPaymentResponse()
-            .setPlatform(platform.getCode())
-            .setPaymentWay(paymentWay.getCode());
+            .setPlatformType(getPlatform().getCode())
+            .setPaymentMode(getPaymentMode());
 
-        switch (paymentWay) {
+        switch (ICode.ofThrow(getPaymentMode(), PaymentMode.class)) {
             case AliPayWithApp: {
                 final AliPayRequest request = this.aliPayAppRequest();
                 final PaymentResponse response = this.request(request);
@@ -196,11 +199,7 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl(this.paymentWay);
+        return getPaymentNotifyUrl(ICode.ofThrow(getPaymentMode(), PaymentMode.class));
     }
 
-    @Override
-    protected PaymentPlatformType getPaymentPlatform() {
-        return this.paymentWay.getPlatform();
-    }
 }
