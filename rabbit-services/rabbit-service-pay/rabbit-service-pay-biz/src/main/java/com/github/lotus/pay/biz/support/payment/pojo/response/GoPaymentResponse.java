@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GoPaymentResponse {
     private String platformType;
-    private String paymentMode;
+    private String payMode;
     private String url;
     private String method;
 

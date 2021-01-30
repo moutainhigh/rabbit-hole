@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.pojo.ro;
 
-import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.common.datadict.bmw.PayMode;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.common.datadict.bmw.TradeStatus;
 import io.swagger.annotations.ApiModelProperty;
@@ -36,7 +36,7 @@ public class PayMessageRo {
     @ApiModelProperty("买家实际支付金额")
     private BigDecimal buyerPayFee;
     @ApiModelProperty("支付方式")
-    private PaymentMode paymentMode;
+    private PayMode paymentMode;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;

@@ -2,7 +2,7 @@ package com.github.lotus.pay.biz.support.payment.pojo.request;
 
 import cn.hutool.json.JSONUtil;
 import com.aliyun.openservices.log.http.client.ServiceException;
-import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.common.datadict.bmw.PayMode;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import in.hocg.boot.web.servlet.SpringServletContext;
@@ -39,7 +39,7 @@ public abstract class AbsRequest {
         return "";
     }
 
-    protected String getPaymentNotifyUrl(PaymentMode paymentMode) {
+    protected String getPaymentNotifyUrl(PayMode paymentMode) {
         final String platformAppid = this.getAppid();
         final String notifyUrl = "/pay";
         return String.format("%s/payment/%s", this.getHost(), notifyUrl);

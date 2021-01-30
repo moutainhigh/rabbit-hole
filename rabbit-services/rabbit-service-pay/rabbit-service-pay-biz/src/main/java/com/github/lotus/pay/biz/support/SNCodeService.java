@@ -18,44 +18,6 @@ public class SNCodeService {
     private final Snowflake snowFlake;
 
     /**
-     * 订单退款申请编号
-     *
-     * @return
-     */
-    public String getOrderRefundApplySNCode() {
-        return getSNCode(Type.OrderRefundApply);
-    }
-
-    /**
-     * 订单编号
-     * TODO :: 生成18位订单编号:8日期 + 2位平台 + 2位支付方式 + 6位自增ID
-     *
-     * @return
-     */
-    public String getOrderSNCode() {
-        return getSNCode(Type.Order);
-    }
-
-    /**
-     * 优惠券编号
-     *
-     * @return
-     */
-    public String getCouponAccountSNCode() {
-        return getSNCode(Type.CouponAccount);
-
-    }
-
-    /**
-     * 业务日志编码
-     *
-     * @return
-     */
-    public String getBusinessSNCode() {
-        return getSNCode(Type.BusinessLog);
-    }
-
-    /**
      * 支付交易流水号
      *
      * @return

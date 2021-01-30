@@ -77,8 +77,15 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
     public String createTrade(CreateTradeRo ro) {
         LocalDateTime now = LocalDateTime.now();
         String clientIp = ro.getClientIp();
+        String outTradeSn = ro.getOutTradeSn();
         String appid = ro.getAppid();
+        String notifyUrl = ro.getNotifyUrl();
         String tradeSn = snCodeService.getTransactionSNCode();
+
+        Optional<Trade> tradeOpt = this.getByOutTradeSn(outTradeSn);
+        if (tradeOpt.isPresent()) {
+            return tradeOpt.get().getTradeSn();
+        }
 
         AccessApp accessApp = accessAppService.getByEncoding(appid)
             .orElseThrow(() -> ServiceException.wrap("未授权接入方"));
@@ -89,10 +96,14 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
             .setTradeSn(tradeSn)
             .setTradeStatus(TradeStatus.Init.getCode())
             .setCreatedAt(now)
-            .setNotifyUrl(ro.getNotifyUrl())
+            .setNotifyUrl(notifyUrl)
             .setCreatedIp(clientIp);
         this.validInsert(entity);
         return tradeSn;
+    }
+
+    private Optional<Trade> getByOutTradeSn(String outTradeSn) {
+        return lambdaQuery().eq(Trade::getOutTradeSn, outTradeSn).oneOpt();
     }
 
     @Override
@@ -150,7 +161,6 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         LocalDateTime now = LocalDateTime.now();
         final String clientIp = ro.getClientIp();
         final String tradeSn = ro.getTradeSn();
-        String paymentMode = ro.getPaymentMode();
 
         final Trade trade = this.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long tradeId = trade.getId();

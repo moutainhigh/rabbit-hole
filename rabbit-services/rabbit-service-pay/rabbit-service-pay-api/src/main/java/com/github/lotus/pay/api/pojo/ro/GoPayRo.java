@@ -22,7 +22,7 @@ public class GoPayRo {
     private String tradeSn;
     @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
-    private String paymentMode;
+    private String payMode;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;

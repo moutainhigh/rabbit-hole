@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.common.datadict.bmw.PayMode;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;
 import in.hocg.boot.utils.ValidUtils;
@@ -144,9 +144,9 @@ public class GoPaymentRequest extends AbsRequest {
     public GoPaymentResponse request() {
         final GoPaymentResponse result = new GoPaymentResponse()
             .setPlatformType(getPlatform().getCode())
-            .setPaymentMode(getPaymentMode());
+            .setPayMode(getPaymentMode());
 
-        switch (ICode.ofThrow(getPaymentMode(), PaymentMode.class)) {
+        switch (ICode.ofThrow(getPaymentMode(), PayMode.class)) {
             case AliPayWithApp: {
                 final AliPayRequest request = this.aliPayAppRequest();
                 final PaymentResponse response = this.request(request);
@@ -199,7 +199,7 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl(ICode.ofThrow(getPaymentMode(), PaymentMode.class));
+        return getPaymentNotifyUrl(ICode.ofThrow(getPaymentMode(), PayMode.class));
     }
 
 }

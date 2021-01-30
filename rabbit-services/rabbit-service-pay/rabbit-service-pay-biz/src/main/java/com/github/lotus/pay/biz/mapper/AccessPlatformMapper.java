@@ -3,6 +3,9 @@ package com.github.lotus.pay.biz.mapper;
 import com.github.lotus.pay.biz.entity.AccessPlatform;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccessPlatformMapper extends BaseMapper<AccessPlatform> {
 
+    Optional<AccessPlatform> getByAccessAppIdAndPayMode(@Param("accessAppId") Long accessAppId, @Param("payMode") String payMode);
 }

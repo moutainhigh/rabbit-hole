@@ -48,9 +48,9 @@ CREATE TABLE `bmw_platform_alipay_config`
     id          bigint auto_increment,
     appid       varchar(255)        not null
         COMMENT 'appid',
-    public_key  varchar(255)        not null
+    public_key  text                not null
         COMMENT 'public key',
-    private_key varchar(255)        not null
+    private_key text                not null
         COMMENT 'private key',
     is_dev      TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '是否测试模式',
@@ -101,16 +101,16 @@ CREATE TABLE `bmw_notify_access_app`
 DROP TABLE IF EXISTS `bmw_notify_access_app_log`;
 CREATE TABLE `bmw_notify_access_app_log`
 (
-    id            bigint auto_increment,
+    id                   bigint auto_increment,
     notify_access_app_id bigint                     not null
         comment '通知编号ID',
-    notify_result varchar(16) default 'init' not null
+    notify_result        varchar(16) default 'init' not null
         comment '通知调用结果: init=>初始化; success=>响应成功; fail=>响应失败; timeout=>超时失败',
-    notify_body   JSON                       not null
+    notify_body          JSON                       not null
         comment '通知内容',
     --
-    created_at    datetime(6)                not null,
-    updated_at    datetime(6),
+    created_at           datetime(6)                not null,
+    updated_at           datetime(6),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4

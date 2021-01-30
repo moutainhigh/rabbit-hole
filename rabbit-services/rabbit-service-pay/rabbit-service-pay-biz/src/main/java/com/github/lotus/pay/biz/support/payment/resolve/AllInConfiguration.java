@@ -14,9 +14,4 @@ import org.springframework.stereotype.Component;
 @Component
 public class AllInConfiguration {
 
-    @Bean
-    public SNCodeService snCode() {
-        return new SNCodeService(IdUtil.createSnowflake(1, 1));
-    }
-
 }

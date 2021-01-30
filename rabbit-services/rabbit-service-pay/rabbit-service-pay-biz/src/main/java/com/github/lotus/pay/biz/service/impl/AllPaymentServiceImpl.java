@@ -56,7 +56,7 @@ public class AllPaymentServiceImpl implements AllPaymentService {
         String tradeSn = this.createTrade(ro);
         GoPayRo goPayRo = new GoPayRo();
         goPayRo.setTradeSn(tradeSn);
-        goPayRo.setPaymentMode(paymentMode);
+        goPayRo.setPayMode(paymentMode);
         goPayRo.setClientIp(clientIp);
         return this.goPay(goPayRo);
     }

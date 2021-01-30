@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum PaymentMode implements DataDictEnum {
+public enum PayMode implements DataDictEnum {
     Unknown("unknown", "未知"),
     // 支付宝
     AliPayWithApp("alipay.app", "支付宝 - APP"),

@@ -2,7 +2,7 @@ package com.github.lotus.pay.biz.support.payment.resolve.message.rule.pay;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.common.datadict.bmw.PayMode;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.common.datadict.bmw.TradeStatus;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
@@ -46,7 +46,7 @@ public class WxPayPayMessageRule extends StringResolve.StringRule<UnifiedOrderMe
             final String outTradeNo = message.getOutTradeNo();
             final String tradeNo = message.getTransactionId();
             TradeStatus tradeStatus = PaymentHelper.wxPayAsTradeStatus(message.getResultCode());
-            PaymentMode paymentMode = PaymentHelper.wxPayAsPaymentMode(message.getTradeType());
+            PayMode paymentMode = PaymentHelper.wxPayAsPaymentMode(message.getTradeType());
             PaymentPlatform paymentPlatform = PaymentHelper.asPaymentPlatform(platformType);
             final LocalDateTime paymentAt = WxPayPayMessageRule.convertDatetime(message.getTimeEnd());
             final BigDecimal totalAmount = WxPayPayMessageRule.convertBigDecimal(new BigDecimal(message.getTotalFee()));

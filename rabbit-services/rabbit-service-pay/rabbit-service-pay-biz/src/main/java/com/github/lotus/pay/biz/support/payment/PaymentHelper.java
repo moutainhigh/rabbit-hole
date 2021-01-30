@@ -2,7 +2,7 @@ package com.github.lotus.pay.biz.support.payment;
 
 import com.github.lotus.common.datadict.bmw.NotifyStatus;
 import com.github.lotus.common.datadict.bmw.NotifyType;
-import com.github.lotus.common.datadict.bmw.PaymentMode;
+import com.github.lotus.common.datadict.bmw.PayMode;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.common.datadict.bmw.RefundStatus;
 import com.github.lotus.common.datadict.bmw.TradeStatus;
@@ -26,7 +26,7 @@ public class PaymentHelper {
      */
     public static final String SUCCESS_NOTIFY_FLAG = "SUCCESS";
 
-    public static String toPaymentMode(PaymentMode paymentMode) {
+    public static String toPaymentMode(PayMode paymentMode) {
         return paymentMode.getCode();
     }
 
@@ -101,16 +101,16 @@ public class PaymentHelper {
         }
     }
 
-    public static PaymentMode wxPayAsPaymentMode(String tradeType) {
+    public static PayMode wxPayAsPaymentMode(String tradeType) {
         switch (tradeType.toUpperCase()) {
             case "JSAPI":
-                return PaymentMode.WxPayWithJSAPI;
+                return PayMode.WxPayWithJSAPI;
             case "NATIVE":
-                return PaymentMode.WxPayWithNative;
+                return PayMode.WxPayWithNative;
             case "APP":
-                return PaymentMode.WxPayWithApp;
+                return PayMode.WxPayWithApp;
             default:
-                return PaymentMode.Unknown;
+                return PayMode.Unknown;
 
         }
     }

@@ -14,6 +14,7 @@ import org.mapstruct.Mapper;
 public interface TradeMapping {
     default Trade asTrade(CreateTradeRo ro) {
         Trade entity = new Trade();
+        entity.setOutTradeSn(ro.getOutTradeSn());
         entity.setNotifyUrl(ro.getNotifyUrl());
         entity.setCreatedIp(ro.getClientIp());
         return entity;

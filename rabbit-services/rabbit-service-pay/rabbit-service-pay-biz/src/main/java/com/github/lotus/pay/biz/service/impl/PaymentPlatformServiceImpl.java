@@ -15,6 +15,7 @@ import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
 import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
 import com.github.lotus.pay.biz.service.PayRecordService;
+import com.github.lotus.pay.biz.service.PaymentModeService;
 import com.github.lotus.pay.biz.service.PaymentPlatformService;
 import com.github.lotus.pay.biz.service.RefundRecordService;
 import com.github.lotus.pay.biz.service.TradeService;
@@ -57,6 +58,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
     private final SNCodeService codeService;
     private final RefundRecordService refundRecordService;
     private final RefundRecordMapping refundRecordMapping;
+    private final PaymentModeService paymentModeService;
 
     @Override
     public boolean closeTrade(Long accessPlatformId, String tradeSn) {
@@ -68,21 +70,21 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
     public GoPayVo payTrade(GoPayRo ro) {
         LocalDateTime now = LocalDateTime.now();
         String tradeSn = ro.getTradeSn();
-        String paymentMode = ro.getPaymentMode();
         String clientIp = ro.getClientIp();
+        String payMode = ro.getPayMode();
 
         Trade trade = tradeService.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易账单"));
-        ValidUtils.notNull(trade);
         Long tradeId = trade.getId();
         Long accessAppId = trade.getAccessAppId();
-        AccessPlatform accessPlatform = accessPlatformService.getByAccessAppIdAndRefType(accessAppId, paymentMode).orElseThrow(() -> ServiceException.wrap("未授权接入该支付方式"));
+
+        AccessPlatform accessPlatform = accessPlatformService.getByAccessAppIdAndPayMode(accessAppId, payMode).orElseThrow(() -> ServiceException.wrap("未授权接入该支付方式"));
         Long accessPlatformId = accessPlatform.getId();
         ConfigStorageDto configStorage = accessPlatformService.getConfigStorage(accessPlatformId);
 
         // 新增支付记录
         PayRecord payRecord = new PayRecord()
             .setAccessPlatformId(accessPlatformId)
-            .setPaymentMode(paymentMode)
+            .setPaymentMode(payMode)
             .setTradeId(tradeId)
             .setCreatedAt(now)
             .setCreatedIp(clientIp);
@@ -90,7 +92,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
 
         BigDecimal totalFee = trade.getTotalFee();
         final GoPaymentResponse result = GoPaymentRequest.builder()
-            .configStorage(configStorage).paymentMode(paymentMode).payAmount(totalFee)
+            .configStorage(configStorage).paymentMode(payMode).payAmount(totalFee)
             .tradeSn(tradeSn).wxOpenId(null).quitUrl(null)
             .build().request();
         return mapping.asGoPayVo(result);
@@ -129,4 +131,5 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
         refundRecordService.validInsert(entity);
         return new GoRefundVo().setRefundSn(entity.getRefundSn());
     }
+
 }

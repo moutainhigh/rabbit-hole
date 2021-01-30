@@ -21,4 +21,8 @@ public interface AccessPlatformService extends AbstractService<AccessPlatform> {
     ConfigStorageDto getConfigStorage(Long accessPlatformId);
 
     Optional<AccessPlatform> getByAccessAppIdAndRefType(Long accessAppId, String refType);
+
+    Optional<AccessPlatform> getByAccessAppIdAndPayMode(Long accessAppId, String payMode);
+
+
 }

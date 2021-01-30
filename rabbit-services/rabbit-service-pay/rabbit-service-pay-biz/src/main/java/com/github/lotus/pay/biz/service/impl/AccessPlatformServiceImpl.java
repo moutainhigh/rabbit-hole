@@ -80,4 +80,9 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
     public Optional<AccessPlatform> getByAccessAppIdAndRefType(Long accessAppId, String refType) {
         return lambdaQuery().eq(AccessPlatform::getAccessAppId, accessAppId).eq(AccessPlatform::getRefType, refType).oneOpt();
     }
+
+    @Override
+    public Optional<AccessPlatform> getByAccessAppIdAndPayMode(Long accessAppId, String payMode) {
+        return baseMapper.getByAccessAppIdAndPayMode(accessAppId, payMode);
+    }
 }
