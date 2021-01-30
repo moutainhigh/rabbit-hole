@@ -219,7 +219,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
                 .setTradeStatus(trade.getTradeStatus())
                 .setCreatedAt(trade.getCreatedAt())
                 .setExpireAt(trade.getExpireAt())
-                .setPaymentMode(trade.getPaymentMode())
+                .setPayMode(trade.getPayMode())
                 .setPaymentAt(trade.getPaymentAt()));
     }
 
@@ -266,7 +266,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         PaymentPlatform platformType = ro.getPlatformType();
         BigDecimal buyerPayFee = ro.getBuyerPayFee();
         String tradeStatus = PaymentHelper.toTradeStatus(ro.getTradeStatus());
-        String paymentMode = PaymentHelper.toPaymentMode(ro.getPaymentMode());
+        String payMode = PaymentHelper.toPayMode(ro.getPayMode());
 
         AccessPlatform accessPlatform = accessPlatformService.getByAppidAndRefType(accessAppSn, platformType.getCode())
             .orElseThrow(() -> ServiceException.wrap("未开通的支付平台"));
@@ -282,7 +282,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
 
         final Trade update = new Trade()
             .setBuyerPayFee(buyerPayFee)
-            .setPaymentMode(paymentMode)
+            .setPayMode(payMode)
             .setTradeStatus(tradeStatus)
             .setFinishAt(now)
             .setAccessPlatformId(accessPlatform.getId())

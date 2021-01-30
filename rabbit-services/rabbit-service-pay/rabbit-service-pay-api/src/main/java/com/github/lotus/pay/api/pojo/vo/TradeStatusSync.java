@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ApiModel("交易状态同步")
 public class TradeStatusSync {
     @ApiModelProperty("支付方式")
-    private String paymentMode;
+    private String payMode;
     @ApiModelProperty("交易单号")
     private String tradeSn;
     @ApiModelProperty("商户单号")

@@ -15,5 +15,5 @@ import java.util.Optional;
  */
 public interface PaymentModeService extends AbstractService<PaymentMode> {
 
-    Optional<PaymentMode> getByEncoding(String paymentMode);
+    Optional<PaymentMode> getByEncoding(String payMode);
 }

@@ -51,12 +51,12 @@ public class AllPaymentServiceImpl implements AllPaymentService {
     @Transactional(rollbackFor = Exception.class)
     public GoPayVo createAndGoPay(CreateTradeGoPayRo ro) {
         String clientIp = ro.getClientIp();
-        String paymentMode = ro.getPaymentMode();
+        String payMode = ro.getPayMode();
 
         String tradeSn = this.createTrade(ro);
         GoPayRo goPayRo = new GoPayRo();
         goPayRo.setTradeSn(tradeSn);
-        goPayRo.setPayMode(paymentMode);
+        goPayRo.setPayMode(payMode);
         goPayRo.setClientIp(clientIp);
         return this.goPay(goPayRo);
     }

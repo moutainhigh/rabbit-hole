@@ -84,7 +84,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
         // 新增支付记录
         PayRecord payRecord = new PayRecord()
             .setAccessPlatformId(accessPlatformId)
-            .setPaymentMode(payMode)
+            .setPayMode(payMode)
             .setTradeId(tradeId)
             .setCreatedAt(now)
             .setCreatedIp(clientIp);
@@ -92,7 +92,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
 
         BigDecimal totalFee = trade.getTotalFee();
         final GoPaymentResponse result = GoPaymentRequest.builder()
-            .configStorage(configStorage).paymentMode(payMode).payAmount(totalFee)
+            .configStorage(configStorage).payMode(payMode).payAmount(totalFee)
             .tradeSn(tradeSn).wxOpenId(null).quitUrl(null)
             .build().request();
         return mapping.asGoPayVo(result);

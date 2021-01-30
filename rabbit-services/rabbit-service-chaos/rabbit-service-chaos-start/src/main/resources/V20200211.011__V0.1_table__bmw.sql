@@ -62,7 +62,15 @@ CREATE TABLE `bmw_platform_alipay_config`
 DROP TABLE IF EXISTS `bmw_platform_wxpay_config`;
 CREATE TABLE `bmw_platform_wxpay_config`
 (
-    id bigint auto_increment,
+    id       bigint auto_increment,
+    appid    varchar(255) not null
+        COMMENT 'appid',
+    mch_id   varchar(255) not null
+        COMMENT 'mch_id',
+    key_str  varchar(255) not null
+        COMMENT 'key',
+    cert_str text         not null
+        COMMENT 'cert file text',
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
@@ -168,7 +176,7 @@ CREATE TABLE `bmw_trade`
     --
     buyer_pay_fee      decimal(10, 2)
         comment '最终买家实际支付金额(第三方回调时填充)',
-    payment_mode       varchar(32)
+    pay_mode           varchar(32)
         comment '最终支付方式(第三方回调时填充)',
     trade_no           varchar(64)
         comment '最终第三方的交易单号(第三方回调填充)',
@@ -204,7 +212,7 @@ CREATE TABLE `bmw_pay_record`
         comment '交易账单',
     access_platform_id bigint      not null
         comment '接入平台',
-    payment_mode       varchar(32)
+    pay_mode           varchar(32)
         comment '支付方式',
     --
     created_at         datetime(6) not null
@@ -261,6 +269,7 @@ CREATE TABLE `bmw_refund_record`
     COMMENT = '[支付网关] 退款记录表';
 
 # ------------------------------------------------
+DROP TABLE IF EXISTS `bmw_payment_platform`;
 CREATE TABLE `bmw_payment_platform`
 (
     id       bigint auto_increment,
@@ -276,6 +285,7 @@ CREATE TABLE `bmw_payment_platform`
   DEFAULT CHARACTER SET = utf8mb4
     COMMENT = '[支付网关] 第三方支付平台表';
 
+DROP TABLE IF EXISTS `bmw_payment_mode`;
 CREATE TABLE `bmw_payment_mode`
 (
     id                  bigint auto_increment,

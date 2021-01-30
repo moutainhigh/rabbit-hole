@@ -36,7 +36,7 @@ public class PayMessageRo {
     @ApiModelProperty("买家实际支付金额")
     private BigDecimal buyerPayFee;
     @ApiModelProperty("支付方式")
-    private PayMode paymentMode;
+    private PayMode payMode;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;

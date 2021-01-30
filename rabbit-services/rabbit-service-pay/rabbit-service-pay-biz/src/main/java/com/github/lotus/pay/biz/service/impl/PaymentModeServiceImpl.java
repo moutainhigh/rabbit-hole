@@ -23,7 +23,7 @@ import java.util.Optional;
 public class PaymentModeServiceImpl extends AbstractServiceImpl<PaymentModeMapper, PaymentMode> implements PaymentModeService {
 
     @Override
-    public Optional<PaymentMode> getByEncoding(String paymentMode) {
-        return lambdaQuery().eq(PaymentMode::getEncoding, paymentMode).oneOpt();
+    public Optional<PaymentMode> getByEncoding(String payMode) {
+        return lambdaQuery().eq(PaymentMode::getEncoding, payMode).oneOpt();
     }
 }

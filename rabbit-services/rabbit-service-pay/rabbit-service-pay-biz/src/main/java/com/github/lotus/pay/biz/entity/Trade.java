@@ -56,8 +56,8 @@ public class Trade extends AbstractEntity<Trade> {
     @TableField("buyer_pay_fee")
     private BigDecimal buyerPayFee;
     @ApiModelProperty("最终支付方式(第三方回调时填充)")
-    @TableField("payment_mode")
-    private String paymentMode;
+    @TableField("pay_mode")
+    private String payMode;
     @ApiModelProperty("最终第三方的交易单号(第三方回调填充)")
     @TableField("trade_no")
     private String tradeNo;

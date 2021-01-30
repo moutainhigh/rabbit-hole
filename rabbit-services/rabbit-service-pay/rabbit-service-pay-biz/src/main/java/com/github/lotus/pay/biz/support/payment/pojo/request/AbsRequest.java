@@ -39,7 +39,7 @@ public abstract class AbsRequest {
         return "";
     }
 
-    protected String getPaymentNotifyUrl(PayMode paymentMode) {
+    protected String getPaymentNotifyUrl(PayMode payMode) {
         final String platformAppid = this.getAppid();
         final String notifyUrl = "/pay";
         return String.format("%s/payment/%s", this.getHost(), notifyUrl);

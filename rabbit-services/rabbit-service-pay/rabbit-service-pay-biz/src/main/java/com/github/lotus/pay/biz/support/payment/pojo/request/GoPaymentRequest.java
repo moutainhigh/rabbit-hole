@@ -39,7 +39,7 @@ public class GoPaymentRequest extends AbsRequest {
     protected final ConfigStorageDto configStorage;
     @NonNull
     @ApiModelProperty(value = "支付方式", required = true)
-    private final String paymentMode;
+    private final String payMode;
     @NonNull
     @ApiModelProperty(value = "订单支付金额", required = true)
     private final BigDecimal payAmount;
@@ -144,9 +144,9 @@ public class GoPaymentRequest extends AbsRequest {
     public GoPaymentResponse request() {
         final GoPaymentResponse result = new GoPaymentResponse()
             .setPlatformType(getPlatform().getCode())
-            .setPayMode(getPaymentMode());
+            .setPayMode(getPayMode());
 
-        switch (ICode.ofThrow(getPaymentMode(), PayMode.class)) {
+        switch (ICode.ofThrow(getPayMode(), PayMode.class)) {
             case AliPayWithApp: {
                 final AliPayRequest request = this.aliPayAppRequest();
                 final PaymentResponse response = this.request(request);
@@ -199,7 +199,7 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl(ICode.ofThrow(getPaymentMode(), PayMode.class));
+        return getPaymentNotifyUrl(ICode.ofThrow(getPayMode(), PayMode.class));
     }
 
 }

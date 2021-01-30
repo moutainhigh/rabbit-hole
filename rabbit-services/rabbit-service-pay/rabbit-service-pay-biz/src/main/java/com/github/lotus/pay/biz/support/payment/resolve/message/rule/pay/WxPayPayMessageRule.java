@@ -46,7 +46,7 @@ public class WxPayPayMessageRule extends StringResolve.StringRule<UnifiedOrderMe
             final String outTradeNo = message.getOutTradeNo();
             final String tradeNo = message.getTransactionId();
             TradeStatus tradeStatus = PaymentHelper.wxPayAsTradeStatus(message.getResultCode());
-            PayMode paymentMode = PaymentHelper.wxPayAsPaymentMode(message.getTradeType());
+            PayMode payMode = PaymentHelper.wxPayAsPayMode(message.getTradeType());
             PaymentPlatform paymentPlatform = PaymentHelper.asPaymentPlatform(platformType);
             final LocalDateTime paymentAt = WxPayPayMessageRule.convertDatetime(message.getTimeEnd());
             final BigDecimal totalAmount = WxPayPayMessageRule.convertBigDecimal(new BigDecimal(message.getTotalFee()));
@@ -59,7 +59,7 @@ public class WxPayPayMessageRule extends StringResolve.StringRule<UnifiedOrderMe
                 .setPaymentAt(paymentAt)
                 .setTotalFee(totalAmount)
                 .setBuyerPayFee(buyerPayAmount)
-                .setPaymentMode(paymentMode)
+                .setPayMode(payMode)
                 .setPlatformType(paymentPlatform);
 
             SpringContext.getBean(AllPaymentService.class).handlePayMessage(ro);

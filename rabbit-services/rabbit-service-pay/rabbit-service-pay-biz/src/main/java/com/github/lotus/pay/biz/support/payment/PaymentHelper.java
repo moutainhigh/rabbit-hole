@@ -26,8 +26,8 @@ public class PaymentHelper {
      */
     public static final String SUCCESS_NOTIFY_FLAG = "SUCCESS";
 
-    public static String toPaymentMode(PayMode paymentMode) {
-        return paymentMode.getCode();
+    public static String toPayMode(PayMode payMode) {
+        return payMode.getCode();
     }
 
     public static String toTradeStatus(TradeStatus tradeStatus) {
@@ -101,7 +101,7 @@ public class PaymentHelper {
         }
     }
 
-    public static PayMode wxPayAsPaymentMode(String tradeType) {
+    public static PayMode wxPayAsPayMode(String tradeType) {
         switch (tradeType.toUpperCase()) {
             case "JSAPI":
                 return PayMode.WxPayWithJSAPI;
