@@ -72,7 +72,7 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
             }
             case Unknown:
             default:
-                throw ServiceException.wrap("未知的支付平台");
+                throw new UnsupportedOperationException();
         }
     }
 
