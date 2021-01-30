@@ -1,17 +1,14 @@
 package com.github.lotus.pay.biz.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -31,6 +28,18 @@ public class PlatformWxpayConfig extends AbstractEntity<PlatformWxpayConfig> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @ApiModelProperty("appid")
+    @TableField("appid")
+    private String appid;
+    @ApiModelProperty("mch_id")
+    @TableField("mch_id")
+    private String mchId;
+    @ApiModelProperty("key")
+    @TableField("key_str")
+    private String keyStr;
+    @ApiModelProperty("cert file text")
+    @TableField("cert_str")
+    private String certStr;
 
 
 
