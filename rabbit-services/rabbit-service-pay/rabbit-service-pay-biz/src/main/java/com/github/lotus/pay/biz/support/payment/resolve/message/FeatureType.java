@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum FeatureType {
-    Refund(0, "退款"),
-    Payment(1, "支付");
-    private final Integer code;
+    Refund("refund", "退款"),
+    Pay("pay", "支付");
+    private final String code;
     private final String name;
 }

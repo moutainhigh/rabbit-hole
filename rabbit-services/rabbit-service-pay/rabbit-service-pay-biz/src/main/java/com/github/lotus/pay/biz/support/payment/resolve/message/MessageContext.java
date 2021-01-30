@@ -23,7 +23,7 @@ public class MessageContext {
 
     public Optional<MessageType> asMessageType() {
         for (MessageType type : MessageType.values()) {
-            if (type.getPlatform().getCode().equals(platform) && type.feature.equals(feature)) {
+            if (type.getPlatform().getCode().equals(platform) && type.feature.getCode().equals(feature)) {
                 return Optional.of(type);
             }
         }
@@ -33,12 +33,12 @@ public class MessageContext {
     @Getter
     @RequiredArgsConstructor
     public enum MessageType {
-        WxPayWithPay(PaymentPlatform.WxPay, "pay", "支付通知 - 微信"),
-        WxPayWithRefund(PaymentPlatform.WxPay, "refund", "退款通知 - 微信"),
-        AliPayWithPay(PaymentPlatform.AliPay, "pay", "支付通知 - 支付宝"),
-        AliPayWithRefund(PaymentPlatform.AliPay, "refund", "退款通知 - 支付宝");
+        WxPayWithPay(PaymentPlatform.WxPay, FeatureType.Pay, "支付通知 - 微信"),
+        WxPayWithRefund(PaymentPlatform.WxPay, FeatureType.Refund, "退款通知 - 微信"),
+        AliPayWithPay(PaymentPlatform.AliPay, FeatureType.Pay, "支付通知 - 支付宝"),
+        AliPayWithRefund(PaymentPlatform.AliPay, FeatureType.Refund, "退款通知 - 支付宝");
         private final PaymentPlatform platform;
-        private final String feature;
+        private final FeatureType feature;
         private final String name;
     }
 
