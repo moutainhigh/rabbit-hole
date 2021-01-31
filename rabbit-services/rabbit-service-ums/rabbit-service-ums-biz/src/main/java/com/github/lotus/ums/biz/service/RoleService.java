@@ -42,4 +42,6 @@ public interface RoleService extends AbstractService<Role> {
     void grantAuthority(Long roleId, GrantAuthorityRo ro);
 
     List<RoleOrdinaryVo> listOrdinaryByAuthorityId(Long authorityId);
+
+    List<RoleOrdinaryVo> listOrdinaryByUserId(Long userId);
 }

@@ -17,7 +17,6 @@ import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
-import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.mapper.UserMapper;
@@ -30,10 +29,11 @@ import com.github.lotus.ums.biz.pojo.ro.UserCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.AuthorityService;
+import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
 import com.github.lotus.ums.biz.service.SocialService;
+import com.github.lotus.ums.biz.service.UserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -69,6 +69,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private final FileServiceApi fileServiceApi;
     private final ProjectServiceApi projectServiceApi;
     private final AuthorityService authorityService;
+    private final RoleService roleService;
     private final RoleUserRefService roleUserRefService;
 
     @Override
@@ -282,9 +283,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
             new AccountComplexVo.SocialItem().setSocialType(social.getSocialType())
         ).collect(Collectors.toList()));
 
-        List<Long> roles = roleUserRefService.listByUserId(userId)
-            .parallelStream().map(Role::getId).collect(Collectors.toList());
-        result.setRoles(roles);
+        result.setRoles(roleService.listOrdinaryByUserId(userId));
         return result;
     }
 

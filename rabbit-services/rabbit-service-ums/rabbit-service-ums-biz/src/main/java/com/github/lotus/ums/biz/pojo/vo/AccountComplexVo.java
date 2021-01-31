@@ -63,7 +63,7 @@ public class AccountComplexVo {
     @ApiModelProperty("已绑定的社交登陆类型")
     private List<SocialItem> social = Collections.emptyList();
     @ApiModelProperty("角色")
-    private List<Long> roles = Collections.emptyList();
+    private List<RoleOrdinaryVo> roles = Collections.emptyList();
 
 
     @Data

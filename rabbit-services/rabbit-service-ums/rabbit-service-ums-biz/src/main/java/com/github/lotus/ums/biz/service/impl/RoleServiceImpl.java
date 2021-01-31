@@ -120,6 +120,11 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role>
         return LangUtils.toList(this.listByAuthorityId(authorityId), this::convertOrdinary);
     }
 
+    @Override
+    public List<RoleOrdinaryVo> listOrdinaryByUserId(Long userId) {
+        return LangUtils.toList(this.listByUserId(userId), this::convertOrdinary);
+    }
+
     private List<Role> listByAuthorityId(Long authorityId) {
         return baseMapper.listByAuthorityId(authorityId);
     }
