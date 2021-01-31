@@ -65,20 +65,6 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
         return convertComplex(getById(id));
     }
 
-    private AuthorityComplexVo convertComplex(Authority entity) {
-        AuthorityComplexVo result = mapping.asComplex(entity);
-        if (Objects.nonNull(result)) {
-            Long authorityId = entity.getId();
-            result.setApis(apiService.listOrdinaryByAuthorityId(authorityId));
-            result.setRoles(roleService.listOrdinaryByAuthorityId(authorityId));
-        }
-        return result;
-    }
-
-    private AuthorityOrdinaryVo convertOrdinary(Authority entity) {
-        return mapping.asComplex(entity);
-    }
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(SaveAuthorityRo ro) {
@@ -184,6 +170,38 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     public List<String> listAuthorityCodeByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities = listAuthoritiesByProjectIdAndUserId(projectId, userId);
         return LangUtils.toList(authorities, Authority::getEncoding);
+    }
+
+    @Override
+    public List<AuthorityOrdinaryVo> listOrdinaryByRoleId(Long roleId) {
+        return LangUtils.toList(this.listByRoleId(roleId), this::convertOrdinary);
+    }
+
+    @Override
+    public List<AuthorityOrdinaryVo> listOrdinaryByUserGroupId(Long userGroupId) {
+        return LangUtils.toList(this.listByUserGroupId(userGroupId), this::convertOrdinary);
+    }
+
+    private List<Authority> listByUserGroupId(Long userGroupId) {
+        return baseMapper.listByUserGroupId(userGroupId);
+    }
+
+    private List<Authority> listByRoleId(Long roleId) {
+        return baseMapper.listByRoleId(roleId);
+    }
+
+    private AuthorityComplexVo convertComplex(Authority entity) {
+        AuthorityComplexVo result = mapping.asComplex(entity);
+        if (Objects.nonNull(result)) {
+            Long authorityId = entity.getId();
+            result.setApis(apiService.listOrdinaryByAuthorityId(authorityId));
+            result.setRoles(roleService.listOrdinaryByAuthorityId(authorityId));
+        }
+        return result;
+    }
+
+    private AuthorityOrdinaryVo convertOrdinary(Authority entity) {
+        return mapping.asOrdinary(entity);
     }
 
     private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {

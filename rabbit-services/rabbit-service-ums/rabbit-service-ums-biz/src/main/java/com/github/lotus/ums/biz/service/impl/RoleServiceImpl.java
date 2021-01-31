@@ -2,7 +2,6 @@ package com.github.lotus.ums.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.Role;
-import com.github.lotus.ums.biz.entity.RoleAuthorityRef;
 import com.github.lotus.ums.biz.mapper.RoleMapper;
 import com.github.lotus.ums.biz.mapstruct.RoleMapping;
 import com.github.lotus.ums.biz.pojo.ro.AssignRoleRo;
@@ -12,6 +11,7 @@ import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.RoleOrdinaryVo;
+import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -42,6 +41,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role>
     implements RoleService {
     private final RoleMapping mapping;
     private final RoleAuthorityRefService roleAuthorityRefService;
+    private final AuthorityService authorityService;
     private final RoleUserRefService roleUserRefService;
 
     @Override
@@ -143,10 +143,8 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role>
 
     private RoleComplexVo convertComplex(Role entity) {
         Long roleId = entity.getId();
-        List<Long> authorities = roleAuthorityRefService.listByRoleId(roleId)
-            .stream().map(RoleAuthorityRef::getAuthorityId).collect(Collectors.toList());
         return mapping.asComplex(entity)
-            .setAuthorities(authorities)
+            .setAuthorities(authorityService.listOrdinaryByRoleId(roleId))
             .setUseUserCount(roleUserRefService.countUseByRoleId(roleId));
     }
 }

@@ -9,11 +9,16 @@ import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -51,6 +56,36 @@ public class UserGroupAuthorityRefServiceImpl extends AbstractServiceImpl<UserGr
     @Transactional(rollbackFor = Exception.class)
     public boolean hasUserGroupByAuthorityId(Long authorityId) {
         return has(UserGroupAuthorityRef::getAuthorityId, authorityId, UserGroupAuthorityRef::getId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantAuthorities(Long userGroupId, List<Long> authorities) {
+        List<UserGroupAuthorityRef> entities = authorities.parallelStream()
+            .map(authorityId -> new UserGroupAuthorityRef().setAuthorityId(authorityId).setUserGroupId(userGroupId))
+            .collect(Collectors.toList());
+        List<UserGroupAuthorityRef> allData = this.listByUserGroupId(userGroupId);
+
+        final BiFunction<UserGroupAuthorityRef, UserGroupAuthorityRef, Boolean> isSame =
+            (t1, t2) -> LangUtils.equals(t1.getAuthorityId(), t2.getAuthorityId());
+        final List<UserGroupAuthorityRef> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<UserGroupAuthorityRef> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<UserGroupAuthorityRef> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
+
+        // 删除
+        this.removeByIds(deleteList.parallelStream()
+            .map(UserGroupAuthorityRef::getId)
+            .collect(Collectors.toList()));
+
+        // 新增
+        addList.forEach(this::validInsertOrUpdate);
+
+        // 更新
+        mixedList.forEach(this::validInsertOrUpdate);
+    }
+
+    private List<UserGroupAuthorityRef> listByUserGroupId(Long userGroupId) {
+        return lambdaQuery().eq(UserGroupAuthorityRef::getUserGroupId, userGroupId).list();
     }
 
     private boolean hasByUserGroupIdAndAuthorityId(Long userGroupId, Long authorityId) {

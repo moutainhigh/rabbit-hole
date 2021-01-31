@@ -98,8 +98,8 @@ public class RoleController {
         return Result.success();
     }
 
-    @PostMapping("/{roleId}/grant/authority")
     @UseLogger("给角色授权权限")
+    @PostMapping("/{roleId}/grant/authority")
     public Result<Void> grantAuthority(@PathVariable Long roleId,
                                        @Validated @RequestBody GrantAuthorityRo ro) {
         service.grantAuthority(roleId, ro);

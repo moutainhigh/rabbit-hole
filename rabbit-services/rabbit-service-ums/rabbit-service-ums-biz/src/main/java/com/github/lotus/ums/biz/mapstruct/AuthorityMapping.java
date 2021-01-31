@@ -30,4 +30,6 @@ public interface AuthorityMapping {
     UserRoleComplexVo asUserRoleComplexVo(User account);
 
     AuthorityComplexVo asComplex(Authority entity);
+
+    AuthorityOrdinaryVo asOrdinary(Authority entity);
 }

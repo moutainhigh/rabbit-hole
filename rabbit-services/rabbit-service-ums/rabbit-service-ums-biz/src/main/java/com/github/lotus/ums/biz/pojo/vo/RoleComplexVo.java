@@ -24,6 +24,6 @@ public class RoleComplexVo extends RoleOrdinaryVo {
     private Integer useUserCount = 0;
 
     @ApiModelProperty("权限列表")
-    private List<Long> authorities = Collections.emptyList();
+    private List<AuthorityOrdinaryVo> authorities = Collections.emptyList();
 
 }

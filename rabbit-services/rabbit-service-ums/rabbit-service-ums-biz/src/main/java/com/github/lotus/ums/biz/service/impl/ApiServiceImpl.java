@@ -14,6 +14,7 @@ import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.ApiOrdinaryVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.AuthorityApiRefService;
+import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserService;
@@ -133,7 +134,7 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api>
     }
 
     private ApiComplexVo convertComplex(Api entity) {
-        return convertOrdinary(entity);
+        return mapping.asComplex(entity);
     }
 
     private ApiComplexVo convertOrdinary(Api entity) {

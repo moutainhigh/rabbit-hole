@@ -2,7 +2,11 @@ package com.github.lotus.ums.biz.pojo.vo;
 
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/1/24
@@ -14,5 +18,4 @@ import lombok.Data;
 @ApiModel
 @InjectNamed
 public class ApiComplexVo extends ApiOrdinaryVo {
-
 }

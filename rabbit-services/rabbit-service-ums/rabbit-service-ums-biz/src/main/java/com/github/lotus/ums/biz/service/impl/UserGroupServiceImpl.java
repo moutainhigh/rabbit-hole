@@ -7,8 +7,11 @@ import com.github.lotus.ums.biz.mapstruct.UserGroupMapping;
 import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
+import com.github.lotus.ums.biz.service.AuthorityService;
+import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -33,6 +36,8 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, UserGroup> implements UserGroupService {
     private final UserGroupUserRefService userGroupUserRefService;
+    private final UserGroupAuthorityRefService userGroupAuthorityRefService;
+    private final AuthorityService authorityService;
     private final UserGroupMapping mapping;
 
     @Override
@@ -44,7 +49,7 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserGroupComplexVo getComplex(Long userGroupId) {
-        return this.convert(getById(userGroupId));
+        return this.convertComplex(getById(userGroupId));
     }
 
     @Override
@@ -62,13 +67,19 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<UserGroupComplexVo> paging(UserGroupPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(this::convert);
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<UserGroupComplexVo> complete(UserGroupCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage()).convert(this::convert).getRecords();
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
+    }
+
+    @Override
+    public void grantAuthority(Long userGroupId, UserGroupGrantAuthorityRo ro) {
+        final List<Long> authorities = ro.getAuthorities();
+        userGroupAuthorityRefService.grantAuthorities(userGroupId, authorities);
     }
 
     @Override
@@ -99,7 +110,9 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
         userGroupUserRefService.assignUserGroup(userGroupId, ro.getAssignUser(), ro.getClearUser());
     }
 
-    private UserGroupComplexVo convert(UserGroup entity) {
-        return mapping.asComplex(entity);
+    private UserGroupComplexVo convertComplex(UserGroup entity) {
+        Long userGroupId = entity.getId();
+        return mapping.asComplex(entity)
+            .setAuthorities(authorityService.listOrdinaryByUserGroupId(userGroupId));
     }
 }

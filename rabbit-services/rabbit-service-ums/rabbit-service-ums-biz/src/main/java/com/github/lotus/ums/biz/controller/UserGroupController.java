@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
 import com.github.lotus.ums.biz.service.UserGroupService;
@@ -47,7 +48,7 @@ public class UserGroupController {
 
     @ApiOperation("查询详情 - 用户组")
     @GetMapping("/{id}")
-    public Result<UserGroupComplexVo> get(@ApiParam(value = "用户组", required = true) @PathVariable Long id) {
+    public Result<UserGroupComplexVo> getComplex(@ApiParam(value = "用户组", required = true) @PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
 
@@ -86,6 +87,14 @@ public class UserGroupController {
     @DeleteMapping("/{id}")
     public Result<Void> deleteOne(@ApiParam(value = "用户组", required = true) @PathVariable Long id) {
         service.deleteOne(id);
+        return Result.success();
+    }
+
+    @UseLogger("授权权限 - 用户组")
+    @PostMapping("/{userGroupId}/grant/authority")
+    public Result<Void> grantAuthority(@PathVariable Long userGroupId,
+                                       @Validated @RequestBody UserGroupGrantAuthorityRo ro) {
+        service.grantAuthority(userGroupId, ro);
         return Result.success();
     }
 
