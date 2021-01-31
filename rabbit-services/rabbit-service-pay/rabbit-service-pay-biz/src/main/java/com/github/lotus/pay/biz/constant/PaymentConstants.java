@@ -8,4 +8,5 @@ package com.github.lotus.pay.biz.constant;
  */
 public class PaymentConstants {
     public static final String PAYMENT_PREFIX = "/pay-gateway";
+    public static final String CALLBACK_URI = "/{feature}/{platform}/{accessPlatformId}";
 }

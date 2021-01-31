@@ -1,8 +1,8 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.pay.biz.entity.RequestPlatformLog;
-import com.github.lotus.pay.biz.mapper.RequestPlatformLogMapper;
-import com.github.lotus.pay.biz.service.RequestPlatformLogService;
+import com.github.lotus.pay.biz.entity.PlatformRequestLog;
+import com.github.lotus.pay.biz.mapper.PlatformRequestLogMapper;
+import com.github.lotus.pay.biz.service.PlatformRequestLogService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class RequestPlatformLogServiceImpl extends AbstractServiceImpl<RequestPlatformLogMapper, RequestPlatformLog> implements RequestPlatformLogService {
+public class PlatformRequestLogServiceImpl extends AbstractServiceImpl<PlatformRequestLogMapper, PlatformRequestLog>
+    implements PlatformRequestLogService {
 
 }

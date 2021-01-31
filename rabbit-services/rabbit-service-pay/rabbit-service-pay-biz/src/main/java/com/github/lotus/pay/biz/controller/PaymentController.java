@@ -40,13 +40,15 @@ public class PaymentController {
     private final AllPaymentService service;
 
     @UseLogger("支付回调")
-    @RequestMapping("/{feature}/{platformTyp}/{accessAppSn}")
+    @RequestMapping(PaymentConstants.CALLBACK_URI)
     public ResponseEntity<String> doPayResultMessage(@PathVariable("feature") String feature,
-                                                     @PathVariable("platformTyp") String platformType,
-                                                     @PathVariable("accessAppSn") String accessAppSn,
+                                                     @PathVariable("platform") String platform,
+                                                     @PathVariable("accessPlatformId") Long accessPlatformId,
                                                      @RequestBody String data) {
         final MessageContext messageContext = new MessageContext()
-            .setAccessAppSn(accessAppSn).setPlatform(platformType).setFeature(feature);
+            .setAccessPlatformId(accessPlatformId)
+            .setPlatform(platform)
+            .setFeature(feature);
         return ResponseEntity.ok(service.handleMessage(messageContext, data));
     }
 

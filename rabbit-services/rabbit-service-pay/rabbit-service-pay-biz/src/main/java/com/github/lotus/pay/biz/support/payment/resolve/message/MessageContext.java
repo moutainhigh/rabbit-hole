@@ -1,5 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.resolve.message;
 
+import com.github.lotus.common.datadict.bmw.Feature;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import lombok.Data;
 import lombok.Getter;
@@ -17,9 +18,10 @@ import java.util.Optional;
 @Data
 @Accessors(chain = true)
 public class MessageContext {
-    private String accessAppSn;
+    private Long accessPlatformId;
     private String platform;
     private String feature;
+    private String clientIp;
 
     public Optional<MessageType> asMessageType() {
         for (MessageType type : MessageType.values()) {
@@ -33,12 +35,12 @@ public class MessageContext {
     @Getter
     @RequiredArgsConstructor
     public enum MessageType {
-        WxPayWithPay(PaymentPlatform.WxPay, FeatureType.Pay, "支付通知 - 微信"),
-        WxPayWithRefund(PaymentPlatform.WxPay, FeatureType.Refund, "退款通知 - 微信"),
-        AliPayWithPay(PaymentPlatform.AliPay, FeatureType.Pay, "支付通知 - 支付宝"),
-        AliPayWithRefund(PaymentPlatform.AliPay, FeatureType.Refund, "退款通知 - 支付宝");
+        WxPayWithPay(PaymentPlatform.WxPay, Feature.Pay, "支付通知 - 微信"),
+        WxPayWithRefund(PaymentPlatform.WxPay, Feature.Refund, "退款通知 - 微信"),
+        AliPayWithPay(PaymentPlatform.AliPay, Feature.Pay, "支付通知 - 支付宝"),
+        AliPayWithRefund(PaymentPlatform.AliPay, Feature.Refund, "退款通知 - 支付宝");
         private final PaymentPlatform platform;
-        private final FeatureType feature;
+        private final Feature feature;
         private final String name;
     }
 

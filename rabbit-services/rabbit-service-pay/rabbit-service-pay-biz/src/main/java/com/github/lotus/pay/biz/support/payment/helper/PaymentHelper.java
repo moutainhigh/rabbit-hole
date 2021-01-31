@@ -1,4 +1,4 @@
-package com.github.lotus.pay.biz.support.payment;
+package com.github.lotus.pay.biz.support.payment.helper;
 
 import com.github.lotus.common.datadict.bmw.NotifyStatus;
 import com.github.lotus.common.datadict.bmw.NotifyType;

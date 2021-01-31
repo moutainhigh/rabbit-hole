@@ -9,7 +9,7 @@ import com.github.lotus.pay.biz.mapper.NotifyAccessAppMapper;
 import com.github.lotus.pay.biz.service.NotifyAccessAppService;
 import com.github.lotus.pay.biz.service.RefundRecordService;
 import com.github.lotus.pay.biz.service.TradeService;
-import com.github.lotus.pay.biz.support.payment.PaymentHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;

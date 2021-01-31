@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.mapper;
 
-import com.github.lotus.pay.biz.entity.RequestPlatformLog;
+import com.github.lotus.pay.biz.entity.PlatformRequestLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021-01-30
  */
 @Mapper
-public interface RequestPlatformLogMapper extends BaseMapper<RequestPlatformLog> {
+public interface PlatformRequestLogMapper extends BaseMapper<PlatformRequestLog> {
 
 }

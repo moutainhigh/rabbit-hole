@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ConfigStorageDto {
     private final String appid;
+    private final Long accessPlatformId;
     private final PaymentPlatform platform;
     private final ConfigStorage configStorage;
 

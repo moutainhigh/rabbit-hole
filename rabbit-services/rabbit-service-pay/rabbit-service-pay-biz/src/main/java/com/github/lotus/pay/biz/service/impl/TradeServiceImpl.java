@@ -31,7 +31,7 @@ import com.github.lotus.pay.biz.service.PaymentPlatformService;
 import com.github.lotus.pay.biz.service.RefundRecordService;
 import com.github.lotus.pay.biz.service.TradeService;
 import com.github.lotus.pay.biz.support.SNCodeService;
-import com.github.lotus.pay.biz.support.payment.PaymentHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -260,7 +260,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
     public void handlePayMessage(PayMessageRo ro) {
         LocalDateTime now = LocalDateTime.now();
         String clientIp = ro.getClientIp();
-        final String accessAppSn = ro.getAccessAppSn();
+        final Long accessPlatformId = ro.getAccessPlatformId();
         String tradeNo = ro.getTradeNo();
         String tradeSn = ro.getTradeSn();
         PaymentPlatform platformType = ro.getPlatformType();
@@ -268,8 +268,8 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         String tradeStatus = PaymentHelper.toTradeStatus(ro.getTradeStatus());
         String payMode = PaymentHelper.toPayMode(ro.getPayMode());
 
-        AccessPlatform accessPlatform = accessPlatformService.getByAppidAndRefType(accessAppSn, platformType.getCode())
-            .orElseThrow(() -> ServiceException.wrap("未开通的支付平台"));
+        AccessPlatform accessPlatform = accessPlatformService.getById(accessPlatformId);
+        ValidUtils.notNull(accessPlatform, "未开通的支付平台");
 
         final Trade trade = this.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         ValidUtils.isTrue(trade.getTotalFee().compareTo(ro.getTotalFee()) == 0, "交易金额不相符");

@@ -1,5 +1,6 @@
 package com.github.lotus.pay.biz.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeGoPayRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
@@ -15,6 +16,7 @@ import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
 import com.github.lotus.pay.biz.pojo.vo.WaitPayTradeVo;
 import com.github.lotus.pay.biz.service.AccessAppService;
 import com.github.lotus.pay.biz.service.AllPaymentService;
+import com.github.lotus.pay.biz.service.PlatformNotifyLogService;
 import com.github.lotus.pay.biz.service.TradeService;
 import com.github.lotus.pay.biz.support.payment.helper.RequestHelper;
 import com.github.lotus.pay.biz.support.payment.resolve.message.AllInMessageResolve;
@@ -40,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AllPaymentServiceImpl implements AllPaymentService {
     private final TradeService tradeService;
     private final AccessAppService accessAppService;
+    private final PlatformNotifyLogService platformNotifyLogService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -119,12 +122,27 @@ public class AllPaymentServiceImpl implements AllPaymentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String handleMessage(MessageContext context, String data) {
+        Long accessPlatformId = context.getAccessPlatformId();
+        String platform = context.getPlatform();
+        String feature = context.getFeature();
+
+        Long logId = platformNotifyLogService.log(context, data);
+
         final LambdaMap<Object> args = new StringMap<>();
-        args.put(MessageContext::getAccessAppSn, context.getAccessAppSn());
-        args.put(MessageContext::getPlatform, context.getPlatform());
-        args.put(MessageContext::getFeature, context.getFeature());
+        args.put(MessageContext::getAccessPlatformId, accessPlatformId);
+        args.put(MessageContext::getPlatform, platform);
+        args.put(MessageContext::getFeature, feature);
         MessageContext.MessageType messageType = context.asMessageType().orElseThrow(UnsupportedOperationException::new);
-        AllInMessageResolve messageResolve = RequestHelper.messageResolve(messageType.getPlatform(), context.getAccessAppSn());
-        return ((PaymentMessage.Result) messageResolve.handle(messageType, data, args)).string();
+        AllInMessageResolve messageResolve = RequestHelper.messageResolve(accessPlatformId);
+        String returnStr = null;
+        try {
+            returnStr = ((PaymentMessage.Result) messageResolve.handle(messageType, data, args)).string();
+            return returnStr;
+        } catch (Exception e) {
+            returnStr = StrUtil.format("发生异常: {}", e.getMessage());
+            throw e;
+        } finally {
+            platformNotifyLogService.updateLog(logId, returnStr);
+        }
     }
 }

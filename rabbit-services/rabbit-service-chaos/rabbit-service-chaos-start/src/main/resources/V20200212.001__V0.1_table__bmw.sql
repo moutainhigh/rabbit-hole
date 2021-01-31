@@ -125,8 +125,8 @@ CREATE TABLE `bmw_notify_access_app_log`
     COMMENT = '[支付网关] 所有通知应用方日志表';
 # ------------------------------------------------
 
-DROP TABLE IF EXISTS `bmw_request_platform_log`;
-CREATE TABLE `bmw_request_platform_log`
+DROP TABLE IF EXISTS `bmw_platform_request_log`;
+CREATE TABLE `bmw_platform_request_log`
 (
     id                 bigint auto_increment,
     access_platform_id bigint      not null
@@ -141,6 +141,8 @@ CREATE TABLE `bmw_request_platform_log`
         comment '请求头',
     request_params     text        not null
         comment '请求参数',
+    request_body       text        not null
+        comment '请求体',
     log_type           varchar(32) not null
         comment '日志类型: pay=>支付; refund=>退款; async_notify=>异步通知; sync_notify=>同步通知; query=>查询',
     --
@@ -151,7 +153,31 @@ CREATE TABLE `bmw_request_platform_log`
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
-    COMMENT = '[支付网关] 所有和第三方支付交易日志表';
+    COMMENT = '[支付网关] 所有对第三方支付发起的交易日志表';
+
+DROP TABLE IF EXISTS `bmw_platform_notify_log`;
+CREATE TABLE `bmw_platform_notify_log`
+(
+    id                 bigint auto_increment,
+    access_platform_id bigint      not null
+        comment '接入平台',
+    feature            varchar(32) not null
+        comment '功能: pay=>支付; refund=>退款',
+    request_body       text        not null
+        comment '请求体',
+    log_type           varchar(32) not null default 'async_notify'
+        comment '日志类型: pay=>支付; refund=>退款; async_notify=>异步通知; sync_notify=>同步通知; query=>查询',
+    return_body        text
+        comment '响应内容',
+    --
+    created_at         datetime(6) not null
+        comment '创建时间',
+    created_ip         varchar(32)
+        comment '创建ip',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+    COMMENT = '[支付网关] 所有第三方支付通知日志表';
 
 # ------------------------------------------------
 DROP TABLE IF EXISTS `bmw_trade`;

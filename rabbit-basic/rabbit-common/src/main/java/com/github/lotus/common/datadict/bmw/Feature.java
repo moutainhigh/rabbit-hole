@@ -1,5 +1,6 @@
-package com.github.lotus.pay.biz.support.payment.resolve.message;
+package com.github.lotus.common.datadict.bmw;
 
+import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,7 +12,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum FeatureType {
+public enum Feature implements DataDictEnum {
     Refund("refund", "退款"),
     Pay("pay", "支付");
     private final String code;

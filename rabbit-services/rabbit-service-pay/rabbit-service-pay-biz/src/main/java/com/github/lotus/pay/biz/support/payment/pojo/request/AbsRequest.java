@@ -1,10 +1,13 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.aliyun.openservices.log.http.client.ServiceException;
-import com.github.lotus.common.datadict.bmw.PayMode;
+import com.github.lotus.common.datadict.bmw.Feature;
 import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.pay.biz.constant.PaymentConstants;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
+import com.google.common.collect.Maps;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import in.hocg.boot.web.utils.web.RequestUtils;
 import in.hocg.payment.PaymentRequest;
@@ -12,6 +15,8 @@ import in.hocg.payment.PaymentService;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
 
 /**
  * Created by hocgin on 2020/6/1.
@@ -30,23 +35,33 @@ public abstract class AbsRequest {
         return getConfigStorage().getPlatform();
     }
 
-    protected String getAppid() {
-        return getConfigStorage().getAppid();
-    }
-
     protected String getHost() {
 //        todo: return Env.getConfigs().getHostname();
         return "";
     }
 
-    protected String getPaymentNotifyUrl(PayMode payMode) {
-        final String platformAppid = this.getAppid();
-        final String notifyUrl = "/pay";
-        return String.format("%s/payment/%s", this.getHost(), notifyUrl);
+    protected String getPaymentNotifyUrl() {
+        PaymentPlatform platform = getPlatform();
+        Long accessPlatformId = getConfigStorage().getAccessPlatformId();
+
+        HashMap<String, String> var = Maps.newHashMap();
+        var.put("feature", Feature.Pay.getCode());
+        var.put("platform", platform.getCodeStr());
+        var.put("accessPlatformId", String.valueOf(accessPlatformId));
+        String uri = StrUtil.format(PaymentConstants.CALLBACK_URI, var);
+        return this.getHost() + uri;
     }
 
     protected String getRefundNotifyUrl() {
-        return String.format("%s/payment/%s", this.getHost(), "refund");
+        PaymentPlatform platform = getPlatform();
+        Long accessPlatformId = getConfigStorage().getAccessPlatformId();
+
+        HashMap<String, String> var = Maps.newHashMap();
+        var.put("feature", Feature.Refund.getCode());
+        var.put("platform", platform.getCodeStr());
+        var.put("accessPlatformId", String.valueOf(accessPlatformId));
+        String uri = StrUtil.format(PaymentConstants.CALLBACK_URI, var);
+        return this.getHost() + uri;
     }
 
     protected String getClientIp() {
@@ -58,7 +73,8 @@ public abstract class AbsRequest {
     }
 
     protected void save(AbsRequest request) {
-        log.info("发起请求: {}", JSONUtil.toJsonStr(request));
+        String requestBody = JSONUtil.toJsonStr(request);
+        log.info("发起请求: {}", requestBody);
     }
 
     protected <T> T request(PaymentRequest request) {

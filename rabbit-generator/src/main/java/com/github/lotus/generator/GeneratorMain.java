@@ -17,10 +17,11 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.PAY, false,
+            "bmw_platform_notify_log",
+            "bmw_platform_request_log",
             "bmw_platform_alipay_config",
             "bmw_platform_wxpay_config",
             "bmw_notify_access_app_log",
-            "bmw_request_platform_log",
             "bmw_access_app",
             "bmw_access_platform",
             "bmw_notify_access_app",

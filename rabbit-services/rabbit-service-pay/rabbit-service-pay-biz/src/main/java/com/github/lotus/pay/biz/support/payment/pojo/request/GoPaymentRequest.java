@@ -199,7 +199,7 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl(ICode.ofThrow(getPayMode(), PayMode.class));
+        return getPaymentNotifyUrl();
     }
 
 }

@@ -6,7 +6,7 @@ import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.common.datadict.bmw.TradeStatus;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
 import com.github.lotus.pay.biz.service.AllPaymentService;
-import com.github.lotus.pay.biz.support.payment.PaymentHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.utils.lambda.map.StringMap;
 import in.hocg.boot.web.SpringContext;
@@ -40,7 +40,7 @@ public class AliPayPayMessageRule extends StringResolve.StringRule<TradeStatusSy
     protected static TradeStatusSyncMessage.Result handleMessage(TradeStatusSyncMessage message, Map<String, Object> args) {
         try {
             final StringMap<Object> lambdaMap = (StringMap<Object>) args;
-            final String accessAppSn = lambdaMap.getAsString(MessageContext::getAccessAppSn);
+            final Long accessPlatformId = (Long) lambdaMap.get(MessageContext::getAccessPlatformId);
             final String platformType = lambdaMap.getAsString(MessageContext::getPlatform);
             final String feature = lambdaMap.getAsString(MessageContext::getFeature);
 
@@ -52,7 +52,7 @@ public class AliPayPayMessageRule extends StringResolve.StringRule<TradeStatusSy
             final String totalAmount = message.getTotalAmount();
             final String buyerPayAmount = message.getBuyerPayAmount();
             final PayMessageRo ro = new PayMessageRo()
-                .setAccessAppSn(accessAppSn)
+                .setAccessPlatformId(accessPlatformId)
                 .setTradeStatus(tradeStatus)
                 .setTradeNo(tradeNo)
                 .setTradeSn(outTradeNo)

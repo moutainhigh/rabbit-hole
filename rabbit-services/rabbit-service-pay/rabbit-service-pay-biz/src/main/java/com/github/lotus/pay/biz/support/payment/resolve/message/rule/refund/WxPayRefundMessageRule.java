@@ -6,7 +6,7 @@ import com.github.lotus.common.datadict.bmw.PaymentPlatform;
 import com.github.lotus.common.datadict.bmw.RefundStatus;
 import com.github.lotus.pay.biz.pojo.ro.RefundMessageRo;
 import com.github.lotus.pay.biz.service.AllPaymentService;
-import com.github.lotus.pay.biz.support.payment.PaymentHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.utils.lambda.map.LambdaMap;
 import in.hocg.boot.web.SpringContext;
@@ -38,7 +38,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
     protected static PayRefundMessage.Result handleMessage(PayRefundMessage message, Map<String, Object> args) {
         try {
             final LambdaMap<Object> lambdaMap = (LambdaMap<Object>) args;
-            final String accessAppSn = lambdaMap.getAsString(MessageContext::getAccessAppSn);
+            final Long accessPlatformId = (Long) lambdaMap.get(MessageContext::getAccessPlatformId);
             final String platformType = lambdaMap.getAsString(MessageContext::getPlatform);
             final String feature = lambdaMap.getAsString(MessageContext::getFeature);
 
@@ -57,7 +57,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
                 .setSettlementRefundFee(settlementRefundFee)
                 .setRefundSn(refundSn)
                 .setRefundTradeNo(refundTradeNo)
-                .setAccessAppSn(accessAppSn)
+                .setAccessPlatformId(accessPlatformId)
                 .setPlatformType(paymentPlatform);
 
             SpringContext.getBean(AllPaymentService.class).handleRefundMessage(ro);

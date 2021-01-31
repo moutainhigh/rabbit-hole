@@ -10,6 +10,8 @@ import com.github.lotus.pay.biz.support.payment.resolve.message.rule.pay.AliPayP
 import com.github.lotus.pay.biz.support.payment.resolve.message.rule.pay.WxPayPayMessageRule;
 import com.github.lotus.pay.biz.support.payment.resolve.message.rule.refund.AliPayRefundMessageRule;
 import com.github.lotus.pay.biz.support.payment.resolve.message.rule.refund.WxPayRefundMessageRule;
+import in.hocg.boot.utils.ValidUtils;
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.SpringContext;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.ConfigStorage;
@@ -31,13 +33,14 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RequestHelper {
 
-    public AllInMessageResolve messageResolve(PaymentPlatform platform, String accessAppSn) {
+    public AllInMessageResolve messageResolve(Long accessPlatformId) {
         AccessPlatformService accessPlatformService = SpringContext.getApplicationContext().getBean(AccessPlatformService.class);
-        AccessPlatform accessPlatform = accessPlatformService.getByAppidAndRefType(accessAppSn, platform.getCode()).orElseThrow(() -> ServiceException.wrap("错误的支付回调信息"));
+        AccessPlatform accessPlatform = accessPlatformService.getById(accessPlatformId);
+        ValidUtils.notNull(accessPlatform, "错误的支付回调信息");
         ConfigStorageDto configStorage = accessPlatformService.getConfigStorage(accessPlatform.getId());
 
         final AllInMessageResolve dataResolve = new AllInMessageResolve();
-        switch (platform) {
+        switch (ICode.ofThrow(accessPlatform.getRefType(), PaymentPlatform.class)) {
             case AliPay:{
                 AliPayService payService = (AliPayService) configStorage.getPayService();
                 dataResolve.addRule(MessageContext.MessageType.WxPayWithPay, new AliPayPayMessageRule(payService));

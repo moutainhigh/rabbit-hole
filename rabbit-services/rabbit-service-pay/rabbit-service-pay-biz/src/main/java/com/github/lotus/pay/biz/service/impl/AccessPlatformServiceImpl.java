@@ -12,7 +12,7 @@ import com.github.lotus.pay.biz.service.AccessAppService;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
 import com.github.lotus.pay.biz.service.PlatformAlipayConfigService;
 import com.github.lotus.pay.biz.service.PlatformWxpayConfigService;
-import com.github.lotus.pay.biz.support.payment.PaymentHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.helper.ConfigStorageHelper;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -64,21 +64,26 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
         String refType = accessPlatform.getRefType();
         Long refId = accessPlatform.getRefId();
         PaymentPlatform paymentPlatform = PaymentHelper.asPaymentPlatform(refType);
+
+        ConfigStorageDto configStorageDto;
         switch (Objects.requireNonNull(paymentPlatform)) {
             case AliPay: {
                 PlatformAlipayConfig config = platformAlipayConfigService.getById(refId);
                 ConfigStorage configStorage = ConfigStorageHelper.createAliPayConfigStorage(config);
-                return new ConfigStorageDto(appid, PaymentPlatform.AliPay, configStorage);
+                configStorageDto = new ConfigStorageDto(appid, accessPlatformId, PaymentPlatform.AliPay, configStorage);
+                break;
             }
             case WxPay: {
                 PlatformWxpayConfig config = platformWxpayConfigService.getById(refId);
                 ConfigStorage configStorage = ConfigStorageHelper.createWxPayConfigStorage(config);
-                return new ConfigStorageDto(appid, PaymentPlatform.WxPay, configStorage);
+                configStorageDto = new ConfigStorageDto(appid, accessPlatformId, PaymentPlatform.WxPay, configStorage);
+                break;
             }
             case Unknown:
             default:
                 throw new UnsupportedOperationException();
         }
+        return configStorageDto;
     }
 
     @Override

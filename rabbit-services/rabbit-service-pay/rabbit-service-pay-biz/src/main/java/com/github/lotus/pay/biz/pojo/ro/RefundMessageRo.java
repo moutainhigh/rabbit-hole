@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class RefundMessageRo {
     @ApiModelProperty(value = "接入应用", required = true)
-    private String accessAppSn;
+    private Long accessPlatformId;
     @ApiModelProperty(value = "支付平台", required = true)
     private PaymentPlatform platformType;
     @ApiModelProperty(value = "退款单号(第三方)", required = true)
