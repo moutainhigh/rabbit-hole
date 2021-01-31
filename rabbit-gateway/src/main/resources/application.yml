@@ -29,6 +29,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: rabbit-pay
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/pay/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-wl
           uri: lb://rabbit-chaos
           predicates:
