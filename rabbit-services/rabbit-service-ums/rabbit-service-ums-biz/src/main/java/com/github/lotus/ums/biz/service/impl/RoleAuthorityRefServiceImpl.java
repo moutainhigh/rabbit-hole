@@ -83,6 +83,11 @@ public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthori
         validInsert(entity);
     }
 
+    @Override
+    public List<RoleAuthorityRef> listByRoleId(Long roleId) {
+        return lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId).list();
+    }
+
     private boolean hasByRoleIdAndAuthorityId(Long roleId, Long authorityId) {
         return !lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId)
             .eq(RoleAuthorityRef::getAuthorityId, authorityId)

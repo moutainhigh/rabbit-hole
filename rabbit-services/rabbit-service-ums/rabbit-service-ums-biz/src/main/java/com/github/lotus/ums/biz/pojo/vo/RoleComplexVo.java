@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/8/21
@@ -51,5 +53,8 @@ public class RoleComplexVo {
     @Named(idFor = "lastUpdater", type = ChaosNamedAPI.USERID2NICKNAME,
         serviceClass = ChaosNamedAPI.class)
     private String lastUpdaterName;
+
+    @ApiModelProperty("权限列表")
+    private List<Long> authorities = Collections.emptyList();
 
 }

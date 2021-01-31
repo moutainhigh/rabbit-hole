@@ -20,4 +20,6 @@ public interface RoleAuthorityRefService extends AbstractService<RoleAuthorityRe
     void grantAuthorities(Long roleId, List<Long> authorities);
 
     void grantAuthority(Long roleId, Long authorityId);
+
+    List<RoleAuthorityRef> listByRoleId(Long roleId);
 }
