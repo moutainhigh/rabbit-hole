@@ -11,4 +11,9 @@
       </if>
     </where>
   </select>
+
+  <select id="paging" resultType="com.github.lotus.com.biz.entity.Project">
+    SELECT cp.*
+    FROM com_project cp
+  </select>
 </mapper>

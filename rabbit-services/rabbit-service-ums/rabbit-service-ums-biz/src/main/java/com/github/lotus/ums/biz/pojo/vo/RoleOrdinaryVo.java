@@ -41,7 +41,6 @@ public class RoleOrdinaryVo {
     @UseNamedService(ChaosNamedAPI.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
-
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")

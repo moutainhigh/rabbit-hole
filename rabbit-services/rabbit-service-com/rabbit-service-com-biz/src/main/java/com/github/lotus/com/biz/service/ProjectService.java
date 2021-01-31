@@ -1,8 +1,11 @@
 package com.github.lotus.com.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.com.biz.entity.Project;
 import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
+import com.github.lotus.com.biz.pojo.ro.ProjectPagingRo;
+import com.github.lotus.com.biz.pojo.ro.ProjectSaveRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -25,4 +28,14 @@ public interface ProjectService extends AbstractService<Project> {
     List<ProjectComplexVo> complete(ProjectCompleteRo ro);
 
     List<ProjectComplexVo> listComplexById(List<Long> id);
+
+    void deleteOne(Long id);
+
+    IPage<ProjectComplexVo> paging(ProjectPagingRo ro);
+
+    void updateOne(Long id, ProjectSaveRo ro);
+
+    void insertOne(ProjectSaveRo ro);
+
+    ProjectComplexVo getComplex(Long id);
 }

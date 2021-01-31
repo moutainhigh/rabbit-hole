@@ -1,17 +1,22 @@
 package com.github.lotus.com.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.com.biz.entity.Project;
 import com.github.lotus.com.biz.mapper.ProjectMapper;
 import com.github.lotus.com.biz.mapstruct.ProjectMapping;
 import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
+import com.github.lotus.com.biz.pojo.ro.ProjectPagingRo;
+import com.github.lotus.com.biz.pojo.ro.ProjectSaveRo;
 import com.github.lotus.com.biz.service.ProjectService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,21 +40,65 @@ public class ProjectServiceImpl extends AbstractServiceImpl<ProjectMapper, Proje
 
     @Override
     public ProjectComplexVo getByEncoding(String projectSn) {
-        return getByProjectSn(projectSn).map(this::convert).orElse(null);
+        return getByProjectSn(projectSn).map(this::convertComplex).orElse(null);
     }
 
     @Override
     public List<ProjectComplexVo> complete(ProjectCompleteRo ro) {
         return baseMapper.complete(ro, ro.ofPage())
-            .convert(this::convert).getRecords();
+            .convert(this::convertComplex).getRecords();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<ProjectComplexVo> listComplexById(List<Long> id) {
-        return LangUtils.toList(listByIds(id), this::convert);
+        return LangUtils.toList(listByIds(id), this::convertComplex);
     }
 
-    private ProjectComplexVo convert(Project entity) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOne(Long id) {
+        this.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<ProjectComplexVo> paging(ProjectPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOne(Long id, ProjectSaveRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        Long userId = ro.getUserId();
+
+        Project entity = mapping.asProject(ro);
+        entity.setId(id);
+        entity.setLastUpdatedAt(now);
+        entity.setLastUpdater(userId);
+        validUpdateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertOne(ProjectSaveRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        Long userId = ro.getUserId();
+
+        Project entity = mapping.asProject(ro);
+        entity.setCreatedAt(now);
+        entity.setCreator(userId);
+        validInsert(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ProjectComplexVo getComplex(Long id) {
+        return this.convertComplex(getById(id));
+    }
+
+    private ProjectComplexVo convertComplex(Project entity) {
         return mapping.asComplex(entity);
     }
 }
