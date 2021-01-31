@@ -72,6 +72,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
         String tradeSn = ro.getTradeSn();
         String clientIp = ro.getClientIp();
         String payMode = ro.getPayMode();
+        String wxOpenId = ro.getWxOpenId();
 
         Trade trade = tradeService.getByTradeSn(tradeSn).orElseThrow(() -> ServiceException.wrap("未找到交易账单"));
         Long tradeId = trade.getId();
@@ -93,7 +94,7 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
         BigDecimal totalFee = trade.getTotalFee();
         final GoPaymentResponse result = GoPaymentRequest.builder()
             .configStorage(configStorage).payMode(payMode).payAmount(totalFee)
-            .tradeSn(tradeSn).wxOpenId(null).quitUrl(null)
+            .tradeSn(tradeSn).wxOpenId(wxOpenId).quitUrl(null)
             .build().request();
         return mapping.asGoPayVo(result);
     }

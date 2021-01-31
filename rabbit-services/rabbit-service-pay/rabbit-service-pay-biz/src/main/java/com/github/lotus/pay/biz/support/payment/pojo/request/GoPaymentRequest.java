@@ -1,8 +1,10 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
 import com.github.lotus.common.datadict.bmw.PayMode;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.PaymentResponse;
@@ -99,7 +101,7 @@ public class GoPaymentRequest extends AbsRequest {
 
     private WxPayRequest wxPayJSAPIRequest() {
         final String wxOpenId = this.getWxOpenId();
-//        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
+        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
 
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setOpenId(wxOpenId);
@@ -107,35 +109,35 @@ public class GoPaymentRequest extends AbsRequest {
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getTradeSn());
-        request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
+        request.setTotalFee(PaymentHelper.toWxPayAmount(payAmount));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
     }
 
     private WxPayRequest wxPayAPPRequest() {
         final String wxOpenId = this.getWxOpenId();
-//        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
+        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
 
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setTradeType("APP");
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getTradeSn());
-        request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
+        request.setTotalFee(PaymentHelper.toWxPayAmount(payAmount));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
     }
 
     private WxPayRequest wxPayNativeRequest() {
         final String wxOpenId = this.getWxOpenId();
-//        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
+        ValidUtils.notNull(wxOpenId, "微信支付需要指定用户ID");
 
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setTradeType("APP");
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getTradeSn());
-        request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
+        request.setTotalFee(PaymentHelper.toWxPayAmount(payAmount));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
     }

@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 @ApiModel("创建交易单")
 public class CreateTradeGoPayRo extends CreateTradeRo {
+    @ApiModelProperty(value = "[可选]微信支付")
+    private String wxOpenId;
+
     @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
     private String payMode;

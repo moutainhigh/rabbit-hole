@@ -79,6 +79,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         String clientIp = ro.getClientIp();
         String outTradeSn = ro.getOutTradeSn();
         String appid = ro.getAppid();
+        BigDecimal totalFee = ro.getTotalFee();
         String notifyUrl = ro.getNotifyUrl();
         String tradeSn = snCodeService.getTransactionSNCode();
 
@@ -92,6 +93,7 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         Long accessAppId = accessApp.getId();
 
         Trade entity = mapping.asTrade(ro)
+            .setTotalFee(totalFee)
             .setAccessAppId(accessAppId)
             .setTradeSn(tradeSn)
             .setTradeStatus(TradeStatus.Init.getCode())

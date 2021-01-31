@@ -9,6 +9,9 @@ import com.github.lotus.common.datadict.bmw.TradeStatus;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Created by hocgin on 2021/1/30
  * email: hocgin@gmail.com
@@ -25,6 +28,11 @@ public class PaymentHelper {
      * 成功通知标记
      */
     public static final String SUCCESS_NOTIFY_FLAG = "SUCCESS";
+
+    public static String toWxPayAmount(BigDecimal v) {
+        BigDecimal decimal = BigDecimal.valueOf(100L).multiply(v);
+        return  decimal.setScale(0, RoundingMode.DOWN).toPlainString();
+    }
 
     public static String toPayMode(PayMode payMode) {
         return payMode.getCode();
