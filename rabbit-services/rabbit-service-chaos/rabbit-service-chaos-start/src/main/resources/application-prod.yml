@@ -20,6 +20,8 @@ rabbit:
           secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
         - appid: wx515efe8f906a5e69
           secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
+        - appid: wxcc688a6002bd1234
+          secret: ENC(lsQ9bNFoRfdugnXc3yo5KA57XgFhIxec9rR4A+Vgf18kIwoQRaFhSe9oQPkoxk1O)
     mp:
       configs:
         - appid: wxb4df1f0c3dc96256
