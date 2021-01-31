@@ -116,6 +116,7 @@ boot:
         ,/com/district/tree
         ,/chaos/address4ip
         ,/pay/gateway/**
+        ,/com/project/encoding:*
 
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift

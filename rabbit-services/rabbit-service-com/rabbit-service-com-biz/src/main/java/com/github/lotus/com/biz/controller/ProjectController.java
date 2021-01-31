@@ -87,7 +87,7 @@ public class ProjectController {
         return Result.success();
     }
 
-    @GetMapping("/encoding:{encoding:\\w+}")
+    @GetMapping("/encoding:{encoding}")
     @ApiOperation("详情 - 项目")
     @ApiOperationSupport(author = "hocgin")
     public Result<ProjectComplexVo> getByEncoding(@PathVariable("encoding") String encoding) {
