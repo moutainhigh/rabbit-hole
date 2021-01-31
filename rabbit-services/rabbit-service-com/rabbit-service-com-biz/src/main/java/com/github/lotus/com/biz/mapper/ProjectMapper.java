@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.com.biz.entity.Project;
 import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
+import com.github.lotus.com.biz.pojo.ro.ProjectPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ProjectMapper extends BaseMapper<Project> {
 
     IPage<Project> complete(@Param("ro") ProjectCompleteRo ro, @Param("page") Page page);
+
+    IPage<Project> paging(@Param("ro") ProjectPagingRo ro, @Param("page") Page page);
 }

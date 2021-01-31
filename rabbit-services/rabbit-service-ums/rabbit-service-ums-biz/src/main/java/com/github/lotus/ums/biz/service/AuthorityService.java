@@ -7,6 +7,7 @@ import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.GrantUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityOrdinaryVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public interface AuthorityService extends AbstractService<Authority> {
 
-    AuthorityComplexVo getAuthority(Long id);
+    AuthorityComplexVo getComplex(Long id);
 
     void insertOne(SaveAuthorityRo ro);
 
@@ -46,4 +47,8 @@ public interface AuthorityService extends AbstractService<Authority> {
     List<AuthorityTreeNodeVo> listByProjectIdAndUserId(Long projectId, Long userId);
 
     List<String> listAuthorityCodeByProjectIdAndUserId(Long projectId, Long userId);
+
+    List<AuthorityOrdinaryVo> listOrdinaryByRoleId(Long roleId);
+
+    List<AuthorityOrdinaryVo> listOrdinaryByUserGroupId(Long userGroupId);
 }

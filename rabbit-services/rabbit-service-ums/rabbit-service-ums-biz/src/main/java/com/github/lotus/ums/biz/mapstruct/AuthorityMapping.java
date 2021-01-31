@@ -4,6 +4,7 @@ import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityOrdinaryVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,4 +30,6 @@ public interface AuthorityMapping {
     UserRoleComplexVo asUserRoleComplexVo(User account);
 
     AuthorityComplexVo asComplex(Authority entity);
+
+    AuthorityOrdinaryVo asOrdinary(Authority entity);
 }

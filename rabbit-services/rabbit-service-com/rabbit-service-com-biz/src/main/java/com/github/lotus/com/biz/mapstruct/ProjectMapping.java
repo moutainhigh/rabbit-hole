@@ -2,6 +2,7 @@ package com.github.lotus.com.biz.mapstruct;
 
 import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.com.biz.entity.Project;
+import com.github.lotus.com.biz.pojo.ro.ProjectSaveRo;
 import org.mapstruct.Mapper;
 
 /**
@@ -13,4 +14,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ProjectMapping {
     ProjectComplexVo asComplex(Project entity);
+
+    Project asProject(ProjectSaveRo ro);
 }

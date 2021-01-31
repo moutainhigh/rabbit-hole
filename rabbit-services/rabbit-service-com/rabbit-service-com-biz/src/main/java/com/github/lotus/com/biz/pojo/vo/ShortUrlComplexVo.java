@@ -1,9 +1,10 @@
 package com.github.lotus.com.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
-
+import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
+import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class ShortUrlComplexVo {
     @ApiModelProperty("创建人")
     private Long creator;
     @ApiModelProperty("创建人")
-    @Named(idFor = "creator", type = ChaosNamedAPI.USERID2NICKNAME)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
 }

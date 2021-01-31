@@ -13,12 +13,14 @@ import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.GrantUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityOrdinaryVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.AuthorityApiRefService;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
+import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
@@ -51,6 +53,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     implements AuthorityService {
     private final AuthorityMapping mapping;
     private final ApiService apiService;
+    private final RoleService roleService;
     private final AuthorityApiRefService authorityApiRefService;
     private final RoleAuthorityRefService roleAuthorityRefService;
     private final UserGroupService userGroupService;
@@ -58,12 +61,8 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     private final UserGroupAuthorityRefService userGroupAuthorityRefService;
 
     @Override
-    public AuthorityComplexVo getAuthority(Long id) {
-        return convert(getById(id));
-    }
-
-    private AuthorityComplexVo convert(Authority entity) {
-        return mapping.asComplex(entity);
+    public AuthorityComplexVo getComplex(Long id) {
+        return convertComplex(getById(id));
     }
 
     @Override
@@ -173,6 +172,38 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
         return LangUtils.toList(authorities, Authority::getEncoding);
     }
 
+    @Override
+    public List<AuthorityOrdinaryVo> listOrdinaryByRoleId(Long roleId) {
+        return LangUtils.toList(this.listByRoleId(roleId), this::convertOrdinary);
+    }
+
+    @Override
+    public List<AuthorityOrdinaryVo> listOrdinaryByUserGroupId(Long userGroupId) {
+        return LangUtils.toList(this.listByUserGroupId(userGroupId), this::convertOrdinary);
+    }
+
+    private List<Authority> listByUserGroupId(Long userGroupId) {
+        return baseMapper.listByUserGroupId(userGroupId);
+    }
+
+    private List<Authority> listByRoleId(Long roleId) {
+        return baseMapper.listByRoleId(roleId);
+    }
+
+    private AuthorityComplexVo convertComplex(Authority entity) {
+        AuthorityComplexVo result = mapping.asComplex(entity);
+        if (Objects.nonNull(result)) {
+            Long authorityId = entity.getId();
+            result.setApis(apiService.listOrdinaryByAuthorityId(authorityId));
+            result.setRoles(roleService.listOrdinaryByAuthorityId(authorityId));
+        }
+        return result;
+    }
+
+    private AuthorityOrdinaryVo convertOrdinary(Authority entity) {
+        return mapping.asOrdinary(entity);
+    }
+
     private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities;
         if (RabbitUtils.isSuperAdmin(userId)) {
@@ -184,7 +215,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     }
 
     private List<Authority> listByProjectId(Long projectId, Boolean enabled) {
-        return lambdaQuery().eq(Authority::getProjectId, projectId)
+        return lambdaQuery().eq(Objects.nonNull(projectId), Authority::getProjectId, projectId)
             .eq(Objects.nonNull(enabled), TreeEntity::getEnabled, enabled)
             .orderByAsc(Authority::getPriority).list();
     }

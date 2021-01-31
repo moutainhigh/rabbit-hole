@@ -59,7 +59,7 @@ public class AuthorityController {
     @GetMapping("/{id}")
     @ResponseBody
     public Result<AuthorityComplexVo> getAuthority(@ApiParam(value = "权限", required = true) @PathVariable Long id) {
-        return Result.success(service.getAuthority(id));
+        return Result.success(service.getComplex(id));
     }
 
     @ApiOperation("新增权限 - 权限")

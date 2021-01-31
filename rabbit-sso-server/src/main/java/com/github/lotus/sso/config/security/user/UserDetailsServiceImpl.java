@@ -1,7 +1,7 @@
 package com.github.lotus.sso.config.security.user;
 
 import cn.hutool.core.lang.Assert;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -21,7 +21,7 @@ import java.util.Collections;
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
-    private final AccountServiceApi accountApi;
+    private final UserServiceApi accountApi;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -19,13 +19,13 @@ import java.time.LocalDateTime;
 @ApiModel("交易状态同步")
 public class TradeStatusSync {
     @ApiModelProperty("支付方式")
-    private Integer paymentWay;
+    private String payMode;
     @ApiModelProperty("交易单号")
     private String tradeSn;
     @ApiModelProperty("商户单号")
     private String outTradeSn;
     @ApiModelProperty("交易状态")
-    private Integer tradeStatus;
+    private String tradeStatus;
     @ApiModelProperty("交易金额")
     private BigDecimal totalFee;
     @ApiModelProperty("付款时间")
@@ -34,6 +34,4 @@ public class TradeStatusSync {
     private LocalDateTime createdAt;
     @ApiModelProperty("过期时间")
     private LocalDateTime expireAt;
-    @ApiModelProperty("(微信用户OPEN-ID)仅微信")
-    private String openid;
 }

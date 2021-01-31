@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class CreateTradeRo {
     @NotNull(message = "应用编号不能为空")
     @ApiModelProperty(value = "接入应用编号", required = true)
-    private Long appSn;
+    private String appid;
     @NotNull(message = "应用订单号不能为空")
     @ApiModelProperty(value = "接入应用订单号", required = true)
     private String outTradeSn;
@@ -29,4 +29,7 @@ public class CreateTradeRo {
     private BigDecimal totalFee;
     @ApiModelProperty("通知地址")
     private String notifyUrl;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 }

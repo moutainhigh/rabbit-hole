@@ -50,6 +50,7 @@
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <jsoup.version>1.13.1</jsoup.version>
     <payment.version>0.1.2-SNAPSHOT</payment.version>
+    <okhttp.version>4.4.0</okhttp.version>
   </properties>
 
   <dependencyManagement>
@@ -424,6 +425,16 @@
         <groupId>com.qiniu</groupId>
         <artifactId>qiniu-java-sdk</artifactId>
         <version>${qiniu-java-sdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>${okhttp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>logging-interceptor</artifactId>
+        <version>${okhttp.version}</version>
       </dependency>
       <dependency>
         <groupId>org.projectlombok</groupId>

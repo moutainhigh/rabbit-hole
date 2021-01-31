@@ -45,7 +45,7 @@ public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthori
         List<RoleAuthorityRef> entities = authorities.parallelStream()
             .map(authorityId -> new RoleAuthorityRef().setAuthorityId(authorityId).setRoleId(roleId))
             .collect(Collectors.toList());
-        List<RoleAuthorityRef> allData = this.listRoleAuthorityByAuthorityId(roleId);
+        List<RoleAuthorityRef> allData = this.listByRoleId(roleId);
 
         final BiFunction<RoleAuthorityRef, RoleAuthorityRef, Boolean> isSame =
             (t1, t2) -> LangUtils.equals(t1.getAuthorityId(), t2.getAuthorityId());
@@ -83,13 +83,14 @@ public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthori
         validInsert(entity);
     }
 
+    @Override
+    public List<RoleAuthorityRef> listByRoleId(Long roleId) {
+        return lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId).list();
+    }
+
     private boolean hasByRoleIdAndAuthorityId(Long roleId, Long authorityId) {
         return !lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId)
             .eq(RoleAuthorityRef::getAuthorityId, authorityId)
             .page(new Page<>(1, 1, false)).getRecords().isEmpty();
-    }
-
-    private List<RoleAuthorityRef> listRoleAuthorityByAuthorityId(Long roleId) {
-        return lambdaQuery().eq(RoleAuthorityRef::getRoleId, roleId).list();
     }
 }

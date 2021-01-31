@@ -5,6 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * Created by hocgin on 2021/1/22
  * email: hocgin@gmail.com
@@ -17,4 +19,7 @@ public interface ProjectServiceApi {
 
     @PostMapping(CONTEXT_ID + "/getProjectByProjectSn")
     ProjectComplexVo getComplexByProjectSn(@RequestParam("projectSn") String projectSn);
+
+    @PostMapping(CONTEXT_ID + "/listComplexById")
+    List<ProjectComplexVo> listComplexById(@RequestParam("id") List<Long> id);
 }

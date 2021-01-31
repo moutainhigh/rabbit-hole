@@ -1,7 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.pay.biz.enumns.PaymentPlatformType;
-import com.github.lotus.pay.biz.enumns.PaymentWayType;
+import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoRefundResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
@@ -9,10 +8,11 @@ import in.hocg.payment.alipay.v2.response.TradeRefundResponse;
 import in.hocg.payment.wxpay.v2.request.PayRefundRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.PayRefundResponse;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 
@@ -24,12 +24,11 @@ import java.math.BigDecimal;
  */
 @Data
 @Builder
+@ApiModel
+@EqualsAndHashCode(callSuper = true)
 public class GoRefundRequest extends AbsRequest {
-    @NonNull
-    @ApiModelProperty(value = "支付平台AppId", required = true)
-    private String platformAppid;
-    @ApiModelProperty("退款方式")
-    private final PaymentWayType paymentWay;
+    @ApiModelProperty
+    protected final ConfigStorageDto configStorage;
     @ApiModelProperty("交易单号(网关)")
     private String tradeSn;
     @ApiModelProperty("交易流水号(第三方)")
@@ -67,8 +66,7 @@ public class GoRefundRequest extends AbsRequest {
 
     public GoRefundResponse request() {
         final GoRefundResponse result = new GoRefundResponse();
-        final PaymentPlatformType platform = paymentWay.getPlatform();
-        switch (platform) {
+        switch (getPlatform()) {
             case WxPay: {
                 final WxPayRequest request = this.wxRefundRequest();
                 final PayRefundResponse response = this.request(request);
@@ -88,11 +86,7 @@ public class GoRefundRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getRefundNotifyUrl(this.paymentWay);
+        return getRefundNotifyUrl();
     }
 
-    @Override
-    protected PaymentPlatformType getPaymentPlatform() {
-        return this.paymentWay.getPlatform();
-    }
 }

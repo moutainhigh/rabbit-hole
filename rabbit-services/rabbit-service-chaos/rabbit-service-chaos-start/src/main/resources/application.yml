@@ -41,6 +41,7 @@ boot:
     from: "HOCGIN 官方邮件<13600747016@163.com>"
     user: 13600747016@163.com
     pass: ENC(gxGSa0v45jQn5vN4j4xBh9Z/YPTHc+9UAcHSwqk9vGs=)
+
 rabbit:
   wx:
     # https://developers.weixin.qq.com/sandbox
@@ -54,9 +55,13 @@ rabbit:
           secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
         - appid: wx515efe8f906a5e69
           secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
+        - appid: wxcc688a6002bd1234
+          secret: ENC(lsQ9bNFoRfdugnXc3yo5KA57XgFhIxec9rR4A+Vgf18kIwoQRaFhSe9oQPkoxk1O)
     # https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
     mp:
       configs:
         - appid: wx6c554c6d25b19c4a
           secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
           token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
+  payment:
+    url-prefix: https://api.hocgin.top/pay

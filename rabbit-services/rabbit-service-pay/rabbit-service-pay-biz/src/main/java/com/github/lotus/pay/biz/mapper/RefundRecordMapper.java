@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.lotus.pay.biz.entity.RefundRecord;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author hocgin
- * @since 2020-06-06
+ * @since 2021-01-30
  */
 @Mapper
 public interface RefundRecordMapper extends BaseMapper<RefundRecord> {

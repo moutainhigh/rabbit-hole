@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.pojo.ro;
 
-import com.github.lotus.pay.biz.enumns.RefundStatus;
+import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.bmw.RefundStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,10 +18,10 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class RefundMessageRo {
-    @ApiModelProperty(value = "支付平台唯一标识", required = true)
-    private String appid;
+    @ApiModelProperty(value = "接入应用", required = true)
+    private Long accessPlatformId;
     @ApiModelProperty(value = "支付平台", required = true)
-    private Integer channel;
+    private PaymentPlatform platformType;
     @ApiModelProperty(value = "退款单号(第三方)", required = true)
     private String refundTradeNo;
     @ApiModelProperty(value = "退款单号(网关)", required = true)
@@ -31,6 +32,9 @@ public class RefundMessageRo {
     private BigDecimal refundFee;
     @ApiModelProperty("实际退款金额")
     private BigDecimal settlementRefundFee;
-    @ApiModelProperty("退款状态: 0=>未退款; 1=>退款处理中; 2=>退款成功; 3=>退款失败")
+    @ApiModelProperty("退款状态")
     private RefundStatus refundStatus;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 }

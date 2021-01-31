@@ -22,4 +22,11 @@
       </if>
     </where>
   </select>
+
+  <select id="listByAuthorityId" resultType="com.github.lotus.ums.biz.entity.Role">
+    SELECT ar.*
+    FROM ams_role ar
+           LEFT JOIN ams_role_authority_ref arar on ar.id = arar.role_id
+    WHERE arar.authority_id = #{authorityId}
+  </select>
 </mapper>

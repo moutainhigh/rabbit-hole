@@ -46,4 +46,11 @@
       </if>
     </where>
   </select>
+
+  <select id="listByAuthorityId" resultType="com.github.lotus.ums.biz.entity.Api">
+    SELECT DISTINCT aa.*
+    FROM ams_api aa
+           LEFT JOIN ams_authority_api_ref aaar on aa.id = aaar.api_id
+    WHERE aaar.authority_id = #{authorityId}
+  </select>
 </mapper>

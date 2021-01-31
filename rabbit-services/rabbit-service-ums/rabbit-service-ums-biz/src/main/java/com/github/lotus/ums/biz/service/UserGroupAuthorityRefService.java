@@ -3,6 +3,8 @@ package com.github.lotus.ums.biz.service;
 import com.github.lotus.ums.biz.entity.UserGroupAuthorityRef;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 用户组x权限表 服务类
@@ -16,4 +18,6 @@ public interface UserGroupAuthorityRefService extends AbstractService<UserGroupA
     void grantAuthority(Long userGroupId, Long authorityId);
 
     boolean hasUserGroupByAuthorityId(Long authorityId);
+
+    void grantAuthorities(Long userGroupId, List<Long> authorities);
 }

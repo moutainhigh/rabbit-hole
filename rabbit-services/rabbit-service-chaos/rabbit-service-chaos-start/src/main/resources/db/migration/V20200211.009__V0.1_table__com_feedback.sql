@@ -10,7 +10,7 @@ create table com_project
         COMMENT '标题',
     `remark`          VARCHAR(255)
         COMMENT '备注',
-    `version`         VARCHAR(16)        NOT NULL DEFAULT 'v1.0.0'
+    `version`         VARCHAR(16)        NOT NULL DEFAULT '1.0.0'
         COMMENT '当前版本',
 --
     created_at        TIMESTAMP(6)       NOT NULL

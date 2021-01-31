@@ -29,10 +29,11 @@ import com.github.lotus.ums.biz.pojo.ro.UserCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.service.UserService;
 import com.github.lotus.ums.biz.service.AuthorityService;
+import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
 import com.github.lotus.ums.biz.service.SocialService;
+import com.github.lotus.ums.biz.service.UserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -68,6 +69,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private final FileServiceApi fileServiceApi;
     private final ProjectServiceApi projectServiceApi;
     private final AuthorityService authorityService;
+    private final RoleService roleService;
     private final RoleUserRefService roleUserRefService;
 
     @Override
@@ -111,8 +113,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
             }
         }
 
-        final User update = new User()
-            .setId(entityId);
+        final User update = new User().setId(entityId);
 
         // 设置默认头像，如果没有指定头像的话
         if (Strings.isBlank(avatar)) {
@@ -155,7 +156,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<User> listAccountByAccountId(List<Long> values) {
+    public List<User> listAccountById(List<Long> values) {
         if (CollectionUtil.isEmpty(values)) {
             return Collections.emptyList();
         }
@@ -180,8 +181,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     }
 
     @Override
-    public List<AccountVo> listAccountVoByAccountId(List<Long> id) {
-        return LangUtils.toList(this.listAccountByAccountId(id), mapping::asAccountVo);
+    public List<AccountVo> listAccountVoById(List<Long> id) {
+        return LangUtils.toList(this.listAccountById(id), mapping::asAccountVo);
     }
 
     @Override
@@ -272,16 +273,17 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     }
 
     private AccountComplexVo convert(User entity) {
-        Long entityId = entity.getId();
+        Long userId = entity.getId();
 
         AccountComplexVo result = mapping.asComplex(entity);
 
         // 已绑定的社交方式
-        List<Social> socials = socialService.listSocialByUserId(entityId);
+        List<Social> socials = socialService.listSocialByUserId(userId);
         result.setSocial(socials.parallelStream().map(social ->
             new AccountComplexVo.SocialItem().setSocialType(social.getSocialType())
         ).collect(Collectors.toList()));
 
+        result.setRoles(roleService.listOrdinaryByUserId(userId));
         return result;
     }
 

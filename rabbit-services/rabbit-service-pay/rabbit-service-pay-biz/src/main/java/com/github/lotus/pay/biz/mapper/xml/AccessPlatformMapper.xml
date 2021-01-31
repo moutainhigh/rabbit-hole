@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.pay.biz.mapper.AccessPlatformMapper">
+  <select id="getByAccessAppIdAndPayMode" resultType="com.github.lotus.pay.biz.entity.AccessPlatform">
+    SELECT bap.*
+    FROM bmw_access_platform bap
+           LEFT JOIN bmw_payment_platform bpp on bap.ref_type = bpp.encoding
+           LEFT JOIN bmw_payment_mode bpm on bpp.id = bpm.payment_platform_id
+    WHERE bap.access_app_id = #{accessAppId}
+      AND bpm.encoding = #{payMode}
+  </select>
+</mapper>

@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.ApiOrdinaryVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -33,4 +34,6 @@ public interface ApiService extends AbstractService<Api> {
     List<ApiComplexVo> complete(ApiCompleteRo ro);
 
     ApiComplexVo getComplex(Long id);
+
+    List<ApiOrdinaryVo> listOrdinaryByAuthorityId(Long authorityId);
 }

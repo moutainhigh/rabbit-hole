@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.apiimpl;
 
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class AccountServiceApiImpl implements AccountServiceApi {
+public class AccountServiceApiImpl implements UserServiceApi {
     private final UserService service;
 
     @Override
@@ -53,8 +53,8 @@ public class AccountServiceApiImpl implements AccountServiceApi {
     }
 
     @Override
-    public List<AccountVo> listAccountVoByAccountId(List<Long> id) {
-        return service.listAccountVoByAccountId(id);
+    public List<AccountVo> listAccountVoById(List<Long> id) {
+        return service.listAccountVoById(id);
     }
 
     @Override

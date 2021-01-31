@@ -26,4 +26,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
 
     List<Authority> listByProjectIdAndUserId(@Param("projectId") Long projectId, @Param("userId") Long userId);
 
+    List<Authority> listByRoleId(@Param("roleId") Long roleId);
+
+    List<Authority> listByUserGroupId(@Param("userGroupId") Long userGroupId);
 }

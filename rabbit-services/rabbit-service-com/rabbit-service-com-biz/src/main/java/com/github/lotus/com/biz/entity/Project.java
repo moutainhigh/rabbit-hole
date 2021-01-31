@@ -45,6 +45,7 @@ public class Project extends AbstractEntity<Project> {
     @ApiModelProperty("当前版本号")
     @TableField("version")
     private String version;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

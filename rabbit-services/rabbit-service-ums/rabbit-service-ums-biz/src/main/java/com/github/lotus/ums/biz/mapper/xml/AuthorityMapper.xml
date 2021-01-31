@@ -35,4 +35,18 @@
     </where>
     ORDER BY aa.priority
   </select>
+
+  <select id="listByRoleId" resultType="com.github.lotus.ums.biz.entity.Authority">
+    SELECT DISTINCT aa.*
+    FROM ams_authority aa
+           LEFT JOIN ams_role_authority_ref arar on aa.id = arar.authority_id
+    WHERE arar.role_id = #{roleId}
+  </select>
+
+  <select id="listByUserGroupId" resultType="com.github.lotus.ums.biz.entity.Authority">
+    SELECT DISTINCT aa.*
+    FROM ams_authority aa
+           LEFT JOIN ams_user_group_authority_ref augar on aa.id = augar.authority_id
+    WHERE augar.user_group_id = #{userGroupId}
+  </select>
 </mapper>

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by hocgin on 2021/1/22
  * email: hocgin@gmail.com
@@ -21,5 +23,10 @@ public class ProjectServiceApiImpl implements ProjectServiceApi {
     @Override
     public ProjectComplexVo getComplexByProjectSn(String projectSn) {
         return service.getByEncoding(projectSn);
+    }
+
+    @Override
+    public List<ProjectComplexVo> listComplexById(List<Long> id) {
+        return service.listComplexById(id);
     }
 }

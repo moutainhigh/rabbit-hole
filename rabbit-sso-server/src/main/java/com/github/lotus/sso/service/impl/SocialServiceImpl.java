@@ -3,7 +3,7 @@ package com.github.lotus.sso.service.impl;
 import com.github.lotus.sso.config.security.PageConstants;
 import com.github.lotus.sso.config.security.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.SocialServiceApi;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
@@ -28,7 +28,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SocialServiceImpl implements SocialService {
     private final SocialServiceApi socialApi;
-    private final AccountServiceApi accountApi;
+    private final UserServiceApi accountApi;
 
     @Override
     public void onAuthenticationSuccess(String socialType, String socialId, String username) {

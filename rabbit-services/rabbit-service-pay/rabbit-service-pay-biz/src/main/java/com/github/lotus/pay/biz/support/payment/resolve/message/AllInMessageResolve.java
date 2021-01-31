@@ -9,6 +9,6 @@ import in.hocg.payment.resolve.StringResolve;
  *
  * @author hocgin
  */
-public class AllInMessageResolve extends StringResolve<MessageType> {
+public class AllInMessageResolve extends StringResolve<MessageContext.MessageType> {
 
 }

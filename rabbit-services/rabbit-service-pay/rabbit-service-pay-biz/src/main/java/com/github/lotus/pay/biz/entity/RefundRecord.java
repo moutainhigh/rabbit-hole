@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author hocgin
- * @since 2020-06-06
+ * @since 2021-01-30
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,15 +31,12 @@ public class RefundRecord extends AbstractEntity<RefundRecord> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    @ApiModelProperty("接入方应用")
-    @TableField("app_id")
-    private Long appId;
+    @ApiModelProperty("交易账单")
+    @TableField("trade_id")
+    private Long tradeId;
     @ApiModelProperty("退款单号(接入方)")
     @TableField("out_refund_sn")
     private String outRefundSn;
-    @ApiModelProperty("交易单号(网关)")
-    @TableField("trade_sn")
-    private String tradeSn;
     @ApiModelProperty("退款单号(网关)")
     @TableField("refund_sn")
     private String refundSn;
@@ -54,7 +51,7 @@ public class RefundRecord extends AbstractEntity<RefundRecord> {
     private String refundReason;
     @ApiModelProperty("退款状态: 0=>未退款; 1=>退款处理中; 2=>退款成功; 3=>退款失败")
     @TableField("refund_status")
-    private Integer refundStatus;
+    private String refundStatus;
     @ApiModelProperty("通知接入应用的地址")
     @TableField("notify_url")
     private String notifyUrl;
@@ -79,5 +76,6 @@ public class RefundRecord extends AbstractEntity<RefundRecord> {
     @ApiModelProperty("更新ip")
     @TableField("update_ip")
     private String updateIp;
+
 
 }

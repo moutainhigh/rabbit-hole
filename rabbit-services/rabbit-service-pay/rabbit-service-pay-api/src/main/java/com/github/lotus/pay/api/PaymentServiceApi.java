@@ -1,14 +1,19 @@
 package com.github.lotus.pay.api;
 
 
+import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
-import com.github.lotus.pay.api.pojo.ro.QueryPaymentWayRo;
+import com.github.lotus.pay.api.pojo.ro.QueryPaymentModeRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
 import com.github.lotus.pay.api.pojo.vo.PaymentWayVo;
 import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
 import com.github.lotus.pay.api.pojo.vo.RefundStatusSync;
 import com.github.lotus.pay.api.pojo.vo.TradeStatusSync;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,14 +23,17 @@ import java.util.List;
  *
  * @author hocgin
  */
+@FeignClient(value = ServiceName.NAME, contextId = PaymentServiceApi.CONTEXT_ID)
 public interface PaymentServiceApi {
+    String CONTEXT_ID = "PaymentServiceApi";
 
     /**
      * 关闭交易单
      *
-     * @param tradeSn
+     * @param ro
      */
-    void closeTrade(String tradeSn);
+    @PostMapping(CONTEXT_ID + "/closeTrade")
+    void closeTrade(@RequestBody CloseTradeRo ro);
 
     /**
      * 创建交易单
@@ -33,7 +41,8 @@ public interface PaymentServiceApi {
      * @param ro
      * @return
      */
-    String createTrade(CreateTradeRo ro);
+    @PostMapping(CONTEXT_ID + "/createTrade")
+    String createTrade(@RequestBody CreateTradeRo ro);
 
     /**
      * 查询支付方式
@@ -41,7 +50,8 @@ public interface PaymentServiceApi {
      * @param ro
      * @return
      */
-    List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro);
+    @PostMapping(CONTEXT_ID + "/queryPaymentMode")
+    List<PaymentWayVo> queryPaymentMode(@RequestBody QueryPaymentModeRo ro);
 
     /**
      * 去支付
@@ -49,7 +59,8 @@ public interface PaymentServiceApi {
      * @param ro
      * @return
      */
-    GoPayVo goPay(GoPayRo ro);
+    @PostMapping(CONTEXT_ID + "/goPay")
+    GoPayVo goPay(@RequestBody GoPayRo ro);
 
     /**
      * 查询交易单信息
@@ -57,7 +68,8 @@ public interface PaymentServiceApi {
      * @param tradeSn
      * @return
      */
-    QueryAsyncVo<TradeStatusSync> queryTrade(String tradeSn);
+    @PostMapping(CONTEXT_ID + "/queryTrade")
+    QueryAsyncVo<TradeStatusSync> queryTrade(@RequestParam("tradeSn") String tradeSn);
 
     /**
      * 查询退款单信息
@@ -65,5 +77,6 @@ public interface PaymentServiceApi {
      * @param refundSn
      * @return
      */
-    QueryAsyncVo<RefundStatusSync> queryRefund(String refundSn);
+    @PostMapping(CONTEXT_ID + "/queryRefund")
+    QueryAsyncVo<RefundStatusSync> queryRefund(@RequestParam("refundSn") String refundSn);
 }

@@ -16,7 +16,7 @@ import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
 import com.github.lotus.com.biz.service.CommentService;
 import com.github.lotus.com.biz.service.CommentTargetService;
 import com.github.lotus.common.datadict.CommentTargetType;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 
@@ -45,7 +45,7 @@ import java.util.Optional;
 public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     implements CommentService {
     private final CommentTargetService commentTargetService;
-    private final AccountServiceApi accountServiceApi;
+    private final UserServiceApi accountServiceApi;
     private final CommentMapping mapping;
 
     @Override
