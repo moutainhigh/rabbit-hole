@@ -184,7 +184,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     }
 
     private List<Authority> listByProjectId(Long projectId, Boolean enabled) {
-        return lambdaQuery().eq(Authority::getProjectId, projectId)
+        return lambdaQuery().eq(Objects.nonNull(projectId), Authority::getProjectId, projectId)
             .eq(Objects.nonNull(enabled), TreeEntity::getEnabled, enabled)
             .orderByAsc(Authority::getPriority).list();
     }
