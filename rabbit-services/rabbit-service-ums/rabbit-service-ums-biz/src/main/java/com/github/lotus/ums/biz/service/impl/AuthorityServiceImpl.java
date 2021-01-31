@@ -6,6 +6,7 @@ import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.entity.Authority;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.helper.AuthorityHelper;
+import com.github.lotus.ums.biz.helper.MyBatisPlusHelper;
 import com.github.lotus.ums.biz.mapper.AuthorityMapper;
 import com.github.lotus.ums.biz.mapstruct.AuthorityMapping;
 import com.github.lotus.ums.biz.pojo.ro.GetAuthorityUserPagingRo;
@@ -128,12 +129,16 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     @Transactional(rollbackFor = Exception.class)
     public String generateSql() {
         String deleteAll = "delete from ams_authority where 1 = 1;";
-        String insertSql = "";
-        String checkSql = "delete from ams_role_authority where authority_id not in (select aa.id from ams_authority aa);";
+        String insertSql = this.list().parallelStream()
+            .map(MyBatisPlusHelper::getInsertSql)
+            .reduce((s, s2) -> s + s2).orElse("");
+        String checkRoleSql = "delete from ams_role_authority_ref where authority_id not in (select aa.id from ams_authority aa);";
+        String checkUserGroupSql = "delete from ams_user_group_authority_ref where authority_id not in (select aa.id from ams_authority aa);";
         StringJoiner stringJoiner = new StringJoiner("\n");
         stringJoiner.add(deleteAll);
         stringJoiner.add(insertSql);
-        stringJoiner.add(checkSql);
+        stringJoiner.add(checkRoleSql);
+        stringJoiner.add(checkUserGroupSql);
         return stringJoiner.toString();
     }
 

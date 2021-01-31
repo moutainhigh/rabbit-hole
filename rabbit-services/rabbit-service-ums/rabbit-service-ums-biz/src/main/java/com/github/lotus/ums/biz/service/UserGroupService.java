@@ -7,7 +7,6 @@ import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
 import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
-import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -40,4 +39,5 @@ public interface UserGroupService extends AbstractService<UserGroup> {
     List<UserGroupComplexVo> complete(UserGroupCompleteRo ro);
 
     void grantAuthority(Long userGroupId, UserGroupGrantAuthorityRo ro);
+
 }
