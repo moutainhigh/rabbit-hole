@@ -55,9 +55,11 @@ public class AllPaymentServiceImpl implements AllPaymentService {
     public GoPayVo createAndGoPay(CreateTradeGoPayRo ro) {
         String clientIp = ro.getClientIp();
         String payMode = ro.getPayMode();
+        String wxOpenId = ro.getWxOpenId();
 
         String tradeSn = this.createTrade(ro);
         GoPayRo goPayRo = new GoPayRo();
+        goPayRo.setWxOpenId(wxOpenId);
         goPayRo.setTradeSn(tradeSn);
         goPayRo.setPayMode(payMode);
         goPayRo.setClientIp(clientIp);
