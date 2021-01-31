@@ -3,6 +3,8 @@ package com.github.lotus.pay.biz.support.payment;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -14,6 +16,8 @@ import org.springframework.context.annotation.Lazy;
  * @author hocgin
  */
 @Configuration
+@ConditionalOnProperty(prefix = PaymentProperties.PREFIX, name = "enabled", matchIfMissing = true)
+@EnableConfigurationProperties(PaymentProperties.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class PaymentConfiguration {
     @Bean

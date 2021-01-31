@@ -108,6 +108,7 @@ boot:
         ,/*/v2/api-docs
         ,/com/district/tree
         ,/chaos/address4ip
+        ,/pay/gateway/**
 
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift
