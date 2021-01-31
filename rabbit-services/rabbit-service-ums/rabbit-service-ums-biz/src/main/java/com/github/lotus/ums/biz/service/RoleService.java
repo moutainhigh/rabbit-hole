@@ -8,6 +8,7 @@ import com.github.lotus.ums.biz.pojo.ro.RoleCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.RoleOrdinaryVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -39,4 +40,6 @@ public interface RoleService extends AbstractService<Role> {
     List<RoleComplexVo> complete(RoleCompleteRo ro);
 
     void grantAuthority(Long roleId, GrantAuthorityRo ro);
+
+    List<RoleOrdinaryVo> listOrdinaryByAuthorityId(Long authorityId);
 }

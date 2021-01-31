@@ -23,4 +23,6 @@ public interface ProjectService extends AbstractService<Project> {
     ProjectComplexVo getByEncoding(String projectSn);
 
     List<ProjectComplexVo> complete(ProjectCompleteRo ro);
+
+    List<ProjectComplexVo> listComplexById(List<Long> id);
 }

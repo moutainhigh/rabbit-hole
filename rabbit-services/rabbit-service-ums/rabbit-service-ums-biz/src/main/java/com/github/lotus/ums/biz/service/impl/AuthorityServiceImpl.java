@@ -13,12 +13,14 @@ import com.github.lotus.ums.biz.pojo.ro.GrantRoleRo;
 import com.github.lotus.ums.biz.pojo.ro.GrantUserGroupRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveAuthorityRo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.AuthorityOrdinaryVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.AuthorityApiRefService;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
+import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserGroupUserRefService;
@@ -51,6 +53,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     implements AuthorityService {
     private final AuthorityMapping mapping;
     private final ApiService apiService;
+    private final RoleService roleService;
     private final AuthorityApiRefService authorityApiRefService;
     private final RoleAuthorityRefService roleAuthorityRefService;
     private final UserGroupService userGroupService;
@@ -58,11 +61,21 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     private final UserGroupAuthorityRefService userGroupAuthorityRefService;
 
     @Override
-    public AuthorityComplexVo getAuthority(Long id) {
-        return convert(getById(id));
+    public AuthorityComplexVo getComplex(Long id) {
+        return convertComplex(getById(id));
     }
 
-    private AuthorityComplexVo convert(Authority entity) {
+    private AuthorityComplexVo convertComplex(Authority entity) {
+        AuthorityComplexVo result = mapping.asComplex(entity);
+        if (Objects.nonNull(result)) {
+            Long authorityId = entity.getId();
+            result.setApis(apiService.listOrdinaryByAuthorityId(authorityId));
+            result.setRoles(roleService.listOrdinaryByAuthorityId(authorityId));
+        }
+        return result;
+    }
+
+    private AuthorityOrdinaryVo convertOrdinary(Authority entity) {
         return mapping.asComplex(entity);
     }
 

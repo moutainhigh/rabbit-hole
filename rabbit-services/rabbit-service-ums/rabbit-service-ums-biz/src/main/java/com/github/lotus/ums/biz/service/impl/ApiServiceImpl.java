@@ -11,10 +11,12 @@ import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
-import com.github.lotus.ums.biz.service.UserService;
+import com.github.lotus.ums.biz.pojo.vo.ApiOrdinaryVo;
 import com.github.lotus.ums.biz.service.ApiService;
+import com.github.lotus.ums.biz.service.AuthorityApiRefService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupService;
+import com.github.lotus.ums.biz.service.UserService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -40,10 +42,12 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implements ApiService {
+public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api>
+    implements ApiService {
     private final ApiMapping mapping;
     private final UserService accountService;
     private final RoleService roleService;
+    private final AuthorityApiRefService authorityApiRefService;
     private final UserGroupService userGroupService;
 
     @Override
@@ -103,23 +107,36 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
     @Transactional(rollbackFor = Exception.class)
     public IPage<ApiComplexVo> paging(ApiPagingRo ro) {
         return baseMapper.paging(ro, ro.ofPage())
-            .convert(this::convert);
+            .convert(this::convertComplex);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<ApiComplexVo> complete(ApiCompleteRo ro) {
         return baseMapper.complete(ro, ro.ofPage())
-            .convert(this::convert).getRecords();
+            .convert(this::convertComplex).getRecords();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ApiComplexVo getComplex(Long id) {
-        return this.convert(getById(id));
+        return this.convertComplex(getById(id));
     }
 
-    private ApiComplexVo convert(Api entity) {
+    @Override
+    public List<ApiOrdinaryVo> listOrdinaryByAuthorityId(Long authorityId) {
+        return LangUtils.toList(listByAuthorityId(authorityId), this::convertOrdinary);
+    }
+
+    private List<Api> listByAuthorityId(Long authorityId) {
+        return baseMapper.listByAuthorityId(authorityId);
+    }
+
+    private ApiComplexVo convertComplex(Api entity) {
+        return convertOrdinary(entity);
+    }
+
+    private ApiComplexVo convertOrdinary(Api entity) {
         return mapping.asComplex(entity);
     }
 

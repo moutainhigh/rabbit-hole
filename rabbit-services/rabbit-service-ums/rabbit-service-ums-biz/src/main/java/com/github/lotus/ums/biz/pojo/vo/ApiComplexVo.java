@@ -1,15 +1,8 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
-import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
-import in.hocg.boot.named.autoconfiguration.annotation.Named;
-import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by hocgin on 2021/1/24
@@ -20,39 +13,6 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel
 @InjectNamed
-public class ApiComplexVo {
-    private Long id;
-    @ApiModelProperty("接口编码")
-    private String encoding;
-    @ApiModelProperty("接口名称")
-    private String title;
-    @ApiModelProperty("接口描述")
-    private String remark;
-    @ApiModelProperty("请求方式: 比如: GET,POST 或者 *")
-    private String requestMethod;
-    @ApiModelProperty("服务接口前缀, 比如: /chaos 或者 *")
-    private String servicePrefix;
-    @ApiModelProperty("请求URI, 比如: /xx/{id}  或者 /**")
-    private String requestUri;
-    @ApiModelProperty("启用状态")
-    private Boolean enabled;
-    @ApiModelProperty("优先级, 越大优先级越低")
-    private Integer priority;
-    @ApiModelProperty("是否保留权限")
-    private Boolean isPersist;
+public class ApiComplexVo extends ApiOrdinaryVo {
 
-    @ApiModelProperty("创建者")
-    private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
-    private String creatorName;
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("更新者")
-    private Long lastUpdater;
-    @UseNamedService(ChaosNamedAPI.class)
-    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
-    private String lastUpdaterName;
-    @ApiModelProperty("更新时间")
-    private LocalDateTime lastUpdatedAt;
 }

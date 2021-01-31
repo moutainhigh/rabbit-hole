@@ -11,10 +11,12 @@ import com.github.lotus.ums.biz.pojo.ro.RoleCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.RoleOrdinaryVo;
 import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -36,7 +38,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> implements RoleService {
+public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role>
+    implements RoleService {
     private final RoleMapping mapping;
     private final RoleAuthorityRefService roleAuthorityRefService;
     private final RoleUserRefService roleUserRefService;
@@ -44,7 +47,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoleComplexVo getRole(Long roleId) {
-        return this.convert(getById(roleId));
+        return this.convertComplex(getById(roleId));
     }
 
     @Override
@@ -70,7 +73,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Transactional(rollbackFor = Exception.class)
     public IPage<RoleComplexVo> paging(RolePagingRo ro) {
         IPage<Role> result = baseMapper.paging(ro, ro.ofPage());
-        return result.convert(this::convert);
+        return result.convert(this::convertComplex);
     }
 
     @Override
@@ -113,10 +116,18 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     }
 
     @Override
+    public List<RoleOrdinaryVo> listOrdinaryByAuthorityId(Long authorityId) {
+        return LangUtils.toList(this.listByAuthorityId(authorityId), this::convertOrdinary);
+    }
+
+    private List<Role> listByAuthorityId(Long authorityId) {
+        return baseMapper.listByAuthorityId(authorityId);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public List<RoleComplexVo> complete(RoleCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage())
-            .convert(this::convert).getRecords();
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
     }
 
     @Override
@@ -126,7 +137,11 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
         roleAuthorityRefService.grantAuthorities(roleId, authorities);
     }
 
-    private RoleComplexVo convert(Role entity) {
+    private RoleOrdinaryVo convertOrdinary(Role entity) {
+        return mapping.asOrdinary(entity);
+    }
+
+    private RoleComplexVo convertComplex(Role entity) {
         Long roleId = entity.getId();
         List<Long> authorities = roleAuthorityRefService.listByRoleId(roleId)
             .stream().map(RoleAuthorityRef::getAuthorityId).collect(Collectors.toList());

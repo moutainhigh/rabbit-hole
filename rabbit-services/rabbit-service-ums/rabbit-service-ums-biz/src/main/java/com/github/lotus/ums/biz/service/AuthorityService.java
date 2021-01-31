@@ -23,7 +23,7 @@ import java.util.List;
  */
 public interface AuthorityService extends AbstractService<Authority> {
 
-    AuthorityComplexVo getAuthority(Long id);
+    AuthorityComplexVo getComplex(Long id);
 
     void insertOne(SaveAuthorityRo ro);
 

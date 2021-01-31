@@ -3,6 +3,7 @@ package com.github.lotus.ums.biz.mapstruct;
 import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.pojo.ro.SaveRoleRo;
 import com.github.lotus.ums.biz.pojo.vo.RoleComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.RoleOrdinaryVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,4 +27,8 @@ public interface RoleMapping {
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     RoleComplexVo asComplex(Role role);
+
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    RoleOrdinaryVo asOrdinary(Role entity);
 }

@@ -6,7 +6,6 @@ import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
 import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
-import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;

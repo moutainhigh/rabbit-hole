@@ -9,6 +9,8 @@ import com.github.lotus.ums.biz.pojo.ro.RolePagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * [权限模块] 角色表 Mapper 接口
@@ -23,4 +25,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     IPage<Role> paging(@Param("ro") RolePagingRo ro, @Param("ofPage") Page<Object> ofPage);
 
     IPage<Role> complete(@Param("ro") RoleCompleteRo ro, @Param("page") Page page);
+
+    List<Role> listByAuthorityId(@Param("authorityId") Long authorityId);
 }

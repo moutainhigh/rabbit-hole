@@ -7,6 +7,7 @@ import com.github.lotus.com.biz.mapstruct.ProjectMapping;
 import com.github.lotus.com.biz.pojo.ro.ProjectCompleteRo;
 import com.github.lotus.com.biz.service.ProjectService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,11 @@ public class ProjectServiceImpl extends AbstractServiceImpl<ProjectMapper, Proje
     public List<ProjectComplexVo> complete(ProjectCompleteRo ro) {
         return baseMapper.complete(ro, ro.ofPage())
             .convert(this::convert).getRecords();
+    }
+
+    @Override
+    public List<ProjectComplexVo> listComplexById(List<Long> id) {
+        return LangUtils.toList(listByIds(id), this::convert);
     }
 
     private ProjectComplexVo convert(Project entity) {

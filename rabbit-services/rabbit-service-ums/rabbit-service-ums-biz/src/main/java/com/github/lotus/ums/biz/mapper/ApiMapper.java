@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.ums.biz.entity.Api;
 import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
-import com.github.lotus.ums.biz.service.impl.ApiServiceImpl;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +29,6 @@ public interface ApiMapper extends BaseMapper<Api> {
     IPage<Api> paging(@Param("ro") ApiPagingRo ro, @Param("page") Page page);
 
     IPage<Api> complete(@Param("ro") ApiCompleteRo ro, @Param("page") Page ofPage);
+
+    List<Api> listByAuthorityId(@Param("authorityId") Long authorityId);
 }
