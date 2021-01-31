@@ -12,13 +12,12 @@ import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SsoIndexServiceImpl implements SsoIndexService {
-    private final AccountServiceApi accountApi;
+    private final UserServiceApi accountApi;
     private final WxServiceApi wxApi;
     private final SmsServiceApi smsApi;
     private final AccountMapping mapping;

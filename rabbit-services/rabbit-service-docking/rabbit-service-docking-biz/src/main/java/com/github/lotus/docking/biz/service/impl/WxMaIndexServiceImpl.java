@@ -11,7 +11,7 @@ import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import com.github.lotus.docking.biz.service.WxMaIndexService;
 import com.github.lotus.docking.biz.support.wxmini.WxMaConfiguration;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.SocialServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
@@ -38,7 +38,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMaIndexServiceImpl implements WxMaIndexService {
     private final SocialServiceApi socialServiceApi;
-    private final AccountServiceApi accountServiceApi;
+    private final UserServiceApi accountServiceApi;
     private final WxMaCacheService wxMaCacheService;
 
     @Override

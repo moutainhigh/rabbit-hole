@@ -36,7 +36,7 @@ public interface UserService extends AbstractService<User> {
 
     Optional<User> getAccountByUsernameOrEmailOrPhone(String unique);
 
-    List<User> listAccountByAccountId(List<Long> values);
+    List<User> listAccountById(List<Long> values);
 
     String getToken(String username);
 
@@ -44,7 +44,7 @@ public interface UserService extends AbstractService<User> {
 
     UserDetailVo getUserByPhone(String phone);
 
-    List<AccountVo> listAccountVoByAccountId(List<Long> id);
+    List<AccountVo> listAccountVoById(List<Long> id);
 
     AccountVo getAccountVoById(Long userId);
 

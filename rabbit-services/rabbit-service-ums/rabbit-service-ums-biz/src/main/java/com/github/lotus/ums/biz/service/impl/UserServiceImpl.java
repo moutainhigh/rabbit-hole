@@ -17,6 +17,7 @@ import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
+import com.github.lotus.ums.biz.entity.Role;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.mapper.UserMapper;
@@ -111,8 +112,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
             }
         }
 
-        final User update = new User()
-            .setId(entityId);
+        final User update = new User().setId(entityId);
 
         // 设置默认头像，如果没有指定头像的话
         if (Strings.isBlank(avatar)) {
@@ -155,7 +155,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<User> listAccountByAccountId(List<Long> values) {
+    public List<User> listAccountById(List<Long> values) {
         if (CollectionUtil.isEmpty(values)) {
             return Collections.emptyList();
         }
@@ -180,8 +180,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     }
 
     @Override
-    public List<AccountVo> listAccountVoByAccountId(List<Long> id) {
-        return LangUtils.toList(this.listAccountByAccountId(id), mapping::asAccountVo);
+    public List<AccountVo> listAccountVoById(List<Long> id) {
+        return LangUtils.toList(this.listAccountById(id), mapping::asAccountVo);
     }
 
     @Override
@@ -272,16 +272,19 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     }
 
     private AccountComplexVo convert(User entity) {
-        Long entityId = entity.getId();
+        Long userId = entity.getId();
 
         AccountComplexVo result = mapping.asComplex(entity);
 
         // 已绑定的社交方式
-        List<Social> socials = socialService.listSocialByUserId(entityId);
+        List<Social> socials = socialService.listSocialByUserId(userId);
         result.setSocial(socials.parallelStream().map(social ->
             new AccountComplexVo.SocialItem().setSocialType(social.getSocialType())
         ).collect(Collectors.toList()));
 
+        List<Long> roles = roleUserRefService.listByUserId(userId)
+            .parallelStream().map(Role::getId).collect(Collectors.toList());
+        result.setRoles(roles);
         return result;
     }
 

@@ -18,8 +18,8 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = AccountServiceApi.CONTEXT_ID)
-public interface AccountServiceApi {
+@FeignClient(value = ServiceName.NAME, contextId = UserServiceApi.CONTEXT_ID)
+public interface UserServiceApi {
     String CONTEXT_ID = "AccountServiceApi";
 
     @GetMapping(CONTEXT_ID + "/getUserByUsername")
@@ -41,7 +41,7 @@ public interface AccountServiceApi {
     String getUsername(@RequestParam("token") String token);
 
     @PostMapping(CONTEXT_ID + "/listAccountByAccountId")
-    List<AccountVo> listAccountVoByAccountId(@RequestParam("id") List<Long> id);
+    List<AccountVo> listAccountVoById(@RequestParam("id") List<Long> id);
 
     @PostMapping(CONTEXT_ID + "/getById")
     AccountVo getById(@RequestParam("id") Long id);

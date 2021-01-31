@@ -7,7 +7,7 @@ import com.github.lotus.com.api.DistrictServiceApi;
 import com.github.lotus.com.api.pojo.vo.DataDictItemVo;
 import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
 import com.github.lotus.common.constant.DistrictLevelConstant;
-import com.github.lotus.ums.api.AccountServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
 import in.hocg.boot.utils.LangUtils;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     private final DataDictServiceApi dataDictServiceApi;
-    private final AccountServiceApi accountServiceApi;
+    private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
 
     @Override
@@ -45,14 +45,14 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     @Override
     public Map<String, Object> loadByUserName(NamedArgs args) {
         List<Long> values = getValues(args.getValues(), Long.class);
-        final List<AccountVo> result = accountServiceApi.listAccountVoByAccountId(values);
+        final List<AccountVo> result = userServiceApi.listAccountVoById(values);
         return this.toMap(result, AccountVo::getId, AccountVo::getUsername);
     }
 
     @Override
     public Map<String, Object> loadByNickname(NamedArgs args) {
         List<Long> values = getValues(args.getValues(), Long.class);
-        final List<AccountVo> result = accountServiceApi.listAccountVoByAccountId(values);
+        final List<AccountVo> result = userServiceApi.listAccountVoById(values);
         return this.toMap(result, AccountVo::getId, AccountVo::getNickname);
     }
 

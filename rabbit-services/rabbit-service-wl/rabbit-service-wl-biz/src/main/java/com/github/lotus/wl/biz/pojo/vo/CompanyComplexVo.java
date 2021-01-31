@@ -1,9 +1,11 @@
 package com.github.lotus.wl.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.constant.DistrictLevelConstant;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
+import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,36 +32,36 @@ public class CompanyComplexVo {
 
     @ApiModelProperty("省区域编码")
     private String provinceAdcode;
-    @Named(idFor = "provinceAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevelConstant.PROVINCE_CODE},
-        serviceClass = ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "provinceAdcode", type = NamedType.DistrictName,
+        args = {DistrictLevelConstant.PROVINCE_CODE})
     private String provinceName;
     @ApiModelProperty("市区区域编码")
     private String cityAdcode;
-    @Named(idFor = "cityAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevelConstant.CITY_CODE},
-        serviceClass = ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "cityAdcode", type = NamedType.DistrictName,
+        args = {DistrictLevelConstant.CITY_CODE})
     private String cityName;
     @ApiModelProperty("县区域编码")
     private String districtAdcode;
-    @Named(idFor = "districtAdcode", type = ChaosNamedAPI.COM_DistrictName,
-        args = {DistrictLevelConstant.DISTRICT_CODE},
-        serviceClass = ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "districtAdcode", type = NamedType.DistrictName,
+        args = {DistrictLevelConstant.DISTRICT_CODE})
     private String districtName;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @Named(idFor = "creator", type = ChaosNamedAPI.USERID2NICKNAME,
-        serviceClass = ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @Named(idFor = "lastUpdater", type = ChaosNamedAPI.USERID2NICKNAME,
-        serviceClass = ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
     private String lastUpdaterName;
 
 }

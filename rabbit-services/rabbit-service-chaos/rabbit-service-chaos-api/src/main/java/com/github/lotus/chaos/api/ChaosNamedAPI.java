@@ -19,24 +19,19 @@ import java.util.Map;
 public interface ChaosNamedAPI extends NamedService {
     String CONTEXT_ID = "ChaosNamedAPI";
 
-    String DATA_DICT = "DATA_DICT";
-    String USERID2USERNAME = "USERID2USERNAME";
-    String USERID2NICKNAME = "USERID2NICKNAME";
-    String COM_DistrictName = "COM_DistrictName";
-
-    @NamedHandler(ChaosNamedAPI.DATA_DICT)
+    @NamedHandler(NamedType.DataDict)
     @PostMapping(CONTEXT_ID + "/loadByDataDict")
     Map<String, Object> loadByDataDict(@RequestBody NamedArgs args);
 
-    @NamedHandler(ChaosNamedAPI.USERID2USERNAME)
+    @NamedHandler(NamedType.UserId2Username)
     @PostMapping(CONTEXT_ID + "/loadByUserName")
     Map<String, Object> loadByUserName(@RequestBody NamedArgs args);
 
-    @NamedHandler(ChaosNamedAPI.USERID2NICKNAME)
+    @NamedHandler(NamedType.Userid2Nickname)
     @PostMapping(CONTEXT_ID + "/loadByNickname")
     Map<String, Object> loadByNickname(@RequestBody NamedArgs args);
 
-    @NamedHandler(ChaosNamedAPI.COM_DistrictName)
+    @NamedHandler(NamedType.DistrictName)
     @PostMapping(CONTEXT_ID + "/loadByDistrictName")
     Map<String, Object> loadByDistrictName(@RequestBody NamedArgs args);
 }
