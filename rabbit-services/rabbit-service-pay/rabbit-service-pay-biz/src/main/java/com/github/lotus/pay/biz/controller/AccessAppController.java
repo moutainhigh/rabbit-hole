@@ -9,6 +9,7 @@ import com.github.lotus.pay.biz.pojo.vo.AccessAppComplexVo;
 import com.github.lotus.pay.biz.service.AccessAppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
+import in.hocg.boot.web.servlet.SpringServletContext;
 import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -44,9 +44,8 @@ public class AccessAppController {
 
     @ApiOperation("新增 - 接入应用")
     @PostMapping
-    public Result<Void> insert(@Validated @RequestBody AccessAppInsertRo ro,
-                               HttpServletRequest request) {
-        ro.setClientIp(RequestUtils.getClientIp(request));
+    public Result<Void> insert(@Validated @RequestBody AccessAppInsertRo ro) {
+        ro.setClientIp(RequestUtils.getClientIp(SpringServletContext.getRequest().orElseThrow(UnsupportedOperationException::new)));
         service.insertOne(ro);
         return Result.success();
     }

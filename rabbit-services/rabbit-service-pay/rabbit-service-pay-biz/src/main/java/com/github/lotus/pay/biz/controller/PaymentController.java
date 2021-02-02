@@ -9,6 +9,7 @@ import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
+import in.hocg.boot.web.servlet.SpringServletContext;
 import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by hocgin on 2021/1/30
@@ -55,16 +54,16 @@ public class PaymentController {
     @UseLogger("发起去支付")
     @ResponseBody
     @PostMapping("/once-pay")
-    public Result<GoPayVo> createAndGoPay(@Validated @RequestBody CreateTradeGoPayRo ro, HttpServletRequest request) {
-        ro.setClientIp(RequestUtils.getClientIp(request));
+    public Result<GoPayVo> createAndGoPay(@Validated @RequestBody CreateTradeGoPayRo ro) {
+        ro.setClientIp(RequestUtils.getClientIp(SpringServletContext.getRequest().orElseThrow(UnsupportedOperationException::new)));
         return Result.success(service.createAndGoPay(ro));
     }
 
     @UseLogger("发起去支付")
     @ResponseBody
     @PostMapping("/go-pay")
-    public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro, HttpServletRequest request) {
-        ro.setClientIp(RequestUtils.getClientIp(request));
+    public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro) {
+        ro.setClientIp(RequestUtils.getClientIp(SpringServletContext.getRequest().orElseThrow(UnsupportedOperationException::new)));
         return Result.success(service.goPay(ro));
     }
 

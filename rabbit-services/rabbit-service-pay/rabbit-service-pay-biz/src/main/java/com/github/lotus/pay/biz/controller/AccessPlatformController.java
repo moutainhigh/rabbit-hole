@@ -4,6 +4,7 @@ package com.github.lotus.pay.biz.controller;
 import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
 import in.hocg.boot.web.result.Result;
+import in.hocg.boot.web.servlet.SpringServletContext;
 import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class AccessPlatformController {
     @ApiOperation("新增或修改 - 第三方支付配置")
     @PostMapping
     public Result<Void> saveOne(@Validated @RequestBody AccessPlatformSaveRo ro) {
-        ro.setClientIp(RequestUtils.getClientIp(request));
+        ro.setClientIp(RequestUtils.getClientIp(SpringServletContext.getRequest().orElseThrow(UnsupportedOperationException::new)));
         service.saveOne(ro);
         return Result.success();
     }
