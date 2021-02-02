@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
-public class AccessPlatformInsertRo {
+public class AccessPlatformSaveRo {
     @NotNull(message = "接入应用错误")
     @ApiModelProperty("接入应用")
     private Long accessAppId;
@@ -27,6 +27,9 @@ public class AccessPlatformInsertRo {
     private AliPayConfig aliPayConfig;
     @ApiModelProperty("微信配置")
     private WxPayConfig wxPayConfig;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 
     @Data
     @ApiModel

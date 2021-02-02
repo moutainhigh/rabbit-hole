@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 
 /**
  * Created by hocgin on 2021/2/2
@@ -11,9 +11,11 @@ import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
  */
 public interface AccessPlatformConfigProxyService {
 
-    Long insertOne(AccessPlatformInsertRo ro);
+    Long insertOne(AccessPlatformSaveRo ro);
 
     void removeByRefTypeAndRefId(String refType, Long refId);
 
     Model<?> getByRefTypeAndRefId(String refType, Long refId);
+
+    void updateOne(Long refId, AccessPlatformSaveRo ro);
 }

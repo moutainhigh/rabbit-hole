@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 import com.github.lotus.pay.biz.entity.AccessPlatform;
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -25,7 +25,7 @@ public interface AccessPlatformService extends AbstractService<AccessPlatform> {
 
     Optional<AccessPlatform> getByAccessAppIdAndPayMode(Long accessAppId, String payMode);
 
-    void insertOne(AccessPlatformInsertRo ro);
+    void saveOne(AccessPlatformSaveRo ro);
 
     void removeByAccessAppId(Long accessAppId);
 }

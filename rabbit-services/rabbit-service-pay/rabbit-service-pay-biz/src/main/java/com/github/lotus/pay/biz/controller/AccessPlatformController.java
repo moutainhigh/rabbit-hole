@@ -1,9 +1,10 @@
 package com.github.lotus.pay.biz.controller;
 
 
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
 import in.hocg.boot.web.result.Result;
+import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -27,10 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccessPlatformController {
     private final AccessPlatformService service;
 
-    @ApiOperation("新增 - 第三方支付配置")
+    @ApiOperation("新增或修改 - 第三方支付配置")
     @PostMapping
-    public Result<Void> insert(@Validated @RequestBody AccessPlatformInsertRo ro) {
-        service.insertOne(ro);
+    public Result<Void> saveOne(@Validated @RequestBody AccessPlatformSaveRo ro) {
+        ro.setClientIp(RequestUtils.getClientIp(request));
+        service.saveOne(ro);
         return Result.success();
     }
 
