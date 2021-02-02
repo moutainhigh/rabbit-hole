@@ -97,7 +97,8 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
             entity.setRefId(refId);
             entity.setCreatedIp(clientIp);
         }
-        validInsertOrUpdate(entity);
+        boolean isOk = validInsertOrUpdate(entity);
+        ValidUtils.isTrue(isOk);
     }
 
     @Override
