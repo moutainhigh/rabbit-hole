@@ -2,6 +2,7 @@ package com.github.lotus.pay.biz.mapstruct;
 
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
+import com.github.lotus.pay.biz.pojo.vo.AccessAppComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,4 +18,6 @@ public interface AccessAppMapping {
     @Mapping(target = "createdIp", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     AccessApp asAccessApp(AccessAppInsertRo ro);
+
+    AccessAppComplexVo asComplex(AccessApp entity);
 }

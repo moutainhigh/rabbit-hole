@@ -26,4 +26,6 @@ public interface AccessPlatformService extends AbstractService<AccessPlatform> {
     Optional<AccessPlatform> getByAccessAppIdAndPayMode(Long accessAppId, String payMode);
 
     void insertOne(AccessPlatformInsertRo ro);
+
+    void removeByAccessAppId(Long accessAppId);
 }

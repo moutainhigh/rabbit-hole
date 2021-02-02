@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccessPlatformController {
     private final AccessPlatformService service;
 
-    @ApiOperation("创建接入应用")
+    @ApiOperation("新增 - 第三方支付配置")
     @PostMapping
     public Result<Void> insert(@Validated @RequestBody AccessPlatformInsertRo ro) {
         service.insertOne(ro);

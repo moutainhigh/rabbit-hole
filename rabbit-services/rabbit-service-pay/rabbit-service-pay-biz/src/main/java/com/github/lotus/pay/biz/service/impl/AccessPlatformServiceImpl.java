@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -124,5 +125,32 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
         entity.setRefType(paymentPlatform.getCode());
         entity.setRefId(refId);
         validInsert(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeByAccessAppId(Long accessAppId) {
+        List<AccessPlatform> result = listByAccessAppId(accessAppId);
+        for (AccessPlatform item : result) {
+            Long refId = item.getRefId();
+            PaymentPlatform paymentPlatform = ICode.ofThrow(item.getRefType(), PaymentPlatform.class);
+            switch (paymentPlatform) {
+                case AliPay: {
+                    platformAlipayConfigService.removeById(refId);
+                    break;
+                }
+                case WxPay: {
+                    platformWxpayConfigService.removeById(refId);
+                    break;
+                }
+                case Unknown:
+                default:
+                    throw new UnsupportedOperationException();
+            }
+        }
+    }
+
+    private List<AccessPlatform> listByAccessAppId(Long accessAppId) {
+        return lambdaQuery().eq(AccessPlatform::getAccessAppId, accessAppId).list();
     }
 }

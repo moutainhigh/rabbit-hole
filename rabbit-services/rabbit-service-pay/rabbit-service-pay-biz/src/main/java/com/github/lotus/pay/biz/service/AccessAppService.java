@@ -1,9 +1,14 @@
 package com.github.lotus.pay.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.pay.biz.entity.AccessApp;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppCompleteRo;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppPagingRo;
+import com.github.lotus.pay.biz.pojo.vo.AccessAppComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,4 +26,12 @@ public interface AccessAppService extends AbstractService<AccessApp> {
     void sendAsyncNotifyApp(Long notifyAccessAppId);
 
     void insertOne(AccessAppInsertRo ro);
+
+    IPage<AccessAppComplexVo> paging(AccessAppPagingRo ro);
+
+    AccessAppComplexVo getComplex(Long id);
+
+    List<AccessAppComplexVo> complete(AccessAppCompleteRo ro);
+
+    void deleteOne(Long id);
 }

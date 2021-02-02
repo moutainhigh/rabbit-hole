@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.common.datadict.bmw.NotifyResult;
 import com.github.lotus.common.datadict.bmw.NotifyType;
 import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
@@ -13,9 +14,13 @@ import com.github.lotus.pay.biz.entity.RefundRecord;
 import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.mapper.AccessAppMapper;
 import com.github.lotus.pay.biz.mapstruct.AccessAppMapping;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppCompleteRo;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppPagingRo;
+import com.github.lotus.pay.biz.pojo.vo.AccessAppComplexVo;
 import com.github.lotus.pay.biz.pojo.vo.NotifyAppAsyncVo;
 import com.github.lotus.pay.biz.service.AccessAppService;
+import com.github.lotus.pay.biz.service.AccessPlatformService;
 import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.service.NotifyAccessAppLogService;
 import com.github.lotus.pay.biz.service.NotifyAccessAppService;
@@ -48,13 +53,15 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, AccessApp> implements AccessAppService {
+public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, AccessApp>
+    implements AccessAppService {
     private final NotifyAccessAppService notifyAccessAppService;
     private final NotifyAccessAppLogService notifyAccessAppLogService;
     private final AllPaymentService allPaymentService;
     private final TradeService tradeService;
     private final AccessAppMapping mapping;
     private final RefundRecordService refundRecordService;
+    private final AccessPlatformService accessPlatformService;
 
     @Override
     public Optional<AccessApp> getByEncoding(String encoding) {
@@ -138,7 +145,39 @@ public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(AccessAppInsertRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+
         AccessApp entity = mapping.asAccessApp(ro);
+        entity.setCreatedAt(now);
         validInsert(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<AccessAppComplexVo> paging(AccessAppPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AccessAppComplexVo getComplex(Long id) {
+        return convertComplex(getById(id));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<AccessAppComplexVo> complete(AccessAppCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOne(Long id) {
+        removeById(id);
+        accessPlatformService.removeByAccessAppId(id);
+    }
+
+    private AccessAppComplexVo convertComplex(AccessApp entity) {
+        return mapping.asComplex(entity);
     }
 }
