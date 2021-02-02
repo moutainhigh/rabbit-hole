@@ -2,6 +2,7 @@ package com.github.lotus.pay.biz.mapstruct;
 
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.biz.entity.Trade;
+import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
 import org.mapstruct.Mapper;
 
 /**
@@ -19,4 +20,6 @@ public interface TradeMapping {
         entity.setCreatedIp(ro.getClientIp());
         return entity;
     }
+
+    TradeComplexVo asComplex(Trade entity);
 }
