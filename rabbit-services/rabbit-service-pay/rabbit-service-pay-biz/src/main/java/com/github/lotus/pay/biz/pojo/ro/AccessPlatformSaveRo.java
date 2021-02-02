@@ -27,6 +27,8 @@ public class AccessPlatformSaveRo {
     private AliPayConfig aliPayConfig;
     @ApiModelProperty("微信配置")
     private WxPayConfig wxPayConfig;
+    @ApiModelProperty("启用状态")
+    private Boolean enabled;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;

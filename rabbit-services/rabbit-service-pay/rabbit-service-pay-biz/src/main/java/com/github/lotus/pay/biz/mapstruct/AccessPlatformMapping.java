@@ -17,7 +17,6 @@ public interface AccessPlatformMapping {
     @Mapping(target = "refType", ignore = true)
     @Mapping(target = "refId", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     AccessPlatform asAccessPlatform(AccessPlatformSaveRo ro);
 }

@@ -82,17 +82,22 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
         String clientIp = ro.getClientIp();
         Optional<AccessPlatform> accessPlatformOpt = getByAccessAppIdAndRefType(accessAppId, platform);
 
+        AccessPlatform entity;
         if (accessPlatformOpt.isPresent()) {
-            Long refId = accessPlatformOpt.get().getRefId();
+            AccessPlatform accessPlatform = accessPlatformOpt.get();
+            Long id = accessPlatform.getId();
+            Long refId = accessPlatform.getRefId();
             platformConfigProxyService.updateOne(refId, ro);
+            entity = mapping.asAccessPlatform(ro);
+            entity.setId(id);
         } else {
             Long refId = platformConfigProxyService.insertOne(ro);
-            AccessPlatform entity = mapping.asAccessPlatform(ro);
+            entity = mapping.asAccessPlatform(ro);
             entity.setRefType(platform);
             entity.setRefId(refId);
             entity.setCreatedIp(clientIp);
-            validInsert(entity);
         }
+        validInsertOrUpdate(entity);
     }
 
     @Override
