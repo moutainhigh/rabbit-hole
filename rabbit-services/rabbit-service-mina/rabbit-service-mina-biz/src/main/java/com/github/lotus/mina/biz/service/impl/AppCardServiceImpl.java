@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mina.biz.entity.AppCard;
 import com.github.lotus.mina.biz.mapper.AppCardMapper;
 import com.github.lotus.mina.biz.mapstruct.AppCardMapping;
-import com.github.lotus.mina.biz.pojo.ro.AppCardPageRo;
-import com.github.lotus.mina.biz.pojo.vo.AppComplexVo;
+import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.AppCardSaveRo;
+import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
+import com.github.lotus.mina.biz.pojo.vo.AppCardOrdinaryVo;
 import com.github.lotus.mina.biz.service.AppCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -14,6 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -30,14 +38,68 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
     private final AppCardMapping mapping;
 
     @Override
-    public IPage<AppComplexVo> paging(AppCardPageRo ro) {
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<AppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro) {
         ro.setEnabled(true);
-        return baseMapper.paging(ro, ro.ofPage())
-            .convert(this::convert);
+        return baseMapper.pagingForMina(ro, ro.ofPage())
+            .convert(this::convertComplex);
     }
 
-    private AppComplexVo convert(AppCard entity) {
-        AppComplexVo result = mapping.asAppComplexVo(entity);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<AppCardOrdinaryVo> paging(AppCardPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<AppCardOrdinaryVo> complete(AppCardCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertOrdinary).getRecords();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertOne(AppCardSaveRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        Long userId = ro.getUserId();
+
+        AppCard entity = mapping.asAppCard(ro);
+        entity.setCreator(userId);
+        entity.setCreatedAt(now);
+        validInsert(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOne(Long id, AppCardSaveRo ro) {
+        LocalDateTime now = LocalDateTime.now();
+        Long userId = ro.getUserId();
+
+        AppCard entity = mapping.asAppCard(ro);
+        entity.setId(id);
+        entity.setLastUpdater(userId);
+        entity.setLastUpdatedAt(now);
+        validUpdateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AppCardComplexVo getComplex(Long id) {
+        return this.convertComplex(getById(id));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOne(Long id) {
+        removeById(id);
+    }
+
+    private AppCardOrdinaryVo convertOrdinary(AppCard entity) {
+        return mapping.asOrdinary(entity);
+    }
+
+    private AppCardComplexVo convertComplex(AppCard entity) {
+        AppCardComplexVo result = mapping.asAppComplexVo(entity);
         String tags = entity.getTags();
         String pageUrl = entity.getPageUrl();
 
@@ -45,8 +107,8 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
             result.setTags(Lists.newArrayList(tags.split(";")));
         }
 
-        AppComplexVo.Href href = new AppComplexVo.Href();
-        href.setMini(new AppComplexVo.Href.Mini().setPath(pageUrl));
+        AppCardComplexVo.Href href = new AppCardComplexVo.Href();
+        href.setMini(new AppCardComplexVo.Href.Mini().setPath(pageUrl));
         result.setHref(href);
 
         return result;

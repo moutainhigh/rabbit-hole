@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel(description = "小游戏")
-public class GameComplexVo {
+public class GameCardComplexVo {
     private String title;
     private String logoUrl;
     private String remark;

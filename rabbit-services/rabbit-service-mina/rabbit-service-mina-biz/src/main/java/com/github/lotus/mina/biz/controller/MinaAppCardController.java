@@ -1,8 +1,9 @@
 package com.github.lotus.mina.biz.controller;
 
-import com.github.lotus.mina.biz.pojo.ro.GameCardPageRo;
-import com.github.lotus.mina.biz.pojo.vo.GameComplexVo;
-import com.github.lotus.mina.biz.service.GameCardService;
+
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
+import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
+import com.github.lotus.mina.biz.service.AppCardService;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,22 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by hocgin on 2021/1/1
- * email: hocgin@gmail.com
+ * <p>
+ * [小程序模块] 游戏表 前端控制器
+ * </p>
  *
  * @author hocgin
+ * @since 2021-01-01
  */
-@Api(tags = "mina::小程序游戏")
+@Api(tags = "mina::小程序应用")
 @RestController
-@RequestMapping("/{appid}/game")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class GameController {
-    private final GameCardService service;
+@RequestMapping("/{appid}/app")
+public class MinaAppCardController {
+    private final AppCardService service;
 
-    @ApiOperation("游戏 - 分页查询")
+    @ApiOperation("应用 - 分页查询")
     @PostMapping("/_paging")
-    public Result<List<GameComplexVo>> paging(@PathVariable String appid,
-                                              @Validated @RequestBody GameCardPageRo ro) {
-        return Result.success(service.paging(ro).getRecords());
+    public Result<List<AppCardComplexVo>> index(@PathVariable String appid,
+                                                @Validated @RequestBody MinaAppCardPagingRo ro) {
+        return Result.success(service.pagingForMina(ro).getRecords());
     }
 }
+

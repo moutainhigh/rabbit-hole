@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(description = "应用")
-public class AppCardPageRo extends PageRo {
+public class MinaAppCardPagingRo extends PageRo {
     private String keyword;
     private Serializable enabled;
 }

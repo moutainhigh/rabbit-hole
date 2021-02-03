@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(description = "游戏")
-public class GameCardPageRo extends PageRo {
+public class MinaGameCardPagingRo extends PageRo {
     private String keyword;
     private Serializable enabled;
 }

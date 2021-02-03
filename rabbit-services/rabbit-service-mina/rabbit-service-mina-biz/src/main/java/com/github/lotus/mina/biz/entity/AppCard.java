@@ -51,6 +51,13 @@ public class AppCard extends AbstractEntity<AppCard> {
     @ApiModelProperty("排序,默认:1000")
     @TableField("priority")
     private Integer priority;
+    @ApiModelProperty("启用状态")
+    @TableField("enabled")
+    private Boolean enabled;
+    @ApiModelProperty("置顶状态")
+    @TableField("is_top")
+    private Boolean isTop;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
@@ -63,9 +70,6 @@ public class AppCard extends AbstractEntity<AppCard> {
     @ApiModelProperty("更新者")
     @TableField("last_updater")
     private Long lastUpdater;
-    @ApiModelProperty("启用状态")
-    @TableField("enabled")
-    private Boolean enabled;
 
 
 

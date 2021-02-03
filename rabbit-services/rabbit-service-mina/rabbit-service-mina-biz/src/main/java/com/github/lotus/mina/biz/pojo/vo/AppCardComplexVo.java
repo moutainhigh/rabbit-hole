@@ -1,6 +1,7 @@
 package com.github.lotus.mina.biz.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,19 +17,21 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel
-public class AppComplexVo {
+public class AppCardComplexVo {
     private String title;
     private String logoUrl;
     private String remark;
     private List<String> tags = Collections.emptyList();
     private List<String> viewUrls = Collections.emptyList();
-    private AppComplexVo.Href href;
+    private AppCardComplexVo.Href href;
+    @ApiModelProperty("置顶状态")
+    private Boolean isTop;
 
     @Data
     @Accessors(chain = true)
     @ApiModel(description = "链接")
     public static class Href {
-        public AppComplexVo.Href.Mini mini;
+        public AppCardComplexVo.Href.Mini mini;
 
         @Data
         @Accessors(chain = true)

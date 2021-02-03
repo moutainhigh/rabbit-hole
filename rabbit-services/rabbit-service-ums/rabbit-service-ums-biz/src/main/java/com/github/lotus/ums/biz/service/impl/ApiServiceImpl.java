@@ -9,12 +9,11 @@ import com.github.lotus.ums.biz.mapper.ApiMapper;
 import com.github.lotus.ums.biz.mapstruct.ApiMapping;
 import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
-import com.github.lotus.ums.biz.pojo.ro.SaveApiRo;
+import com.github.lotus.ums.biz.pojo.ro.ApiSaveRo;
 import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.ApiOrdinaryVo;
 import com.github.lotus.ums.biz.service.ApiService;
 import com.github.lotus.ums.biz.service.AuthorityApiRefService;
-import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.ums.biz.service.UserService;
@@ -53,7 +52,7 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertOne(SaveApiRo ro) {
+    public void insertOne(ApiSaveRo ro) {
         Long userId = ro.getUserId();
         LocalDateTime now = LocalDateTime.now();
 
@@ -65,7 +64,7 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateOne(Long id, SaveApiRo ro) {
+    public void updateOne(Long id, ApiSaveRo ro) {
         Long userId = ro.getUserId();
         LocalDateTime now = LocalDateTime.now();
 

@@ -48,6 +48,9 @@ public class GameCard extends AbstractEntity<GameCard> {
     @ApiModelProperty("排序,默认:1000")
     @TableField("priority")
     private Integer priority;
+    @ApiModelProperty("启用状态")
+    @TableField("enabled")
+    private Boolean enabled;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
@@ -60,9 +63,6 @@ public class GameCard extends AbstractEntity<GameCard> {
     @ApiModelProperty("更新者")
     @TableField("last_updater")
     private Long lastUpdater;
-    @ApiModelProperty("启用状态")
-    @TableField("enabled")
-    private Boolean enabled;
 
 
 

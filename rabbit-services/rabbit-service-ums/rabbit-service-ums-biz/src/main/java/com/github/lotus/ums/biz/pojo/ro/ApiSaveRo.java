@@ -1,7 +1,6 @@
 package com.github.lotus.ums.biz.pojo.ro;
 
 
-import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
 import in.hocg.boot.validation.autoconfigure.group.Update;
 import io.swagger.annotations.ApiModel;
@@ -19,7 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Data
 @ApiModel(description = "接口保存")
-public class SaveApiRo {
+public class ApiSaveRo {
     @ApiModelProperty("接口编码")
     @NotNull(message = "接口编码不能为空", groups = {Insert.class})
     private String encoding;
