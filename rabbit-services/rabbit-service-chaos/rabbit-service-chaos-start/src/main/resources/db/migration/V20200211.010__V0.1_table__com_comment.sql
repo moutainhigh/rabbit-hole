@@ -2,13 +2,13 @@ DROP TABLE IF EXISTS `com_comment_target`;
 CREATE TABLE com_comment_target
 (
     id       BIGINT AUTO_INCREMENT,
-    rel_id   BIGINT      NOT NULL
+    ref_id   BIGINT      NOT NULL
         COMMENT '评论对象ID',
-    rel_type VARCHAR(32) NOT NULL
+    ref_type VARCHAR(32) NOT NULL
         COMMENT '评论对象类型',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    UNIQUE KEY (rel_id, rel_type),
+    UNIQUE KEY (ref_id, ref_type),
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

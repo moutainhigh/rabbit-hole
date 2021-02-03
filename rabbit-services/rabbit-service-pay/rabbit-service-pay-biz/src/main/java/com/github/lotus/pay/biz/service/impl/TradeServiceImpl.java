@@ -1,8 +1,9 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
-import com.github.lotus.common.datadict.bmw.RefundStatus;
-import com.github.lotus.common.datadict.bmw.TradeStatus;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.RefundStatus;
+import com.github.lotus.common.datadict.pay.TradeStatus;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
@@ -20,7 +21,10 @@ import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
 import com.github.lotus.pay.biz.pojo.ro.RefundMessageRo;
+import com.github.lotus.pay.biz.pojo.ro.TradeCompleteRo;
+import com.github.lotus.pay.biz.pojo.ro.TradePagingRo;
 import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
+import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
 import com.github.lotus.pay.biz.pojo.vo.WaitPayTradeVo;
 import com.github.lotus.pay.biz.service.AccessAppService;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
@@ -337,6 +341,28 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         // 发送异步通知
         final Long notifyAccessAppId = notifyAccessAppService.createRefundNotify(refundRecordId);
         allPaymentService.sendAsyncNotifyApp(notifyAccessAppId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<TradeComplexVo> paging(TradePagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<TradeComplexVo> complete(TradeCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public TradeComplexVo getComplex(Long id) {
+        return convertComplex(getById(id));
+    }
+
+    private TradeComplexVo convertComplex(Trade entity) {
+        return mapping.asComplex(entity);
     }
 
     private boolean updateByIdAndTradeStatus(@NonNull Trade update, @NonNull Long tradeId, @NonNull String... tradeStatus) {

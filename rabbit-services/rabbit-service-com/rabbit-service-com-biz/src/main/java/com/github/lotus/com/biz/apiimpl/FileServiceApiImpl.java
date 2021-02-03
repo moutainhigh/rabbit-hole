@@ -27,8 +27,8 @@ public class FileServiceApiImpl implements FileServiceApi {
     }
 
     @Override
-    public List<FileVo> listFileByRelTypeAndRelId(String relType, Long relId) {
-        return service.listFileByRelTypeAndRelId(relType, relId);
+    public List<FileVo> listByRefTypeAndRefId(String relType, Long relId) {
+        return service.listByRefTypeAndRefId(relType, relId);
     }
 
     @Override

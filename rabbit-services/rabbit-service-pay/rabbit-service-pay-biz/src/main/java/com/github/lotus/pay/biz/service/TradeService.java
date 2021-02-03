@@ -1,5 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
@@ -7,14 +9,17 @@ import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
 import com.github.lotus.pay.api.pojo.vo.RefundStatusSync;
 import com.github.lotus.pay.api.pojo.vo.TradeStatusSync;
 import com.github.lotus.pay.biz.entity.Trade;
-import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
 import com.github.lotus.pay.biz.pojo.ro.RefundMessageRo;
+import com.github.lotus.pay.biz.pojo.ro.TradeCompleteRo;
+import com.github.lotus.pay.biz.pojo.ro.TradePagingRo;
 import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
+import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
 import com.github.lotus.pay.biz.pojo.vo.WaitPayTradeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -103,4 +108,10 @@ public interface TradeService extends AbstractService<Trade> {
      * @param ro
      */
     void handleRefundMessage(RefundMessageRo ro);
+
+    IPage<TradeComplexVo> paging(TradePagingRo ro);
+
+    List<TradeComplexVo> complete(TradeCompleteRo ro);
+
+    TradeComplexVo getComplex(Long id);
 }

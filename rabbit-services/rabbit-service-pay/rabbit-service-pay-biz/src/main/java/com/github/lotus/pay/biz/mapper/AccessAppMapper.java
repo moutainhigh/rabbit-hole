@@ -1,8 +1,13 @@
 package com.github.lotus.pay.biz.mapper;
 
-import com.github.lotus.pay.biz.entity.AccessApp;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.lotus.pay.biz.entity.AccessApp;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppCompleteRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessAppPagingRo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +20,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccessAppMapper extends BaseMapper<AccessApp> {
 
+    IPage<AccessApp> paging(@Param("ro") AccessAppPagingRo ro, @Param("page") Page page);
+
+    IPage<AccessApp> complete(@Param("ro") AccessAppCompleteRo ro, @Param("page") Page page);
 }

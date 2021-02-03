@@ -1,5 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.helper;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.github.lotus.pay.biz.entity.PlatformAlipayConfig;
 import com.github.lotus.pay.biz.entity.PlatformWxpayConfig;
 import in.hocg.boot.utils.ValidUtils;
@@ -20,7 +21,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ConfigStorageHelper {
 
-    public static ConfigStorage createAliPayConfigStorage(PlatformAlipayConfig config) {
+    public static ConfigStorage createConfigStorage(Model<?> model) {
+        if (model instanceof PlatformAlipayConfig) {
+            return ConfigStorageHelper.createConfigStorage(model);
+        } else if (model instanceof PlatformWxpayConfig) {
+            return ConfigStorageHelper.createConfigStorage(model);
+        }
+        throw new UnsupportedOperationException();
+    }
+
+    public static ConfigStorage createConfigStorage(PlatformAlipayConfig config) {
         ValidUtils.notNull(config);
         return ConfigStorages.createConfigStorage(AliPayConfigStorage.class)
             .setAliPayPublicKey(config.getPublicKey())
@@ -30,7 +40,7 @@ public class ConfigStorageHelper {
             .setIsDev(config.getIsDev());
     }
 
-    public static ConfigStorage createWxPayConfigStorage(PlatformWxpayConfig config) {
+    public static ConfigStorage createConfigStorage(PlatformWxpayConfig config) {
         ValidUtils.notNull(config);
         return ConfigStorages.createConfigStorage(WxPayConfigStorage.class)
             .setCertFileStr(config.getCertStr())

@@ -1,4 +1,4 @@
-package com.github.lotus.common.datadict.bmw;
+package com.github.lotus.common.datadict.pay;
 
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;

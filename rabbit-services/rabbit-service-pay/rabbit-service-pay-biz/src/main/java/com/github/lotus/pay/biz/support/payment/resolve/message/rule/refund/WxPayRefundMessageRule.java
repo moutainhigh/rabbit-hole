@@ -2,8 +2,8 @@ package com.github.lotus.pay.biz.support.payment.resolve.message.rule.refund;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
-import com.github.lotus.common.datadict.bmw.RefundStatus;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.RefundStatus;
 import com.github.lotus.pay.biz.pojo.ro.RefundMessageRo;
 import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;

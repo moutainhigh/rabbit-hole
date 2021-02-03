@@ -19,9 +19,9 @@ import java.util.List;
 public class UploadFileRo implements Serializable {
 
     @ApiModelProperty("引用类型(必须)")
-    private Integer relType;
+    private Integer refType;
     @ApiModelProperty("引用ID(必须)")
-    private Long relId;
+    private Long refId;
     @ApiModelProperty("文件列表")
     private List<FileDto> files = Collections.emptyList();
     @ApiModelProperty("创建人ID(可选)")

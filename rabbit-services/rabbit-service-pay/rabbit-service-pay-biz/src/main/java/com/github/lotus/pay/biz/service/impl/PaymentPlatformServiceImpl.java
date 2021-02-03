@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.RefundStatus;
+import com.github.lotus.common.datadict.pay.RefundStatus;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
 import com.github.lotus.pay.biz.entity.AccessPlatform;

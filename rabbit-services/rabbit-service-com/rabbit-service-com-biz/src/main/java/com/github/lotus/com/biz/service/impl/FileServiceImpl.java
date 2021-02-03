@@ -7,7 +7,7 @@ import com.github.lotus.com.biz.mapper.FileMapper;
 import com.github.lotus.com.biz.service.FileService;
 import com.github.lotus.com.biz.utils.Avatars;
 import com.github.lotus.common.constant.GlobalConstant;
-import com.github.lotus.common.datadict.FileRelType;
+import com.github.lotus.common.datadict.com.FileRelType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
 import in.hocg.boot.utils.LangUtils;
@@ -46,11 +46,11 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void upload(UploadFileRo dto) {
-        final Long relId = dto.getRelId();
+        final Long relId = dto.getRefId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final FileRelType relType = ICode.ofThrow(dto.getRelType(), FileRelType.class);
+        final FileRelType relType = ICode.ofThrow(dto.getRefType(), FileRelType.class);
         final List<UploadFileRo.FileDto> files = dto.getFiles();
-        deleteByRelTypeAndRelId(relType, relId);
+        deleteByRefTypeAndRefId(relType.getCodeStr(), relId);
         final LocalDateTime now = LocalDateTime.now();
         final Long creator = LangUtils.getOrDefault(dto.getCreator(), GlobalConstant.SUPPER_ADMIN_USER_ID);
         if (CollectionUtils.isEmpty(files)) {
@@ -58,8 +58,8 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
         }
         final List<File> list = files.parallelStream()
             .map(item -> new File()
-                .setRelId(relId)
-                .setRelType((String) relType.getCode())
+                .setRefId(relId)
+                .setRefType(relType.getCodeStr())
                 .setPriority(item.getPriority())
                 .setCreator(creator)
                 .setFilename(item.getFilename())
@@ -77,21 +77,19 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<FileVo> listFileByRelTypeAndRelId(@NotNull String relType,
-                                                  @NotNull Long relId) {
-        return listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(ICode.ofThrow(relType, FileRelType.class), relId)
+    public List<FileVo> listByRefTypeAndRefId(@NotNull String refType,
+                                              @NotNull Long refId) {
+        return listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(refType, refId)
             .stream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
             .collect(Collectors.toList());
     }
 
-    private List<File> listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull FileRelType relType, @NotNull Long relId) {
-        return baseMapper.listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType.getCode(), relId);
+    private List<File> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@NotNull String relType, @NotNull Long relId) {
+        return baseMapper.listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(relType, relId);
     }
 
-    private void deleteByRelTypeAndRelId(@NotNull FileRelType relType, @NotNull Long relId) {
-        lambdaUpdate().eq(File::getRelType, relType.getCode())
-            .eq(File::getRelId, relId)
-            .remove();
+    private void deleteByRefTypeAndRefId(@NotNull String relType, @NotNull Long relId) {
+        lambdaUpdate().eq(File::getRefType, relType).eq(File::getRefId, relId).remove();
     }
 }

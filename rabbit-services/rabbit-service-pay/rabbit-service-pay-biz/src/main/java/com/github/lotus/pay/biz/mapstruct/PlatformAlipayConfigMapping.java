@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.mapstruct;
 
 import com.github.lotus.pay.biz.entity.PlatformAlipayConfig;
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,5 +15,5 @@ import org.mapstruct.Mapping;
 public interface PlatformAlipayConfigMapping {
 
     @Mapping(target = "id", ignore = true)
-    PlatformAlipayConfig asPlatformAlipayConfig(AccessPlatformInsertRo.AliPayConfig config);
+    PlatformAlipayConfig asPlatformAlipayConfig(AccessPlatformSaveRo.AliPayConfig config);
 }

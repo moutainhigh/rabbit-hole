@@ -1,4 +1,4 @@
-package com.github.lotus.common.datadict;
+package com.github.lotus.common.datadict.com;
 
 import com.github.lotus.common.constant.DistrictLevelConstant;
 import in.hocg.boot.utils.enums.DataDictEnum;
@@ -24,5 +24,5 @@ public enum DistrictLevel implements DataDictEnum {
     private final Serializable code;
     private final String name;
 
-    public final static String KEY = "DistrictLevel";
+    public final static String KEY = "district_level";
 }

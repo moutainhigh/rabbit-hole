@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.pojo.ro;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
-public class AccessPlatformInsertRo {
+public class AccessPlatformSaveRo {
     @NotNull(message = "接入应用错误")
     @ApiModelProperty("接入应用")
     private Long accessAppId;
@@ -27,6 +27,11 @@ public class AccessPlatformInsertRo {
     private AliPayConfig aliPayConfig;
     @ApiModelProperty("微信配置")
     private WxPayConfig wxPayConfig;
+    @ApiModelProperty("启用状态")
+    private Boolean enabled;
+
+    @ApiModelProperty(hidden = true)
+    private String clientIp;
 
     @Data
     @ApiModel

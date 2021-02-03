@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.pojo;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.pay.biz.support.payment.helper.RequestHelper;
 import in.hocg.payment.ConfigStorage;
 import in.hocg.payment.PaymentService;

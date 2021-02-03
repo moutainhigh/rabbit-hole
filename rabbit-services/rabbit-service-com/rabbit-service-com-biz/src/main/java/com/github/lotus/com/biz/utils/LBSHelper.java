@@ -1,7 +1,7 @@
 package com.github.lotus.com.biz.utils;
 
 import com.github.lotus.common.constant.DistrictLevelConstant;
-import com.github.lotus.common.datadict.DistrictLevel;
+import com.github.lotus.common.datadict.com.DistrictLevel;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 

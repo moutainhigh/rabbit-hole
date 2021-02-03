@@ -2,9 +2,9 @@ package com.github.lotus.pay.biz.support.payment.resolve.message.rule.pay;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.github.lotus.common.datadict.bmw.PayMode;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
-import com.github.lotus.common.datadict.bmw.TradeStatus;
+import com.github.lotus.common.datadict.pay.PayMode;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.TradeStatus;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
 import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;

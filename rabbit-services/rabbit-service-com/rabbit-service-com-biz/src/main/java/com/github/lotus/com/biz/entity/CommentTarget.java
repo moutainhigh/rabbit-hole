@@ -29,11 +29,11 @@ public class CommentTarget extends AbstractEntity<CommentTarget> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     @ApiModelProperty("评论对象ID")
-    @TableField("rel_id")
-    private Long relId;
+    @TableField("ref_id")
+    private Long refId;
     @ApiModelProperty("评论对象类型")
-    @TableField("rel_type")
-    private String relType;
+    @TableField("ref_type")
+    private String refType;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
     private Boolean enabled;

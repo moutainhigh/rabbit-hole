@@ -19,5 +19,5 @@ import java.util.List;
 @Mapper
 public interface FileMapper extends BaseMapper<File> {
 
-    List<File> listFileByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@Param("relType") Serializable code, @Param("relId") Long relId);
+    List<File> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@Param("refType") Serializable code, @Param("refId") Long relId);
 }

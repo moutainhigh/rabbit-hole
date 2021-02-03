@@ -1,23 +1,19 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.entity.AccessPlatform;
-import com.github.lotus.pay.biz.entity.PlatformAlipayConfig;
-import com.github.lotus.pay.biz.entity.PlatformWxpayConfig;
 import com.github.lotus.pay.biz.mapper.AccessPlatformMapper;
 import com.github.lotus.pay.biz.mapstruct.AccessPlatformMapping;
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.AccessAppService;
+import com.github.lotus.pay.biz.service.AccessPlatformConfigProxyService;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
-import com.github.lotus.pay.biz.service.PlatformAlipayConfigService;
-import com.github.lotus.pay.biz.service.PlatformWxpayConfigService;
-import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.helper.ConfigStorageHelper;
+import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.ConfigStorage;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +21,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,9 +37,8 @@ import java.util.Optional;
 public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatformMapper, AccessPlatform>
     implements AccessPlatformService {
     private final AccessAppService accessAppService;
-    private final PlatformAlipayConfigService platformAlipayConfigService;
-    private final PlatformWxpayConfigService platformWxpayConfigService;
     private final AccessPlatformMapping mapping;
+    private final AccessPlatformConfigProxyService platformConfigProxyService;
 
     @Override
     public Optional<AccessPlatform> getByAppidAndRefType(String accessAppSn, String refType) {
@@ -65,25 +60,8 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
         Long refId = accessPlatform.getRefId();
         PaymentPlatform paymentPlatform = PaymentHelper.asPaymentPlatform(refType);
 
-        ConfigStorageDto configStorageDto;
-        switch (Objects.requireNonNull(paymentPlatform)) {
-            case AliPay: {
-                PlatformAlipayConfig config = platformAlipayConfigService.getById(refId);
-                ConfigStorage configStorage = ConfigStorageHelper.createAliPayConfigStorage(config);
-                configStorageDto = new ConfigStorageDto(appid, accessPlatformId, PaymentPlatform.AliPay, configStorage);
-                break;
-            }
-            case WxPay: {
-                PlatformWxpayConfig config = platformWxpayConfigService.getById(refId);
-                ConfigStorage configStorage = ConfigStorageHelper.createWxPayConfigStorage(config);
-                configStorageDto = new ConfigStorageDto(appid, accessPlatformId, PaymentPlatform.WxPay, configStorage);
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
-        }
-        return configStorageDto;
+        ConfigStorage configStorage = ConfigStorageHelper.createConfigStorage(platformConfigProxyService.getByRefTypeAndRefId(refType, refId));
+        return new ConfigStorageDto(appid, accessPlatformId, paymentPlatform, configStorage);
     }
 
     @Override
@@ -98,31 +76,41 @@ public class AccessPlatformServiceImpl extends AbstractServiceImpl<AccessPlatfor
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertOne(AccessPlatformInsertRo ro) {
-        PaymentPlatform paymentPlatform = ICode.ofThrow(ro.getPlatform(), PaymentPlatform.class);
-        AccessPlatformInsertRo.AliPayConfig aliPayConfig = ro.getAliPayConfig();
-        AccessPlatformInsertRo.WxPayConfig wxPayConfig = ro.getWxPayConfig();
+    public void saveOne(AccessPlatformSaveRo ro) {
+        Long accessAppId = ro.getAccessAppId();
+        String platform = ro.getPlatform();
+        String clientIp = ro.getClientIp();
+        Optional<AccessPlatform> accessPlatformOpt = getByAccessAppIdAndRefType(accessAppId, platform);
 
-        Long refId;
-        switch (paymentPlatform) {
-            case AliPay: {
-                ValidUtils.notNull(aliPayConfig);
-                refId = platformAlipayConfigService.insert(aliPayConfig);
-                break;
-            }
-            case WxPay: {
-                ValidUtils.notNull(wxPayConfig);
-                refId = platformWxpayConfigService.insert(wxPayConfig);
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
+        AccessPlatform entity;
+        if (accessPlatformOpt.isPresent()) {
+            AccessPlatform accessPlatform = accessPlatformOpt.get();
+            Long id = accessPlatform.getId();
+            Long refId = accessPlatform.getRefId();
+            platformConfigProxyService.updateOne(refId, ro);
+            entity = mapping.asAccessPlatform(ro);
+            entity.setId(id);
+        } else {
+            Long refId = platformConfigProxyService.insertOne(ro);
+            entity = mapping.asAccessPlatform(ro);
+            entity.setRefType(platform);
+            entity.setRefId(refId);
+            entity.setCreatedIp(clientIp);
         }
+        boolean isOk = validInsertOrUpdate(entity);
+        ValidUtils.isTrue(isOk);
+    }
 
-        AccessPlatform entity = mapping.asAccessPlatform(ro);
-        entity.setRefType(paymentPlatform.getCode());
-        entity.setRefId(refId);
-        validInsert(entity);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeByAccessAppId(Long accessAppId) {
+        List<AccessPlatform> result = listByAccessAppId(accessAppId);
+        for (AccessPlatform item : result) {
+            platformConfigProxyService.removeByRefTypeAndRefId(item.getRefType(), item.getRefId());
+        }
+    }
+
+    private List<AccessPlatform> listByAccessAppId(Long accessAppId) {
+        return lambdaQuery().eq(AccessPlatform::getAccessAppId, accessAppId).list();
     }
 }

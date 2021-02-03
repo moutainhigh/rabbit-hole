@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.NotifyStatus;
-import com.github.lotus.common.datadict.bmw.NotifyType;
+import com.github.lotus.common.datadict.pay.NotifyStatus;
+import com.github.lotus.common.datadict.pay.NotifyType;
 import com.github.lotus.pay.biz.entity.NotifyAccessApp;
 import com.github.lotus.pay.biz.entity.RefundRecord;
 import com.github.lotus.pay.biz.entity.Trade;

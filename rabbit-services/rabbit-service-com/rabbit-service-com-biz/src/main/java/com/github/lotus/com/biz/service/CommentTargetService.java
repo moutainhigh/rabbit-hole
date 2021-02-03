@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 public interface CommentTargetService extends AbstractService<CommentTarget> {
 
-    Long getOrCreateCommentTarget(String refType, Long refId);
+    Long getOrCreate(String refType, Long refId);
 
-    Optional<Long> getCommentTarget(String relType, Long relId);
+    Optional<Long> getIdByRefTypeAndRefId(String relType, Long relId);
 }

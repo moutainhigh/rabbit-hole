@@ -3,7 +3,7 @@ package com.github.lotus.pay.biz.service.impl;
 import com.github.lotus.pay.biz.entity.PlatformWxpayConfig;
 import com.github.lotus.pay.biz.mapper.PlatformWxpayConfigMapper;
 import com.github.lotus.pay.biz.mapstruct.PlatformWxpayConfigMapping;
-import com.github.lotus.pay.biz.pojo.ro.AccessPlatformInsertRo;
+import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.PlatformWxpayConfigService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class PlatformWxpayConfigServiceImpl extends AbstractServiceImpl<PlatformWxpayConfigMapper, PlatformWxpayConfig> implements PlatformWxpayConfigService {
     private final PlatformWxpayConfigMapping mapping;
     @Override
-    public Long insert(AccessPlatformInsertRo.WxPayConfig config) {
+    public Long insert(AccessPlatformSaveRo.WxPayConfig config) {
         PlatformWxpayConfig entity = mapping.asPlatformWxpayConfig(config);
         validInsert(entity);
         return entity.getId();
