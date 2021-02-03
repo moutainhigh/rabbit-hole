@@ -36,9 +36,9 @@ CREATE TABLE `com_file`
         COMMENT '文件名',
     file_url   VARCHAR(200) NOT NULL
         COMMENT '链接地址',
-    rel_id     BIGINT       NOT NULL
+    ref_id     BIGINT       NOT NULL
         COMMENT '业务ID',
-    rel_type   VARCHAR(10)  NOT NULL DEFAULT 'unknown'
+    ref_type   VARCHAR(10)  NOT NULL DEFAULT 'unknown'
         COMMENT '业务类型',
     priority       INT      NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',

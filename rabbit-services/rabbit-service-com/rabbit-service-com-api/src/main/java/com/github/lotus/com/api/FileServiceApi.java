@@ -24,9 +24,8 @@ public interface FileServiceApi {
     @PostMapping(CONTEXT_ID + "/upload")
     void upload(@Validated @RequestBody UploadFileRo ro);
 
-    @PostMapping(CONTEXT_ID + "/listFileByRelTypeAndRelId")
-    List<FileVo> listFileByRelTypeAndRelId(@RequestParam("relType") String relType,
-                                           @RequestParam("relId") Long relId);
+    @PostMapping(CONTEXT_ID + "/listFileByRefTypeAndRefId")
+    List<FileVo> listByRefTypeAndRefId(@RequestParam("refType") String refType, @RequestParam("refId") Long refId);
 
     @PostMapping(CONTEXT_ID + "/getAvatarUrl")
     String getAvatarUrl(@RequestParam("id") Long id);

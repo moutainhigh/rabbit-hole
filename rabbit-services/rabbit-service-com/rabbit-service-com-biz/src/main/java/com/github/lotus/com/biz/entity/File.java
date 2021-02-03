@@ -37,11 +37,11 @@ public class File extends AbstractEntity<File> {
     @TableField("file_url")
     private String fileUrl;
     @ApiModelProperty("业务ID")
-    @TableField("rel_id")
-    private Long relId;
+    @TableField("ref_id")
+    private Long refId;
     @ApiModelProperty("业务类型")
-    @TableField("rel_type")
-    private String relType;
+    @TableField("ref_type")
+    private String refType;
     @ApiModelProperty("排序,默认:1000")
     @TableField("priority")
     private Integer priority;

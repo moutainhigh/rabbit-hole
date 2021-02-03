@@ -30,12 +30,12 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long getOrCreateCommentTarget(String relType, Long relId) {
-        final CommentTargetType targetType = ICode.ofThrow(relType, CommentTargetType.class);
-        final Optional<Long> idOpt = getCommentTarget(relType, relId);
+    public Long getOrCreate(String refType, Long refId) {
+        final CommentTargetType targetType = ICode.ofThrow(refType, CommentTargetType.class);
+        final Optional<Long> idOpt = getIdByRefTypeAndRefId(refType, refId);
         return idOpt.orElseGet(() -> {
             final CommentTarget entity = new CommentTarget()
-                .setRelId(relId).setRelType(targetType.getCodeStr());
+                .setRefId(refId).setRefType(targetType.getCodeStr());
             validInsert(entity);
             return entity.getId();
         });
@@ -43,15 +43,14 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Optional<Long> getCommentTarget(String relType, Long relId) {
-        final CommentTargetType targetType = ICode.ofThrow(relType, CommentTargetType.class);
-        return selectOneByRelTypeAndRelId(targetType.getCodeStr(), relId);
+    public Optional<Long> getIdByRefTypeAndRefId(String refType, Long refId) {
+        final CommentTargetType targetType = ICode.ofThrow(refType, CommentTargetType.class);
+        return this.getByRefTypeAndRefId(targetType.getCodeStr(), refId)
+            .map(CommentTarget::getId);
     }
 
-    private Optional<Long> selectOneByRelTypeAndRelId(String relType, Long relId) {
-        return lambdaQuery().eq(CommentTarget::getRelType, relType)
-            .eq(CommentTarget::getRelId, relId)
-            .oneOpt()
-            .map(CommentTarget::getId);
+    private Optional<CommentTarget> getByRefTypeAndRefId(String refType, Long refId) {
+        return lambdaQuery().eq(CommentTarget::getRefType, refType)
+            .eq(CommentTarget::getRefId, refId).oneOpt();
     }
 }

@@ -25,6 +25,5 @@ public interface FileService extends AbstractService<File> {
 
     String getAvatarUrl(Long id);
 
-    List<FileVo> listFileByRelTypeAndRelId(@NotNull String relType,
-                                           @NotNull Long relId);
+    List<FileVo> listByRefTypeAndRefId(@NotNull String refType, @NotNull Long refId);
 }

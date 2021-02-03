@@ -68,7 +68,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final Long refId = ro.getRefId();
         LocalDateTime now = LocalDateTime.now();
 
-        final Long targetId = commentTargetService.getOrCreateCommentTarget(refType, refId);
+        final Long targetId = commentTargetService.getOrCreate(refType, refId);
 
         final Comment entity = mapping.asComment(ro);
         entity.setEnabled(true);
@@ -97,7 +97,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
             return PageUtils.emptyPage(ro);
         }
 
-        final Optional<Long> targetIdOpt = commentTargetService.getCommentTarget(refType, refId);
+        final Optional<Long> targetIdOpt = commentTargetService.getIdByRefTypeAndRefId(refType, refId);
         if (!targetIdOpt.isPresent()) {
             return PageUtils.emptyPage(ro);
         }
