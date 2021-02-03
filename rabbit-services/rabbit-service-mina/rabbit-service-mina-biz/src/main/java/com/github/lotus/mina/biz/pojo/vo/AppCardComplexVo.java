@@ -16,19 +16,19 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel
-public class AppComplexVo {
+public class AppCardComplexVo {
     private String title;
     private String logoUrl;
     private String remark;
     private List<String> tags = Collections.emptyList();
     private List<String> viewUrls = Collections.emptyList();
-    private AppComplexVo.Href href;
+    private AppCardComplexVo.Href href;
 
     @Data
     @Accessors(chain = true)
     @ApiModel(description = "链接")
     public static class Href {
-        public AppComplexVo.Href.Mini mini;
+        public AppCardComplexVo.Href.Mini mini;
 
         @Data
         @Accessors(chain = true)

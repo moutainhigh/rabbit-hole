@@ -1,12 +1,12 @@
-package com.github.lotus.ums.biz.controller;
-
+package com.github.lotus.mina.biz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.ums.biz.pojo.ro.ApiCompleteRo;
-import com.github.lotus.ums.biz.pojo.ro.ApiPagingRo;
-import com.github.lotus.ums.biz.pojo.ro.ApiSaveRo;
-import com.github.lotus.ums.biz.pojo.vo.ApiComplexVo;
-import com.github.lotus.ums.biz.service.ApiService;
+import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
+import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.AppCardSaveRo;
+import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
+import com.github.lotus.mina.biz.pojo.vo.AppCardOrdinaryVo;
+import com.github.lotus.mina.biz.service.AppCardService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.autoconfigure.group.Insert;
@@ -30,61 +30,59 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * <p>
- * [权限模块] 接口表 前端控制器
- * </p>
+ * Created by hocgin on 2021/2/3
+ * email: hocgin@gmail.com
  *
  * @author hocgin
- * @since 2021-01-19
  */
-@Api(tags = "ums::接口")
+@Api(tags = "mina::小程序应用")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api")
-public class ApiController {
-    private final ApiService service;
+@RequestMapping("/app-card")
+public class AppCardController {
+    private final AppCardService service;
 
-    @ApiOperation("分页查询 - 接口")
+    @ApiOperation("分页查询 - 小程序应用")
     @PostMapping("/_paging")
-    public Result<IPage<ApiComplexVo>> paging(@Validated @RequestBody ApiPagingRo ro) {
+    public Result<IPage<AppCardOrdinaryVo>> paging(@Validated @RequestBody AppCardPagingRo ro) {
         return Result.success(service.paging(ro));
     }
 
-    @ApiOperation("检索 - 接口")
-    @UseLogger("检索 - 接口")
+    @ApiOperation("检索 - 小程序应用")
+    @UseLogger("检索 - 小程序应用")
     @PostMapping("/_complete")
-    public Result<List<ApiComplexVo>> complete(@Validated @RequestBody ApiCompleteRo ro) {
+    public Result<List<AppCardOrdinaryVo>> complete(@Validated @RequestBody AppCardCompleteRo ro) {
         return Result.success(service.complete(ro));
     }
 
-    @ApiOperation("新增 - 接口")
+    @ApiOperation("新增 - 小程序应用")
     @PostMapping
-    public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody ApiSaveRo ro) {
+    public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody AppCardSaveRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.insertOne(ro);
         return Result.success();
     }
 
-    @ApiOperation("修改 - 接口")
+    @ApiOperation("修改 - 小程序应用")
     @PutMapping("/{id}")
-    public Result<Void> updateOne(@ApiParam(value = "接口", required = true) @PathVariable Long id,
-                                  @Validated({Update.class}) @RequestBody ApiSaveRo ro) {
+    public Result<Void> updateOne(@ApiParam(value = "小程序应用", required = true) @PathVariable Long id,
+                                  @Validated({Update.class}) @RequestBody AppCardSaveRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.updateOne(id, ro);
         return Result.success();
     }
 
-    @ApiOperation("查询详情 - 接口")
+    @ApiOperation("查询详情 - 小程序应用")
     @GetMapping("/{id}")
-    public Result<ApiComplexVo> getComplex(@ApiParam(value = "接口", required = true) @PathVariable Long id) {
+    public Result<AppCardComplexVo> getComplex(@ApiParam(value = "小程序应用", required = true) @PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
 
-    @ApiOperation("删除 - 接口")
+    @ApiOperation("删除 - 小程序应用")
     @DeleteMapping("/{id}")
-    public Result<Void> deleteOne(@ApiParam(value = "接口", required = true) @PathVariable Long id) {
+    public Result<Void> deleteOne(@ApiParam(value = "小程序应用", required = true) @PathVariable Long id) {
         service.deleteOne(id);
         return Result.success();
     }
-}
 
+}
