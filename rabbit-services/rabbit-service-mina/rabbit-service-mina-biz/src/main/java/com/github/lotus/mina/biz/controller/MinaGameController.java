@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/{appid}/game")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class GameController {
+public class MinaGameController {
     private final GameCardService service;
 
     @ApiOperation("游戏 - 分页查询")

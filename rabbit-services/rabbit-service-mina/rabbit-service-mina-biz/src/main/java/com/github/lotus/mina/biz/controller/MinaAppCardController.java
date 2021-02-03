@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/{appid}/app")
-public class AppController {
+public class MinaAppCardController {
     private final AppCardService service;
 
     @ApiOperation("应用 - 分页查询")
