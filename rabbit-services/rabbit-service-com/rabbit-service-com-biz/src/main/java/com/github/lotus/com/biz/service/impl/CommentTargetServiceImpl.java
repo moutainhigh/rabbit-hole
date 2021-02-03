@@ -3,6 +3,7 @@ package com.github.lotus.com.biz.service.impl;
 import com.github.lotus.com.biz.entity.CommentTarget;
 import com.github.lotus.com.biz.mapper.CommentTargetMapper;
 import com.github.lotus.com.biz.mapstruct.CommentTargetMapping;
+import com.github.lotus.com.biz.service.CommentTargetProxyService;
 import com.github.lotus.com.biz.service.CommentTargetService;
 import com.github.lotus.common.datadict.CommentTargetType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetMapper, CommentTarget>
     implements CommentTargetService {
     private final CommentTargetMapping mapping;
+    private final CommentTargetProxyService proxyService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
