@@ -1,6 +1,7 @@
 package com.github.lotus.mina.biz.pojo.vo;
 
-import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
