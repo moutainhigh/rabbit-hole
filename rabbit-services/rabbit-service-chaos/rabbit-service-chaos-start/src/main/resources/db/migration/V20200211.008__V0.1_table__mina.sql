@@ -57,6 +57,8 @@ CREATE TABLE `mina_app_card`
         COMMENT '更新者',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
+    `is_top`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 0
+        COMMENT '是否置顶',
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

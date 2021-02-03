@@ -38,7 +38,7 @@ import java.util.List;
 @Api(tags = "mina::小程序游戏")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/game")
+@RequestMapping("/game-card")
 public class GameCardController {
     private final GameCardService service;
 
