@@ -54,6 +54,9 @@ public class AppCard extends AbstractEntity<AppCard> {
     @ApiModelProperty("启用状态")
     @TableField("enabled")
     private Boolean enabled;
+    @ApiModelProperty("置顶状态")
+    @TableField("is_top")
+    private Boolean isTop;
 
     @ApiModelProperty("创建时间")
     @TableField("created_at")

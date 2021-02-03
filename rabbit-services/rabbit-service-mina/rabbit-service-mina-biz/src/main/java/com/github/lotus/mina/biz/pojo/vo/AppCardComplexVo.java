@@ -1,6 +1,7 @@
 package com.github.lotus.mina.biz.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -23,6 +24,8 @@ public class AppCardComplexVo {
     private List<String> tags = Collections.emptyList();
     private List<String> viewUrls = Collections.emptyList();
     private AppCardComplexVo.Href href;
+    @ApiModelProperty("置顶状态")
+    private Boolean isTop;
 
     @Data
     @Accessors(chain = true)

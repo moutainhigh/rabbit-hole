@@ -26,6 +26,8 @@ public class AppCardSaveRo {
     private Integer priority;
     @ApiModelProperty("启用状态")
     private Boolean enabled;
+    @ApiModelProperty("置顶状态")
+    private Boolean isTop;
 
     @ApiModelProperty(value = "创建者", hidden = true)
     private Long userId;

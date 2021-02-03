@@ -13,7 +13,7 @@
         AND mac.enabled = #{ro.enabled}
       </if>
     </where>
-    ORDER BY mac.priority DESC, mac.created_at DESC
+    ORDER BY mac.is_top DESC, mac.priority DESC, mac.created_at DESC
   </select>
 
   <select id="paging" resultType="com.github.lotus.mina.biz.entity.AppCard">
