@@ -12,7 +12,7 @@ import com.github.lotus.com.biz.pojo.vo.district.DistrictTreeVo;
 import com.github.lotus.com.biz.service.DistrictService;
 import com.github.lotus.com.biz.utils.LBSHelper;
 import com.github.lotus.common.constant.DistrictLevelConstant;
-import com.github.lotus.common.datadict.DistrictLevel;
+import com.github.lotus.common.datadict.com.DistrictLevel;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;

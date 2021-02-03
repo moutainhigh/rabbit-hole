@@ -7,7 +7,7 @@ import com.github.lotus.com.biz.mapper.FileMapper;
 import com.github.lotus.com.biz.service.FileService;
 import com.github.lotus.com.biz.utils.Avatars;
 import com.github.lotus.common.constant.GlobalConstant;
-import com.github.lotus.common.datadict.FileRelType;
+import com.github.lotus.common.datadict.com.FileRelType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
 import in.hocg.boot.utils.LangUtils;

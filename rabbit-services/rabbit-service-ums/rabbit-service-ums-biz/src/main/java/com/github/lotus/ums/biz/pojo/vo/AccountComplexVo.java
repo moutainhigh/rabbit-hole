@@ -2,7 +2,7 @@ package com.github.lotus.ums.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
-import com.github.lotus.ums.biz.enumns.Gender;
+import com.github.lotus.common.datadict.ums.Gender;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
