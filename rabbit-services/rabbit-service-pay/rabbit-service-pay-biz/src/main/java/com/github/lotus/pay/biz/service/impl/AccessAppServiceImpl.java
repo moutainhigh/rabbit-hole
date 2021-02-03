@@ -2,8 +2,8 @@ package com.github.lotus.pay.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.common.datadict.bmw.NotifyResult;
-import com.github.lotus.common.datadict.bmw.NotifyType;
+import com.github.lotus.common.datadict.pay.NotifyResult;
+import com.github.lotus.common.datadict.pay.NotifyType;
 import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
 import com.github.lotus.pay.api.pojo.vo.RefundStatusSync;
 import com.github.lotus.pay.api.pojo.vo.TradeStatusSync;

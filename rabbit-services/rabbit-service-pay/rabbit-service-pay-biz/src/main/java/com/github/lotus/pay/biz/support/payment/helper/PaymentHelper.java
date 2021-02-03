@@ -1,11 +1,11 @@
 package com.github.lotus.pay.biz.support.payment.helper;
 
-import com.github.lotus.common.datadict.bmw.NotifyStatus;
-import com.github.lotus.common.datadict.bmw.NotifyType;
-import com.github.lotus.common.datadict.bmw.PayMode;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
-import com.github.lotus.common.datadict.bmw.RefundStatus;
-import com.github.lotus.common.datadict.bmw.TradeStatus;
+import com.github.lotus.common.datadict.pay.NotifyStatus;
+import com.github.lotus.common.datadict.pay.NotifyType;
+import com.github.lotus.common.datadict.pay.PayMode;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.RefundStatus;
+import com.github.lotus.common.datadict.pay.TradeStatus;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.experimental.UtilityClass;
 

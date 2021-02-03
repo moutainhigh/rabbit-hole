@@ -1,4 +1,4 @@
-package com.github.lotus.common.datadict.bmw;
+package com.github.lotus.common.datadict.pay;
 
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum NotifyResult implements DataDictEnum {
-    Init("init", "初始化"),
-    Success("success", "成功"),
-    Timeout("timeout", "关闭"),
-    Fail("fail", "失败");
+public enum TradeStatus implements DataDictEnum {
+    Init("init", "等待支付"),
+    Pending("pending", "待付款完成"),
+    Success("success", "完成支付"),
+    Close("close", "交易已关闭"),
+    Fail("fail", "支付失败");
     private final String code;
     private final String name;
+
 }

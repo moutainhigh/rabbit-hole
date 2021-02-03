@@ -1,9 +1,9 @@
 package com.github.lotus.pay.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
-import com.github.lotus.common.datadict.bmw.RefundStatus;
-import com.github.lotus.common.datadict.bmw.TradeStatus;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.RefundStatus;
+import com.github.lotus.common.datadict.pay.TradeStatus;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;

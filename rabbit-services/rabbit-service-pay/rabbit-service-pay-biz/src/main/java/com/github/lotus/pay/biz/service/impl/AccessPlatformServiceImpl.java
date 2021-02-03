@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.entity.AccessPlatform;
 import com.github.lotus.pay.biz.mapper.AccessPlatformMapper;

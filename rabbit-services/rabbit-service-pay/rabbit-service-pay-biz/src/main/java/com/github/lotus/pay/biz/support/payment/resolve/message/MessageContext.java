@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.support.payment.resolve.message;
 
-import com.github.lotus.common.datadict.bmw.Feature;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.Feature;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

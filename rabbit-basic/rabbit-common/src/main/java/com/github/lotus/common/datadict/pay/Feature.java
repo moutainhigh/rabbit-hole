@@ -1,4 +1,4 @@
-package com.github.lotus.common.datadict.bmw;
+package com.github.lotus.common.datadict.pay;
 
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
@@ -12,11 +12,8 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum LogType implements DataDictEnum {
+public enum Feature implements DataDictEnum {
     Refund("refund", "退款"),
-    AsyncNotify("async_notify", "异步通知"),
-    SyncNotify("sync_notify", "同步通知"),
-    Query("query", "查询"),
     Pay("pay", "支付");
     private final String code;
     private final String name;

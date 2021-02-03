@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.support.payment.pojo.request;
 
-import com.github.lotus.common.datadict.bmw.PayMode;
+import com.github.lotus.common.datadict.pay.PayMode;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.pojo.ConfigStorageDto;
 import com.github.lotus.pay.biz.support.payment.pojo.response.GoPaymentResponse;

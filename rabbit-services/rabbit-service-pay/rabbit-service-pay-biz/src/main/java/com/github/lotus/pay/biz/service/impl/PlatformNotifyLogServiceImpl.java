@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.service.impl;
 
-import com.github.lotus.common.datadict.bmw.Feature;
-import com.github.lotus.common.datadict.bmw.LogType;
+import com.github.lotus.common.datadict.pay.Feature;
+import com.github.lotus.common.datadict.pay.LogType;
 import com.github.lotus.pay.biz.entity.PlatformNotifyLog;
 import com.github.lotus.pay.biz.mapper.PlatformNotifyLogMapper;
 import com.github.lotus.pay.biz.service.PlatformNotifyLogService;

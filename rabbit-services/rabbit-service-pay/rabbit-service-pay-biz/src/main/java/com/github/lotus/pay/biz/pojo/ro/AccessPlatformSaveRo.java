@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.pojo.ro;
 
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,7 +1,7 @@
 package com.github.lotus.pay.biz.service.impl;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.github.lotus.common.datadict.bmw.PaymentPlatform;
+import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.pay.biz.entity.PlatformAlipayConfig;
 import com.github.lotus.pay.biz.entity.PlatformWxpayConfig;
 import com.github.lotus.pay.biz.mapstruct.PlatformAlipayConfigMapping;
