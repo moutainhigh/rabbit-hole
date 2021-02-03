@@ -2,9 +2,15 @@ package com.github.lotus.mina.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mina.biz.entity.GameCard;
-import com.github.lotus.mina.biz.pojo.ro.GameCardPageRo;
-import com.github.lotus.mina.biz.pojo.vo.GameComplexVo;
+import com.github.lotus.mina.biz.pojo.ro.GameCardCompleteRo;
+import com.github.lotus.mina.biz.pojo.ro.GameCardPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.GameCardSaveRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
+import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;
+import com.github.lotus.mina.biz.pojo.vo.GameCardOrdinaryVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +22,17 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface GameCardService extends AbstractService<GameCard> {
 
-    IPage<GameComplexVo> paging(GameCardPageRo ro);
+    IPage<GameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro);
+
+    IPage<GameCardOrdinaryVo> paging(GameCardPagingRo ro);
+
+    List<GameCardOrdinaryVo> complete(GameCardCompleteRo ro);
+
+    void insertOne(GameCardSaveRo ro);
+
+    void updateOne(Long id, GameCardSaveRo ro);
+
+    GameCardComplexVo getComplex(Long id);
+
+    void deleteOne(Long id);
 }

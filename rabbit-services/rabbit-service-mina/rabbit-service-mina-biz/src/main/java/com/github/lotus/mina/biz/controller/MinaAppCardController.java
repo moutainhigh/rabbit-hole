@@ -1,7 +1,7 @@
 package com.github.lotus.mina.biz.controller;
 
 
-import com.github.lotus.mina.biz.pojo.ro.AppCardPageRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
 import com.github.lotus.mina.biz.service.AppCardService;
 import in.hocg.boot.web.result.Result;
@@ -36,7 +36,7 @@ public class MinaAppCardController {
     @ApiOperation("应用 - 分页查询")
     @PostMapping("/_paging")
     public Result<List<AppCardComplexVo>> index(@PathVariable String appid,
-                                                @Validated @RequestBody AppCardPageRo ro) {
+                                                @Validated @RequestBody MinaAppCardPagingRo ro) {
         return Result.success(service.pagingForMina(ro).getRecords());
     }
 }

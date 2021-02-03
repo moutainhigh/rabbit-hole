@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.mina.biz.entity.AppCard;
 import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
-import com.github.lotus.mina.biz.pojo.ro.AppCardPageRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +21,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AppCardMapper extends BaseMapper<AppCard> {
 
-    IPage<AppCard> pagingForMina(@Param("ro") AppCardPageRo ro, @Param("ofPage") Page ofPage);
+    IPage<AppCard> pagingForMina(@Param("ro") MinaAppCardPagingRo ro, @Param("ofPage") Page ofPage);
 
     IPage<AppCard> paging(@Param("ro") AppCardPagingRo ro, @Param("ofPage") Page ofPage);
 

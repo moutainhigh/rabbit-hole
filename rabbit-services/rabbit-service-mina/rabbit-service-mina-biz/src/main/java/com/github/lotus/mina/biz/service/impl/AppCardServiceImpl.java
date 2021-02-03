@@ -5,7 +5,7 @@ import com.github.lotus.mina.biz.entity.AppCard;
 import com.github.lotus.mina.biz.mapper.AppCardMapper;
 import com.github.lotus.mina.biz.mapstruct.AppCardMapping;
 import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
-import com.github.lotus.mina.biz.pojo.ro.AppCardPageRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardSaveRo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
@@ -39,7 +39,7 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<AppCardComplexVo> pagingForMina(AppCardPageRo ro) {
+    public IPage<AppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro) {
         ro.setEnabled(true);
         return baseMapper.pagingForMina(ro, ro.ofPage())
             .convert(this::convertComplex);
