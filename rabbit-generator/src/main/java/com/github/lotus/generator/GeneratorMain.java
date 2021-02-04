@@ -16,20 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.PAY, false,
-            "bmw_platform_notify_log",
-            "bmw_platform_request_log",
-            "bmw_platform_alipay_config",
-            "bmw_platform_wxpay_config",
-            "bmw_notify_access_app_log",
-            "bmw_access_app",
-            "bmw_access_platform",
-            "bmw_notify_access_app",
-            "bmw_trade",
-            "bmw_pay_record",
-            "bmw_refund_record",
-            "bmw_payment_platform",
-            "bmw_payment_mode");
+            Module.MINA, false,
+            "mina_status_material");
     }
 
 }
