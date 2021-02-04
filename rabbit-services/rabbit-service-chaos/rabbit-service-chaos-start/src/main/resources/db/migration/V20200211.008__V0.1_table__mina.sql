@@ -12,11 +12,11 @@ CREATE TABLE `mina_game_card`
         COMMENT '备注',
     tags              VARCHAR(125)
         COMMENT '标签(暂用;分隔)',
-    priority              INT(10)      NOT NULL DEFAULT 1000
+    priority          INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',
-    created_at        TIMESTAMP(6) NOT NULL
+    created_at        TIMESTAMP(6)        NOT NULL
         COMMENT '创建时间',
-    creator           BIGINT       NOT NULL
+    creator           BIGINT              NOT NULL
         COMMENT '创建人',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -40,16 +40,18 @@ CREATE TABLE `mina_app_card`
     logo_url          VARCHAR(255)
         COMMENT 'LOGO',
     page_url          VARCHAR(255)
-        COMMENT '小程序链接',
+        COMMENT '小程序链接(跳转)',
+    appid             VARCHAR(32)
+        COMMENT '小程序appid(跳转)',
     remark            VARCHAR(255)
         COMMENT '备注',
     tags              VARCHAR(125)
         COMMENT '标签(暂用;分隔)',
-    priority              INT(10)      NOT NULL DEFAULT 1000
+    priority          INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',
-    created_at        TIMESTAMP(6) NOT NULL
+    created_at        TIMESTAMP(6)        NOT NULL
         COMMENT '创建时间',
-    creator           BIGINT       NOT NULL
+    creator           BIGINT              NOT NULL
         COMMENT '创建人',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -57,7 +59,7 @@ CREATE TABLE `mina_app_card`
         COMMENT '更新者',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    `is_top`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 0
+    `is_top`          TINYINT(1) UNSIGNED NOT NULL DEFAULT 0
         COMMENT '是否置顶',
     PRIMARY KEY (id)
 )
