@@ -31,7 +31,7 @@ import java.util.List;
 public class MinaStatusMaterialController {
     private final StatusMaterialService service;
 
-    @ApiOperation("游戏 - 分页查询")
+    @ApiOperation("状态素材 - 分页查询")
     @PostMapping("/_paging")
     public Result<List<MinaStatusMaterialComplexVo>> paging(@PathVariable String appid,
                                                             @Validated @RequestBody MinaStatusMaterialPagingRo ro) {
