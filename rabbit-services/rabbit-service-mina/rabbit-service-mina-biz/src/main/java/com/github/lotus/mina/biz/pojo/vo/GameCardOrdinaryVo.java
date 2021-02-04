@@ -1,7 +1,10 @@
 package com.github.lotus.mina.biz.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
+import in.hocg.boot.named.autoconfiguration.annotation.Named;
+import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -33,12 +36,18 @@ public class GameCardOrdinaryVo {
     @ApiModelProperty("启用状态")
     private Boolean enabled;
 
+    @ApiModelProperty("创建者")
+    private Long creator;
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    private String creatorName;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
-    @ApiModelProperty("创建人")
-    private Long creator;
-    @ApiModelProperty("更新时间")
-    private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
+    private String lastUpdaterName;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime lastUpdatedAt;
 }

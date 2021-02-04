@@ -2,50 +2,42 @@ package com.github.lotus.mina.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
+import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 /**
- * Created by hocgin on 2021/1/1
+ * Created by hocgin on 2021/2/4
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
-@Accessors(chain = true)
-@ApiModel
+@InjectNamed
 public class AppCardComplexVo {
+    private Long id;
+    @ApiModelProperty("名称")
     private String title;
+    @ApiModelProperty("LOGO")
     private String logoUrl;
+    @ApiModelProperty("小程序链接")
+    private String pageUrl;
+    @ApiModelProperty("小程序appid")
+    private String appid;
+    @ApiModelProperty("备注")
     private String remark;
-    private List<String> tags = Collections.emptyList();
-    private List<String> viewUrls = Collections.emptyList();
-    private AppCardComplexVo.Href href;
+    @ApiModelProperty("标签(暂用;分隔)")
+    private String tags;
+    @ApiModelProperty("排序,默认:1000")
+    private Integer priority;
+    @ApiModelProperty("启用状态")
+    private Boolean enabled;
     @ApiModelProperty("置顶状态")
     private Boolean isTop;
-
-    @Data
-    @Accessors(chain = true)
-    @ApiModel(description = "链接")
-    public static class Href {
-        public AppCardComplexVo.Href.Mini mini;
-
-        @Data
-        @Accessors(chain = true)
-        @ApiModel(description = "小程序")
-        public static class Mini {
-            private String appid;
-            private String path;
-        }
-    }
 
     @ApiModelProperty("创建者")
     private Long creator;

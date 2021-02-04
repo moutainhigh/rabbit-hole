@@ -2,6 +2,7 @@ package com.github.lotus.mina.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
+import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModel;
@@ -10,8 +11,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by hocgin on 2021/1/1
@@ -20,15 +19,22 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 @Accessors(chain = true)
 @ApiModel(description = "小游戏")
 public class GameCardComplexVo {
+    private Long id;
+    @ApiModelProperty("名称")
     private String title;
+    @ApiModelProperty("LOGO")
     private String logoUrl;
-    private String remark;
+    @ApiModelProperty("ROM链接")
     private String gameUrl;
-    private List<String> tags = Collections.emptyList();
-    private List<String> viewUrls = Collections.emptyList();
+    @ApiModelProperty("备注")
+    private String remark;
+    @ApiModelProperty("标签(暂用;分隔)")
+    private String tags;
+    @ApiModelProperty("排序,默认:1000")
     private Integer priority;
     @ApiModelProperty("启用状态")
     private Boolean enabled;

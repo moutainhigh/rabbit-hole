@@ -3,11 +3,12 @@ package com.github.lotus.mina.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mina.biz.entity.AppCard;
 import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
-import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardSaveRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardOrdinaryVo;
+import com.github.lotus.mina.biz.pojo.vo.MinaAppCardComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public interface AppCardService extends AbstractService<AppCard> {
 
-    IPage<AppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro);
+    IPage<MinaAppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro);
 
     IPage<AppCardOrdinaryVo> paging(AppCardPagingRo ro);
 

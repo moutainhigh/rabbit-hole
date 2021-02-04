@@ -1,19 +1,16 @@
 package com.github.lotus.mina.biz.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -42,6 +39,9 @@ public class AppCard extends AbstractEntity<AppCard> {
     @ApiModelProperty("小程序链接")
     @TableField("page_url")
     private String pageUrl;
+    @ApiModelProperty("小程序appid")
+    @TableField("appid")
+    private String appid;
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
