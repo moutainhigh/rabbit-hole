@@ -10,6 +10,7 @@ import com.github.lotus.mina.biz.pojo.ro.GameCardSaveRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardOrdinaryVo;
+import com.github.lotus.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import com.github.lotus.mina.biz.service.GameCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -38,9 +39,9 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<GameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro) {
+    public IPage<MinaGameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro) {
         ro.setEnabled(true);
-        return baseMapper.pagingForMina(ro, ro.ofPage()).convert(this::convertComplex);
+        return baseMapper.pagingForMina(ro, ro.ofPage()).convert(this::convertComplexForMina);
     }
 
     @Override
@@ -98,7 +99,11 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
     }
 
     private GameCardComplexVo convertComplex(GameCard entity) {
-        GameCardComplexVo result = mapping.asGameComplexVo(entity);
+        return mapping.asComplex(entity);
+    }
+
+    private MinaGameCardComplexVo convertComplexForMina(GameCard entity) {
+        MinaGameCardComplexVo result = mapping.asGameComplexVo(entity);
         String tags = entity.getTags();
 
         if (Strings.isNotBlank(tags)) {

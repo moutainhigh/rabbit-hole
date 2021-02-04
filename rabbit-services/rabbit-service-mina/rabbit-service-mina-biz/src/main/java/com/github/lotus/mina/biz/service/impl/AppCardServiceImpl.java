@@ -5,15 +5,15 @@ import com.github.lotus.mina.biz.entity.AppCard;
 import com.github.lotus.mina.biz.mapper.AppCardMapper;
 import com.github.lotus.mina.biz.mapstruct.AppCardMapping;
 import com.github.lotus.mina.biz.pojo.ro.AppCardCompleteRo;
-import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.AppCardSaveRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.AppCardOrdinaryVo;
+import com.github.lotus.mina.biz.pojo.vo.MinaAppCardComplexVo;
 import com.github.lotus.mina.biz.service.AppCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
@@ -39,10 +39,10 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<AppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro) {
+    public IPage<MinaAppCardComplexVo> pagingForMina(MinaAppCardPagingRo ro) {
         ro.setEnabled(true);
         return baseMapper.pagingForMina(ro, ro.ofPage())
-            .convert(this::convertComplex);
+            .convert(this::convertMinaComplex);
     }
 
     @Override
@@ -88,6 +88,10 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
         return this.convertComplex(getById(id));
     }
 
+    private AppCardComplexVo convertComplex(AppCard entity) {
+        return mapping.asComplex(entity);
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteOne(Long id) {
@@ -98,17 +102,18 @@ public class AppCardServiceImpl extends AbstractServiceImpl<AppCardMapper, AppCa
         return mapping.asOrdinary(entity);
     }
 
-    private AppCardComplexVo convertComplex(AppCard entity) {
-        AppCardComplexVo result = mapping.asAppComplexVo(entity);
+    private MinaAppCardComplexVo convertMinaComplex(AppCard entity) {
+        MinaAppCardComplexVo result = mapping.asAppComplexVo(entity);
         String tags = entity.getTags();
         String pageUrl = entity.getPageUrl();
+        String appid = entity.getAppid();
 
         if (Strings.isNotBlank(tags)) {
             result.setTags(Lists.newArrayList(tags.split(";")));
         }
 
-        AppCardComplexVo.Href href = new AppCardComplexVo.Href();
-        href.setMini(new AppCardComplexVo.Href.Mini().setPath(pageUrl));
+        MinaAppCardComplexVo.Href href = new MinaAppCardComplexVo.Href();
+        href.setMini(new MinaAppCardComplexVo.Href.Mini().setAppid(appid).setPath(pageUrl));
         result.setHref(href);
 
         return result;

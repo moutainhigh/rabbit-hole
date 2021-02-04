@@ -8,6 +8,7 @@ import com.github.lotus.mina.biz.pojo.ro.GameCardSaveRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardOrdinaryVo;
+import com.github.lotus.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public interface GameCardService extends AbstractService<GameCard> {
 
-    IPage<GameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro);
+    IPage<MinaGameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro);
 
     IPage<GameCardOrdinaryVo> paging(GameCardPagingRo ro);
 

@@ -16,6 +16,8 @@ public class AppCardSaveRo {
     private String title;
     @ApiModelProperty("LOGO")
     private String logoUrl;
+    @ApiModelProperty("小程序appid")
+    private String appid;
     @ApiModelProperty("小程序链接")
     private String pageUrl;
     @ApiModelProperty("备注")
