@@ -3,14 +3,14 @@ CREATE TABLE `mina_status_material`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `title`           VARCHAR(32)  NOT NULL
+    `title`           VARCHAR(32) NOT NULL
         COMMENT '标题',
-    `type`            VARCHAR(16)  NOT NULL
+    `type`            VARCHAR(16) NOT NULL
         COMMENT '素材类型: video=>视频;image=>图片',
-    `url`             VARCHAR(255) NOT NULL
+    `url`             text        NOT NULL
         COMMENT '素材地址',
     --
-    `created_at`      DATETIME(6)  NOT NULL
+    `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
     `creator`         BIGINT
         COMMENT '创建者',
