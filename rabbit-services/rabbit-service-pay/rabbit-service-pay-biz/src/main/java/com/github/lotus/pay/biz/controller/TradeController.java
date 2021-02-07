@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.pay.biz.pojo.ro.TradeCompleteRo;
 import com.github.lotus.pay.biz.pojo.ro.TradePagingRo;
 import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
+import com.github.lotus.pay.api.pojo.vo.TradeOrdinaryVo;
 import com.github.lotus.pay.biz.service.TradeService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
@@ -38,14 +39,14 @@ public class TradeController {
 
     @ApiOperation("分页查询 - 交易账单")
     @PostMapping("/_paging")
-    public Result<IPage<TradeComplexVo>> paging(@Validated @RequestBody TradePagingRo ro) {
+    public Result<IPage<TradeOrdinaryVo>> paging(@Validated @RequestBody TradePagingRo ro) {
         return Result.success(service.paging(ro));
     }
 
     @ApiOperation("检索 - 交易账单")
     @UseLogger("检索 - 交易账单")
     @PostMapping("/_complete")
-    public Result<List<TradeComplexVo>> complete(@Validated @RequestBody TradeCompleteRo ro) {
+    public Result<List<TradeOrdinaryVo>> complete(@Validated @RequestBody TradeCompleteRo ro) {
         return Result.success(service.complete(ro));
     }
 

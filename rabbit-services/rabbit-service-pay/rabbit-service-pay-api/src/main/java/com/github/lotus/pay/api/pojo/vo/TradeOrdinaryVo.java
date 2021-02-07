@@ -1,10 +1,5 @@
-package com.github.lotus.pay.biz.pojo.vo;
+package com.github.lotus.pay.api.pojo.vo;
 
-import com.github.lotus.chaos.api.NamedType;
-import com.github.lotus.common.datadict.pay.PayMode;
-import com.github.lotus.common.datadict.pay.TradeStatus;
-import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
-import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,22 +8,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2021/2/2
+ * Created by hocgin on 2021/2/7
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @ApiModel
-@InjectNamed
-public class TradeComplexVo {
+public class TradeOrdinaryVo {
 
     private Long id;
     @ApiModelProperty("接入方应用")
     private Long accessAppId;
-    @Named(idFor = "accessAppId", type = NamedType.AccessAppName)
-    private String accessAppName;
-
     @ApiModelProperty("最终接入平台(第三方回调时填充)")
     private Long accessPlatformId;
     @ApiModelProperty("交易单号(接入方)")
@@ -37,20 +28,14 @@ public class TradeComplexVo {
     private String tradeSn;
     @ApiModelProperty("交易总金额")
     private BigDecimal totalFee;
-    @ApiModelProperty("交易状态")
+    @ApiModelProperty("交易状态: init=>等待支付; wait_pay=>待付款; success=>完成支付; close=>交易已关闭; fail=>支付失败")
     private String tradeStatus;
-    @Named(idFor = "tradeStatus", type = NamedType.DataDict, args = {TradeStatus.Key})
-    private String tradeStatusName;
-
     @ApiModelProperty("通知接入应用的地址")
     private String notifyUrl;
     @ApiModelProperty("最终买家实际支付金额(第三方回调时填充)")
     private BigDecimal buyerPayFee;
     @ApiModelProperty("最终支付方式(第三方回调时填充)")
     private String payMode;
-    @Named(idFor = "payMode", type = NamedType.DataDict, args = {PayMode.Key})
-    private String payModeName;
-
     @ApiModelProperty("最终第三方的交易单号(第三方回调填充)")
     private String tradeNo;
     @ApiModelProperty("最终第三方支付成功的时间(第三方回调填充)")

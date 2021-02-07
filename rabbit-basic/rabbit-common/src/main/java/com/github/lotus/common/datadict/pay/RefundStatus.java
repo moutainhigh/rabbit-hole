@@ -20,4 +20,6 @@ public enum RefundStatus implements DataDictEnum {
     Fail("fail", "退款失败");
     private final String code;
     private final String name;
+
+    public static final String Key = "pay_refund_status";
 }

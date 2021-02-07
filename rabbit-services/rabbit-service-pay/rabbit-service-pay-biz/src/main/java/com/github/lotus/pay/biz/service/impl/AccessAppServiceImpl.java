@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.common.datadict.pay.NotifyResult;
 import com.github.lotus.common.datadict.pay.NotifyType;
+import com.github.lotus.pay.api.pojo.vo.AccessAppOrdinaryVo;
 import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
 import com.github.lotus.pay.api.pojo.vo.RefundStatusSync;
 import com.github.lotus.pay.api.pojo.vo.TradeStatusSync;
@@ -28,6 +29,7 @@ import com.github.lotus.pay.biz.service.RefundRecordService;
 import com.github.lotus.pay.biz.service.TradeService;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
@@ -175,6 +177,16 @@ public class AccessAppServiceImpl extends AbstractServiceImpl<AccessAppMapper, A
     public void deleteOne(Long id) {
         removeById(id);
         accessPlatformService.removeByAccessAppId(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<AccessAppOrdinaryVo> listOrdinaryById(List<Long> id) {
+        return LangUtils.toList(listByIds(id), this::convertOrdinary);
+    }
+
+    private AccessAppOrdinaryVo convertOrdinary(AccessApp entity) {
+        return mapping.asOrdinary(entity);
     }
 
     private AccessAppComplexVo convertComplex(AccessApp entity) {

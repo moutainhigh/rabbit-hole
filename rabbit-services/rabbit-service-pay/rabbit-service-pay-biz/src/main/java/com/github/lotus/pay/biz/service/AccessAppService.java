@@ -1,6 +1,7 @@
 package com.github.lotus.pay.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.pay.api.pojo.vo.AccessAppOrdinaryVo;
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppCompleteRo;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
@@ -34,4 +35,6 @@ public interface AccessAppService extends AbstractService<AccessApp> {
     List<AccessAppComplexVo> complete(AccessAppCompleteRo ro);
 
     void deleteOne(Long id);
+
+    List<AccessAppOrdinaryVo> listOrdinaryById(List<Long> id);
 }

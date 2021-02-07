@@ -38,4 +38,8 @@ public interface ChaosNamedAPI extends NamedService {
     @NamedHandler(NamedType.DistrictName)
     @PostMapping(CONTEXT_ID + "/loadByDistrictName")
     Map<String, Object> loadByDistrictName(@RequestBody NamedArgs args);
+
+    @NamedHandler(NamedType.AccessAppName)
+    @PostMapping(CONTEXT_ID + "/loadByAccessAppName")
+    Map<String, Object> loadByAccessAppName(@RequestBody NamedArgs args);
 }

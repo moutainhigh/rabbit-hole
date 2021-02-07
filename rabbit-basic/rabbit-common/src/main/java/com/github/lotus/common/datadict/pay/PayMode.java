@@ -25,4 +25,6 @@ public enum PayMode implements DataDictEnum {
     WxPayWithNative("wxpay.native", "微信 - Native");
     private final String code;
     private final String name;
+
+    public static final String Key = "pay_paymode";
 }

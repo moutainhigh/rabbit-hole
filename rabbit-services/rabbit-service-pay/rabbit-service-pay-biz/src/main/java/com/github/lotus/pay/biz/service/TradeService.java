@@ -16,6 +16,7 @@ import com.github.lotus.pay.biz.pojo.ro.TradeCompleteRo;
 import com.github.lotus.pay.biz.pojo.ro.TradePagingRo;
 import com.github.lotus.pay.biz.pojo.vo.GoRefundVo;
 import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
+import com.github.lotus.pay.api.pojo.vo.TradeOrdinaryVo;
 import com.github.lotus.pay.biz.pojo.vo.WaitPayTradeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -109,9 +110,11 @@ public interface TradeService extends AbstractService<Trade> {
      */
     void handleRefundMessage(RefundMessageRo ro);
 
-    IPage<TradeComplexVo> paging(TradePagingRo ro);
+    IPage<TradeOrdinaryVo> paging(TradePagingRo ro);
 
-    List<TradeComplexVo> complete(TradeCompleteRo ro);
+    List<TradeOrdinaryVo> complete(TradeCompleteRo ro);
 
     TradeComplexVo getComplex(Long id);
+
+    List<TradeOrdinaryVo> listOrdinaryById(List<Long> id);
 }

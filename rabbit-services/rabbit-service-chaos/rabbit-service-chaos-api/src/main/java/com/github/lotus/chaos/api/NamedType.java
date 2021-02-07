@@ -12,4 +12,5 @@ public final class NamedType {
     public final static String UserId2Username = "UserId2Username";
     public final static String Userid2Nickname = "Userid2Nickname";
     public final static String DistrictName = "DistrictName";
+    public final static String AccessAppName = "AccessAppName";
 }

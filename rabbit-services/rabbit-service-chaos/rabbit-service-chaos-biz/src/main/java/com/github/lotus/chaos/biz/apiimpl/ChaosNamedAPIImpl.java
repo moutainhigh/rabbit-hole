@@ -1,7 +1,6 @@
 package com.github.lotus.chaos.biz.apiimpl;
 
 import cn.hutool.core.convert.Convert;
-import com.aliyun.openservices.log.common.Project;
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.com.api.DataDictServiceApi;
 import com.github.lotus.com.api.DistrictServiceApi;
@@ -10,6 +9,8 @@ import com.github.lotus.com.api.pojo.vo.DataDictItemVo;
 import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
 import com.github.lotus.com.api.pojo.vo.ProjectComplexVo;
 import com.github.lotus.common.constant.DistrictLevelConstant;
+import com.github.lotus.pay.api.AccessAppServiceApi;
+import com.github.lotus.pay.api.pojo.vo.AccessAppOrdinaryVo;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
@@ -37,6 +38,7 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
     private final ProjectServiceApi projectServiceApi;
+    private final AccessAppServiceApi accessAppServiceApi;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
@@ -88,6 +90,13 @@ public class ChaosNamedAPIImpl implements ChaosNamedAPI {
             default:
         }
         return this.toMap(result, DistrictComplexVo::getAdcode, DistrictComplexVo::getTitle);
+    }
+
+    @Override
+    public Map<String, Object> loadByAccessAppName(NamedArgs args) {
+        List<Long> values = getValues(args.getValues(), Long.class);
+        List<AccessAppOrdinaryVo> result = accessAppServiceApi.listOrdinaryById(values);
+        return this.toMap(result, AccessAppOrdinaryVo::getId, AccessAppOrdinaryVo::getTitle);
     }
 
     private <T> List<T> getValues(List<?> values, Class<T> clazz) {

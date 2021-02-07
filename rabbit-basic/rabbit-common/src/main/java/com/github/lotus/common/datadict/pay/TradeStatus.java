@@ -21,4 +21,5 @@ public enum TradeStatus implements DataDictEnum {
     private final String code;
     private final String name;
 
+    public static final String Key = "pay_trade_status";
 }
