@@ -73,7 +73,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
             entity.setDictId(dictId);
             entity.setCreator(userId);
             entity.setCreatedAt(now);
-            validEntity(entity);
+            validInsert(entity);
         }
     }
 
@@ -115,7 +115,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
     }
 
     private boolean hasDictIdAndCodeIgnoreId(Long dictId, String code, Long ignoreId) {
-        return lambdaQuery().eq(DataDictItem::getDictId, dictId)
+        return lambdaQuery().eq(Objects.nonNull(dictId), DataDictItem::getDictId, dictId)
             .eq(DataDictItem::getCode, code)
             .notIn(Objects.nonNull(ignoreId), DataDictItem::getId, ignoreId)
             .count() > 0;
@@ -124,12 +124,14 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
     @Override
     public void validEntity(DataDictItem entity) {
         final String code = entity.getCode();
-        final Long dictId = entity.getDictId();
+        Long dictId = entity.getDictId();
         final Long id = entity.getId();
 
         // 检查数据字典码
         if (Objects.nonNull(code)) {
-            ValidUtils.notNull(dictId);
+            if (Objects.nonNull(id) && Objects.isNull(dictId)) {
+                dictId = getById(id).getDictId();
+            }
             ValidUtils.isFalse(hasDictIdAndCodeIgnoreId(dictId, code, id), "数据字典码已经存在");
         }
     }

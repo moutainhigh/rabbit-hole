@@ -2,6 +2,7 @@ package com.github.lotus.com.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
+import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModel;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
+@InjectNamed
 public class DataDictComplexVo {
     private Long id;
     private String title;

@@ -45,7 +45,7 @@ public class DataDictController {
     private final DataDictService service;
 
     @ApiOperation("查询 - 数据字典项")
-    @GetMapping("/{code}")
+    @GetMapping("/code:{code}")
     public Result<List<KeyValue>> listKeyValueByCodeAndEnabledIsOn(@ApiParam(value = "数据字典类型", required = true) @PathVariable("code") String code) {
         return Result.success(service.listKeyValueByCodeAndEnabledIsOn(code));
     }

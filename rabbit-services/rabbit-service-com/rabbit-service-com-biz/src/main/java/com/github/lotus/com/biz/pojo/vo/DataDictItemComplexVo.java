@@ -5,7 +5,9 @@ import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
 import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
  *
  * @author hocgin
  */
+@Data
+@ApiModel
 @InjectNamed
 public class DataDictItemComplexVo {
     private Long id;
@@ -22,8 +26,8 @@ public class DataDictItemComplexVo {
     private String title;
     private String code;
     private String remark;
-    private Integer sort;
-    private Integer enabled;
+    private Integer priority;
+    private Boolean enabled;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
