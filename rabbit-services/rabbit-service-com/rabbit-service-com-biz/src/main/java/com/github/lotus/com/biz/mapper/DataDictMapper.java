@@ -1,8 +1,11 @@
 package com.github.lotus.com.biz.mapper;
 
-import com.github.lotus.com.biz.entity.DataDict;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.lotus.com.biz.entity.DataDict;
 import com.github.lotus.com.biz.entity.DataDictItem;
+import com.github.lotus.com.biz.pojo.ro.DataDictPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +29,5 @@ public interface DataDictMapper extends BaseMapper<DataDict> {
 
     List<DataDictItem> listDataDictItemByCodeAndEnabled(@Param("typeCode") String typeCode, @Param("enabled") Serializable enabled);
 
+    IPage<DataDict> paging(@Param("ro") DataDictPagingRo ro, @Param("ofPage") Page<Object> ofPage);
 }

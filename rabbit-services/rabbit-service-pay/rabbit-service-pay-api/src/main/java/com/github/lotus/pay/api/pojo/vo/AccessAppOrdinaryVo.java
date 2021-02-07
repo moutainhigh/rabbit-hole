@@ -19,7 +19,7 @@ public class AccessAppOrdinaryVo {
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("启用状态")
-    private Integer enabled;
+    private Boolean enabled;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
     @ApiModelProperty("创建ip")

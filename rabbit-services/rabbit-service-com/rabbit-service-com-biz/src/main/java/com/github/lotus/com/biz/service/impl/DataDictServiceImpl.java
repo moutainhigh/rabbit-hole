@@ -1,22 +1,32 @@
 package com.github.lotus.com.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.api.pojo.vo.DataDictItemVo;
 import com.github.lotus.com.biz.entity.DataDict;
 import com.github.lotus.com.biz.entity.DataDictItem;
 import com.github.lotus.com.biz.mapper.DataDictMapper;
 import com.github.lotus.com.biz.mapstruct.DataDictItemMapping;
+import com.github.lotus.com.biz.mapstruct.DataDictMapping;
+import com.github.lotus.com.biz.pojo.ro.DataDictInsertRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictItemInsertRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictPagingRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictUpdateRo;
+import com.github.lotus.com.biz.pojo.vo.DataDictComplexVo;
+import com.github.lotus.com.biz.pojo.vo.DataDictOrdinaryVo;
 import com.github.lotus.com.biz.service.DataDictItemService;
 import com.github.lotus.com.biz.service.DataDictService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +42,7 @@ import java.util.stream.Collectors;
 public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, DataDict>
     implements DataDictService {
     private final DataDictItemService dataDictItemService;
+    private final DataDictMapping mapping;
     private final DataDictItemMapping dataDictItemMapping;
 
     @Override
@@ -63,6 +74,64 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         return this.listKeyValueByCodeAndEnabled(typeCode, null);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public DataDictComplexVo getComplex(Long id) {
+        return convertComplex(getById(id));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long id) {
+        dataDictItemService.deleteByDataDictId(id);
+        removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertOne(DataDictInsertRo ro) {
+        Long userId = ro.getUserId();
+        LocalDateTime now = LocalDateTime.now();
+        List<DataDictItemInsertRo> items = ro.getItems();
+
+        DataDict entity = mapping.asDataDict(ro);
+        entity.setCreatedAt(now);
+        entity.setCreator(userId);
+        validInsert(entity);
+        Long dataDictId = entity.getId();
+        for (DataDictItemInsertRo item : items) {
+            dataDictItemService.insertOne(dataDictId, userId, item);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOne(Long id, DataDictUpdateRo ro) {
+        Long userId = ro.getUserId();
+        LocalDateTime now = LocalDateTime.now();
+
+        DataDict entity = mapping.asDataDict(ro);
+        entity.setLastUpdatedAt(now);
+        entity.setLastUpdater(userId);
+        validUpdateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<DataDictOrdinaryVo> paging(DataDictPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
+    }
+
+    private DataDictOrdinaryVo convertOrdinary(DataDict entity) {
+        return mapping.asOrdinary(entity);
+    }
+
+    private DataDictComplexVo convertComplex(DataDict entity) {
+        DataDictComplexVo result = mapping.asComplex(entity);
+        result.setItems(dataDictItemService.listOrdinaryByDataDictId(entity.getId()));
+        return result;
+    }
+
     private List<KeyValue> listKeyValueByCodeAndEnabled(String typeCode, Boolean enabled) {
         return listDataDictItemByCodeAndEnabled(typeCode, enabled)
             .stream().map(this::convertKeyValue)
@@ -78,4 +147,5 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     private List<DataDictItem> listDataDictItemByCodeAndEnabled(String typeCode, Boolean enabled) {
         return baseMapper.listDataDictItemByCodeAndEnabled(typeCode, enabled);
     }
+
 }

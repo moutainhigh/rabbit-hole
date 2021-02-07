@@ -22,7 +22,7 @@ public class AccessAppInsertRo {
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("启用状态")
-    private Integer enabled;
+    private Boolean enabled;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;
