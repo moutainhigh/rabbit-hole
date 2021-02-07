@@ -1,8 +1,10 @@
 package com.github.lotus.pay.biz.pojo.vo;
 
+import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.pay.PayMode;
 import in.hocg.boot.named.autoconfiguration.annotation.Named;
+import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -23,6 +25,7 @@ public class PayRecordOrdinaryVo {
     private Long accessPlatformId;
     @ApiModelProperty("支付方式")
     private String payMode;
+    @UseNamedService(ChaosNamedAPI.class)
     @Named(idFor = "payMode", type = NamedType.DataDict, args = {PayMode.Key})
     private String payModeName;
 
