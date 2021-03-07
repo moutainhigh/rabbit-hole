@@ -2,6 +2,7 @@ package com.github.lotus.pay.biz.mapstruct;
 
 import com.github.lotus.pay.biz.entity.RefundRecord;
 import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
+import com.github.lotus.pay.biz.pojo.vo.RefundRecordOrdinaryVo;
 import org.mapstruct.Mapper;
 
 /**
@@ -13,4 +14,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface RefundRecordMapping {
     RefundRecord asRefundRecord(GoRefundRo ro);
+
+    RefundRecordOrdinaryVo asOrdinary(RefundRecord entity);
 }

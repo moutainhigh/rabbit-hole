@@ -1,10 +1,23 @@
 package com.github.lotus.com.biz.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import com.github.lotus.com.biz.pojo.ro.DataDictItemBatchInsertRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictItemUpdateRo;
+import com.github.lotus.com.biz.pojo.vo.DataDictItemComplexVo;
+import com.github.lotus.com.biz.service.DataDictItemService;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.web.result.Result;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,6 +32,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/data-dict-item")
 public class DataDictItemController {
+    private final DataDictItemService service;
 
+    @UseLogger("删除数据字典项")
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable Long id) {
+        service.deleteOne(id);
+        return Result.success();
+    }
+
+    @UseLogger("新增数据字典项")
+    @PostMapping("/{dictId}")
+    public Result<Void> insertOne(@PathVariable("dictId") Long dictId,
+                                  @RequestBody DataDictItemBatchInsertRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.insertOne(dictId, ro);
+        return Result.success();
+    }
+
+    @UseLogger("查询数据字典详情")
+    @GetMapping("/{id:\\d+}")
+    public Result<DataDictItemComplexVo> getComplex(@PathVariable("id") Long id) {
+        return Result.success(service.getComplex(id));
+    }
+
+    @UseLogger("更新数据字典项")
+    @PutMapping("/{id}")
+    public Result<Void> updateOne(@PathVariable Long id,
+                                  @Validated @RequestBody DataDictItemUpdateRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.updateOne(id, ro);
+        return Result.success();
+    }
 }
 

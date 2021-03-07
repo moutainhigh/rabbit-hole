@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.common.datadict.pay.RefundStatus;
 import com.github.lotus.common.datadict.pay.TradeStatus;
+import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.api.pojo.ro.GoPayRo;
 import com.github.lotus.pay.api.pojo.vo.GoPayVo;
 import com.github.lotus.pay.api.pojo.vo.QueryAsyncVo;
 import com.github.lotus.pay.api.pojo.vo.RefundStatusSync;
+import com.github.lotus.pay.api.pojo.vo.TradeOrdinaryVo;
 import com.github.lotus.pay.api.pojo.vo.TradeStatusSync;
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.entity.AccessPlatform;
@@ -17,7 +19,6 @@ import com.github.lotus.pay.biz.entity.RefundRecord;
 import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.mapper.TradeMapper;
 import com.github.lotus.pay.biz.mapstruct.TradeMapping;
-import com.github.lotus.pay.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.pay.biz.pojo.ro.GoRefundRo;
 import com.github.lotus.pay.biz.pojo.ro.PayMessageRo;
 import com.github.lotus.pay.biz.pojo.ro.RefundMessageRo;
@@ -345,14 +346,14 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<TradeComplexVo> paging(TradePagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    public IPage<TradeOrdinaryVo> paging(TradePagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<TradeComplexVo> complete(TradeCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
+    public List<TradeOrdinaryVo> complete(TradeCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertOrdinary).getRecords();
     }
 
     @Override
@@ -361,8 +362,18 @@ public class TradeServiceImpl extends AbstractServiceImpl<TradeMapper, Trade> im
         return convertComplex(getById(id));
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<TradeOrdinaryVo> listOrdinaryById(List<Long> id) {
+        return LangUtils.toList(listByIds(id), this::convertOrdinary);
+    }
+
     private TradeComplexVo convertComplex(Trade entity) {
         return mapping.asComplex(entity);
+    }
+
+    private TradeOrdinaryVo convertOrdinary(Trade entity) {
+        return mapping.asOrdinary(entity);
     }
 
     private boolean updateByIdAndTradeStatus(@NonNull Trade update, @NonNull Long tradeId, @NonNull String... tradeStatus) {

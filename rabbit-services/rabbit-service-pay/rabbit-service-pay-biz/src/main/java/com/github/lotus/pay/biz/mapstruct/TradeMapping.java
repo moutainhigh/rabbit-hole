@@ -3,6 +3,7 @@ package com.github.lotus.pay.biz.mapstruct;
 import com.github.lotus.pay.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
+import com.github.lotus.pay.api.pojo.vo.TradeOrdinaryVo;
 import org.mapstruct.Mapper;
 
 /**
@@ -22,4 +23,6 @@ public interface TradeMapping {
     }
 
     TradeComplexVo asComplex(Trade entity);
+
+    TradeOrdinaryVo asOrdinary(Trade entity);
 }

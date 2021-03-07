@@ -1,7 +1,13 @@
 package com.github.lotus.com.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.api.pojo.vo.DataDictItemVo;
 import com.github.lotus.com.biz.entity.DataDict;
+import com.github.lotus.com.biz.pojo.ro.DataDictInsertRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictPagingRo;
+import com.github.lotus.com.biz.pojo.ro.DataDictUpdateRo;
+import com.github.lotus.com.biz.pojo.vo.DataDictComplexVo;
+import com.github.lotus.com.biz.pojo.vo.DataDictOrdinaryVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 import in.hocg.boot.web.datastruct.KeyValue;
 
@@ -30,4 +36,14 @@ public interface DataDictService extends AbstractService<DataDict> {
     List<KeyValue> listKeyValueByCodeAndEnabledIsOn(String typeCode);
 
     List<KeyValue> listKeyValueByCode(String code);
+
+    DataDictComplexVo getComplex(Long id);
+
+    void delete(Long id);
+
+    void insertOne(DataDictInsertRo ro);
+
+    void updateOne(Long id, DataDictUpdateRo ro);
+
+    IPage<DataDictOrdinaryVo> paging(DataDictPagingRo ro);
 }

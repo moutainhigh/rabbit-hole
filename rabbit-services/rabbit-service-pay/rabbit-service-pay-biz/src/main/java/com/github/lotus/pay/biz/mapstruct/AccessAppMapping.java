@@ -1,5 +1,6 @@
 package com.github.lotus.pay.biz.mapstruct;
 
+import com.github.lotus.pay.api.pojo.vo.AccessAppOrdinaryVo;
 import com.github.lotus.pay.biz.entity.AccessApp;
 import com.github.lotus.pay.biz.pojo.ro.AccessAppInsertRo;
 import com.github.lotus.pay.biz.pojo.vo.AccessAppComplexVo;
@@ -20,4 +21,6 @@ public interface AccessAppMapping {
     AccessApp asAccessApp(AccessAppInsertRo ro);
 
     AccessAppComplexVo asComplex(AccessApp entity);
+
+    AccessAppOrdinaryVo asOrdinary(AccessApp entity);
 }

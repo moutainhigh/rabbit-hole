@@ -1,5 +1,7 @@
 package com.github.lotus.pay.biz.mapstruct;
 
+import com.github.lotus.pay.biz.entity.PayRecord;
+import com.github.lotus.pay.biz.pojo.vo.PayRecordOrdinaryVo;
 import org.mapstruct.Mapper;
 
 /**
@@ -10,4 +12,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface PayRecordMapping {
+    PayRecordOrdinaryVo asOrdinary(PayRecord entity);
 }
