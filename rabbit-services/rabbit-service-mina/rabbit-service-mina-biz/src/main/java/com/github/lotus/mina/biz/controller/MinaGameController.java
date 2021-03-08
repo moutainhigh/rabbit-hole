@@ -34,7 +34,7 @@ public class MinaGameController {
     @PostMapping("/_paging")
     public Result<List<MinaGameCardComplexVo>> paging(@PathVariable String appid,
                                                       @Validated @RequestBody MinaGameCardPagingRo ro) {
-        ro.setPage(Integer.MAX_VALUE);
+        ro.setSize(Integer.MAX_VALUE);
         return Result.success(service.pagingForMina(ro).getRecords());
     }
 }
