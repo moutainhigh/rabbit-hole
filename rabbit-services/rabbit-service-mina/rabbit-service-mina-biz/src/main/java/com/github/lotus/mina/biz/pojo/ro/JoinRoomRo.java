@@ -15,6 +15,9 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel
 public class JoinRoomRo {
+    @NotNull(message = "房间号")
+    @ApiModelProperty("房间号")
+    private String roomCode;
     @NotNull(message = "用户标记")
     @ApiModelProperty("用户标记")
     private String userFlag;
@@ -22,8 +25,6 @@ public class JoinRoomRo {
     @ApiModelProperty("信号")
     private String signalData;
 
-    @ApiModelProperty(value = "房间号", hidden = true)
-    private String roomCode;
     @ApiModelProperty(value = "创建者", hidden = true)
     private Long userId;
 }

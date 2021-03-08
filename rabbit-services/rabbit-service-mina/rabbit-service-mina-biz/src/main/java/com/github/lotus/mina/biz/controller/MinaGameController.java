@@ -61,10 +61,9 @@ public class MinaGameController {
     }
 
     @ApiOperation("加入房间")
-    @PostMapping("/room/{encoding}")
-    public Result<Void> joinRoom(@PathVariable("encoding") String encoding,
+    @PostMapping("/room/join")
+    public Result<Void> joinRoom(@PathVariable String appid,
                                  @Validated @RequestBody JoinRoomRo ro) {
-        ro.setRoomCode(encoding);
         ro.setUserId(UserContextHolder.getUserIdThrow());
         gameRoomService.joinUser(ro);
         return Result.success();
