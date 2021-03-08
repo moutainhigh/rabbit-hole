@@ -17,7 +17,7 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.MINA, false,
-            "mina_status_material");
+            "mina_game_room", "mina_game_room_user");
     }
 
 }
