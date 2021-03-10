@@ -32,4 +32,9 @@ public class GameRoomUserServiceImpl extends AbstractServiceImpl<GameRoomUserMap
     public void removeByRoomId(Long roomId) {
         lambdaUpdate().eq(GameRoomUser::getRoomId, roomId).remove();
     }
+
+    @Override
+    public void removeByUserFlag(String userFlag) {
+        lambdaUpdate().eq(GameRoomUser::getUserFlag, userFlag).remove();
+    }
 }

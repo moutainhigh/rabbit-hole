@@ -68,6 +68,7 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
         GameRoom entity = getByEncoding(roomCode).orElseThrow(ServiceException::new);
         Long roomId = entity.getId();
 
+        gameRoomUserService.removeByUserFlag(userFlag);
         GameRoomUser playerUser = new GameRoomUser();
         playerUser.setRoomId(roomId);
         playerUser.setUserFlag(userFlag);
@@ -101,9 +102,5 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
 
     public Optional<GameRoom> getByEncoding(String encoding) {
         return lambdaQuery().eq(GameRoom::getEncoding, encoding).oneOpt();
-    }
-
-    private void deleteByEncoding(String encoding) {
-        lambdaUpdate().eq(GameRoom::getEncoding, encoding).remove();
     }
 }

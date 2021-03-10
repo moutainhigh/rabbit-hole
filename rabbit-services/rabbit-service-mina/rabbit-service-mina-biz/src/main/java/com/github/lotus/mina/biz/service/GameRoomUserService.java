@@ -18,4 +18,6 @@ public interface GameRoomUserService extends AbstractService<GameRoomUser> {
     List<GameRoomUser> listByRoomId(Long roomId);
 
     void removeByRoomId(Long roomId);
+
+    void removeByUserFlag(String userFlag);
 }
