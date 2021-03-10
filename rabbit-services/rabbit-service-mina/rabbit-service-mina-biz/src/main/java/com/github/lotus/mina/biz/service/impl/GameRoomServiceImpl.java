@@ -60,12 +60,15 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
     @Transactional(rollbackFor = Exception.class)
     public void joinUser(JoinRoomRo ro) {
         String roomCode = ro.getRoomCode();
+        String password = ro.getPassword();
         String userFlag = ro.getUserFlag();
         Long userId = ro.getUserId();
         String signalData = ro.getSignalData();
         LocalDateTime now = LocalDateTime.now();
 
         GameRoom entity = getByEncoding(roomCode).orElseThrow(ServiceException::new);
+        // todo: 检查密码匹配
+
         Long roomId = entity.getId();
 
         gameRoomUserService.removeByUserFlag(userFlag);
