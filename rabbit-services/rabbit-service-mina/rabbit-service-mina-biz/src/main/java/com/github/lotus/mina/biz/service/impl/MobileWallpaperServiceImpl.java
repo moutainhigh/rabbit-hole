@@ -36,6 +36,7 @@ public class MobileWallpaperServiceImpl extends AbstractServiceImpl<MobileWallpa
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<MinaMobileWallpaperComplexVo> paging(MinaMobileWallpaperPagingRo ro) {
+        ro.setEnabled(true);
         return baseMapper.paging(ro, ro.ofPage()).convert(this::complex);
     }
 

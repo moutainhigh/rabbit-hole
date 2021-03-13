@@ -14,5 +14,5 @@ import lombok.Data;
 @ApiModel
 public class MinaMobileWallpaperPagingRo extends PageRo {
     private String keyword;
-    private String enabled;
+    private Boolean enabled;
 }
