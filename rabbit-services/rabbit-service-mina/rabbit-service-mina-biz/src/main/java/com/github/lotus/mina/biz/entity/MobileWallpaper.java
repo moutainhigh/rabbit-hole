@@ -57,7 +57,7 @@ public class MobileWallpaper extends AbstractEntity<MobileWallpaper> {
     private Integer priority;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private Integer enabled;
+    private Boolean enabled;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

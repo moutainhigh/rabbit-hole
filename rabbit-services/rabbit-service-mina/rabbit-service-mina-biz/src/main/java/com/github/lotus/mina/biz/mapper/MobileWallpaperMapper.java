@@ -1,8 +1,12 @@
 package com.github.lotus.mina.biz.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MobileWallpaperMapper extends BaseMapper<MobileWallpaper> {
 
+    IPage<MobileWallpaper> paging(@Param("ro") MinaMobileWallpaperPagingRo ro, @Param("ofPage") Page ofPage);
 }
