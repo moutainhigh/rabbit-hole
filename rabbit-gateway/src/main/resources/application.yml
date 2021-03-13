@@ -134,6 +134,9 @@ boot:
         ,/mina/*/app/_paging
         ,/mina/*/check-message
         ,/mina/*/check-image
+        ,/mina/*/mobile-wallpaper/_paging
+        ,/mina/*/mobile-wallpaper/random/_paging
+        ,/mina/*/mobile-wallpaper/tags/_paging
 
         ,/sso/account/login/token
 rabbit:
