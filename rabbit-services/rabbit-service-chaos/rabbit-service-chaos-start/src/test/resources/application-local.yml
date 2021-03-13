@@ -1,0 +1,20 @@
+logging:
+  level:
+    root: debug
+
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://39.100.87.79:30962/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: hocgin
+  redis:
+    host: 39.100.87.79
+    port: 32079
+boot:
+  oss:
+    accessKey: n9Rn_w4-OTQegF2BUV0l0tG5puLA5S2CL-7kRj3u
+    secretKey: ENC(Q4KNuG4LBNWjVJMk3cJ3Yds/lyHe1OLmWVkPktynGEuzVax3QkO4RWvjKNdDcnXpE3EmHk1Pd/8=)
+    space: github-blog
+    domain: http://cdn.hocgin.top
+    type: Qiniu
