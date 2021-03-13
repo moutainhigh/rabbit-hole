@@ -2,6 +2,7 @@ package com.github.lotus.mina.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperCompleteRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
@@ -36,6 +37,14 @@ public class MinaMobileWallpaperController {
     public Result<IPage<MinaMobileWallpaperComplexVo>> paging(@PathVariable String appid,
                                                               @Validated @RequestBody MinaMobileWallpaperPagingRo ro) {
         return Result.success(service.paging(ro));
+    }
+
+
+    @ApiOperation("手机壁纸 - 分页查询")
+    @PostMapping("/random/_paging")
+    public Result<IPage<MinaMobileWallpaperComplexVo>> randomComplete(@PathVariable String appid,
+                                                                      @Validated @RequestBody MinaMobileWallpaperCompleteRo ro) {
+        return Result.success(service.randomComplete(ro));
     }
 
     @ApiOperation("手机壁纸标签 - 分页查询")

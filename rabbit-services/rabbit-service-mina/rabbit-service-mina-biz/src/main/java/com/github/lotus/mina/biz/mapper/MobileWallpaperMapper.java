@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.mina.biz.entity.MobileWallpaper;
+import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperCompleteRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>
@@ -25,4 +24,6 @@ public interface MobileWallpaperMapper extends BaseMapper<MobileWallpaper> {
     IPage<MobileWallpaper> paging(@Param("ro") MinaMobileWallpaperPagingRo ro, @Param("ofPage") Page ofPage);
 
     IPage<String> pagingByTags(@Param("ro") MinaMobileWallpaperTagsPagingRo ro, @Param("ofPage") Page ofPage);
+
+    IPage<MobileWallpaper> randomComplete(@Param("ro") MinaMobileWallpaperCompleteRo ro, @Param("ofPage") Page ofPage);
 }
