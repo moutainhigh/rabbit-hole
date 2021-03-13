@@ -3,6 +3,7 @@ package com.github.lotus.mina.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -19,4 +20,6 @@ public interface MobileWallpaperService extends AbstractService<MobileWallpaper>
     Boolean hasByFileHash(String hash);
 
     IPage<MinaMobileWallpaperComplexVo> paging(MinaMobileWallpaperPagingRo ro);
+
+    IPage<String> pagingByTags(MinaMobileWallpaperTagsPagingRo ro);
 }

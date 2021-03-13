@@ -5,6 +5,7 @@ import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.github.lotus.mina.biz.mapper.MobileWallpaperMapper;
 import com.github.lotus.mina.biz.mapstruct.MobileWallpaperMapping;
 import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
+import com.github.lotus.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
 import com.github.lotus.mina.biz.service.MobileWallpaperService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -36,6 +37,12 @@ public class MobileWallpaperServiceImpl extends AbstractServiceImpl<MobileWallpa
     @Transactional(rollbackFor = Exception.class)
     public IPage<MinaMobileWallpaperComplexVo> paging(MinaMobileWallpaperPagingRo ro) {
         return baseMapper.paging(ro, ro.ofPage()).convert(this::complex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<String> pagingByTags(MinaMobileWallpaperTagsPagingRo ro) {
+        return baseMapper.pagingByTags(ro, ro.ofPage());
     }
 
     private MinaMobileWallpaperComplexVo complex(MobileWallpaper entity) {
