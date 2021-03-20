@@ -14,7 +14,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserInfoDto {
     @ApiModelProperty(value = "微信小程序会话标记", required = true)
-    private String code;
+    private String sessionKey;
+    private String openid;
     @ApiModelProperty("头像")
     private String avatarUrl;
     @ApiModelProperty("昵称")
