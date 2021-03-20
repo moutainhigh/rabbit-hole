@@ -6,13 +6,15 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.github.lotus.docking.biz.cache.WxMaCacheService;
+import com.github.lotus.docking.biz.pojo.dto.UserInfoDto;
+import com.github.lotus.docking.biz.pojo.ro.GetMaUserToken2Ro;
 import com.github.lotus.docking.biz.pojo.ro.GetMaUserTokenRo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import com.github.lotus.docking.biz.service.WxMaIndexService;
 import com.github.lotus.docking.biz.support.wxmini.WxMaConfiguration;
-import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.SocialServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -41,7 +44,68 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
     private final UserServiceApi accountServiceApi;
     private final WxMaCacheService wxMaCacheService;
 
+    private WxMaLoginVo getOrCreateUserToken(String appid, UserInfoDto dto) {
+        String sessionKey = dto.getSessionKey();
+        String openid = dto.getOpenid();
+        String nickName = dto.getNickName();
+        String avatarUrl = dto.getAvatarUrl();
+        log.debug("sessionkey: [{}]; openid: [{}]", sessionKey, openid);
+
+        WxMaLoginVo result = new WxMaLoginVo();
+        String socialType = (String) SocialType.WxMa.getCode();
+        UserDetailVo userDetailVo = socialServiceApi.getAccountBySocialTypeAndSocialId(socialType, openid);
+
+        // 如果没有关联则自动创建一个账号
+        if (Objects.isNull(userDetailVo)) {
+            CreateAccountRo createAccountRo = new CreateAccountRo()
+                .setAvatar(avatarUrl)
+                .setNickname(nickName)
+                .setSocials(Collections.singletonList(new CreateAccountRo.SocialItem()
+                    .setSocialType(socialType)
+                    .setSocialId(openid)));
+            userDetailVo = accountServiceApi.createAccount(createAccountRo);
+        }
+
+        String username = userDetailVo.getUsername();
+        wxMaCacheService.updateWxMaSessionUser(sessionKey, username);
+
+        // 关联账号
+        WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
+            .setAvatar(userDetailVo.getAvatarUrl())
+            .setNickname(userDetailVo.getNickname())
+            .setUsername(username)
+            .setId(userDetailVo.getId());
+        return result.setToken(accountServiceApi.getUserToken(username)).setUserDetail(userDetail);
+    }
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public WxMaLoginVo getUserToken2(String appid, GetMaUserToken2Ro ro) {
+        String code = ro.getCode();
+        String avatarUrl = ro.getAvatarUrl();
+        String nickName = ro.getNickName();
+
+        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        WxMaUserService userService = wxService.getUserService();
+
+        String sessionKey;
+        String openid;
+        try {
+            WxMaJscode2SessionResult session = userService.getSessionInfo(code);
+            sessionKey = session.getSessionKey();
+            openid = session.getOpenid();
+        } catch (Exception e) {
+            throw ServiceException.wrap(e);
+        }
+
+        UserInfoDto userInfoDto = new UserInfoDto()
+            .setSessionKey(sessionKey).setOpenid(openid)
+            .setAvatarUrl(avatarUrl).setNickName(nickName);
+        return this.getOrCreateUserToken(appid, userInfoDto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public WxMaLoginVo getUserToken(String appid, GetMaUserTokenRo ro) {
         String iv = ro.getIv();
         String encryptedData = ro.getEncryptedData();
@@ -49,45 +113,26 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
         String rawData = ro.getRawData();
         String code = ro.getCode();
 
-        WxMaLoginVo result = new WxMaLoginVo();
         final WxMaService wxService = WxMaConfiguration.getMaService(appid);
         WxMaUserService userService = wxService.getUserService();
 
+        String sessionKey;
+        String openid;
         try {
             WxMaJscode2SessionResult session = userService.getSessionInfo(code);
-            String sessionKey = session.getSessionKey();
-            String openid = session.getOpenid();
-            log.debug("sessionkey: [{}]; openid: [{}]", sessionKey, openid);
-            String socialType = (String) SocialType.WxMa.getCode();
-            UserDetailVo userDetailVo = socialServiceApi.getAccountBySocialTypeAndSocialId(socialType, openid);
-
-            // 如果没有关联则自动创建一个账号
-            if (Objects.isNull(userDetailVo)) {
-                WxMaUserInfo userInfo = getUserInfo(appid, sessionKey, signature, rawData, encryptedData, iv);
-                CreateAccountRo createAccountRo = new CreateAccountRo()
-                    .setAvatar(userInfo.getAvatarUrl())
-                    .setNickname(userInfo.getNickName())
-                    .setSocials(Collections.singletonList(new CreateAccountRo.SocialItem()
-                        .setSocialType(socialType)
-                        .setSocialId(openid)));
-                userDetailVo = accountServiceApi.createAccount(createAccountRo);
-            }
-
-            String username = userDetailVo.getUsername();
-            wxMaCacheService.updateWxMaSessionUser(sessionKey, username);
-
-            // 关联账号
-            WxMaLoginVo.UserDetailVo userDetail = new WxMaLoginVo.UserDetailVo()
-                .setAvatar(userDetailVo.getAvatarUrl())
-                .setNickname(userDetailVo.getNickname())
-                .setUsername(username)
-                .setId(userDetailVo.getId());
-            return result.setToken(accountServiceApi.getUserToken(username))
-                .setUserDetail(userDetail);
-        } catch (WxErrorException e) {
-            log.error(e.getMessage(), e);
+            sessionKey = session.getSessionKey();
+            openid = session.getOpenid();
+        } catch (Exception e) {
             throw ServiceException.wrap(e);
         }
+
+        WxMaUserInfo userInfo = this.getUserInfo(appid, sessionKey, signature, rawData, encryptedData, iv);
+        String avatarUrl = userInfo.getAvatarUrl();
+        String nickName = userInfo.getNickName();
+        UserInfoDto userInfoDto = new UserInfoDto()
+            .setOpenid(openid).setSessionKey(sessionKey)
+            .setAvatarUrl(avatarUrl).setNickName(nickName);
+        return this.getOrCreateUserToken(appid, userInfoDto);
     }
 
     private WxMaUserInfo getUserInfo(String appid, String sessionKey,
