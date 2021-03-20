@@ -126,6 +126,7 @@ boot:
         ,/wl/logistics-line/_search
 
         ,/docking/wx/mp/*
+        ,/docking/wx/miniapp/*/token2
         ,/docking/wx/miniapp/*/token
 
         ,/ums/account/*:avatar

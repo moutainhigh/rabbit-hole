@@ -6,13 +6,15 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.github.lotus.docking.biz.cache.WxMaCacheService;
+import com.github.lotus.docking.biz.pojo.dto.UserInfoDto;
+import com.github.lotus.docking.biz.pojo.ro.GetMaUserToken2Ro;
 import com.github.lotus.docking.biz.pojo.ro.GetMaUserTokenRo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import com.github.lotus.docking.biz.service.WxMaIndexService;
 import com.github.lotus.docking.biz.support.wxmini.WxMaConfiguration;
-import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.SocialServiceApi;
+import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
@@ -41,13 +43,10 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
     private final UserServiceApi accountServiceApi;
     private final WxMaCacheService wxMaCacheService;
 
-    @Override
-    public WxMaLoginVo getUserToken(String appid, GetMaUserTokenRo ro) {
-        String iv = ro.getIv();
-        String encryptedData = ro.getEncryptedData();
-        String signature = ro.getSignature();
-        String rawData = ro.getRawData();
-        String code = ro.getCode();
+    private WxMaLoginVo getOrCreateUserToken(String appid, UserInfoDto dto) {
+        String code = dto.getCode();
+        String nickName = dto.getNickName();
+        String avatarUrl = dto.getAvatarUrl();
 
         WxMaLoginVo result = new WxMaLoginVo();
         final WxMaService wxService = WxMaConfiguration.getMaService(appid);
@@ -63,10 +62,9 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
             // 如果没有关联则自动创建一个账号
             if (Objects.isNull(userDetailVo)) {
-                WxMaUserInfo userInfo = getUserInfo(appid, sessionKey, signature, rawData, encryptedData, iv);
                 CreateAccountRo createAccountRo = new CreateAccountRo()
-                    .setAvatar(userInfo.getAvatarUrl())
-                    .setNickname(userInfo.getNickName())
+                    .setAvatar(avatarUrl)
+                    .setNickname(nickName)
                     .setSocials(Collections.singletonList(new CreateAccountRo.SocialItem()
                         .setSocialType(socialType)
                         .setSocialId(openid)));
@@ -82,8 +80,47 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
                 .setNickname(userDetailVo.getNickname())
                 .setUsername(username)
                 .setId(userDetailVo.getId());
-            return result.setToken(accountServiceApi.getUserToken(username))
-                .setUserDetail(userDetail);
+            return result.setToken(accountServiceApi.getUserToken(username)).setUserDetail(userDetail);
+        } catch (WxErrorException e) {
+            log.error(e.getMessage(), e);
+            throw ServiceException.wrap(e);
+        }
+    }
+
+    @Override
+    public WxMaLoginVo getUserToken2(String appid, GetMaUserToken2Ro ro) {
+        String code = ro.getCode();
+        String avatarUrl = ro.getAvatarUrl();
+        String nickName = ro.getNickName();
+
+        UserInfoDto userInfoDto = new UserInfoDto().setCode(code)
+            .setAvatarUrl(avatarUrl).setNickName(nickName);
+        return this.getOrCreateUserToken(appid, userInfoDto);
+    }
+
+    @Override
+    public WxMaLoginVo getUserToken(String appid, GetMaUserTokenRo ro) {
+        String iv = ro.getIv();
+        String encryptedData = ro.getEncryptedData();
+        String signature = ro.getSignature();
+        String rawData = ro.getRawData();
+        String code = ro.getCode();
+
+        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        WxMaUserService userService = wxService.getUserService();
+
+        try {
+            WxMaJscode2SessionResult session = userService.getSessionInfo(code);
+            String sessionKey = session.getSessionKey();
+            String openid = session.getOpenid();
+            log.debug("sessionkey: [{}]; openid: [{}]", sessionKey, openid);
+            WxMaUserInfo userInfo = this.getUserInfo(appid, sessionKey, signature, rawData, encryptedData, iv);
+            String avatarUrl = userInfo.getAvatarUrl();
+            String nickName = userInfo.getNickName();
+
+            UserInfoDto userInfoDto = new UserInfoDto().setCode(code)
+                .setAvatarUrl(avatarUrl).setNickName(nickName);
+            return this.getOrCreateUserToken(appid, userInfoDto);
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
             throw ServiceException.wrap(e);

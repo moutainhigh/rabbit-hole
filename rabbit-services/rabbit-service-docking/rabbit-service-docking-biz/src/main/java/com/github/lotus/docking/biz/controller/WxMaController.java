@@ -1,6 +1,7 @@
 package com.github.lotus.docking.biz.controller;
 
 
+import com.github.lotus.docking.biz.pojo.ro.GetMaUserToken2Ro;
 import com.github.lotus.docking.biz.pojo.ro.GetMaUserTokenRo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
@@ -34,6 +35,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/wx/miniapp/{appid}")
 public class WxMaController {
     private final WxMaIndexService service;
+
+    @ApiOperation("登陆/注册接口")
+    @PostMapping("/token2")
+    public Result<WxMaLoginVo> getUserTokenV2(@PathVariable String appid, @Validated @RequestBody GetMaUserToken2Ro ro) {
+        return Result.success(service.getUserToken2(appid, ro));
+    }
 
     @ApiOperation("登陆/注册接口")
     @PostMapping("/token")
