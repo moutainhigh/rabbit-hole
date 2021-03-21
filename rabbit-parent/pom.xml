@@ -46,7 +46,7 @@
     <jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
     <avatar-generator.version>1.1.0</avatar-generator.version>
     <javase.version>3.4.0</javase.version>
-    <weixin-java.version>3.7.0</weixin-java.version>
+    <weixin-java.version>4.0.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <jsoup.version>1.13.1</jsoup.version>
     <payment.version>0.1.2-SNAPSHOT</payment.version>
@@ -197,6 +197,16 @@
         <version>${project.version}</version>
       </dependency>
       <!-- 二方库 -->
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>wx-mp-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>wx-ma-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>openfeign-spring-boot-starter</artifactId>
