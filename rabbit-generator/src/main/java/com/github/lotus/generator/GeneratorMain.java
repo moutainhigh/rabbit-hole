@@ -16,8 +16,13 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MINA, false,
-            "mina_mobile_wallpaper");
+            Module.COM, false,
+            "mms_message_user_ref",
+            "mms_message_user_ref",
+            "mms_system_message",
+            "mms_personal_message",
+            "mms_notice_message",
+            "mms_notice_user_config");
     }
 
 }
