@@ -1,15 +1,24 @@
 package com.github.lotus.com.biz.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
+import com.github.lotus.com.biz.service.MessageUserRefService;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * [消息模块] 用户接收的消息表 前端控制器
+ * [消息模块]
  * </p>
  *
  * @author hocgin
@@ -17,8 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/message-user-ref")
+@RequestMapping("/user/message")
 public class MessageUserRefController {
+    private final MessageUserRefService service;
 
+    @ApiOperation("分页查询项目 - 项目")
+    @PostMapping("/_paging")
+    public Result<IPage<MessageComplexVo>> paging(@Validated @RequestBody MessagePagingRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.pagingWithSelf(ro));
+    }
 }
 

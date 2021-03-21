@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.MessageUserRef;
 import com.github.lotus.com.biz.mapper.MessageUserRefMapper;
 import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
+import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.MessageUserRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -21,6 +24,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRefMapper, MessageUserRef> implements MessageUserRefService {
+    private final MessageUserRefProxyService messageUserRefProxyService;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<MessageComplexVo> pagingWithSelf(MessagePagingRo ro) {
+        return messageUserRefProxyService.paging(ro);
+    }
 
     @Override
     public IPage<MessageUserRef> paging(MessagePagingRo ro) {
