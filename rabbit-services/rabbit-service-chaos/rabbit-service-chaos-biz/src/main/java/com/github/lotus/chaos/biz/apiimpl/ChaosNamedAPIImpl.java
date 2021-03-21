@@ -13,7 +13,7 @@ import com.github.lotus.pay.api.AccessAppServiceApi;
 import com.github.lotus.pay.api.pojo.vo.AccessAppOrdinaryVo;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
-import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
+import in.hocg.boot.named.ifc.NamedArgs;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

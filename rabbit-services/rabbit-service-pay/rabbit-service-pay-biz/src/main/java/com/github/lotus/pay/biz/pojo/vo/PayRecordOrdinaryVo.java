@@ -3,8 +3,8 @@ package com.github.lotus.pay.biz.pojo.vo;
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.pay.PayMode;
-import in.hocg.boot.named.autoconfiguration.annotation.Named;
-import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
+import in.hocg.boot.named.annotation.Named;
+import in.hocg.boot.named.annotation.UseNamedService;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package com.github.lotus.chaos.api;
 
-import in.hocg.boot.named.autoconfiguration.annotation.NamedService;
-import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
-import in.hocg.boot.named.autoconfiguration.ifc.NamedHandler;
+import in.hocg.boot.named.annotation.NamedService;
+import in.hocg.boot.named.ifc.NamedArgs;
+import in.hocg.boot.named.ifc.NamedHandler;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
