@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MessageUserRefProxyService {
     MessageComplexVo getById(Long id);
 
-    @Transactional(rollbackFor = Exception.class)
     IPage<MessageComplexVo> paging(MessagePagingRo ro);
 
     void sendSystemMessage(SendSystemMessageDto dto);

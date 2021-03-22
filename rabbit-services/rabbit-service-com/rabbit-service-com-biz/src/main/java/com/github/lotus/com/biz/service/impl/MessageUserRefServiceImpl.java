@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -39,7 +43,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<MessageUserRef> paging(MessagePagingRo ro) {
-        return baseMapper.paging(ro);
+        return baseMapper.paging(ro, ro.ofPage());
     }
 
     @Override
@@ -48,5 +52,16 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         SendPersonalMessageDto dto = mapping.asSendPersonalMessageDto(ro);
         dto.setCreator(ro.getUserId());
         messageUserRefProxyService.sendPersonalMessage(dto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void readById(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        lambdaUpdate().in(MessageUserRef::getId, ids)
+            .set(MessageUserRef::getReadAt, LocalDateTime.now())
+            .update();
     }
 }

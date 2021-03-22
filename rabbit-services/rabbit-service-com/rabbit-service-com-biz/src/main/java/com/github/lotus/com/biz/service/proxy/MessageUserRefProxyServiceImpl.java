@@ -25,6 +25,7 @@ import com.github.lotus.com.biz.service.PersonalMessageService;
 import com.github.lotus.com.biz.service.SystemMessageService;
 import com.github.lotus.common.datadict.com.MessageUserRefType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +64,9 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<MessageComplexVo> paging(MessagePagingRo ro) {
-        return messageUserRefService.paging(ro).convert(this::convert);
+        IPage<MessageUserRef> result = messageUserRefService.paging(ro);
+        messageUserRefService.readById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        return result.convert(this::convert);
     }
 
     @Override

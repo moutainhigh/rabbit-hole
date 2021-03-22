@@ -7,6 +7,8 @@ import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
+
 /**
  * <p>
  * [消息模块] 用户接收的消息表 服务类
@@ -22,4 +24,6 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
     IPage<MessageUserRef> paging(MessagePagingRo ro);
 
     void sendPersonalMessage(SendPersonalMessageRo ro);
+
+    void readById(List<Long> ids);
 }
