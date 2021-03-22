@@ -3,7 +3,10 @@ package com.github.lotus.com.biz.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.MessageUserRef;
 import com.github.lotus.com.biz.mapper.MessageUserRefMapper;
+import com.github.lotus.com.biz.mapstruct.MessageUserRefMapping;
+import com.github.lotus.com.biz.pojo.dto.SendPersonalMessageDto;
 import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
+import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.MessageUserRefService;
@@ -25,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRefMapper, MessageUserRef> implements MessageUserRefService {
     private final MessageUserRefProxyService messageUserRefProxyService;
+    private final MessageUserRefMapping mapping;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -33,7 +37,16 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public IPage<MessageUserRef> paging(MessagePagingRo ro) {
         return baseMapper.paging(ro);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void sendPersonalMessage(SendPersonalMessageRo ro) {
+        SendPersonalMessageDto dto = mapping.asSendPersonalMessageDto(ro);
+        dto.setCreator(ro.getUserId());
+        messageUserRefProxyService.sendPersonalMessage(dto);
     }
 }
