@@ -2,9 +2,9 @@ package com.github.lotus.wl.biz.basic;
 
 import com.github.lotus.wl.biz.entity.Company;
 import com.github.lotus.wl.biz.service.CompanyService;
-import in.hocg.boot.named.autoconfiguration.annotation.NamedService;
-import in.hocg.boot.named.autoconfiguration.ifc.NamedArgs;
-import in.hocg.boot.named.autoconfiguration.ifc.NamedHandler;
+import in.hocg.boot.named.annotation.NamedService;
+import in.hocg.boot.named.ifc.NamedArgs;
+import in.hocg.boot.named.ifc.NamedHandler;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

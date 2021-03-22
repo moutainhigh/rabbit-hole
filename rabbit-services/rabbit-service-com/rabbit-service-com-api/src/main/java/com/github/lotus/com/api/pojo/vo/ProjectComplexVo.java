@@ -2,9 +2,9 @@ package com.github.lotus.com.api.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
-import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
-import in.hocg.boot.named.autoconfiguration.annotation.Named;
-import in.hocg.boot.named.autoconfiguration.annotation.UseNamedService;
+import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.boot.named.annotation.Named;
+import in.hocg.boot.named.annotation.UseNamedService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
