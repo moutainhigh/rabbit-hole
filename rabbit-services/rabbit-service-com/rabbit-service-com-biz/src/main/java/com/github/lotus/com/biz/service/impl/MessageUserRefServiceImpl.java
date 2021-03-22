@@ -10,14 +10,16 @@ import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.MessageUserRefService;
+import com.github.lotus.common.datadict.com.MessageUserRefType;
 import com.github.lotus.ums.api.UserServiceApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -66,6 +68,27 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         SendSystemMessageDto dto = mapping.asSendSystemMessageDto(ro);
         dto.setCreator(ro.getUserId());
         messageUserRefProxyService.sendSystemMessage(dto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public MessageStatVo getMessageStatByUserId(Long userId) {
+        Integer unreadNoticeCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
+        Integer unreadPersonalCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
+        Integer unreadSystemCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.SystemMessage.getCodeStr(), userId);
+
+        MessageStatVo result = new MessageStatVo();
+        result.setUnreadPersonCount(unreadPersonalCount);
+        result.setUnreadNoticeCount(unreadNoticeCount);
+        result.setUnreadSystemCount(unreadSystemCount);
+        result.setUnreadTotalCount(unreadPersonalCount + unreadNoticeCount + unreadSystemCount);
+        return result;
+    }
+
+    private Integer countByUnreadAndUserIdAndRefType(String refType, Long userId) {
+        return lambdaQuery().eq(MessageUserRef::getReceiverUser, userId)
+            .eq(MessageUserRef::getRefType, refType)
+            .isNotNull(MessageUserRef::getReadAt).count();
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.com.biz.entity.MessageUserRef;
 import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,5 @@ import org.apache.ibatis.annotations.Param;
 public interface MessageUserRefMapper extends BaseMapper<MessageUserRef> {
 
     IPage<MessageUserRef> paging(@Param("ro") MessagePagingRo ro, @Param("page") Page page);
+
 }

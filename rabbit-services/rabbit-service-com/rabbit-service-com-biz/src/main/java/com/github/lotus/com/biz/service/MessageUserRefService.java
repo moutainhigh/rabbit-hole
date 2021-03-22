@@ -6,6 +6,7 @@ import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
     void readById(List<Long> ids);
 
     void sendSystemMessage(SendSystemMessageRo ro);
+
+    MessageStatVo getMessageStatByUserId(Long userId);
 }

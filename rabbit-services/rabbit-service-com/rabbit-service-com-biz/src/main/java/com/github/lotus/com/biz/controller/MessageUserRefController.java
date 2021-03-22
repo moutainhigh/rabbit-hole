@@ -6,6 +6,7 @@ import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
+import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.result.Result;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,12 @@ public class MessageUserRefController {
     public Result<IPage<MessageComplexVo>> paging(@Validated @RequestBody MessagePagingRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.pagingWithSelf(ro));
+    }
+
+    @ApiOperation("获取消息状态 - 我的消息")
+    @GetMapping("/stat")
+    public Result<MessageStatVo> getMessageStat() {
+        return Result.success(service.getMessageStatByUserId(UserContextHolder.getUserIdThrow()));
     }
 
     @ApiOperation("发送私信消息 - 我的消息")

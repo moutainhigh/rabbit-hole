@@ -14,4 +14,5 @@
     </where>
     ORDER BY mmur.created_at desc
   </select>
+
 </mapper>
