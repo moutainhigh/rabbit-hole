@@ -73,9 +73,9 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MessageStatVo getMessageStatByUserId(Long userId) {
-        Integer unreadNoticeCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
-        Integer unreadPersonalCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
-        Integer unreadSystemCount = this.countByUnreadAndUserIdAndRefType(MessageUserRefType.SystemMessage.getCodeStr(), userId);
+        Integer unreadNoticeCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
+        Integer unreadPersonalCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
+        Integer unreadSystemCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.SystemMessage.getCodeStr(), userId);
 
         MessageStatVo result = new MessageStatVo();
         result.setUnreadPersonCount(unreadPersonalCount);
@@ -85,7 +85,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         return result;
     }
 
-    private Integer countByUnreadAndUserIdAndRefType(String refType, Long userId) {
+    private Integer countByUnreadAndRefTypeAndUserId(String refType, Long userId) {
         return lambdaQuery().eq(MessageUserRef::getReceiverUser, userId)
             .eq(MessageUserRef::getRefType, refType)
             .isNotNull(MessageUserRef::getReadAt).count();
