@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.dto;
 
-import com.github.lotus.common.datadict.com.NoticeEventType;
+import com.github.lotus.common.datadict.com.NoticeMessageEventType;
 import com.github.lotus.common.datadict.com.NoticeRefType;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SendNoticeMessageDto {
     @ApiModelProperty(value = "事件类型", required = true)
-    @EnumRange(enumClass = NoticeEventType.class)
+    @EnumRange(enumClass = NoticeMessageEventType.class)
     private String eventType;
     @ApiModelProperty(value = "订阅对象类型", required = true)
     @EnumRange(enumClass = NoticeRefType.class)

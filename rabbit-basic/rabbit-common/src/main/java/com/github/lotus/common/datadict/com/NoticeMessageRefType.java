@@ -18,4 +18,6 @@ public enum NoticeMessageRefType implements DataDictEnum {
     Comment("comment", "评论");
     private final Serializable code;
     private final String name;
+
+    public final static String KEY = "mms_notice_message_ref_type";
 }

@@ -75,6 +75,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
             return;
         }
         lambdaUpdate().in(MessageUserRef::getId, ids)
+            .isNotNull(MessageUserRef::getReadAt)
             .set(MessageUserRef::getReadAt, LocalDateTime.now())
             .update();
     }

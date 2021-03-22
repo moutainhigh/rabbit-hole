@@ -18,4 +18,6 @@ public enum NoticeMessageEventType implements DataDictEnum {
     CommentBeEvaluated("comment_be_evaluated", "被评论");
     private final Serializable code;
     private final String name;
+
+    public final static String KEY = "mms_notice_message_event_type";
 }

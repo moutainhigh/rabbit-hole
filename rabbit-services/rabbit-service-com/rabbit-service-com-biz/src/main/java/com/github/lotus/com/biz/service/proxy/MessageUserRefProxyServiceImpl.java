@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/3/21
@@ -73,13 +74,15 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
     @Transactional(rollbackFor = Exception.class)
     public void sendSystemMessage(SendSystemMessageDto dto) {
         LocalDateTime now = LocalDateTime.now();
-        Long receiver = dto.getReceiver();
+        List<Long> receiver = dto.getReceiver();
 
         SystemMessage entity = systemMessageMapping.asSystemMessage(dto);
         entity.setCreatedAt(now);
         ValidUtils.isTrue(systemMessageService.validInsert(entity));
 
-        this.insertMessageUser(receiver, entity);
+        for (Long receiverUser : receiver) {
+            this.insertMessageUser(receiverUser, entity);
+        }
     }
 
     @Override
@@ -129,6 +132,7 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
         boolean isOk = messageUserRefService.validInsert(messageUserRef);
         ValidUtils.isTrue(isOk);
     }
+
     private MessageComplexVo convert(MessageUserRef entity) {
         Long refId = entity.getRefId();
         MessageUserRefType messageUserRefType = ICode.ofThrow(entity.getRefType(), MessageUserRefType.class);

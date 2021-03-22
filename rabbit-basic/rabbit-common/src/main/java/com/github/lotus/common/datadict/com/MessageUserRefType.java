@@ -22,4 +22,5 @@ public enum MessageUserRefType implements DataDictEnum {
     private final Serializable code;
     private final String name;
 
+    public final static String KEY = "mms_message_user_ref_type";
 }

@@ -18,6 +18,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MessageUserRefMapping {
 
+    @Mapping(target = "receiverUserName", ignore = true)
+    @Mapping(target = "messageTypeName", ignore = true)
     @Mapping(target = "systemMessage", ignore = true)
     @Mapping(target = "personalMessage", ignore = true)
     @Mapping(target = "noticeMessage", ignore = true)
