@@ -14,11 +14,11 @@ import lombok.Data;
 @ApiModel(description = "消息状态")
 public class MessageStatVo {
     @ApiModelProperty("未读总数量")
-    private Integer unreadTotalCount;
+    private Integer unreadTotalCount = 0;
     @ApiModelProperty("未读系统消息数量")
-    private Integer unreadSystemCount;
+    private Integer unreadSystemCount = 0;
     @ApiModelProperty("未读私信消息数量")
-    private Integer unreadPersonCount;
+    private Integer unreadPersonCount = 0;
     @ApiModelProperty("未读通知消息数量")
-    private Integer unreadNoticeCount;
+    private Integer unreadNoticeCount = 0;
 }

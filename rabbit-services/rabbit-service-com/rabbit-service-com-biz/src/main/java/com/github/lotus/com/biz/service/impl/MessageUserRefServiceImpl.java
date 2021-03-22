@@ -73,11 +73,15 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MessageStatVo getMessageStatByUserId(Long userId) {
+        MessageStatVo result = new MessageStatVo();
+        if (Objects.isNull(userId)) {
+            return result;
+        }
+
         Integer unreadNoticeCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
         Integer unreadPersonalCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
         Integer unreadSystemCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.SystemMessage.getCodeStr(), userId);
 
-        MessageStatVo result = new MessageStatVo();
         result.setUnreadPersonCount(unreadPersonalCount);
         result.setUnreadNoticeCount(unreadNoticeCount);
         result.setUnreadSystemCount(unreadSystemCount);

@@ -44,7 +44,8 @@ public class MessageUserRefController {
     @ApiOperation("获取消息状态 - 我的消息")
     @GetMapping("/stat")
     public Result<MessageStatVo> getMessageStat() {
-        return Result.success(service.getMessageStatByUserId(UserContextHolder.getUserIdThrow()));
+        return Result.success(UserContextHolder.getUserId()
+            .map(service::getMessageStatByUserId).orElse(null));
     }
 
     @ApiOperation("发送私信消息 - 我的消息")
