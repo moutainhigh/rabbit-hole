@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.MessageUserRef;
 import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
+import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -26,4 +27,6 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
     void sendPersonalMessage(SendPersonalMessageRo ro);
 
     void readById(List<Long> ids);
+
+    void sendSystemMessage(SendSystemMessageRo ro);
 }

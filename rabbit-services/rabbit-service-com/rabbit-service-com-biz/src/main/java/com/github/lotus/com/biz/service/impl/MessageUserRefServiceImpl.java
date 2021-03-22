@@ -5,12 +5,16 @@ import com.github.lotus.com.biz.entity.MessageUserRef;
 import com.github.lotus.com.biz.mapper.MessageUserRefMapper;
 import com.github.lotus.com.biz.mapstruct.MessageUserRefMapping;
 import com.github.lotus.com.biz.pojo.dto.SendPersonalMessageDto;
+import com.github.lotus.com.biz.pojo.dto.SendSystemMessageDto;
 import com.github.lotus.com.biz.pojo.ro.message.MessagePagingRo;
 import com.github.lotus.com.biz.pojo.ro.message.SendPersonalMessageRo;
+import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.MessageUserRefService;
+import com.github.lotus.ums.api.UserServiceApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.ValidUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -32,6 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRefMapper, MessageUserRef> implements MessageUserRefService {
     private final MessageUserRefProxyService messageUserRefProxyService;
+    private final UserServiceApi userServiceApi;
     private final MessageUserRefMapping mapping;
 
     @Override
@@ -56,6 +62,14 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void sendSystemMessage(SendSystemMessageRo ro) {
+        SendSystemMessageDto dto = mapping.asSendSystemMessageDto(ro);
+        dto.setCreator(ro.getUserId());
+        messageUserRefProxyService.sendSystemMessage(dto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void readById(List<Long> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return;
@@ -63,5 +77,14 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         lambdaUpdate().in(MessageUserRef::getId, ids)
             .set(MessageUserRef::getReadAt, LocalDateTime.now())
             .update();
+    }
+
+    @Override
+    public void validEntity(MessageUserRef entity) {
+        super.validEntity(entity);
+        Long receiverUser = entity.getReceiverUser();
+        if (Objects.nonNull(receiverUser)) {
+            ValidUtils.notNull(userServiceApi.getById(receiverUser));
+        }
     }
 }

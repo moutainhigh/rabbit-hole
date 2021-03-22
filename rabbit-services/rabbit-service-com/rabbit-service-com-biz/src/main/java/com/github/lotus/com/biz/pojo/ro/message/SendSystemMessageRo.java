@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/3/22
@@ -14,13 +16,17 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel
-public class SendPersonalMessageRo {
+public class SendSystemMessageRo {
+    @NotNull
+    @ApiModelProperty(value = "标题", required = true)
+    private String title;
     @NotNull
     @ApiModelProperty(value = "内容", required = true)
     private String content;
     @NotNull
+    @Size(min = 1, max = 100)
     @ApiModelProperty(value = "接收人", required = true)
-    private Long receiver;
+    private List<Long> receiver;
 
     @ApiModelProperty(hidden = true)
     private Long userId;
