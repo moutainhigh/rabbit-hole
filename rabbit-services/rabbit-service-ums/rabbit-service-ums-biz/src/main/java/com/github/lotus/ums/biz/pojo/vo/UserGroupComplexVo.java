@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
-import in.hocg.boot.named.autoconfiguration.annotation.InjectNamed;
+import in.hocg.boot.named.annotation.InjectNamed;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

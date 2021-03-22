@@ -8,9 +8,9 @@ spring:
     host: sv-redis.basic
     port: 6379
     database: 0
-rabbit:
+boot:
   wx:
-    miniapp:
+    ma:
       configs:
         - appid: wx19d2028bfdc4decf
           secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)

@@ -12,7 +12,7 @@ import com.github.lotus.docking.biz.pojo.ro.GetMaUserTokenRo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaLoginVo;
 import com.github.lotus.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import com.github.lotus.docking.biz.service.WxMaIndexService;
-import com.github.lotus.docking.biz.support.wxmini.WxMaConfiguration;
+import com.github.lotus.docking.biz.support.wxma.WxMaConfiguration;
 import com.github.lotus.ums.api.SocialServiceApi;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
@@ -43,6 +43,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
     private final SocialServiceApi socialServiceApi;
     private final UserServiceApi accountServiceApi;
     private final WxMaCacheService wxMaCacheService;
+    private final WxMaService wxMaService;
 
     private WxMaLoginVo getOrCreateUserToken(String appid, UserInfoDto dto) {
         String sessionKey = dto.getSessionKey();
@@ -85,7 +86,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
         String avatarUrl = ro.getAvatarUrl();
         String nickName = ro.getNickName();
 
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
         WxMaUserService userService = wxService.getUserService();
 
         String sessionKey;
@@ -113,7 +114,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
         String rawData = ro.getRawData();
         String code = ro.getCode();
 
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
         WxMaUserService userService = wxService.getUserService();
 
         String sessionKey;
@@ -137,7 +138,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
     private WxMaUserInfo getUserInfo(String appid, String sessionKey,
                                      String signature, String rawData, String encryptedData, String iv) {
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
 
         WxMaUserService userService = wxService.getUserService();
         // 用户信息校验
@@ -152,7 +153,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
     @Override
     public WxMaPhoneNumberInfoVo getUserPhone(String appid, String sessionKey,
                                               String signature, String rawData, String encryptedData, String iv) {
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
 
         // 用户信息校验
         if (!wxService.getUserService().checkUserInfo(sessionKey, rawData, signature)) {
@@ -169,7 +170,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
     @Override
     public boolean checkMessage(String appid, String text) {
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
         try {
             return wxService.getSecCheckService().checkMessage(text);
         } catch (WxErrorException e) {
@@ -180,7 +181,7 @@ public class WxMaIndexServiceImpl implements WxMaIndexService {
 
     @Override
     public boolean checkImage(String appid, String imageUrl) {
-        final WxMaService wxService = WxMaConfiguration.getMaService(appid);
+        final WxMaService wxService = wxMaService.switchoverTo(appid);
         try {
             return wxService.getSecCheckService().checkImage(imageUrl);
         } catch (WxErrorException e) {

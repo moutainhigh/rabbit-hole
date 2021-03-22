@@ -1,111 +1,102 @@
--- # 订阅-通知设计
-DROP TABLE IF EXISTS `mms_notification`;
-CREATE TABLE mms_notification
+DROP TABLE IF EXISTS `mms_notice_user_config`;
+CREATE TABLE `mms_notice_user_config`
 (
     id              BIGINT AUTO_INCREMENT,
-    notify_type     varchar(32) not null
-        comment '通知类型: mention=>提及; like_article=>点赞文章; like_comment=>点赞评论',
-    actor_type      varchar(32) not null
-        comment '触发者类型: user=>用户;',
-    actor_id        BIGINT      not null
-        comment '触发者ID',
-    subject_type    varchar(32) null
-        comment '订阅对象类型: article=>文章; user=>用户',
-    subject_id      BIGINT      null
-        comment '订阅对象ID',
+    event_type      VARCHAR(32) NOT NULL
+        COMMENT '事件类型',
+    ref_type        VARCHAR(32) NOT NULL
+        comment '订阅对象类型',
+    ref_id          BIGINT      NOT NULL
+        comment '订阅对象',
+    subscriber_user BIGINT      NOT NULL
+        comment '订阅人',
     --
-    creator         BIGINT      not null,
-    created_at      DATETIME(6) not null,
-    last_updater    BIGINT      null,
-    last_updated_at DATETIME(6) null,
+    `created_at`    DATETIME(6) NOT NULL
+        COMMENT '创建时间',
+    `creator`       BIGINT
+        COMMENT '创建者',
+    UNIQUE KEY (`event_type`, `ref_type`, `ref_id`, `subscriber_user`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[通用模块] 通知表';
+    COMMENT '[消息模块] 用户订阅配置表';
 
-DROP TABLE IF EXISTS `mms_notification_user`;
-CREATE TABLE mms_notification_user
+DROP TABLE IF EXISTS `mms_message_user_ref`;
+CREATE TABLE `mms_message_user_ref`
 (
-    notification_id bigint      not null comment '通知ID',
-    receiver_id     bigint      not null comment '接收人ID',
-    read_at         datetime(6) null comment '已读时间',
-    PRIMARY KEY (notification_id, receiver_id)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    COMMENT '[通用模块] 通知-接收人表';
-
--- 谁订阅了哪篇文章的什么操作
-DROP TABLE IF EXISTS `mms_subscription`;
-CREATE TABLE mms_subscription
-(
-    id              bigint AUTO_INCREMENT,
-    notify_type     varchar(32) not null
-        comment '通知类型: mention=>提及; like_article=>点赞文章; like_comment=>点赞评论',
-    subscriber_id   bigint      not null
-        comment '订阅人ID',
-    subject_type    varchar(32) not null
-        comment '订阅对象类型: article=>文章; user=>用户',
-    subject_id      bigint      not null
-        comment '订阅对象ID',
+    id            BIGINT AUTO_INCREMENT,
+    receiver_user BIGINT      not null
+        comment '接收人',
+    ref_type      VARCHAR(32) NOT NULL
+        comment '消息类型',
+    ref_id        BIGINT      NOT NULL
+        comment '消息对象',
+    read_at       DATETIME(6)
+        comment '读取时间',
     --
-    creator         bigint      not null,
-    created_at      datetime(6) not null,
-    last_updated_at datetime(6) null,
-    last_updater    bigint      null,
+    `created_at` DATETIME(6)   NOT NULL
+        COMMENT '创建时间',
+    UNIQUE KEY (`receiver_user`, `ref_type`, `ref_id`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[通用模块] 订阅列表';
+    COMMENT '[消息模块] 用户接收的消息表';
 
--- # 消息
-DROP TABLE IF EXISTS `mms_message`;
-CREATE TABLE mms_message
+DROP TABLE IF EXISTS `mms_system_message`;
+CREATE TABLE `mms_system_message`
 (
-    id              BIGINT AUTO_INCREMENT,
-    sender_id       bigint       not null
-        comment '发送人ID',
-    receiver_id     bigint       not null
-        comment '接收人ID',
-    content_type    varchar(32)  not null default 'text'
-        comment '内容类型: text=>文本',
-    content         varchar(255) not null
-        comment '内容',
-    --
-    creator         BIGINT       not null,
-    created_at      DATETIME(6)  not null,
-    last_updater    BIGINT       null,
-    last_updated_at DATETIME(6)  null,
-    PRIMARY KEY (`id`)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    COMMENT '[通用模块] 私信表';
-
--- # 公告
-DROP TABLE IF EXISTS `mms_notice`;
-CREATE TABLE mms_notice
-(
-    id              BIGINT AUTO_INCREMENT,
-    project_id      bigint       not null
-        comment '项目ID',
-    title           varchar(255) not null
+    id           BIGINT AUTO_INCREMENT,
+    title        VARCHAR(128)  NOT NULL
         comment '标题',
-    content_type    varchar(32)  not null default 'text'
-        comment '内容类型: text=>文本',
-    content         varchar(255) not null
+    content      VARCHAR(1024) NOT NULL
         comment '内容',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
-        COMMENT '启用状态',
     --
-    creator         BIGINT       not null,
-    created_at      DATETIME(6)  not null,
-    last_updater    BIGINT       null,
-    last_updated_at DATETIME(6)  null,
+    `created_at` DATETIME(6)   NOT NULL
+        COMMENT '创建时间',
+    `creator`    BIGINT
+        COMMENT '创建者',
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[通用模块] 系统通知表';
+    COMMENT '[消息模块] 系统消息表';
+
+DROP TABLE IF EXISTS `mms_personal_message`;
+CREATE TABLE `mms_personal_message`
+(
+    id           BIGINT AUTO_INCREMENT,
+    content      VARCHAR(1024) NOT NULL
+        comment '内容',
+    --
+    `created_at` DATETIME(6)   NOT NULL
+        COMMENT '创建时间',
+    `creator`    BIGINT
+        COMMENT '创建者',
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[消息模块] 私信消息表';
+
+DROP TABLE IF EXISTS `mms_notice_message`;
+CREATE TABLE `mms_notice_message`
+(
+    id           BIGINT AUTO_INCREMENT,
+    event_type   VARCHAR(32) NOT NULL
+        COMMENT '事件类型',
+    ref_type     VARCHAR(32) NOT NULL
+        comment '订阅对象类型',
+    ref_id       BIGINT      NOT NULL
+        comment '订阅对象',
+    --
+    `created_at` DATETIME(6) NOT NULL
+        COMMENT '创建时间',
+    `creator`    BIGINT
+        COMMENT '创建者',
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[消息模块] 订阅消息表';
