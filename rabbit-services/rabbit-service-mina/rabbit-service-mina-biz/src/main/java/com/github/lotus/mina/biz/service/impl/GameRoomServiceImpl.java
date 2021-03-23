@@ -1,6 +1,7 @@
 package com.github.lotus.mina.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.mina.biz.entity.GameCard;
 import com.github.lotus.mina.biz.entity.GameRoom;
 import com.github.lotus.mina.biz.entity.GameRoomUser;
 import com.github.lotus.mina.biz.mapper.GameRoomMapper;
@@ -10,9 +11,11 @@ import com.github.lotus.mina.biz.pojo.ro.MinaGameCreateRoomRo;
 import com.github.lotus.mina.biz.pojo.ro.RoomPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameRoomComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.GameRoomOrdinaryVo;
+import com.github.lotus.mina.biz.service.GameCardService;
 import com.github.lotus.mina.biz.service.GameRoomService;
 import com.github.lotus.mina.biz.service.GameRoomUserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,6 +40,7 @@ import java.util.stream.Collectors;
 public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, GameRoom>
     implements GameRoomService {
     private final GameRoomUserService gameRoomUserService;
+    private final GameCardService gameCardService;
     private final GameRoomMapping mapping;
 
     @Override
@@ -50,8 +55,13 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
             removeById(roomId);
             gameRoomUserService.removeByRoomId(roomId);
         }
-
         GameRoom entity = mapping.asGameRoom(ro);
+
+        Long game = ro.getGame();
+        if (Objects.nonNull(game)) {
+            entity.setLogoUrl(LangUtils.callIfNotNull(gameCardService.getById(game), GameCard::getLogoUrl).orElse(null));
+        }
+
         entity.setCreatedAt(now);
         this.validInsertOrUpdate(entity);
 

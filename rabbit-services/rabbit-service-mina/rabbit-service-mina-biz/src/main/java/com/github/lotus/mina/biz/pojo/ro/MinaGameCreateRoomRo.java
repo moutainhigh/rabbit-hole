@@ -27,6 +27,8 @@ public class MinaGameCreateRoomRo {
     private String password;
     @ApiModelProperty("类型")
     private String type;
+    @ApiModelProperty("游戏")
+    private Long game;
 
     @ApiModelProperty(value = "创建者", hidden = true)
     private Long userId;
