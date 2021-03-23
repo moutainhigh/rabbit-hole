@@ -1,5 +1,6 @@
 package com.github.lotus.mina.biz.controller;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import com.github.lotus.mina.biz.pojo.ro.JoinRoomRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCreateRoomRo;
@@ -49,7 +50,7 @@ public class MinaGameController {
     @PostMapping("/room")
     public Result<GameRoomComplexVo> createRoom(@PathVariable String appid,
                                                 @Validated @RequestBody MinaGameCreateRoomRo ro) {
-        ro.setUserId(UserContextHolder.getUserIdThrow());
+        ro.setUserId(UserContextHolder.getUserId().orElse(GlobalConstant.SUPPER_ADMIN_USER_ID));
         return Result.success(gameRoomService.createAndGet(ro));
     }
 
@@ -61,10 +62,10 @@ public class MinaGameController {
     }
 
     @ApiOperation("加入房间")
-    @PostMapping("/room/{encoding}/join")
+    @PostMapping("/room/join")
     public Result<Void> joinRoom(@PathVariable String appid,
                                  @Validated @RequestBody JoinRoomRo ro) {
-        ro.setUserId(UserContextHolder.getUserIdThrow());
+        ro.setUserId(UserContextHolder.getUserId().orElse(GlobalConstant.SUPPER_ADMIN_USER_ID));
         gameRoomService.joinUser(ro);
         return Result.success();
     }

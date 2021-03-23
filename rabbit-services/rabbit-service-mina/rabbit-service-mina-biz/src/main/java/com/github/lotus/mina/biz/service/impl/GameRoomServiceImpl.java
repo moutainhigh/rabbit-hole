@@ -1,6 +1,5 @@
 package com.github.lotus.mina.biz.service.impl;
 
-import com.aliyun.openservices.log.http.client.ServiceException;
 import com.github.lotus.mina.biz.entity.GameRoom;
 import com.github.lotus.mina.biz.entity.GameRoomUser;
 import com.github.lotus.mina.biz.mapper.GameRoomMapper;
@@ -66,7 +65,7 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
         String signalData = ro.getSignalData();
         LocalDateTime now = LocalDateTime.now();
 
-        GameRoom entity = getByEncoding(roomCode).orElseThrow(ServiceException::new);
+        GameRoom entity = getByEncoding(roomCode).orElseThrow(IllegalArgumentException::new);
         // todo: 检查密码匹配
 
         Long roomId = entity.getId();
@@ -84,7 +83,7 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
     @Override
     @Transactional(rollbackFor = Exception.class)
     public GameRoomComplexVo getComplexByEncoding(String encoding) {
-        GameRoom entity = getByEncoding(encoding).orElseThrow(ServiceException::new);
+        GameRoom entity = getByEncoding(encoding).orElseThrow(IllegalArgumentException::new);
         return this.convertComplex(entity);
     }
 
