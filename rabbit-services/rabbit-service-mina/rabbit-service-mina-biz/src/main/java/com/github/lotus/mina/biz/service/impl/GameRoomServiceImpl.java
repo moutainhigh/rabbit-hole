@@ -1,12 +1,15 @@
 package com.github.lotus.mina.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mina.biz.entity.GameRoom;
 import com.github.lotus.mina.biz.entity.GameRoomUser;
 import com.github.lotus.mina.biz.mapper.GameRoomMapper;
 import com.github.lotus.mina.biz.mapstruct.GameRoomMapping;
 import com.github.lotus.mina.biz.pojo.ro.JoinRoomRo;
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCreateRoomRo;
+import com.github.lotus.mina.biz.pojo.ro.RoomPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameRoomComplexVo;
+import com.github.lotus.mina.biz.pojo.vo.GameRoomOrdinaryVo;
 import com.github.lotus.mina.biz.service.GameRoomService;
 import com.github.lotus.mina.biz.service.GameRoomUserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
@@ -82,9 +85,19 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public IPage<GameRoomOrdinaryVo> paging(RoomPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public GameRoomComplexVo getComplexByEncoding(String encoding) {
         GameRoom entity = getByEncoding(encoding).orElseThrow(IllegalArgumentException::new);
         return this.convertComplex(entity);
+    }
+
+    private GameRoomOrdinaryVo convertOrdinary(GameRoom entity) {
+        return mapping.asOrdinary(entity);
     }
 
     private GameRoomComplexVo convertComplex(GameRoom entity) {
