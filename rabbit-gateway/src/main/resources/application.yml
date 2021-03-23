@@ -113,11 +113,15 @@ boot:
         ,/webjars/**
         ,/ignore
         ,/*/v2/api-docs
+
+        ,/com/user/message/stat
+
         ,/com/district/tree
-        ,/chaos/address4ip
-        ,/pay/gateway/**
         ,/com/project/encoding:*
 
+        ,/pay/gateway/**
+
+        ,/chaos/address4ip
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift
         ,/chaos/wallpaper/**
@@ -132,6 +136,7 @@ boot:
         ,/ums/account/*:avatar
 
         ,/mina/*/game/_paging
+        ,/mina/*/game/room/**
         ,/mina/*/app/_paging
         ,/mina/*/check-message
         ,/mina/*/check-image

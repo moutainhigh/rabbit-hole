@@ -15,16 +15,20 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel
 public class MinaGameCreateRoomRo {
+    @NotNull(message = "房间号错误")
+    @ApiModelProperty("房间号")
+    private String encoding;
     @NotNull(message = "房间名错误")
     @ApiModelProperty("房间名")
-    private String encoding;
-    @NotNull(message = "房间号错误")
-    @ApiModelProperty("房间名")
     private String title;
+    @ApiModelProperty("logo url")
+    private String logoUrl;
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("类型")
     private String type;
+    @ApiModelProperty("游戏")
+    private Long game;
 
     @ApiModelProperty(value = "创建者", hidden = true)
     private Long userId;

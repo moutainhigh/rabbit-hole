@@ -58,6 +58,8 @@ public class GameRoom extends AbstractEntity<GameRoom> {
     @ApiModelProperty("更新者")
     @TableField("last_updater")
     private Long lastUpdater;
+    @TableField("logo_url")
+    private String logoUrl;
 
 
 
