@@ -22,7 +22,7 @@
     <where>
       <if test="ro.type != null ">
         <bind name="type" value="'%' + ro.type + '%'"/>
-        AND mgc.tags LIKE #{type}
+        AND UPPER(mgc.game_url) LIKE #{type}
       </if>
       <if test="ro.keyword != null">
         <bind name="keyword" value="'%' + ro.keyword + '%'"/>
