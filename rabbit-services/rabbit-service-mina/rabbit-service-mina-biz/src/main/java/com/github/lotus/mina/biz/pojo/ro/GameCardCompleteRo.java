@@ -12,4 +12,5 @@ import lombok.Data;
 @Data
 public class GameCardCompleteRo extends CompleteRo {
     private String keyword;
+    private String type;
 }
