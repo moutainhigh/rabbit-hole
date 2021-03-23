@@ -135,8 +135,9 @@ boot:
 
         ,/ums/account/*:avatar
 
+        ,/mina/game-card/_complete
+        ,/mina/game/room/**
         ,/mina/*/game/_paging
-        ,/mina/*/game/room/**
         ,/mina/*/app/_paging
         ,/mina/*/check-message
         ,/mina/*/check-image
