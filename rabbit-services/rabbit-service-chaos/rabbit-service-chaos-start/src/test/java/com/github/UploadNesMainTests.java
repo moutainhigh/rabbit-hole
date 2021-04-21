@@ -3,10 +3,14 @@ package com.github;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.lotus.chaos.BootApplication;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.test.AbstractSpringBootTest;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,6 +30,8 @@ import java.util.List;
  *
  * @author hocgin
  */
+@ActiveProfiles("local")
+@SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UploadNesMainTests extends AbstractSpringBootTest {
     @Autowired
     protected OssFileService ossFileService;

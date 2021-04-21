@@ -1,8 +1,12 @@
 package com.github.lotus.com.biz.message.listener;
 
+import com.github.lotus.com.biz.entity.Comment;
 import com.github.lotus.com.biz.message.MessageTopic;
 import com.github.lotus.com.biz.pojo.dto.NoticeMessageDto;
+import com.github.lotus.com.biz.pojo.dto.SendNoticeMessageDto;
 import com.github.lotus.com.biz.pojo.dto.TriggerCommentedDto;
+import com.github.lotus.com.biz.service.CommentService;
+import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.common.datadict.com.NoticeMessageEventType;
 import com.github.lotus.common.datadict.com.NoticeMessageRefType;
 import in.hocg.boot.message.service.normal.NormalMessageService;
@@ -26,22 +30,39 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Component
-@ApiModel("评论后触发")
+@ApiModel("评论被评论")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class CommentedListener extends RedisMessageListener<TriggerCommentedDto> {
+public class BeCommentedListener extends RedisMessageListener<TriggerCommentedDto> {
     private final NormalMessageService messageService;
+    private final CommentService commentService;
+    private final MessageUserRefProxyService messageUserRefProxyService;
 
     @Override
     public void onMessage(TriggerCommentedDto message) {
         LocalDateTime createdAt = message.getCreatedAt();
+        Long refId = message.getBeCommentedId();
         Long commentId = message.getCommentId();
         Long creatorId = message.getCreatorId();
 
-        // 被评论通知
+        Comment beCommend = commentService.getById(refId);
+        Long beCommendCreator = beCommend.getCreator();
+        String refType = NoticeMessageRefType.Comment.getCodeStr();
+        String eventType = NoticeMessageEventType.CommentBeEvaluated.getName();
+
+        // 通知被评论人
+        SendNoticeMessageDto messageDto = new SendNoticeMessageDto();
+        messageDto.setEventType(eventType);
+        messageDto.setRefId(refId);
+        messageDto.setRefType(refType);
+        messageDto.setCreator(creatorId);
+        messageDto.setReceiver(beCommendCreator);
+        messageUserRefProxyService.sendNoticeMessage(messageDto);
+
+        // 通知其他订阅的人
         NoticeMessageDto payload = new NoticeMessageDto()
-            .setCreatedAt(createdAt).setRefId(commentId)
-            .setRefType(NoticeMessageRefType.Comment.getCodeStr()).setTriggerUserId(creatorId)
-            .setEventType(NoticeMessageEventType.CommentBeEvaluated.getName());
+            .setCreatedAt(createdAt).setTriggerUserId(creatorId)
+            .setRefId(refId).setRefType(refType)
+            .setEventType(eventType);
         messageService.asyncSend(MessageTopic.TriggerSubscribeNotice.getCode(), MessageBuilder.withPayload(payload).build());
     }
 

@@ -65,6 +65,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final Long creatorId = ro.getUserId();
         final String refType = ro.getRefType();
         final Long refId = ro.getRefId();
+        Long parentId = ro.getParentId();
         LocalDateTime now = LocalDateTime.now();
 
         final Long targetId = commentTargetService.getOrCreate(refType, refId);
@@ -76,11 +77,17 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         entity.setCreator(creatorId);
         validInsert(entity);
 
-        // 触发消息
-        TriggerCommentedDto payload = new TriggerCommentedDto()
-            .setCreatedAt(now).setCreatorId(creatorId)
-            .setCommentId(entity.getId());
-        messageService.asyncSend(MessageTopic.TriggerCommented.getCode(), MessageBuilder.withPayload(payload).build());
+        // 评论被评论
+        if (Objects.nonNull(parentId)) {
+            TriggerCommentedDto payload = new TriggerCommentedDto()
+                .setCreatedAt(now).setCreatorId(creatorId)
+                .setCommentId(entity.getId());
+            messageService.asyncSend(MessageTopic.TriggerCommented.getCode(), MessageBuilder.withPayload(payload).build());
+        }
+        // 评论对象被评论
+        else {
+
+        }
     }
 
     @Override

@@ -6,25 +6,24 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.AbstractSpringBootTest;
+import com.github.lotus.chaos.BootApplication;
 import com.github.lotus.common.utils.CommonUtils;
 import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.github.lotus.mina.biz.service.MobileWallpaperService;
 import com.github.lotus.mina.gathering.youxie.Post;
 import com.google.common.collect.Maps;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.test.AbstractSpringBootTest;
 import in.hocg.boot.utils.LangUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Created by hocgin on 2021/3/13
@@ -33,6 +32,8 @@ import java.util.StringJoiner;
  *
  * @author hocgin
  */
+@ActiveProfiles("local")
+@SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class YouXieGathering extends AbstractSpringBootTest {
     @Autowired
     MobileWallpaperService mobileWallpaperService;
