@@ -4,12 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.Comment;
 import com.github.lotus.com.biz.mapper.CommentMapper;
 import com.github.lotus.com.biz.mapstruct.CommentMapping;
-import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
-import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
-import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
-import com.github.lotus.com.biz.pojo.ro.CommentPagingRo;
-import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
-import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
+import com.github.lotus.com.biz.message.MessageTopic;
+import com.github.lotus.com.biz.pojo.dto.TriggerCommentedDto;
+import com.github.lotus.com.biz.pojo.ro.*;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
 import com.github.lotus.com.biz.pojo.vo.CommentUserVo;
 import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
@@ -18,13 +15,14 @@ import com.github.lotus.com.biz.service.CommentTargetService;
 import com.github.lotus.common.datadict.CommentTargetType;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import in.hocg.boot.message.service.normal.NormalMessageService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
-
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +45,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     private final CommentTargetService commentTargetService;
     private final UserServiceApi accountServiceApi;
     private final CommentMapping mapping;
+    private final NormalMessageService messageService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -78,12 +77,10 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         validInsert(entity);
 
         // 触发消息
-//        final SubscriptionEvent message = new SubscriptionEvent()
-//            .setActorId(creatorId)
-//            .setSubjectId(entity.getId())
-//            .setSubjectType(SubjectType.Comment)
-//            .setNotifyType(NotifyType.SubscriptionComment);
-//        MessageFactory.local().publish(message);
+        TriggerCommentedDto payload = new TriggerCommentedDto()
+            .setCreatedAt(now).setCreatorId(creatorId)
+            .setCommentId(entity.getId());
+        messageService.asyncSend(MessageTopic.TriggerCommented.getCode(), MessageBuilder.withPayload(payload).build());
     }
 
     @Override

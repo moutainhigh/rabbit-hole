@@ -7,6 +7,7 @@ import com.github.lotus.com.biz.pojo.dto.SendNoticeMessageDto;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.NoticeUserConfigService;
 import in.hocg.boot.message.service.normal.redis.RedisMessageListener;
+import io.swagger.annotations.ApiModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@ApiModel("触发通知消息")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class TriggerSubscribeNoticeListener extends RedisMessageListener<Message<NoticeMessageDto>> {
     private final NoticeUserConfigService noticeUserConfigService;
