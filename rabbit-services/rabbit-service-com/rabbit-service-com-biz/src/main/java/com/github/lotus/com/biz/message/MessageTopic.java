@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum MessageTopic {
-    NoticeMessage("notice_message", "通知消息");
+    TriggerSubscribeNotice("trigger_subscribe_notice", "触发订阅通知");
     private final String code;
     private final String desc;
 }

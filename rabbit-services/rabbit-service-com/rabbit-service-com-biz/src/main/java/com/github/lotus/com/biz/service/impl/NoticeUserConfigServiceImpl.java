@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 /**
  * <p>
  * [消息模块] 用户订阅配置表 服务实现类
@@ -20,4 +22,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NoticeUserConfigServiceImpl extends AbstractServiceImpl<NoticeUserConfigMapper, NoticeUserConfig> implements NoticeUserConfigService {
 
+    @Override
+    public List<NoticeUserConfig> listByEventTypeAndRefIdAndRefType(String eventType, Long refId, String refType) {
+        return lambdaQuery().eq(NoticeUserConfig::getEventType, eventType)
+            .eq(NoticeUserConfig::getRefType, refType)
+            .eq(NoticeUserConfig::getRefId, refId).list();
+    }
 }
