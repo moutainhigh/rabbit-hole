@@ -11,9 +11,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RedisConstants {
     public enum Prefix {
-        SMS,
-        TOKEN,
-        EMAIL
+        SMS, TOKEN, EMAIL
     }
 
     public String getEmailKey(String email) {

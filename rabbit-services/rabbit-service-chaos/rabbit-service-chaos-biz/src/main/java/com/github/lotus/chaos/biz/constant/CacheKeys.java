@@ -6,7 +6,7 @@ package com.github.lotus.chaos.biz.constant;
  *
  * @author hocgin
  */
-public class CacheKeys {
+public final class CacheKeys {
     public static final String GUMBALLS_GIFT = "GUMBALLS_GIFT";
     public static final String PAGING_WALLPAPER = "PAGING_WALLPAPER";
     public static final String GET_ADDRESS_BY_IP = "GET_ADDRESS_BY_IP";
