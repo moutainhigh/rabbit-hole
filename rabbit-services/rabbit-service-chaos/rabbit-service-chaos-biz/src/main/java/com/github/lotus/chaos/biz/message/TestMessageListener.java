@@ -4,11 +4,10 @@ import com.github.lotus.chaos.biz.pojo.dto.TestMessageDto;
 import in.hocg.boot.message.service.normal.redis.RedisMessageListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.listener.PatternTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.Topic;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,24 +19,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class TestMessageListener extends RedisMessageListener<TestMessageDto>
-    implements InitializingBean, DisposableBean {
-    private final RedisMessageListenerContainer listenerContainer;
+public class TestMessageListener extends RedisMessageListener<Message<TestMessageDto>> {
     public static final String TOPIC = "topic#test";
 
     @Override
-    public void onMessage(TestMessageDto message) {
+    public void onMessage(Message<TestMessageDto> message) {
         log.info("print {}", message);
     }
 
     @Override
-    public void destroy() throws Exception {
-        listenerContainer.removeMessageListener(this);
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        listenerContainer.addMessageListener(this, new PatternTopic(TestMessageListener.TOPIC));
+    protected Topic getTopic() {
+        return new PatternTopic(TOPIC);
     }
 
 }

@@ -1,12 +1,14 @@
 package com.github.lotus.com.biz.message.listener;
 
 import com.github.lotus.com.biz.message.MessageTopic;
+import com.github.lotus.com.biz.pojo.dto.NoticeMessageDto;
 import in.hocg.boot.message.service.normal.redis.RedisMessageListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.Topic;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,16 +20,16 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class NoticeMessageListener extends RedisMessageListener<Object> {
+public class NoticeMessageListener extends RedisMessageListener<Message<NoticeMessageDto>> {
 
     @Override
-    public void onMessage(Object o) {
+    public void onMessage(Message<NoticeMessageDto> message) {
         log.info("===> 执行对应业务");
     }
 
     @Override
     protected Topic getTopic() {
-        return new PatternTopic(MessageTopic.Test.getCode());
+        return new PatternTopic(MessageTopic.NoticeMessage.getCode());
     }
 
 }

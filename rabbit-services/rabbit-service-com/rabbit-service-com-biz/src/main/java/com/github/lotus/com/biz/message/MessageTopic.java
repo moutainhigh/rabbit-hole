@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum MessageTopic {
-    Test("test", "测试");
+    NoticeMessage("notice_message", "通知消息");
     private final String code;
     private final String desc;
 }
