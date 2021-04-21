@@ -304,6 +304,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>test-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>schedulerx-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>

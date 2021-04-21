@@ -20,13 +20,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class TestMessageListener implements RedisMessageListener<TestMessageDto>, InitializingBean, DisposableBean {
+public class TestMessageListener extends RedisMessageListener<TestMessageDto>
+    implements InitializingBean, DisposableBean {
     private final RedisMessageListenerContainer listenerContainer;
     public static final String TOPIC = "topic#test";
 
     @Override
-    public void onMessage(TestMessageDto testMessageDto) {
-
+    public void onMessage(TestMessageDto message) {
+        log.info("print {}", message);
     }
 
     @Override
@@ -38,4 +39,5 @@ public class TestMessageListener implements RedisMessageListener<TestMessageDto>
     public void afterPropertiesSet() throws Exception {
         listenerContainer.addMessageListener(this, new PatternTopic(TestMessageListener.TOPIC));
     }
+
 }
