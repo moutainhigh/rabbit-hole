@@ -32,4 +32,5 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
     void sendSystemMessage(SendSystemMessageRo ro);
 
     MessageStatVo getMessageStatByUserId(Long userId);
+
 }

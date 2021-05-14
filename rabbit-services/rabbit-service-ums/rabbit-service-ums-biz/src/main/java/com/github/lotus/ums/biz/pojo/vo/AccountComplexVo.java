@@ -41,8 +41,7 @@ public class AccountComplexVo {
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
     @UseNamedService(ChaosNamedAPI.class)
-    @Named(idFor = "gender", type = NamedType.DataDict,
-        args = {Gender.KEY})
+    @Named(idFor = "gender", type = NamedType.DataDict, args = {Gender.KEY})
     private String genderName;
 
     @ApiModelProperty("创建者")

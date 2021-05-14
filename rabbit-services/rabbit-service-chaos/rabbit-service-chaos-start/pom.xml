@@ -47,6 +47,11 @@
       <artifactId>rabbit-service-pay-biz</artifactId>
     </dependency>
     <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>test-spring-boot-starter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>

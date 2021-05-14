@@ -1,6 +1,6 @@
 package com.github.lotus.chaos.biz.service.impl;
 
-import com.github.lotus.chaos.biz.constant.ChaosCacheKeys;
+import com.github.lotus.chaos.biz.constant.CacheKeys;
 import com.github.lotus.chaos.biz.pojo.dto.IpAndAddressDto;
 import com.github.lotus.chaos.biz.pojo.ro.SendEmailCodeRo;
 import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
@@ -42,7 +42,7 @@ public class ChaosServiceImpl implements ChaosService {
     }
 
     @Override
-    @Cacheable(cacheNames = ChaosCacheKeys.GET_ADDRESS_BY_IP, key = "#ip")
+    @Cacheable(cacheNames = CacheKeys.GET_ADDRESS_BY_IP, key = "#ip")
     public IpAddressVo getAddress4ip(String ip) {
         log.info("正在查询IP:[{}]的物理地址", ip);
         IpAddressVo result = new IpAddressVo();

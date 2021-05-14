@@ -18,3 +18,5 @@ boot:
     space: github-blog
     domain: http://cdn.hocgin.top
     type: Qiniu
+server:
+  port: 8080

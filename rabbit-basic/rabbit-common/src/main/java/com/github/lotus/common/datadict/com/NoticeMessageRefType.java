@@ -15,7 +15,9 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum NoticeMessageRefType implements DataDictEnum {
-    Comment("comment", "评论");
+    Comment("comment", "评论"),
+//    Comment("comment", "评论")
+    ;
     private final Serializable code;
     private final String name;
 

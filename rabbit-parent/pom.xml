@@ -254,6 +254,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>message-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>logging-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
@@ -295,6 +300,11 @@
       <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>sms-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>test-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>

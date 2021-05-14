@@ -92,7 +92,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     private Integer countByUnreadAndRefTypeAndUserId(String refType, Long userId) {
         return lambdaQuery().eq(MessageUserRef::getReceiverUser, userId)
             .eq(MessageUserRef::getRefType, refType)
-            .isNotNull(MessageUserRef::getReadAt).count();
+            .isNull(MessageUserRef::getReadAt).count();
     }
 
     @Override

@@ -4,15 +4,18 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.AbstractSpringBootTest;
+import com.github.lotus.chaos.BootApplication;
 import com.github.lotus.common.utils.CommonUtils;
 import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.github.lotus.mina.biz.service.MobileWallpaperService;
 import com.github.lotus.mina.gathering.yuexiakeji.Post;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.test.AbstractSpringBootTest;
 import in.hocg.boot.utils.LangUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
@@ -29,6 +32,8 @@ import java.util.StringJoiner;
  *
  * @author hocgin
  */
+@ActiveProfiles("local")
+@SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class YuexiakejiGathering extends AbstractSpringBootTest {
     @Autowired
     MobileWallpaperService mobileWallpaperService;
