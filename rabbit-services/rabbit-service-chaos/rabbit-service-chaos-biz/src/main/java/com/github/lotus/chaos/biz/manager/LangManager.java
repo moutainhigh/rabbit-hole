@@ -35,7 +35,7 @@ public class LangManager {
         HashMap<String, Object> formMap = Maps.newHashMap();
         formMap.put("type", "1");
         HttpRequest request = HttpUtil.createPost("http://wechat.leiting.com/weixin/gumballs/201610/gift/common/getGift.php")
-            .form(formMap);
+            .form(formMap).setFollowRedirects(true);
         HttpResponse response = request.execute();
         return JSON.parseObject(response.body()).getJSONArray("message").getString(0);
     }
