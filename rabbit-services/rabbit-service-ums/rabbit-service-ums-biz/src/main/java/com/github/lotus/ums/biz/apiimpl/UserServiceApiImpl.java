@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class AccountServiceApiImpl implements UserServiceApi {
+public class UserServiceApiImpl implements UserServiceApi {
     private final UserService service;
 
     @Override
