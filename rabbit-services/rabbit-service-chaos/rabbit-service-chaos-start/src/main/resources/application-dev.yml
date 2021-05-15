@@ -1,7 +1,7 @@
-debug: true
 logging:
   level:
-    root: debug
+    root: warn
+    in.hocg: debug
 
 spring:
   datasource:

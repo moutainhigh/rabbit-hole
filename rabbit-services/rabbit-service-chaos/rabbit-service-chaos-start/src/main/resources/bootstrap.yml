@@ -3,6 +3,7 @@ server:
   port: 21000
 logging:
   level:
+    root: warn
     in.hocg: debug
   config: classpath:log4j2-boot-local.xml
   file:
@@ -37,9 +38,18 @@ management:
       show-details: always
 feign:
   hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
     enabled: false
   client:
     config:
       default:
         connectTimeout: 60000
         readTimeout: 60000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
