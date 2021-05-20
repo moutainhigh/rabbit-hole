@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = SmsServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface SmsServiceApi {
     String CONTEXT_ID = "SmsServiceApi";
 

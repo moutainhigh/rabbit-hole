@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = EmailServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface EmailServiceApi {
     String CONTEXT_ID = "EmailServiceApi";
 

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = LbsServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface LbsServiceApi {
     String CONTEXT_ID = "LbsServiceApi";
 

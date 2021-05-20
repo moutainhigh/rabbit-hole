@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = TradeServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface TradeServiceApi {
     String CONTEXT_ID = "TradeServiceApi";
 

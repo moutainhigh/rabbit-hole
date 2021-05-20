@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = DataDictServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface DataDictServiceApi {
     String CONTEXT_ID = "DataDictServiceApi";
 
