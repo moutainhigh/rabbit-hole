@@ -38,7 +38,7 @@ management:
       show-details: always
 feign:
   hystrix:
-    enabled: true
+    enabled: false
   okhttp:
     enabled: true
   httpclient:

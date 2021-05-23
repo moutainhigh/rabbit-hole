@@ -3,9 +3,9 @@ package com.github.lotus.usercontext.autoconfigure;
 import com.github.lotus.usercontext.basic.HeaderConstants;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
-import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.exception.UnAuthenticationException;
-import in.hocg.boot.web.servlet.SpringServletContext;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;

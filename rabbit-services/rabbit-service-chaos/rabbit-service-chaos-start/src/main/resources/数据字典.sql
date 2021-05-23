@@ -1,27 +1,44 @@
-INSERT INTO com_data_dict(`id`, `title`, `code`, `remark`, `created_at`)
-VALUES (1, '物流方式', 'wl_shipping_methods', '物流|运输方式', now());
+# 物流系统
+# - 物流方式
+INSERT INTO com_data_dict(`title`, `code`, `remark`, `created_at`)
+VALUES ('物流方式', 'wl_shipping_methods', '物流|运输方式', now());
+set @dict_id := last_insert_id();
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, '直达', 'direct', '运输方式#直达', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, '中转', 'transit', '运输方式#直达', now());
 
+# - 单位
+INSERT INTO com_data_dict(`title`, `code`, `remark`, `created_at`)
+VALUES ('单位', 'wl_unit', '物流|单位', now());
+set @dict_id := last_insert_id();
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (1, '直达', 'direct', '运输方式#直达', now());
-INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (1, '中转', 'transit', '运输方式#直达', now());
+VALUES (@dict_id, '元/方', 'yuan_cube', '单位#元/方', now());
 
-INSERT INTO com_data_dict(`id`, `title`, `code`, `remark`, `created_at`)
-VALUES (2, '单位', 'wl_unit', '物流|单位', now());
+# 用户系统
+# - API请求方式
+INSERT INTO com_data_dict(`title`, `code`, `remark`, `created_at`)
+VALUES ('请求方式', 'request_method', '请求方式', now());
+set @dict_id := last_insert_id();
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (2, '元/方', 'yuan_cube', '单位#元/方', now());
+VALUES (@dict_id, 'GET', 'get', 'GET', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, 'POST', 'post', 'POST', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, 'DELETE', 'delete', 'DELETE', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, 'PUT', 'put', 'PUT', now());
+INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
+VALUES (@dict_id, 'ALL', '*', 'all', now());
 
-# ums
-INSERT INTO com_data_dict(`id`, `title`, `code`, `remark`, `created_at`)
-VALUES (3, '请求方式', 'request_method', '请求方式', now());
+# 消息系统
+# - 消息类型
+INSERT INTO com_data_dict(`title`, `code`, `remark`, `created_at`)
+VALUES ('消息类型', 'mms_message_user_ref_type', '消息类型', now());
+set @dict_id := last_insert_id();
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (3, 'GET', 'get', 'GET', now());
+VALUES (@dict_id, '系统消息', 'system_message', '消息类型::系统消息', now());
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (3, 'POST', 'post', 'POST', now());
+VALUES (@dict_id, '私信消息', 'personal_message', '消息类型::私信消息', now());
 INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (3, 'DELETE', 'delete', 'DELETE', now());
-INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (3, 'PUT', 'put', 'PUT', now());
-INSERT INTO com_data_dict_item(dict_id, title, code, remark, created_at)
-VALUES (3, 'ALL', '*', 'all', now());
-
+VALUES (@dict_id, '订阅消息', 'notice_message', '消息类型::订阅消息', now());

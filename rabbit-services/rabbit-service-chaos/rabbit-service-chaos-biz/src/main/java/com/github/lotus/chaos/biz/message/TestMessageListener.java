@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.message;
 
 import com.github.lotus.chaos.biz.pojo.dto.TestMessageDto;
-import in.hocg.boot.message.service.normal.redis.RedisMessageListener;
+import in.hocg.boot.message.autoconfigure.service.normal.redis.RedisMessageListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
