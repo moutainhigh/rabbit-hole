@@ -79,9 +79,10 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
         // 评论被评论
         if (Objects.nonNull(parentId)) {
-            TriggerCommentedDto payload = new TriggerCommentedDto()
-                .setCreatedAt(now).setCreatorId(creatorId)
-                .setCommentId(entity.getId());
+            TriggerCommentedDto payload = new TriggerCommentedDto();
+            payload.setCreatedAt(now);
+            payload.setCreatorId(creatorId);
+            payload.setCommentId(entity.getId());
             messageService.asyncSend(MessageTopic.TriggerCommented.getCode(), MessageBuilder.withPayload(payload).build());
         }
         // 评论对象被评论
@@ -153,8 +154,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
-        final String content = Boolean.FALSE.equals(entity.getEnabled())
-            ? result.getContent() : "已删除";
+        final String content = entity.getEnabled() ? result.getContent() : "已删除";
         result.setContent(content);
         final Long parentId = entity.getParentId();
         if (Objects.nonNull(parentId)) {

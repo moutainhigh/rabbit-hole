@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.Topic;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
@@ -32,17 +33,18 @@ import java.time.LocalDateTime;
 @Component
 @ApiModel("评论被评论")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class BeCommentedListener extends RedisMessageListener<TriggerCommentedDto> {
+public class BeCommentedListener extends RedisMessageListener<Message<TriggerCommentedDto>> {
     private final NormalMessageService messageService;
     private final CommentService commentService;
     private final MessageUserRefProxyService messageUserRefProxyService;
 
     @Override
-    public void onMessage(TriggerCommentedDto message) {
-        LocalDateTime createdAt = message.getCreatedAt();
-        Long refId = message.getBeCommentedId();
-        Long commentId = message.getCommentId();
-        Long creatorId = message.getCreatorId();
+    public void onMessage(Message<TriggerCommentedDto> inMessage) {
+        TriggerCommentedDto inPayload = inMessage.getPayload();
+        LocalDateTime createdAt = inPayload.getCreatedAt();
+        Long refId = inPayload.getBeCommentedId();
+        Long commentId = inPayload.getCommentId();
+        Long creatorId = inPayload.getCreatorId();
 
         Comment beCommend = commentService.getById(refId);
         Long beCommendCreator = beCommend.getCreator();
