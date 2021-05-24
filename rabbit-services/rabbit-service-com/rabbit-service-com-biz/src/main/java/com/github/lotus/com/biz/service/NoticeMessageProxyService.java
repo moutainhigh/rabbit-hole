@@ -9,5 +9,12 @@ import com.github.lotus.com.biz.pojo.vo.message.NoticeMessageComplexVo;
  * @author hocgin
  */
 public interface NoticeMessageProxyService {
+
+    /**
+     * 解析通知消息
+     *
+     * @param id _
+     * @return _
+     */
     NoticeMessageComplexVo getById(Long id);
 }

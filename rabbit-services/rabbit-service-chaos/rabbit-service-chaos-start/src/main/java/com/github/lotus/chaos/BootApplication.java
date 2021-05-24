@@ -6,6 +6,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Created by hocgin on 2020/8/15
@@ -24,6 +25,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
     "com.github.lotus.docking", "com.github.lotus.ums",
     "com.github.lotus.mina", "com.github.lotus.com"}
     , annotationClass = Mapper.class)
+@EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class BootApplication {
 

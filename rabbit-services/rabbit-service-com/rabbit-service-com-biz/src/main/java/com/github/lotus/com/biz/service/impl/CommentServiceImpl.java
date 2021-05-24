@@ -76,13 +76,15 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         entity.setCreatedAt(now);
         entity.setCreator(creatorId);
         validInsert(entity);
+        Long commentId = entity.getId();
 
         // 评论被评论
         if (Objects.nonNull(parentId)) {
             TriggerCommentedDto payload = new TriggerCommentedDto();
+            payload.setBeCommentedId(parentId);
             payload.setCreatedAt(now);
             payload.setCreatorId(creatorId);
-            payload.setCommentId(entity.getId());
+            payload.setCommentId(commentId);
             messageService.asyncSend(MessageTopic.TriggerCommented.getCode(), MessageBuilder.withPayload(payload).build());
         }
         // 评论对象被评论

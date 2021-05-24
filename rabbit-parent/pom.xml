@@ -17,9 +17,9 @@
   <properties>
     <!-- Maven plugins -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>8</java.version>
-    <java.source.version>8</java.source.version>
-    <java.target.version>8</java.target.version>
+    <java.version>11</java.version>
+    <java.source.version>11</java.source.version>
+    <java.target.version>11</java.target.version>
     <main-class/>
 
     <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
@@ -38,7 +38,7 @@
     <p6spy.version>3.8.7</p6spy.version>
     <rocketmq-spring-boot-starter.version>2.1.0</rocketmq-spring-boot-starter.version>
     <jjwt.version>0.9.1</jjwt.version>
-    <boot.version>1.0.0-SNAPSHOT</boot.version>
+    <boot.version>1.0.1</boot.version>
     <velocity-engine-core.version>2.2</velocity-engine-core.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
     <easy-captcha.version>1.6.2</easy-captcha.version>
