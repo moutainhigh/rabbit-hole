@@ -10,7 +10,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/1/1
@@ -38,6 +41,19 @@ public class GameCardComplexVo {
     private Integer priority;
     @ApiModelProperty("启用状态")
     private Boolean enabled;
+
+    @ApiModelProperty("简介")
+    private String body;
+    @ApiModelProperty("评分")
+    private BigDecimal score;
+    @ApiModelProperty("热度")
+    private Long heat;
+    @ApiModelProperty("游戏类型")
+    private String gameType;
+    @ApiModelProperty("主图")
+    private String mainViewUrl;
+    @ApiModelProperty("展示图表")
+    private List<String> viewUrls = Collections.emptyList();
 
     @ApiModelProperty("创建者")
     private Long creator;

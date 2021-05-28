@@ -15,7 +15,8 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum FileRelType implements DataDictEnum {
-    Unknown("unknown", "未知");
+    Unknown("unknown", "未知"),
+    GameCard("game_card", "游戏卡带");
     private final Serializable code;
     private final String name;
 }
