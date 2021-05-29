@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum NoticeMessageEventType implements DataDictEnum {
-    CommentBeEvaluated("comment_be_evaluated", "被评论"),
+    CommentBeEvaluated("comment_be_evaluated", "评论被评论"),
     ;
     private final Serializable code;
     private final String name;

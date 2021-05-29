@@ -13,7 +13,7 @@ import com.github.lotus.mina.biz.service.MobileWallpaperService;
 import com.github.lotus.mina.gathering.youxie.Post;
 import com.google.common.collect.Maps;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
-import in.hocg.boot.test.AbstractSpringBootTest;
+import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import in.hocg.boot.utils.LangUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.github.lotus.sso.basic;
 
-import in.hocg.boot.web.servlet.ServletExceptionAdvice;
+
+import in.hocg.boot.web.autoconfiguration.servlet.ServletExceptionAdvice;
 
 /**
  * Created by hocgin on 2020/11/19

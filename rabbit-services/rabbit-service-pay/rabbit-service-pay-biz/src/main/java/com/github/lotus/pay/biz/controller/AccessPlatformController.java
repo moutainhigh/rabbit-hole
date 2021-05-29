@@ -3,9 +3,9 @@ package com.github.lotus.pay.biz.controller;
 
 import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.AccessPlatformService;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
+import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import in.hocg.boot.web.result.Result;
-import in.hocg.boot.web.servlet.SpringServletContext;
-import in.hocg.boot.web.utils.web.RequestUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

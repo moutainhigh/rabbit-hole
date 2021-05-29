@@ -6,7 +6,7 @@ import com.github.lotus.com.biz.pojo.dto.NoticeMessageDto;
 import com.github.lotus.com.biz.pojo.dto.SendNoticeMessageDto;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.com.biz.service.NoticeUserConfigService;
-import in.hocg.boot.message.service.normal.redis.RedisMessageListener;
+import in.hocg.boot.message.autoconfigure.service.normal.redis.RedisMessageListener;
 import io.swagger.annotations.ApiModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

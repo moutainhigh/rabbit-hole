@@ -1,6 +1,6 @@
 package com.github.lotus.sso.config.security;
 
-import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;

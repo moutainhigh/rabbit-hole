@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.lotus.chaos.BootApplication;
 import in.hocg.boot.oss.autoconfigure.core.OssFileService;
-import in.hocg.boot.test.AbstractSpringBootTest;
+import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

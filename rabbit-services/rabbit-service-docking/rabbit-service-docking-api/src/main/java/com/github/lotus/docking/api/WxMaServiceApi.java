@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = WxMaServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface WxMaServiceApi {
     String CONTEXT_ID = "WxMaServiceApi";
 

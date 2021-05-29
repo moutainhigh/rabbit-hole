@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = PaymentServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface PaymentServiceApi {
     String CONTEXT_ID = "PaymentServiceApi";
 

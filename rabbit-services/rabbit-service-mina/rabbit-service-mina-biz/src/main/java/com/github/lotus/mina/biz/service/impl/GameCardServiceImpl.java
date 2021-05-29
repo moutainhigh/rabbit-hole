@@ -1,6 +1,10 @@
 package com.github.lotus.mina.biz.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.com.api.FileServiceApi;
+import com.github.lotus.com.api.pojo.vo.FileVo;
+import com.github.lotus.common.datadict.com.FileRelType;
 import com.github.lotus.mina.biz.entity.GameCard;
 import com.github.lotus.mina.biz.mapper.GameCardMapper;
 import com.github.lotus.mina.biz.mapstruct.GameCardMapping;
@@ -14,6 +18,7 @@ import com.github.lotus.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import com.github.lotus.mina.biz.service.GameCardService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
@@ -36,6 +41,7 @@ import java.util.List;
 public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, GameCard>
     implements GameCardService {
     private final GameCardMapping mapping;
+    private final FileServiceApi fileServiceApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -99,7 +105,15 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
     }
 
     private GameCardComplexVo convertComplex(GameCard entity) {
-        return mapping.asComplex(entity);
+        Long id = entity.getId();
+        GameCardComplexVo result = mapping.asComplex(entity);
+        List<FileVo> files = fileServiceApi.listByRefTypeAndRefId(FileRelType.GameCard.getCodeStr(), id);
+        List<String> viewUrls = LangUtils.toList(files, FileVo::getUrl);
+        if (CollUtil.isNotEmpty(files)) {
+            result.setViewUrls(viewUrls);
+            result.setMainViewUrl(viewUrls.get(0));
+        }
+        return result;
     }
 
     private MinaGameCardComplexVo convertComplexForMina(GameCard entity) {

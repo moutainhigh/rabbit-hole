@@ -31,6 +31,8 @@ public interface GameCardMapping {
     @Mapping(target = "creatorName", ignore = true)
     GameCardOrdinaryVo asOrdinary(GameCard entity);
 
+    @Mapping(target = "viewUrls", ignore = true)
+    @Mapping(target = "mainViewUrl", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     GameCardComplexVo asComplex(GameCard entity);

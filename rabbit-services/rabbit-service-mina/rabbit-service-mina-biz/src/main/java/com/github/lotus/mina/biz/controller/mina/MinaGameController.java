@@ -1,6 +1,7 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.mina;
 
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
+import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;
 import com.github.lotus.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import com.github.lotus.mina.biz.service.GameCardService;
 import in.hocg.boot.web.result.Result;
@@ -36,6 +37,12 @@ public class MinaGameController {
                                                       @Validated @RequestBody MinaGameCardPagingRo ro) {
         ro.setSize(Integer.MAX_VALUE);
         return Result.success(service.pagingForMina(ro).getRecords());
+    }
+
+    @ApiOperation("游戏 - 详情")
+    @PostMapping("/{id}")
+    public Result<GameCardComplexVo> getOne(@PathVariable String appid, @PathVariable Long id) {
+        return Result.success(service.getComplex(id));
     }
 
 }

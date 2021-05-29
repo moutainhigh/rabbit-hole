@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = SocialServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface SocialServiceApi {
     String CONTEXT_ID = "SocialServiceApi";
 

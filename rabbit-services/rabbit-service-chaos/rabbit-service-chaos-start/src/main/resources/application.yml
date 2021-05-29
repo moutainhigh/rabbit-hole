@@ -1,7 +1,8 @@
 logging:
   level:
-    in.hocg: debug
-    com.github.lotus: debug
+    com.alibaba.nacos: WARN
+    com.github.lotus: DEBUG
+    in.hocg: DEBUG
 spring:
   profiles:
     active: local

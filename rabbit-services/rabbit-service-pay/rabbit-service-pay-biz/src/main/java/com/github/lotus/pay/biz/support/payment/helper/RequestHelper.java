@@ -12,7 +12,7 @@ import com.github.lotus.pay.biz.support.payment.resolve.message.rule.refund.AliP
 import com.github.lotus.pay.biz.support.payment.resolve.message.rule.refund.WxPayRefundMessageRule;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.ConfigStorage;
 import in.hocg.payment.PaymentResponse;

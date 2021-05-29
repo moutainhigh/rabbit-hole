@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME, contextId = FileServiceApi.CONTEXT_ID)
+@FeignClient(value = ServiceName.NAME)
 public interface FileServiceApi {
     String CONTEXT_ID = "FileServiceApi";
 

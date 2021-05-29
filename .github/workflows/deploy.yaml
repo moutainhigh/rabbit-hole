@@ -7,22 +7,22 @@ on:
         description: '是否使用 Maven 缓存'
         required: true
         default: 'true'
-      re_chaos:
-        description: '是否重发 chaos'
-        required: true
-        default: 'true'
-      re_gateway:
-        description: '是否重发 gateway'
-        required: true
-        default: 'true'
-      re_sso_server:
-        description: '是否重发 sso-server'
-        required: true
-        default: 'true'
-      re_spring_boot_admin:
-        description: '是否重发 spring-boot-admin'
-        required: true
-        default: 'false'
+#      re_chaos:
+#        description: '是否重发 chaos'
+#        required: true
+#        default: 'true'
+#      re_gateway:
+#        description: '是否重发 gateway'
+#        required: true
+#        default: 'true'
+#      re_sso_server:
+#        description: '是否重发 sso-server'
+#        required: true
+#        default: 'true'
+#      re_spring_boot_admin:
+#        description: '是否重发 spring-boot-admin'
+#        required: true
+#        default: 'false'
   push:
     branches:
       - develop

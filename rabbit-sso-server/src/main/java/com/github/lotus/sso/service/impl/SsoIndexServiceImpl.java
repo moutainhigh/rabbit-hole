@@ -15,7 +15,7 @@ import com.github.lotus.sso.service.SsoIndexService;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.constant.SocialType;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
-import in.hocg.boot.web.servlet.SpringServletContext;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;

@@ -9,7 +9,7 @@ import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.utils.lambda.map.LambdaMap;
-import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.payment.convert.StringConvert;
 import in.hocg.payment.resolve.StringResolve;
 import in.hocg.payment.wxpay.v2.WxPayService;

@@ -6,7 +6,7 @@ import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefService;
 import com.github.lotus.common.constant.GlobalConstant;
-import in.hocg.boot.test.AbstractSpringBootTest;
+import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

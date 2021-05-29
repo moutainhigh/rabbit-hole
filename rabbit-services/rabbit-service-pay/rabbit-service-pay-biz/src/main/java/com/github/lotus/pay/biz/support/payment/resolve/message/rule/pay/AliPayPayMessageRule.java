@@ -9,7 +9,7 @@ import com.github.lotus.pay.biz.service.AllPaymentService;
 import com.github.lotus.pay.biz.support.payment.helper.PaymentHelper;
 import com.github.lotus.pay.biz.support.payment.resolve.message.MessageContext;
 import in.hocg.boot.utils.lambda.map.StringMap;
-import in.hocg.boot.web.SpringContext;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.message.TradeStatusSyncMessage;
 import in.hocg.payment.convert.StringConvert;

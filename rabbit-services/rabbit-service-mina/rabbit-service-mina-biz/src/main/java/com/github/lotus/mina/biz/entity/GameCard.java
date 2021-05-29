@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -45,6 +46,14 @@ public class GameCard extends AbstractEntity<GameCard> {
     @ApiModelProperty("标签(暂用;分隔)")
     @TableField("tags")
     private String tags;
+    @ApiModelProperty("简介")
+    private String body;
+    @ApiModelProperty("评分")
+    private BigDecimal score;
+    @ApiModelProperty("热度")
+    private Long heat;
+    @ApiModelProperty("游戏类型")
+    private String gameType;
     @ApiModelProperty("排序,默认:1000")
     @TableField("priority")
     private Integer priority;

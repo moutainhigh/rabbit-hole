@@ -1,6 +1,5 @@
 package com.github.lotus.common.datadict;
 
-import com.github.lotus.common.constant.DistrictLevelConstant;
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,8 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum CommentTargetType implements DataDictEnum {
-    Country(DistrictLevelConstant.COUNTRY_CODE, "国家");
+    Article("article", "文章"),
+    Comment("comment", "文章");
     private final Serializable code;
     private final String name;
 }
