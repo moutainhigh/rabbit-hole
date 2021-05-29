@@ -43,7 +43,7 @@ public class GameCardComplexVo {
     private Boolean enabled;
 
     @ApiModelProperty("简介")
-    private String body;
+    private String bodyStr;
     @ApiModelProperty("评分")
     private BigDecimal score;
     @ApiModelProperty("热度")
