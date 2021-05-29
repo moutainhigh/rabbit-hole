@@ -36,7 +36,7 @@ public class GameCardComplexVo {
     @ApiModelProperty("备注")
     private String remark;
     @ApiModelProperty("标签(暂用;分隔)")
-    private String tags;
+    private List<String> tags = Collections.emptyList();
     @ApiModelProperty("排序,默认:1000")
     private Integer priority;
     @ApiModelProperty("启用状态")

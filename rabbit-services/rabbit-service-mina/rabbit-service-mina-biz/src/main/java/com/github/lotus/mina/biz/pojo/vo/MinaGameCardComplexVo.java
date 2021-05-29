@@ -18,6 +18,7 @@ import java.util.List;
 @Accessors(chain = true)
 @ApiModel(description = "小游戏")
 public class MinaGameCardComplexVo {
+    private Long id;
     private String title;
     private String logoUrl;
     private String remark;
