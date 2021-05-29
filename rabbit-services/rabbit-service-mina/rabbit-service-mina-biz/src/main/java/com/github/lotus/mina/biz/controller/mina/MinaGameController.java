@@ -42,7 +42,7 @@ public class MinaGameController {
     @ApiOperation("游戏 - 详情")
     @PostMapping("/{id}")
     public Result<GameCardComplexVo> getOne(@PathVariable String appid, @PathVariable Long id) {
-        return Result.success(service.getComplex(id));
+        return Result.success(service.getComplexWithMina(id));
     }
 
 }

@@ -35,5 +35,7 @@ public interface GameCardService extends AbstractService<GameCard> {
 
     GameCardComplexVo getComplex(Long id);
 
+    GameCardComplexVo getComplexWithMina(Long id);
+
     void deleteOne(Long id);
 }
