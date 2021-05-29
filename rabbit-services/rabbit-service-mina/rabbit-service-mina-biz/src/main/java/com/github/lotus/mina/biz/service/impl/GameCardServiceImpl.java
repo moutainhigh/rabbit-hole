@@ -1,6 +1,7 @@
 package com.github.lotus.mina.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.api.FileServiceApi;
 import com.github.lotus.com.api.pojo.vo.FileVo;
@@ -21,7 +22,9 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,8 +98,29 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public GameCardComplexVo getComplexWithMina(Long id) {
+        GameCard entity = getById(id);
+        ((GameCardServiceImpl) AopContext.currentProxy()).upHeatById(id);
+        return convertComplex(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteOne(Long id) {
         removeById(id);
+    }
+
+    @Async
+    protected void upHeatById(Long id) {
+        GameCard entity = this.getById(id);
+        long randomHeat = LangUtils.getOrDefault(entity.getHeat(), 0L) + RandomUtil.randomInt(50);
+
+        GameCard update = new GameCard();
+        update.setId(id);
+        update.setHeat(randomHeat);
+        if (!this.updateById(update)) {
+            this.upHeatById(id);
+        }
     }
 
 
@@ -111,7 +135,7 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
         List<String> viewUrls = LangUtils.toList(files, FileVo::getUrl);
         if (CollUtil.isNotEmpty(files)) {
             result.setViewUrls(viewUrls);
-            result.setMainViewUrl(viewUrls.get(0));
+            result.setMainViewUrl(CollUtil.getLast(viewUrls));
         }
         return result;
     }
