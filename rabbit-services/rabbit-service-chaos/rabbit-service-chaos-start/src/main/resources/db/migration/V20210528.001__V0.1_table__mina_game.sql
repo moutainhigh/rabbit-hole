@@ -1,5 +1,5 @@
 alter table mina_game_card
-    add bodyStr text null comment '简介';
+    add body_str text null comment '简介';
 
 alter table mina_game_card
     add score decimal(10, 2) default 10 not null comment '评分';
