@@ -137,6 +137,11 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
             result.setViewUrls(viewUrls);
             result.setMainViewUrl(CollUtil.getLast(viewUrls));
         }
+        String tags = entity.getTags();
+
+        if (Strings.isNotBlank(tags)) {
+            result.setTags(Lists.newArrayList(tags.split(";")));
+        }
         return result;
     }
 
