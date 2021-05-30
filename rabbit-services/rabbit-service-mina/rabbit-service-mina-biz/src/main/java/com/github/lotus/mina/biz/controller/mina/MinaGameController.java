@@ -31,7 +31,6 @@ public class MinaGameController {
     @ApiOperation("游戏 - 分页查询")
     public Result<List<MinaGameCardComplexVo>> paging(@PathVariable String appid,
                                                       @Validated @RequestBody MinaGameCardPagingRo ro) {
-        ro.setSize(Integer.MAX_VALUE);
         return Result.success(service.pagingForMina(ro).getRecords());
     }
 
