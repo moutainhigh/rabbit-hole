@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `mina_game_card`;
 CREATE TABLE `mina_game_card`
 (
     id                BIGINT AUTO_INCREMENT,
-    title             VARCHAR(32)
+    title             VARCHAR(128)
         COMMENT '名称',
     logo_url          VARCHAR(255)
         COMMENT 'LOGO',
