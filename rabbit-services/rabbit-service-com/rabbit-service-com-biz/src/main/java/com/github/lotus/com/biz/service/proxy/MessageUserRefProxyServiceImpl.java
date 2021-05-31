@@ -24,6 +24,7 @@ import com.github.lotus.com.biz.service.NoticeMessageService;
 import com.github.lotus.com.biz.service.PersonalMessageService;
 import com.github.lotus.com.biz.service.SystemMessageService;
 import com.github.lotus.common.datadict.com.MessageUserRefType;
+import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -112,16 +113,11 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
     }
 
     private <T extends AbstractEntity<?>> void insertMessageUser(Long receiverUser, T entity) {
-        MessageUserRefType messageUserRefType;
-        if (entity instanceof PersonalMessage) {
-            messageUserRefType = MessageUserRefType.PersonalMessage;
-        } else if (entity instanceof NoticeMessage) {
-            messageUserRefType = MessageUserRefType.NoticeMessage;
-        } else if (entity instanceof SystemMessage) {
-            messageUserRefType = MessageUserRefType.SystemMessage;
-        } else {
-            throw new UnsupportedOperationException();
-        }
+        MessageUserRefType messageUserRefType = (MessageUserRefType) Rules.create()
+            .rule(NoticeMessage.class, Rules.Supplier(() -> MessageUserRefType.NoticeMessage))
+            .rule(SystemMessage.class, Rules.Supplier(() -> MessageUserRefType.SystemMessage))
+            .rule(PersonalMessage.class, Rules.Supplier(() -> MessageUserRefType.PersonalMessage))
+            .of(entity.getClass()).orElseThrow(UnsupportedOperationException::new);
 
         Long refId = (Long) entity.pkVal();
         MessageUserRef messageUserRef = new MessageUserRef();
@@ -140,26 +136,22 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
         MessageComplexVo result = messageUserRefMapping.asComplex(entity);
         result.setMessageType(messageUserRefType.getCodeStr());
 
-        switch (messageUserRefType) {
-            case NoticeMessage: {
+        Rules.create()
+            .rule(MessageUserRefType.NoticeMessage, Rules.Runnable(() -> {
                 NoticeMessageComplexVo complex = noticeMessageProxyService.getById(refId);
                 result.setNoticeMessage(complex);
-                break;
-            }
-            case PersonalMessage: {
+            }))
+            .rule(MessageUserRefType.PersonalMessage, Rules.Runnable(() -> {
                 PersonalMessage message = personalMessageService.getById(refId);
                 PersonalMessageComplexVo complex = personalMessageMapping.asComplex(message);
                 result.setPersonalMessage(complex);
-                break;
-            }
-            case SystemMessage: {
+            }))
+            .rule(MessageUserRefType.SystemMessage, Rules.Runnable(() -> {
                 SystemMessage message = systemMessageService.getById(refId);
                 SystemMessageComplexVo complex = systemMessageMapping.asComplex(message);
                 result.setSystemMessage(complex);
-                break;
-            }
-            default:
-        }
+            }))
+            .of(messageUserRefType);
         return result;
     }
 }

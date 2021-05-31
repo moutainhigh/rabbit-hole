@@ -6,6 +6,7 @@ import com.github.lotus.com.biz.pojo.vo.message.NoticeMessageComplexVo;
 import com.github.lotus.com.biz.service.NoticeMessageProxyService;
 import com.github.lotus.com.biz.service.NoticeMessageService;
 import com.github.lotus.common.datadict.com.NoticeMessageRefType;
+import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -34,14 +35,12 @@ public class NoticeMessageProxyServiceImpl implements NoticeMessageProxyService 
         NoticeMessageComplexVo result = noticeMessageMapping.asComplex(entity);
         NoticeMessageComplexVo.RefObject refObject = new NoticeMessageComplexVo.RefObject();
         refObject.setId(refId);
-        switch (ICode.ofThrow(entity.getRefType(), NoticeMessageRefType.class)) {
-            case Comment:{
-                // todo
-                break;
-            }
-            default:
-                throw new UnsupportedOperationException();
-        }
+
+        Rules.create()
+            .rule(NoticeMessageRefType.Comment, Rules.Runnable(() -> {
+                refObject.setTitle("评论");
+            }))
+            .of(ICode.ofThrow(entity.getRefType(), NoticeMessageRefType.class));
         result.setRefObject(refObject);
         return result;
     }
