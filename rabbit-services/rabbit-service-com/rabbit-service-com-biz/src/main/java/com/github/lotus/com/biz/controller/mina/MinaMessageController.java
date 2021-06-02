@@ -1,4 +1,4 @@
-package com.github.lotus.com.biz.controller;
+package com.github.lotus.com.biz.controller.mina;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,17 +8,15 @@ import com.github.lotus.com.biz.pojo.ro.message.SendSystemMessageRo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefService;
+import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -30,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/user/message")
-public class MessageUserRefController {
+@RequestMapping("/mina/message")
+public class MinaMessageController {
     private final MessageUserRefService service;
 
     @ApiOperation("分页查询消息 - 我的消息")
@@ -59,7 +57,9 @@ public class MessageUserRefController {
     @ApiOperation("发送系统消息 - 我的消息")
     @PostMapping("/system/send")
     public Result<Void> sendSystemMessage(@Validated @RequestBody SendSystemMessageRo ro) {
-        ro.setUserId(UserContextHolder.getUserIdThrow());
+        Long userId = UserContextHolder.getUserIdThrow();
+        ValidUtils.isTrue(RabbitUtils.isSuperAdmin(userId));
+        ro.setUserId(userId);
         service.sendSystemMessage(ro);
         return Result.success();
     }

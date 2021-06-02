@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller.mina;
+package com.github.lotus.mina.biz.controller;
 
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;

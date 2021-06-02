@@ -10,6 +10,7 @@ import com.github.lotus.pay.biz.pojo.ro.AccessPlatformSaveRo;
 import com.github.lotus.pay.biz.service.AccessPlatformConfigProxyService;
 import com.github.lotus.pay.biz.service.PlatformAlipayConfigService;
 import com.github.lotus.pay.biz.service.PlatformWxpayConfigService;
+import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.NonNull;
@@ -36,101 +37,62 @@ public class AccessPlatformConfigProxyServiceImpl implements AccessPlatformConfi
 
     @Override
     public Long insertOne(AccessPlatformSaveRo ro) {
-        PaymentPlatform paymentPlatform = ICode.ofThrow(ro.getPlatform(), PaymentPlatform.class);
-        AccessPlatformSaveRo.AliPayConfig aliPayConfig = ro.getAliPayConfig();
-        AccessPlatformSaveRo.WxPayConfig wxPayConfig = ro.getWxPayConfig();
-
-        Long refId;
-        switch (paymentPlatform) {
-            case AliPay: {
-                ValidUtils.notNull(aliPayConfig);
+        return (Long) Rules.create()
+            .rule(PaymentPlatform.AliPay, Rules.Supplier(() -> {
+                AccessPlatformSaveRo.AliPayConfig aliPayConfig = ValidUtils.notNull(ro.getAliPayConfig());
                 PlatformAlipayConfig entity = platformAlipayConfigMapping.asPlatformAlipayConfig(aliPayConfig);
                 boolean isOk = platformAlipayConfigService.validInsert(entity);
                 ValidUtils.isTrue(isOk);
-                refId = entity.getId();
-                break;
-            }
-            case WxPay: {
-                ValidUtils.notNull(wxPayConfig);
+                return entity.getId();
+            }))
+            .rule(PaymentPlatform.WxPay, Rules.Supplier(() -> {
+                AccessPlatformSaveRo.WxPayConfig wxPayConfig = ValidUtils.notNull(ro.getWxPayConfig());
                 PlatformWxpayConfig entity = platformWxpayConfigMapping.asPlatformWxpayConfig(wxPayConfig);
                 boolean isOk = platformWxpayConfigService.validInsert(entity);
                 ValidUtils.isTrue(isOk);
-                refId = entity.getId();
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
-        }
-        return refId;
+                return entity.getId();
+            }))
+            .of(ICode.ofThrow(ro.getPlatform(), PaymentPlatform.class)).orElse(null);
     }
 
     @Override
     public void updateOne(@NonNull Long refId, AccessPlatformSaveRo ro) {
-        String refType = ro.getPlatform();
-        PaymentPlatform paymentPlatform = ICode.ofThrow(refType, PaymentPlatform.class);
-        AccessPlatformSaveRo.AliPayConfig aliPayConfig = ro.getAliPayConfig();
-        AccessPlatformSaveRo.WxPayConfig wxPayConfig = ro.getWxPayConfig();
-
-        switch (paymentPlatform) {
-            case AliPay: {
-                ValidUtils.notNull(aliPayConfig);
+        Rules.create()
+            .rule(PaymentPlatform.AliPay, Rules.Runnable(() -> {
+                AccessPlatformSaveRo.AliPayConfig aliPayConfig = ValidUtils.notNull(ro.getAliPayConfig());
                 PlatformAlipayConfig entity = platformAlipayConfigMapping.asPlatformAlipayConfig(aliPayConfig);
                 entity.setId(refId);
                 boolean isOk = platformAlipayConfigService.validUpdateById(entity);
                 ValidUtils.isTrue(isOk);
-                break;
-            }
-            case WxPay: {
-                ValidUtils.notNull(wxPayConfig);
+            }))
+            .rule(PaymentPlatform.WxPay, Rules.Runnable(() -> {
+                AccessPlatformSaveRo.WxPayConfig wxPayConfig = ValidUtils.notNull(ro.getWxPayConfig());
                 PlatformWxpayConfig entity = platformWxpayConfigMapping.asPlatformWxpayConfig(wxPayConfig);
                 entity.setId(refId);
                 boolean isOk = platformWxpayConfigService.validUpdateById(entity);
                 ValidUtils.isTrue(isOk);
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
-        }
+            }))
+            .of(ICode.ofThrow(ro.getPlatform(), PaymentPlatform.class));
 
     }
 
     @Override
     public void removeByRefTypeAndRefId(@NonNull String refType, @NonNull Long refId) {
-        PaymentPlatform paymentPlatform = ICode.ofThrow(refType, PaymentPlatform.class);
-        switch (paymentPlatform) {
-            case AliPay: {
+        Rules.create()
+            .rule(PaymentPlatform.AliPay, Rules.Runnable(() -> {
                 platformAlipayConfigService.removeById(refId);
-                break;
-            }
-            case WxPay: {
+            }))
+            .rule(PaymentPlatform.WxPay, Rules.Runnable(() -> {
                 platformWxpayConfigService.removeById(refId);
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
-        }
+            }))
+            .of(ICode.ofThrow(refType, PaymentPlatform.class));
     }
 
     @Override
     public Model<?> getByRefTypeAndRefId(@NonNull String refType, @NonNull Long refId) {
-        PaymentPlatform paymentPlatform = ICode.ofThrow(refType, PaymentPlatform.class);
-        Model<?> result;
-        switch (paymentPlatform) {
-            case AliPay: {
-                result = platformAlipayConfigService.getById(refId);
-                break;
-            }
-            case WxPay: {
-                result = platformWxpayConfigService.getById(refId);
-                break;
-            }
-            case Unknown:
-            default:
-                throw new UnsupportedOperationException();
-        }
-        return result;
+        return (Model<?>) Rules.create()
+            .rule(PaymentPlatform.AliPay, Rules.Supplier(() -> platformAlipayConfigService.getById(refId)))
+            .rule(PaymentPlatform.WxPay, Rules.Supplier(() -> platformWxpayConfigService.getById(refId)))
+            .of(ICode.ofThrow(refType, PaymentPlatform.class)).orElse(null);
     }
 }

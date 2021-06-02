@@ -23,14 +23,14 @@ public class ConfigStorageHelper {
 
     public static ConfigStorage createConfigStorage(Model<?> model) {
         if (model instanceof PlatformAlipayConfig) {
-            return ConfigStorageHelper.createConfigStorage(model);
+            return ConfigStorageHelper.createAlipayConfigStorage((PlatformAlipayConfig) model);
         } else if (model instanceof PlatformWxpayConfig) {
-            return ConfigStorageHelper.createConfigStorage(model);
+            return ConfigStorageHelper.createWxpayConfigStorage((PlatformWxpayConfig) model);
         }
         throw new UnsupportedOperationException();
     }
 
-    public static ConfigStorage createConfigStorage(PlatformAlipayConfig config) {
+    public static ConfigStorage createAlipayConfigStorage(PlatformAlipayConfig config) {
         ValidUtils.notNull(config);
         return ConfigStorages.createConfigStorage(AliPayConfigStorage.class)
             .setAliPayPublicKey(config.getPublicKey())
@@ -40,7 +40,7 @@ public class ConfigStorageHelper {
             .setIsDev(config.getIsDev());
     }
 
-    public static ConfigStorage createConfigStorage(PlatformWxpayConfig config) {
+    public static ConfigStorage createWxpayConfigStorage(PlatformWxpayConfig config) {
         ValidUtils.notNull(config);
         return ConfigStorages.createConfigStorage(WxPayConfigStorage.class)
             .setCertFileStr(config.getCertStr())
