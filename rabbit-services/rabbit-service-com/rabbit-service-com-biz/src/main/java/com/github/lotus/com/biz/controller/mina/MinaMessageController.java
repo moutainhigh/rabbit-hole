@@ -12,6 +12,7 @@ import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-03-21
  */
 @RestController
+@Api(tags = "com::消息模块")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/mina/message")
 public class MinaMessageController {
