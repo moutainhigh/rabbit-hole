@@ -10,6 +10,7 @@ import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefService;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 public class MinaMessageController {
     private final MessageUserRefService service;
 
+    @UseLogger("分页查询消息 - 我的消息")
     @ApiOperation("分页查询消息 - 我的消息")
     @PostMapping("/_paging")
     public Result<IPage<MessageComplexVo>> paging(@Validated @RequestBody MessagePagingRo ro) {

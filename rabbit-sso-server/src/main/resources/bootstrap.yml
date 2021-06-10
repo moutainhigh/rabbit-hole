@@ -2,7 +2,9 @@ server:
   port: 20000
 logging:
   level:
-    in.hocg: debug
+    com.alibaba.nacos: WARN
+    com.github.lotus: INFO
+    in.hocg: DEBUG
   config: classpath:log4j2-boot-local.xml
   file:
     path: /data/logs/app/${spring.application.name:unknown}
