@@ -1,7 +1,7 @@
 logging:
   level:
     com.alibaba.nacos: WARN
-    com.github.lotus: INFO
+    com.github.lotus: DEBUG
     in.hocg: DEBUG
 spring:
   profiles:
