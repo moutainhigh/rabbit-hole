@@ -1,15 +1,13 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.mapper.UserGroupMapper;
 import com.github.lotus.ums.biz.mapstruct.UserGroupMapping;
-import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.*;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.UserGroupRefUserVo;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
@@ -72,7 +70,7 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<UserGroupComplexVo> complete(UserGroupCompleteRo ro) {
+    public List<UserGroupComplexVo> getComplete(UserGroupCompleteRo ro) {
         return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
     }
 
@@ -80,6 +78,13 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
     public void grantAuthority(Long userGroupId, UserGroupGrantAuthorityRo ro) {
         final List<Long> authorities = ro.getAuthorities();
         userGroupAuthorityRefService.grantAuthorities(userGroupId, authorities);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<UserGroupRefUserVo> pagingUser(UserGroupRefUserPagingRo ro) {
+        return userGroupAuthorityRefService.pagingUser(ro)
+            .convert(this::convertUserGroupRefUserVo);
     }
 
     @Override
@@ -108,6 +113,11 @@ public class UserGroupServiceImpl extends AbstractServiceImpl<UserGroupMapper, U
         UserGroup userGroup = this.getById(userGroupId);
         ValidUtils.notNull(userGroup, "用户组不存在");
         userGroupUserRefService.assignUserGroup(userGroupId, ro.getAssignUser(), ro.getClearUser());
+    }
+
+    private UserGroupRefUserVo convertUserGroupRefUserVo(User user) {
+        return mapping.asUserGroupRefUserVo(user)
+            .setUserId(user.getId());
     }
 
     private UserGroupComplexVo convertComplex(UserGroup entity) {

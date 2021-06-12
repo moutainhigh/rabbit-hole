@@ -2,12 +2,9 @@ package com.github.lotus.ums.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.*;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.UserGroupRefUserVo;
 import com.github.lotus.ums.biz.service.UserGroupService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -20,14 +17,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,6 +42,13 @@ public class UserGroupController {
         return Result.success(service.getComplex(id));
     }
 
+    @ApiOperation("查询用户组内的用户 - 用户组")
+    @PostMapping("/{id}/user/_paging")
+    public Result<IPage<UserGroupRefUserVo>> pagingUserByUserGroup(@ApiParam(value = "用户组", required = true) @PathVariable Long id,
+                                                                   @RequestBody UserGroupRefUserPagingRo ro) {
+        ro.setUserGroupId(id);
+        return Result.success(service.pagingUser(ro));
+    }
 
     @ApiOperation("新增用户组 - 用户组")
     @PostMapping
@@ -71,7 +68,7 @@ public class UserGroupController {
     @UseLogger("查询列表 - 用户组")
     @PostMapping("/_complete")
     public Result<List<UserGroupComplexVo>> complete(@Validated @RequestBody UserGroupCompleteRo ro) {
-        return Result.success(service.complete(ro));
+        return Result.success(service.getComplete(ro));
     }
 
     @ApiOperation("修改用户组 - 用户组")
