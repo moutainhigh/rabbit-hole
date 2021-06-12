@@ -17,12 +17,7 @@ import com.github.lotus.com.biz.pojo.vo.message.MessageComplexVo;
 import com.github.lotus.com.biz.pojo.vo.message.NoticeMessageComplexVo;
 import com.github.lotus.com.biz.pojo.vo.message.PersonalMessageComplexVo;
 import com.github.lotus.com.biz.pojo.vo.message.SystemMessageComplexVo;
-import com.github.lotus.com.biz.service.MessageUserRefProxyService;
-import com.github.lotus.com.biz.service.MessageUserRefService;
-import com.github.lotus.com.biz.service.NoticeMessageProxyService;
-import com.github.lotus.com.biz.service.NoticeMessageService;
-import com.github.lotus.com.biz.service.PersonalMessageService;
-import com.github.lotus.com.biz.service.SystemMessageService;
+import com.github.lotus.com.biz.service.*;
 import com.github.lotus.common.datadict.com.MessageUserRefType;
 import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
@@ -31,7 +26,7 @@ import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -43,7 +38,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Service
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyService {
     private final NoticeMessageService noticeMessageService;

@@ -19,6 +19,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -95,16 +96,15 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
             .isNull(MessageUserRef::getReadAt).count();
     }
 
+    @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void readById(List<Long> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return;
         }
-        lambdaUpdate().in(MessageUserRef::getId, ids)
-            .isNotNull(MessageUserRef::getReadAt)
-            .set(MessageUserRef::getReadAt, LocalDateTime.now())
-            .update();
+        lambdaUpdate().in(MessageUserRef::getId, ids).isNull(MessageUserRef::getReadAt)
+            .set(MessageUserRef::getReadAt, LocalDateTime.now()).update();
     }
 
     @Override

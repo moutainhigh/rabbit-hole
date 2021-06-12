@@ -2,12 +2,9 @@ package com.github.lotus.ums.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.biz.entity.UserGroup;
-import com.github.lotus.ums.biz.pojo.ro.AssignUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.SaveUserGroupRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupCompleteRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupGrantAuthorityRo;
-import com.github.lotus.ums.biz.pojo.ro.UserGroupPagingRo;
+import com.github.lotus.ums.biz.pojo.ro.*;
 import com.github.lotus.ums.biz.pojo.vo.UserGroupComplexVo;
+import com.github.lotus.ums.biz.pojo.vo.UserGroupRefUserVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -36,8 +33,9 @@ public interface UserGroupService extends AbstractService<UserGroup> {
 
     void assignUserGroup(Long userGroupId, AssignUserGroupRo ro);
 
-    List<UserGroupComplexVo> complete(UserGroupCompleteRo ro);
+    List<UserGroupComplexVo> getComplete(UserGroupCompleteRo ro);
 
     void grantAuthority(Long userGroupId, UserGroupGrantAuthorityRo ro);
 
+    IPage<UserGroupRefUserVo> pagingUser(UserGroupRefUserPagingRo ro);
 }

@@ -49,7 +49,7 @@ public class BeCommentedListener extends RedisMessageListener<Message<TriggerCom
         Comment beCommend = commentService.getById(refId);
         Long beCommendCreator = beCommend.getCreator();
         String refType = NoticeMessageRefType.Comment.getCodeStr();
-        String eventType = NoticeMessageEventType.CommentBeEvaluated.getName();
+        String eventType = NoticeMessageEventType.CommentBeEvaluated.getCodeStr();
 
         // 通知被评论人
         SendNoticeMessageDto messageDto = new SendNoticeMessageDto();
