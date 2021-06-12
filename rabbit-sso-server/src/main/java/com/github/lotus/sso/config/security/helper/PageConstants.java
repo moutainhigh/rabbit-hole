@@ -1,4 +1,4 @@
-package com.github.lotus.sso.config.security;
+package com.github.lotus.sso.config.security.helper;
 
 import lombok.experimental.UtilityClass;
 

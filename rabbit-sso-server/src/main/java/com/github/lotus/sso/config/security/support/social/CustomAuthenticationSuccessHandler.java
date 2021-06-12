@@ -1,4 +1,4 @@
-package com.github.lotus.sso.config.security.social;
+package com.github.lotus.sso.config.security.support.social;
 
 import com.github.lotus.sso.service.SocialService;
 import lombok.RequiredArgsConstructor;

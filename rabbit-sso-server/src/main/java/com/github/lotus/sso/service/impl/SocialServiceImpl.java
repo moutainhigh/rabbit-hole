@@ -1,7 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.sso.config.security.PageConstants;
-import com.github.lotus.sso.config.security.SecurityContext;
+import com.github.lotus.sso.config.security.helper.PageConstants;
+import com.github.lotus.sso.config.security.helper.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.ums.api.SocialServiceApi;
 import com.github.lotus.ums.api.UserServiceApi;

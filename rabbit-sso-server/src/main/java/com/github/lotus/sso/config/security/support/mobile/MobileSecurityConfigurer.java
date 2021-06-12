@@ -1,8 +1,9 @@
 package com.github.lotus.sso.config.security.support.mobile;
 
 import com.github.lotus.sso.config.security.SecuritySupportService;
-import com.github.lotus.sso.config.security.user.AjaxAuthenticationEntryPoint;
+import com.github.lotus.sso.config.security.handler.AjaxAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final AjaxAuthenticationEntryPoint authenticationEntryPoint;
-    private final SecuritySupportService securitySupportService;
+    private final SecuritySupportService supportService;
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
@@ -29,9 +30,10 @@ public class MobileSecurityConfigurer extends SecurityConfigurerAdapter<DefaultS
         mobileAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         mobileAuthenticationFilter.setAuthenticationEntryPoint(authenticationEntryPoint);
 
-        MobileAuthenticationProvider mobileAuthenticationProvider = new MobileAuthenticationProvider();
-        mobileAuthenticationProvider.setSecuritySupportService(securitySupportService);
-        builder.authenticationProvider(mobileAuthenticationProvider)
+        MobileAuthenticationProvider authenticationProvider = new MobileAuthenticationProvider();
+        authenticationProvider.setChecker(new AccountStatusUserDetailsChecker());
+        authenticationProvider.setSupportService(supportService);
+        builder.authenticationProvider(authenticationProvider)
             .addFilterAfter(mobileAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

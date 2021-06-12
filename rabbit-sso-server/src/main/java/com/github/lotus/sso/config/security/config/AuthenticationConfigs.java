@@ -1,8 +1,10 @@
-package com.github.lotus.sso.config.security.user;
+package com.github.lotus.sso.config.security.config;
 
-import com.github.lotus.sso.config.security.PageConstants;
-import com.github.lotus.sso.config.security.social.CustomAuthenticationSuccessHandler;
-import com.github.lotus.sso.config.security.social.CustomOAuth2UserService;
+import com.github.lotus.sso.config.security.helper.PageConstants;
+import com.github.lotus.sso.config.security.handler.AuthorizedFailureHandle;
+import com.github.lotus.sso.config.security.handler.AuthorizedSuccessHandle;
+import com.github.lotus.sso.config.security.support.social.CustomAuthenticationSuccessHandler;
+import com.github.lotus.sso.config.security.support.social.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;

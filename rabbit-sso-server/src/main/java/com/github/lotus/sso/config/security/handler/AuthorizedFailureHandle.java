@@ -1,6 +1,7 @@
-package com.github.lotus.sso.config.security.user;
+package com.github.lotus.sso.config.security.handler;
 
 import cn.hutool.json.JSONUtil;
+import com.github.lotus.sso.config.security.helper.IsAjaxRequestMatcher;
 import com.github.lotus.sso.utils.ResponseUtils;
 import in.hocg.boot.web.result.ExceptionResult;
 import in.hocg.boot.web.result.ResultCode;

@@ -1,6 +1,6 @@
-package com.github.lotus.sso.config.security.social;
+package com.github.lotus.sso.config.security.support.social;
 
-import com.github.lotus.sso.config.security.SecurityContext;
+import com.github.lotus.sso.config.security.helper.SecurityContext;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;

@@ -1,5 +1,8 @@
-package com.github.lotus.sso.config.security.user;
+package com.github.lotus.sso.config.security.config;
 
+import com.github.lotus.sso.config.security.handler.AjaxAccessDeniedHandler;
+import com.github.lotus.sso.config.security.handler.AjaxAuthenticationEntryPoint;
+import com.github.lotus.sso.config.security.helper.IsAjaxRequestMatcher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

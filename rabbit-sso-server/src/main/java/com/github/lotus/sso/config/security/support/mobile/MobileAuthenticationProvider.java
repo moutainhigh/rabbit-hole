@@ -20,23 +20,24 @@ import java.util.Optional;
  */
 @Slf4j
 public class MobileAuthenticationProvider implements AuthenticationProvider {
-    private UserDetailsChecker checker;
     @Setter
-    private SecuritySupportService securitySupportService;
+    private SecuritySupportService supportService;
+    @Setter
+    private UserDetailsChecker checker;
 
     @Override
     @SneakyThrows
     public Authentication authenticate(Authentication authentication) {
         MobileAuthenticationToken mobileAuthenticationToken = (MobileAuthenticationToken) authentication;
 
-        String mobile = String.valueOf(mobileAuthenticationToken.getPrincipal());
-        Optional<UserDetails> userDetailsOptional = securitySupportService.getUserDetailsByMobile(mobile);
-        if (!userDetailsOptional.isPresent()) {
+        String phone = String.valueOf(mobileAuthenticationToken.getPrincipal());
+        Optional<UserDetails> userDetailsOpt = supportService.getUserDetailsByPhone(phone);
+        if (!userDetailsOpt.isPresent()) {
             log.debug("Authentication failed");
             throw new BadCredentialsException("Noop Bind Account");
         }
 
-        UserDetails userDetails = userDetailsOptional.get();
+        UserDetails userDetails = userDetailsOpt.get();
         checker.check(userDetails);
 
         MobileAuthenticationToken authenticationToken = new MobileAuthenticationToken(userDetails, userDetails.getAuthorities());

@@ -1,6 +1,7 @@
-package com.github.lotus.sso.config.security.user;
+package com.github.lotus.sso.config.security.handler;
 
-import com.github.lotus.sso.config.security.AuthorizedSuccessResult;
+import com.github.lotus.sso.config.security.helper.AuthorizedSuccessResult;
+import com.github.lotus.sso.config.security.helper.IsAjaxRequestMatcher;
 import com.github.lotus.sso.utils.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

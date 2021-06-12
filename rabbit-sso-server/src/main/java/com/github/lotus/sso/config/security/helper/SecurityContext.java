@@ -1,4 +1,4 @@
-package com.github.lotus.sso.config.security;
+package com.github.lotus.sso.config.security.helper;
 
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import lombok.experimental.UtilityClass;

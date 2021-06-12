@@ -1,5 +1,6 @@
-package com.github.lotus.sso.config.security;
+package com.github.lotus.sso.config.security.endpoint;
 
+import com.github.lotus.sso.config.security.helper.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;

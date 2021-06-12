@@ -1,4 +1,4 @@
-package com.github.lotus.sso.config.security.user;
+package com.github.lotus.sso.config.security.helper;
 
 import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import org.springframework.security.web.util.matcher.RequestMatcher;

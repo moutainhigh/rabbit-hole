@@ -12,5 +12,7 @@ import java.util.Optional;
  */
 public interface SecuritySupportService {
 
-    Optional<UserDetails> getUserDetailsByMobile(String mobile);
+    Optional<UserDetails> getUserDetailsByPhone(String phone);
+
+    Optional<UserDetails> getUserByUsernameOrEmailOrPhone(String username);
 }

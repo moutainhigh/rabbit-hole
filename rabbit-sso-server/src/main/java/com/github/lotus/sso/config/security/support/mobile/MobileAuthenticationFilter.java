@@ -1,6 +1,6 @@
 package com.github.lotus.sso.config.security.support.mobile;
 
-import com.github.lotus.sso.config.security.PageConstants;
+import com.github.lotus.sso.config.security.helper.PageConstants;
 import lombok.Setter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
