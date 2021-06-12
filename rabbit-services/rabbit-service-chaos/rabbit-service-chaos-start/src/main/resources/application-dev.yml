@@ -13,6 +13,9 @@ spring:
     host: sv-redis.basic
     port: 6379
     database: 1
+boot:
+  flyway:
+    repair-on-migrate: true
 rabbit:
   payment:
     url-prefix: https://api-dev.hocgin.top/pay
