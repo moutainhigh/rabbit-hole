@@ -10,6 +10,7 @@ import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
  *
  * @author hocgin
  */
-@Service
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NoticeMessageProxyServiceImpl implements NoticeMessageProxyService {
     private final NoticeMessageService noticeMessageService;

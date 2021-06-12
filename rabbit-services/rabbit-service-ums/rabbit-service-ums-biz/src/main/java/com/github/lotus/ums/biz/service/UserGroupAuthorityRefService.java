@@ -1,6 +1,9 @@
 package com.github.lotus.ums.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.UserGroupAuthorityRef;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupRefUserPagingRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;
@@ -20,4 +23,6 @@ public interface UserGroupAuthorityRefService extends AbstractService<UserGroupA
     boolean hasUserGroupByAuthorityId(Long authorityId);
 
     void grantAuthorities(Long userGroupId, List<Long> authorities);
+
+    IPage<User> pagingUser(UserGroupRefUserPagingRo ro);
 }

@@ -11,3 +11,4 @@ spring:
   redis:
     host: 39.100.87.79
     port: 32079
+    database: 2

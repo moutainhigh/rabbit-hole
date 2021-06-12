@@ -1,10 +1,13 @@
 package com.github.lotus.ums.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.lotus.ums.biz.entity.Authority;
+import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.entity.UserGroup;
 import com.github.lotus.ums.biz.entity.UserGroupAuthorityRef;
 import com.github.lotus.ums.biz.mapper.UserGroupAuthorityRefMapper;
+import com.github.lotus.ums.biz.pojo.ro.UserGroupRefUserPagingRo;
 import com.github.lotus.ums.biz.service.AuthorityService;
 import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
 import com.github.lotus.ums.biz.service.UserGroupService;
@@ -82,6 +85,11 @@ public class UserGroupAuthorityRefServiceImpl extends AbstractServiceImpl<UserGr
 
         // 更新
         mixedList.forEach(this::validInsertOrUpdate);
+    }
+
+    @Override
+    public IPage<User> pagingUser(UserGroupRefUserPagingRo ro) {
+        return baseMapper.pagingUser(ro, ro.ofPage());
     }
 
     private List<UserGroupAuthorityRef> listByUserGroupId(Long userGroupId) {
