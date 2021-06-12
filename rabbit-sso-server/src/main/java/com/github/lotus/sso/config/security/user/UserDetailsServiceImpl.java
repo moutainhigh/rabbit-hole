@@ -21,11 +21,11 @@ import java.util.Collections;
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
-    private final UserServiceApi accountApi;
+    private final UserServiceApi userServiceApi;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetailVo user = accountApi.getUserByUsernameOrEmailOrPhone(username);
+        UserDetailVo user = userServiceApi.getUserByUsernameOrEmailOrPhone(username);
         Assert.notNull(user, "账号或密码错误");
         return new User(username, user.getPassword(), Collections.emptyList());
     }

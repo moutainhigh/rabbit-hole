@@ -19,10 +19,10 @@ import java.security.Principal;
 @RestController
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 @SpringBootApplication
-public class SsoServerApplication {
+public class BootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SsoServerApplication.class, args);
+        SpringApplication.run(BootApplication.class, args);
     }
 
     @RequestMapping("/user")

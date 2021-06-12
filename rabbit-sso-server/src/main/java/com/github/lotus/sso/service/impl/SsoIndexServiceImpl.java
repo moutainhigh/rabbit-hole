@@ -31,9 +31,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SsoIndexServiceImpl implements SsoIndexService {
-    private final UserServiceApi accountApi;
-    private final WxServiceApi wxApi;
-    private final SmsServiceApi smsApi;
+    private final UserServiceApi userServiceApi;
+    private final WxServiceApi wxServiceApi;
+    private final SmsServiceApi smsServiceApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
@@ -43,23 +43,23 @@ public class SsoIndexServiceImpl implements SsoIndexService {
         ro.setPassword(passwordEncoder.encode(ro.getPassword()));
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
-        accountApi.createAccount(createAccountRo);
+        userServiceApi.createAccount(createAccountRo);
     }
 
     @Override
     public void sendSmsCode(SendSmsCodeRo ro) {
-        smsApi.sendVerifyCode(ro.getPhone());
+        smsServiceApi.sendVerifyCode(ro.getPhone());
     }
 
     @Override
     public WxMpQrCodeVo getWxQrCode(String appid) {
-        return wxApi.getQrCode(appid);
+        return wxServiceApi.getQrCode(appid);
     }
 
     @Override
     public WxLoginStatusVo getWxLoginStatus(String idFlag, String redirectUrl) {
         String socialType = (String) SocialType.WxMp.getCode();
-        WxLoginInfoVo wxLoginStatus = wxApi.getWxLoginStatus(idFlag);
+        WxLoginInfoVo wxLoginStatus = wxServiceApi.getWxLoginStatus(idFlag);
         String socialId = wxLoginStatus.getOpenid();
         WxLoginInfoVo.WxLoginStatus status = wxLoginStatus.getStatus();
         String username = SecurityContext.getCurrentUsername().orElse(null);

@@ -33,8 +33,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final SmsServiceApi smsApi;
-    private final UserServiceApi accountServiceApi;
+    private final SmsServiceApi smsServiceApi;
+    private final UserServiceApi userServiceApi;
 
     @Override
     public String join(JoinAccountRo ro) {
@@ -66,8 +66,8 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setEmail(email);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
@@ -78,22 +78,22 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setUsername(username);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
 
-        if (!smsApi.validVerifyCode(phone, verifyCode)) {
+        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
         CreateAccountRo newRo = new CreateAccountRo()
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setPhone(phone);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     @Override
@@ -116,12 +116,12 @@ public class AccountServiceImpl implements AccountService {
     private String loginUseSms(LoginRo.SmsMode ro) {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
-        if (!smsApi.validVerifyCode(phone, verifyCode)) {
+        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
-        UserDetailVo userDetail = accountServiceApi.getUserByPhone(phone);
+        UserDetailVo userDetail = userServiceApi.getUserByPhone(phone);
         ValidUtils.notNull(userDetail, "手机号码错误");
-        return accountServiceApi.getUserToken(userDetail.getUsername());
+        return userServiceApi.getUserToken(userDetail.getUsername());
     }
 
     private String loginUsePassword(LoginRo.PasswordMode ro) {
@@ -132,7 +132,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (AuthenticationException e) {
             throw ServiceException.wrap("用户名或密码错误");
         }
-        return accountServiceApi.getUserToken(username);
+        return userServiceApi.getUserToken(username);
     }
 
 }
