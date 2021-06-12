@@ -8,6 +8,9 @@ spring:
     host: sv-redis.basic
     port: 6379
     database: 0
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 boot:
   wx:
     ma:
