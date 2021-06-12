@@ -254,6 +254,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>flyway-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>message-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
