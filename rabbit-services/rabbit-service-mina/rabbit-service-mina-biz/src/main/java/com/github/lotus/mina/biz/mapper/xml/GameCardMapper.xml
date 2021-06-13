@@ -13,7 +13,7 @@
         AND mgc.enabled = #{ro.enabled}
       </if>
     </where>
-    ORDER BY mgc.priority DESC, mgc.created_at DESC
+    ORDER BY mgc.heat DESC, mgc.priority DESC, mgc.created_at DESC
   </select>
 
   <select id="complete" resultType="com.github.lotus.mina.biz.entity.GameCard">
