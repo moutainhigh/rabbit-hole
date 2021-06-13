@@ -1,6 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
 import com.github.lotus.chaos.api.SmsServiceApi;
+import com.github.lotus.common.utils.Rules;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinAccountRo;
 import com.github.lotus.sso.pojo.ro.LoginRo;
@@ -21,6 +22,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.github.lotus.sso.pojo.ro.JoinAccountRo.Mode.UsePhone;
+
 /**
  * Created by hocgin on 2020/10/7
  * email: hocgin@gmail.com
@@ -39,21 +42,19 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String join(JoinAccountRo ro) {
         JoinAccountRo.Mode mode = ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class);
-        switch (mode) {
-            case UsePhone: {
+        return ((String) Rules.create()
+            .rule(JoinAccountRo.Mode.UsePhone, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneModeGroup.class);
                 return this.joinUsePhone(ro.getPhoneMode());
-            }
-            case UseUsername: {
+            }))
+            .rule(JoinAccountRo.Mode.UseUsername, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameModeGroup.class);
                 return this.joinUseUsername(ro.getUsernameMode());
-            }
-            case UseEmail:
+            }))
+            .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.EmailModeGroup.class);
                 return this.joinUseEmail(ro.getEmailMode());
-            default:
-                throw ServiceException.wrap("该注册方式暂不支持");
-        }
+            })).of(mode).orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持")));
     }
 
     private String joinUseEmail(JoinAccountRo.EmailMode ro) {
