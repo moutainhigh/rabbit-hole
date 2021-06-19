@@ -16,6 +16,8 @@ spring:
 boot:
   flyway:
     repair-on-migrate: true
+  web:
+    hostname: https://api-dev.hocgin.top
 rabbit:
   payment:
     url-prefix: https://api-dev.hocgin.top/pay
