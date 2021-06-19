@@ -15,7 +15,7 @@ import com.github.lotus.com.biz.service.CommentTargetService;
 import com.github.lotus.common.datadict.CommentTargetType;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
-import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageService;
+import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -45,7 +45,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     private final CommentTargetService commentTargetService;
     private final UserServiceApi accountServiceApi;
     private final CommentMapping mapping;
-    private final NormalMessageService messageService;
+    private final NormalMessageBervice messageService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

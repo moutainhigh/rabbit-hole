@@ -1,7 +1,7 @@
 package com.github;
 
 import com.github.lotus.chaos.BootApplication;
-import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UploadGbaMainTests extends AbstractSpringBootTest {
     @Autowired
-    protected OssFileService ossFileService;
+    protected OssFileBervice ossFileService;
 
     @Test
     public void xxxx() throws IOException {

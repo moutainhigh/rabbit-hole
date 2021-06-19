@@ -4,9 +4,11 @@ import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
 import com.alibaba.schedulerx.worker.processor.ProcessResult;
 import com.github.lotus.common.datadict.com.TaskType;
+import com.github.lotus.mina.api.YouTubeServiceApi;
+import com.github.lotus.mina.api.pojo.ro.UploadYouTubeRo;
+import in.hocg.boot.task.autoconfiguration.core.TaskBervice;
 import in.hocg.boot.task.autoconfiguration.core.TaskInfo;
 import in.hocg.boot.task.autoconfiguration.core.TaskRepository;
-import in.hocg.boot.task.autoconfiguration.core.TaskService;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,20 +29,29 @@ import java.util.function.Function;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class DbTask extends JavaProcessor {
     private final TaskRepository taskRepository;
-    private final TaskService taskService;
+    private final TaskBervice taskBervice;
+    private final YouTubeServiceApi youTubeServiceApi;
 
     @Override
     public ProcessResult process(JobContext context) throws Exception {
         for (TaskInfo taskInfo : taskRepository.listByReady()) {
             String taskType = taskInfo.getType();
             String taskSn = taskInfo.getTaskSn();
-            taskService.runAsync(taskSn, this.getTaskFunction(taskType));
+            taskBervice.runAsync(taskSn, this.getTaskFunction(taskType));
         }
         return new ProcessResult(true);
     }
 
-    private Function<String, Object> getTaskFunction(String typeCode) {
+    private Function<Object, Object> getTaskFunction(String typeCode) {
         Optional<TaskType> taskType = ICode.of(typeCode, TaskType.class);
+        if (taskType.isPresent()) {
+            switch (taskType.get()) {
+                // 视频上传
+                case YouTubeUpload: {
+                    return (s) -> youTubeServiceApi.upload((UploadYouTubeRo) s);
+                }
+            }
+        }
         return s -> {
             log.info("任务名称: => {}", taskType.orElse(null));
             return null;

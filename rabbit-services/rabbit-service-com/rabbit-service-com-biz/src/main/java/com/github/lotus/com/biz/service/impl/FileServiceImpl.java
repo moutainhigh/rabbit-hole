@@ -9,7 +9,7 @@ import com.github.lotus.com.biz.utils.Avatars;
 import com.github.lotus.common.constant.GlobalConstant;
 import com.github.lotus.common.datadict.com.FileRelType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> implements FileService {
-    private final OssFileService ossFileService;
+    private final OssFileBervice ossFileService;
 
     @Override
     public String upload(MultipartFile file) {

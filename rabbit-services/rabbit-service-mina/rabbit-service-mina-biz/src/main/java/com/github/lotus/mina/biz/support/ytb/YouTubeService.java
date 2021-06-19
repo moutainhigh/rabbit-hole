@@ -1,5 +1,6 @@
 package com.github.lotus.mina.biz.support.ytb;
 
+import com.github.lotus.mina.api.pojo.ro.UploadYouTubeRo;
 import com.github.lotus.mina.biz.pojo.ro.UploadYouTubeVideoRo;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface YouTubeService {
     String authorize(String clientId, List<String> scopes, String redirectUri);
 
     String getCredential(String clientId, String redirectUri, List<String> scopes, String code);
+
+    void uploadVideo(UploadYouTubeRo ro);
 }

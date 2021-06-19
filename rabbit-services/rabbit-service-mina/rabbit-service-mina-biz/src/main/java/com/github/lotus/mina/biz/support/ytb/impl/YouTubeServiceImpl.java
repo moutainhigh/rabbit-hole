@@ -1,9 +1,12 @@
-package com.github.lotus.mina.biz.support.ytb;
+package com.github.lotus.mina.biz.support.ytb.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import com.github.lotus.common.utils.CommonUtils;
+import com.github.lotus.mina.api.pojo.ro.UploadYouTubeRo;
+import com.github.lotus.mina.biz.mapstruct.YouTubeMapping;
 import com.github.lotus.mina.biz.pojo.ro.UploadYouTubeVideoRo;
+import com.github.lotus.mina.biz.support.ytb.YouTubeService;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.youtube.YouTube;
@@ -11,7 +14,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
-import in.hocg.boot.youtube.autoconfiguration.core.YoutubeService;
+import in.hocg.boot.youtube.autoconfiguration.core.YoutubeBervice;
 import in.hocg.boot.youtube.autoconfiguration.properties.YoutubeProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -34,7 +37,8 @@ import java.util.function.BiConsumer;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class YouTubeServiceImpl implements YouTubeService {
-    private final YoutubeService youtubeServiceApi;
+    private final YoutubeBervice youtubeServiceApi;
+    private final YouTubeMapping mapping;
 
     @Override
     @SneakyThrows
@@ -87,5 +91,10 @@ public class YouTubeServiceImpl implements YouTubeService {
     @Override
     public String getCredential(String clientId, String redirectUri, List<String> scopes, String code) {
         return youtubeServiceApi.getCredential(clientId, redirectUri, scopes, code).getAccessToken();
+    }
+
+    @Override
+    public void uploadVideo(UploadYouTubeRo ro) {
+        this.upload(mapping.asUploadYouTubeVideoRo(ro));
     }
 }

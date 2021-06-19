@@ -1,5 +1,6 @@
 package com.github.lotus.common.utils;
 
+import com.github.lotus.common.datadict.com.TaskType;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -64,4 +65,5 @@ public class Rules<K> {
     public static <P> Supplier<P> Supplier(Supplier<P> fun) {
         return fun;
     }
+
 }
