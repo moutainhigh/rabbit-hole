@@ -114,7 +114,7 @@ boot:
         ,/ignore
         ,/*/v2/api-docs
 
-        ,/com/user/message/stat
+        ,/com/mina/message/stat
 
         ,/com/district/tree
         ,/com/project/encoding:*
