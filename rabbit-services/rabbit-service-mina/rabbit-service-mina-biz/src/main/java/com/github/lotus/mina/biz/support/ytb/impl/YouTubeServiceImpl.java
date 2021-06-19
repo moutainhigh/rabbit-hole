@@ -15,17 +15,17 @@ import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
 import in.hocg.boot.youtube.autoconfiguration.core.YoutubeBervice;
-import in.hocg.boot.youtube.autoconfiguration.properties.YoutubeProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 /**
  * Created by hocgin on 2021/6/19
@@ -41,7 +41,7 @@ public class YouTubeServiceImpl implements YouTubeService {
     private final YouTubeMapping mapping;
 
     @Override
-    @SneakyThrows
+    @SneakyThrows({MalformedURLException.class, IOException.class})
     public String upload(UploadYouTubeVideoRo ro) {
         String clientId = ro.getClientId();
         String fromUrl = ro.getFromUrl();
@@ -57,28 +57,22 @@ public class YouTubeServiceImpl implements YouTubeService {
 
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
         StringBuilder sb = new StringBuilder("https://www.youtube.com/watch?v=");
-        youtubeServiceApi.youtube(clientId, scopes, new BiConsumer<YoutubeProperties.ClientConfig, YouTube>() {
-            @Override
-            @SneakyThrows
-            public void accept(YoutubeProperties.ClientConfig clientConfig, YouTube youTube) {
-                VideoStatus status = new VideoStatus()
-                    .setPrivacyStatus(privacyStatus);
-                VideoSnippet snippet = new VideoSnippet()
-                    .setTitle(ro.getTitle())
-                    .setDescription(ro.getDescription())
-                    .setTags(ro.getTags());
+        youtubeServiceApi.youtube(clientId, scopes, (clientConfig, youTube) -> {
+            VideoStatus status = new VideoStatus().setPrivacyStatus(privacyStatus);
+            VideoSnippet snippet = new VideoSnippet()
+                .setTitle(ro.getTitle()).setTags(ro.getTags())
+                .setDescription(ro.getDescription());
 
-                Video video = new Video().setStatus(status).setSnippet(snippet);
-                YouTube.Videos.Insert videoInsert = youTube.videos().insert("snippet,statistics,status", video, new InputStreamContent("video/*", is));
+            Video video = new Video().setStatus(status).setSnippet(snippet);
+            YouTube.Videos.Insert videoInsert = youTube.videos().insert("snippet,statistics,status", video, new InputStreamContent("video/*", is));
 
-                MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
-                uploader.setDirectUploadEnabled(false);
+            MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
+            uploader.setDirectUploadEnabled(false);
 
-                Video returnedVideo = videoInsert.execute();
-                String rid = returnedVideo.getId();
-                log.info("上传视频信息: [{}]", rid);
-                sb.append(rid);
-            }
+            Video returnedVideo = videoInsert.execute();
+            String rid = returnedVideo.getId();
+            log.info("上传视频信息: [{}]", rid);
+            sb.append(rid);
         });
         return sb.toString();
     }
