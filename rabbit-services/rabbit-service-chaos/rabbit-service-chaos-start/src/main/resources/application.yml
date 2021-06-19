@@ -30,6 +30,8 @@ mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
 boot:
+  web:
+    hostname: https://api.hocgin.top
   oss:
     accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
     secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
@@ -75,6 +77,11 @@ boot:
           token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
   message:
     type: redis
+  youtube:
+    clients:
+      - application-name: simple-app
+        client-id: 854840501995-v67uhbkpipjdicve031ka4rdjqqojmf1.apps.googleusercontent.com
+        client-secret: gV04XZx4G0TFyOsR0YC3jaRW
 
 rabbit:
   payment:

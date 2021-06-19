@@ -12,3 +12,7 @@ spring:
     host: 39.100.87.79
     port: 32079
     database: 2
+
+boot:
+  web:
+    hostname: http://127.0.0.1:20001

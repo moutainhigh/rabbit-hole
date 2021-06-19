@@ -15,7 +15,8 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum TaskType implements DataDictEnum {
-    Unknown("unknown", "未知");
+    Unknown("unknown", "未知"),
+    YtbUpload("ytb_upload", "youtube视频上传");
     private final Serializable code;
     private final String name;
 }
