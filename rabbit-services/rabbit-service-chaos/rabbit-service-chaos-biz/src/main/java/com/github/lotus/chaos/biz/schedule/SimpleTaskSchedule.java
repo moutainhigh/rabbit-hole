@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.biz.task;
+package com.github.lotus.chaos.biz.schedule;
 
 import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SimpleTask extends JavaProcessor {
+public class SimpleTaskSchedule extends JavaProcessor {
 
     @Override
     public ProcessResult process(JobContext context) throws Exception {

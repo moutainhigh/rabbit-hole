@@ -1,4 +1,4 @@
-package com.github.lotus.com.biz.task;
+package com.github.lotus.com.biz.schedule;
 
 import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class DbTask extends JavaProcessor {
+public class DbTaskSchedule extends JavaProcessor {
     private final TaskRepository taskRepository;
     private final TaskBervice taskBervice;
     private final YouTubeServiceApi youTubeServiceApi;
