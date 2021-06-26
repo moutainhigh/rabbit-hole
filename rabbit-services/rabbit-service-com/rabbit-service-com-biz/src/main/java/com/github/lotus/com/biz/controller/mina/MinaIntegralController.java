@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/mina/integral")
 public class MinaIntegralController {
-    private UserIntegralService service;
+    private final UserIntegralService service;
 
     @ApiOperation("获取状态 - 我的积分")
     @GetMapping("/stat")
@@ -42,5 +42,6 @@ public class MinaIntegralController {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.pageFlow(ro));
     }
+
 }
 

@@ -7,10 +7,13 @@ import com.github.lotus.com.biz.mapstruct.UserIntegralFlowMapping;
 import com.github.lotus.com.biz.pojo.ro.MinaIntegralFlowPageRo;
 import com.github.lotus.com.biz.pojo.vo.MinaIntegralFlowVo;
 import com.github.lotus.com.biz.service.UserIntegralFlowService;
+import com.github.lotus.common.datadict.com.integralflow.EventType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -29,6 +32,14 @@ public class UserIntegralFlowServiceImpl extends AbstractServiceImpl<UserIntegra
     public IPage<MinaIntegralFlowVo> pageFlow(MinaIntegralFlowPageRo ro) {
         return baseMapper.pageFlow(ro, ro.ofPage())
             .convert(this::convertMinaIntegralFlowVo);
+    }
+
+    @Override
+    public Boolean exitUserSign(Long userId, LocalDate now) {
+        return lambdaQuery().eq(UserIntegralFlow::getUserId, userId)
+            .eq(UserIntegralFlow::getEventType, EventType.UserSign.getCode())
+            .ge(UserIntegralFlow::getCreatedAt, now.atStartOfDay())
+            .le(UserIntegralFlow::getCreatedAt, now.plusDays(1).atStartOfDay()).count() > 0;
     }
 
     private MinaIntegralFlowVo convertMinaIntegralFlowVo(UserIntegralFlow entity) {

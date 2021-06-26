@@ -6,6 +6,8 @@ import com.github.lotus.com.biz.pojo.ro.MinaIntegralFlowPageRo;
 import com.github.lotus.com.biz.pojo.vo.MinaIntegralFlowVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.time.LocalDate;
+
 /**
  * <p>
  * [通用] 用户积分流水表 服务类
@@ -17,4 +19,13 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 public interface UserIntegralFlowService extends AbstractService<UserIntegralFlow> {
 
     IPage<MinaIntegralFlowVo> pageFlow(MinaIntegralFlowPageRo ro);
+
+    /**
+     * 判断当天有过签到
+     *
+     * @param userId
+     * @param now
+     * @return
+     */
+    Boolean exitUserSign(Long userId, LocalDate now);
 }
