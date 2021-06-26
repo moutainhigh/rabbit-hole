@@ -19,5 +19,7 @@ public enum ChangeType implements DataDictEnum {
     Subtract("subtract", "减少");
     private final Serializable code;
     private final String name;
+
+    public final static String KEY = "integral_flow_change_type";
 }
 

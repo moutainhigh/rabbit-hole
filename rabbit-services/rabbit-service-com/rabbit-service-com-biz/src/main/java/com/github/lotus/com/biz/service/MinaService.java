@@ -15,4 +15,11 @@ public interface MinaService {
      * @param userId 用户
      */
     void userSign(Long userId);
+
+    /**
+     * 触发观看视频
+     *
+     * @param userId 用户
+     */
+    void triggerWatchAd(Long userId);
 }

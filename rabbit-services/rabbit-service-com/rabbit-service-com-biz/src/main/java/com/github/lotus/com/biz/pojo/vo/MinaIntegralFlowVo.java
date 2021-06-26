@@ -2,6 +2,9 @@ package com.github.lotus.com.biz.pojo.vo;
 
 import com.github.lotus.chaos.api.ChaosNamedAPI;
 import com.github.lotus.chaos.api.NamedType;
+import com.github.lotus.common.datadict.com.integralflow.ChangeType;
+import com.github.lotus.common.datadict.com.integralflow.EventType;
+import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
 import in.hocg.boot.named.annotation.UseNamedService;
 import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
@@ -18,11 +21,18 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class MinaIntegralFlowVo {
     @ApiModelProperty("触发事件")
     private String eventType;
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "eventType", type = NamedType.DataDict, args = {EventType.KEY})
+    private String eventTypeName;
     @ApiModelProperty("变更类型")
     private String changeType;
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "changeType", type = NamedType.DataDict, args = {ChangeType.KEY})
+    private String changeTypeName;
     @BigDecimalFormat
     @ApiModelProperty("变更值")
     private BigDecimal changeValue;

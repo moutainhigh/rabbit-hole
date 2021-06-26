@@ -21,11 +21,20 @@ public interface UserIntegralFlowService extends AbstractService<UserIntegralFlo
     IPage<MinaIntegralFlowVo> pageFlow(MinaIntegralFlowPageRo ro);
 
     /**
-     * 判断当天有过签到
+     * 判断指定日期有过签到
      *
      * @param userId
      * @param now
      * @return
      */
-    Boolean exitUserSign(Long userId, LocalDate now);
+    Integer countSignByDate(Long userId, LocalDate now);
+
+    /**
+     * 积分视频指定日期观看次数
+     *
+     * @param userId
+     * @param now
+     * @return
+     */
+    Integer countWatchAdByDate(Long userId, LocalDate now);
 }

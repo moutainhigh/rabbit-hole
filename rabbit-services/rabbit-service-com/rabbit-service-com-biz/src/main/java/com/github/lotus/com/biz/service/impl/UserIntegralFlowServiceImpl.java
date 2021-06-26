@@ -7,6 +7,7 @@ import com.github.lotus.com.biz.mapstruct.UserIntegralFlowMapping;
 import com.github.lotus.com.biz.pojo.ro.MinaIntegralFlowPageRo;
 import com.github.lotus.com.biz.pojo.vo.MinaIntegralFlowVo;
 import com.github.lotus.com.biz.service.UserIntegralFlowService;
+import com.github.lotus.common.datadict.com.integralflow.ChangeType;
 import com.github.lotus.common.datadict.com.integralflow.EventType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +36,30 @@ public class UserIntegralFlowServiceImpl extends AbstractServiceImpl<UserIntegra
     }
 
     @Override
-    public Boolean exitUserSign(Long userId, LocalDate now) {
+    public Integer countSignByDate(Long userId, LocalDate now) {
+        return this.countByUserIdAndEventTypeAndLocalDate(userId, EventType.UserSign.getCodeStr(), now);
+    }
+
+
+    @Override
+    public Integer countWatchAdByDate(Long userId, LocalDate now) {
+        return countByUserIdAndEventTypeAndLocalDate(userId, EventType.WatchAd.getCodeStr(), now);
+    }
+
+    /**
+     * 查询某一天内触发积分增加事件的数量
+     *
+     * @param userId
+     * @param eventType
+     * @param now
+     * @return
+     */
+    private Integer countByUserIdAndEventTypeAndLocalDate(Long userId, String eventType, LocalDate now) {
         return lambdaQuery().eq(UserIntegralFlow::getUserId, userId)
-            .eq(UserIntegralFlow::getEventType, EventType.UserSign.getCode())
+            .eq(UserIntegralFlow::getEventType, eventType)
+            .eq(UserIntegralFlow::getChangeType, ChangeType.Plus.getCodeStr())
             .ge(UserIntegralFlow::getCreatedAt, now.atStartOfDay())
-            .le(UserIntegralFlow::getCreatedAt, now.plusDays(1).atStartOfDay()).count() > 0;
+            .le(UserIntegralFlow::getCreatedAt, now.plusDays(1).atStartOfDay()).count();
     }
 
     private MinaIntegralFlowVo convertMinaIntegralFlowVo(UserIntegralFlow entity) {

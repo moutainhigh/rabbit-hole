@@ -1,20 +1,17 @@
 package com.github.lotus.com.biz.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -38,8 +35,8 @@ public class UserIntegral extends AbstractEntity<UserIntegral> {
     @TableField("user_id")
     private Long userId;
     @ApiModelProperty("可用积分")
-    @TableField("avl_integral")
-    private BigDecimal avlIntegral;
+    @TableField("avail_integral")
+    private BigDecimal availIntegral;
     @ApiModelProperty("已用积分")
     @TableField("used_integral")
     private BigDecimal usedIntegral;

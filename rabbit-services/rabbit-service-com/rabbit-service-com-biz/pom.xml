@@ -78,6 +78,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
+      <artifactId>vars-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
       <artifactId>schedulerx-spring-boot-starter</artifactId>
     </dependency>
     <!--  三方库  -->

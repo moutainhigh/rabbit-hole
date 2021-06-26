@@ -4,6 +4,7 @@ import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel
+@Accessors(chain = true)
 public class MinaIntegralStatsVo {
     @BigDecimalFormat
     @ApiModelProperty("获取的总积分")
@@ -25,4 +27,8 @@ public class MinaIntegralStatsVo {
     @BigDecimalFormat
     @ApiModelProperty("已用积分")
     private BigDecimal used;
+    @ApiModelProperty("今日签到状态")
+    private Boolean hasSigned = Boolean.FALSE;
+    @ApiModelProperty("观看视频是否到上限")
+    private Boolean hasWatchAdUpperLimit = Boolean.FALSE;
 }

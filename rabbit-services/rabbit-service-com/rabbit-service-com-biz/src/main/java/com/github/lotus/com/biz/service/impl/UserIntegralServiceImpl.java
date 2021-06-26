@@ -41,7 +41,10 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
 
     @Override
     public MinaIntegralStatsVo getStats(Long userId) {
-        return getOrCreate(userId).map(mapping::asMinaIntegralStatsVo).orElse(null);
+        LocalDate now = LocalDate.now();
+        return getOrCreate(userId).map(userIntegral -> mapping.asMinaIntegralStatsVo(userIntegral)
+            .setHasWatchAdUpperLimit(this.hasWatchAdUpperLimit(userId, now))
+            .setHasSigned(this.exitUserSign(userId, now))).orElse(null);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void userSign(Long userId, LocalDateTime now) {
+    public void triggerUserSign(Long userId, LocalDateTime now) {
         BigDecimal plusValue = BigDecimal.ONE;
         // 1 年后过期
         LocalDateTime expireAt = now.plusYears(1);
@@ -68,8 +71,32 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
     }
 
     @Override
+    public void triggerWatchAd(Long userId, LocalDateTime now) {
+        BigDecimal plusValue = BigDecimal.ONE;
+        // 1 年后过期
+        LocalDateTime expireAt = now.plusYears(1);
+        UserIntegralFlow entity = new UserIntegralFlow();
+        entity.setEventType(EventType.WatchAd.getCodeStr());
+        entity.setChangeValue(plusValue);
+        entity.setChangeType(ChangeType.Plus.getCodeStr());
+        entity.setUserId(userId);
+        entity.setCreator(userId);
+        entity.setCreatedAt(now);
+        entity.setExpireAt(expireAt);
+        userIntegralFlowService.validInsert(entity);
+        Assert.isTrue(this.casPlusAvlIntegral(userId, plusValue), "观看视频失败");
+    }
+
+    @Override
     public Boolean exitUserSign(Long userId, LocalDate now) {
-        return userIntegralFlowService.exitUserSign(userId, now);
+        return userIntegralFlowService.countSignByDate(userId, now) > 0;
+    }
+
+    @Override
+    public Boolean hasWatchAdUpperLimit(Long userId, LocalDate now) {
+        // 每日观看上限
+        int maxCount = 10;
+        return userIntegralFlowService.countWatchAdByDate(userId, now) > maxCount;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.NESTED)

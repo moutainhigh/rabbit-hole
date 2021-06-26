@@ -24,8 +24,15 @@ public class MinaController {
 
     @ApiOperation("签到")
     @PostMapping("/sign")
-    public Result<Void> signIn() {
+    public Result<Void> sign() {
         UserContextHolder.getUserId().ifPresent(service::userSign);
+        return Result.success();
+    }
+
+    @ApiOperation("观看视频")
+    @PostMapping("/watch-ad")
+    public Result<Void> watchAd() {
+        UserContextHolder.getUserId().ifPresent(service::triggerWatchAd);
         return Result.success();
     }
 }

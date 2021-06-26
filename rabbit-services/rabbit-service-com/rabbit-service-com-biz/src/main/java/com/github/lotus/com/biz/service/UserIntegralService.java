@@ -42,7 +42,7 @@ public interface UserIntegralService extends AbstractService<UserIntegral> {
      * @param userId 用户
      * @param now    签到时间
      */
-    void userSign(Long userId, LocalDateTime now);
+    void triggerUserSign(Long userId, LocalDateTime now);
 
     /**
      * 是否存在签到
@@ -52,4 +52,21 @@ public interface UserIntegralService extends AbstractService<UserIntegral> {
      * @return
      */
     Boolean exitUserSign(Long userId, LocalDate now);
+
+    /**
+     * 是否达到观看上限
+     *
+     * @param userId
+     * @param now
+     * @return
+     */
+    Boolean hasWatchAdUpperLimit(Long userId, LocalDate now);
+
+    /**
+     * 触发视频观看
+     *
+     * @param userId
+     * @param now
+     */
+    void triggerWatchAd(Long userId, LocalDateTime now);
 }

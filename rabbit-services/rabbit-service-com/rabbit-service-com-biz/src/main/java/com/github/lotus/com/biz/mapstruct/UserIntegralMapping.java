@@ -16,8 +16,8 @@ public interface UserIntegralMapping {
    default MinaIntegralStatsVo asMinaIntegralStatsVo(UserIntegral entity) {
        MinaIntegralStatsVo result = new MinaIntegralStatsVo();
        result.setUsed(entity.getUsedIntegral());
-       result.setAvailable(entity.getAvlIntegral());
-       result.setTotal(entity.getUsedIntegral().add(entity.getAvlIntegral()));
+       result.setAvailable(entity.getAvailIntegral());
+       result.setTotal(entity.getUsedIntegral().add(entity.getAvailIntegral()));
        return result;
    }
 }

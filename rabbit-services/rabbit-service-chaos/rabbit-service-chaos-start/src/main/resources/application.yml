@@ -26,6 +26,9 @@ spring:
     namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
     groupId: rabbit-hold
     appKey: hr3g+Up7k91lHL4eAX4DhQ==
+jasypt:
+  encryptor:
+    poolSize: 10
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 

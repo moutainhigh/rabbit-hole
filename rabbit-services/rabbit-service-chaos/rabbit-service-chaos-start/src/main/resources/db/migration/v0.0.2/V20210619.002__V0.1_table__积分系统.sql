@@ -1,3 +1,6 @@
+alter table com_project
+    add config TEXT NULL COMMENT '项目配置, JSON 格式';
+
 DROP TABLE IF EXISTS `com_user_integral`;
 CREATE TABLE `com_user_integral`
 (
@@ -5,7 +8,7 @@ CREATE TABLE `com_user_integral`
     --
     user_id           BIGINT         NOT NULL
         COMMENT '用户',
-    avl_integral      decimal(20, 2) NOT NULL DEFAULT 0
+    avail_integral    decimal(20, 2) NOT NULL DEFAULT 0
         COMMENT '可用积分',
     used_integral     decimal(20, 2) NOT NULL DEFAULT 0
         COMMENT '已用积分',

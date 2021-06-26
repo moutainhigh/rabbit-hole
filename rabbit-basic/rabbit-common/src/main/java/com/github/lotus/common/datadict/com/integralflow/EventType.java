@@ -15,7 +15,10 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public enum EventType implements DataDictEnum {
-    UserSign("user_sign", "用户签到");
+    UserSign("user_sign", "用户签到"),
+    WatchAd("user_ad", "视频观看");
     private final Serializable code;
     private final String name;
+
+    public final static String KEY = "integral_flow_event_type";
 }

@@ -8,12 +8,12 @@ import com.google.common.cache.CacheBuilder;
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.exception.UnAuthenticationException;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by hocgin on 2020/8/6
@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 public class UserContextHolder {
     private static final Cache<String, UserDetail> CACHE_USER = CacheBuilder.newBuilder()
         .maximumSize(10000L)
-        .expireAfterWrite(10, TimeUnit.MINUTES)
         .build();
 
     public Optional<String> getUsername() {
@@ -34,13 +33,7 @@ public class UserContextHolder {
     }
 
     public Optional<UserDetail> getUserDetail() {
-        return getUsername().map(username -> {
-            UserDetail userDetail = CACHE_USER.getIfPresent(username);
-            if (Objects.isNull(userDetail)) {
-                userDetail = getUserContextService().getUserDetail(username);
-            }
-            return userDetail;
-        });
+        return getUsername().map(UserContextHolder::getUserDetailUseCache);
     }
 
     public Optional<Long> getUserId() {
@@ -59,6 +52,11 @@ public class UserContextHolder {
     public Optional<String> getVersion() {
         HttpServletRequest request = getRequest();
         return Optional.ofNullable(request.getHeader(HeaderConstants.VERSION));
+    }
+
+    @SneakyThrows(ExecutionException.class)
+    private UserDetail getUserDetailUseCache(String username) {
+        return CACHE_USER.get(username, () -> getUserContextService().getUserDetail(username));
     }
 
     private HttpServletRequest getRequest() {

@@ -1,5 +1,6 @@
 package com.github.lotus.com.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.github.lotus.com.biz.service.MinaService;
 import com.github.lotus.com.biz.service.UserIntegralService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,15 @@ public class MinaServiceImpl implements MinaService {
     public void userSign(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         Boolean hasSign = userIntegralService.exitUserSign(userId, now.toLocalDate());
-        if (hasSign) {
-            return;
-        }
-        userIntegralService.userSign(userId, now);
+        Assert.isFalse(hasSign, "今日已签到");
+        userIntegralService.triggerUserSign(userId, now);
+    }
+
+    @Override
+    public void triggerWatchAd(Long userId) {
+        LocalDateTime now = LocalDateTime.now();
+        Boolean hasUpperLimit = userIntegralService.hasWatchAdUpperLimit(userId, now.toLocalDate());
+        Assert.isFalse(hasUpperLimit, "今日观看已满上限");
+        userIntegralService.triggerWatchAd(userId, now);
     }
 }

@@ -32,6 +32,8 @@ public class ProjectComplexVo {
     private String version;
     @ApiModelProperty("备注")
     private String remark;
+    @ApiModelProperty("配置")
+    private String config;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
