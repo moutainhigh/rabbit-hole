@@ -17,12 +17,9 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.COM, false,
-            "mms_message_user_ref",
-            "mms_message_user_ref",
-            "mms_system_message",
-            "mms_personal_message",
-            "mms_notice_message",
-            "mms_notice_user_config");
+            "com_user_integral",
+            "com_user_integral_flow",
+            "");
     }
 
 }
