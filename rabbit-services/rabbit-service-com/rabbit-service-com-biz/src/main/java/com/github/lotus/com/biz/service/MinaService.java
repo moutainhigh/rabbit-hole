@@ -14,5 +14,5 @@ public interface MinaService {
      *
      * @param userId 用户
      */
-    void signIn(Long userId);
+    void userSign(Long userId);
 }

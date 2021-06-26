@@ -98,6 +98,8 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
         Optional<UserIntegral> userIntegralOpt = lambdaQuery().eq(UserIntegral::getUserId, userId).oneOpt();
         if (!userIntegralOpt.isPresent()) {
             UserIntegral entity = new UserIntegral();
+            entity.setAvlIntegral(BigDecimal.ZERO);
+            entity.setUsedIntegral(BigDecimal.ZERO);
             entity.setUserId(userId);
             entity.setCreator(userId);
             entity.setCreatedAt(LocalDateTime.now());

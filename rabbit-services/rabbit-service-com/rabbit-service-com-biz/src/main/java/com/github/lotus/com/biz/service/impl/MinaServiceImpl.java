@@ -22,7 +22,7 @@ public class MinaServiceImpl implements MinaService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void signIn(Long userId) {
+    public void userSign(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         Boolean hasSign = userIntegralService.exitUserSign(userId, now.toLocalDate());
         if (hasSign) {

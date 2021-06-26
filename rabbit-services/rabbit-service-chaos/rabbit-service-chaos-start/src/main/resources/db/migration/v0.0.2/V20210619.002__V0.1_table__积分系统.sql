@@ -37,7 +37,7 @@ CREATE TABLE `com_user_integral_flow`
         COMMENT '变更类型',
     change_value      decimal(20, 2) NOT NULL DEFAULT 0
         COMMENT '变更值',
-    remark            VARCHAR(255)   NOT NULL
+    remark            VARCHAR(255)
         COMMENT '变更备注',
     expire_at         DATETIME(6)    NOT NULL
         COMMENT '过期时间',
