@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class MinaController {
     private final MinaService service;
 
     @ApiOperation("签到")
-    @GetMapping("/sign")
+    @PostMapping("/sign")
     public Result<Void> signIn() {
         UserContextHolder.getUserId().ifPresent(service::signIn);
         return Result.success();
