@@ -1,6 +1,10 @@
 package com.github.lotus.com.biz.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.NamedType;
+import in.hocg.boot.named.annotation.Named;
+import in.hocg.boot.named.annotation.UseNamedService;
+import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,6 +23,7 @@ public class MinaIntegralFlowVo {
     private String eventType;
     @ApiModelProperty("变更类型")
     private String changeType;
+    @BigDecimalFormat
     @ApiModelProperty("变更值")
     private BigDecimal changeValue;
     @ApiModelProperty("变更备注")
@@ -29,4 +34,7 @@ public class MinaIntegralFlowVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
+    @UseNamedService(ChaosNamedAPI.class)
+    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    private String creatorName;
 }
