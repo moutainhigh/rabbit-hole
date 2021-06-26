@@ -1,6 +1,6 @@
 package com.github.lotus.mina.biz.controller;
 
-import com.github.lotus.mina.biz.service.MinaService;
+import com.github.lotus.mina.biz.service.CheckService;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/{appid}")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class MinaController {
-    private final MinaService service;
+public class CheckController {
+    private final CheckService service;
 
     @ApiOperation("文字检查")
     @PostMapping("/check-message")

@@ -1,7 +1,7 @@
 package com.github.lotus.mina.biz.service.impl;
 
 import com.github.lotus.docking.api.WxMaServiceApi;
-import com.github.lotus.mina.biz.service.MinaService;
+import com.github.lotus.mina.biz.service.CheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class MinaServiceImpl implements MinaService {
+public class CheckServiceImpl implements CheckService {
     private final WxMaServiceApi wxMaServiceApi;
 
     @Override

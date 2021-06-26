@@ -6,7 +6,7 @@ package com.github.lotus.mina.biz.service;
  *
  * @author hocgin
  */
-public interface MinaService {
+public interface CheckService {
 
     boolean checkMessage(String appid, String text);
 

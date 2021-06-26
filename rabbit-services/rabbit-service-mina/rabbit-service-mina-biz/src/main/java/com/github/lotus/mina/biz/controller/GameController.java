@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/{appid}/game")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class MinaGameController {
+public class GameController {
     private final GameCardService service;
 
     @PostMapping("/_paging")
