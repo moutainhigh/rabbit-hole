@@ -1,7 +1,7 @@
 logging:
   level:
-    root: warn
-    in.hocg: debug
+    root: WARN
+    in.hocg: DEBUG
 
 spring:
   datasource:
@@ -14,8 +14,6 @@ spring:
     port: 6379
     database: 1
 boot:
-  flyway:
-    repair-on-migrate: true
   web:
     hostname: https://api-dev.hocgin.top
 rabbit:

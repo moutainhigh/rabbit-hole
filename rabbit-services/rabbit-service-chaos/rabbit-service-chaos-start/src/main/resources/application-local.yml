@@ -1,6 +1,6 @@
 logging:
   level:
-    root: info
+    root: INFO
 
 spring:
   datasource:
@@ -14,5 +14,7 @@ spring:
     database: 2
 
 boot:
+  flyway:
+    repair-on-migrate: true
   web:
     hostname: http://127.0.0.1:20001
