@@ -100,13 +100,13 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.NESTED)
-    protected Boolean plusAvlIntegral(Long userId, BigDecimal plusVal) {
+    protected Boolean plusAvailIntegral(Long userId, BigDecimal plusVal) {
         Optional<UserIntegral> userIntegralOpt = this.getOrCreate(userId);
         if (userIntegralOpt.isPresent()) {
             UserIntegral userIntegral = userIntegralOpt.get();
-            BigDecimal avlIntegral = userIntegral.getAvlIntegral();
-            return lambdaUpdate().eq(UserIntegral::getUserId, userId).eq(UserIntegral::getAvlIntegral, avlIntegral)
-                .set(UserIntegral::getAvlIntegral, avlIntegral.add(plusVal)).update();
+            BigDecimal avlIntegral = userIntegral.getAvailIntegral();
+            return lambdaUpdate().eq(UserIntegral::getUserId, userId).eq(UserIntegral::getAvailIntegral, avlIntegral)
+                .set(UserIntegral::getAvailIntegral, avlIntegral.add(plusVal)).update();
         }
         return false;
     }
@@ -114,7 +114,7 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
     protected Boolean casPlusAvlIntegral(Long userId, BigDecimal plusVal) {
         int tryCatchCount = 10;
         for (int i = 0; i < tryCatchCount; i++) {
-            if (this.plusAvlIntegral(userId, plusVal)) {
+            if (this.plusAvailIntegral(userId, plusVal)) {
                 return true;
             }
         }
@@ -125,7 +125,7 @@ public class UserIntegralServiceImpl extends AbstractServiceImpl<UserIntegralMap
         Optional<UserIntegral> userIntegralOpt = lambdaQuery().eq(UserIntegral::getUserId, userId).oneOpt();
         if (!userIntegralOpt.isPresent()) {
             UserIntegral entity = new UserIntegral();
-            entity.setAvlIntegral(BigDecimal.ZERO);
+            entity.setAvailIntegral(BigDecimal.ZERO);
             entity.setUsedIntegral(BigDecimal.ZERO);
             entity.setUserId(userId);
             entity.setCreator(userId);
