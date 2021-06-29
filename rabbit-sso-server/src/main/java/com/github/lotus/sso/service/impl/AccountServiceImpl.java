@@ -1,6 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
 import com.github.lotus.chaos.api.SmsServiceApi;
+import com.github.lotus.common.utils.Rules;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinAccountRo;
 import com.github.lotus.sso.pojo.ro.LoginRo;
@@ -21,6 +22,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.github.lotus.sso.pojo.ro.JoinAccountRo.Mode.UsePhone;
+
 /**
  * Created by hocgin on 2020/10/7
  * email: hocgin@gmail.com
@@ -33,27 +36,25 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final SmsServiceApi smsApi;
-    private final UserServiceApi accountServiceApi;
+    private final SmsServiceApi smsServiceApi;
+    private final UserServiceApi userServiceApi;
 
     @Override
     public String join(JoinAccountRo ro) {
         JoinAccountRo.Mode mode = ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class);
-        switch (mode) {
-            case UsePhone: {
+        return ((String) Rules.create()
+            .rule(JoinAccountRo.Mode.UsePhone, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneModeGroup.class);
                 return this.joinUsePhone(ro.getPhoneMode());
-            }
-            case UseUsername: {
+            }))
+            .rule(JoinAccountRo.Mode.UseUsername, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameModeGroup.class);
                 return this.joinUseUsername(ro.getUsernameMode());
-            }
-            case UseEmail:
+            }))
+            .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> {
                 ValidatorUtils.validThrow(ro, JoinAccountRo.EmailModeGroup.class);
                 return this.joinUseEmail(ro.getEmailMode());
-            default:
-                throw ServiceException.wrap("该注册方式暂不支持");
-        }
+            })).of(mode).orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持")));
     }
 
     private String joinUseEmail(JoinAccountRo.EmailMode ro) {
@@ -66,8 +67,8 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setEmail(email);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
@@ -78,22 +79,22 @@ public class AccountServiceImpl implements AccountService {
             .setPassword(passwordEncoder.encode(password))
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setUsername(username);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
 
-        if (!smsApi.validVerifyCode(phone, verifyCode)) {
+        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
         CreateAccountRo newRo = new CreateAccountRo()
             .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
             .setPhone(phone);
-        UserDetailVo userDetailVo = accountServiceApi.createAccount(newRo);
-        return accountServiceApi.getUserToken(userDetailVo.getUsername());
+        UserDetailVo userDetailVo = userServiceApi.createAccount(newRo);
+        return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
     @Override
@@ -116,12 +117,12 @@ public class AccountServiceImpl implements AccountService {
     private String loginUseSms(LoginRo.SmsMode ro) {
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
-        if (!smsApi.validVerifyCode(phone, verifyCode)) {
+        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
             throw ServiceException.wrap("验证码错误");
         }
-        UserDetailVo userDetail = accountServiceApi.getUserByPhone(phone);
+        UserDetailVo userDetail = userServiceApi.getUserByPhone(phone);
         ValidUtils.notNull(userDetail, "手机号码错误");
-        return accountServiceApi.getUserToken(userDetail.getUsername());
+        return userServiceApi.getUserToken(userDetail.getUsername());
     }
 
     private String loginUsePassword(LoginRo.PasswordMode ro) {
@@ -132,7 +133,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (AuthenticationException e) {
             throw ServiceException.wrap("用户名或密码错误");
         }
-        return accountServiceApi.getUserToken(username);
+        return userServiceApi.getUserToken(username);
     }
 
 }

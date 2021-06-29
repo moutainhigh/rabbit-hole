@@ -9,7 +9,7 @@ import com.github.lotus.com.biz.service.CommentService;
 import com.github.lotus.com.biz.service.MessageUserRefProxyService;
 import com.github.lotus.common.datadict.com.NoticeMessageEventType;
 import com.github.lotus.common.datadict.com.NoticeMessageRefType;
-import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageService;
+import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
 import in.hocg.boot.message.autoconfigure.service.normal.redis.RedisMessageListener;
 import io.swagger.annotations.ApiModel;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
 @ApiModel("评论被评论")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class BeCommentedListener extends RedisMessageListener<Message<TriggerCommentedDto>> {
-    private final NormalMessageService messageService;
+    private final NormalMessageBervice messageService;
     private final CommentService commentService;
     private final MessageUserRefProxyService messageUserRefProxyService;
 

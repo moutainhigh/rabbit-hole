@@ -87,9 +87,9 @@ public class ProjectController {
         return Result.success();
     }
 
-    @GetMapping("/encoding:{encoding}")
     @ApiOperation("详情 - 项目")
     @ApiOperationSupport(author = "hocgin")
+    @GetMapping("/encoding:{encoding}")
     public Result<ProjectComplexVo> getByEncoding(@PathVariable("encoding") String encoding) {
         return Result.success(service.getByEncoding(encoding));
     }

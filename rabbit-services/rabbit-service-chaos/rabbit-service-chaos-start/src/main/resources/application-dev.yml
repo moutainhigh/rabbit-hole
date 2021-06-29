@@ -1,7 +1,7 @@
 logging:
   level:
-    root: warn
-    in.hocg: debug
+    root: WARN
+    in.hocg: DEBUG
 
 spring:
   datasource:
@@ -13,6 +13,9 @@ spring:
     host: sv-redis.basic
     port: 6379
     database: 1
+boot:
+  web:
+    hostname: https://api-dev.hocgin.top
 rabbit:
   payment:
     url-prefix: https://api-dev.hocgin.top/pay

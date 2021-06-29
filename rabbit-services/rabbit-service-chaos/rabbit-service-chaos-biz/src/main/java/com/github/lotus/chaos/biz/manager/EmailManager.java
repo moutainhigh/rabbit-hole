@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.manager;
 
 import cn.hutool.core.util.StrUtil;
-import in.hocg.boot.mail.autoconfigure.core.MailService;
+import in.hocg.boot.mail.autoconfigure.core.MailBervice;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class EmailManager {
     private final RedisManager redisManager;
-    private final MailService service;
+    private final MailBervice service;
 
     private void sendEmail(String email, String text) {
         log.info("发送邮件, 接收人: [{}], 内容: [{}]", email, text);

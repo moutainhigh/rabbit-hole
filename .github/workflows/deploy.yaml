@@ -133,7 +133,7 @@ jobs:
             ${{ runner.os }}-maven-
       # 进行 Maven 编译
       - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+        run: ./mvnw clean package -DskipTests --batch-mode
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       # 设置 Docker 编译环境

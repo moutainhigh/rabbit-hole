@@ -26,6 +26,9 @@ spring:
     namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
     groupId: rabbit-hold
     appKey: hr3g+Up7k91lHL4eAX4DhQ==
+jasypt:
+  encryptor:
+    poolSize: 10
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
@@ -75,6 +78,11 @@ boot:
           token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
   message:
     type: redis
+  youtube:
+    clients:
+      - application-name: simple-app
+        client-id: 854840501995-v67uhbkpipjdicve031ka4rdjqqojmf1.apps.googleusercontent.com
+        client-secret: gV04XZx4G0TFyOsR0YC3jaRW
 
 rabbit:
   payment:

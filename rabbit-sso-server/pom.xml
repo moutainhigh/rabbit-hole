@@ -14,7 +14,7 @@
   <artifactId>rabbit-sso-server</artifactId>
 
   <properties>
-    <main-class>com.github.lotus.sso.SsoServerApplication</main-class>
+    <main-class>com.github.lotus.sso.BootApplication</main-class>
   </properties>
 
   <dependencies>

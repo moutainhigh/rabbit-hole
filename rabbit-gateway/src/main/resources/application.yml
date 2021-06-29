@@ -114,7 +114,7 @@ boot:
         ,/ignore
         ,/*/v2/api-docs
 
-        ,/com/user/message/stat
+        ,/com/mina/message/stat
 
         ,/com/district/tree
         ,/com/project/encoding:*
@@ -145,6 +145,8 @@ boot:
         ,/mina/*/mobile-wallpaper/_paging
         ,/mina/*/mobile-wallpaper/random/_paging
         ,/mina/*/mobile-wallpaper/tags/_paging
+        ,/mina/youtube/authorize
+        ,/mina/youtube/*/callback
 
         ,/sso/account/login/token
 rabbit:

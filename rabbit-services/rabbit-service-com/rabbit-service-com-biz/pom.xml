@@ -25,6 +25,10 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-mina-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-ums-api</artifactId>
     </dependency>
     <dependency>
@@ -67,6 +71,18 @@
     <dependency>
       <groupId>in.hocg.boot</groupId>
       <artifactId>message-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>task-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>vars-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>schedulerx-spring-boot-starter</artifactId>
     </dependency>
     <!--  三方库  -->
     <dependency>

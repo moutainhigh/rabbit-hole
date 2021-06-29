@@ -12,7 +12,7 @@ import com.github.lotus.mina.biz.entity.MobileWallpaper;
 import com.github.lotus.mina.biz.service.MobileWallpaperService;
 import com.github.lotus.mina.gathering.youxie.Post;
 import com.google.common.collect.Maps;
-import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import in.hocg.boot.utils.LangUtils;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class YouXieGathering extends AbstractSpringBootTest {
     @Autowired
     MobileWallpaperService mobileWallpaperService;
     @Autowired
-    OssFileService ossFileService;
+    OssFileBervice ossFileService;
 
     @Test
     public void youxie() throws InterruptedException {

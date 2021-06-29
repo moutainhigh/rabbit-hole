@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.lotus.chaos.BootApplication;
-import in.hocg.boot.oss.autoconfigure.core.OssFileService;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import lombok.SneakyThrows;
 import org.junit.Test;
@@ -34,7 +34,7 @@ import java.util.List;
 @SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UploadNesMainTests extends AbstractSpringBootTest {
     @Autowired
-    protected OssFileService ossFileService;
+    protected OssFileBervice ossFileService;
 
     @Test
     public void xxxx() throws IOException {

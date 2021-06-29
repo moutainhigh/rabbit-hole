@@ -33,6 +33,8 @@ public class Project extends AbstractEntity<Project> {
     @ApiModelProperty("编码")
     @TableField("encoding")
     private String encoding;
+    @TableField("config")
+    private String config;
     @ApiModelProperty("图章地址")
     @TableField("logo_url")
     private String logoUrl;

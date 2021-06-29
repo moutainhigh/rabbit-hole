@@ -1,7 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.sso.config.security.PageConstants;
-import com.github.lotus.sso.config.security.SecurityContext;
+import com.github.lotus.sso.config.security.helper.PageConstants;
+import com.github.lotus.sso.config.security.helper.SecurityContext;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.ums.api.SocialServiceApi;
 import com.github.lotus.ums.api.UserServiceApi;
@@ -27,12 +27,12 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SocialServiceImpl implements SocialService {
-    private final SocialServiceApi socialApi;
-    private final UserServiceApi accountApi;
+    private final SocialServiceApi socialServiceApi;
+    private final UserServiceApi userServiceApi;
 
     @Override
     public void onAuthenticationSuccess(String socialType, String socialId, String username) {
-        UserDetailVo userDetail = socialApi.getAccountBySocialTypeAndSocialId(socialType, socialId);
+        UserDetailVo userDetail = socialServiceApi.getAccountBySocialTypeAndSocialId(socialType, socialId);
 
         // 社交账号未被绑定
         if (Objects.isNull(userDetail)) {
@@ -40,8 +40,8 @@ public class SocialServiceImpl implements SocialService {
             if (Objects.nonNull(username)) {
                 // 这个用户需要未绑定改类型的社交账号
                 log.debug("==> 绑定社交账号 [{}] 到 [{}]", socialType + socialId, username);
-                UserDetailVo user = accountApi.getUserByUsername(username);
-                socialApi.insertOne(new InsertSocialRo()
+                UserDetailVo user = userServiceApi.getUserByUsername(username);
+                socialServiceApi.insertOne(new InsertSocialRo()
                     .setSocialType(socialType)
                     .setSocialId(socialId)
                     .setUserId(user.getId()));

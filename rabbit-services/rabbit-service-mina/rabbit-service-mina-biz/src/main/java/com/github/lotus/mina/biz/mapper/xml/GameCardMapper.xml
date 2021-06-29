@@ -13,7 +13,7 @@
         AND mgc.enabled = #{ro.enabled}
       </if>
     </where>
-    ORDER BY mgc.priority DESC, mgc.created_at DESC
+    ORDER BY mgc.heat DESC, mgc.priority DESC, mgc.created_at DESC
   </select>
 
   <select id="complete" resultType="com.github.lotus.mina.biz.entity.GameCard">
@@ -21,7 +21,8 @@
     FROM mina_game_card mgc
     <where>
       <if test="ro.type != null">
-        AND mgc.game_type = #{ro.type}
+        <bind name="type" value="'%' + ro.type + '%'"/>
+        AND UPPER(mgc.game_url) LIKE #{type}
       </if>
       <if test="ro.keyword != null">
         <bind name="keyword" value="'%' + ro.keyword + '%'"/>
@@ -33,14 +34,5 @@
   <select id="paging" resultType="com.github.lotus.mina.biz.entity.GameCard">
     SELECT mgc.*
     FROM mina_game_card mgc
-    <where>
-      <if test="ro.type != null">
-        AND mgc.game_type = #{ro.type}
-      </if>
-      <if test="ro.keyword != null">
-        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
-        AND (mgc.remark LIKE #{keyword} OR mgc.title LIKE #{keyword} OR mgc.tags LIKE #{keyword})
-      </if>
-    </where>
   </select>
 </mapper>

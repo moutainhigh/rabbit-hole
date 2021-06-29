@@ -1,13 +1,20 @@
 package com.github.lotus.common.utils;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileMode;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 
 /**
@@ -54,5 +61,24 @@ public class CommonUtils {
         fos.flush();
         fos.close();
         return dfile;
+    }
+
+    @SneakyThrows
+    public static Path toFile2(String formUrl) {
+        InputStream inputStream = URI.create(formUrl).toURL().openStream();
+        Path toPath = Files.createTempFile("_", "." + getFileName(formUrl));
+        File toFile = toPath.toFile();
+        FileUtil.writeFromStream(inputStream, toFile);
+        return toPath;
+    }
+
+    @SneakyThrows
+    public static Path modifyMD5(Path path) {
+        @Cleanup
+        RandomAccessFile file = FileUtil.createRandomAccessFile(path, FileMode.rw);
+        file.seek(file.length());
+        file.writeBytes("hocgin");
+        file.close();
+        return path;
     }
 }

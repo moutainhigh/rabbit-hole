@@ -1,16 +1,12 @@
 package com.github.lotus.sso.config.security.user;
 
-import cn.hutool.core.lang.Assert;
-import com.github.lotus.ums.api.UserServiceApi;
-import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
+import com.github.lotus.sso.config.security.SecuritySupportService;
+import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 /**
  * Created by hocgin on 2020/1/9.
@@ -21,13 +17,12 @@ import java.util.Collections;
 @Component
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
-    private final UserServiceApi accountApi;
+    private final SecuritySupportService supportService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetailVo user = accountApi.getUserByUsernameOrEmailOrPhone(username);
-        Assert.notNull(user, "账号或密码错误");
-        return new User(username, user.getPassword(), Collections.emptyList());
+        return supportService.getUserByUsernameOrEmailOrPhone(username)
+            .orElseThrow(() -> ServiceException.wrap("账号或密码错误"));
     }
 
 }
