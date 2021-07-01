@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.lotus.chaos.BootApplication;
+import com.github.lotus.chaos.biz.manager.LangManager;
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import lombok.SneakyThrows;
@@ -35,6 +36,13 @@ import java.util.List;
 public class UploadNesMainTests extends AbstractSpringBootTest {
     @Autowired
     protected OssFileBervice ossFileService;
+    @Autowired
+    protected LangManager langManager;
+
+    @Test
+    public void testx() {
+        langManager.uploadMiStep("13600747016", "Heke5200", 8888);
+    }
 
     @Test
     public void xxxx() throws IOException {
