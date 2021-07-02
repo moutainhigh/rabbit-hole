@@ -1,19 +1,25 @@
 package com.github.lotus.chaos.biz.manager;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.github.lotus.chaos.biz.support.I2ProxyHttpClient;
+import com.github.lotus.chaos.biz.support.MiSupport;
 import com.google.common.collect.Maps;
-import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHost;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Created by hocgin on 2020/11/11
@@ -25,6 +31,7 @@ import java.util.HashMap;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LangManager {
+    private final StringRedisTemplate redisTemplate;
 
     /**
      * 获取冈布奥每日密令
@@ -48,16 +55,29 @@ public class LangManager {
      * @param count    count
      */
     public void uploadMiStep(String username, String password, Integer count) {
-        String url = StrUtil.format("https://api.5173kk.com/cloudApi/sport/mi/submit?mobile={}&password={}&count={}", username, password, count);
-        HttpRequest request = HttpUtil.createPost(url);
-        HttpResponse response = request.execute();
+        I2ProxyHttpClient.proxy(new Function<HttpHost, String>() {
+            @Override
+            public String apply(HttpHost httpHost) {
+                MiSupport.loginAndUpdate(username, password, count, httpHost);
+                return "ok";
+            }
+        });
+    }
 
-        JSONObject result = JSON.parseObject(response.body());
-        String msg = result.getString("msg");
-        Integer code = result.getInteger("code");
-        if (code != 0) {
-            ValidUtils.fail(msg);
+    public Optional<HttpHost> getProxyIp() {
+//        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        String url = "http://api.520e.com.cn/api/ip/getIp";
+        String body = null; //ops.get(url);
+        if (Objects.isNull(body)) {
+            body = HttpRequest.get(url).execute().body();
+            Assert.notBlank(body);
         }
+        final cn.hutool.json.JSONObject result = JSONUtil.parseObj(body);
+        Assert.isTrue(result.getInt("code") == 0, result.getStr("msg"));
+        cn.hutool.json.JSONObject data = result.getJSONObject("data");
+
+//        ops.set(url, body, data.getLong("time") - 1000);
+        return Optional.of(new HttpHost(data.getStr("ip"), data.getInt("port")));
     }
 
 }
