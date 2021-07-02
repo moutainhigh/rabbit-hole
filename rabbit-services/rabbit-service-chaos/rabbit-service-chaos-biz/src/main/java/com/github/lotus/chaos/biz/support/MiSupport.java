@@ -202,7 +202,7 @@ public class MiSupport {
             String userId = result.right;
             return updateStep(getAppToken(apptoken, proxy), userId, step, proxy);
         } catch (Exception e) {
-            throw ServiceException.wrap("操作失败" + e.getMessage());
+            throw ServiceException.wrap("操作失败: {}", e.getMessage());
         }
     }
 
