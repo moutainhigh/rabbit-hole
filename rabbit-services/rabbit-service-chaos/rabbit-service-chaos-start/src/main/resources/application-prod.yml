@@ -7,7 +7,7 @@ spring:
   redis:
     host: sv-redis.basic
     port: 6379
-    database: 0
+    database: 3
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

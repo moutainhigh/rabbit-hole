@@ -84,6 +84,13 @@ spring:
         - name: SaveSession
       loadbalancer:
         use404: true
+  redis:
+    database: 0
+    port: 6379
+    timeout: 10000
+    jedis:
+      pool:
+        max-active: 10
   security:
     oauth2:
       shostname: http://sso.hocgin.top
@@ -149,6 +156,10 @@ boot:
         ,/mina/youtube/*/callback
 
         ,/sso/account/login/token
+  cache:
+    names:
+      - name: GET_USER_DETAIL
+        ttl: 5M
 rabbit:
   gateway:
     authorize:
