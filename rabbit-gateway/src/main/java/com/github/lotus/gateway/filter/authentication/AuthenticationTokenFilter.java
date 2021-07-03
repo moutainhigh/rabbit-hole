@@ -31,7 +31,7 @@ public class AuthenticationTokenFilter implements BearerTokenAuthentication {
         String username;
         try {
             username = JwtUtils.decode(token);
-            checker.check(userService.getUserDetail(username));
+//            checker.check(userService.getUserDetail(username));
         } catch (Exception e) {
             log.warn("用户登陆鉴权失败 token=[{}], 失败: {}", token, e);
             return new UsernamePasswordAuthenticationToken("", null, Collections.emptyList());
