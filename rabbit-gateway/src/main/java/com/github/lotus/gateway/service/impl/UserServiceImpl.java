@@ -1,11 +1,13 @@
 package com.github.lotus.gateway.service.impl;
 
+import com.github.lotus.gateway.constant.CacheKeys;
 import com.github.lotus.gateway.service.UserService;
 import com.github.lotus.ums.api.AuthorityServiceApi;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Cacheable(cacheNames = CacheKeys.GET_USER_DETAIL, key = "#username")
+    @Cacheable(cacheNames = CacheKeys.GET_USER_DETAIL, key = "#username")
     public UserDetailVo getUserDetail(String username) {
         return ValidUtils.notNull(userServiceApi.getUserByUsername(username), "用户不存在");
     }
