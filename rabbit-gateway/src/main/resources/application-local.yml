@@ -2,6 +2,10 @@ spring:
   security:
     oauth2:
       shostname: http://sso.hocgin.local
+  redis:
+    host: 39.100.87.79
+    port: 32079
+    database: 0
 boot:
   sso:
     client:

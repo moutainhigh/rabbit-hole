@@ -6,6 +6,10 @@ spring:
   security:
     oauth2:
       shostname: https://sso-dev.hocgin.top
+  redis:
+    host: sv-redis.basic
+    port: 6379
+    database: 1
 boot:
   sso:
     client:

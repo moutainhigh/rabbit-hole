@@ -22,4 +22,10 @@ public class UserDetailVo {
     private String username;
     @ApiModelProperty("密码")
     private String password;
+    @ApiModelProperty("过期状态")
+    private Boolean expired;
+    @ApiModelProperty("锁定状态")
+    private Boolean locked;
+    @ApiModelProperty("启用状态")
+    private Boolean enabled;
 }

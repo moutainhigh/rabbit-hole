@@ -36,6 +36,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
+      <artifactId>cache-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
       <artifactId>web-spring-boot-starter</artifactId>
     </dependency>
     <dependency>
