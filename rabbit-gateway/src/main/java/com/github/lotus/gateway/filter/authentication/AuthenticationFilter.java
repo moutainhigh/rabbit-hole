@@ -2,9 +2,11 @@ package com.github.lotus.gateway.filter.authentication;
 
 import com.github.lotus.usercontext.basic.HeaderConstants;
 import in.hocg.boot.sso.client.autoconfigure.utils.TokenUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,7 +23,9 @@ import java.security.Principal;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthenticationFilter implements GlobalFilter, Ordered {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         return exchange.getPrincipal().map(Principal::getName).defaultIfEmpty("")
@@ -41,4 +45,5 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     private boolean isAnonymous(String username) {
         return StringUtils.isEmpty(username) || TokenUtils.ANONYMOUS_AUTHENTICATION_TOKEN.getPrincipal().equals(username);
     }
+
 }

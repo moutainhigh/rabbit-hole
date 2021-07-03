@@ -15,6 +15,7 @@ import in.hocg.boot.validation.autoconfigure.core.ValidatorUtils;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,14 +23,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.github.lotus.sso.pojo.ro.JoinAccountRo.Mode.UsePhone;
-
 /**
  * Created by hocgin on 2020/10/7
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl implements AccountService {
@@ -131,6 +131,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (AuthenticationException e) {
+            log.warn("登陆失败", e);
             throw ServiceException.wrap("用户名或密码错误");
         }
         return userServiceApi.getUserToken(username);

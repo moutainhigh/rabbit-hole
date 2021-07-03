@@ -22,6 +22,9 @@ public interface AccountMapping {
     @Mapping(target = "avatarUrl", source = "avatarUrl")
     AccountVo asAccountVo(User entity);
 
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     @Mapping(target = "avatar", source = "avatarUrl")
     @Mapping(target = "social", ignore = true)
     @Mapping(target = "genderName", ignore = true)

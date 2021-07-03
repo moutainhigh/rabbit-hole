@@ -52,10 +52,10 @@ public class User extends AbstractEntity<User> {
     @ApiModelProperty("性别(0:女, 1:男)")
     @TableField("gender")
     private Integer gender;
-    @ApiModelProperty("过期状态")
+    @ApiModelProperty("非过期状态")
     @TableField("expired")
     private Boolean expired;
-    @ApiModelProperty("锁定状态")
+    @ApiModelProperty("非锁定状态")
     @TableField("locked")
     private Boolean locked;
     @ApiModelProperty("启用状态")
