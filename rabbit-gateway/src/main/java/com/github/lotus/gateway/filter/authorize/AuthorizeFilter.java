@@ -1,6 +1,5 @@
 package com.github.lotus.gateway.filter.authorize;
 
-import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.gateway.filter.authentication.DefaultUserDetailsChecker;
 import com.github.lotus.gateway.service.UserService;
 import com.github.lotus.gateway.utils.ResultUtils;
@@ -63,10 +62,11 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
             return ResultUtils.handleException(exchange, e);
         }
 
-        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
-            log.warn("username:[{}], 访问URL=[{}]", username, uri);
-            return ResultUtils.accessDenied(exchange);
-        }
+//        todo 如果要开启，需要给每个用户配置接口权限
+//        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
+//            log.warn("username:[{}], 访问URL=[{}]", username, uri);
+//            return ResultUtils.accessDenied(exchange);
+//        }
 
         return chain.filter(exchange);
     }
