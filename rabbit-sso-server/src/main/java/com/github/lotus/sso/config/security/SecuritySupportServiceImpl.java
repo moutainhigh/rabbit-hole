@@ -27,7 +27,7 @@ public class SecuritySupportServiceImpl implements SecuritySupportService {
     public Optional<UserDetails> getUserDetailsByPhone(String phone) {
         UserDetailVo user = userServiceApi.getUserByUsernameOrEmailOrPhone(phone);
         Assert.notNull(user, "账号或密码错误");
-        return Optional.of(new User(phone, user.getPassword(), user.getEnabled(), user.getExpired(), true, user.getLocked(), Collections.emptyList()));
+        return Optional.of(new User(user.getUsername(), user.getPassword(), user.getEnabled(), user.getExpired(), true, user.getLocked(), Collections.emptyList()));
     }
 
     @Override
