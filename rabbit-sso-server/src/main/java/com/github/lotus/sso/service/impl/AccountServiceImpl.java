@@ -132,7 +132,7 @@ public class AccountServiceImpl implements AccountService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (AuthenticationException e) {
             log.warn("登陆失败", e);
-            throw ServiceException.wrap("用户名或密码错误");
+            throw ServiceException.wrap("{}", e.getMessage());
         }
         return userServiceApi.getUserToken(username);
     }
