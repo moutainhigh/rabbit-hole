@@ -24,6 +24,19 @@ import java.nio.charset.StandardCharsets;
 public class ResultUtils {
 
     /**
+     * 处理异常
+     * @param exchange exchange
+     * @param e e
+     * @return _
+     */
+    public Mono<Void> handleException(ServerWebExchange exchange, Exception e) {
+        if (CommonUtils.isAjaxRequest(exchange)) {
+            return result(exchange, Result.fail(e.getMessage()));
+        }
+        throw new RuntimeException(e);
+    }
+
+    /**
      * 被拒绝访问, 没有权限
      *
      * @param exchange exchange

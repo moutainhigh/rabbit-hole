@@ -1,8 +1,9 @@
 package com.github.lotus.gateway.filter.authorize;
 
-import com.github.lotus.common.utils.RabbitUtils;
+import com.github.lotus.gateway.filter.authentication.DefaultUserDetailsChecker;
 import com.github.lotus.gateway.service.UserService;
 import com.github.lotus.gateway.utils.ResultUtils;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.usercontext.basic.HeaderConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -10,11 +11,14 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.Collections;
 
 /**
  * Created by hocgin on 2021/1/19
@@ -26,6 +30,7 @@ import java.net.URI;
 @Component
 public class AuthorizeFilter extends BaseAuthorizeFilter {
     private final UserService userService;
+    private final UserDetailsChecker checker = new DefaultUserDetailsChecker();
 
     public AuthorizeFilter(AuthorizeProperties properties, UserService userService) {
         super(properties);
@@ -50,10 +55,18 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
             return ResultUtils.notLogin(exchange);
         }
 
-        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
-            log.warn("username:[{}], 访问URL=[{}]", username, uri);
-            return ResultUtils.accessDenied(exchange);
+        try {
+            checker.check(this.convertUser(userService.getUserDetail(username)));
+        } catch (Exception e) {
+            log.warn("检查账户发生异常: ", e);
+            return ResultUtils.handleException(exchange, e);
         }
+
+//        todo 如果要开启，需要给每个用户配置接口权限
+//        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
+//            log.warn("username:[{}], 访问URL=[{}]", username, uri);
+//            return ResultUtils.accessDenied(exchange);
+//        }
 
         return chain.filter(exchange);
     }
@@ -71,5 +84,10 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
     @Override
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE + 3;
+    }
+
+    private User convertUser(UserDetailVo userDetail) {
+        return new User(userDetail.getUsername(), userDetail.getPassword(), userDetail.getEnabled(),
+            userDetail.getExpired(), true, userDetail.getLocked(), Collections.emptyList());
     }
 }

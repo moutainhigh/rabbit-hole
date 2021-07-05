@@ -1,6 +1,6 @@
 package com.github.lotus.gateway.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 
 /**
  * Created by hocgin on 2021/1/20
@@ -11,5 +11,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserService {
     boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri);
 
-    UserDetails getUserDetail(String username);
+    UserDetailVo getUserDetail(String username);
 }

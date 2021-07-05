@@ -164,4 +164,3 @@ rabbit:
   gateway:
     authorize:
       ignore-urls: ${boot.sso.client.ignore-urls}
-        ,/**

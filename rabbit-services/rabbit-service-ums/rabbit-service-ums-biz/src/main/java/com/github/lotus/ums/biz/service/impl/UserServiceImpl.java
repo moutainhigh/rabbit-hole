@@ -134,8 +134,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserDetailVo getUserDetailVoByUsername(String username) {
-        return getByUsername(username)
-            .map(mapping::asUserDetailVo).orElse(null);
+        return getByUsername(username).map(mapping::asUserDetailVo).orElse(null);
     }
 
     @Override
