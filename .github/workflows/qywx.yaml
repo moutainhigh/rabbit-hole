@@ -13,12 +13,11 @@ jobs:
         with:
           msgtype: markdown
           content: "🎉 **【[${{ github.repository }}](https://github.com/${{ github.repository }})】** 发布完成。\n
-          **-** 🕐 \n<font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
-          **-** 🏃 \n<font color=\"info\">${{ github.actor }}</font> \n
-          **-** 🔧 \n<font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
-          **-** 📝 \n<font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
+          🕐 <font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
+          🏃 <font color=\"info\">${{ github.actor }}</font> \n
+          🔧 <font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
+          📝 <font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
           \n
-          ###### 其他 \n
           - [查看详情](https://www.hocgin.top)
           "
           mentioned_list: '["@all"]'
