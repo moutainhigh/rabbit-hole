@@ -12,9 +12,9 @@ jobs:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: markdown
-          content: "🎉 **【[${{ github.repository }}](https://github.com/${{ github.repository }})】** 发布完成。\n
+          content: "🎉**【[${{ github.repository }}](https://github.com/${{ github.repository }})】** \n
+          🏃| 发布完成 | <font color=\"info\">${{ github.actor }}</font>\n
           🕐 <font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
-          🏃 <font color=\"info\">${{ github.actor }}</font> \n
           🔧 <font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
           📝 <font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
           \n
