@@ -23,12 +23,12 @@ on:
 #        description: '是否重发 spring-boot-admin'
 #        required: true
 #        default: 'false'
-  push:
-    branches:
-      - develop
-      - rls-*
-      - features-*
-      - master
+#  push:
+#    branches:
+#      - develop
+#      - rls-*
+#      - features-*
+#      - master
   create:
     tags:
       - v*.*.*
