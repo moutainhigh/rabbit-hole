@@ -9,8 +9,10 @@ jobs:
       - id: wx_prep
         run: |
           echo ::set-output name=wx_created::$(date -u +'%Y-%m-%d %H:%M:%SZ')
-          echo ::set-output name=wx_base_ref::$(echo ${github.base_ref#refs/heads/})
-          echo ::set-output name=wx_target_ref::$(echo ${github.event.ref#refs/heads/})
+          GITHUB_REF=${{github.base_ref}}
+          echo ::set-output name=wx_base_ref::$(echo ${GITHUB_REF#refs/heads/})
+          GITHUB_REF=${{github.event.ref}}
+          echo ::set-output name=wx_target_ref::$(echo ${GITHUB_REF#refs/heads/})
       - name: WeChat Work Notification
         uses: chf007/action-wechat-work@master
         env:
