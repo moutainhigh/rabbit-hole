@@ -12,14 +12,13 @@ jobs:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: markdown
-          content: "🎉 [${{ github.repository }}](https://github.com/${{ github.repository }}) 发布完成。\n
-          - 🕐 <font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
-          - 🏃 <font color=\"info\">${{ github.actor }}</font> \n
-          - 🔧 <font color=\"warning\">${{ github.base_ref }} -> ${{ github.event.ref }}</font> \n
-          - 📝 <font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
-
-          ###### 其他
-          - ![workflow badge](https://github.com/${{ github.repository }}/actions/workflows/${{ github.workflow }}/badge.svg?branch=master)
+          content: "🎉 **【[${{ github.repository }}](https://github.com/${{ github.repository }})】** 发布完成。\n
+          **-** 🕐 \n<font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
+          **-** 🏃 \n<font color=\"info\">${{ github.actor }}</font> \n
+          **-** 🔧 \n<font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
+          **-** 📝 \n<font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
+          \n
+          ###### 其他 \n
           - [查看详情](https://www.hocgin.top)
           "
           mentioned_list: '["@all"]'
