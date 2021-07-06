@@ -9,8 +9,8 @@ jobs:
       - id: wx_prep
         run: |
           echo ::set-output name=wx_created::$(date -u +'%Y-%m-%d %H:%M:%SZ')
-          echo ::set-output name=wx_base_ref::echo ${github.base_ref#refs/heads/}
-          echo ::set-output name=wx_target_ref::echo ${github.event.ref#refs/heads/}
+          echo ::set-output name=wx_base_ref::$(echo ${github.base_ref#refs/heads/})
+          echo ::set-output name=wx_target_ref::$(echo ${github.event.ref#refs/heads/})
       - name: WeChat Work Notification
         uses: chf007/action-wechat-work@master
         env:
@@ -26,4 +26,3 @@ jobs:
           \n
           - [查看详情](https://www.hocgin.top)
           "
-          mentioned_list: '["@all"]'
