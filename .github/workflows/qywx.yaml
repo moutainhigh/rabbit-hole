@@ -13,9 +13,10 @@ jobs:
         with:
           msgtype: markdown
           content: "🎉**【[${{ github.repository }}](https://github.com/${{ github.repository }})】** \n
-          🏃 | 发布完成 | <font color=\"info\">${{ github.actor }}</font>\n
-          🕐 <font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
-          🔧 <font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
+          \n
+          🏃 <font color=\"info\">${{ github.actor }}</font>\n
+          🕐 <font color=\"comment\">${{ github.event.head_commit.created_at }}</font> \n
+          🔧 <font color=\"warning\">${{ github.base_ref#refs/heads/ || '∅' }} -> ${{ github.event.ref#refs/heads/ }}</font> \n
           📝 <font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
           \n
           - [查看详情](https://www.hocgin.top)
