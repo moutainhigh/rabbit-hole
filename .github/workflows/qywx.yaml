@@ -13,7 +13,7 @@ jobs:
         with:
           msgtype: markdown
           content: "🎉**【[${{ github.repository }}](https://github.com/${{ github.repository }})】** \n
-          🏃| 发布完成 | <font color=\"info\">${{ github.actor }}</font>\n
+          🏃 | 发布完成 | <font color=\"info\">${{ github.actor }}</font>\n
           🕐 <font color=\"comment\">${{ github.event.head_commit.timestamp }}</font> \n
           🔧 <font color=\"warning\">${{ github.base_ref || '∅' }} -> ${{ github.event.ref }}</font> \n
           📝 <font color=\"comment\"> ${{ github.event.head_commit.message }}</font> \n
