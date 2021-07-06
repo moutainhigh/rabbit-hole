@@ -241,6 +241,7 @@ jobs:
         uses: chf007/action-wechat-work@master
         env:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
+        with:
           msgtype: markdown
           content: "🎉 [Rabbit-Hole](https://github.com/tree-lotus/rabbit-hole) 发布完成。\n
           > \n
