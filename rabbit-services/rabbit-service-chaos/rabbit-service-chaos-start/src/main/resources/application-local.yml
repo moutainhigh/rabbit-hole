@@ -1,6 +1,7 @@
 logging:
   level:
     root: INFO
+    in.hocg: DEBUG
 
 spring:
   datasource:
