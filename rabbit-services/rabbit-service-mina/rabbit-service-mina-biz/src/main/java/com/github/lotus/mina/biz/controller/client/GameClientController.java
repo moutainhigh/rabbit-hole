@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 import com.github.lotus.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import com.github.lotus.mina.biz.pojo.vo.GameCardComplexVo;
@@ -22,9 +22,9 @@ import java.util.List;
  */
 @Api(tags = "mina::小程序游戏")
 @RestController
-@RequestMapping("/{appid}/game")
+@RequestMapping({"/{appid}/game", "/game"})
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class GameController {
+public class GameClientController {
     private final GameCardService service;
 
     @PostMapping("/_paging")

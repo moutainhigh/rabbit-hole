@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/game/room")
-public class GameRoomController {
+public class GameRoomClientController {
     private final GameRoomService service;
 
     @ApiOperation("分页查询")

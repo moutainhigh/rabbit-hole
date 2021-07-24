@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 
 import com.github.lotus.mina.biz.pojo.ro.MinaStatusMaterialPagingRo;
@@ -27,8 +27,8 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/{appid}/status-material")
-public class MinaStatusMaterialController {
+@RequestMapping({"/{appid}/status-material", "/material"})
+public class StatusMaterialClientController {
     private final StatusMaterialService service;
 
     @ApiOperation("状态素材 - 分页查询")

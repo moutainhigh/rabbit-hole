@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 
 import com.github.lotus.mina.biz.pojo.ro.MinaAppCardPagingRo;
@@ -29,8 +29,8 @@ import java.util.List;
 @Api(tags = "mina::小程序应用")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/{appid}/app")
-public class MinaAppCardController {
+@RequestMapping({"/{appid}/app", "/app-card"})
+public class AppCardClientController {
     private final AppCardService service;
 
     @ApiOperation("应用 - 分页查询")

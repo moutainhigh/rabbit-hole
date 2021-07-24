@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/{appid}/mobile-wallpaper")
-public class MinaMobileWallpaperController {
+@RequestMapping({"/{appid}/mobile-wallpaper", "/wallpaper"})
+public class WallpaperClientController {
     private final MobileWallpaperService service;
 
     @ApiOperation("手机壁纸 - 分页查询")
