@@ -28,7 +28,6 @@ on:
       - develop
       - rls-*
       - features-*
-      - master
   create:
     tags:
       - v*.*.*

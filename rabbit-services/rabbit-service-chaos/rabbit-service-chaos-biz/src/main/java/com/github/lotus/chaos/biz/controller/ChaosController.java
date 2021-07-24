@@ -1,5 +1,7 @@
 package com.github.lotus.chaos.biz.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.github.lotus.chaos.biz.constant.SentinelKeys;
 import com.github.lotus.chaos.biz.pojo.ro.SendEmailCodeRo;
 import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
 import com.github.lotus.chaos.biz.pojo.vo.IpAddressVo;
@@ -39,9 +41,9 @@ public class ChaosController {
     @ApiOperation("发送短信验证码")
     @PostMapping("/sms-code")
     @ResponseBody
-    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
-        service.sendSmsCode(qo);
-        return Result.success();
+    @SentinelResource(SentinelKeys.GET_SMS_CODE)
+    public Result<Long> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
+        return Result.success(service.sendSmsCode(qo));
     }
 
     @ApiOperation("发送邮箱验证码")

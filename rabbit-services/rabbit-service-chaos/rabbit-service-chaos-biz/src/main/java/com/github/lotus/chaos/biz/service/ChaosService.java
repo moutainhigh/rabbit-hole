@@ -13,7 +13,7 @@ import com.github.lotus.chaos.biz.pojo.vo.IpAddressVo;
  */
 public interface ChaosService {
 
-    void sendSmsCode(SendSmsCodeRo ro);
+    Long sendSmsCode(SendSmsCodeRo ro);
 
     IpAddressVo getAddress4ip(String ip);
 

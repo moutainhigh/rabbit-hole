@@ -2,6 +2,7 @@ package com.github.lotus.chaos.biz.support.sms;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.github.lotus.chaos.biz.manager.SmsManager;
 import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,10 @@ public class SmsServiceImpl implements SmsService {
     private final SmsManager smsManager;
 
     @Override
-    public void sendSmsCode(SendSmsCodeRo qo) {
+    public Long sendSmsCode(SendSmsCodeRo qo) {
         final String phone = qo.getPhone();
         Assert.notBlank(phone, "手机号不能为空");
-        smsManager.sendVerifyCode(phone, RandomUtil.randomNumbers(4));
+        return smsManager.sendVerifyCode(phone, RandomUtil.randomNumbers(4));
     }
 
     @Override

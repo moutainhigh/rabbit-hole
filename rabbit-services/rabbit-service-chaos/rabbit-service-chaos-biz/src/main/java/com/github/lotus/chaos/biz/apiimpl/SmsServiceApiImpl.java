@@ -23,9 +23,4 @@ public class SmsServiceApiImpl implements SmsServiceApi {
         return service.validSmsCode(phone, smsCode);
     }
 
-    @Override
-    public void sendVerifyCode(String phone) {
-        service.sendSmsCode(new SendSmsCodeRo()
-            .setPhone(phone));
-    }
 }

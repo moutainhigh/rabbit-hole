@@ -32,25 +32,26 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"docking::微信小程序"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/wx/miniapp/{appid}")
+@RequestMapping({"/wx/miniapp/{appid}", "/wx/miniapp"})
 public class WxMaController {
     private final WxMaIndexService service;
 
     @ApiOperation("登陆/注册接口")
-    @PostMapping("/token2")
-    public Result<WxMaLoginVo> getUserTokenV2(@PathVariable String appid, @Validated @RequestBody GetMaUserToken2Ro ro) {
+    @PostMapping({"/token2", "/token"})
+    public Result<WxMaLoginVo> getUserTokenV2(@PathVariable(required = false) String appid, @Validated @RequestBody GetMaUserToken2Ro ro) {
         return Result.success(service.getUserToken2(appid, ro));
     }
 
+    @Deprecated(/*todo:微信接口升级202108之后作废*/)
     @ApiOperation("登陆/注册接口")
-    @PostMapping("/token")
-    public Result<WxMaLoginVo> getUserToken(@PathVariable String appid, @Validated @RequestBody GetMaUserTokenRo ro) {
+    // @PostMapping("/token")
+    public Result<WxMaLoginVo> getUserToken(@PathVariable(required = false) String appid, @Validated @RequestBody GetMaUserTokenRo ro) {
         return Result.success(service.getUserToken(appid, ro));
     }
 
     @ApiOperation("获取用户绑定手机号信息")
     @GetMapping("/phone")
-    public Result<WxMaPhoneNumberInfoVo> phone(@PathVariable String appid, String sessionKey,
+    public Result<WxMaPhoneNumberInfoVo> phone(@PathVariable(required = false) String appid, String sessionKey,
                                                String signature, String rawData, String encryptedData, String iv) {
         return Result.success(service.getUserPhone(appid, sessionKey, signature, rawData, encryptedData, iv));
     }

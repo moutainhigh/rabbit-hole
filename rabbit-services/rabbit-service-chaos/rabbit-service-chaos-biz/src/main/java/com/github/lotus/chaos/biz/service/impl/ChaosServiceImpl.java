@@ -37,8 +37,8 @@ public class ChaosServiceImpl implements ChaosService {
     private final LbsService lbsService;
 
     @Override
-    public void sendSmsCode(SendSmsCodeRo ro) {
-        smsService.sendSmsCode(ro);
+    public Long sendSmsCode(SendSmsCodeRo ro) {
+        return smsService.sendSmsCode(ro);
     }
 
     @Override

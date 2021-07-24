@@ -12,6 +12,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -116,11 +119,14 @@ public class RedisManager {
      * @param phone
      * @param smsCode
      */
-    public void setVerifyCodeByPhone(@NonNull String phone, @NonNull String smsCode) {
+    public Long setVerifyCodeByPhone(@NonNull String phone, @NonNull String smsCode) {
+        Duration duration = Duration.of(1, ChronoUnit.MINUTES);
+
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String smsKey = RedisConstants.getSmsKey(phone);
-        opsForValue.set(smsKey, smsCode, 1, TimeUnit.MINUTES);
+        opsForValue.set(smsKey, smsCode, duration);
         log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
+        return duration.getSeconds();
     }
 
     public boolean exitsVerifyCodeByEmail(String email) {

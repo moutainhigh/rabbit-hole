@@ -15,7 +15,7 @@ public interface SmsServiceApi {
     String CONTEXT_ID = "SmsServiceApi";
 
     /**
-     * 发送验证码
+     * 验证验证码
      *
      * @param phone
      * @param smsCode
@@ -25,11 +25,4 @@ public interface SmsServiceApi {
     boolean validVerifyCode(@RequestParam("phone") String phone,
                             @RequestParam("smsCode") String smsCode);
 
-    /**
-     * 验证验证码
-     *
-     * @param phone
-     */
-    @PostMapping(CONTEXT_ID + "/sendVerifyCode")
-    void sendVerifyCode(@RequestParam("phone") String phone);
 }

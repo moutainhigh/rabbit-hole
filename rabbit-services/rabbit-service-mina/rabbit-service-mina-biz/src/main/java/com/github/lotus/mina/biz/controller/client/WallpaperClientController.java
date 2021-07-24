@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.controller;
+package com.github.lotus.mina.biz.controller.client;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -28,13 +28,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/{appid}/mobile-wallpaper")
-public class MinaMobileWallpaperController {
+@RequestMapping({"/{appid}/mobile-wallpaper", "/wallpaper"})
+public class WallpaperClientController {
     private final MobileWallpaperService service;
 
     @ApiOperation("手机壁纸 - 分页查询")
     @PostMapping("/_paging")
-    public Result<IPage<MinaMobileWallpaperComplexVo>> paging(@PathVariable String appid,
+    public Result<IPage<MinaMobileWallpaperComplexVo>> paging(@PathVariable(required = false) String appid,
                                                               @Validated @RequestBody MinaMobileWallpaperPagingRo ro) {
         return Result.success(service.paging(ro));
     }
@@ -42,14 +42,14 @@ public class MinaMobileWallpaperController {
 
     @ApiOperation("手机壁纸 - 分页查询")
     @PostMapping("/random/_paging")
-    public Result<IPage<MinaMobileWallpaperComplexVo>> randomComplete(@PathVariable String appid,
+    public Result<IPage<MinaMobileWallpaperComplexVo>> randomComplete(@PathVariable(required = false) String appid,
                                                                       @Validated @RequestBody MinaMobileWallpaperCompleteRo ro) {
         return Result.success(service.randomComplete(ro));
     }
 
     @ApiOperation("手机壁纸标签 - 分页查询")
     @PostMapping("/tags/_paging")
-    public Result<IPage<String>> paging(@PathVariable String appid,
+    public Result<IPage<String>> paging(@PathVariable(required = false) String appid,
                                         @Validated @RequestBody MinaMobileWallpaperTagsPagingRo ro) {
         return Result.success(service.pagingByTags(ro));
     }
