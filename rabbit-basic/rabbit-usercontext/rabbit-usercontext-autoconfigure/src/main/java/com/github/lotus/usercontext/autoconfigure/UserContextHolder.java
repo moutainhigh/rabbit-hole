@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 @UtilityClass
 public class UserContextHolder {
     private static final Cache<String, UserDetail> CACHE_USER = CacheBuilder.newBuilder()
+        .softValues()
         .maximumSize(10000L)
         .build();
 
