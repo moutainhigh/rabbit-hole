@@ -1,4 +1,4 @@
-package com.github.lotus.chaos;
+package com.github.lotus.chaos.basic;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import in.hocg.boot.web.result.Result;
