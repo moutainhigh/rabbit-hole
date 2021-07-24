@@ -25,7 +25,7 @@ spring:
     endpointPort: 8080
     namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
     groupId: rabbit-hold
-    appKey: hr3g+Up7k91lHL4eAX4DhQ==
+    appKey: ENC(A0/FEwviqFuXaW/f0uAO+omU5vReoXzpm+1FoUSHZXbrFtzxHNFu0Q==)
 jasypt:
   encryptor:
     poolSize: 10
@@ -33,6 +33,10 @@ mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
 
 boot:
+  sms:
+    regionId: cn-hangzhou
+    secretKey: ENC(0e4TdhdwQjsgJGLNDayV8yrt2GWZpjWlE29if8AZeCmtUTn7nqgzWw==)
+    accessKey: ENC(iLLAsf+0aaFg6TTcx5XfkYRJUaK7J8qICdq2CSo4Ju4=)
   oss:
     accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
     secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
@@ -81,8 +85,14 @@ boot:
   youtube:
     clients:
       - application-name: simple-app
-        client-id: 854840501995-v67uhbkpipjdicve031ka4rdjqqojmf1.apps.googleusercontent.com
-        client-secret: gV04XZx4G0TFyOsR0YC3jaRW
+        client-id: ENC(fhFEL/IvwoTnOBC8CTu6FZY0Qvg7SZ9nZ9XSpRz5PyVvb7zC2PxsqnWgeNTLhRjqiiNSEpe0oz8H5SQhu+4fnWj8nzJ0LTAMVlUMMpeFdAbG3KB62ag5Ow==)
+        client-secret: ENC(9pHlkVXaMIqfK4/KCmYqzSYjZAspJQCRraYFI+GvEmpXWtvNURlkAQ==)
+  sentinel:
+    flow-rules:
+      # 发送短信限流, 24 小时只能发送 5 条
+      - resource: GET_SMS_CODE
+        grade: 1
+        count: 0.01
 
 rabbit:
   payment:

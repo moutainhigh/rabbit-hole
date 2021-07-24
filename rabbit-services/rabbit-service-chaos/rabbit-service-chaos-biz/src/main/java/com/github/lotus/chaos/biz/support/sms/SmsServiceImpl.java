@@ -2,6 +2,7 @@ package com.github.lotus.chaos.biz.support.sms;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.github.lotus.chaos.biz.manager.SmsManager;
 import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
 import lombok.RequiredArgsConstructor;

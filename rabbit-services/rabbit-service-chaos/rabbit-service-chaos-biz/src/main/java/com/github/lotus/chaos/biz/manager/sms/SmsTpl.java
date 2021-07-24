@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum SmsTpl implements SmsTemplate {
-    Zhifou("知否社区", "SMS_204297021");
+    VerifyCode("知否社区", "SMS_204297021");
     private final String signName;
     private final String templateCode;
 }
