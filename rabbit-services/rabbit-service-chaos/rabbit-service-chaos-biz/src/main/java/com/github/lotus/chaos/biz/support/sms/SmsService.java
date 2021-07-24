@@ -11,7 +11,7 @@ import com.github.lotus.chaos.biz.pojo.ro.SendSmsCodeRo;
  */
 public interface SmsService {
 
-    void sendSmsCode(SendSmsCodeRo qo);
+    Long sendSmsCode(SendSmsCodeRo qo);
 
     boolean validSmsCode(String phone, String smsCode);
 }

@@ -43,12 +43,12 @@ public class SmsManager {
         smsBervice.sendSms(phone, tpl.getSignName(), tpl.getTemplateCode(), vars);
     }
 
-    public void sendVerifyCode(String phone, String code) {
+    public Long sendVerifyCode(String phone, String code) {
         if (Boolean.TRUE.compareTo(redisManager.exitsVerifyCodeByPhone(phone)) == 0) {
             throw ServiceException.wrap("验证码已发送，请注意查收");
         }
         this.sendSmsVerifyCode(phone, code);
-        redisManager.setVerifyCodeByPhone(phone, code);
+        return redisManager.setVerifyCodeByPhone(phone, code);
     }
 
     public boolean validVerifyCode(@NonNull String phone, @NonNull String smsCode) {

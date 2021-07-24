@@ -42,9 +42,8 @@ public class ChaosController {
     @PostMapping("/sms-code")
     @ResponseBody
     @SentinelResource(SentinelKeys.GET_SMS_CODE)
-    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
-        service.sendSmsCode(qo);
-        return Result.success();
+    public Result<Long> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
+        return Result.success(service.sendSmsCode(qo));
     }
 
     @ApiOperation("发送邮箱验证码")

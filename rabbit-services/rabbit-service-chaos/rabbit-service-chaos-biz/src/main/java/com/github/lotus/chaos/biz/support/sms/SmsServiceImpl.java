@@ -23,10 +23,10 @@ public class SmsServiceImpl implements SmsService {
     private final SmsManager smsManager;
 
     @Override
-    public void sendSmsCode(SendSmsCodeRo qo) {
+    public Long sendSmsCode(SendSmsCodeRo qo) {
         final String phone = qo.getPhone();
         Assert.notBlank(phone, "手机号不能为空");
-        smsManager.sendVerifyCode(phone, RandomUtil.randomNumbers(4));
+        return smsManager.sendVerifyCode(phone, RandomUtil.randomNumbers(4));
     }
 
     @Override
