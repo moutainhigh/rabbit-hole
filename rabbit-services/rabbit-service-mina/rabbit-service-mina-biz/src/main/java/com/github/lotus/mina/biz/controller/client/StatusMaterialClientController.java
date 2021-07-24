@@ -33,7 +33,7 @@ public class StatusMaterialClientController {
 
     @ApiOperation("状态素材 - 分页查询")
     @PostMapping("/_paging")
-    public Result<List<MinaStatusMaterialComplexVo>> paging(@PathVariable String appid,
+    public Result<List<MinaStatusMaterialComplexVo>> paging(@PathVariable(required = false) String appid,
                                                             @Validated @RequestBody MinaStatusMaterialPagingRo ro) {
         return Result.success(service.pagingForMina(ro).getRecords());
     }

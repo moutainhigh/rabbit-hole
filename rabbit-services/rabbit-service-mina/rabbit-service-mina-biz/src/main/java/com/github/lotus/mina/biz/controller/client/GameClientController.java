@@ -29,14 +29,14 @@ public class GameClientController {
 
     @PostMapping("/_paging")
     @ApiOperation("游戏 - 分页查询")
-    public Result<List<MinaGameCardComplexVo>> paging(@PathVariable String appid,
+    public Result<List<MinaGameCardComplexVo>> paging(@PathVariable(required = false) String appid,
                                                       @Validated @RequestBody MinaGameCardPagingRo ro) {
         return Result.success(service.pagingForMina(ro).getRecords());
     }
 
     @GetMapping("/{id}")
     @ApiOperation("游戏 - 详情")
-    public Result<GameCardComplexVo> getOne(@PathVariable String appid, @PathVariable Long id) {
+    public Result<GameCardComplexVo> getOne(@PathVariable(required = false) String appid, @PathVariable Long id) {
         return Result.success(service.getComplexWithMina(id));
     }
 

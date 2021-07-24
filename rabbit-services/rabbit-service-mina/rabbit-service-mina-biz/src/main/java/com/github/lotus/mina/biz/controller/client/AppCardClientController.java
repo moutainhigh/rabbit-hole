@@ -35,7 +35,7 @@ public class AppCardClientController {
 
     @ApiOperation("应用 - 分页查询")
     @PostMapping("/_paging")
-    public Result<List<MinaAppCardComplexVo>> index(@PathVariable String appid,
+    public Result<List<MinaAppCardComplexVo>> index(@PathVariable(required = false) String appid,
                                                     @Validated @RequestBody MinaAppCardPagingRo ro) {
         return Result.success(service.pagingForMina(ro).getRecords());
     }
