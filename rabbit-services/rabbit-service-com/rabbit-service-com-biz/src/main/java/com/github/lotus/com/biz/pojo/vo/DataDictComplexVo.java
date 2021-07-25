@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
@@ -32,7 +32,7 @@ public class DataDictComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建人")
     private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
 
@@ -40,7 +40,7 @@ public class DataDictComplexVo {
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("最后更新时间")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
     private String lastUpdaterName;
 

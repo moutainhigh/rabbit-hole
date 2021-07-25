@@ -3,6 +3,7 @@ package com.github.lotus.ums.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.pojo.ro.RoleGrantUserRo;
@@ -69,4 +70,10 @@ public interface UserService extends AbstractService<User> {
     void grantRole(Long userId, RoleGrantUserRo ro);
 
     AccountComplexVo getComplex(Long id);
+
+    UserDetailVo getUserByIdFlag(String idFlag);
+
+    GetLoginQrcodeVo getLoginQrcode();
+
+    void confirmQrcode(String idFlag, Long userId);
 }

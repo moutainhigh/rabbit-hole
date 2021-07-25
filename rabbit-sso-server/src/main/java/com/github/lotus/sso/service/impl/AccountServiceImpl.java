@@ -3,11 +3,13 @@ package com.github.lotus.sso.service.impl;
 import com.github.lotus.chaos.api.SmsServiceApi;
 import com.github.lotus.common.utils.Rules;
 import com.github.lotus.sso.mapstruct.AccountMapping;
+import com.github.lotus.sso.pojo.ro.ConfirmQrcodeRo;
 import com.github.lotus.sso.pojo.ro.JoinAccountRo;
 import com.github.lotus.sso.pojo.ro.LoginRo;
 import com.github.lotus.sso.service.AccountService;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
@@ -22,6 +24,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2020/10/7
@@ -41,23 +46,45 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String join(JoinAccountRo ro) {
-        JoinAccountRo.Mode mode = ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class);
-        return ((String) Rules.create()
-            .rule(JoinAccountRo.Mode.UsePhone, Rules.Supplier(() -> {
-                ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneModeGroup.class);
-                return this.joinUsePhone(ro.getPhoneMode());
-            }))
-            .rule(JoinAccountRo.Mode.UseUsername, Rules.Supplier(() -> {
-                ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameModeGroup.class);
-                return this.joinUseUsername(ro.getUsernameMode());
-            }))
-            .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> {
-                ValidatorUtils.validThrow(ro, JoinAccountRo.EmailModeGroup.class);
-                return this.joinUseEmail(ro.getEmailMode());
-            })).of(mode).orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持")));
+        Optional<String> resultOpt = Rules.create()
+            .rule(JoinAccountRo.Mode.UsePhone, Rules.Supplier(() -> this.joinUsePhone(ro.getPhoneMode())))
+            .rule(JoinAccountRo.Mode.UseUsername, Rules.Supplier(() -> this.joinUseUsername(ro.getUsernameMode())))
+            .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> this.joinUseEmail(ro.getEmailMode())))
+            .of(ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class));
+        return resultOpt.orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持"));
+    }
+
+    @Override
+    public GetLoginQrcodeVo getLoginQrcode() {
+        return userServiceApi.getLoginQrcode();
+    }
+
+    @Override
+    public void confirmQrcode(ConfirmQrcodeRo ro) {
+        userServiceApi.confirmQrcode(ro.getIdFlag(), ro.getUserId());
+    }
+
+    @Override
+    public String login(LoginRo ro) {
+        Optional<String> resultOpt = Rules.create()
+            .rule(LoginRo.Mode.UseSms, Rules.Supplier(() -> this.loginUseSms(ro.getSmsMode())))
+            .rule(LoginRo.Mode.UsePassword, Rules.Supplier(() -> this.loginUsePassword(ro.getPasswordMode())))
+            .rule(LoginRo.Mode.UseQrcode, Rules.Supplier(() -> this.loginUseQrcode(ro.getQrcodeMode())))
+            .of(ICode.ofThrow(ro.getMode(), LoginRo.Mode.class));
+        return resultOpt.orElseThrow(() -> ServiceException.wrap("该登录方式暂不支持"));
+    }
+
+    private String loginUseQrcode(LoginRo.QrcodeMode ro) {
+        ValidatorUtils.validThrow(ro);
+        UserDetailVo userDetail = userServiceApi.getUserByIdFlag(ro.getIdFlag());
+        if (Objects.isNull(userDetail)) {
+            return null;
+        }
+        return userServiceApi.getUserToken(userDetail.getUsername());
     }
 
     private String joinUseEmail(JoinAccountRo.EmailMode ro) {
+        ValidatorUtils.validThrow(ro, JoinAccountRo.EmailModeGroup.class);
         String email = ro.getEmail();
         String verifyCode = ro.getVerifyCode();
         String password = ro.getPassword();
@@ -72,6 +99,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String joinUseUsername(JoinAccountRo.UsernameMode ro) {
+        ValidatorUtils.validThrow(ro, JoinAccountRo.UsernameModeGroup.class);
         String username = ro.getUsername();
         String password = ro.getPassword();
 
@@ -84,6 +112,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String joinUsePhone(JoinAccountRo.PhoneMode ro) {
+        ValidatorUtils.validThrow(ro, JoinAccountRo.PhoneModeGroup.class);
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
 
@@ -97,24 +126,8 @@ public class AccountServiceImpl implements AccountService {
         return userServiceApi.getUserToken(userDetailVo.getUsername());
     }
 
-    @Override
-    public String login(LoginRo ro) {
-        LoginRo.Mode mode = ICode.ofThrow(ro.getMode(), LoginRo.Mode.class);
-        switch (mode) {
-            case UseSms: {
-                ValidatorUtils.validThrow(ro, LoginRo.SmsModeGroup.class);
-                return this.loginUseSms(ro.getSmsMode());
-            }
-            case UsePassword: {
-                ValidatorUtils.validThrow(ro, LoginRo.PasswordModeGroup.class);
-                return this.loginUsePassword(ro.getPasswordMode());
-            }
-            default:
-                throw ServiceException.wrap("该登录方式暂不支持");
-        }
-    }
-
     private String loginUseSms(LoginRo.SmsMode ro) {
+        ValidatorUtils.validThrow(ro, LoginRo.SmsModeGroup.class);
         String phone = ro.getPhone();
         String verifyCode = ro.getVerifyCode();
         if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
@@ -126,6 +139,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String loginUsePassword(LoginRo.PasswordMode ro) {
+        ValidatorUtils.validThrow(ro, LoginRo.PasswordModeGroup.class);
         String username = ro.getUsername();
         String password = ro.getPassword();
         try {

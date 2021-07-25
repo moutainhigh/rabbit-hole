@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.pay.RefundStatus;
 import in.hocg.boot.named.annotation.InjectNamed;
@@ -36,7 +36,7 @@ public class RefundRecordOrdinaryVo {
     private String refundReason;
     @ApiModelProperty("退款状态")
     private String refundStatus;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "refundStatus", type = NamedType.DataDict, args = {RefundStatus.Key})
     private String refundStatusName;
 

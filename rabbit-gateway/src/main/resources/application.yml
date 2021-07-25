@@ -128,6 +128,7 @@ boot:
 
         ,/pay/gateway/**
 
+        ,/chaos/sms-code
         ,/chaos/address4ip
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift
@@ -155,6 +156,7 @@ boot:
         ,/mina/youtube/authorize
         ,/mina/youtube/*/callback
 
+        ,/sso/account/login/qrcode
         ,/sso/account/login/token
   cache:
     names:

@@ -1,6 +1,6 @@
 package com.github.lotus.mina.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.Named;
 import in.hocg.boot.named.annotation.UseNamedService;
@@ -28,7 +28,7 @@ public class GameRoomOrdinaryVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
 }

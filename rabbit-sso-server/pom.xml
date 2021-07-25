@@ -34,6 +34,10 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-common</artifactId>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-usercontext-autoconfigure</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>in.hocg.boot</groupId>

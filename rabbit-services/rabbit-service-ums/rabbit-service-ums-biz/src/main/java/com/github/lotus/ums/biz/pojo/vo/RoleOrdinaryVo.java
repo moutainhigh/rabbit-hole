@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
@@ -38,14 +38,14 @@ public class RoleOrdinaryVo {
     @ApiModelProperty("创建人")
     private Long creator;
     @ApiModelProperty("创建人")
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
     private String lastUpdaterName;
 }

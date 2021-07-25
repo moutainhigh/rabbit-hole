@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.vo.message;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.com.MessageUserRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
@@ -25,12 +25,12 @@ public class MessageComplexVo {
     private Long id;
     @ApiModelProperty("消息类型")
     private String messageType;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "messageType", type = NamedType.DataDict, args = {MessageUserRefType.KEY})
     private String messageTypeName;
     @ApiModelProperty("接收者")
     private Long receiverUser;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "receiverUser", type = NamedType.Userid2Nickname)
     private String receiverUserName;
 

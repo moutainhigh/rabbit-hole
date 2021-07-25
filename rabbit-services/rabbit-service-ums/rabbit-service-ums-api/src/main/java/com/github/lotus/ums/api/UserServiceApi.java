@@ -2,6 +2,7 @@ package com.github.lotus.ums.api;
 
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
@@ -48,4 +49,13 @@ public interface UserServiceApi {
 
     @PostMapping(CONTEXT_ID + "/getUserDetailVoByUsername")
     UserDetailVo getUserDetailVoByUsername(@RequestParam("username") String username);
+
+    @GetMapping(CONTEXT_ID + "/getUserByIdFlag")
+    UserDetailVo getUserByIdFlag(@RequestParam("idFlag") String idFlag);
+
+    @GetMapping(CONTEXT_ID + "/getLoginQrcode")
+    GetLoginQrcodeVo getLoginQrcode();
+
+    @GetMapping(CONTEXT_ID + "/confirmQrcode")
+    void confirmQrcode(@RequestParam("idFlag") String idFlag, @RequestParam("userId") Long userId);
 }

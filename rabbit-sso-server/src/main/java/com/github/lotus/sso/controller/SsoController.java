@@ -2,7 +2,7 @@ package com.github.lotus.sso.controller;
 
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
 import com.github.lotus.sso.pojo.ro.JoinRo;
-import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SsoIndexService;
 import in.hocg.boot.web.result.Result;
@@ -30,37 +30,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SsoIndexController {
-    private final SsoIndexService indexService;
+public class SsoController {
+    private final SsoIndexService service;
 
     @ApiOperation("注册账号")
     @PostMapping("/join")
     @ResponseBody
     public Result<Void> createAccount(@Validated @ModelAttribute JoinRo ro) {
-        indexService.createAccount(ro);
+        service.createAccount(ro);
         return Result.success();
     }
 
-    @ApiOperation("获取短信验证码")
-    @PostMapping("/get-code")
-    @ResponseBody
-    public Result<Void> sendSmsCode(@Validated @ModelAttribute SendSmsCodeRo ro) {
-        indexService.sendSmsCode(ro);
-        return Result.success();
-    }
-
-    @ApiOperation("微信公众号二维码")
+    @ApiOperation(value = "微信公众号二维码", notes = "免登陆")
     @GetMapping("/wx/{appid}/qrcode")
     @ResponseBody
     public Result<WxMpQrCodeVo> getWxQrCode(@PathVariable("appid") String appid) {
-        return Result.success(indexService.getWxQrCode(appid));
+        return Result.success(service.getWxQrCode(appid));
     }
 
-    @ApiOperation("获取微信登陆状态")
+    @ApiOperation(value = "获取微信登陆状态", notes = "免登陆")
     @GetMapping("/wx/login-status")
     @ResponseBody
     public Result<WxLoginStatusVo> getWxLoginStatus(@RequestParam("idFlag") String idFlag,
                                                     @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
-        return Result.success(indexService.getWxLoginStatus(idFlag, redirectUrl));
+        return Result.success(service.getWxLoginStatus(idFlag, redirectUrl));
     }
+
 }

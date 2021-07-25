@@ -19,3 +19,9 @@ boot:
     repair-on-migrate: true
   web:
     hostname: http://127.0.0.1:20001
+  sentinel:
+    flow-rules:
+      # 发送短信限流, 24 小时只能发送 5 条
+      - resource: GET_SMS_CODE
+        grade: 1
+        count: 1
