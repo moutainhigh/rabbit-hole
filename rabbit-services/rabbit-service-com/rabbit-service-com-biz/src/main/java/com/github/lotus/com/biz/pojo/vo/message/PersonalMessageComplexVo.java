@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.vo.message;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
@@ -27,7 +27,7 @@ public class PersonalMessageComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
 }

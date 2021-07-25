@@ -1,7 +1,7 @@
 package com.github.lotus.chaos.biz.apiimpl;
 
 import cn.hutool.core.convert.Convert;
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.com.api.DataDictServiceApi;
 import com.github.lotus.com.api.DistrictServiceApi;
 import com.github.lotus.com.api.ProjectServiceApi;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class ChaosNamedAPIImpl implements ChaosNamedAPI {
+public class ChaosNamedApiImpl implements ChaosNamedApi {
     private final DataDictServiceApi dataDictServiceApi;
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;

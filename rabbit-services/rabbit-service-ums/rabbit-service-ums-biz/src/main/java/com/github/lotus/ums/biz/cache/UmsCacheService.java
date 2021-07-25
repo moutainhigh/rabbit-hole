@@ -1,5 +1,6 @@
 package com.github.lotus.ums.biz.cache;
 
+import cn.hutool.core.lang.Assert;
 import com.github.lotus.ums.biz.constant.CacheConstant;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,7 @@ public class UmsCacheService implements TokenCacheService {
     public void updateQrcodeLoginKey(@NonNull String idFlag, @NonNull String username) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         String key = CacheConstant.getQrcodeIdFlag(idFlag);
+        Assert.isTrue(template.hasKey(key), "二维码已失效");
         opsForValue.set(key, username);
     }
 }

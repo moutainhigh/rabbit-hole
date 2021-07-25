@@ -16,7 +16,7 @@ import java.util.Map;
  * @author hocgin
  */
 @FeignClient(value = ServiceName.NAME)
-public interface ChaosNamedAPI extends NamedService {
+public interface ChaosNamedApi extends NamedService {
     String CONTEXT_ID = "ChaosNamedAPI";
 
     @NamedHandler(NamedType.DataDict)

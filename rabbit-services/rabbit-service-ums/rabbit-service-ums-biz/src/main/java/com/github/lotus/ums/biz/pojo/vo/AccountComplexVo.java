@@ -1,6 +1,6 @@
 package com.github.lotus.ums.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.ums.Gender;
 import in.hocg.boot.named.annotation.InjectNamed;
@@ -40,20 +40,20 @@ public class AccountComplexVo {
     private Boolean enabled;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "gender", type = NamedType.DataDict, args = {Gender.KEY})
     private String genderName;
 
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
     private String lastUpdaterName;
     @ApiModelProperty("更新时间")

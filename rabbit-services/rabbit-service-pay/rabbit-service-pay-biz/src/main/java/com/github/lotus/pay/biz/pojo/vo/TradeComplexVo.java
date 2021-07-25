@@ -1,6 +1,6 @@
 package com.github.lotus.pay.biz.pojo.vo;
 
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.datadict.pay.PayMode;
 import com.github.lotus.common.datadict.pay.TradeStatus;
@@ -28,7 +28,7 @@ public class TradeComplexVo {
     private Long id;
     @ApiModelProperty("接入方应用")
     private Long accessAppId;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "accessAppId", type = NamedType.AccessAppName)
     private String accessAppName;
 
@@ -42,7 +42,7 @@ public class TradeComplexVo {
     private BigDecimal totalFee;
     @ApiModelProperty("交易状态")
     private String tradeStatus;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "tradeStatus", type = NamedType.DataDict, args = {TradeStatus.Key})
     private String tradeStatusName;
 
@@ -52,7 +52,7 @@ public class TradeComplexVo {
     private BigDecimal buyerPayFee;
     @ApiModelProperty("最终支付方式(第三方回调时填充)")
     private String payMode;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "payMode", type = NamedType.DataDict, args = {PayMode.Key})
     private String payModeName;
 

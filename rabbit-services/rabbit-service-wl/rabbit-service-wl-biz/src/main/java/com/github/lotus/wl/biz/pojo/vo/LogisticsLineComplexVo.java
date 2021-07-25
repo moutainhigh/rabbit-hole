@@ -2,7 +2,7 @@ package com.github.lotus.wl.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.github.lotus.chaos.api.ChaosNamedAPI;
+import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.chaos.api.NamedType;
 import com.github.lotus.common.constant.DistrictLevelConstant;
 import com.github.lotus.wl.biz.enumns.ShippingMethods;
@@ -35,14 +35,14 @@ public class LogisticsLineComplexVo {
     private BigDecimal unitPrice;
     @ApiModelProperty("单位(元/方)")
     private String unit;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "unit", type = NamedType.DataDict, args = {Unit.KEY})
     private String unitName;
     @ApiModelProperty("时效(天)")
     private Integer aging;
     @ApiModelProperty("物流方式")
     private String shippingMethods;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "shippingMethods", type = NamedType.DataDict,
         args = {ShippingMethods.KEY})
     private String shippingMethodsName;
@@ -51,19 +51,19 @@ public class LogisticsLineComplexVo {
 
     @ApiModelProperty("省区域编码")
     private String provinceAdcode;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "provinceAdcode", type = NamedType.DistrictName,
         args = {DistrictLevelConstant.PROVINCE_CODE})
     private String provinceName;
     @ApiModelProperty("市区区域编码")
     private String cityAdcode;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "cityAdcode", type = NamedType.DistrictName,
         args = {DistrictLevelConstant.CITY_CODE})
     private String cityName;
     @ApiModelProperty("县区域编码")
     private String districtAdcode;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "districtAdcode", type = NamedType.DistrictName,
         args = {DistrictLevelConstant.DISTRICT_CODE})
     private String districtName;
@@ -72,14 +72,14 @@ public class LogisticsLineComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "creator", type = NamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedAPI.class)
+    @UseNamedService(ChaosNamedApi.class)
     @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
     private String lastUpdaterName;
 

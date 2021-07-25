@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.apiimpl;
 
+import com.github.lotus.chaos.api.UserContextServiceApi;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.usercontext.ifc.UserContextService;
@@ -7,6 +8,7 @@ import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
@@ -16,9 +18,9 @@ import java.util.Objects;
  *
  * @author hocgin
  */
-@Component
+@RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class UserContextServiceImpl implements UserContextService {
+public class UserContextServiceApiImpl implements UserContextServiceApi {
     private final UserServiceApi accountServiceApi;
 
     @Override

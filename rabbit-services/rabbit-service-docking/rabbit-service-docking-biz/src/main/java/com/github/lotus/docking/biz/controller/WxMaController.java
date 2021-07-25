@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"docking::微信小程序"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping({"/wx/miniapp/{appid}", "/wx/miniapp"})
+@RequestMapping({"/wx/miniapp/{appid}"})
 public class WxMaController {
     private final WxMaIndexService service;
 
