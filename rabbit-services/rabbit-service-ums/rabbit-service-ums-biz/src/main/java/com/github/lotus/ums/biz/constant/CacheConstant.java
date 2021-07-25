@@ -11,11 +11,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CacheConstant {
     public enum Prefix {
-        Token
+        Token,
+        QrcodeIdFlag,
     }
 
     public String getTokenKey(String token) {
         return prefix(Prefix.Token, token);
+    }
+
+    public String getQrcodeIdFlag(String idFlag) {
+        return prefix(Prefix.QrcodeIdFlag, idFlag);
     }
 
     private String prefix(Prefix prefix, String suffix) {

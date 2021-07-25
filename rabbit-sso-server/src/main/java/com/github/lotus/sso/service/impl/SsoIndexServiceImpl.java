@@ -1,6 +1,7 @@
 package com.github.lotus.sso.service.impl;
 
-import com.github.lotus.chaos.api.SmsServiceApi;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.github.lotus.docking.api.WxServiceApi;
 import com.github.lotus.docking.api.pojo.vo.WxLoginInfoVo;
 import com.github.lotus.docking.api.pojo.vo.WxMpQrCodeVo;
@@ -8,7 +9,7 @@ import com.github.lotus.sso.config.security.helper.PageConstants;
 import com.github.lotus.sso.config.security.helper.SecurityContext;
 import com.github.lotus.sso.mapstruct.AccountMapping;
 import com.github.lotus.sso.pojo.ro.JoinRo;
-import com.github.lotus.sso.pojo.ro.SendSmsCodeRo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.sso.pojo.vo.WxLoginStatusVo;
 import com.github.lotus.sso.service.SocialService;
 import com.github.lotus.sso.service.SsoIndexService;
@@ -67,4 +68,5 @@ public class SsoIndexServiceImpl implements SsoIndexService {
         }
         return result;
     }
+
 }

@@ -1,10 +1,14 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.chaos.api.EmailServiceApi;
 import com.github.lotus.chaos.api.SmsServiceApi;
@@ -16,7 +20,9 @@ import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
+import com.github.lotus.ums.biz.cache.UmsCacheService;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.mapper.UserMapper;
@@ -34,20 +40,25 @@ import com.github.lotus.ums.biz.service.RoleService;
 import com.github.lotus.ums.biz.service.RoleUserRefService;
 import com.github.lotus.ums.biz.service.SocialService;
 import com.github.lotus.ums.biz.service.UserService;
+import com.google.common.collect.Maps;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,6 +82,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private final AuthorityService authorityService;
     private final RoleService roleService;
     private final RoleUserRefService roleUserRefService;
+    private final UmsCacheService cacheService;
+    private final OssFileBervice ossFileService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -355,6 +368,34 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Transactional(rollbackFor = Exception.class)
     public AccountComplexVo getComplex(Long id) {
         return this.convert(getById(id));
+    }
+
+    @Override
+    public UserDetailVo getUserByIdFlag(String idFlag) {
+        String username = cacheService.getQrcodeLoginKey(idFlag);
+        return this.getUserDetailVoByUsername(username);
+    }
+
+    @Override
+    @SneakyThrows(IOException.class)
+    public GetLoginQrcodeVo getLoginQrcode() {
+        String idFlag = (IdUtil.randomUUID() + RandomUtil.randomString(5)).toUpperCase();
+        cacheService.applyQrcodeLoginKey(idFlag);
+        HashMap<String, String> params = Maps.newHashMap();
+        params.put("idFlag", idFlag);
+        BufferedImage image = QrCodeUtil.generate(JSON.toJSONString(params), 400, 400);
+        File output = Files.createTempFile("tmp", "png").toFile();
+        ImageIO.write(image, "png", output);
+        String fileUrl = ossFileService.upload(output);
+        return new GetLoginQrcodeVo()
+            .setQrCodeUrl(fileUrl)
+            .setIdFlag(idFlag);
+    }
+
+    @Override
+    public void confirmQrcode(String idFlag, Long userId) {
+        User user = Assert.notNull(getById(userId), "用户信息错误");
+        cacheService.updateQrcodeLoginKey(idFlag, user.getUsername());
     }
 
     private Optional<User> getAccountByPhone(String phone) {

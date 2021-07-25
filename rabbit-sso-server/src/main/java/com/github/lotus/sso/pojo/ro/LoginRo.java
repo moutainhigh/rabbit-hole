@@ -38,6 +38,15 @@ public class LoginRo {
     @ApiModelProperty(value = "仅密码模式使用")
     private PasswordMode passwordMode;
 
+    @ApiModelProperty(value = "仅二维码模式使用")
+    private QrcodeMode qrcodeMode;
+
+    @Data
+    @ApiModel(description = "二维码模式")
+    public static class QrcodeMode {
+        private String idFlag;
+    }
+
 
     @Data
     @ApiModel(description = "密码模式")
@@ -72,6 +81,7 @@ public class LoginRo {
     @Getter
     @RequiredArgsConstructor
     public enum Mode implements ICode {
+        UseQrcode("use_qrcode"),
         UsePassword("use_password"),
         UseSms("use_sms");
         private final String code;

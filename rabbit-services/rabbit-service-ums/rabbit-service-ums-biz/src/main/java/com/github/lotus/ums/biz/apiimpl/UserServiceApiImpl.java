@@ -3,6 +3,7 @@ package com.github.lotus.ums.biz.apiimpl;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import com.github.lotus.ums.biz.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +66,20 @@ public class UserServiceApiImpl implements UserServiceApi {
     @Override
     public UserDetailVo getUserDetailVoByUsername(String username) {
         return service.getUserDetailVoByUsername(username);
+    }
+
+    @Override
+    public UserDetailVo getUserByIdFlag(String idFlag) {
+        return service.getUserByIdFlag(idFlag);
+    }
+
+    @Override
+    public GetLoginQrcodeVo getLoginQrcode() {
+        return service.getLoginQrcode();
+    }
+
+    @Override
+    public void confirmQrcode(String idFlag, Long userId) {
+        service.confirmQrcode(idFlag, userId);
     }
 }

@@ -1,6 +1,7 @@
 package com.github.lotus.ums.biz.cache;
 
 import com.github.lotus.ums.biz.constant.CacheConstant;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -35,5 +36,41 @@ public class UmsCacheService implements TokenCacheService {
         final String tokenKey = CacheConstant.getTokenKey(username);
         ValueOperations<String, String> opsForValue = template.opsForValue();
         return opsForValue.get(tokenKey);
+    }
+
+    /**
+     * 初始化 qrcode 值
+     *
+     * @param idFlag qrcode
+     */
+    public void applyQrcodeLoginKey(@NonNull String idFlag) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        String key = CacheConstant.getQrcodeIdFlag(idFlag);
+        opsForValue.set(key, "", 1, TimeUnit.MINUTES);
+        log.debug("初始化微信扫码登陆的KEY: [{}]", key);
+    }
+
+    /**
+     * 根据 qrcode 获取 username
+     *
+     * @param idFlag qrcode
+     * @return username
+     */
+    public String getQrcodeLoginKey(@NonNull String idFlag) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        String key = CacheConstant.getQrcodeIdFlag(idFlag);
+        return opsForValue.get(key);
+    }
+
+    /**
+     * 设置 qrcode 的 username
+     *
+     * @param idFlag   qrcode
+     * @param username username
+     */
+    public void updateQrcodeLoginKey(@NonNull String idFlag, @NonNull String username) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        String key = CacheConstant.getQrcodeIdFlag(idFlag);
+        opsForValue.set(key, username);
     }
 }
