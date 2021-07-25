@@ -3,8 +3,7 @@ WORKDIR application
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 
-RUN java -Djarmode=layertools -Djava.security.egd=file:/dev/./urandom
- -jar application.jar extract
+RUN java -Djava.security.egd=file:/dev/./urandom -Djarmode=layertools -jar application.jar extract
 
 FROM adoptopenjdk:11-jre-hotspot
 ENV TZ=Asia/Shanghai
