@@ -15,8 +15,6 @@ public interface SsoIndexService {
 
     void createAccount(JoinRo ro);
 
-    void sendSmsCode(SendSmsCodeRo ro);
-
     WxMpQrCodeVo getWxQrCode(String appid);
 
     WxLoginStatusVo getWxLoginStatus(String idFlag, String redirectUrl);

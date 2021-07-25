@@ -41,14 +41,6 @@ public class SsoIndexController {
         return Result.success();
     }
 
-    @ApiOperation("获取短信验证码")
-    @PostMapping("/get-code")
-    @ResponseBody
-    public Result<Void> sendSmsCode(@Validated @ModelAttribute SendSmsCodeRo ro) {
-        indexService.sendSmsCode(ro);
-        return Result.success();
-    }
-
     @ApiOperation("微信公众号二维码")
     @GetMapping("/wx/{appid}/qrcode")
     @ResponseBody

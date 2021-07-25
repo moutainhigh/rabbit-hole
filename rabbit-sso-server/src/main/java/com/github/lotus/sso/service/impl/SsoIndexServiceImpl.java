@@ -33,7 +33,6 @@ import org.springframework.stereotype.Service;
 public class SsoIndexServiceImpl implements SsoIndexService {
     private final UserServiceApi userServiceApi;
     private final WxServiceApi wxServiceApi;
-    private final SmsServiceApi smsServiceApi;
     private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final SocialService socialService;
@@ -44,11 +43,6 @@ public class SsoIndexServiceImpl implements SsoIndexService {
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
         userServiceApi.createAccount(createAccountRo);
-    }
-
-    @Override
-    public void sendSmsCode(SendSmsCodeRo ro) {
-        smsServiceApi.sendVerifyCode(ro.getPhone());
     }
 
     @Override
