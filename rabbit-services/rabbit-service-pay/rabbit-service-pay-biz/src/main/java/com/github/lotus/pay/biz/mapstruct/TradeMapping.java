@@ -5,6 +5,7 @@ import com.github.lotus.pay.biz.entity.Trade;
 import com.github.lotus.pay.biz.pojo.vo.TradeComplexVo;
 import com.github.lotus.pay.api.pojo.vo.TradeOrdinaryVo;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Created by hocgin on 2021/1/30
@@ -22,6 +23,9 @@ public interface TradeMapping {
         return entity;
     }
 
+    @Mapping(target = "tradeStatusName", ignore = true)
+    @Mapping(target = "payModeName", ignore = true)
+    @Mapping(target = "accessAppName", ignore = true)
     TradeComplexVo asComplex(Trade entity);
 
     TradeOrdinaryVo asOrdinary(Trade entity);

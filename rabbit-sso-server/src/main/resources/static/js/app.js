@@ -102,7 +102,7 @@ $(function () {
             }
         };
         $.ajax({
-            type: "POST", url: '/get-code', dataType: 'json',
+            type: "POST", url: '/api/chaos/sms-code', dataType: 'json',
             data: {phone: phone},
             success: callback,
             error: ({responseJSON}) => callback(responseJSON)

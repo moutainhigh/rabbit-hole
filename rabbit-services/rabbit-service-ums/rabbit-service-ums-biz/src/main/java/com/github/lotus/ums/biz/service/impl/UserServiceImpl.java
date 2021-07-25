@@ -379,12 +379,12 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Override
     @SneakyThrows(IOException.class)
     public GetLoginQrcodeVo getLoginQrcode() {
-        String idFlag = (IdUtil.randomUUID() + RandomUtil.randomString(5)).toUpperCase();
+        String idFlag = (IdUtil.simpleUUID() + RandomUtil.randomString(5)).toUpperCase();
         cacheService.applyQrcodeLoginKey(idFlag);
         HashMap<String, String> params = Maps.newHashMap();
         params.put("idFlag", idFlag);
         BufferedImage image = QrCodeUtil.generate(JSON.toJSONString(params), 400, 400);
-        File output = Files.createTempFile("tmp", "png").toFile();
+        File output = Files.createTempFile("tmp", ".png").toFile();
         ImageIO.write(image, "png", output);
         String fileUrl = ossFileService.upload(output);
         return new GetLoginQrcodeVo()

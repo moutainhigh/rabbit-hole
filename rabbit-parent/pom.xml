@@ -51,6 +51,7 @@
     <jsoup.version>1.13.1</jsoup.version>
     <payment.version>0.1.2-SNAPSHOT</payment.version>
     <okhttp.version>4.4.0</okhttp.version>
+    <zxing.version>3.4.1</zxing.version>
   </properties>
 
   <dependencyManagement>
@@ -360,6 +361,11 @@
         <scope>import</scope>
       </dependency>
       <!--Jar-->
+      <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>core</artifactId>
+        <version>${zxing.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>

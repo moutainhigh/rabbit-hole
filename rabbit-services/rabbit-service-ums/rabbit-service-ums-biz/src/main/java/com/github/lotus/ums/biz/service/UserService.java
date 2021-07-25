@@ -14,7 +14,6 @@ import com.github.lotus.ums.biz.pojo.ro.UserCompleteRo;
 import com.github.lotus.ums.biz.pojo.ro.UserPagingRo;
 import com.github.lotus.ums.biz.pojo.vo.AccountComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
-import com.github.lotus.ums.biz.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 import java.util.List;

@@ -56,6 +56,6 @@ public interface UserServiceApi {
     @GetMapping(CONTEXT_ID + "/getLoginQrcode")
     GetLoginQrcodeVo getLoginQrcode();
 
-    @GetMapping(CONTEXT_ID + "/getLoginQrcode")
+    @GetMapping(CONTEXT_ID + "/confirmQrcode")
     void confirmQrcode(@RequestParam("idFlag") String idFlag, @RequestParam("userId") Long userId);
 }
