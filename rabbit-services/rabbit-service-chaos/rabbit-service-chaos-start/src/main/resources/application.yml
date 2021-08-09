@@ -13,6 +13,7 @@ spring:
     druid:
       validation-query: SELECT 1
       test-while-idle: true
+      initial-size: 1
   redis:
     database: 0
     port: 6379
@@ -31,7 +32,9 @@ jasypt:
     poolSize: 10
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
-
+feign:
+  okhttp:
+    enabled: true
 boot:
   sms:
     regionId: cn-hangzhou
