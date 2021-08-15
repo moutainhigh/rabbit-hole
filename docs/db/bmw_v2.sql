@@ -16,7 +16,7 @@ CREATE TABLE `bmw_trade_order`
     `refund_amt`      DECIMAL(20, 2) NOT NULL DEFAULT 0
         COMMENT '退款金额',
     `status`          VARCHAR(32)    NOT NULL DEFAULT 'processing'
-        COMMENT '交易状态: processing=>进行中; payed=>已支付; cancelled=>已取消; closed=>已关闭',
+        COMMENT '交易状态: processing=>进行中; payed=>已支付; success=>成功; fail=>失败; cancelled=>已取消; closed=>已关闭',
     `plan_close_at`   DATETIME(6)    NOT NULL
         COMMENT '计划关单时间',
     `order_desc`      VARCHAR(256)   NULL
@@ -30,9 +30,9 @@ CREATE TABLE `bmw_trade_order`
     `front_jump_url`  VARCHAR(256)   NULL
         COMMENT '支付后前端回跳地址',
     --
-    finished_at       DATETIME(6)    NULL
+    `finished_at`     DATETIME(6)    NULL
         COMMENT '完成时间',
-    payment_mch_id    BIGINT         NULL
+    `payment_mch_id`  BIGINT         NULL
         COMMENT '支付商户(最终)',
     `real_pay_amt`    DECIMAL(20, 2) NULL     DEFAULT NULL
         COMMENT '用户实际支付金额(最终)',
@@ -40,6 +40,8 @@ CREATE TABLE `bmw_trade_order`
         COMMENT '支付类型(最终)',
     `pay_act_id`      BIGINT         NULL     DEFAULT NULL
         COMMENT '支付账户(最终)',
+    `pay_record_id`   BIGINT         NULL     DEFAULT NULL
+        COMMENT '支付记录(最终)',
     --
     `created_at`      DATETIME(6)    NOT NULL
         COMMENT '创建时间',
@@ -72,6 +74,12 @@ CREATE TABLE `bmw_refund_record`
         COMMENT '退款单号(接入商户)',
     `refund_amt`      DECIMAL(20, 2) NOT NULL DEFAULT 0
         COMMENT '退款金额',
+    `refund_act_id`   BIGINT         NOT NULL
+        COMMENT '退款账户',
+    `status`          VARCHAR(32)    NOT NULL DEFAULT 'processing'
+        COMMENT '退款状态: processing=>处理中; success=>成功; fail=>失败;',
+    `finished_at`     DATETIME(6)    NULL
+        COMMENT '完成时间',
     `notify_url`      VARCHAR(512)   NULL
         COMMENT '完结通知地址',
     `attach`          VARCHAR(512)   NULL
@@ -104,7 +112,9 @@ CREATE TABLE `bmw_pay_record`
         COMMENT '交易单',
     `pay_type`        VARCHAR(32) NOT NULL
         COMMENT '支付类型',
-    `pay_act_id`      BIGINT      NOT NULL
+    `payment_mch_id`  BIGINT      NOT NULL
+        COMMENT '支付商户',
+    `pay_act_id`      BIGINT
         COMMENT '支付账户',
     --
     `created_at`      DATETIME(6) NOT NULL
@@ -194,6 +204,8 @@ CREATE TABLE `bmw_payment_mch`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
+    `encoding`        VARCHAR(32) NOT NULL
+        COMMENT '编码',
     `type`            VARCHAR(32) NOT NULL
         COMMENT '类型: 支付宝、微信',
     `config`          JSON
@@ -207,6 +219,7 @@ CREATE TABLE `bmw_payment_mch`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
+    UNIQUE KEY (`encoding`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
@@ -316,13 +329,13 @@ CREATE TABLE `bmw_payment_mch_pay_type`
 DROP TABLE IF EXISTS `bmw_pay_scene`;
 CREATE TABLE `bmw_pay_scene`
 (
-    `id`            BIGINT AUTO_INCREMENT
+    `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `access_mch_id` BIGINT      NOT NULL
+    `access_mch_id`   BIGINT      NOT NULL
         COMMENT '接入商户',
-    `encoding`      VARCHAR(32) NOT NULL
+    `encoding`        VARCHAR(32) NOT NULL
         COMMENT '场景编号',
-    `title`         VARCHAR(32) NOT NULL
+    `title`           VARCHAR(32) NOT NULL
         COMMENT '标题',
     --
     `created_at`      DATETIME(6) NOT NULL

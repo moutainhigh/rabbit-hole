@@ -15,6 +15,10 @@
 
   <dependencies>
     <!--  一方库  -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-common</artifactId>
+    </dependency>
     <!--  二方库  -->
     <dependency>
       <groupId>in.hocg.boot</groupId>

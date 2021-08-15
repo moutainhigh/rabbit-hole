@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.bmw.biz.mapper.PaymentMchMapper">
+  <select id="getByAccessMchIdAndPayType" resultType="com.github.lotus.bmw.biz.entity.PaymentMch">
+    SELECT DISTINCT bpm.*
+    FROM bmw_payment_mch bpm
+           LEFT JOIN bmw_payment_access_ref bpar ON bpar.payment_mch_id = bpm.id
+           LEFT JOIN bmw_pay_scene bps ON bpar.access_mch_id = bps.access_mch_id
+           LEFT JOIN bmw_pay_scene_support bpss ON bps.id = bpss.pay_scene_id
+    <where>
+      <if test="accessMchId != null">
+        AND bps.access_mch_id = #{accessMchId}
+      </if>
+      <if test="payType != null">
+        AND bpss.pay_type = #{payType}
+      </if>
+    </where>
+  </select>
+</mapper>

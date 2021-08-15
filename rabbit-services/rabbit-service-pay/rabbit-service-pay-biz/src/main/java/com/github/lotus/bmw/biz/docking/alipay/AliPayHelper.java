@@ -1,0 +1,25 @@
+package com.github.lotus.bmw.biz.docking.alipay;
+
+import in.hocg.payment.PaymentResponse;
+import in.hocg.payment.alipay.v2.response.AliPayHttpResponse;
+import in.hocg.payment.wxpay.v2.response.WxPayXmlResponse;
+import lombok.experimental.UtilityClass;
+
+/**
+ * Created by hocgin on 2021/8/15
+ * email: hocgin@gmail.com
+ *
+ * @author hocgin
+ */
+@UtilityClass
+public class AliPayHelper {
+
+    public static boolean isSuccess(PaymentResponse response) {
+        if (response instanceof AliPayHttpResponse) {
+            return "10000".equalsIgnoreCase(((AliPayHttpResponse) response).getCode());
+        } else if (response instanceof WxPayXmlResponse) {
+            return "SUCCESS".equalsIgnoreCase(((WxPayXmlResponse) response).getResultCode());
+        }
+        return false;
+    }
+}
