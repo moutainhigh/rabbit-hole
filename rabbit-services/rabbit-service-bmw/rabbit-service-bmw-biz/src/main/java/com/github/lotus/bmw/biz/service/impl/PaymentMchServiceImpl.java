@@ -4,7 +4,6 @@ import com.github.lotus.bmw.biz.entity.PaymentMch;
 import com.github.lotus.bmw.biz.mapper.PaymentMchMapper;
 import com.github.lotus.bmw.biz.service.PaymentMchService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +24,8 @@ public class PaymentMchServiceImpl extends AbstractServiceImpl<PaymentMchMapper,
     implements PaymentMchService {
 
     @Override
-    public Optional<PaymentMch> getByAccessMchIdAndPayType(Long accessMchId, String payType) {
-        return baseMapper.getByAccessMchIdAndPayType(accessMchId, payType);
+    public Optional<PaymentMch> getByAccessMchIdAndSceneCodeAndPayType(Long accessMchId, String sceneCode, String payType) {
+        return baseMapper.getByAccessMchIdAndSceneCodeAndPayType(accessMchId, sceneCode, payType);
     }
 
     @Override

@@ -37,4 +37,6 @@ public interface TradeOrderService extends AbstractService<TradeOrder> {
     void updateRefundAmtById(Long tradeOrderId, BigDecimal newRefundAmt, BigDecimal oldRefundAmt);
 
     boolean updatePaySuccess(Long tradeOrderId, TradeOrder update);
+
+    Optional<TradeOrder> getByOrderNo(String orderNo);
 }

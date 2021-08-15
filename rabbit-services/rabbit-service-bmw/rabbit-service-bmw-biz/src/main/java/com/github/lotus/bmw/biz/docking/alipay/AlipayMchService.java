@@ -1,13 +1,15 @@
 package com.github.lotus.bmw.biz.docking.alipay;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
-import com.github.lotus.bmw.biz.docking.PaymentMchService;
+import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
 import com.github.lotus.bmw.biz.entity.*;
 import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
+import com.github.lotus.bmw.biz.service.PayRecordService;
 import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
@@ -18,14 +20,18 @@ import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.RefType;
 import com.github.lotus.common.datadict.bmw.PaymentMchRecordBizType;
 import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.message.TradeStatusSyncMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by hocgin on 2021/8/15
@@ -35,18 +41,19 @@ import java.io.Serializable;
  */
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AlipayMchService implements PaymentMchService {
+public class AlipayMchService implements PaymentMchDockingService {
     private final HttpLogBervice httpLogBervice;
     private final PaymentMchRecordService paymentMchRecordService;
     private final BmwCacheService cacheService;
     private final com.github.lotus.bmw.biz.service.PaymentMchService paymentMchService;
     private final TradeOrderService tradeOrderService;
     private final RefundRecordService refundRecordService;
+    private final PayRecordService payRecordService;
 
     @Override
     public PayTradeVo goPay(PayTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndPayType(accessMch.getId(), ro.getPayType())
+        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndSceneCodeAndPayType(accessMch.getId(), ro.getSceneCode(), ro.getPayType())
             .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
         TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
@@ -59,10 +66,12 @@ public class AlipayMchService implements PaymentMchService {
 
         String orderNo = tradeOrder.getOrderNo();
         GoPayRequest request = GoPayRequest.builder()
+            .payRecordId(ro.getPayRecordId())
             .quitUrl(tradeOrder.getFrontJumpUrl())
             .payAmount(tradeOrder.getTradeAmt())
             .configStorage(new ConfigStorageDto(paymentMch))
             .tradeSn(orderNo).build();
+
         String urlString = request.getClass().getSimpleName();
         String result = httpLogBervice.call(() -> {
             GoPayResponse response = request.request(ro.getPayType());
@@ -108,13 +117,26 @@ public class AlipayMchService implements PaymentMchService {
     }
 
     @Override
-    public PayRecord getTradeWithPayRecord(String paymentMchCode, String ro) {
+    public PayRecord getTradeWithPayRecord(String paymentMchCode, Long payRecordId, String ro) {
         PaymentMch paymentMch = paymentMchService.getByEncoding(paymentMchCode)
             .orElseThrow(UnsupportedOperationException::new);
         PaymentService<?> payService = this.getPayService(paymentMch);
         TradeStatusSyncMessage message = payService.message(ro, TradeStatusSyncMessage.class);
+        String orderNo = message.getOutTradeNo();
+        String tradeStatus = message.getTradeStatus();
+        BigDecimal messageAmount = AliPayHelper.asAmt(message.getTotalAmount());
+        TradeOrder tradeOrder = tradeOrderService.getByOrderNo(orderNo).orElseThrow(() -> ServiceException.wrap("交易单不存在"));
+        BigDecimal tradeAmt = tradeOrder.getTradeAmt();
+        Assert.isTrue(AliPayHelper.isPayed(tradeStatus), "支付商户的支付单[{}]的状态为[{}]，不是已支付", orderNo, tradeStatus);
+        Assert.isTrue(messageAmount.equals(tradeAmt), "支付单[{}]交易金额[{}!={}]不符", orderNo, messageAmount, tradeAmt);
+        return payRecordService.getById(payRecordId);
+    }
 
-        return null;
+    @Override
+    @SneakyThrows
+    public void notifySuccess() {
+        HttpServletResponse response = SpringServletContext.getResponse().orElseThrow(UnsupportedOperationException::new);
+        response.getWriter().write("notify_success");
     }
 
 }

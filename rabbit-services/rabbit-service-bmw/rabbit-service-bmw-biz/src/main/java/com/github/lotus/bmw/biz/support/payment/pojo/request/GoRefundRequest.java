@@ -73,13 +73,11 @@ public class GoRefundRequest extends AbsRequest {
         final GoRefundResponse result = new GoRefundResponse();
         Optional<GoRefundResponse> opt = Rules.create()
             .rule(PaymentMchType.Wxpay, Rules.Supplier(() -> {
-                final WxPayRequest request = this.wxRefundRequest();
-                final PayRefundResponse response = this.request(request);
+                final PayRefundResponse response = this.request(this.wxRefundRequest());
                 return result.setRefundTradeNo(response.getRefundId());
             }))
             .rule(PaymentMchType.Alipay, Rules.Supplier(() -> {
-                final AliPayRequest request = this.aliRefundRequest();
-                final TradeRefundResponse response = this.request(request);
+                final TradeRefundResponse response = this.request(this.aliRefundRequest());
                 result.setRefundTradeNo(response.getTradeNo());
                 return result;
             }))

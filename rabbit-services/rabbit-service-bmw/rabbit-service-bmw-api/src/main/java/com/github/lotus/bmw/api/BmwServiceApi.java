@@ -42,7 +42,7 @@ public interface BmwServiceApi {
      * @param ro ro
      * @return _
      */
-    @PostMapping(value = CONTEXT_ID + "/payTrade", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/goPay", headers = GlobalConstant.FEIGN_HEADER)
     PayTradeVo goPay(@RequestBody PayTradeRo ro);
 
 

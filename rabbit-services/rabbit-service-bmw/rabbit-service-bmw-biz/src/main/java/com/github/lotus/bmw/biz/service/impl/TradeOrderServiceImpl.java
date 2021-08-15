@@ -14,10 +14,10 @@ import com.github.lotus.bmw.biz.mapstruct.TradeOrderMapping;
 import com.github.lotus.bmw.biz.pojo.dto.CreatePayRecordDto;
 import com.github.lotus.bmw.biz.service.*;
 import com.github.lotus.common.datadict.bmw.TradeOrderStatus;
-import com.github.lotus.common.datadict.pay.TradeStatus;
 import com.github.lotus.bmw.biz.service.SNCodeService;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.NonNull;
@@ -62,6 +62,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         String orderNo = codeService.getTradeOrderNo();
 
         TradeOrder entity = mapping.asTradeOrder(ro);
+        entity.setPlanCloseAt(LangUtils.getOrDefault(entity.getPlanCloseAt(), now.plusDays(999L)));
         entity.setAccessMchId(accessMch.getId());
         entity.setStatus(TradeOrderStatus.Processing.getCodeStr());
         entity.setOrderNo(orderNo);
@@ -99,7 +100,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         Assert.isTrue(isProcessing, "交易单据状态错误");
 
         TradeOrder update = new TradeOrder().setFinishedAt(now).setStatus(TradeOrderStatus.Closed.getCodeStr()).setLastUpdatedAt(now);
-        boolean isOk = this.updateByIdAndStatus(update, tradeOrderId, TradeStatus.Init.getCode());
+        boolean isOk = this.updateByIdAndStatus(update, tradeOrderId, TradeOrderStatus.Processing.getCodeStr());
         ValidUtils.isTrue(isOk, "系统繁忙，关单失败");
 
         return this.convertTradeSyncVo(getById(tradeOrderId));
@@ -128,7 +129,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         Long accessMchId = accessMch.getId();
 
         // 1. 检查支付类型是否被支持
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndPayType(accessMchId, ro.getPayType())
+        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndSceneCodeAndPayType(accessMchId, ro.getSceneCode(), ro.getPayType())
             .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
         Long paymentMchId = paymentMch.getId();
 
@@ -146,7 +147,10 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         createPayRecordDto.setPaymentMchId(paymentMchId);
         createPayRecordDto.setPayActId(account.getId());
         createPayRecordDto.setTradeOrderId(tradeOrder.getId());
-        Assert.notNull(payRecordService.createPayRecord(createPayRecordDto));
+        PayRecord payRecord = Assert.notNull(payRecordService.createPayRecord(createPayRecordDto));
+
+        ro.setPaymentMchType(paymentMch.getType());
+        ro.setPayRecordId(payRecord.getId());
 
         // 4. 发起支付
         return dockingService.goPay(ro);
@@ -166,6 +170,11 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         return lambdaUpdate().eq(TradeOrder::getId, tradeOrderId)
             .eq(TradeOrder::getStatus, TradeOrderStatus.Processing.getCode())
             .update(update);
+    }
+
+    @Override
+    public Optional<TradeOrder> getByOrderNo(String orderNo) {
+        return this.lambdaQuery().eq(TradeOrder::getOrderNo, orderNo).oneOpt();
     }
 
 }

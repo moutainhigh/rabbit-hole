@@ -7,6 +7,7 @@ import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
+import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
 import com.github.lotus.bmw.biz.entity.*;
 import com.github.lotus.bmw.biz.mapstruct.RefundRecordMapping;
 import com.github.lotus.bmw.biz.pojo.dto.CreateAccountDto;
@@ -21,6 +22,7 @@ import com.github.lotus.bmw.biz.service.SNCodeService;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +36,10 @@ import java.util.Optional;
  *
  * @author hocgin
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class PaymentMchDockingServiceImpl implements PaymentMchDockingService {
+public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.service.PaymentMchDockingService {
     private final BmwCacheService cacheService;
     private final TradeOrderService tradeOrderService;
     private final RefundRecordService refundRecordService;
@@ -51,16 +54,7 @@ public class PaymentMchDockingServiceImpl implements PaymentMchDockingService {
 
     @Override
     public PayTradeVo goPay(PayTradeRo ro) {
-        AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndPayType(accessMch.getId(), ro.getPayType())
-            .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
-        Optional<PayTradeVo> opt = Rules.create()
-            // 支付宝
-            .rule(PaymentMchType.Alipay, Rules.Supplier(() -> alipayMchService.goPay(ro)))
-            // 微信
-            .rule(PaymentMchType.Wxpay, Rules.Supplier(() -> wxpayMchService.goPay(ro)))
-            .of(ICode.ofThrow(paymentMch.getType(), PaymentMchType.class));
-        return opt.orElseThrow(UnsupportedOperationException::new);
+        return getPaymentMchService(ICode.ofThrow(ro.getPaymentMchType(), PaymentMchType.class)).goPay(ro);
     }
 
     @Override
@@ -97,12 +91,7 @@ public class PaymentMchDockingServiceImpl implements PaymentMchDockingService {
         Long refundRecordId = entity.getId();
 
         // 2. [支付商户]去退款
-        Rules.create()
-            // 支付宝
-            .rule(PaymentMchType.Alipay, Rules.Supplier(() -> alipayMchService.goRefund(refundRecordId)))
-            // 微信
-            .rule(PaymentMchType.Wxpay, Rules.Supplier(() -> wxpayMchService.goRefund(refundRecordId)))
-            .of(ICode.ofThrow(paymentMch.getType(), PaymentMchType.class));
+        getPaymentMchService(ICode.ofThrow(paymentMch.getType(), PaymentMchType.class)).goRefund(refundRecordId);
 
         // 3. 变更退款状态
         RefundRecord update = new RefundRecord().setStatus(RefundStatus.Success.getCodeStr()).setFinishedAt(now).setLastUpdatedAt(now);
@@ -140,34 +129,62 @@ public class PaymentMchDockingServiceImpl implements PaymentMchDockingService {
         return Optional.ofNullable(accountService.createAccount(dto));
     }
 
-    @Override
-    public void payResult(PaymentMchType paymentMchType, String paymentMchCode, String ro) {
-        // 1. 验证签名 & 验证支付单据 & 验证支付金额
-        Optional<PayRecord> payRecordOpt = Rules.create()
-            // 支付宝
-            .rule(PaymentMchType.Alipay, Rules.Supplier(() -> alipayMchService.getTradeWithPayRecord(paymentMchCode, ro)))
-            // 微信
-            .rule(PaymentMchType.Wxpay, Rules.Supplier(() -> wxpayMchService.getTradeWithPayRecord(paymentMchCode, ro)))
-            .of(paymentMchType);
-        PayRecord payRecord = payRecordOpt.orElseThrow(UnsupportedOperationException::new);
 
+    @Override
+    public void handlePayResult(PaymentMchType paymentMchType, String paymentMchCode, Long payRecordId, String ro) {
+        PaymentMchDockingService paymentMchService = getPaymentMchService(paymentMchType);
+
+        // 1. 验证签名 & 验证支付单据 & 验证支付金额
+        PayRecord payRecord = paymentMchService.getTradeWithPayRecord(paymentMchCode, payRecordId, ro);
         Long tradeOrderId = payRecord.getTradeOrderId();
         TradeOrder tradeOrder = Assert.notNull(tradeOrderService.getById(tradeOrderId));
 
-        // 2. 修改交易单状态 & 支付信息
-        TradeOrder updateTradeOrder = new TradeOrder();
-        updateTradeOrder.setPayType(payRecord.getPayType());
-        updateTradeOrder.setPayActId(payRecord.getPayActId());
-        updateTradeOrder.setPaymentMchId(payRecord.getPaymentMchId());
-        updateTradeOrder.setPayRecordId(payRecord.getId());
-        tradeOrderService.updatePaySuccess(tradeOrderId, updateTradeOrder);
-
-        // 3. 新增账户流水
-        accountFlowService.createTradeFlow(tradeOrderId);
-
-        // 4. 创建通知任务 & 通知接入商户
-        if (StrUtil.isNotBlank(tradeOrder.getNotifyUrl())) {
-            syncAccessMchTaskService.createPayed(tradeOrderId);
+        // 如果单据已支付
+        if (TradeOrderStatus.Payed.eq(tradeOrder.getStatus())) {
+            log.info("交易单[{}]已支付, 支付回调处理终止", tradeOrder.getOrderNo());
         }
+        // 如果单据未支付
+        else if (TradeOrderStatus.Processing.eq(tradeOrder.getStatus())) {
+            // 2. 修改交易单状态 & 支付信息
+            TradeOrder updateTradeOrder = new TradeOrder();
+            updateTradeOrder.setPayType(payRecord.getPayType());
+            updateTradeOrder.setPayActId(payRecord.getPayActId());
+            updateTradeOrder.setPaymentMchId(payRecord.getPaymentMchId());
+            updateTradeOrder.setPayRecordId(payRecord.getId());
+            tradeOrderService.updatePaySuccess(tradeOrderId, updateTradeOrder);
+
+            // 3. 新增账户流水
+            accountFlowService.createTradeFlow(tradeOrderId);
+
+            // 4. 创建通知任务 & 通知接入商户
+            if (StrUtil.isNotBlank(tradeOrder.getNotifyUrl())) {
+                syncAccessMchTaskService.createPayed(tradeOrderId);
+            }
+        }
+        // 如果单据非正常状态
+        else {
+            log.warn("交易单[{}]状态异常,支付回调无法被正常处理", tradeOrder.getOrderNo());
+        }
+
+        // 回执处理成功
+        paymentMchService.notifySuccess();
     }
+
+
+    /**
+     * 获取支付商户处理服务
+     *
+     * @param paymentMchType 商户类型
+     * @return
+     */
+    public PaymentMchDockingService getPaymentMchService(PaymentMchType paymentMchType) {
+        Optional<PaymentMchDockingService> opt = Rules.create()
+            // 支付宝
+            .rule(PaymentMchType.Alipay, Rules.Supplier(() -> alipayMchService))
+            // 微信
+            .rule(PaymentMchType.Wxpay, Rules.Supplier(() -> wxpayMchService))
+            .of(paymentMchType);
+        return opt.orElseThrow(UnsupportedOperationException::new);
+    }
+
 }

@@ -29,7 +29,7 @@ insert into bmw_access_mch(id, encoding, title, created_at)
 insert into bmw_payment_mch(id, encoding, type, created_at)
     value (1, 'test_payment', 'alipay', now());
 insert into bmw_payment_mch(id, encoding, type, created_at)
-    value (2, 'test_payment', 'wxpay', now());
+    value (2, 'test_payment_2', 'wxpay', now());
 
 -- bmw_payment_mch_alipay
 insert into bmw_payment_mch_alipay_config(id, appid, public_key, private_key)

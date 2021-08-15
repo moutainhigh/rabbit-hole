@@ -22,7 +22,6 @@ public class CloseTradeRo extends AccessRo {
     @ApiModelProperty(value = "交易单号", required = true)
     private String orderNo;
 
-    @NotNull(message = "IP错误")
     @ApiModelProperty(hidden = true)
     private String clientIp;
 }

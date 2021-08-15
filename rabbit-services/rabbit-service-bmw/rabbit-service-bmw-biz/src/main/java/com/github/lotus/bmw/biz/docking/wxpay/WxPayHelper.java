@@ -30,4 +30,12 @@ public class WxPayHelper {
         }
         return false;
     }
+
+    public static boolean isPayed(String tradeStatus) {
+        return "10000".equalsIgnoreCase(tradeStatus);
+    }
+
+    public static BigDecimal asAmt(String totalFee) {
+        return new BigDecimal(totalFee).divide(BigDecimal.valueOf(100L), RoundingMode.DOWN);
+    }
 }

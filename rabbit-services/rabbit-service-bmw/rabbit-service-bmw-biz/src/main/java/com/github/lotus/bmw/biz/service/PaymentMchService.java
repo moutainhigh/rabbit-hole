@@ -15,7 +15,8 @@ import java.util.Optional;
  */
 public interface PaymentMchService extends AbstractService<PaymentMch> {
 
-    Optional<PaymentMch> getByAccessMchIdAndPayType(Long accessMchId, String payType);
+
+    Optional<PaymentMch> getByAccessMchIdAndSceneCodeAndPayType(Long accessMchId, String sceneCode, String payType);
 
     Optional<PaymentMch> getByEncoding(String paymentMchCode);
 }

@@ -18,5 +18,5 @@ import java.util.Optional;
 @Mapper
 public interface PaymentMchMapper extends BaseMapper<PaymentMch> {
 
-    Optional<PaymentMch> getByAccessMchIdAndPayType(@Param("accessMchId") Long accessMchId, @Param("payType") String payType);
+    Optional<PaymentMch> getByAccessMchIdAndSceneCodeAndPayType(@Param("accessMchId") Long accessMchId, @Param("scenesCode") String scenesCode, @Param("payType") String payType);
 }

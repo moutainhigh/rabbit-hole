@@ -47,5 +47,6 @@ public interface PaymentMchDockingService {
     /**
      * 处理支付结果
      */
-    void payResult(PaymentMchType paymentMchType, String paymentMchCode, String ro);
+    void handlePayResult(PaymentMchType paymentMchType, String paymentMchCode, Long payRecordId, String ro);
+
 }

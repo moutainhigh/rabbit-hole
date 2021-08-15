@@ -5,6 +5,7 @@ import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.common.datadict.bmw.PaymentMchPayType;
 import com.github.lotus.common.datadict.pay.PayMode;
 import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
+import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
@@ -25,6 +26,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
+import java.util.function.Supplier;
+
+import static com.github.lotus.common.datadict.bmw.PaymentMchPayType.*;
 
 /**
  * Created by hocgin on 2020/5/31.
@@ -40,14 +44,16 @@ public class GoPayRequest extends AbsRequest {
     @ApiModelProperty
     protected final ConfigStorageDto configStorage;
     @NonNull
-    @ApiModelProperty(value = "支付方式", required = true)
-    private final String payMode;
-    @NonNull
     @ApiModelProperty(value = "订单支付金额", required = true)
     private final BigDecimal payAmount;
     @NonNull
     @ApiModelProperty("交易单号(网关)")
     private final String tradeSn;
+    @NonNull
+    @ApiModelProperty("支付记录")
+    private final Long payRecordId;
+
+
     @ApiModelProperty(value = "[可选] 微信用户(微信支付必须)")
     private final String wxOpenId;
     @ApiModelProperty(value = "[可选] (支付宝Wap支付)")
@@ -145,60 +151,46 @@ public class GoPayRequest extends AbsRequest {
 
     public GoPayResponse request(String payType) {
         final GoPayResponse result = new GoPayResponse().setPayType(payType);
-        switch (ICode.ofThrow(payType, PaymentMchPayType.class)) {
-            case AliPay_App: {
-                final AliPayRequest request = this.aliPayAppRequest();
-                final PaymentResponse response = this.request(request);
+        Rules.create()
+            .rule(AliPay_App, Rules.Runnable(() -> {
+                final PaymentResponse response = this.request(this.aliPayAppRequest());
                 result.setApp(response.getContent());
-                break;
-            }
-            case AliPay_QrCode: {
-                final AliPayRequest request = this.aliPayQrCodeRequest();
-                final TradePreCreateResponse response = this.request(request);
-                result.setQrCode(response.getQrCode());
-                break;
-            }
-            case AliPay_PC: {
-                final AliPayRequest request = this.aliPayPcRequest();
-                final PaymentResponse response = this.request(request);
+            }))
+            .rule(AliPay_QrCode, Rules.Runnable(() -> {
+                final PaymentResponse response = this.request(this.aliPayQrCodeRequest());
+                result.setApp(response.getContent());
+            }))
+            .rule(AliPay_PC, Rules.Runnable(() -> {
+                final PaymentResponse response = this.request(this.aliPayPcRequest());
                 result.setMethod("POST");
                 result.setForm(response.getContent());
-                break;
-            }
-            case AliPay_Wap: {
-                final AliPayRequest request = this.aliPayWapRequest();
-                final PaymentResponse response = this.request(request);
+            }))
+            .rule(AliPay_Wap, Rules.Runnable(() -> {
+                final PaymentResponse response = this.request(this.aliPayWapRequest());
                 result.setMethod("POST");
                 result.setForm(response.getContent());
-                break;
-            }
-            case WxPay_App: {
-                final WxPayRequest request = this.wxPayAPPRequest();
-                final UnifiedOrderResponse response = this.request(request);
-                result.setApp(response.getContent());
-                break;
-            }
-            case WxPay_JSAPI: {
-                final WxPayRequest request = this.wxPayJSAPIRequest();
+            }))
+            .rule(WxPay_App, Rules.Runnable(() -> {
+                final UnifiedOrderResponse response = this.request(this.wxPayAPPRequest());
+                result.setForm(response.getContent());
+            }))
+            .rule(WxPay_JSAPI, Rules.Runnable(() -> {
+                WxPayRequest request = this.wxPayJSAPIRequest();
                 final UnifiedOrderResponse response = this.request(request);
                 result.setWxJSApi(GoPayResponse.WxJSAPI.NEW("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
-                break;
-            }
-            case WxPay_Native: {
+                result.setForm(response.getContent());
+            }))
+            .rule(WxPay_Native, Rules.Runnable(() -> {
                 final WxPayRequest request = this.wxPayNativeRequest();
                 final UnifiedOrderResponse response = this.request(request);
-                result.setWxNative(response.getContent());
-                break;
-            }
-            default: {
-                throw ServiceException.wrap("暂不支持该支付方式");
-            }
-        }
+                result.setForm(response.getContent());
+            }))
+            .of(ICode.ofThrow(payType, PaymentMchPayType.class));
         return result;
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl();
+        return getPaymentNotifyUrl(this.payRecordId);
     }
 
 }

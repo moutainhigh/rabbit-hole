@@ -28,13 +28,21 @@ public class PayTradeRo extends AccessRo {
     @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
     private String payType;
+    @NotNull(message = "支付场景不能为空")
+    @ApiModelProperty(value = "支付场景", required = true)
+    private String sceneCode;
+
     @NotNull(message = "用户")
     @ApiModelProperty(value = "用户", required = true)
     private Long userId;
-    @NotNull(message = "使用场景")
-    @ApiModelProperty(value = "使用场景", required = true)
+    @NotNull(message = "账号使用场景")
+    @ApiModelProperty(value = "账号使用场景", required = true)
     private String useScenes = UseScenes.None.getCodeStr();
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "发起支付的客户端", hidden = true)
     private String clientIp;
+    @ApiModelProperty(value = "支付记录", hidden = true)
+    private Long payRecordId;
+    @ApiModelProperty(value = "支付商户类型", hidden = true)
+    private String paymentMchType;
 }

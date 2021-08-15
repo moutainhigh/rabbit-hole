@@ -35,25 +35,27 @@ public abstract class AbsRequest {
     abstract ConfigStorageDto getConfigStorage();
 
     protected PaymentMchType getPaymentMchType() {
-        return ICode.ofThrow(getConfigStorage().getPaymentMchType(), PaymentMchType.class);
+        return ICode.ofThrow(getConfigStorage().getPaymentMch().getType(), PaymentMchType.class);
     }
 
     protected String getUrlPrefix() {
         return SpringContext.getBean(PaymentProperties.class).getUrlPrefix();
     }
 
-    protected String getPaymentNotifyUrl() {
-
-        HashMap<String, String> var = Maps.newHashMap();
-        var.put("feature", Feature.Pay.getCode());
-        String uri = StrUtil.format(BmwConstant.CALLBACK_URI, var);
+    protected String getPaymentNotifyUrl(Long payRecordId) {
+        HashMap<String, Object> var = Maps.newHashMap();
+        var.put("paymentMchType", getPaymentMchType().getCodeStr());
+        var.put("paymentMchCode", getConfigStorage().getPaymentMch().getEncoding());
+        var.put("payRecordId", payRecordId);
+        String uri = StrUtil.format(BmwConstant.PAY_CALLBACK_URI, var);
         return this.getUrlPrefix() + uri;
     }
 
     protected String getRefundNotifyUrl() {
         HashMap<String, String> var = Maps.newHashMap();
-        var.put("feature", Feature.Refund.getCode());
-        String uri = StrUtil.format(BmwConstant.CALLBACK_URI, var);
+        var.put("paymentMchType", getPaymentMchType().getCodeStr());
+        var.put("paymentMchCode", getConfigStorage().getPaymentMch().getEncoding());
+        String uri = StrUtil.format(BmwConstant.REFUND_CALLBACK_URI, var);
         return this.getUrlPrefix() + uri;
     }
 
@@ -65,14 +67,8 @@ public abstract class AbsRequest {
         return this.getConfigStorage().getPayService();
     }
 
-    protected void save(AbsRequest request) {
-        String requestBody = JSONUtil.toJsonStr(request);
-        log.info("发起请求: {}", requestBody);
-    }
-
     protected <T> T request(PaymentRequest request) {
         final PaymentService paymentService = this.getPayService();
-        this.save(this);
         return (T) paymentService.request(request);
     }
 }

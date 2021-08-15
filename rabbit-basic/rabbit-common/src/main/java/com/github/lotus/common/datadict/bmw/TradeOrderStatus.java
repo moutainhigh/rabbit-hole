@@ -17,8 +17,6 @@ import java.io.Serializable;
 public enum TradeOrderStatus implements DataDictEnum {
     Processing("processing", "进行中"),
     Payed("payed", "已支付"),
-    Success("success", "成功"),
-    Fail("fail", "失败"),
     Cancelled("cancelled", "已取消"),
     Closed("closed", "已关闭");
     private final Serializable code;

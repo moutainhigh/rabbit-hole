@@ -15,7 +15,7 @@ import org.mapstruct.Mapping;
  * @author hocgin
  */
 @Mapper(componentModel = "spring")
-public interface AccountMapping {
+public interface UserMapping {
 
     UserDetailVo asUserDetailVo(User account);
 

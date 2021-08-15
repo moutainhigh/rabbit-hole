@@ -2,7 +2,6 @@ package com.github.lotus.bmw.biz.controller;
 
 import com.github.lotus.bmw.biz.constant.BmwConstant;
 import com.github.lotus.bmw.biz.service.PaymentMchDockingService;
-import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ResultNotifyController {
     private final PaymentMchDockingService dockingService;
 
-    @RequestMapping(BmwConstant.CALLBACK_URI)
-    public void payResult(@PathVariable("paymentMchType") String paymentMchType, @PathVariable("paymentMchCode") String paymentMchCode,
+    @RequestMapping(BmwConstant.PAY_CALLBACK_URI)
+    public void payResult(@PathVariable("paymentMchType") String paymentMchType, @PathVariable("paymentMchCode") String paymentMchCode, @PathVariable("payRecordId") Long payRecordId,
                           @RequestBody String requestBody) {
         PaymentMchType mchType = ICode.ofThrow(paymentMchType, PaymentMchType.class);
-        dockingService.payResult(mchType, paymentMchCode, requestBody);
+        dockingService.handlePayResult(mchType, paymentMchCode, payRecordId, requestBody);
     }
 }

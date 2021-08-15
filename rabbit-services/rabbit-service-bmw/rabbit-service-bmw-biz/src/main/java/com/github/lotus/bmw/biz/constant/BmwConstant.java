@@ -14,5 +14,6 @@ public class BmwConstant {
     /**
      * 回调地址
      */
-    public static final String CALLBACK_URI = "/{paymentMchType}/{paymentMchCode}";
+    public static final String PAY_CALLBACK_URI = "/{paymentMchType}/{paymentMchCode}/pay/{payRecordId}";
+    public static final String REFUND_CALLBACK_URI = "/{paymentMchType}/{paymentMchCode}/refund";
 }
