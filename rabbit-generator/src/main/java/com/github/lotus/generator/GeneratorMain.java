@@ -17,21 +17,8 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.BMW, false,
-            "bmw_access_mch",
-            "bmw_account",
-            "bmw_account_flow",
-            "bmw_pay_record",
-            "bmw_pay_scene",
-            "bmw_pay_scene_support",
-            "bmw_payment_access_ref",
-            "bmw_payment_mch",
-            "bmw_payment_mch_pay_type",
-            "bmw_payment_mch_record",
-            "bmw_payment_mch_type",
-            "bmw_payment_support",
-            "bmw_refund_record",
-            "bmw_sync_access_mch_task",
-            "bmw_trade_order",
+            "bmw_payment_mch_wxpay_config",
+            "bmw_payment_mch_alipay_config",
             "");
     }
 

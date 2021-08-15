@@ -16,12 +16,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @SpringBootApplication(scanBasePackages = {
     "com.github.lotus.chaos", "com.github.lotus.wl",
-    "com.github.lotus.pay",
+    "com.github.lotus.bmw",
     "com.github.lotus.docking", "com.github.lotus.ums",
     "com.github.lotus.mina", "com.github.lotus.com"})
 @MapperScan(value = {
     "com.github.lotus.chaos", "com.github.lotus.wl",
-    "com.github.lotus.pay",
+    "com.github.lotus.bmw",
     "com.github.lotus.docking", "com.github.lotus.ums",
     "com.github.lotus.mina", "com.github.lotus.com"}
     , annotationClass = Mapper.class)

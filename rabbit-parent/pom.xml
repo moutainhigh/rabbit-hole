@@ -154,17 +154,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-start</artifactId>
+        <artifactId>rabbit-service-bmw-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-biz</artifactId>
+        <artifactId>rabbit-service-bmw-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-api</artifactId>
+        <artifactId>rabbit-service-bmw-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

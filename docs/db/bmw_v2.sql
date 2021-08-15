@@ -226,11 +226,48 @@ CREATE TABLE `bmw_payment_mch`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[支付模块] 支付商户表';
 
+
+DROP TABLE IF EXISTS `bmw_payment_mch_alipay_config`;
+CREATE TABLE `bmw_payment_mch_alipay_config`
+(
+    id          bigint auto_increment,
+    appid       varchar(255)        NOT NULL
+        COMMENT 'appid',
+    public_key  text                NOT NULL
+        COMMENT 'public key',
+    private_key text                NOT NULL
+        COMMENT 'private key',
+    is_dev      TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '是否测试模式',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+    COMMENT = '[支付模块] 支付宝配置表';
+
+DROP TABLE IF EXISTS `bmw_payment_mch_wxpay_config`;
+CREATE TABLE `bmw_payment_mch_wxpay_config`
+(
+    id       bigint auto_increment,
+    appid    varchar(255) not null
+        COMMENT 'appid',
+    mch_id   varchar(255) not null
+        COMMENT 'mch_id',
+    key_str  varchar(255) not null
+        COMMENT 'key',
+    cert_str text         not null
+        COMMENT 'cert file text',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+    COMMENT = '[支付模块] 微信支付配置表';
+
 DROP TABLE IF EXISTS `bmw_access_mch`;
 CREATE TABLE `bmw_access_mch`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
+    `title`           VARCHAR(32) NOT NULL
+        COMMENT '标题',
     `encoding`        VARCHAR(32) NOT NULL
         COMMENT '商户编码',
     `config`          JSON
@@ -356,11 +393,13 @@ CREATE TABLE `bmw_pay_scene`
 DROP TABLE IF EXISTS `bmw_pay_scene_support`;
 CREATE TABLE `bmw_pay_scene_support`
 (
-    `id`           BIGINT AUTO_INCREMENT
+    `id`             BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `pay_scene_id` BIGINT      NOT NULL
+    `pay_scene_id`   BIGINT      NOT NULL
         COMMENT '支付场景',
-    `pay_type`     VARCHAR(32) NOT NULL
+    `payment_mch_id` BIGINT      NOT NULL
+        COMMENT '支付商户',
+    `pay_type`       VARCHAR(32) NOT NULL
         COMMENT '支付类型',
     UNIQUE KEY (pay_scene_id, pay_type),
     PRIMARY KEY (`id`)
