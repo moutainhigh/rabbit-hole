@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class CashierInfoVo {
+public class CashierInfoVo implements Serializable {
     @ApiModelProperty("交易单")
     private String tradeOrderId;
     @ApiModelProperty("交易单号(接入商户)")

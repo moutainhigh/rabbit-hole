@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * Created by hocgin on 2021/8/16
  * email: hocgin@gmail.com
@@ -13,7 +15,9 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class CashierInfoDto {
+public class CashierInfoDto implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty("接入商户")
     private Long accessMchId;
     @ApiModelProperty("支付场景")
