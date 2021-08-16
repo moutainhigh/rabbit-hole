@@ -2,8 +2,8 @@ package com.github.lotus.bmw.api;
 
 import com.github.lotus.bmw.api.pojo.ro.*;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ public interface BmwServiceApi {
      * @param ro ro
      */
     @PostMapping(value = CONTEXT_ID + "/closeTrade", headers = GlobalConstant.FEIGN_HEADER)
-    TradeSyncVo closeTrade(@RequestBody CloseTradeRo ro);
+    TradeStatusSyncVo closeTrade(@RequestBody CloseTradeRo ro);
 
     /**
      * 创建交易单
@@ -34,7 +34,7 @@ public interface BmwServiceApi {
      * @return _
      */
     @PostMapping(value = CONTEXT_ID + "/createTrade", headers = GlobalConstant.FEIGN_HEADER)
-    TradeSyncVo createTrade(@RequestBody CreateTradeRo ro);
+    TradeStatusSyncVo createTrade(@RequestBody CreateTradeRo ro);
 
     /**
      * 去支付
@@ -53,7 +53,7 @@ public interface BmwServiceApi {
      * @return _
      */
     @PostMapping(value = CONTEXT_ID + "/getTrade", headers = GlobalConstant.FEIGN_HEADER)
-    TradeSyncVo getTrade(@RequestBody GetTradeRo ro);
+    TradeStatusSyncVo getTrade(@RequestBody GetTradeRo ro);
 
     /**
      * 进行退款
@@ -62,7 +62,7 @@ public interface BmwServiceApi {
      * @return _
      */
     @PostMapping(value = CONTEXT_ID + "/goRefund", headers = GlobalConstant.FEIGN_HEADER)
-    RefundSyncVo goRefund(@RequestBody GoRefundRo ro);
+    RefundStatusSyncVo goRefund(@RequestBody GoRefundRo ro);
 
     /**
      * 查询退款单信息
@@ -71,5 +71,5 @@ public interface BmwServiceApi {
      * @return _
      */
     @PostMapping(value = CONTEXT_ID + "/getRefund", headers = GlobalConstant.FEIGN_HEADER)
-    RefundSyncVo getRefund(@RequestBody GetRefundRo ro);
+    RefundStatusSyncVo getRefund(@RequestBody GetRefundRo ro);
 }

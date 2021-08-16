@@ -14,6 +14,7 @@ import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskStatus;
 import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
     private final TradeOrderService tradeOrderService;
     private final RefundRecordService refundRecordService;
 
+    @Async
     @Override
     public void createPayed(Long tradeOrderId) {
         TradeOrder tradeOrder = tradeOrderService.getById(tradeOrderId);
@@ -57,6 +59,7 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
         syncAccessMchTaskSchedule.asyncNotifyHandleError(entity);
     }
 
+    @Async
     @Override
     public void createRefund(Long refundRecordId) {
         RefundRecord refundRecord = refundRecordService.getById(refundRecordId);

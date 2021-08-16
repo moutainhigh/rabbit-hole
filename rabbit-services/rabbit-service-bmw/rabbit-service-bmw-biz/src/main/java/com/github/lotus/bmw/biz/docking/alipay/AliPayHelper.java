@@ -16,15 +16,6 @@ import java.math.BigDecimal;
 @UtilityClass
 public class AliPayHelper {
 
-    public static boolean isPayed(PaymentResponse response) {
-        if (response instanceof AliPayHttpResponse) {
-            return "10000".equalsIgnoreCase(((AliPayHttpResponse) response).getCode());
-        } else if (response instanceof WxPayXmlResponse) {
-            return "SUCCESS".equalsIgnoreCase(((WxPayXmlResponse) response).getResultCode());
-        }
-        return false;
-    }
-
     /**
      * 支付宝金额 -> 平台金额
      *
@@ -36,10 +27,21 @@ public class AliPayHelper {
 
     /**
      * 交易单状态是否支付成功
+     *
      * @param tradeStatus
      * @return
      */
     public static boolean isPayed(String tradeStatus) {
-        return true;
+        return "SUCCESS".equalsIgnoreCase(tradeStatus);
     }
+
+    public static boolean isSuccess(PaymentResponse response) {
+        if (response instanceof AliPayHttpResponse) {
+            return "10000".equalsIgnoreCase(((AliPayHttpResponse) response).getCode());
+        } else if (response instanceof WxPayXmlResponse) {
+            return "SUCCESS".equalsIgnoreCase(((WxPayXmlResponse) response).getResultCode());
+        }
+        return false;
+    }
+
 }

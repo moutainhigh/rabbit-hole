@@ -7,15 +7,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
 import com.alibaba.schedulerx.worker.processor.ProcessResult;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.SyncAccessMchTask;
-import com.github.lotus.bmw.biz.pojo.dto.SyncNotifyVo;
+import com.github.lotus.bmw.biz.pojo.dto.NotifySyncStatusVo;
+import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.SyncAccessMchTaskService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.bmw.biz.support.TaskHelper;
 import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskStatus;
 import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskType;
-import com.github.lotus.common.datadict.com.TaskType;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by hocgin on 2021/8/15
@@ -39,6 +39,7 @@ import java.util.Date;
 public class SyncAccessMchTaskSchedule extends JavaProcessor {
     private final SyncAccessMchTaskService syncAccessMchTaskService;
     private final TradeOrderService tradeOrderService;
+    private final RefundRecordService refundRecordService;
     private final SyncAccessMchTaskSchedule self;
 
     @Override
@@ -69,15 +70,22 @@ public class SyncAccessMchTaskSchedule extends JavaProcessor {
         }
 
         // 2. 通知准备
-        String notifyUrl = null;
+        String notifyUrl = entity.getNotifyUrl();
         String signStr = null;
-        SyncNotifyVo notifyBody = new SyncNotifyVo();
+        NotifySyncStatusVo notifyBody = new NotifySyncStatusVo();
         notifyBody.setNotifyAt(LocalDateTime.now());
-        notifyBody.setTaskType(entity.getTaskType());
+        notifyBody.setSyncNotifyType(entity.getTaskType());
+
+        // 交易结果
         if (SyncAccessMchTaskType.TradeResult.eq(entity.getTaskType())) {
-            TradeSyncVo syncResult = tradeOrderService.getTradeById(entity.getRefId());
-            notifyBody.setTradeSync(syncResult);
-            notifyUrl = entity.getNotifyUrl();
+            TradeStatusSyncVo syncResult = tradeOrderService.getTradeById(entity.getRefId());
+            notifyBody.setTradeStatusSync(syncResult);
+            signStr = MD5.create().digestHex(JSON.toJSONString(syncResult));
+        }
+        // 退款结果
+        else if (SyncAccessMchTaskType.RefundResult.eq(entity.getTaskType())) {
+            RefundStatusSyncVo syncResult = refundRecordService.getRefundById(entity.getRefId());
+            notifyBody.setRefundStatusSync(syncResult);
             signStr = MD5.create().digestHex(JSON.toJSONString(syncResult));
         }
 

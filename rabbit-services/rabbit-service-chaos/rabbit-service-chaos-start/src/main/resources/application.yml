@@ -54,6 +54,8 @@ boot:
         ttl: 1D
       - name: PAGING_TOPIC_WALLPAPER
         ttl: 1D
+      - name: GET_ACCESS_MCH_BY_ENCODING
+        ttl: 1D
       - name: GET_ADDRESS_BY_IP
         ttl: 1H
   mail:

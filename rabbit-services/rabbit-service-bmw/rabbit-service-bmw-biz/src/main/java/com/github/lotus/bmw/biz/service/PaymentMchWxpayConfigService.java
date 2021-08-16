@@ -1,6 +1,6 @@
 package com.github.lotus.bmw.biz.service;
 
-import com.github.lotus.bmw.biz.entity.PaymentMchWxpayConfig;
+import com.github.lotus.bmw.biz.entity.PaymentMchConfigWxpay;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
@@ -11,6 +11,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  * @author hocgin
  * @since 2021-08-15
  */
-public interface PaymentMchWxpayConfigService extends AbstractService<PaymentMchWxpayConfig> {
+public interface PaymentMchWxpayConfigService extends AbstractService<PaymentMchConfigWxpay> {
 
 }

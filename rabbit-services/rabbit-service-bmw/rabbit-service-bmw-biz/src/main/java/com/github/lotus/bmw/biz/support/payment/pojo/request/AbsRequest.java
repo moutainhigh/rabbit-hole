@@ -4,9 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.aliyun.openservices.log.http.client.ServiceException;
 import com.github.lotus.bmw.biz.constant.BmwConstant;
+import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
+import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
-import com.github.lotus.common.datadict.pay.Feature;
 import com.github.lotus.bmw.biz.config.PaymentProperties;
 import com.google.common.collect.Maps;
 import in.hocg.boot.utils.enums.ICode;
@@ -71,4 +72,5 @@ public abstract class AbsRequest {
         final PaymentService paymentService = this.getPayService();
         return (T) paymentService.request(request);
     }
+
 }

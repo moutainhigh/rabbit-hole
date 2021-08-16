@@ -1,7 +1,7 @@
 package com.github.lotus.bmw.biz.service.impl;
 
-import com.github.lotus.bmw.biz.entity.PaymentMchAlipayConfig;
-import com.github.lotus.bmw.biz.mapper.PaymentMchAlipayConfigMapper;
+import com.github.lotus.bmw.biz.entity.PaymentMchConfigAlipay;
+import com.github.lotus.bmw.biz.mapper.PaymentMchConfigAlipayMapper;
 import com.github.lotus.bmw.biz.service.PaymentMchAlipayConfigService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class PaymentMchAlipayConfigServiceImpl extends AbstractServiceImpl<PaymentMchAlipayConfigMapper, PaymentMchAlipayConfig> implements PaymentMchAlipayConfigService {
+public class PaymentMchConfigAlipayServiceImpl extends AbstractServiceImpl<PaymentMchConfigAlipayMapper, PaymentMchConfigAlipay> implements PaymentMchAlipayConfigService {
 
 }

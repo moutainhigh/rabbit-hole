@@ -1,7 +1,7 @@
 package com.github.lotus.bmw.biz.service.impl;
 
-import com.github.lotus.bmw.biz.entity.PaymentMchWxpayConfig;
-import com.github.lotus.bmw.biz.mapper.PaymentMchWxpayConfigMapper;
+import com.github.lotus.bmw.biz.entity.PaymentMchConfigWxpay;
+import com.github.lotus.bmw.biz.mapper.PaymentMchConfigWxpayMapper;
 import com.github.lotus.bmw.biz.service.PaymentMchWxpayConfigService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class PaymentMchWxpayConfigServiceImpl extends AbstractServiceImpl<PaymentMchWxpayConfigMapper, PaymentMchWxpayConfig> implements PaymentMchWxpayConfigService {
+public class PaymentMchConfigWxpayServiceImpl extends AbstractServiceImpl<PaymentMchConfigWxpayMapper, PaymentMchConfigWxpay> implements PaymentMchWxpayConfigService {
 
 }

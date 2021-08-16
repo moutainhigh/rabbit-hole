@@ -16,6 +16,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public enum SyncAccessMchTaskType implements DataDictEnum {
     TradeResult("trade_result", "交易结果"),
+    RefundResult("refund_result", "退款结果"),
     ;
     private final Serializable code;
     private final String name;

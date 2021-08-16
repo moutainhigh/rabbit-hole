@@ -3,8 +3,8 @@ package com.github.lotus.bmw.biz.apiimpl;
 import com.github.lotus.bmw.api.BmwServiceApi;
 import com.github.lotus.bmw.api.pojo.ro.*;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ public class BmwServiceApiImpl implements BmwServiceApi {
     private final RefundRecordService refundRecordService;
 
     @Override
-    public TradeSyncVo createTrade(@Validated @RequestBody CreateTradeRo ro) {
+    public TradeStatusSyncVo createTrade(@Validated @RequestBody CreateTradeRo ro) {
         return tradeOrderService.createTrade(ro);
     }
 
     @Override
-    public TradeSyncVo closeTrade(@Validated @RequestBody CloseTradeRo ro) {
+    public TradeStatusSyncVo closeTrade(@Validated @RequestBody CloseTradeRo ro) {
         return tradeOrderService.closeTrade(ro);
     }
 
@@ -41,17 +41,17 @@ public class BmwServiceApiImpl implements BmwServiceApi {
     }
 
     @Override
-    public TradeSyncVo getTrade(@Validated @RequestBody GetTradeRo ro) {
+    public TradeStatusSyncVo getTrade(@Validated @RequestBody GetTradeRo ro) {
         return tradeOrderService.getTrade(ro);
     }
 
     @Override
-    public RefundSyncVo goRefund(@Validated @RequestBody GoRefundRo ro) {
+    public RefundStatusSyncVo goRefund(@Validated @RequestBody GoRefundRo ro) {
         return refundRecordService.goRefund(ro);
     }
 
     @Override
-    public RefundSyncVo getRefund(@Validated @RequestBody GetRefundRo ro) {
+    public RefundStatusSyncVo getRefund(@Validated @RequestBody GetRefundRo ro) {
         return refundRecordService.getRefund(ro);
     }
 

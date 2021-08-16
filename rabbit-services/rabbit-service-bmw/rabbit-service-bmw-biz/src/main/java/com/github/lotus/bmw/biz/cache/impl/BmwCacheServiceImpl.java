@@ -1,6 +1,7 @@
 package com.github.lotus.bmw.biz.cache.impl;
 
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
+import com.github.lotus.bmw.biz.constant.CacheKeys;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.service.AccessMchService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class BmwCacheServiceImpl implements BmwCacheService {
     private final AccessMchService accessMchService;
 
     @Override
-    @Cacheable(cacheNames = "getAccessMchByEncoding", key = "#encoding", unless = "#result != null")
+    @Cacheable(cacheNames = CacheKeys.GET_ACCESS_MCH_BY_ENCODING, key = "#encoding", unless = "#result == null")
     public AccessMch getAccessMchByEncoding(String encoding) {
         return accessMchService.getByEncoding(encoding).orElse(null);
     }

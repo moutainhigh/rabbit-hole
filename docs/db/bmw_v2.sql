@@ -227,8 +227,8 @@ CREATE TABLE `bmw_payment_mch`
     COMMENT = '[支付模块] 支付商户表';
 
 
-DROP TABLE IF EXISTS `bmw_payment_mch_alipay_config`;
-CREATE TABLE `bmw_payment_mch_alipay_config`
+DROP TABLE IF EXISTS `bmw_payment_mch_config_alipay`;
+CREATE TABLE `bmw_payment_mch_config_alipay`
 (
     id          bigint auto_increment,
     appid       varchar(255)        NOT NULL
@@ -244,8 +244,8 @@ CREATE TABLE `bmw_payment_mch_alipay_config`
   DEFAULT CHARACTER SET = utf8mb4
     COMMENT = '[支付模块] 支付宝配置表';
 
-DROP TABLE IF EXISTS `bmw_payment_mch_wxpay_config`;
-CREATE TABLE `bmw_payment_mch_wxpay_config`
+DROP TABLE IF EXISTS `bmw_payment_mch_config_wxpay`;
+CREATE TABLE `bmw_payment_mch_config_wxpay`
 (
     id       bigint auto_increment,
     appid    varchar(255) not null

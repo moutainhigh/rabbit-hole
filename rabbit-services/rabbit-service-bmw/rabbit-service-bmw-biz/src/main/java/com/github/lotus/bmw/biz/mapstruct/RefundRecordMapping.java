@@ -1,7 +1,7 @@
 package com.github.lotus.bmw.biz.mapstruct;
 
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.RefundRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,5 +28,5 @@ public interface RefundRecordMapping {
     @Mapping(target = "createdAt", ignore = true)
     RefundRecord asRefundRecord(GoRefundRo ro);
 
-    RefundSyncVo asRefundSyncVo(RefundRecord entity);
+    RefundStatusSyncVo asRefundSyncVo(RefundRecord entity);
 }

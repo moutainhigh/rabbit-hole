@@ -340,6 +340,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.boot</groupId>
+        <artifactId>distributed-lock-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
         <artifactId>http-log-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>

@@ -5,7 +5,7 @@ import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.GetTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.TradeOrder;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
@@ -22,13 +22,15 @@ import java.util.Optional;
  */
 public interface TradeOrderService extends AbstractService<TradeOrder> {
 
-    TradeSyncVo createTrade(CreateTradeRo ro);
+    TradeStatusSyncVo createTrade(CreateTradeRo ro);
 
-    TradeSyncVo closeTrade(CloseTradeRo ro);
+    TradeStatusSyncVo closeTrade(CloseTradeRo ro);
 
-    TradeSyncVo getTrade(GetTradeRo ro);
+    TradeStatusSyncVo getTrade(GetTradeRo ro);
 
-    TradeSyncVo getTradeById(Long tradeOrderId);
+    TradeStatusSyncVo getTradeById(Long tradeOrderId);
+
+    void closeTrade(Long tradeOrderId);
 
     Optional<TradeOrder> getByAccessMchIdAndOutOrderNoOrOrderNo(Long accessMchId, String outOrderNo, String orOrderNo);
 
@@ -39,4 +41,6 @@ public interface TradeOrderService extends AbstractService<TradeOrder> {
     boolean updatePaySuccess(Long tradeOrderId, TradeOrder update);
 
     Optional<TradeOrder> getByOrderNo(String orderNo);
+
+    void paySuccess(Long payRecordId);
 }

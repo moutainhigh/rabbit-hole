@@ -1,6 +1,6 @@
 package com.github.lotus.bmw.biz.mapper;
 
-import com.github.lotus.bmw.biz.entity.PaymentMchAlipayConfig;
+import com.github.lotus.bmw.biz.entity.PaymentMchConfigAlipay;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021-08-15
  */
 @Mapper
-public interface PaymentMchAlipayConfigMapper extends BaseMapper<PaymentMchAlipayConfig> {
+public interface PaymentMchConfigAlipayMapper extends BaseMapper<PaymentMchConfigAlipay> {
 
 }

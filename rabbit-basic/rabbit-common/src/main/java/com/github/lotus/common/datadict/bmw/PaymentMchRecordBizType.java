@@ -17,6 +17,7 @@ import java.io.Serializable;
 public enum PaymentMchRecordBizType implements DataDictEnum {
     GoPay("go_pay", "申请支付"),
     GoRefund("go_refund", "申请退款"),
+    CloseTrade("close_trade", "关闭交易"),
     ;
     private final Serializable code;
     private final String name;

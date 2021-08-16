@@ -16,19 +16,25 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GoPayResponse {
     private String payType;
-    private String url;
-    private String method;
 
     @ApiModelProperty("表单")
-    private String form;
+    private Form form;
     @ApiModelProperty("APP")
     private String app;
     @ApiModelProperty("二维码")
     private String qrCode;
+
     @ApiModelProperty("微信 - JSAPI")
-    private WxJSAPI wxJSApi;
+    private WxJSAPI wxJsApi;
+    @ApiModelProperty("微信 - Native")
     private String wxNative;
 
+    @Data
+    @RequiredArgsConstructor
+    public static class Form {
+        private final String method;
+        private final String value;
+    }
 
     @Data
     @RequiredArgsConstructor
@@ -40,7 +46,7 @@ public class GoPayResponse {
         private final String signType;
         private final String paySign;
 
-        public static WxJSAPI NEW(String timestamp, String nonceStr, String packageName, String signType, String paySign) {
+        public static WxJSAPI create(String timestamp, String nonceStr, String packageName, String signType, String paySign) {
             return new WxJSAPI(timestamp, nonceStr, "prepay_id=" + packageName, signType, paySign);
         }
     }

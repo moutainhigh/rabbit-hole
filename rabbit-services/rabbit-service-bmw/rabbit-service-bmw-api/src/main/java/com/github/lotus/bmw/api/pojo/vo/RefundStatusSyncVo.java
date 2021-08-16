@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel
 @Accessors(chain = true)
-public class RefundSyncVo {
+public class RefundStatusSyncVo {
     @ApiModelProperty("退款单号")
     private String orderNo;
     @ApiModelProperty("退款单号(接入商户)")

@@ -4,11 +4,8 @@ import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.biz.entity.PayRecord;
 import com.github.lotus.bmw.biz.entity.PaymentMch;
-import com.github.lotus.bmw.biz.entity.PaymentMchType;
 import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
-import in.hocg.boot.utils.enums.ICode;
 import in.hocg.payment.PaymentService;
-import org.apache.commons.lang3.tuple.Triple;
 
 /**
  * Created by hocgin on 2021/8/15
@@ -17,15 +14,36 @@ import org.apache.commons.lang3.tuple.Triple;
  * @author hocgin
  */
 public interface PaymentMchDockingService {
+    /**
+     * 发起支付
+     *
+     * @param ro 支付参数
+     * @return 处理参数
+     */
     PayTradeVo goPay(PayTradeRo ro);
 
-    String goRefund(Long refundRecordId);
+    /**
+     * 关闭交易
+     *
+     * @param tradeOrderId 交易单
+     */
+    void closeTrade(Long tradeOrderId);
+
+    /**
+     * 发起退款
+     *
+     * @param refundRecordId 退款单
+     */
+    void goRefund(Long refundRecordId);
+
+    /**
+     * 通知结果
+     */
+    void notifySuccess();
 
     PayRecord getTradeWithPayRecord(String paymentMchCode, Long payRecordId, String ro);
 
     default PaymentService<?> getPayService(PaymentMch paymentMch) {
         return RequestHelper.getPayService(paymentMch);
     }
-
-    void notifySuccess();
 }

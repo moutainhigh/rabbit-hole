@@ -1,20 +1,25 @@
 package com.github.lotus.bmw.biz.support.payment.pojo.request;
 
+import cn.hutool.core.convert.Convert;
+import com.alibaba.fastjson.JSON;
+import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.biz.docking.wxpay.WxPayHelper;
+import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
+import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
+import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
 import com.github.lotus.common.datadict.bmw.PaymentMchPayType;
-import com.github.lotus.common.datadict.pay.PayMode;
 import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.utils.Rules;
+import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;
 import in.hocg.payment.alipay.v2.request.TradePreCreateRequest;
 import in.hocg.payment.alipay.v2.request.TradeWapPayRequest;
-import in.hocg.payment.alipay.v2.response.TradePreCreateResponse;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.UnifiedOrderResponse;
@@ -25,8 +30,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.function.Supplier;
 
 import static com.github.lotus.common.datadict.bmw.PaymentMchPayType.*;
 
@@ -158,35 +163,46 @@ public class GoPayRequest extends AbsRequest {
             }))
             .rule(AliPay_QrCode, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayQrCodeRequest());
-                result.setApp(response.getContent());
+                result.setQrCode(response.getContent());
             }))
             .rule(AliPay_PC, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayPcRequest());
-                result.setMethod("POST");
-                result.setForm(response.getContent());
+                result.setForm(new GoPayResponse.Form("POST", response.getContent()));
             }))
             .rule(AliPay_Wap, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayWapRequest());
-                result.setMethod("POST");
-                result.setForm(response.getContent());
+                result.setForm(new GoPayResponse.Form("POST", response.getContent()));
             }))
             .rule(WxPay_App, Rules.Runnable(() -> {
                 final UnifiedOrderResponse response = this.request(this.wxPayAPPRequest());
-                result.setForm(response.getContent());
+                result.setApp(response.getContent());
             }))
             .rule(WxPay_JSAPI, Rules.Runnable(() -> {
                 WxPayRequest request = this.wxPayJSAPIRequest();
                 final UnifiedOrderResponse response = this.request(request);
-                result.setWxJSApi(GoPayResponse.WxJSAPI.NEW("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
-                result.setForm(response.getContent());
+                result.setWxJsApi(GoPayResponse.WxJSAPI.create("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
             }))
             .rule(WxPay_Native, Rules.Runnable(() -> {
                 final WxPayRequest request = this.wxPayNativeRequest();
                 final UnifiedOrderResponse response = this.request(request);
-                result.setForm(response.getContent());
+                result.setWxNative(response.getContent());
             }))
             .of(ICode.ofThrow(payType, PaymentMchPayType.class));
         return result;
+    }
+
+    public PayTradeVo request(String payType, PaymentMchRecordDto createDto) {
+        HttpLogBervice httpLogBervice = SpringContext.getBean(HttpLogBervice.class);
+        PaymentMchRecordService paymentMchRecordService = SpringContext.getBean(PaymentMchRecordService.class);
+        String urlString = this.getClass().getSimpleName();
+        String body = httpLogBervice.call(() -> JSON.toJSONString(this.request(payType)), () -> {
+            Serializable logId = httpLogBervice.syncReady(null, null, null, null, null, null, null, null, urlString, null, null);
+            createDto.setLogId(Convert.toLong(logId));
+            createDto.setAttach(this.getTradeSn());
+            paymentMchRecordService.create(createDto);
+            return logId;
+        });
+        return JSON.parseObject(body, PayTradeVo.class);
     }
 
     private String getNotifyUrl() {

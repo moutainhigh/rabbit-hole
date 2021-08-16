@@ -3,7 +3,8 @@ package com.github.lotus.bmw.biz.service.impl;
 import cn.hutool.core.lang.Assert;
 import com.github.lotus.bmw.api.pojo.ro.GetRefundRo;
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.entity.RefundRecord;
@@ -22,7 +23,6 @@ import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -42,7 +42,7 @@ public class RefundRecordServiceImpl extends AbstractServiceImpl<RefundRecordMap
     private final RefundRecordMapping mapping;
 
     @Override
-    public RefundSyncVo getRefund(GetRefundRo ro) {
+    public RefundStatusSyncVo getRefund(GetRefundRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
         RefundRecord entity = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
@@ -52,8 +52,13 @@ public class RefundRecordServiceImpl extends AbstractServiceImpl<RefundRecordMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public RefundSyncVo goRefund(GoRefundRo ro) {
+    public RefundStatusSyncVo goRefund(GoRefundRo ro) {
         return dockingService.goRefund(ro);
+    }
+
+    @Override
+    public RefundStatusSyncVo getRefundById(Long refundRecordId) {
+        return this.convertRefundSyncVo(getById(refundRecordId));
     }
 
     @Override
@@ -62,7 +67,7 @@ public class RefundRecordServiceImpl extends AbstractServiceImpl<RefundRecordMap
     }
 
     @Override
-    public RefundSyncVo convertRefundSyncVo(RefundRecord entity) {
+    public RefundStatusSyncVo convertRefundSyncVo(RefundRecord entity) {
         return mapping.asRefundSyncVo(entity);
     }
 

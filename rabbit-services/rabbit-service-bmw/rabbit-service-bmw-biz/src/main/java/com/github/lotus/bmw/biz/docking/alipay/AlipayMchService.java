@@ -14,6 +14,8 @@ import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
+import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
+import com.github.lotus.bmw.biz.support.payment.pojo.request.CloseTradeRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoPayRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoRefundRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
@@ -71,23 +73,39 @@ public class AlipayMchService implements PaymentMchDockingService {
             .payAmount(tradeOrder.getTradeAmt())
             .configStorage(new ConfigStorageDto(paymentMch))
             .tradeSn(orderNo).build();
+        return request.request(ro.getPayType(), createDto);
+    }
 
+    @Override
+    public void closeTrade(Long tradeOrderId) {
+        TradeOrder tradeOrder = tradeOrderService.getById(tradeOrderId);
+        Long paymentMchId = tradeOrder.getPaymentMchId();
+        PaymentMch paymentMch = paymentMchService.getById(paymentMchId);
+
+        String orderNo = tradeOrder.getOrderNo();
+        CloseTradeRequest request = CloseTradeRequest.builder()
+            .configStorage(new ConfigStorageDto(paymentMch))
+            .tradeSn(orderNo)
+            .build();
+
+        PaymentMchRecordDto createDto = new PaymentMchRecordDto();
+        createDto.setRefType(RefType.TradeOrder.getCodeStr());
+        createDto.setRefId(tradeOrderId);
+        createDto.setBizType(PaymentMchRecordBizType.CloseTrade.getCodeStr());
+        createDto.setPaymentMchId(paymentMchId);
         String urlString = request.getClass().getSimpleName();
-        String result = httpLogBervice.call(() -> {
-            GoPayResponse response = request.request(ro.getPayType());
-            return JSON.toJSONString(response);
-        }, () -> {
+        String result = httpLogBervice.call(() -> JSON.toJSONString(request.request()), () -> {
             Serializable logId = httpLogBervice.syncReady(null, null, null, null, null, null, null, null, urlString, null, null);
             createDto.setLogId(Convert.toLong(logId));
             createDto.setAttach(orderNo);
             paymentMchRecordService.create(createDto);
             return logId;
         });
-        return new PayTradeVo();
+        tradeOrderService.closeTrade(tradeOrderId);
     }
 
     @Override
-    public String goRefund(Long refundRecordId) {
+    public void goRefund(Long refundRecordId) {
         RefundRecord refundRecord = refundRecordService.getById(refundRecordId);
         TradeOrder tradeOrder = tradeOrderService.getById(refundRecord.getTradeOrderId());
         Long paymentMchId = tradeOrder.getPaymentMchId();
@@ -113,7 +131,6 @@ public class AlipayMchService implements PaymentMchDockingService {
             paymentMchRecordService.create(createDto);
             return logId;
         });
-        return "ok";
     }
 
     @Override

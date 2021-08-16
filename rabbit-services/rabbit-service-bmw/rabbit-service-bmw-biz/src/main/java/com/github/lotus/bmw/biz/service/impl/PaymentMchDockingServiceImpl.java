@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
 import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
 import com.github.lotus.bmw.biz.entity.*;
@@ -58,7 +58,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
     }
 
     @Override
-    public RefundSyncVo goRefund(GoRefundRo ro) {
+    public RefundStatusSyncVo goRefund(GoRefundRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
         Long accessMchId = accessMch.getId();
@@ -129,12 +129,11 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         return Optional.ofNullable(accountService.createAccount(dto));
     }
 
-
     @Override
     public void handlePayResult(PaymentMchType paymentMchType, String paymentMchCode, Long payRecordId, String ro) {
         PaymentMchDockingService paymentMchService = getPaymentMchService(paymentMchType);
 
-        // 1. 验证签名 & 验证支付单据 & 验证支付金额
+        // 验证签名 & 验证支付单据 & 验证支付金额
         PayRecord payRecord = paymentMchService.getTradeWithPayRecord(paymentMchCode, payRecordId, ro);
         Long tradeOrderId = payRecord.getTradeOrderId();
         TradeOrder tradeOrder = Assert.notNull(tradeOrderService.getById(tradeOrderId));
@@ -145,21 +144,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         }
         // 如果单据未支付
         else if (TradeOrderStatus.Processing.eq(tradeOrder.getStatus())) {
-            // 2. 修改交易单状态 & 支付信息
-            TradeOrder updateTradeOrder = new TradeOrder();
-            updateTradeOrder.setPayType(payRecord.getPayType());
-            updateTradeOrder.setPayActId(payRecord.getPayActId());
-            updateTradeOrder.setPaymentMchId(payRecord.getPaymentMchId());
-            updateTradeOrder.setPayRecordId(payRecord.getId());
-            tradeOrderService.updatePaySuccess(tradeOrderId, updateTradeOrder);
-
-            // 3. 新增账户流水
-            accountFlowService.createTradeFlow(tradeOrderId);
-
-            // 4. 创建通知任务 & 通知接入商户
-            if (StrUtil.isNotBlank(tradeOrder.getNotifyUrl())) {
-                syncAccessMchTaskService.createPayed(tradeOrderId);
-            }
+            tradeOrderService.paySuccess(payRecordId);
         }
         // 如果单据非正常状态
         else {

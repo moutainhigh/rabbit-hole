@@ -1,7 +1,7 @@
 package com.github.lotus.bmw.biz.mapstruct;
 
 import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.TradeOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -32,5 +32,5 @@ public interface TradeOrderMapping {
     @Mapping(target = "accessMchId", ignore = true)
     TradeOrder asTradeOrder(CreateTradeRo ro);
 
-    TradeSyncVo asTradeSyncVo(TradeOrder entity);
+    TradeStatusSyncVo asTradeSyncVo(TradeOrder entity);
 }

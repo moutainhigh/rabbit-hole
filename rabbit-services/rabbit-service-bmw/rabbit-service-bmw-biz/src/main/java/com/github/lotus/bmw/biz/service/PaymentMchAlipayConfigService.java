@@ -1,6 +1,6 @@
 package com.github.lotus.bmw.biz.service;
 
-import com.github.lotus.bmw.biz.entity.PaymentMchAlipayConfig;
+import com.github.lotus.bmw.biz.entity.PaymentMchConfigAlipay;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
@@ -11,6 +11,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  * @author hocgin
  * @since 2021-08-15
  */
-public interface PaymentMchAlipayConfigService extends AbstractService<PaymentMchAlipayConfig> {
+public interface PaymentMchAlipayConfigService extends AbstractService<PaymentMchConfigAlipay> {
 
 }

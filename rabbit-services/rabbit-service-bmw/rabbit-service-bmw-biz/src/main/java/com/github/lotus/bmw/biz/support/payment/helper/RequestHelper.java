@@ -1,8 +1,9 @@
 package com.github.lotus.bmw.biz.support.payment.helper;
 
+import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.biz.entity.PaymentMch;
+import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
-import com.github.lotus.common.datadict.pay.PaymentPlatform;
 import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.exception.ServiceException;
@@ -37,4 +38,5 @@ public class RequestHelper {
             .of(ICode.ofThrow(paymentMch.getType(), PaymentMchType.class));
         return opt.orElseThrow(UnsupportedOperationException::new);
     }
+
 }

@@ -3,7 +3,7 @@ package com.github.lotus.bmw.biz.service;
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
 import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.RefundSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.Account;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
 
@@ -31,7 +31,7 @@ public interface PaymentMchDockingService {
      * @param ro
      * @return
      */
-    RefundSyncVo goRefund(GoRefundRo ro);
+    RefundStatusSyncVo goRefund(GoRefundRo ro);
 
     /**
      * 账户

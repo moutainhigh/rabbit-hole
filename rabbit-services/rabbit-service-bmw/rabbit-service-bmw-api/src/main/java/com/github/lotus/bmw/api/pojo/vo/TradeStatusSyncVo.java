@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel
 @Accessors(chain = true)
-public class TradeSyncVo {
+public class TradeStatusSyncVo {
     @ApiModelProperty("交易单号")
     private String orderNo;
     @ApiModelProperty("交易单号(接入商户)")

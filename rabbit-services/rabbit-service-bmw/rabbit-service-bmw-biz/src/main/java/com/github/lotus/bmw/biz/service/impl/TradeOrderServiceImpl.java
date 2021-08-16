@@ -1,13 +1,15 @@
 package com.github.lotus.bmw.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.github.lotus.bmw.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.GetTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
 import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
-import com.github.lotus.bmw.api.pojo.vo.TradeSyncVo;
+import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
+import com.github.lotus.bmw.biz.constant.LockKeys;
 import com.github.lotus.bmw.biz.entity.*;
 import com.github.lotus.bmw.biz.mapper.TradeOrderMapper;
 import com.github.lotus.bmw.biz.mapstruct.TradeOrderMapping;
@@ -16,6 +18,8 @@ import com.github.lotus.bmw.biz.service.*;
 import com.github.lotus.common.datadict.bmw.TradeOrderStatus;
 import com.github.lotus.bmw.biz.service.SNCodeService;
 import com.google.common.collect.Lists;
+import in.hocg.boot.distributed.lock.autoconfiguration.annotation.LockKey;
+import in.hocg.boot.distributed.lock.autoconfiguration.annotation.UseLock;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -49,13 +53,13 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     private final PayRecordService payRecordService;
     private final PaymentMchService paymentMchService;
     private final AccessMchService accessMchService;
-    private final AccountService accountService;
+    private final SyncAccessMchTaskService syncAccessMchTaskService;
     private final AccountFlowService accountFlowService;
     private final PaymentMchDockingService dockingService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public TradeSyncVo createTrade(CreateTradeRo ro) {
+    public TradeStatusSyncVo createTrade(CreateTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
         LocalDateTime now = LocalDateTime.now();
@@ -72,7 +76,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     }
 
     @Override
-    public TradeSyncVo getTrade(GetTradeRo ro) {
+    public TradeStatusSyncVo getTrade(GetTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
         TradeOrder tradeOrder = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
@@ -81,19 +85,27 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     }
 
     @Override
-    public TradeSyncVo getTradeById(Long tradeOrderId) {
+    public TradeStatusSyncVo getTradeById(Long tradeOrderId) {
         return this.convertTradeSyncVo(getById(tradeOrderId));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public TradeSyncVo closeTrade(CloseTradeRo ro) {
+    public TradeStatusSyncVo closeTrade(CloseTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
         TradeOrder tradeOrder = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
-        LocalDateTime now = LocalDateTime.now();
+
         Long tradeOrderId = tradeOrder.getId();
+        this.closeTrade(tradeOrderId);
+        return this.convertTradeSyncVo(getById(tradeOrderId));
+    }
+
+    @Override
+    public void closeTrade(Long tradeOrderId) {
+        LocalDateTime now = LocalDateTime.now();
+        TradeOrder tradeOrder = getById(tradeOrderId);
 
         // 如果是初始化状态可直接关闭
         boolean isProcessing = TradeOrderStatus.Processing.eq(tradeOrder.getStatus());
@@ -102,11 +114,9 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         TradeOrder update = new TradeOrder().setFinishedAt(now).setStatus(TradeOrderStatus.Closed.getCodeStr()).setLastUpdatedAt(now);
         boolean isOk = this.updateByIdAndStatus(update, tradeOrderId, TradeOrderStatus.Processing.getCodeStr());
         ValidUtils.isTrue(isOk, "系统繁忙，关单失败");
-
-        return this.convertTradeSyncVo(getById(tradeOrderId));
     }
 
-    private TradeSyncVo convertTradeSyncVo(TradeOrder entity) {
+    private TradeStatusSyncVo convertTradeSyncVo(TradeOrder entity) {
         return mapping.asTradeSyncVo(entity);
     }
 
@@ -175,6 +185,30 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     @Override
     public Optional<TradeOrder> getByOrderNo(String orderNo) {
         return this.lambdaQuery().eq(TradeOrder::getOrderNo, orderNo).oneOpt();
+    }
+
+    @Override
+    @UseLock(key = LockKeys.PAY_SUCCESS)
+    public void paySuccess(@LockKey Long payRecordId) {
+        PayRecord payRecord = payRecordService.getById(payRecordId);
+        Long tradeOrderId = payRecord.getTradeOrderId();
+        TradeOrder tradeOrder = this.getById(tradeOrderId);
+
+        // 2. 修改交易单状态 & 支付信息
+        TradeOrder updateTradeOrder = new TradeOrder();
+        updateTradeOrder.setPayType(payRecord.getPayType());
+        updateTradeOrder.setPayActId(payRecord.getPayActId());
+        updateTradeOrder.setPaymentMchId(payRecord.getPaymentMchId());
+        updateTradeOrder.setPayRecordId(payRecord.getId());
+        this.updatePaySuccess(tradeOrderId, updateTradeOrder);
+
+        // 3. 新增账户流水
+        accountFlowService.createTradeFlow(tradeOrderId);
+
+        // 4. 创建通知任务 & 通知接入商户
+        if (StrUtil.isNotBlank(tradeOrder.getNotifyUrl())) {
+            syncAccessMchTaskService.createPayed(tradeOrderId);
+        }
     }
 
 }

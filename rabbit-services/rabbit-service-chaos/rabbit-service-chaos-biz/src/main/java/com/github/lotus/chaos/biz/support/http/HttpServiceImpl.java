@@ -36,14 +36,14 @@ public class HttpServiceImpl implements HttpService {
     private final WallpaperMapping mapping;
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.PAGING_WALLPAPER, key = "#ro.page")
+    @Cacheable(cacheNames = CacheKeys.PAGING_WALLPAPER, key = "#ro.page", unless = "#result == null")
     public List<WallpaperComplexVo> pagingWallpaper(WallpaperPagingRo ro) {
         List<UnsplashPhotoDto> result = unsplashManager.paging(ro.getPage(), ro.getSize());
         return LangUtils.toList(result, mapping::asWallpaperComplexVo);
     }
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.PAGING_TOPIC_WALLPAPER, key = "#topicId + #ro.page + #ro.size")
+    @Cacheable(cacheNames = CacheKeys.PAGING_TOPIC_WALLPAPER, key = "#topicId + #ro.page + #ro.size", unless = "#result == null")
     public List<WallpaperComplexVo> pagingByTopic(String topicId, WallpaperTopicPagingRo ro) {
         List<UnsplashPhotoDto> result = unsplashManager.pagingByTopic(topicId, ro.getPage(), ro.getSize());
         return LangUtils.toList(result, mapping::asWallpaperComplexVo);
@@ -72,7 +72,7 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.GUMBALLS_GIFT, key = "#day")
+    @Cacheable(cacheNames = CacheKeys.GUMBALLS_GIFT, key = "#day", unless = "#result == null")
     public String getGumballsGift(String day) {
         return langManager.getGumballsGift();
     }
