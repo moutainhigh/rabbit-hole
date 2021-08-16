@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Assert;
 import com.github.lotus.bmw.api.pojo.ro.GetRefundRo;
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
 import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
-import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.entity.RefundRecord;
@@ -45,7 +44,7 @@ public class RefundRecordServiceImpl extends AbstractServiceImpl<RefundRecordMap
     public RefundStatusSyncVo getRefund(GetRefundRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
-        RefundRecord entity = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
+        RefundRecord entity = this.getByAccessMchIdAndOutRefundNoOrRefundNo(accessMch.getId(), ro.getOutRefundNo(), ro.getRefundNo())
             .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
         return this.convertRefundSyncVo(entity);
     }
@@ -72,9 +71,9 @@ public class RefundRecordServiceImpl extends AbstractServiceImpl<RefundRecordMap
     }
 
     @Override
-    public Optional<RefundRecord> getByAccessMchIdAndOutOrderNoOrOrderNo(Long accessMchId, String outOrderNo, String orOrderNo) {
+    public Optional<RefundRecord> getByAccessMchIdAndOutRefundNoOrRefundNo(Long accessMchId, String outOrderNo, String orOrderNo) {
         return this.lambdaQuery().eq(RefundRecord::getAccessMchId, accessMchId)
-            .and(wrapper -> wrapper.eq(Strings.isNotBlank(outOrderNo), RefundRecord::getOutOrderNo, outOrderNo).or().eq(Strings.isNotBlank(orOrderNo), RefundRecord::getOrderNo, orOrderNo))
+            .and(wrapper -> wrapper.eq(Strings.isNotBlank(outOrderNo), RefundRecord::getOutRefundNo, outOrderNo).or().eq(Strings.isNotBlank(orOrderNo), RefundRecord::getRefundNo, orOrderNo))
             .oneOpt();
     }
 }

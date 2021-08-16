@@ -47,11 +47,11 @@ public class RefundRecord extends AbstractEntity<RefundRecord> {
     @TableField("trade_order_id")
     private Long tradeOrderId;
     @ApiModelProperty("退款单号")
-    @TableField("order_no")
-    private String orderNo;
+    @TableField("refund_no")
+    private String refundNo;
     @ApiModelProperty("退款单号(接入商户)")
-    @TableField("out_order_no")
-    private String outOrderNo;
+    @TableField("out_refund_no")
+    private String outRefundNo;
     @ApiModelProperty("退款金额")
     @TableField("refund_amt")
     private BigDecimal refundAmt;

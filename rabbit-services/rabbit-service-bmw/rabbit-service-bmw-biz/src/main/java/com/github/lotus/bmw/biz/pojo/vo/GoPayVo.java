@@ -1,4 +1,4 @@
-package com.github.lotus.bmw.api.pojo.vo;
+package com.github.lotus.bmw.biz.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import in.hocg.boot.utils.enums.DataDictEnum;
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Data
 @ApiModel
 @Accessors(chain = true)
-public class PayTradeVo {
+public class GoPayVo {
     private String payType;
 
     @ApiModelProperty("表单")

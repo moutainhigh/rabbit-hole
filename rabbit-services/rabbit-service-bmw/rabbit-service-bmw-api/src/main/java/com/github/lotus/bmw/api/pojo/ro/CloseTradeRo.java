@@ -18,9 +18,9 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 public class CloseTradeRo extends AccessRo {
     @ApiModelProperty(value = "接入商户交易单号", required = true)
-    private String outOrderNo;
+    private String outTradeNo;
     @ApiModelProperty(value = "交易单号", required = true)
-    private String orderNo;
+    private String tradeNo;
 
     @ApiModelProperty(hidden = true)
     private String clientIp;

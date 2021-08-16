@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GetRefundRo extends AccessRo {
     @ApiModelProperty(value = "退款单号(接入商户)", required = true)
-    private String outOrderNo;
+    private String outRefundNo;
     @ApiModelProperty(value = "退款单号", required = true)
-    private String orderNo;
+    private String refundNo;
 }

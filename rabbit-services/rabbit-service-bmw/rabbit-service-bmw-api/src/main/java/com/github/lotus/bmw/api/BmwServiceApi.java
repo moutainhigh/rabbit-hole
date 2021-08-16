@@ -1,7 +1,6 @@
 package com.github.lotus.bmw.api;
 
 import com.github.lotus.bmw.api.pojo.ro.*;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
 import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
 import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.common.constant.GlobalConstant;
@@ -37,14 +36,13 @@ public interface BmwServiceApi {
     TradeStatusSyncVo createTrade(@RequestBody CreateTradeRo ro);
 
     /**
-     * 去支付
+     * 获取收银台
      *
      * @param ro ro
      * @return _
      */
-    @PostMapping(value = CONTEXT_ID + "/goPay", headers = GlobalConstant.FEIGN_HEADER)
-    PayTradeVo goPay(@RequestBody PayTradeRo ro);
-
+    @PostMapping(value = CONTEXT_ID + "/getCashier", headers = GlobalConstant.FEIGN_HEADER)
+    String getCashierUrl(@RequestBody GetCashierRo ro);
 
     /**
      * 查询交易单信息

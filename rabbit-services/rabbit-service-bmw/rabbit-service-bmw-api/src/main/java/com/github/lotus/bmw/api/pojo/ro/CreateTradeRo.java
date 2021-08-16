@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class CreateTradeRo extends AccessRo {
     @NotNull(message = "接入商户订单号不能为空")
     @ApiModelProperty(value = "接入商户订单号", required = true)
-    private String outOrderNo;
+    private String outTradeNo;
     @NotNull(message = "交易总金额不能为空")
     @ApiModelProperty(value = "交易总金额", required = true)
     private BigDecimal tradeAmt;

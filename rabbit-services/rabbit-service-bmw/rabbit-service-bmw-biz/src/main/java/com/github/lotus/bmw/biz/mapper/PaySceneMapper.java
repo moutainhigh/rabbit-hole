@@ -2,7 +2,11 @@ package com.github.lotus.bmw.biz.mapper;
 
 import com.github.lotus.bmw.biz.entity.PayScene;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.lotus.bmw.biz.entity.PaySceneSupport;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PaySceneMapper extends BaseMapper<PayScene> {
 
+    List<PaySceneSupport> listByEncodingAndAccessMchId(@Param("sceneCode") String sceneCode, @Param("accessMchId") Long accessMchId);
 }

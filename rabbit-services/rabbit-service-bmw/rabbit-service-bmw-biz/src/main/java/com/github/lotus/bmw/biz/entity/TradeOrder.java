@@ -44,11 +44,11 @@ public class TradeOrder extends AbstractEntity<TradeOrder> {
     @TableField("access_mch_id")
     private Long accessMchId;
     @ApiModelProperty("交易单号")
-    @TableField("order_no")
-    private String orderNo;
+    @TableField("trade_no")
+    private String tradeNo;
     @ApiModelProperty("交易单号(接入商户)")
-    @TableField("out_order_no")
-    private String outOrderNo;
+    @TableField("out_trade_no")
+    private String outTradeNo;
     @ApiModelProperty("是否担保交易")
     @TableField("guarantee_flag")
     private Boolean guaranteeFlag;

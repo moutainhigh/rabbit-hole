@@ -5,9 +5,9 @@ CREATE TABLE `bmw_trade_order`
         COMMENT 'ID',
     `access_mch_id`   BIGINT         NOT NULL
         COMMENT '接入商户',
-    `order_no`        VARCHAR(64)    NOT NULL
+    `trade_no`        VARCHAR(64)    NOT NULL
         COMMENT '交易单号',
-    `out_order_no`    VARCHAR(64)    NOT NULL
+    `out_trade_no`    VARCHAR(64)    NOT NULL
         COMMENT '交易单号(接入商户)',
     `guarantee_flag`  TINYINT(1)     NOT NULL DEFAULT 0
         COMMENT '是否担保交易',
@@ -51,8 +51,8 @@ CREATE TABLE `bmw_trade_order`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
-    UNIQUE KEY (`order_no`),
-    UNIQUE KEY (`access_mch_id`, `out_order_no`),
+    UNIQUE KEY (`trade_no`),
+    UNIQUE KEY (`access_mch_id`, `out_trade_no`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
@@ -68,9 +68,9 @@ CREATE TABLE `bmw_refund_record`
         COMMENT '接入商户',
     `trade_order_id`  BIGINT         NOT NULL
         COMMENT '交易单',
-    `order_no`        VARCHAR(64)    NOT NULL
+    `refund_no`       VARCHAR(64)    NOT NULL
         COMMENT '退款单号',
-    `out_order_no`    VARCHAR(64)    NOT NULL
+    `out_refund_no`   VARCHAR(64)    NOT NULL
         COMMENT '退款单号(接入商户)',
     `refund_amt`      DECIMAL(20, 2) NOT NULL DEFAULT 0
         COMMENT '退款金额',
@@ -95,8 +95,8 @@ CREATE TABLE `bmw_refund_record`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
-    UNIQUE KEY (`order_no`),
-    UNIQUE KEY (`access_mch_id`, `out_order_no`),
+    UNIQUE KEY (`refund_no`),
+    UNIQUE KEY (`access_mch_id`, `out_refund_no`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
@@ -157,7 +157,7 @@ CREATE TABLE `bmw_account`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
-    UNIQUE KEY (`user_id`, `access_mch_id`, `use_scenes`),
+    UNIQUE KEY (`user_id`, `access_mch_id`, `payment_mch_id`, `use_scenes`),
     UNIQUE KEY (`account`),
     PRIMARY KEY (`id`)
 )

@@ -1,7 +1,11 @@
 package com.github.lotus.bmw.biz.service;
 
 import com.github.lotus.bmw.biz.entity.PayScene;
+import com.github.lotus.bmw.biz.pojo.vo.PaySceneItemVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface PaySceneService extends AbstractService<PayScene> {
 
+    Optional<PayScene> getByAccessMchIdAndEncoding(Long accessMchId, String sceneCode);
+
+    List<PaySceneItemVo> listBySceneCodeAndAccessMchId(String sceneCode, Long accessMchId);
+
+    List<PaySceneItemVo> listByPaySceneId(Long paySceneId);
 }

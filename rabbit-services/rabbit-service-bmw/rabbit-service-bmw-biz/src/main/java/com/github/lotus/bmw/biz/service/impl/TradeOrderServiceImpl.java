@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.github.lotus.bmw.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.GetTradeRo;
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.constant.LockKeys;
@@ -52,7 +52,6 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     private final TradeOrderMapping mapping;
     private final PayRecordService payRecordService;
     private final PaymentMchService paymentMchService;
-    private final AccessMchService accessMchService;
     private final SyncAccessMchTaskService syncAccessMchTaskService;
     private final AccountFlowService accountFlowService;
     private final PaymentMchDockingService dockingService;
@@ -69,7 +68,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
         entity.setPlanCloseAt(LangUtils.getOrDefault(entity.getPlanCloseAt(), now.plusDays(999L)));
         entity.setAccessMchId(accessMch.getId());
         entity.setStatus(TradeOrderStatus.Processing.getCodeStr());
-        entity.setOrderNo(orderNo);
+        entity.setTradeNo(orderNo);
         entity.setCreatedAt(now);
         Assert.isTrue(this.validInsert(entity));
         return this.convertTradeSyncVo(getById(entity.getId()));
@@ -79,7 +78,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     public TradeStatusSyncVo getTrade(GetTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
-        TradeOrder tradeOrder = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
+        TradeOrder tradeOrder = this.getByAccessMchIdAndOutTradeNoOrTradeNo(accessMch.getId(), ro.getOutTradeNo(), ro.getTradeNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         return this.convertTradeSyncVo(tradeOrder);
     }
@@ -94,7 +93,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     public TradeStatusSyncVo closeTrade(CloseTradeRo ro) {
         AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
         Assert.notNull(accessMch, "接入应用不存在");
-        TradeOrder tradeOrder = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
+        TradeOrder tradeOrder = this.getByAccessMchIdAndOutTradeNoOrTradeNo(accessMch.getId(), ro.getOutTradeNo(), ro.getTradeNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
 
         Long tradeOrderId = tradeOrder.getId();
@@ -125,31 +124,30 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
     }
 
     @Override
-    public Optional<TradeOrder> getByAccessMchIdAndOutOrderNoOrOrderNo(Long accessMchId, String outOrderNo, String orOrderNo) {
+    public Optional<TradeOrder> getByAccessMchIdAndOutTradeNoOrTradeNo(Long accessMchId, String outOrderNo, String orOrderNo) {
         return this.lambdaQuery().eq(TradeOrder::getAccessMchId, accessMchId)
-            .and(wrapper -> wrapper.eq(Strings.isNotBlank(outOrderNo), TradeOrder::getOutOrderNo, outOrderNo).or().eq(Strings.isNotBlank(orOrderNo), TradeOrder::getOrderNo, orOrderNo))
+            .and(wrapper -> wrapper.eq(Strings.isNotBlank(outOrderNo), TradeOrder::getOutTradeNo, outOrderNo).or().eq(Strings.isNotBlank(orOrderNo), TradeOrder::getTradeNo, orOrderNo))
             .oneOpt();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public PayTradeVo goPay(PayTradeRo ro) {
-        AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
-        Assert.notNull(accessMch, "接入应用不存在");
-        Long accessMchId = accessMch.getId();
+    public GoPayVo goPay(GoPayRo ro) {
+        Long tradeOrderId = ro.getTradeOrderId();
+        TradeOrder tradeOrder = this.getById(tradeOrderId);
+        Assert.notNull(tradeOrder, "未找到交易单据");
+        Assert.isTrue(TradeOrderStatus.Processing.eq(tradeOrder.getStatus()), "交易单据状态异常");
+        Long accessMchId = tradeOrder.getAccessMchId();
 
         // 1. 检查支付类型是否被支持
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndSceneCodeAndPayType(accessMchId, ro.getSceneCode(), ro.getPayType())
+        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndPaySceneIdAndPayType(accessMchId, ro.getPaySceneId(), ro.getPayType())
             .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
         Long paymentMchId = paymentMch.getId();
+        ro.setPaymentMchId(paymentMchId);
 
         // 2. 获取对应的支付账户
         Account account = dockingService.getAccount(ro.getUserId(), accessMchId, paymentMchId, ro.getUseScenes())
             .orElseThrow(() -> ServiceException.wrap("未找到对应的支付账户"));
-
-        TradeOrder tradeOrder = this.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMchId, ro.getOutOrderNo(), ro.getOrderNo())
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
-        Assert.isTrue(TradeOrderStatus.Processing.eq(tradeOrder.getStatus()), "交易单据状态异常");
 
         // 3. 创建支付记录
         CreatePayRecordDto createPayRecordDto = new CreatePayRecordDto();
@@ -184,7 +182,7 @@ public class TradeOrderServiceImpl extends AbstractServiceImpl<TradeOrderMapper,
 
     @Override
     public Optional<TradeOrder> getByOrderNo(String orderNo) {
-        return this.lambdaQuery().eq(TradeOrder::getOrderNo, orderNo).oneOpt();
+        return this.lambdaQuery().eq(TradeOrder::getTradeNo, orderNo).oneOpt();
     }
 
     @Override

@@ -19,9 +19,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class TradeStatusSyncVo {
     @ApiModelProperty("交易单号")
-    private String orderNo;
+    private String tradeNo;
     @ApiModelProperty("交易单号(接入商户)")
-    private String outOrderNo;
+    private String outTradeNo;
     @ApiModelProperty("是否担保交易")
     private Boolean guaranteeFlag;
     @ApiModelProperty("交易金额")

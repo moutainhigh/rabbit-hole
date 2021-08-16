@@ -20,17 +20,17 @@ import java.math.BigDecimal;
 @ApiModel(description = "发起退款")
 @EqualsAndHashCode(callSuper = true)
 public class GoRefundRo extends AccessRo {
-    @ApiModelProperty(value = "交易单号(接入商户), outTradeOrderNo/tradeOrderNo 二选一", required = true)
-    private String outTradeOrderNo;
-    @ApiModelProperty(value = "交易单号, outTradeOrderNo/tradeOrderNo 二选一", required = true)
-    private String tradeOrderNo;
+    @ApiModelProperty(value = "交易单号(接入商户), outTradeNo/tradeNo 二选一", required = true)
+    private String outTradeNo;
+    @ApiModelProperty(value = "交易单号, outTradeNo/tradeNo 二选一", required = true)
+    private String tradeNo;
     @ApiModelProperty(value = "退款单号(接入商户)", required = true)
-    private String outOrderNo;
+    private String outRefundNo;
     @NotNull(message = "退款金额错误")
     @ApiModelProperty(value = "退款金额", required = true)
     private BigDecimal refundAmt;
     @ApiModelProperty(value = "退款原因")
-    private String refundReason;
+    private String reason;
     @ApiModelProperty(value = "附加参数")
     private String attach;
     @ApiModelProperty(value = "通知地址")

@@ -19,4 +19,23 @@
       </if>
     </where>
   </select>
+
+  <select id="getByAccessMchIdAndPaySceneIdAndPayType" resultType="com.github.lotus.bmw.biz.entity.PaymentMch">
+    SELECT DISTINCT bpm.*
+    FROM bmw_payment_mch bpm
+           LEFT JOIN bmw_payment_access_ref bpar ON bpar.payment_mch_id = bpm.id
+           LEFT JOIN bmw_pay_scene bps ON bpar.access_mch_id = bps.access_mch_id
+           LEFT JOIN bmw_pay_scene_support bpss ON bps.id = bpss.pay_scene_id and bpss.payment_mch_id = bpm.id
+    <where>
+      <if test="accessMchId != null">
+        AND bps.access_mch_id = #{accessMchId}
+      </if>
+      <if test="paySceneId != null">
+        AND bps.id = #{paySceneId}
+      </if>
+      <if test="payType != null">
+        AND bpss.pay_type = #{payType}
+      </if>
+    </where>
+  </select>
 </mapper>

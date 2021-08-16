@@ -19,9 +19,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class RefundStatusSyncVo {
     @ApiModelProperty("退款单号")
-    private String orderNo;
+    private String refundNo;
     @ApiModelProperty("退款单号(接入商户)")
-    private String outOrderNo;
+    private String outRefundNo;
     @ApiModelProperty("退款金额")
     private BigDecimal refundAmt;
     @ApiModelProperty("完结通知地址")

@@ -2,12 +2,11 @@ package com.github.lotus.bmw.biz.support.payment.pojo.request;
 
 import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson.JSON;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.biz.docking.wxpay.WxPayHelper;
 import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
 import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
-import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
 import com.github.lotus.common.datadict.bmw.PaymentMchPayType;
 import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.utils.Rules;
@@ -20,6 +19,7 @@ import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;
 import in.hocg.payment.alipay.v2.request.TradePreCreateRequest;
 import in.hocg.payment.alipay.v2.request.TradeWapPayRequest;
+import in.hocg.payment.alipay.v2.response.TradePreCreateResponse;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.UnifiedOrderResponse;
@@ -162,8 +162,8 @@ public class GoPayRequest extends AbsRequest {
                 result.setApp(response.getContent());
             }))
             .rule(AliPay_QrCode, Rules.Runnable(() -> {
-                final PaymentResponse response = this.request(this.aliPayQrCodeRequest());
-                result.setQrCode(response.getContent());
+                final TradePreCreateResponse response = this.request(this.aliPayQrCodeRequest());
+                result.setQrCode(response.getQrCode());
             }))
             .rule(AliPay_PC, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayPcRequest());
@@ -191,7 +191,7 @@ public class GoPayRequest extends AbsRequest {
         return result;
     }
 
-    public PayTradeVo request(String payType, PaymentMchRecordDto createDto) {
+    public GoPayVo request(String payType, PaymentMchRecordDto createDto) {
         HttpLogBervice httpLogBervice = SpringContext.getBean(HttpLogBervice.class);
         PaymentMchRecordService paymentMchRecordService = SpringContext.getBean(PaymentMchRecordService.class);
         String urlString = this.getClass().getSimpleName();
@@ -202,7 +202,7 @@ public class GoPayRequest extends AbsRequest {
             paymentMchRecordService.create(createDto);
             return logId;
         });
-        return JSON.parseObject(body, PayTradeVo.class);
+        return JSON.parseObject(body, GoPayVo.class);
     }
 
     private String getNotifyUrl() {

@@ -14,13 +14,13 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface RefundRecordMapping {
+    @Mapping(target = "refundNo", ignore = true)
+    @Mapping(target = "refundActId", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "finishedAt", ignore = true)
     @Mapping(target = "tradeOrderId", ignore = true)
-    @Mapping(target = "orderNo", ignore = true)
     @Mapping(target = "accessMchId", ignore = true)
     @Mapping(target = "notifyUrl", ignore = true)
-    @Mapping(target = "reason", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)

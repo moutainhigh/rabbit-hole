@@ -3,8 +3,8 @@ package com.github.lotus.bmw.biz.docking.wxpay;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
 import com.github.lotus.bmw.biz.entity.*;
@@ -17,7 +17,6 @@ import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.CloseTradeRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoPayRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoRefundRequest;
-import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.RefType;
 import com.github.lotus.common.datadict.bmw.PaymentMchRecordBizType;
 import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
@@ -52,12 +51,11 @@ public class WxpayMchService implements PaymentMchDockingService {
     private final RefundRecordService refundRecordService;
 
     @Override
-    public PayTradeVo goPay(PayTradeRo ro) {
-        AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndSceneCodeAndPayType(accessMch.getId(), ro.getSceneCode(), ro.getPayType())
-            .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
-        TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+    public GoPayVo goPay(GoPayRo ro) {
+        PaymentMch paymentMch = paymentMchService.getById(ro.getPaymentMchId());
+        Assert.notNull(paymentMch, "支付商户未找到");
+        TradeOrder tradeOrder = tradeOrderService.getById(ro.getTradeOrderId());
+        Assert.notNull(tradeOrder, "未找到交易单据");
 
         PaymentMchRecordDto createDto = new PaymentMchRecordDto();
         createDto.setRefType(RefType.TradeOrder.getCodeStr());
@@ -65,24 +63,13 @@ public class WxpayMchService implements PaymentMchDockingService {
         createDto.setBizType(PaymentMchRecordBizType.GoPay.getCodeStr());
         createDto.setPaymentMchId(paymentMch.getId());
 
-        String orderNo = tradeOrder.getOrderNo();
+        String orderNo = tradeOrder.getTradeNo();
         GoPayRequest request = GoPayRequest.builder()
             .quitUrl(tradeOrder.getFrontJumpUrl())
             .payAmount(tradeOrder.getTradeAmt())
+            .payRecordId(ro.getPayRecordId())
             .tradeSn(orderNo).build();
-        String urlString = request.getClass().getSimpleName();
-
-        String result = httpLogBervice.call(() -> {
-            GoPayResponse response = request.request(ro.getPayType());
-            return JSON.toJSONString(response);
-        }, () -> {
-            Serializable logId = httpLogBervice.syncReady(null, null, null, null, null, null, null, null, urlString, null, null);
-            createDto.setLogId(Convert.toLong(logId));
-            createDto.setAttach(orderNo);
-            paymentMchRecordService.create(createDto);
-            return logId;
-        });
-        return new PayTradeVo();
+        return request.request(ro.getPayType(), createDto);
     }
 
     @Override
@@ -91,7 +78,7 @@ public class WxpayMchService implements PaymentMchDockingService {
         Long paymentMchId = tradeOrder.getPaymentMchId();
         PaymentMch paymentMch = paymentMchService.getById(paymentMchId);
 
-        String orderNo = tradeOrder.getOrderNo();
+        String orderNo = tradeOrder.getTradeNo();
         CloseTradeRequest request = CloseTradeRequest.builder()
             .configStorage(new ConfigStorageDto(paymentMch))
             .tradeSn(orderNo)
@@ -119,7 +106,7 @@ public class WxpayMchService implements PaymentMchDockingService {
         TradeOrder tradeOrder = tradeOrderService.getById(refundRecord.getTradeOrderId());
         Long paymentMchId = tradeOrder.getPaymentMchId();
 
-        String orderNo = refundRecord.getOrderNo();
+        String orderNo = refundRecord.getRefundNo();
         GoRefundRequest request = GoRefundRequest.builder()
             .refundSn(orderNo)
             .refundFee(refundRecord.getRefundAmt())

@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface TradeOrderMapping {
+    @Mapping(target = "tradeNo", ignore = true)
+    @Mapping(target = "payRecordId", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "refundAmt", ignore = true)
     @Mapping(target = "reason", ignore = true)
@@ -21,7 +23,6 @@ public interface TradeOrderMapping {
     @Mapping(target = "paymentMchId", ignore = true)
     @Mapping(target = "payType", ignore = true)
     @Mapping(target = "payActId", ignore = true)
-    @Mapping(target = "orderNo", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)

@@ -23,6 +23,12 @@ import java.util.Optional;
 public class PaymentMchServiceImpl extends AbstractServiceImpl<PaymentMchMapper, PaymentMch>
     implements PaymentMchService {
 
+
+    @Override
+    public Optional<PaymentMch> getByAccessMchIdAndPaySceneIdAndPayType(Long accessMchId, Long paySceneId, String payType) {
+        return baseMapper.getByAccessMchIdAndPaySceneIdAndPayType(accessMchId, paySceneId, payType);
+    }
+
     @Override
     public Optional<PaymentMch> getByAccessMchIdAndSceneCodeAndPayType(Long accessMchId, String sceneCode, String payType) {
         return baseMapper.getByAccessMchIdAndSceneCodeAndPayType(accessMchId, sceneCode, payType);

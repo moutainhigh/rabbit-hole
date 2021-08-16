@@ -3,6 +3,8 @@ package com.github.lotus.bmw.biz.service;
 import com.github.lotus.bmw.biz.entity.PaySceneSupport;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
+import java.util.List;
+
 /**
  * <p>
  * [支付模块] 支付场景支持的支付类型 服务类
@@ -13,4 +15,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface PaySceneSupportService extends AbstractService<PaySceneSupport> {
 
+    List<PaySceneSupport> listByPaySceneId(Long paySceneId);
 }

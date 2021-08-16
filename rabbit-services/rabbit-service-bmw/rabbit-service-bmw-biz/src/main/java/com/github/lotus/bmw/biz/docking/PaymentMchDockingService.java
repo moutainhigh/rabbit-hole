@@ -1,7 +1,7 @@
 package com.github.lotus.bmw.biz.docking;
 
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.biz.entity.PayRecord;
 import com.github.lotus.bmw.biz.entity.PaymentMch;
 import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
@@ -20,7 +20,7 @@ public interface PaymentMchDockingService {
      * @param ro 支付参数
      * @return 处理参数
      */
-    PayTradeVo goPay(PayTradeRo ro);
+    GoPayVo goPay(GoPayRo ro);
 
     /**
      * 关闭交易

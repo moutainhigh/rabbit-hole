@@ -3,8 +3,8 @@ package com.github.lotus.bmw.biz.service;
 import com.github.lotus.bmw.api.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.GetTradeRo;
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import com.github.lotus.bmw.biz.entity.TradeOrder;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -32,9 +32,9 @@ public interface TradeOrderService extends AbstractService<TradeOrder> {
 
     void closeTrade(Long tradeOrderId);
 
-    Optional<TradeOrder> getByAccessMchIdAndOutOrderNoOrOrderNo(Long accessMchId, String outOrderNo, String orOrderNo);
+    Optional<TradeOrder> getByAccessMchIdAndOutTradeNoOrTradeNo(Long accessMchId, String outOrderNo, String orOrderNo);
 
-    PayTradeVo goPay(PayTradeRo ro);
+    GoPayVo goPay(GoPayRo ro);
 
     void updateRefundAmtById(Long tradeOrderId, BigDecimal newRefundAmt, BigDecimal oldRefundAmt);
 

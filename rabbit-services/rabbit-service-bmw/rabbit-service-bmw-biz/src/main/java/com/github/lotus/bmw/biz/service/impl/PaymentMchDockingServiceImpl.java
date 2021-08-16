@@ -3,8 +3,8 @@ package com.github.lotus.bmw.biz.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.github.lotus.bmw.api.pojo.ro.GoRefundRo;
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.api.pojo.vo.RefundStatusSyncVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
@@ -53,7 +53,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
     private final WxpayMchService wxpayMchService;
 
     @Override
-    public PayTradeVo goPay(PayTradeRo ro) {
+    public GoPayVo goPay(GoPayRo ro) {
         return getPaymentMchService(ICode.ofThrow(ro.getPaymentMchType(), PaymentMchType.class)).goPay(ro);
     }
 
@@ -64,7 +64,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         Long accessMchId = accessMch.getId();
         LocalDateTime now = LocalDateTime.now();
 
-        TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMchId, ro.getOutTradeOrderNo(), ro.getTradeOrderNo())
+        TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutTradeNoOrTradeNo(accessMchId, ro.getOutTradeNo(), ro.getTradeNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         Assert.isTrue(TradeOrderStatus.Payed.eq(tradeOrder.getStatus()), "交易单状态非已支付状态");
         BigDecimal oldRefundAmt = tradeOrder.getRefundAmt();
@@ -74,7 +74,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         Long tradeOrderId = tradeOrder.getId();
 
         PaymentMch paymentMch = paymentMchService.getById(tradeOrder.getPaymentMchId());
-        Optional<RefundRecord> entityOpt = refundRecordService.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMchId, ro.getOutOrderNo(), null);
+        Optional<RefundRecord> entityOpt = refundRecordService.getByAccessMchIdAndOutRefundNoOrRefundNo(accessMchId, ro.getOutRefundNo(), null);
         Assert.isTrue(entityOpt.isPresent(), "退款单据已存在");
         Long payActId = tradeOrder.getPayActId();
 
@@ -84,7 +84,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         entity.setRefundActId(payActId);
         entity.setStatus(RefundStatus.Processing.getCodeStr());
         entity.setTradeOrderId(tradeOrderId);
-        entity.setOrderNo(refundNo);
+        entity.setRefundNo(refundNo);
         entity.setAccessMchId(accessMchId);
         entity.setCreatedAt(now);
         Assert.isTrue(refundRecordService.validInsert(entity));
@@ -140,7 +140,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
 
         // 如果单据已支付
         if (TradeOrderStatus.Payed.eq(tradeOrder.getStatus())) {
-            log.info("交易单[{}]已支付, 支付回调处理终止", tradeOrder.getOrderNo());
+            log.info("交易单[{}]已支付, 支付回调处理终止", tradeOrder.getTradeNo());
         }
         // 如果单据未支付
         else if (TradeOrderStatus.Processing.eq(tradeOrder.getStatus())) {
@@ -148,7 +148,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         }
         // 如果单据非正常状态
         else {
-            log.warn("交易单[{}]状态异常,支付回调无法被正常处理", tradeOrder.getOrderNo());
+            log.warn("交易单[{}]状态异常,支付回调无法被正常处理", tradeOrder.getTradeNo());
         }
 
         // 回执处理成功

@@ -3,8 +3,8 @@ package com.github.lotus.bmw.biz.docking.alipay;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
-import com.github.lotus.bmw.api.pojo.ro.PayTradeRo;
-import com.github.lotus.bmw.api.pojo.vo.PayTradeVo;
+import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
+import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
 import com.github.lotus.bmw.biz.docking.PaymentMchDockingService;
 import com.github.lotus.bmw.biz.entity.*;
@@ -14,11 +14,9 @@ import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
-import com.github.lotus.bmw.biz.support.payment.helper.RequestHelper;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.CloseTradeRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoPayRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoRefundRequest;
-import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.RefType;
 import com.github.lotus.common.datadict.bmw.PaymentMchRecordBizType;
 import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
@@ -46,19 +44,17 @@ import java.math.BigDecimal;
 public class AlipayMchService implements PaymentMchDockingService {
     private final HttpLogBervice httpLogBervice;
     private final PaymentMchRecordService paymentMchRecordService;
-    private final BmwCacheService cacheService;
     private final com.github.lotus.bmw.biz.service.PaymentMchService paymentMchService;
     private final TradeOrderService tradeOrderService;
     private final RefundRecordService refundRecordService;
     private final PayRecordService payRecordService;
 
     @Override
-    public PayTradeVo goPay(PayTradeRo ro) {
-        AccessMch accessMch = cacheService.getAccessMchByEncoding(ro.getAccessCode());
-        PaymentMch paymentMch = paymentMchService.getByAccessMchIdAndSceneCodeAndPayType(accessMch.getId(), ro.getSceneCode(), ro.getPayType())
-            .orElseThrow(() -> ServiceException.wrap("支付类型[{}]未匹配到接入商户支持的支付商户", ro.getPayType()));
-        TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutOrderNoOrOrderNo(accessMch.getId(), ro.getOutOrderNo(), ro.getOrderNo())
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+    public GoPayVo goPay(GoPayRo ro) {
+        PaymentMch paymentMch = paymentMchService.getById(ro.getPaymentMchId());
+        Assert.notNull(paymentMch, "支付商户未找到");
+        TradeOrder tradeOrder = tradeOrderService.getById(ro.getTradeOrderId());
+        Assert.notNull(tradeOrder, "未找到交易单据");
 
         PaymentMchRecordDto createDto = new PaymentMchRecordDto();
         createDto.setRefType(RefType.TradeOrder.getCodeStr());
@@ -66,7 +62,7 @@ public class AlipayMchService implements PaymentMchDockingService {
         createDto.setBizType(PaymentMchRecordBizType.GoPay.getCodeStr());
         createDto.setPaymentMchId(paymentMch.getId());
 
-        String orderNo = tradeOrder.getOrderNo();
+        String orderNo = tradeOrder.getTradeNo();
         GoPayRequest request = GoPayRequest.builder()
             .payRecordId(ro.getPayRecordId())
             .quitUrl(tradeOrder.getFrontJumpUrl())
@@ -82,7 +78,7 @@ public class AlipayMchService implements PaymentMchDockingService {
         Long paymentMchId = tradeOrder.getPaymentMchId();
         PaymentMch paymentMch = paymentMchService.getById(paymentMchId);
 
-        String orderNo = tradeOrder.getOrderNo();
+        String orderNo = tradeOrder.getTradeNo();
         CloseTradeRequest request = CloseTradeRequest.builder()
             .configStorage(new ConfigStorageDto(paymentMch))
             .tradeSn(orderNo)
@@ -111,7 +107,7 @@ public class AlipayMchService implements PaymentMchDockingService {
         Long paymentMchId = tradeOrder.getPaymentMchId();
         PaymentMch paymentMch = paymentMchService.getById(paymentMchId);
 
-        String orderNo = refundRecord.getOrderNo();
+        String orderNo = refundRecord.getRefundNo();
         GoRefundRequest request = GoRefundRequest.builder()
             .refundSn(orderNo)
             .refundFee(refundRecord.getRefundAmt())

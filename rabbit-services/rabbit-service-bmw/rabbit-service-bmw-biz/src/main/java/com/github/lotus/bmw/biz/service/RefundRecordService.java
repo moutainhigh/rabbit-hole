@@ -30,6 +30,6 @@ public interface RefundRecordService extends AbstractService<RefundRecord> {
 
     RefundStatusSyncVo convertRefundSyncVo(RefundRecord entity);
 
-    Optional<RefundRecord> getByAccessMchIdAndOutOrderNoOrOrderNo(Long accessMchId, String outOrderNo, String orOrderNo);
+    Optional<RefundRecord> getByAccessMchIdAndOutRefundNoOrRefundNo(Long accessMchId, String outOrderNo, String orOrderNo);
 
 }
