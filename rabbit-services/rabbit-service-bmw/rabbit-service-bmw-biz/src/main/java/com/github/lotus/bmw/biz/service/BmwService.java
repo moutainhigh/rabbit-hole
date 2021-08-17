@@ -2,6 +2,7 @@ package com.github.lotus.bmw.biz.service;
 
 import com.github.lotus.bmw.api.pojo.ro.GetCashierRo;
 import com.github.lotus.bmw.biz.pojo.dto.CashierInfoDto;
+import com.github.lotus.bmw.biz.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
 import com.github.lotus.bmw.biz.pojo.vo.CashierInfoVo;
 import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
@@ -21,4 +22,6 @@ public interface BmwService {
     String getCashierUrl(GetCashierRo ro);
 
     GoPayVo goPay(GoPayRo ro);
+
+    void closeTrade(CloseTradeRo ro);
 }

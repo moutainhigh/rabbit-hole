@@ -8,7 +8,6 @@ import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
 import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.common.datadict.bmw.PaymentMchPayType;
-import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.utils.Rules;
 import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
 import in.hocg.boot.utils.ValidUtils;
@@ -154,37 +153,44 @@ public class GoPayRequest extends AbsRequest {
         return request;
     }
 
-    public GoPayResponse request(String payType) {
-        final GoPayResponse result = new GoPayResponse().setPayType(payType);
+    public GoPayVo request(String payType) {
+        final GoPayVo result = new GoPayVo().setPayType(payType);
         Rules.create()
             .rule(AliPay_App, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayAppRequest());
+                result.setType(GoPayVo.Type.App.getCode());
                 result.setApp(response.getContent());
             }))
             .rule(AliPay_QrCode, Rules.Runnable(() -> {
                 final TradePreCreateResponse response = this.request(this.aliPayQrCodeRequest());
+                result.setType(GoPayVo.Type.QrCode.getCode());
                 result.setQrCode(response.getQrCode());
             }))
             .rule(AliPay_PC, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayPcRequest());
-                result.setForm(new GoPayResponse.Form("POST", response.getContent()));
+                result.setType(GoPayVo.Type.From.getCode());
+                result.setForm(new GoPayVo.Form("POST", response.getContent()));
             }))
             .rule(AliPay_Wap, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayWapRequest());
-                result.setForm(new GoPayResponse.Form("POST", response.getContent()));
+                result.setType(GoPayVo.Type.From.getCode());
+                result.setForm(new GoPayVo.Form("POST", response.getContent()));
             }))
             .rule(WxPay_App, Rules.Runnable(() -> {
                 final UnifiedOrderResponse response = this.request(this.wxPayAPPRequest());
+                result.setType(GoPayVo.Type.App.getCode());
                 result.setApp(response.getContent());
             }))
             .rule(WxPay_JSAPI, Rules.Runnable(() -> {
                 WxPayRequest request = this.wxPayJSAPIRequest();
                 final UnifiedOrderResponse response = this.request(request);
-                result.setWxJsApi(GoPayResponse.WxJSAPI.create("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
+                result.setType(GoPayVo.Type.WxJsApi.getCode());
+                result.setWxJsApi(GoPayVo.WxJSAPI.create("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
             }))
             .rule(WxPay_Native, Rules.Runnable(() -> {
                 final WxPayRequest request = this.wxPayNativeRequest();
                 final UnifiedOrderResponse response = this.request(request);
+                result.setType(GoPayVo.Type.WxNative.getCode());
                 result.setWxNative(response.getContent());
             }))
             .of(ICode.ofThrow(payType, PaymentMchPayType.class));

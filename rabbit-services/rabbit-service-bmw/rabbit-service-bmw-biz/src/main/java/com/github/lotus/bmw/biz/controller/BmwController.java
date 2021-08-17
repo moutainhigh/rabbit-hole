@@ -1,7 +1,6 @@
 package com.github.lotus.bmw.biz.controller;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
+import com.github.lotus.bmw.biz.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
 import com.github.lotus.bmw.biz.pojo.vo.CashierInfoVo;
 import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
@@ -29,18 +28,28 @@ public class BmwController {
     private final BmwService bmwService;
 
     @ResponseBody
-    @GetMapping("/cashier")
     @ApiOperation("获取收银台信息")
+    @GetMapping("/cashier")
     public Result<CashierInfoVo> getCashierInfo(@RequestParam("u") String u) {
         return Result.success(bmwService.getCashierInfo(u));
     }
 
     @ResponseBody
-    @GetMapping("/go-pay")
     @ApiOperation("发起支付")
+    @PostMapping("/go-pay")
     public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         ro.setClientIp(SpringServletContext.getClientIp().orElse(null));
         return Result.success(bmwService.goPay(ro));
+    }
+
+    @ResponseBody
+    @ApiOperation("关单")
+    @PostMapping("/close-trade")
+    public Result<Void> closeTrade(@Validated @RequestBody CloseTradeRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        ro.setClientIp(SpringServletContext.getClientIp().orElse(null));
+        bmwService.closeTrade(ro);
+        return Result.success();
     }
 }

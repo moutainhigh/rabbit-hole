@@ -21,6 +21,9 @@ import java.io.Serializable;
 @ApiModel
 @Accessors(chain = true)
 public class GoPayVo {
+    @ApiModelProperty("form/app/qrCode/wxJsApi/wxNative/redirect")
+    private String type;
+    @ApiModelProperty("支付类型")
     private String payType;
 
     @ApiModelProperty("表单")
@@ -34,6 +37,20 @@ public class GoPayVo {
     private WxJSAPI wxJsApi;
     @ApiModelProperty("微信 - Native")
     private String wxNative;
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Type implements DataDictEnum {
+        From("form", "form"),
+        App("app", "app"),
+        Redirect("redirect", "redirect"),
+        QrCode("qrCode", "qrcode"),
+        WxJsApi("wxJsApi", "wxJsApi"),
+        WxNative("wxNative", "wxNative"),
+        ;
+        private final String code;
+        private final String name;
+    }
 
     @Data
     @RequiredArgsConstructor
@@ -51,5 +68,10 @@ public class GoPayVo {
         private final String packageName;
         private final String signType;
         private final String paySign;
+
+        public static WxJSAPI create(String timestamp, String nonceStr, String packageName, String signType, String paySign) {
+            return new WxJSAPI(timestamp, nonceStr, "prepay_id=" + packageName, signType, paySign);
+        }
     }
+
 }

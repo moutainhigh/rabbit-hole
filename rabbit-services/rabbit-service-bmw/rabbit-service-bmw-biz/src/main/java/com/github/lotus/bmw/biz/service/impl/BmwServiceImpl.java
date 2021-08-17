@@ -10,6 +10,7 @@ import com.github.lotus.bmw.biz.entity.PayScene;
 import com.github.lotus.bmw.biz.entity.TradeOrder;
 import com.github.lotus.bmw.biz.mapstruct.BmwMapping;
 import com.github.lotus.bmw.biz.pojo.dto.CashierInfoDto;
+import com.github.lotus.bmw.biz.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
 import com.github.lotus.bmw.biz.pojo.vo.CashierInfoVo;
 import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
@@ -75,5 +76,10 @@ public class BmwServiceImpl implements BmwService {
     @Override
     public GoPayVo goPay(GoPayRo ro) {
         return tradeOrderService.goPay(ro);
+    }
+
+    @Override
+    public void closeTrade(CloseTradeRo ro) {
+        tradeOrderService.closeTrade(ro.getTradeOrderId());
     }
 }
