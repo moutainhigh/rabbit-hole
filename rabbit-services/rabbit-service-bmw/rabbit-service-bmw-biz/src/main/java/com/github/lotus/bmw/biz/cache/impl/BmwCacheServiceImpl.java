@@ -3,17 +3,14 @@ package com.github.lotus.bmw.biz.cache.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
-import com.github.lotus.bmw.biz.constant.CacheKeys;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.pojo.dto.CashierInfoDto;
 import com.github.lotus.bmw.biz.service.AccessMchService;
 import com.github.lotus.bmw.biz.support.PageUrlHelper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -54,7 +51,7 @@ public class BmwCacheServiceImpl implements BmwCacheService {
     public String setFormPage(String content) {
         String key = MD5.create().digestHex(content);
         redisTemplate.opsForValue().set(key, content, 15, TimeUnit.MINUTES);
-        return PageUrlHelper.getFormPage(key);
+        return PageUrlHelper.getGoCashierUrl(key);
     }
 
     @Override

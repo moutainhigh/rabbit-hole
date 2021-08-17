@@ -19,10 +19,16 @@ public class PageUrlHelper {
      * @return
      */
     public String getCashierUrl(String u) {
-        return StrUtil.format("https://bmw.hocgin.top/cashier?u={}", u);
+        return StrUtil.format("https://bmw.hocgin.top/api/bmw/cashier?u={}", u);
     }
 
-    public static String getFormPage(String key) {
-        return StrUtil.format("https://bmw.hocgin.top/go-cashier?key={}", key);
+    /**
+     * 前往第三方收银台
+     *
+     * @param key
+     * @return
+     */
+    public static String getGoCashierUrl(String key) {
+        return StrUtil.format("https://bmw.hocgin.top/api/bmw/go-cashier?key={}", key);
     }
 }
