@@ -1,6 +1,8 @@
 package com.github.lotus.bmw.biz.support;
 
 import cn.hutool.core.util.StrUtil;
+import in.hocg.boot.web.autoconfiguration.SpringContext;
+import in.hocg.boot.web.autoconfiguration.properties.BootProperties;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -19,7 +21,8 @@ public class PageUrlHelper {
      * @return
      */
     public String getCashierUrl(String u) {
-        return StrUtil.format("https://bmw.hocgin.top/api/bmw/cashier?u={}", u);
+        String hostname = getHostname();
+        return StrUtil.format("{}/cashier?u={}", hostname, u);
     }
 
     /**
@@ -29,6 +32,12 @@ public class PageUrlHelper {
      * @return
      */
     public static String getGoCashierUrl(String key) {
-        return StrUtil.format("https://bmw.hocgin.top/api/bmw/go-cashier?key={}", key);
+        String hostname = getHostname();
+        return StrUtil.format("{}/go-cashier?key={}", hostname, key);
+    }
+
+    public static String getHostname() {
+        BootProperties properties = SpringContext.getBean(BootProperties.class);
+        return StrUtil.format("{}/api/bmw", properties.getHostname());
     }
 }

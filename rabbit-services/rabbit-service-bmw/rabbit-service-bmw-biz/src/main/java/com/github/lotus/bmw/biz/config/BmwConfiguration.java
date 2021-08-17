@@ -16,10 +16,7 @@ import org.springframework.context.annotation.Lazy;
  * @author hocgin
  */
 @Configuration
-@ConditionalOnProperty(prefix = PaymentProperties.PREFIX, name = "enabled", matchIfMissing = true)
-@EnableConfigurationProperties(PaymentProperties.class)
-@RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class PaymentConfiguration {
+public class BmwConfiguration {
     @Bean
     public Snowflake snowflake() {
         return IdUtil.createSnowflake(1, 1);

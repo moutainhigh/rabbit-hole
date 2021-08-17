@@ -1,16 +1,13 @@
 package com.github.lotus.bmw.biz.support.payment.pojo.request;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.aliyun.openservices.log.http.client.ServiceException;
 import com.github.lotus.bmw.biz.constant.BmwConstant;
-import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
+import com.github.lotus.bmw.biz.support.PageUrlHelper;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
-import com.github.lotus.bmw.biz.config.PaymentProperties;
 import com.google.common.collect.Maps;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import in.hocg.payment.PaymentRequest;
@@ -39,7 +36,7 @@ public abstract class AbsRequest {
     }
 
     protected String getUrlPrefix() {
-        return SpringContext.getBean(PaymentProperties.class).getUrlPrefix();
+        return PageUrlHelper.getHostname();
     }
 
     protected String getPaymentNotifyUrl(Long payRecordId) {
