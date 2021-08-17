@@ -1,5 +1,6 @@
 package com.github.lotus.bmw.biz.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.lotus.bmw.biz.pojo.ro.CloseTradeRo;
 import com.github.lotus.bmw.biz.pojo.ro.GoPayRo;
 import com.github.lotus.bmw.biz.pojo.vo.CashierInfoVo;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * Created by hocgin on 2021/8/16
  * email: hocgin@gmail.com
@@ -26,6 +30,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class BmwController {
     private final BmwService bmwService;
+
+    @ResponseBody
+    @ApiOperation("前往第三方支付收银台")
+    @GetMapping("/go-cashier")
+    public void goCashier(@RequestParam("key") String key, HttpServletResponse response) throws IOException {
+        response.addHeader("Content-Type", "text/html;charset=utf-8");
+        response.getWriter().write(bmwService.getCashierPage(key));
+    }
 
     @ResponseBody
     @ApiOperation("获取收银台信息")

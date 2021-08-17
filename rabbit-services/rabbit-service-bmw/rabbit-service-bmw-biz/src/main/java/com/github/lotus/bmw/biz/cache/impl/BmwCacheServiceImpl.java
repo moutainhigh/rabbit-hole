@@ -7,10 +7,12 @@ import com.github.lotus.bmw.biz.constant.CacheKeys;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.pojo.dto.CashierInfoDto;
 import com.github.lotus.bmw.biz.service.AccessMchService;
+import com.github.lotus.bmw.biz.support.PageUrlHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +48,18 @@ public class BmwCacheServiceImpl implements BmwCacheService {
         String key = MD5.create().digestHex(str);
         redisTemplate.opsForValue().set(key, cashierInfo, 15, TimeUnit.MINUTES);
         return key;
+    }
+
+    @Override
+    public String setFormPage(String content) {
+        String key = MD5.create().digestHex(content);
+        redisTemplate.opsForValue().set(key, content, 15, TimeUnit.MINUTES);
+        return PageUrlHelper.getFormPage(key);
+    }
+
+    @Override
+    public Optional<String> getFormPage(String key) {
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        return Optional.ofNullable(String.valueOf(valueOperations.get(key)));
     }
 }

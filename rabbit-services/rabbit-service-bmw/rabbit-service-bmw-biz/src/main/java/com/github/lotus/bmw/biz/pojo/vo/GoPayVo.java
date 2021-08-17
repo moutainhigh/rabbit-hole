@@ -26,6 +26,8 @@ public class GoPayVo {
     @ApiModelProperty("支付类型")
     private String payType;
 
+    @ApiModelProperty("redirect")
+    private String redirect;
     @ApiModelProperty("表单")
     private Form form;
     @ApiModelProperty("APP")

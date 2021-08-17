@@ -21,4 +21,8 @@ public class PageUrlHelper {
     public String getCashierUrl(String u) {
         return StrUtil.format("https://bmw.hocgin.top/cashier?u={}", u);
     }
+
+    public static String getFormPage(String key) {
+        return StrUtil.format("https://bmw.hocgin.top/go-cashier?key={}", key);
+    }
 }

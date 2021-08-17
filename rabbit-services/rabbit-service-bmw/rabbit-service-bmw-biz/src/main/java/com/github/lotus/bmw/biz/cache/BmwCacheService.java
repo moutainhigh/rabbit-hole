@@ -30,4 +30,20 @@ public interface BmwCacheService {
      * @return
      */
     String setCashierInfo(CashierInfoDto cashierInfo);
+
+    /**
+     * 收银台页面
+     *
+     * @param content
+     * @return
+     */
+    String setFormPage(String content);
+
+    /**
+     * 收银台页面
+     *
+     * @param key
+     * @return
+     */
+    Optional<String> getFormPage(String key);
 }

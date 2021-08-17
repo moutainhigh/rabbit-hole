@@ -1,11 +1,13 @@
 package com.github.lotus.bmw.biz.support.payment.pojo.request;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.lotus.bmw.biz.pojo.vo.GoPayVo;
 import com.github.lotus.bmw.biz.docking.wxpay.WxPayHelper;
 import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
 import com.github.lotus.bmw.biz.service.PaymentMchRecordService;
+import com.github.lotus.bmw.biz.support.BmwHelper;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.common.datadict.bmw.PaymentMchPayType;
 import com.github.lotus.common.utils.Rules;
@@ -29,8 +31,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static com.github.lotus.common.datadict.bmw.PaymentMchPayType.*;
 
@@ -164,17 +170,17 @@ public class GoPayRequest extends AbsRequest {
             .rule(AliPay_QrCode, Rules.Runnable(() -> {
                 final TradePreCreateResponse response = this.request(this.aliPayQrCodeRequest());
                 result.setType(GoPayVo.Type.QrCode.getCode());
-                result.setQrCode(response.getQrCode());
+                result.setQrCode(BmwHelper.uploadQrcode(response.getQrCode()));
             }))
             .rule(AliPay_PC, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayPcRequest());
-                result.setType(GoPayVo.Type.From.getCode());
-                result.setForm(new GoPayVo.Form("POST", response.getContent()));
+                result.setType(GoPayVo.Type.Redirect.getCode());
+                result.setRedirect(BmwHelper.setFormPage(response.getContent()));
             }))
             .rule(AliPay_Wap, Rules.Runnable(() -> {
                 final PaymentResponse response = this.request(this.aliPayWapRequest());
-                result.setType(GoPayVo.Type.From.getCode());
-                result.setForm(new GoPayVo.Form("POST", response.getContent()));
+                result.setType(GoPayVo.Type.Redirect.getCode());
+                result.setRedirect(BmwHelper.setFormPage(response.getContent()));
             }))
             .rule(WxPay_App, Rules.Runnable(() -> {
                 final UnifiedOrderResponse response = this.request(this.wxPayAPPRequest());

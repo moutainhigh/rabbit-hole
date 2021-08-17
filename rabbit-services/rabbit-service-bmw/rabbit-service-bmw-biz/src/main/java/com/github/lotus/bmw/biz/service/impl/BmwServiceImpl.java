@@ -82,4 +82,9 @@ public class BmwServiceImpl implements BmwService {
     public void closeTrade(CloseTradeRo ro) {
         tradeOrderService.closeTrade(ro.getTradeOrderId());
     }
+
+    @Override
+    public String getCashierPage(String key) {
+        return bmwCacheService.getFormPage(key).orElseThrow(() -> ServiceException.wrap("连接已过期"));
+    }
 }

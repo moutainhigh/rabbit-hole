@@ -24,4 +24,6 @@ public interface BmwService {
     GoPayVo goPay(GoPayRo ro);
 
     void closeTrade(CloseTradeRo ro);
+
+    String getCashierPage(String key);
 }

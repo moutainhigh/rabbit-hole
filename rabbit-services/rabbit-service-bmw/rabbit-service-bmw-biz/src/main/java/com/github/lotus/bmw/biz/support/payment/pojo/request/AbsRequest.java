@@ -6,7 +6,6 @@ import com.aliyun.openservices.log.http.client.ServiceException;
 import com.github.lotus.bmw.biz.constant.BmwConstant;
 import com.github.lotus.bmw.biz.pojo.dto.PaymentMchRecordDto;
 import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
-import com.github.lotus.bmw.biz.support.payment.pojo.response.GoPayResponse;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
 import com.github.lotus.bmw.biz.config.PaymentProperties;
 import com.google.common.collect.Maps;
