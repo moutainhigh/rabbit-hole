@@ -100,6 +100,3 @@ boot:
         grade: 1
         count: 0.01
 
-rabbit:
-  payment:
-    url-prefix: https://api.hocgin.top/pay

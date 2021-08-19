@@ -1,5 +1,6 @@
 package com.github.lotus.ums.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import com.github.lotus.ums.api.pojo.ro.InsertSocialRo;
 import com.github.lotus.ums.api.pojo.vo.UserDetailVo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -19,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SocialServiceApi {
     String CONTEXT_ID = "SocialServiceApi";
 
-    @GetMapping(CONTEXT_ID + "/getAccountBySocialTypeAndSocialId")
-    UserDetailVo getAccountBySocialTypeAndSocialId(@RequestParam("socialType") String socialType,
-                                                   @RequestParam("socialId") String socialId);
+    @GetMapping(value = CONTEXT_ID + "/getAccountBySocialTypeAndSocialId", headers = GlobalConstant.FEIGN_HEADER)
+    UserDetailVo getAccountBySocialTypeAndSocialId(@RequestParam("socialType") String socialType, @RequestParam("socialId") String socialId);
 
-    @PostMapping(CONTEXT_ID + "/insertOne")
+    @PostMapping(value = CONTEXT_ID + "/insertOne", headers = GlobalConstant.FEIGN_HEADER)
     void insertOne(@Validated @RequestBody InsertSocialRo ro);
 }

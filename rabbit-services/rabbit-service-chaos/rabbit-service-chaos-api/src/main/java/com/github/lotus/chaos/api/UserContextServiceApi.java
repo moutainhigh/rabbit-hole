@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import com.github.lotus.usercontext.ifc.UserContextService;
 import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,6 +18,6 @@ public interface UserContextServiceApi extends UserContextService {
     String CONTEXT_ID = "UserContextServiceApi";
 
     @Override
-    @PostMapping(CONTEXT_ID + "/getUserDetail")
+    @PostMapping(value = CONTEXT_ID + "/getUserDetail", headers = GlobalConstant.FEIGN_HEADER)
     UserDetail getUserDetail(@RequestParam("username") String username);
 }

@@ -3,6 +3,7 @@ package com.github.lotus.com.api;
 
 import com.github.lotus.com.api.pojo.ro.UploadFileRo;
 import com.github.lotus.com.api.pojo.vo.FileVo;
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +22,12 @@ import java.util.List;
 public interface FileServiceApi {
     String CONTEXT_ID = "FileServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/upload")
+    @PostMapping(value = CONTEXT_ID + "/upload", headers = GlobalConstant.FEIGN_HEADER)
     void upload(@Validated @RequestBody UploadFileRo ro);
 
-    @PostMapping(CONTEXT_ID + "/listFileByRefTypeAndRefId")
+    @PostMapping(value = CONTEXT_ID + "/listFileByRefTypeAndRefId", headers = GlobalConstant.FEIGN_HEADER)
     List<FileVo> listByRefTypeAndRefId(@RequestParam("refType") String refType, @RequestParam("refId") Long refId);
 
-    @PostMapping(CONTEXT_ID + "/getAvatarUrl")
+    @PostMapping(value = CONTEXT_ID + "/getAvatarUrl", headers = GlobalConstant.FEIGN_HEADER)
     String getAvatarUrl(@RequestParam("id") Long id);
 }

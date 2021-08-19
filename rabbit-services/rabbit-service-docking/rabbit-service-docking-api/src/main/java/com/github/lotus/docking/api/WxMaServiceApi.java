@@ -1,5 +1,6 @@
 package com.github.lotus.docking.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface WxMaServiceApi {
     String CONTEXT_ID = "WxMaServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/checkMessage")
-    boolean checkMessage(@RequestParam("appid") String appid,
-                         @RequestParam("text") String text);
+    @PostMapping(value = CONTEXT_ID + "/checkMessage", headers = GlobalConstant.FEIGN_HEADER)
+    boolean checkMessage(@RequestParam("appid") String appid, @RequestParam("text") String text);
 
-    @PostMapping(CONTEXT_ID + "/checkImage")
-    boolean checkImage(@RequestParam("appid") String appid,
-                       @RequestParam("imageUrl") String imageUrl);
+    @PostMapping(value = CONTEXT_ID + "/checkImage", headers = GlobalConstant.FEIGN_HEADER)
+    boolean checkImage(@RequestParam("appid") String appid, @RequestParam("imageUrl") String imageUrl);
 }

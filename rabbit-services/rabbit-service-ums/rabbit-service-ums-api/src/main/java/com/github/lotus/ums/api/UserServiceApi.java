@@ -1,5 +1,6 @@
 package com.github.lotus.ums.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import com.github.lotus.ums.api.pojo.ro.CreateAccountRo;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import com.github.lotus.ums.api.pojo.vo.GetLoginQrcodeVo;
@@ -23,39 +24,39 @@ import java.util.List;
 public interface UserServiceApi {
     String CONTEXT_ID = "AccountServiceApi";
 
-    @GetMapping(CONTEXT_ID + "/getUserByUsername")
+    @GetMapping(value = CONTEXT_ID + "/getUserByUsername", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo getUserByUsername(@RequestParam("username") String username);
 
-    @GetMapping(CONTEXT_ID + "/getUserByUsernameOrEmailOrPhone")
+    @GetMapping(value = CONTEXT_ID + "/getUserByUsernameOrEmailOrPhone", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo getUserByUsernameOrEmailOrPhone(@RequestParam("unique") String unique);
 
-    @GetMapping(CONTEXT_ID + "/getUserByPhone")
+    @GetMapping(value = CONTEXT_ID + "/getUserByPhone", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo getUserByPhone(@RequestParam("phone") String phone);
 
-    @PostMapping(CONTEXT_ID + "/createAccount")
+    @PostMapping(value = CONTEXT_ID + "/createAccount", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo createAccount(@Validated @RequestBody CreateAccountRo ro);
 
-    @PostMapping(CONTEXT_ID + "/getUserToken")
+    @PostMapping(value = CONTEXT_ID + "/getUserToken", headers = GlobalConstant.FEIGN_HEADER)
     String getUserToken(@RequestParam("username") String username);
 
-    @PostMapping(CONTEXT_ID + "/getUsername")
+    @PostMapping(value = CONTEXT_ID + "/getUsername", headers = GlobalConstant.FEIGN_HEADER)
     String getUsername(@RequestParam("token") String token);
 
-    @PostMapping(CONTEXT_ID + "/listAccountByAccountId")
+    @PostMapping(value = CONTEXT_ID + "/listAccountByAccountId", headers = GlobalConstant.FEIGN_HEADER)
     List<AccountVo> listAccountVoById(@RequestParam("id") List<Long> id);
 
-    @PostMapping(CONTEXT_ID + "/getById")
+    @PostMapping(value = CONTEXT_ID + "/getById", headers = GlobalConstant.FEIGN_HEADER)
     AccountVo getById(@RequestParam("id") Long id);
 
-    @PostMapping(CONTEXT_ID + "/getUserDetailVoByUsername")
+    @PostMapping(value = CONTEXT_ID + "/getUserDetailVoByUsername", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo getUserDetailVoByUsername(@RequestParam("username") String username);
 
-    @GetMapping(CONTEXT_ID + "/getUserByIdFlag")
+    @GetMapping(value = CONTEXT_ID + "/getUserByIdFlag", headers = GlobalConstant.FEIGN_HEADER)
     UserDetailVo getUserByIdFlag(@RequestParam("idFlag") String idFlag);
 
-    @GetMapping(CONTEXT_ID + "/getLoginQrcode")
+    @GetMapping(value = CONTEXT_ID + "/getLoginQrcode", headers = GlobalConstant.FEIGN_HEADER)
     GetLoginQrcodeVo getLoginQrcode();
 
-    @GetMapping(CONTEXT_ID + "/confirmQrcode")
+    @GetMapping(value = CONTEXT_ID + "/confirmQrcode", headers = GlobalConstant.FEIGN_HEADER)
     void confirmQrcode(@RequestParam("idFlag") String idFlag, @RequestParam("userId") Long userId);
 }

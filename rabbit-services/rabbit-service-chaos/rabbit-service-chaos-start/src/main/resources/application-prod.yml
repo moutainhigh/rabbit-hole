@@ -32,3 +32,5 @@ boot:
         - appid: wxb4df1f0c3dc96256
           secret: ENC(qWrZg5B1aiIwRld5B3JuCnUd0AuV9GPgTVUqA9w5lysRLncaJ0W3rfmj6yWLGHD4)
           token: ENC(u4Zbme+gFwVMKRcU8fT+mGbdJVhsX5PF)
+  web:
+    hostname: https://api.hocgin.top

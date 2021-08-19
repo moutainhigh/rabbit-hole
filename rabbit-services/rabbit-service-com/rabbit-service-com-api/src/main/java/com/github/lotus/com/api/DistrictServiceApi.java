@@ -1,6 +1,7 @@
 package com.github.lotus.com.api;
 
 import com.github.lotus.com.api.pojo.vo.DistrictComplexVo;
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,18 +18,18 @@ import java.util.List;
 public interface DistrictServiceApi {
     String CONTEXT_ID = "DistrictServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/listProvince")
+    @PostMapping(value = CONTEXT_ID + "/listProvince", headers = GlobalConstant.FEIGN_HEADER)
     List<DistrictComplexVo> listProvince(@RequestParam("adcode") List<String> adcode);
 
-    @PostMapping(CONTEXT_ID + "/listCity")
+    @PostMapping(value = CONTEXT_ID + "/listCity", headers = GlobalConstant.FEIGN_HEADER)
     List<DistrictComplexVo> listCity(@RequestParam("adcode") List<String> adcode);
 
-    @PostMapping(CONTEXT_ID + "/listDistrict")
+    @PostMapping(value = CONTEXT_ID + "/listDistrict", headers = GlobalConstant.FEIGN_HEADER)
     List<DistrictComplexVo> listDistrict(@RequestParam("adcode") List<String> adcode);
 
-    @PostMapping(CONTEXT_ID + "/getCityByCityCode")
+    @PostMapping(value = CONTEXT_ID + "/getCityByCityCode", headers = GlobalConstant.FEIGN_HEADER)
     DistrictComplexVo getComplexByCityCode(@RequestParam("cityCode") String cityCode);
 
-    @PostMapping(CONTEXT_ID + "/getById")
+    @PostMapping(value = CONTEXT_ID + "/getById", headers = GlobalConstant.FEIGN_HEADER)
     DistrictComplexVo getComplexById(@RequestParam("id") Long id);
 }
