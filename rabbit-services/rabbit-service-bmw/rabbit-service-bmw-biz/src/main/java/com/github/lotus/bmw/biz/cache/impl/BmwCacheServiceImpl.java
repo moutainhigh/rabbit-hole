@@ -43,7 +43,7 @@ public class BmwCacheServiceImpl implements BmwCacheService {
     public String setCashierInfo(CashierInfoDto cashierInfo) {
         String str = StrUtil.format("{}:{}:{}", cashierInfo.getAccessMchId(), cashierInfo.getPaySceneId(), cashierInfo.getTradeOrderId());
         String key = MD5.create().digestHex(str);
-        redisTemplate.opsForValue().set(key, cashierInfo, 15, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, cashierInfo, 30, TimeUnit.MINUTES);
         return key;
     }
 
