@@ -45,7 +45,7 @@ public class AccessMchServiceImpl extends AbstractServiceImpl<AccessMchMapper, A
         return LangUtils.toList(listByIds(id), this::convertComplex);
     }
 
-    private R convertComplex(AccessMch entity) {
+    private AccessMchComplexVo convertComplex(AccessMch entity) {
         return mapping.asAccessMchComplexVo(entity);
     }
 }

@@ -27,9 +27,7 @@ public class YoutubeTests extends AbstractSpringBootTest {
     public void testFile() {
         String str = "http://cdn.hocgin.top/file/sample_video.mp4";
         Path path = YoutubeTests.downloadFile(str);
-        log.info("=>  {}", path.toString());
-
-
+        log.info("=>  {}", path);
     }
 
     @SneakyThrows
