@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,7 +23,7 @@ public class GetCashierRo extends AccessRo {
     private String outTradeNo;
     @ApiModelProperty(value = "交易单号", required = true)
     private String tradeNo;
-    @NotNull(message = "支付场景不能为空")
+    @NotBlank(message = "支付场景不能为空")
     @ApiModelProperty(value = "支付场景", required = true)
     private String sceneCode;
 }

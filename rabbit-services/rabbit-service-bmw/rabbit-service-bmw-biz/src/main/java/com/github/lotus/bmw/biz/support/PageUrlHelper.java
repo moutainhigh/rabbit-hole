@@ -3,6 +3,7 @@ package com.github.lotus.bmw.biz.support;
 import cn.hutool.core.util.StrUtil;
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.web.autoconfiguration.properties.BootProperties;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -21,8 +22,7 @@ public class PageUrlHelper {
      * @return
      */
     public String getCashierUrl(String u) {
-        String hostname = getHostname();
-        return StrUtil.format("{}/cashier?u={}", hostname, u);
+        return StrUtil.format("https://bmw.hocgin.top/cashier?u={}", u);
     }
 
     /**
