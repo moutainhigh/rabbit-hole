@@ -53,7 +53,6 @@ CREATE TABLE `com_user_integral_flow`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
-    UNIQUE KEY (user_id),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

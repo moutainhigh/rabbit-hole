@@ -20,7 +20,8 @@
     <module>rabbit-service-chaos</module>
     <module>rabbit-service-docking</module>
     <module>rabbit-service-wl</module>
-    <module>rabbit-service-pay</module>
+    <module>rabbit-service-bmw</module>
+    <module>rabbit-service-mall</module>
     <module>rabbit-service-mina</module>
   </modules>
 

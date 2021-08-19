@@ -55,28 +55,20 @@ public class LangManager {
      * @param count    count
      */
     public void uploadMiStep(String username, String password, Integer count) {
-        I2ProxyHttpClient.proxy(new Function<HttpHost, String>() {
-            @Override
-            public String apply(HttpHost httpHost) {
-                MiSupport.loginAndUpdate(username, password, count, httpHost);
-                return "ok";
-            }
+        I2ProxyHttpClient.proxy(httpHost -> {
+            MiSupport.loginAndUpdate(username, password, count, httpHost);
+            return "ok";
         });
     }
 
     public Optional<HttpHost> getProxyIp() {
-//        ValueOperations<String, String> ops = redisTemplate.opsForValue();
         String url = "http://api.520e.com.cn/api/ip/getIp";
-        String body = null; //ops.get(url);
-        if (Objects.isNull(body)) {
-            body = HttpRequest.get(url).execute().body();
-            Assert.notBlank(body);
-        }
+        String body;
+        body = HttpRequest.get(url).execute().body();
+        Assert.notBlank(body);
         final cn.hutool.json.JSONObject result = JSONUtil.parseObj(body);
         Assert.isTrue(result.getInt("code") == 0, result.getStr("msg"));
         cn.hutool.json.JSONObject data = result.getJSONObject("data");
-
-//        ops.set(url, body, data.getLong("time") - 1000);
         return Optional.of(new HttpHost(data.getStr("ip"), data.getInt("port")));
     }
 

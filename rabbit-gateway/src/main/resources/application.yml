@@ -29,10 +29,10 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: rabbit-pay
+        - id: rabbit-bmw
           uri: lb://rabbit-chaos
           predicates:
-            - Path=/pay/**
+            - Path=/bmw/**
           filters:
             - StripPrefix=1
 
@@ -126,7 +126,7 @@ boot:
         ,/com/district/tree
         ,/com/project/encoding:*
 
-        ,/pay/gateway/**
+        ,/bmw/gateway/**
 
         ,/chaos/sms-code
         ,/chaos/address4ip

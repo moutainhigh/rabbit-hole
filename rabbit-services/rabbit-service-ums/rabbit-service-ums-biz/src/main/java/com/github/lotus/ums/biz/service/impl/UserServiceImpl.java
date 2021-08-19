@@ -1,8 +1,6 @@
 package com.github.lotus.ums.biz.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
@@ -26,7 +24,7 @@ import com.github.lotus.ums.biz.cache.UmsCacheService;
 import com.github.lotus.ums.biz.entity.Social;
 import com.github.lotus.ums.biz.entity.User;
 import com.github.lotus.ums.biz.mapper.UserMapper;
-import com.github.lotus.ums.biz.mapstruct.AccountMapping;
+import com.github.lotus.ums.biz.mapstruct.UserMapping;
 import com.github.lotus.ums.biz.pojo.ro.RoleGrantUserRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import com.github.lotus.ums.biz.pojo.ro.UpdateAccountPhoneRo;
@@ -73,7 +71,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     implements UserService {
-    private final AccountMapping mapping;
+    private final UserMapping mapping;
     private final SocialService socialService;
     private final SmsServiceApi smsServiceApi;
     private final EmailServiceApi emailServiceApi;

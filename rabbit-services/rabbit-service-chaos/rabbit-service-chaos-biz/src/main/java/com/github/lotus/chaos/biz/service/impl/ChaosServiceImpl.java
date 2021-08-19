@@ -42,7 +42,7 @@ public class ChaosServiceImpl implements ChaosService {
     }
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.GET_ADDRESS_BY_IP, key = "#ip")
+    @Cacheable(cacheNames = CacheKeys.GET_ADDRESS_BY_IP, key = "#ip", unless = "#result == null")
     public IpAddressVo getAddress4ip(String ip) {
         log.info("正在查询IP:[{}]的物理地址", ip);
         IpAddressVo result = new IpAddressVo();

@@ -16,9 +16,9 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.COM, false,
-            "com_user_integral",
-            "com_user_integral_flow",
+            Module.BMW, false,
+            "bmw_payment_mch_wxpay_config",
+            "bmw_payment_mch_alipay_config",
             "");
     }
 

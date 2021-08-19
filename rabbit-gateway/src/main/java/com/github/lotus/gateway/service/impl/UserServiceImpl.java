@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.GET_USER_DETAIL, key = "#username")
+    @Cacheable(cacheNames = CacheKeys.GET_USER_DETAIL, key = "#username", unless = "#result == null")
     public UserDetailVo getUserDetail(String username) {
         return ValidUtils.notNull(userServiceApi.getUserByUsername(username), "用户不存在");
     }

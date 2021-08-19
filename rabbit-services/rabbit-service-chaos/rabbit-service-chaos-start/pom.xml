@@ -44,7 +44,7 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>rabbit-service-pay-biz</artifactId>
+      <artifactId>rabbit-service-bmw-biz</artifactId>
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>

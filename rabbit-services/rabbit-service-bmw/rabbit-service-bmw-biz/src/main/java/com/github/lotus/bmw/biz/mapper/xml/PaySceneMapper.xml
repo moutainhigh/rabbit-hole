@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lotus.bmw.biz.mapper.PaySceneMapper">
+
+  <select id="listByEncodingAndAccessMchId" resultType="com.github.lotus.bmw.biz.entity.PaySceneSupport">
+    SELECT DISTINCT bpss.*
+    FROM bmw_pay_scene_support bpss
+           LEFT JOIN bmw_pay_scene bps ON bpss.pay_scene_id = bps.id;
+    <where>
+      <if test="accessMchId != null">
+        AND bps.access_mch_id = #{accessMchId}
+      </if>
+      <if test="sceneCode != null">
+        AND bps.encoding = #{sceneCode}
+      </if>
+    </where>
+  </select>
+</mapper>

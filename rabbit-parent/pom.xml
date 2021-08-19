@@ -38,7 +38,7 @@
     <p6spy.version>3.8.7</p6spy.version>
     <rocketmq-spring-boot-starter.version>2.1.0</rocketmq-spring-boot-starter.version>
     <jjwt.version>0.9.1</jjwt.version>
-    <boot.version>1.0.13</boot.version>
+    <boot.version>1.0.15</boot.version>
     <velocity-engine-core.version>2.2</velocity-engine-core.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
     <easy-captcha.version>1.6.2</easy-captcha.version>
@@ -124,6 +124,21 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-tpl-start</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -154,17 +169,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-start</artifactId>
+        <artifactId>rabbit-service-bmw-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-biz</artifactId>
+        <artifactId>rabbit-service-bmw-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-pay-api</artifactId>
+        <artifactId>rabbit-service-bmw-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -336,6 +351,16 @@
       <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>schedulerx-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>distributed-lock-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>http-log-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <!-- Spring Boot -->

@@ -13,6 +13,7 @@ spring:
     druid:
       validation-query: SELECT 1
       test-while-idle: true
+      initial-size: 1
   redis:
     database: 0
     port: 6379
@@ -31,7 +32,9 @@ jasypt:
     poolSize: 10
 mybatis-plus:
   mapper-locations: classpath*:/**/xml/*.xml
-
+feign:
+  okhttp:
+    enabled: true
 boot:
   sms:
     regionId: cn-hangzhou
@@ -53,6 +56,9 @@ boot:
         ttl: 1D
       - name: GET_ADDRESS_BY_IP
         ttl: 1H
+      # [BMW] 接入应用名称
+      - name: GET_ACCESS_MCH_BY_ENCODING
+        ttl: 1D
   mail:
     host: smtp.163.com
     from: "HOCGIN 官方邮件<13600747016@163.com>"
