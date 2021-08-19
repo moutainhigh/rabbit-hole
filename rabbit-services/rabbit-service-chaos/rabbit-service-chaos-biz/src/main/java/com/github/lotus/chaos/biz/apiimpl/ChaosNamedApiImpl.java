@@ -1,6 +1,8 @@
 package com.github.lotus.chaos.biz.apiimpl;
 
 import cn.hutool.core.convert.Convert;
+import com.github.lotus.bmw.api.AccessMchServiceApi;
+import com.github.lotus.bmw.api.pojo.vo.AccessMchComplexVo;
 import com.github.lotus.chaos.api.ChaosNamedApi;
 import com.github.lotus.com.api.DataDictServiceApi;
 import com.github.lotus.com.api.DistrictServiceApi;
@@ -36,6 +38,7 @@ public class ChaosNamedApiImpl implements ChaosNamedApi {
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
     private final ProjectServiceApi projectServiceApi;
+    private final AccessMchServiceApi accessMchServiceApi;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
@@ -90,9 +93,9 @@ public class ChaosNamedApiImpl implements ChaosNamedApi {
     }
 
     @Override
-    public Map<String, Object> loadByAccessAppName(NamedArgs args) {
+    public Map<String, Object> loadByAccessMchName(NamedArgs args) {
         List<Long> values = getValues(args.getValues(), Long.class);
-        return Collections.emptyMap();
+        return this.toMap(accessMchServiceApi.listComplexById(values), AccessMchComplexVo::getId, AccessMchComplexVo::getTitle);
     }
 
     private <T> List<T> getValues(List<?> values, Class<T> clazz) {

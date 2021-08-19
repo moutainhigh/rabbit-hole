@@ -1,6 +1,9 @@
 package com.github.lotus.bmw.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.github.lotus.chaos.api.NamedType;
+import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.boot.named.annotation.Named;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,6 +21,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 @Accessors(chain = true)
 public class CashierInfoVo implements Serializable {
     @ApiModelProperty("交易单")
@@ -45,6 +49,7 @@ public class CashierInfoVo implements Serializable {
 
     @ApiModelProperty("接入商户")
     private Long accessMchId;
+    @Named(idFor = "accessMchId", type = NamedType.AccessMchName)
     private String accessMchName;
 
     @ApiModelProperty("支付场景")

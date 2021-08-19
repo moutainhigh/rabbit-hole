@@ -14,6 +14,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PaySceneMapping {
 
-    @Mapping(target = "title", ignore = true)
     PaySceneItemVo asPaySceneItemVo(PaySceneSupport entity);
 }
