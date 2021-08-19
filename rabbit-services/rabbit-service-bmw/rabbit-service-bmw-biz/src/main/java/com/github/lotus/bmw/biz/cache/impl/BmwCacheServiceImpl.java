@@ -3,11 +3,13 @@ package com.github.lotus.bmw.biz.cache.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.github.lotus.bmw.biz.cache.BmwCacheService;
+import com.github.lotus.bmw.biz.constant.CacheKeys;
 import com.github.lotus.bmw.biz.entity.AccessMch;
 import com.github.lotus.bmw.biz.pojo.dto.CashierInfoDto;
 import com.github.lotus.bmw.biz.service.AccessMchService;
 import com.github.lotus.bmw.biz.support.PageUrlHelper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -29,7 +31,7 @@ public class BmwCacheServiceImpl implements BmwCacheService {
     private final RedisTemplate redisTemplate;
 
     @Override
-    // @Cacheable(cacheNames = CacheKeys.GET_ACCESS_MCH_BY_ENCODING, key = "#encoding", unless = "#result == null")
+    @Cacheable(cacheNames = CacheKeys.GET_ACCESS_MCH_BY_ENCODING, key = "#encoding", unless = "#result == null")
     public AccessMch getAccessMchByEncoding(String encoding) {
         return accessMchService.getByEncoding(encoding).orElse(null);
     }

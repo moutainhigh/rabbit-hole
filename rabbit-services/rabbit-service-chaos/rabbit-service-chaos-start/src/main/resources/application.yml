@@ -27,6 +27,10 @@ spring:
     namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
     groupId: rabbit-hold
     appKey: ENC(A0/FEwviqFuXaW/f0uAO+omU5vReoXzpm+1FoUSHZXbrFtzxHNFu0Q==)
+  cache:
+    type: redis
+    redis:
+      key-prefix: 'chaos::'
 jasypt:
   encryptor:
     poolSize: 10
