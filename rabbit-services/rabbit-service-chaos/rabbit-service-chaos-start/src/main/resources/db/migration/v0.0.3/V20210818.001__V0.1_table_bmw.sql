@@ -401,6 +401,8 @@ CREATE TABLE `bmw_pay_scene_support`
         COMMENT '支付商户',
     `pay_type`       VARCHAR(32) NOT NULL
         COMMENT '支付类型',
+    `title`          VARCHAR(32) NOT NULL
+        COMMENT '支付类型名称',
     UNIQUE KEY (pay_scene_id, pay_type),
     PRIMARY KEY (`id`)
 )

@@ -23,13 +23,13 @@ VALUES (@mch_type_id, 'wxpay.native', '微信支付(Native)', 1);
 
 -- 接入商户
 insert into bmw_access_mch(id, encoding, title, created_at)
-    value (1, 'test_access', '测试应用', now());
+    value (1, 'rabbit_gold', '测试应用', now());
 
 -- 支付商户
 insert into bmw_payment_mch(id, encoding, type, created_at)
-    value (1, 'test_payment', 'alipay', now());
+    value (1, 'alipay_dev', 'alipay', now());
 insert into bmw_payment_mch(id, encoding, type, created_at)
-    value (2, 'test_payment_2', 'wxpay', now());
+    value (2, 'wxpay_prod', 'wxpay', now());
 
 -- bmw_payment_mch_alipay
 insert into bmw_payment_mch_config_alipay(id, appid, public_key, private_key)
@@ -71,11 +71,11 @@ VALUES (1, 1),
 INSERT INTO bmw_pay_scene(access_mch_id, encoding, title, created_at)
     value (1, 'test_scene', '测试场景', now());
 set @last_id := last_insert_id();
-INSERT INTO bmw_pay_scene_support(pay_scene_id, payment_mch_id, pay_type)
-VALUES (@last_id, 1, 'alipay.pc'),
-       (@last_id, 1, 'alipay.native'),
-       (@last_id, 1, 'alipay.app'),
-       (@last_id, 1, 'alipay.qrcode'),
-       (@last_id, 2, 'wxpay.jsapi'),
-       (@last_id, 2, 'wxpay.app'),
-       (@last_id, 2, 'wxpay.native');
+INSERT INTO bmw_pay_scene_support(pay_scene_id, payment_mch_id, pay_type, title)
+VALUES (@last_id, 1, 'alipay.pc', '支付宝支付'),
+       (@last_id, 1, 'alipay.native', '支付宝支付'),
+       (@last_id, 1, 'alipay.app', '支付宝支付'),
+       (@last_id, 1, 'alipay.qrcode', '支付宝支付'),
+       (@last_id, 2, 'wxpay.jsapi', '微信支付'),
+       (@last_id, 2, 'wxpay.app', '微信支付'),
+       (@last_id, 2, 'wxpay.native', '微信支付');
