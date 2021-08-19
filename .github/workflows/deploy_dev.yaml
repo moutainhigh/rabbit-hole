@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy_Dev
 
 on:
   workflow_dispatch:
@@ -7,29 +7,9 @@ on:
         description: '是否使用 Maven 缓存'
         required: true
         default: 'true'
-#      re_chaos:
-#        description: '是否重发 chaos'
-#        required: true
-#        default: 'true'
-#      re_gateway:
-#        description: '是否重发 gateway'
-#        required: true
-#        default: 'true'
-#      re_sso_server:
-#        description: '是否重发 sso-server'
-#        required: true
-#        default: 'true'
-#      re_spring_boot_admin:
-#        description: '是否重发 spring-boot-admin'
-#        required: true
-#        default: 'false'
   push:
     branches:
-      - develop
-      - rls-*
-  create:
-    tags:
-      - v*.*.*
+      - features-*
 
 env:
   IMAGE_NAME: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/demo
@@ -224,8 +204,6 @@ jobs:
           manifests: |
             manifests/deployment-gateway.yaml
             manifests/deployment-chaos.yaml
-            manifests/deployment-sso-server.yaml
-            manifests/deployment-spring-boot-admin.yaml
           images: |
             ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
             ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
