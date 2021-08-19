@@ -42,6 +42,9 @@ public class PaySceneSupport extends AbstractEntity<PaySceneSupport> {
     @ApiModelProperty("支付类型")
     @TableField("pay_type")
     private String payType;
+    @ApiModelProperty("支付标题")
+    @TableField("title")
+    private String title;
 
 
 

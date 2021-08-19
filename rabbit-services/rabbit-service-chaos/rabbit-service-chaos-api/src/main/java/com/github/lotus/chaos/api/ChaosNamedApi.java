@@ -40,7 +40,7 @@ public interface ChaosNamedApi extends NamedService {
     @PostMapping(value = CONTEXT_ID + "/loadByDistrictName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByDistrictName(@RequestBody NamedArgs args);
 
-    @NamedHandler(NamedType.AccessAppName)
-    @PostMapping(value = CONTEXT_ID + "/loadByAccessAppName", headers = GlobalConstant.FEIGN_HEADER)
-    Map<String, Object> loadByAccessAppName(@RequestBody NamedArgs args);
+    @NamedHandler(NamedType.AccessMchName)
+    @PostMapping(value = CONTEXT_ID + "/loadByAccessMchName", headers = GlobalConstant.FEIGN_HEADER)
+    Map<String, Object> loadByAccessMchName(@RequestBody NamedArgs args);
 }
