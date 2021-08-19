@@ -3,6 +3,7 @@ package com.github.lotus.bmw.biz.controller;
 import com.github.lotus.bmw.biz.pojo.vo.PaySceneItemVo;
 import com.github.lotus.bmw.biz.service.PaySceneService;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -17,6 +18,7 @@ import java.util.List;
  *
  * @author hocgin
  */
+@Api(tags = {"bmw::支付场景"})
 @RestController
 @RequestMapping("/scene")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))

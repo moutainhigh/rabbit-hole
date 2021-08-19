@@ -5,6 +5,7 @@ import com.github.lotus.bmw.api.pojo.ro.CreateTradeRo;
 import com.github.lotus.bmw.api.pojo.ro.GetCashierRo;
 import com.github.lotus.bmw.api.pojo.vo.TradeStatusSyncVo;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author hocgin
  */
+@Api(tags = {"bmw::调试"})
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/debug")

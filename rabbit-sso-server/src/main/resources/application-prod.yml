@@ -12,3 +12,5 @@ sso:
           - http://logistics.hocgin.top/login/oauth2/code/custom
           - https://manage.hocgin.top/login/oauth2/code/custom
           - http://manage.hocgin.top/login/oauth2/code/custom
+          - https://bmw.hocgin.top/login/oauth2/code/custom
+          - http://bmw.hocgin.top/login/oauth2/code/custom
