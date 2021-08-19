@@ -31,7 +31,7 @@ public class BmwCacheServiceImpl implements BmwCacheService {
     private final RedisTemplate redisTemplate;
 
     @Override
-    @Cacheable(cacheNames = CacheKeys.GET_ACCESS_MCH_BY_ENCODING, key = "#encoding", unless = "#result == null")
+    // @Cacheable(cacheNames = CacheKeys.GET_ACCESS_MCH_BY_ENCODING, key = "#encoding", unless = "#result == null")
     public AccessMch getAccessMchByEncoding(String encoding) {
         return accessMchService.getByEncoding(encoding).orElse(null);
     }

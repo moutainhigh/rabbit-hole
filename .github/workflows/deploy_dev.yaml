@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy_Dev
 
 on:
   workflow_dispatch:
@@ -9,12 +9,7 @@ on:
         default: 'true'
   push:
     branches:
-      - develop
-      - rls-*
-#      - features-*
-  create:
-    tags:
-      - v*.*.*
+      - features-*
 
 env:
   IMAGE_NAME: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/demo
@@ -209,8 +204,6 @@ jobs:
           manifests: |
             manifests/deployment-gateway.yaml
             manifests/deployment-chaos.yaml
-            manifests/deployment-sso-server.yaml
-            manifests/deployment-spring-boot-admin.yaml
           images: |
             ${{ env.IMAGE_CHAOS }}:${{ steps.prep.outputs.version }}
             ${{ env.IMAGE_GATEWAY }}:${{ steps.prep.outputs.version }}
