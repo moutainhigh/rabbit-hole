@@ -126,7 +126,7 @@ boot:
         ,/com/district/tree
         ,/com/project/encoding:*
 
-        ,/bmw/gateway/**
+        ,/bmw/gateway/result/**
 
         ,/chaos/sms-code
         ,/chaos/address4ip

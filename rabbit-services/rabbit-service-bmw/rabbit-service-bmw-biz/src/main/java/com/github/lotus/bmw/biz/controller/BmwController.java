@@ -9,6 +9,7 @@ import com.github.lotus.bmw.biz.service.BmwService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -25,6 +26,7 @@ import java.io.IOException;
  *
  * @author hocgin
  */
+@Api(tags = {"bmw::收银台"})
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping

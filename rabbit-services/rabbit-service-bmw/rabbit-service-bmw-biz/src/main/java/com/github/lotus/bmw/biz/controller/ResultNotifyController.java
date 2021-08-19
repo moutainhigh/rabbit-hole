@@ -4,6 +4,7 @@ import com.github.lotus.bmw.biz.constant.BmwConstant;
 import com.github.lotus.bmw.biz.service.PaymentMchDockingService;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
 import in.hocg.boot.utils.enums.ICode;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @author hocgin
  */
+@Api(tags = {"bmw::第三方结果通知"})
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping(BmwConstant.PAYMENT_PREFIX + "/result")
