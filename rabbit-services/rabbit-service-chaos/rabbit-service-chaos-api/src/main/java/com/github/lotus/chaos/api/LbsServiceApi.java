@@ -1,6 +1,7 @@
 package com.github.lotus.chaos.api;
 
 import com.github.lotus.chaos.api.pojo.vo.AMapDistrictVo;
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,6 +17,6 @@ import java.util.List;
 public interface LbsServiceApi {
     String CONTEXT_ID = "LbsServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/listDistrict")
+    @PostMapping(value = CONTEXT_ID + "/listDistrict", headers = GlobalConstant.FEIGN_HEADER)
     List<AMapDistrictVo> listDistrict();
 }

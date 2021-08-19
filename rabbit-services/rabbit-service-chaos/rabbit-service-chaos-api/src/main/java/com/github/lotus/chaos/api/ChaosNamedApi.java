@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import in.hocg.boot.named.annotation.NamedService;
 import in.hocg.boot.named.ifc.NamedArgs;
 import in.hocg.boot.named.ifc.NamedHandler;
@@ -20,26 +21,26 @@ public interface ChaosNamedApi extends NamedService {
     String CONTEXT_ID = "ChaosNamedAPI";
 
     @NamedHandler(NamedType.DataDict)
-    @PostMapping(CONTEXT_ID + "/loadByDataDict")
+    @PostMapping(value = CONTEXT_ID + "/loadByDataDict", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByDataDict(@RequestBody NamedArgs args);
 
     @NamedHandler(NamedType.UserId2Username)
-    @PostMapping(CONTEXT_ID + "/loadByUserName")
+    @PostMapping(value = CONTEXT_ID + "/loadByUserName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByUserName(@RequestBody NamedArgs args);
 
     @NamedHandler(NamedType.Userid2Nickname)
-    @PostMapping(CONTEXT_ID + "/loadByNickname")
+    @PostMapping(value = CONTEXT_ID + "/loadByNickname", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByNickname(@RequestBody NamedArgs args);
 
     @NamedHandler(NamedType.ProjectName)
-    @PostMapping(CONTEXT_ID + "/loadByProjectName")
+    @PostMapping(value = CONTEXT_ID + "/loadByProjectName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByProjectName(@RequestBody NamedArgs args);
 
     @NamedHandler(NamedType.DistrictName)
-    @PostMapping(CONTEXT_ID + "/loadByDistrictName")
+    @PostMapping(value = CONTEXT_ID + "/loadByDistrictName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByDistrictName(@RequestBody NamedArgs args);
 
     @NamedHandler(NamedType.AccessAppName)
-    @PostMapping(CONTEXT_ID + "/loadByAccessAppName")
+    @PostMapping(value = CONTEXT_ID + "/loadByAccessAppName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByAccessAppName(@RequestBody NamedArgs args);
 }

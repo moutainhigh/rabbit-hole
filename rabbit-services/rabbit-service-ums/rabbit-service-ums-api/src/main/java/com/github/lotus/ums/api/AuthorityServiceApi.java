@@ -1,5 +1,6 @@
 package com.github.lotus.ums.api;
 
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AuthorityServiceApi {
     String CONTEXT_ID = "AuthorityServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/isPassAuthorize")
+    @PostMapping(value = CONTEXT_ID + "/isPassAuthorize", headers = GlobalConstant.FEIGN_HEADER)
     boolean isPassAuthorize(@RequestParam("username") String username, @RequestParam("servicePrefix") String servicePrefix,
                             @RequestParam("methodName") String methodName, @RequestParam("uri") String uri);
 }

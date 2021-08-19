@@ -1,6 +1,7 @@
 package com.github.lotus.com.api;
 
 import com.github.lotus.com.api.pojo.vo.DataDictItemVo;
+import com.github.lotus.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,6 @@ import java.util.List;
 public interface DataDictServiceApi {
     String CONTEXT_ID = "DataDictServiceApi";
 
-    @PostMapping(CONTEXT_ID + "/listDataDictItemVoByDictIdAndCode")
-    List<DataDictItemVo> listDataDictItemVoByDictIdAndCode(@RequestParam("typeCode") String typeCode,
-                                                           @RequestParam("itemCodes") List<String> itemCodes);
+    @PostMapping(value = CONTEXT_ID + "/listDataDictItemVoByDictIdAndCode", headers = GlobalConstant.FEIGN_HEADER)
+    List<DataDictItemVo> listDataDictItemVoByDictIdAndCode(@RequestParam("typeCode") String typeCode, @RequestParam("itemCodes") List<String> itemCodes);
 }
