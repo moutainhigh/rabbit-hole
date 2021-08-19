@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -57,7 +58,13 @@ public class UserContextHolder {
 
     @SneakyThrows(ExecutionException.class)
     private UserDetail getUserDetailUseCache(String username) {
-        return CACHE_USER.get(username, () -> getUserContextService().getUserDetail(username));
+        UserDetail userDetail = CACHE_USER.getIfPresent(username);
+        if (Objects.nonNull(userDetail)) {
+            return userDetail;
+        }
+        userDetail = getUserContextService().getUserDetail(username);
+        CACHE_USER.put(username, userDetail);
+        return userDetail;
     }
 
     private HttpServletRequest getRequest() {
