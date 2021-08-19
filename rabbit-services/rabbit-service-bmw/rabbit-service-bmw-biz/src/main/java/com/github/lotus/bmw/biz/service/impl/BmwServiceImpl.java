@@ -1,5 +1,6 @@
 package com.github.lotus.bmw.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.github.lotus.bmw.api.pojo.ro.GetCashierRo;
@@ -59,6 +60,7 @@ public class BmwServiceImpl implements BmwService {
     @Override
     public String getCashierUrl(GetCashierRo ro) {
         AccessMch accessMch = bmwCacheService.getAccessMchByEncoding(ro.getAccessCode());
+        Assert.notNull(accessMch, "未找到接入商户");
         Long accessMchId = accessMch.getId();
         TradeOrder tradeOrder = tradeOrderService.getByAccessMchIdAndOutTradeNoOrTradeNo(accessMchId, ro.getOutTradeNo(), ro.getTradeNo())
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
