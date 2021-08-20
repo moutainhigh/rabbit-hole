@@ -38,6 +38,6 @@ public class PageUrlHelper {
 
     public static String getHostname() {
         BootProperties properties = SpringContext.getBean(BootProperties.class);
-        return StrUtil.format("{}/api/bmw", properties.getHostname());
+        return StrUtil.format("{}/bmw", properties.getHostname());
     }
 }
