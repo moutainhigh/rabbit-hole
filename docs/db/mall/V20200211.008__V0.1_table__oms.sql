@@ -18,9 +18,7 @@ CREATE TABLE `oms_order`
         COMMENT '运费金额',
     total_amt               DECIMAL(10, 2) NOT NULL DEFAULT 0
         COMMENT '[计算型]订单总金额',
-    discount_amt            DECIMAL(10, 2) NOT NULL DEFAULT 0
-        COMMENT '优惠分解金额(不含后台调整优惠)',
-    real_pay_amt            DECIMAL(10, 2) NOT NULL
+    user_pay_amt            DECIMAL(10, 2) NOT NULL
         COMMENT '[计算型]应付金额（实际支付金额）',
 
     auto_confirm_day        INT            NULL
@@ -48,7 +46,7 @@ CREATE TABLE `oms_order`
         COMMENT '收货人姓名',
     receiver_tel            VARCHAR(32)    NULL
         COMMENT '收货人电话',
-    receiver_post_code      VARCHAR(32)    NULL
+    receiver_postcode       VARCHAR(32)    NULL
         COMMENT '收货人邮编',
     receiver_adcode         VARCHAR(32)    NULL
         COMMENT '收货人区域编码',
@@ -58,7 +56,7 @@ CREATE TABLE `oms_order`
         COMMENT '收货人城市',
     receiver_region         VARCHAR(32)    NULL
         COMMENT '收货人区',
-    receiver_detail_address VARCHAR(200)   NULL
+    receiver_address        VARCHAR(200)   NULL
         COMMENT '收货人详细地址',
     --
     creator                 BIGINT,
@@ -84,7 +82,7 @@ CREATE TABLE `oms_order_item`
     title                   VARCHAR(200)   NOT NULL
         COMMENT '商品名称',
     unit_price              DECIMAL(10, 2) NOT NULL
-        COMMENT '销售价格',
+        COMMENT '销售单价',
     quantity                INT            NOT NULL DEFAULT 1
         COMMENT '购买数量',
     image_url               VARCHAR(500)   NULL
@@ -93,16 +91,15 @@ CREATE TABLE `oms_order_item`
         COMMENT '商品SKU ID',
     sku_code                VARCHAR(50)    NULL
         COMMENT '商品SKU条码',
-    spec_data               JSON           NULL
+    sku_spec_data           JSON           NULL
         COMMENT '商品规格:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]',
-
     discount_amt            DECIMAL(10, 2) NOT NULL DEFAULT 0
         COMMENT '优惠分解金额(不含后台调整)',
     adjustment_discount_amt DECIMAL(10, 2) NOT NULL DEFAULT 0
         COMMENT '后台调整优惠',
-    original_amt            DECIMAL(10, 2) NOT NULL
+    total_amt               DECIMAL(10, 2) NOT NULL
         COMMENT '[计算型]原总价=销售价格x购买数量',
-    real_amt                DECIMAL(10, 2) NOT NULL
+    user_pay_amt            DECIMAL(10, 2) NOT NULL
         COMMENT '[计算型]该商品经过优惠后的分解金额(实际支付金额)=原总价-后台调整优惠-优惠分解金额',
     --
     PRIMARY KEY (id)
@@ -137,40 +134,40 @@ CREATE TABLE `oms_order_discount`
 DROP TABLE IF EXISTS `oms_order_refund_apply`;
 CREATE TABLE `oms_order_refund_apply`
 (
-    `id`               bigint(20)     NOT NULL AUTO_INCREMENT,
-    `refund_apply_no`  VARCHAR(64)    NOT NULL
+    `id`              bigint(20)     NOT NULL AUTO_INCREMENT,
+    `refund_apply_no` VARCHAR(64)    NOT NULL
         COMMENT '退款申请编号',
-    `apply_status`     int(1)         NOT NULL DEFAULT 0
+    `apply_status`    int(1)         NOT NULL DEFAULT 0
         COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
     -- #退货信息
-    `order_item_id`    bigint(20)     NOT NULL
+    `order_item_id`   bigint(20)     NOT NULL
         COMMENT '订单商品ID',
-    `refund_quantity`  int(11)        NOT NULL
+    `refund_quantity` int(11)        NOT NULL
         COMMENT '退货数量',
-    `refund_amt`       decimal(10, 2) NOT NULL
+    `refund_amt`      decimal(10, 2) NOT NULL
         COMMENT '退款金额',
-    `refund_reason`    varchar(200)            DEFAULT NULL
+    `refund_reason`   varchar(200)            DEFAULT NULL
         COMMENT '退货原因',
-    `refund_remark`    varchar(200)            DEFAULT NULL
+    `refund_remark`   varchar(200)            DEFAULT NULL
         COMMENT '退货备注',
     -- #处理信息
-    handler_id         BIGINT         NULL
+    handler_id        BIGINT         NULL
         COMMENT '处理人',
-    handle_at          DATETIME(6)    NULL
+    handle_at         DATETIME(6)    NULL
         COMMENT '处理时间',
-    handle_remark      varchar(512)            DEFAULT NULL
+    handle_remark     VARCHAR(512)   NULL
         COMMENT '处理备注',
-    receiver_id        BIGINT         NULL
+    receiver_id       BIGINT         NULL
         COMMENT '收货人',
-    receive_at         DATETIME(6)    NULL
+    receive_at        DATETIME(6)    NULL
         COMMENT '收货时间',
-    receive_remark     varchar(512)            DEFAULT NULL
+    receive_remark    varchar(512)   NULL
         COMMENT '收货备注',
     --
-    creator            BIGINT,
-    created_at         DATETIME(6)    NOT NULL,
-    last_updater       BIGINT         NULL,
-    last_updated_at    DATETIME(6)    NULL,
+    creator           BIGINT,
+    created_at        DATETIME(6)    NOT NULL,
+    last_updater      BIGINT         NULL,
+    last_updated_at   DATETIME(6)    NULL,
     UNIQUE KEY (`refund_apply_no`),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
@@ -186,8 +183,8 @@ CREATE TABLE `oms_shopcart`
         COMMENT '用户',
     product_id        BIGINT         NOT NULL
         COMMENT '商品',
-    add_price         DECIMAL(10, 2) NOT NULL
-        COMMENT '加入时，商品价格',
+    add_unit_price    DECIMAL(10, 2) NOT NULL
+        COMMENT '加入时，商品单价',
     add_title         VARCHAR(128)   NOT NULL
         COMMENT '加入时，商品标题',
     add_image_url     VARCHAR(255)

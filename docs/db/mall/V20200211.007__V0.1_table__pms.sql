@@ -7,7 +7,7 @@ CREATE TABLE pms_product
     --
     title               VARCHAR(255) NOT NULL
         COMMENT '产品名',
-    attrs               JSON         NOT NULL DEFAULT '{}'
+    attrs               JSON         NOT NULL
         COMMENT '产品属性: {}',
     published_flag      TINYINT      NOT NULL DEFAULT 1
         COMMENT '上架状态',
@@ -30,7 +30,7 @@ CREATE TABLE pms_product
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[Shop模块] 商品表';
+    COMMENT '[商品模块] 商品表';
 --
 DROP TABLE IF EXISTS `pms_product_category`;
 CREATE TABLE pms_product_category
@@ -43,8 +43,6 @@ CREATE TABLE pms_product_category
         COMMENT '商品品类描述',
     image_url       varchar(255)
         COMMENT '商品品类图片',
-    keywords        varchar(255)
-        COMMENT '商品品类关键词',
     priority        INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序, 从大到小降序',
     --
@@ -63,7 +61,7 @@ CREATE TABLE pms_product_category
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[Shop模块] 商品品类表';
+    COMMENT '[商品模块] 商品品类表';
 --
 DROP TABLE IF EXISTS `pms_sku`;
 CREATE TABLE `pms_sku`
@@ -79,7 +77,7 @@ CREATE TABLE `pms_sku`
         COMMENT '库存, 默认为0',
     sale       INT            NOT NULL DEFAULT 0
         COMMENT '销量, 默认为0',
-    spec_data  JSON                    DEFAULT '[]'
+    spec_data  JSON           NOT NULL
         COMMENT '规格属性(JSONArray, 如: [{"key":"颜色","value":"银色"}])',
     image_url  VARCHAR(255)
         COMMENT '该特色商品图片',
@@ -88,8 +86,8 @@ CREATE TABLE `pms_sku`
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[Shop模块] 商品SKU表';
+    COMMENT '[商品模块] 商品SKU表';
 
 -- 品类
 INSERT INTO pms_product_category(id, title, tree_path, creator, created_at)
-    VALUE (1, '测试品类', '/1', 1, NOW());
+    VALUE (1, 'unknown', '/1', 1, NOW());
