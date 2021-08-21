@@ -45,8 +45,11 @@ public class BmwServiceImpl implements BmwService {
 
     @Override
     public CashierInfoVo getCashierInfo(String u) {
-        CashierInfoDto cashierInfo = bmwCacheService.getCashierInfo(u)
-            .orElseThrow(() -> ServiceException.wrap("交易错误"));
+        Optional<CashierInfoDto> cashierInfoOpt = bmwCacheService.getCashierInfo(u);
+        if (!cashierInfoOpt.isPresent()) {
+            return null;
+        }
+        CashierInfoDto cashierInfo = cashierInfoOpt.get();
         Long paySceneId = cashierInfo.getPaySceneId();
 
         Long tradeOrderId = cashierInfo.getTradeOrderId();
