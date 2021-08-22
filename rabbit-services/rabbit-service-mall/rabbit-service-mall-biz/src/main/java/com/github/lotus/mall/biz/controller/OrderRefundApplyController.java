@@ -34,7 +34,7 @@ public class OrderRefundApplyController {
     }
 
     @UseLogger("获取 - 订单退费申请详情")
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/complex")
     public Result<OrderRefundApplyComplexVo> getComplex(@PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }

@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @UseLogger("查看信息 - 商品")
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/complex")
     public Result<ProductComplexVo> getComplexById(@PathVariable("id") Long id) {
         return Result.success(service.getComplexById(id));
     }

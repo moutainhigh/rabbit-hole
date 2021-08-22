@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @UseLogger("获取 - 订单详情")
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/complex")
     public Result<OrderComplexVo> getComplex(@PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
