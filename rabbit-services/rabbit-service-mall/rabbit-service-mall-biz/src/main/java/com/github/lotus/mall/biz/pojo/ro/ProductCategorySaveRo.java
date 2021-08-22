@@ -4,6 +4,7 @@ import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class ProductCategorySaveRo {
     @ApiModelProperty("父级")
     private Long parentId;
-    @NotNull
+    @NotBlank
     @ApiModelProperty("商品品类名称")
     private String title;
     @ApiModelProperty("商品品类描述")
@@ -29,5 +30,8 @@ public class ProductCategorySaveRo {
     @ApiModelProperty("启用状态")
     private Boolean enabled;
     @ApiModelProperty("排序")
-    private Integer sort;
+    private Integer priority;
+
+    @ApiModelProperty(hidden = true)
+    private Long userId;
 }

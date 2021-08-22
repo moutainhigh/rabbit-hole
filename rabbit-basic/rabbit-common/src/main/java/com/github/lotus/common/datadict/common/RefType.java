@@ -20,6 +20,7 @@ public enum RefType implements DataDictEnum {
     PayRecord("pay_record", "支付记录"),
     Article("article", "文章"),
     Comment("comment", "评论"),
+    UserCoupon("user_coupon", "用户优惠券"),
     ;
 
     private final Serializable code;

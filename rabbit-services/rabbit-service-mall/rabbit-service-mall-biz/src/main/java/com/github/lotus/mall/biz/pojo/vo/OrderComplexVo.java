@@ -1,5 +1,6 @@
 package com.github.lotus.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
@@ -23,58 +24,42 @@ public class OrderComplexVo {
     @ApiModelProperty("订单ID")
     private Long id;
     @ApiModelProperty("订单拥有人ID")
-    private Long accountId;
-    @ApiModelProperty("订单拥有人")
-    @Named(idFor = "accountId", type = NamedType.Userid2Nickname)
-    private String accountName;
+    private Long userId;
     @ApiModelProperty("订单编号")
-    private String orderSn;
+    private String orderNo;
     @ApiModelProperty("交易流水号")
-    private String tradeSn;
-    @ApiModelProperty("优惠券ID")
-    private Long couponId;
+    private String tradeNo;
 
     @ApiModelProperty("运费金额")
-    private BigDecimal freightAmount;
+    private BigDecimal freightAmt;
     @ApiModelProperty("优惠券抵扣金额")
-    private BigDecimal couponDiscountAmount;
+    private BigDecimal couponDiscountAmt;
+    @ApiModelProperty("活动抵扣金额")
+    private BigDecimal activityDiscountAmt;
     @ApiModelProperty("后台调整优惠")
-    private BigDecimal adjustmentDiscountAmount;
-    @ApiModelProperty("[计算型]优惠总金额(不含后台调整优惠)")
-    private BigDecimal discountAmount;
-    @ApiModelProperty("优惠总金额")
-    private BigDecimal discountTotalAmount;
+    private BigDecimal adjustmentDiscountAmt;
     @ApiModelProperty("订单总金额")
-    private BigDecimal totalAmount;
+    private BigDecimal totalAmt;
     @ApiModelProperty("实际支付金额")
-    private BigDecimal payAmount;
+    private BigDecimal userPayAmt;
 
     @ApiModelProperty("支付方式")
     private Integer payType;
-    @Named(idFor = "payType", type = NamedType.DataDict, args = {})
-    private String payTypeName;
-
-    @ApiModelProperty("订单来源")
-    private Integer sourceType;
-    @Named(idFor = "sourceType", type = NamedType.DataDict, args = {})
-    private String sourceTypeName;
 
     @ApiModelProperty("订单状态")
-    private Integer orderStatus;
-    @Named(idFor = "orderStatus", type = NamedType.DataDict, args = {})
-    private String orderStatusName;
+    private String orderStatus;
 
     @ApiModelProperty("确认收货状态")
-    private Integer confirmStatus;
-    @Named(idFor = "confirmStatus", type = NamedType.DataDict, args = {})
-    private String confirmStatusName;
+    private Boolean confirmFlag;
 
     @ApiModelProperty("收货人姓名")
     private String receiverName;
     @ApiModelProperty("收货人电话")
-    private String receiverPhone;
+    private String receiverTel;
     @ApiModelProperty("收货人邮编")
-    private String receiverPostCode;
+    private String receiverPostcode;
+    @ApiModelProperty("收货人区域编码")
+    private String receiverAdcode;
     @ApiModelProperty("省份/直辖市")
     private String receiverProvince;
     @ApiModelProperty("城市")
@@ -82,17 +67,17 @@ public class OrderComplexVo {
     @ApiModelProperty("区")
     private String receiverRegion;
     @ApiModelProperty("详细地址")
-    private String receiverDetailAddress;
+    private String receiverAddress;
     @ApiModelProperty("订单备注")
     private String remark;
     @ApiModelProperty("支付时间")
-    private LocalDateTime paymentTime;
+    private LocalDateTime payAt;
     @ApiModelProperty("发货时间")
-    private LocalDateTime deliveryTime;
+    private LocalDateTime deliveryAt;
     @ApiModelProperty("确认收货时间")
-    private LocalDateTime receiveTime;
+    private LocalDateTime receiveAt;
     @ApiModelProperty("评价时间")
-    private LocalDateTime commentTime;
+    private LocalDateTime commentedAt;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
 

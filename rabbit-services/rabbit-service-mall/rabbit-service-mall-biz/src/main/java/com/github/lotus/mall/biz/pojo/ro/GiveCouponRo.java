@@ -2,6 +2,7 @@ package com.github.lotus.mall.biz.pojo.ro;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -18,9 +19,12 @@ import java.util.List;
 @Data
 public class GiveCouponRo {
     @Size(min = 1, max = 100, message = "请选择用户(1~100)")
-    private List<Long> userId = Lists.newArrayList();
+    private List<Long> toUserId = Lists.newArrayList();
     @NotNull(message = "请指定生效时间")
     private LocalDateTime startAt;
     @NotNull(message = "请指定失效时间")
     private LocalDateTime endAt;
+
+    @ApiModelProperty(hidden = true)
+    private Long userId;
 }

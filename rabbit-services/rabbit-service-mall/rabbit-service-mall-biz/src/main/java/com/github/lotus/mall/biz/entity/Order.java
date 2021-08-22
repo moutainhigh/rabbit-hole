@@ -40,6 +40,9 @@ public class Order extends AbstractEntity<Order> {
     @ApiModelProperty("订单编号")
     @TableField("order_no")
     private String orderNo;
+    @ApiModelProperty("交易流水号")
+    @TableField("trade_no")
+    private String tradeNo;
     @ApiModelProperty("活动抵扣金额")
     @TableField("activity_discount_amt")
     private BigDecimal activityDiscountAmt;

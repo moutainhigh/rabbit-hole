@@ -16,19 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MALL, false,
-            "mkt_coupon",
-            "mkt_coupon_product_category_ref",
-            "mkt_coupon_product_ref",
-            "mkt_user_coupon",
-            "oms_order",
-            "oms_order_discount",
-            "oms_order_item",
-            "oms_order_refund_apply",
-            "oms_shopcart",
-            "pms_product",
-            "pms_product_category",
-            "pms_sku",
+            Module.UMS, false,
+            "ums_user_address",
             "");
     }
 

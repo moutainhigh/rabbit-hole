@@ -1,7 +1,10 @@
 package com.github.lotus.mall.biz.service;
 
 import com.github.lotus.mall.biz.entity.CouponProductRef;
+import com.github.lotus.mall.biz.pojo.vo.ProductComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface CouponProductRefService extends AbstractService<CouponProductRef> {
 
+    List<ProductComplexVo> listComplexByCouponId(Long couponId);
 }

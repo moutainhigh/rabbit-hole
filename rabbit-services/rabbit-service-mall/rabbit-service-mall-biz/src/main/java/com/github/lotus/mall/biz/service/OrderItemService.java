@@ -1,7 +1,10 @@
 package com.github.lotus.mall.biz.service;
 
 import com.github.lotus.mall.biz.entity.OrderItem;
+import com.github.lotus.mall.biz.pojo.vo.OrderItemComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
  */
 public interface OrderItemService extends AbstractService<OrderItem> {
 
+    List<OrderItemComplexVo> listComplexByOrderId(Long orderId);
+
+    List<OrderItem> listByOrderId(Long orderId);
 }

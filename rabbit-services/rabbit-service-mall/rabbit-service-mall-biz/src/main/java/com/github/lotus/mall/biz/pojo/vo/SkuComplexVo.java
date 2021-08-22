@@ -22,9 +22,9 @@ public class SkuComplexVo {
     private Long id;
     private Long productId;
     @ApiModelProperty("SKU编码")
-    private String skuCode;
+    private String encoding;
     @ApiModelProperty("价格")
-    private BigDecimal price;
+    private BigDecimal unitPrice;
     @ApiModelProperty("库存")
     private Integer stock;
     @ApiModelProperty("销量")
@@ -32,8 +32,9 @@ public class SkuComplexVo {
     @ApiModelProperty("规格图片")
     private String imageUrl;
     @ApiModelProperty("规格")
-    private List<Spec> spec = Collections.emptyList();
     private String specData;
+
+    private List<Spec> spec = Collections.emptyList();
 
     @Data
     public static class Spec {

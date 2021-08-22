@@ -60,6 +60,7 @@ public class OrderItem extends AbstractEntity<OrderItem> {
     @ApiModelProperty("商品规格:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
     @TableField("sku_spec_data")
     private String skuSpecData;
+
     @ApiModelProperty("优惠分解金额(不含后台调整)")
     @TableField("discount_amt")
     private BigDecimal discountAmt;

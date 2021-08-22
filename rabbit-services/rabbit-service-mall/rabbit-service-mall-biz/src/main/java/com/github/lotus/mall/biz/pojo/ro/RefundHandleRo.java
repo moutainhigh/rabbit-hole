@@ -16,4 +16,6 @@ public class RefundHandleRo {
     @NotNull(message = "处理失败")
     private Boolean isPass;
     private String handleRemark;
+    @ApiModelProperty(hidden = true)
+    private Long userId;
 }

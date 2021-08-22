@@ -1,19 +1,24 @@
 package com.github.lotus.mall.biz.entity;
 
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
+
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -43,9 +48,12 @@ public class UserCoupon extends AbstractEntity<UserCoupon> {
     @ApiModelProperty("优惠券编号")
     @TableField("coupon_no")
     private String couponNo;
-    @ApiModelProperty("已使用状态")
-    @TableField("use_flag")
-    private Boolean useFlag;
+    /**
+     * @see com.github.lotus.common.datadict.mall.UserCouponStatus
+     */
+    @ApiModelProperty("优惠券状态")
+    @TableField("status")
+    private String status;
     @ApiModelProperty("过期状态")
     @TableField("expired_flag")
     private Boolean expiredFlag;
@@ -70,7 +78,6 @@ public class UserCoupon extends AbstractEntity<UserCoupon> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
 
 
 }

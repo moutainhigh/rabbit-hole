@@ -2,7 +2,12 @@ package com.github.lotus.mall.biz.mapper;
 
 import com.github.lotus.mall.biz.entity.CouponProductRef;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.lotus.mall.biz.entity.Product;
+import com.github.lotus.mall.biz.entity.ProductCategory;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +20,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CouponProductRefMapper extends BaseMapper<CouponProductRef> {
 
+    List<Product> listProductCategoryByCouponId(@Param("couponId") Long couponId);
 }

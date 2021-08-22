@@ -1,5 +1,6 @@
 package com.github.lotus.mall.biz.pojo.ro;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.lotus.com.api.pojo.ro.UploadFileRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,11 +28,6 @@ public class ProductSaveRo {
     private String title;
     @ApiModelProperty("属性,JSON 格式")
     private String attrs;
-    @Valid
-    @NotNull(message = "sku不能为空")
-    @Size(min = 1, message = "sku不能为空")
-    @ApiModelProperty("SKU列表")
-    private List<Sku> sku;
     @ApiModelProperty("采购地")
     private String procurement;
     @ApiModelProperty("图片")
@@ -43,15 +39,21 @@ public class ProductSaveRo {
     @ApiModelProperty("品类ID")
     @NotNull(message = "品类不能为空")
     private Long productCategoryId;
-    @NotNull(message = "上架状态错误")
-    @ApiModelProperty("上架状态: [0:下架, 1:上架]")
-    private Integer publishStatus;
     @ApiModelProperty("单位")
     private String unit;
     @ApiModelProperty("商品重量(克)")
     private BigDecimal weight;
-    @ApiModelProperty("删除状态: [0:未删除, 1:删除]")
-    private Integer deleteStatus;
+    @NotNull(message = "上架状态错误")
+    @ApiModelProperty("上架状态")
+    private Boolean publishedFlag;
+    @Valid
+    @NotNull(message = "sku不能为空")
+    @Size(min = 1, message = "sku不能为空")
+    @ApiModelProperty("SKU列表")
+    private List<Sku> sku;
+
+    @ApiModelProperty(hidden = true)
+    private Long userId;
 
     @Data
     public static class Sku {
@@ -64,10 +66,10 @@ public class ProductSaveRo {
         private Integer stock;
         @NotBlank(message = "SKU编码不能为空")
         @ApiModelProperty("SKU编码")
-        private String skuCode;
+        private String encoding;
         @Min(value = 0L, message = "价格错误")
         @ApiModelProperty("价格")
-        private BigDecimal price;
+        private BigDecimal unitPrice;
         @ApiModelProperty("图片")
         private String imageUrl;
     }
@@ -81,4 +83,5 @@ public class ProductSaveRo {
         @ApiModelProperty("规格值")
         private String value;
     }
+
 }

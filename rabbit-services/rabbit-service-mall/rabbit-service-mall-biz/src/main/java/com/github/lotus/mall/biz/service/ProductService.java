@@ -31,4 +31,6 @@ public interface ProductService extends AbstractService<Product> {
     IPage<ProductComplexVo> paging(ProductPagingRo ro);
 
     List<ProductComplexVo> complete(ProductCompleteRo ro);
+
+    ProductComplexVo convertComplex(Product entity);
 }

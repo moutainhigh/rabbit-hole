@@ -75,8 +75,8 @@ CREATE TABLE `mkt_user_coupon`
         COMMENT 'mkt_COUPON ID',
     coupon_no       VARCHAR(100) NOT NULL
         COMMENT '优惠券编号',
-    use_flag        TINYINT(1)   NOT NULL DEFAULT 0
-        COMMENT '已使用状态',
+    status          VARCHAR(32)  NOT NULL DEFAULT 0
+        COMMENT '优惠券状态',
     expired_flag    TINYINT(1)   NOT NULL DEFAULT 0
         COMMENT '过期状态',
     start_at        DATETIME(6)  NOT NULL
@@ -96,7 +96,7 @@ CREATE TABLE `mkt_user_coupon`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[促销模块] 优惠券账号拥有人表';
+    COMMENT ='[促销模块] 用户优惠券表';
 
 -- 优惠券可用商品表
 DROP TABLE IF EXISTS `mkt_coupon_product_ref`;
@@ -111,7 +111,7 @@ CREATE TABLE `mkt_coupon_product_ref`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[促销模块] 优惠券可用商品表';
+    COMMENT ='[促销模块] 优惠条件-可用商品表';
 
 
 -- 优惠券可用商品品类表
@@ -127,4 +127,4 @@ CREATE TABLE `mkt_coupon_product_category_ref`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[促销模块] 优惠券可用商品品类表';
+    COMMENT ='[促销模块] 优惠条件-可用商品品类表';

@@ -9,6 +9,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,12 +28,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("pms_product_category")
-public class ProductCategory extends AbstractEntity<ProductCategory> {
+public class ProductCategory extends TreeEntity<ProductCategory> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("商品品类名称")
     @TableField("title")
     private String title;
@@ -45,15 +44,6 @@ public class ProductCategory extends AbstractEntity<ProductCategory> {
     @ApiModelProperty("排序, 从大到小降序")
     @TableField("priority")
     private Integer priority;
-    @ApiModelProperty("父级ID, 顶级为 NULL")
-    @TableField("parent_id")
-    private Long parentId;
-    @ApiModelProperty("树路径，组成方式: /父路径/当前ID")
-    @TableField("tree_path")
-    private String treePath;
-    @ApiModelProperty("启用状态")
-    @TableField("enabled")
-    private Boolean enabled;
 
     @TableField("creator")
     private Long creator;
@@ -63,7 +53,5 @@ public class ProductCategory extends AbstractEntity<ProductCategory> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
-
 
 }

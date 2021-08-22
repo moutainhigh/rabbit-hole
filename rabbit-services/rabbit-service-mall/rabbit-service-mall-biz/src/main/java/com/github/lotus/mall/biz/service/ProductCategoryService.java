@@ -26,8 +26,9 @@ public interface ProductCategoryService extends AbstractService<ProductCategory>
 
     List<ProductCategoryTreeVo> listTree(ProductCategoryTreeRo ro);
 
-
     ProductCategoryComplexVo getComplex(Long id);
 
     void deleteAllById(Long id);
+
+    ProductCategoryComplexVo convertComplex(ProductCategory entity);
 }

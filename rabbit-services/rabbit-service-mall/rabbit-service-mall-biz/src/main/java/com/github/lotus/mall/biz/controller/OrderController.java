@@ -2,10 +2,7 @@ package com.github.lotus.mall.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.lotus.mall.biz.pojo.ro.CloseOrderRo;
-import com.github.lotus.mall.biz.pojo.ro.OrderPagingRo;
-import com.github.lotus.mall.biz.pojo.ro.ShippedOrderRo;
-import com.github.lotus.mall.biz.pojo.ro.UpdateOrderRo;
+import com.github.lotus.mall.biz.pojo.ro.*;
 import com.github.lotus.mall.biz.pojo.vo.OrderComplexVo;
 import com.github.lotus.mall.biz.service.OrderService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -69,5 +66,11 @@ public class OrderController {
         return Result.success();
     }
 
+    @UseLogger("通知订单状态 - 订单")
+    @PostMapping("/pay/result")
+    public String payResult(@RequestBody OrderPayResultRo ro) {
+        service.payResult(ro);
+        return "notify_success";
+    }
 }
 

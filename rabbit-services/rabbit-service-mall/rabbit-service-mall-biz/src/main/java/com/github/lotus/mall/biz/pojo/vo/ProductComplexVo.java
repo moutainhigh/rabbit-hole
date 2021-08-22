@@ -35,7 +35,7 @@ public class ProductComplexVo {
     @ApiModelProperty("产地")
     private String procurement;
     @ApiModelProperty("上架状态")
-    private Boolean publishFlag;
+    private Boolean publishedFlag;
     @ApiModelProperty("删除状态")
     private Boolean deleteFlag;
     @ApiModelProperty("单位")

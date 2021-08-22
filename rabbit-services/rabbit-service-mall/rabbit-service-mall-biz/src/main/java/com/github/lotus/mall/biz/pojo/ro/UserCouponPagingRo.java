@@ -11,4 +11,5 @@ import lombok.Data;
  */
 @Data
 public class UserCouponPagingRo extends PageRo {
+    private Long userId;
 }

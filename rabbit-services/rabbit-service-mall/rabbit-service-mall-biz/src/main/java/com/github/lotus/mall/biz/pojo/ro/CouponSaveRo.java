@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,12 +23,20 @@ public class CouponSaveRo {
     @ApiModelProperty("优惠券名称")
     private String title;
 
-    @NotNull(message = "请选择优惠券类型")
+    @NotBlank(message = "请选择优惠券类型")
     @ApiModelProperty("优惠券类型")
-    private Integer couponType;
+    private String couponType;
+
+    @NotBlank(message = "请选择可用类型")
+    @ApiModelProperty("可用类型")
+    private String useStint;
+
+    @NotBlank(message = "请选择可用平台")
+    @ApiModelProperty("可用平台")
+    private String usePlatform;
 
     @ApiModelProperty("优惠券使用说明")
-    private String instructions;
+    private String useInstructions;
 
     @ApiModelProperty("后台备注")
     private String remark;
@@ -41,14 +50,6 @@ public class CouponSaveRo {
 
     @ApiModelProperty("优惠上限")
     private BigDecimal ceiling;
-
-    @NotNull(message = "请选择可用平台")
-    @ApiModelProperty("可用平台")
-    private Integer platform;
-
-    @NotNull(message = "请选择可用类型")
-    @ApiModelProperty("可用类型")
-    private Integer useType;
 
     @Size(min = 1, message = "请选择可用商品")
     @ApiModelProperty("可用商品")

@@ -45,7 +45,7 @@ public class Product extends AbstractEntity<Product> {
     private String attrs;
     @ApiModelProperty("上架状态")
     @TableField("published_flag")
-    private Integer publishedFlag;
+    private Boolean publishedFlag;
     @ApiModelProperty("删除状态: != 0")
     @TableField("delete_flag")
     private Long deleteFlag;

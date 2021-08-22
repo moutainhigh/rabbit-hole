@@ -1,5 +1,6 @@
 package com.github.lotus.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.lotus.chaos.api.NamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
@@ -23,22 +24,13 @@ import java.util.List;
 public class UserCouponComplexVo {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
+    @ApiModelProperty("优惠券编号")
+    private String couponNo;
+    private Long couponId;
+    @ApiModelProperty("使用状态")
+    private String status;
     @ApiModelProperty("拥有人")
     private Long userId;
-    @Named(idFor = "accountId", type = NamedType.Userid2Nickname)
-    private String userName;
-
-    @ApiModelProperty("优惠券编号")
-    private String couponSn;
-    @ApiModelProperty("优惠券标题")
-    private String title;
-    @ApiModelProperty("优惠券使用说明")
-    private String instructions;
-    @ApiModelProperty("使用状态：[0:未使用；1:已使用；2:已过期]")
-    private Integer useStatus;
-    @Named(idFor = "useStatus", type = NamedType.DataDict, args = {})
-    private String useStatusName;
-
     @ApiModelProperty("优惠券生效时间")
     private LocalDateTime startAt;
     @ApiModelProperty("优惠券失效时间")
@@ -48,33 +40,22 @@ public class UserCouponComplexVo {
     @ApiModelProperty("领取时间")
     private LocalDateTime createdAt;
 
-    /**
-     * 金额相关
-     */
-    @ApiModelProperty("使用方式：[0:满减；1:折扣]")
-    private Integer couponType;
-    @Named(idFor = "couponType", type = NamedType.DataDict, args = {})
-    private String couponTypeName;
-
+    @ApiModelProperty("折扣方式")
+    private String couponType;
+    @ApiModelProperty("优惠券标题")
+    private String title;
+    @ApiModelProperty("优惠券使用说明")
+    private String useInstructions;
+    @ApiModelProperty("使用方式")
+    private String useStint;
+    @ApiModelProperty("可用平台")
+    private String usePlatform;
     @ApiModelProperty("满减金额/折扣率")
     private BigDecimal credit;
     @ApiModelProperty("最低启用金额")
     private BigDecimal minPoint;
     @ApiModelProperty("优惠上限金额")
     private BigDecimal ceiling;
-
-    /**
-     * 使用条件
-     */
-    @ApiModelProperty("可用平台：[0:全部；1:移动；2:PC]")
-    private Integer platform;
-    @Named(idFor = "platform", type = NamedType.DataDict, args = {})
-    private String platformName;
-
-    @ApiModelProperty("可用类型：[0:全场通用；1:指定品类；2:指定商品]")
-    private Integer useType;
-    @Named(idFor = "useType", type = NamedType.DataDict, args = {})
-    private String useTypeName;
 
     @ApiModelProperty("可用商品品类")
     private List<ProductCategoryComplexVo> canUseProductCategory = Collections.emptyList();

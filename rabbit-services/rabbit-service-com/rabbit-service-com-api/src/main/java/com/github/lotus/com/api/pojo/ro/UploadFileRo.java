@@ -19,7 +19,7 @@ import java.util.List;
 public class UploadFileRo implements Serializable {
 
     @ApiModelProperty("引用类型(必须)")
-    private Integer refType;
+    private String refType;
     @ApiModelProperty("引用ID(必须)")
     private Long refId;
     @ApiModelProperty("文件列表")

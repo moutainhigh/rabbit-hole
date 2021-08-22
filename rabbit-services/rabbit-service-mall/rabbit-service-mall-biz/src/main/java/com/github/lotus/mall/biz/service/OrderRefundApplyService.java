@@ -3,9 +3,12 @@ package com.github.lotus.mall.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.mall.biz.entity.OrderRefundApply;
 import com.github.lotus.mall.biz.pojo.ro.OrderRefundApplyPagingRo;
+import com.github.lotus.mall.biz.pojo.ro.RefundApplyRo;
 import com.github.lotus.mall.biz.pojo.ro.RefundHandleRo;
 import com.github.lotus.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +25,8 @@ public interface OrderRefundApplyService extends AbstractService<OrderRefundAppl
     OrderRefundApplyComplexVo getComplex(Long id);
 
     void handleRefund(Long id, RefundHandleRo ro);
+
+    List<OrderRefundApplyComplexVo> listComplexByOrderItemId(Long orderItemId);
+
+    void applyRefund(RefundApplyRo ro);
 }

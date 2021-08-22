@@ -30,8 +30,7 @@ public class ProductCategoryComplexVo {
     private String remark;
     @ApiModelProperty
     private String imageUrl;
-    @ApiModelProperty
-    private List<String> keywords = Collections.emptyList();
+
     @ApiModelProperty("开启状态")
     private Boolean enabled;
 

@@ -7,6 +7,8 @@ CREATE TABLE `oms_order`
         COMMENT '账号ID',
     order_no                VARCHAR(64)    NOT NULL
         COMMENT '订单编号',
+    trade_no                VARCHAR(64)
+        COMMENT '交易流水号',
 
     activity_discount_amt   DECIMAL(10, 2) NOT NULL DEFAULT 0
         COMMENT '活动抵扣金额',

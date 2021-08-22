@@ -26,33 +26,25 @@ public class CouponComplexVo {
     @ApiModelProperty("优惠券名称")
     private String title;
     @ApiModelProperty("折扣方式")
-    private Integer couponType;
-    @Named(idFor = "couponType", type = NamedType.DataDict, args = {})
-    private String couponTypeName;
+    private String couponType;
+    @ApiModelProperty("可用类型")
+    private String useStint;
+    @ApiModelProperty("可用平台")
+    private String usePlatform;
 
     @ApiModelProperty("优惠券使用说明")
-    private String instructions;
+    private String useInstructions;
     @ApiModelProperty("订单最低启用金额")
     private BigDecimal minPoint;
     @ApiModelProperty("满减金额/折扣率")
     private BigDecimal credit;
     @ApiModelProperty("优惠上限")
     private BigDecimal ceiling;
-    @ApiModelProperty("可用平台：[0:全部；1:移动；2:PC]")
-    private BigDecimal platform;
-    @Named(idFor = "platform", type = NamedType.DataDict, args = {})
-    private String platformName;
-
-
-    @ApiModelProperty("可用类型：[0:全场通用；1:指定品类；2:指定商品]")
-    private Integer useType;
-    @Named(idFor = "useType", type = NamedType.DataDict, args = {})
-    private String useTypeName;
 
     @ApiModelProperty("可用商品")
-    private List<ProductComplexVo> canUseProduct = Lists.newArrayList();
+    private List<ProductComplexVo> canUseProduct;
     @ApiModelProperty("可用商品品类")
-    private List<ProductCategoryComplexVo> canUseProductCategory = Lists.newArrayList();
+    private List<ProductCategoryComplexVo> canUseProductCategory;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;

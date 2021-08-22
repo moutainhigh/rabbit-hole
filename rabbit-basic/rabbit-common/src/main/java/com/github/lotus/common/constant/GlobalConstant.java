@@ -31,5 +31,8 @@ public class GlobalConstant {
      * [FEIGN] 服务API
      */
     public static final String DEFAULT_FEIGN_BASE_PACKAGE = "com.github.lotus";
-
+    /**
+     * [支付中心] 接入商户
+     */
+    public static final String BMW_ACCESS_CODE = "rabbit";
 }
