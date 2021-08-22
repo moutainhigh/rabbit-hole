@@ -31,6 +31,9 @@ public interface LogisticsLineMapping {
     @Mapping(target = "createdAt", ignore = true)
     LogisticsLine asLogisticsLine(LogisticsLineCreateRo ro);
 
+    @Mapping(target = "warehouses", ignore = true)
+    @Mapping(target = "unitName", ignore = true)
+    @Mapping(target = "shippingMethodsName", ignore = true)
     @Mapping(target = "provinceName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "districtName", ignore = true)

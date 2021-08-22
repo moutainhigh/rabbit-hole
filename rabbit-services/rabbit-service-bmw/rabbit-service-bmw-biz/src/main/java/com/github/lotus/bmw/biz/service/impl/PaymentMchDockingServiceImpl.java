@@ -15,8 +15,8 @@ import com.github.lotus.bmw.biz.service.*;
 import com.github.lotus.bmw.biz.docking.alipay.AlipayMchService;
 import com.github.lotus.bmw.biz.docking.wxpay.WxpayMchService;
 import com.github.lotus.common.datadict.bmw.PaymentMchType;
-import com.github.lotus.common.datadict.bmw.RefundStatus;
 import com.github.lotus.common.datadict.bmw.TradeOrderStatus;
+import com.github.lotus.common.datadict.common.HandleStatus;
 import com.github.lotus.common.utils.Rules;
 import com.github.lotus.bmw.biz.service.SNCodeService;
 import in.hocg.boot.utils.enums.ICode;
@@ -82,7 +82,7 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         String refundNo = codeService.getRefundNo();
         RefundRecord entity = refundRecordMapping.asRefundRecord(ro);
         entity.setRefundActId(payActId);
-        entity.setStatus(RefundStatus.Processing.getCodeStr());
+        entity.setStatus(HandleStatus.Processing.getCodeStr());
         entity.setTradeOrderId(tradeOrderId);
         entity.setRefundNo(refundNo);
         entity.setAccessMchId(accessMchId);
@@ -94,8 +94,8 @@ public class PaymentMchDockingServiceImpl implements com.github.lotus.bmw.biz.se
         getPaymentMchService(ICode.ofThrow(paymentMch.getType(), PaymentMchType.class)).goRefund(refundRecordId);
 
         // 3. 变更退款状态
-        RefundRecord update = new RefundRecord().setStatus(RefundStatus.Success.getCodeStr()).setFinishedAt(now).setLastUpdatedAt(now);
-        refundRecordService.updateByIdAndStatus(update, refundRecordId, RefundStatus.Processing.getCodeStr());
+        RefundRecord update = new RefundRecord().setStatus(HandleStatus.Success.getCodeStr()).setFinishedAt(now).setLastUpdatedAt(now);
+        refundRecordService.updateByIdAndStatus(update, refundRecordId, HandleStatus.Processing.getCodeStr());
 
         // 4. 修改支付单退款金额
         tradeOrderService.updateRefundAmtById(tradeOrder.getId(), newTotalRefundAmt, oldRefundAmt);

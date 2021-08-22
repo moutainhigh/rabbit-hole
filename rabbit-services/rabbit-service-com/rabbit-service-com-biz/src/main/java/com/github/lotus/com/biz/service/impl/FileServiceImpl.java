@@ -52,7 +52,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
         final List<UploadFileRo.FileDto> files = dto.getFiles();
         deleteByRefTypeAndRefId(relType.getCodeStr(), relId);
         final LocalDateTime now = LocalDateTime.now();
-        final Long creator = LangUtils.getOrDefault(dto.getCreator(), GlobalConstant.SUPPER_ADMIN_USER_ID);
+        final Long creator = dto.getCreator();
         if (CollectionUtils.isEmpty(files)) {
             return;
         }

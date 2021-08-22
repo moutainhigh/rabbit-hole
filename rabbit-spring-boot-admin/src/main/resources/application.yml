@@ -3,7 +3,6 @@ spring:
     active: local
   security:
     oauth2:
-      shostname: https://sso.hocgin.top
       client:
         registration:
           custom:
@@ -13,9 +12,9 @@ spring:
             authorization-grant-type: authorization_code
         provider:
           custom:
-            user-info-uri: ${spring.security.oauth2.shostname}/oauth/user
-            authorization-uri: ${spring.security.oauth2.shostname}/oauth/authorize
-            token-uri: ${spring.security.oauth2.shostname}/oauth/token
+            user-info-uri: ${boot.web.hostname}/oauth/user
+            authorization-uri: ${boot.web.hostname}/oauth/authorize
+            token-uri: ${boot.web.hostname}/oauth/token
             user-name-attribute: name
 
 boot:
@@ -24,3 +23,5 @@ boot:
       ignore-urls:
         - /favicon.ico
         - /actuator/**
+  web:
+    hostname: https://sso.hocgin.top

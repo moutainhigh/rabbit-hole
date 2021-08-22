@@ -62,7 +62,10 @@ public class SyncAccessMchTask extends AbstractEntity<SyncAccessMchTask> {
     @ApiModelProperty("完成通知时间")
     @TableField("finished_at")
     private LocalDateTime finishedAt;
-    @ApiModelProperty("通知状态: init=>初始化; processing=>进行中; done=>完成")
+    /**
+     * @see com.github.lotus.common.datadict.common.HandleStatus
+     */
+    @ApiModelProperty("通知状态")
     @TableField("status")
     private String status;
     @ApiModelProperty("创建时间")

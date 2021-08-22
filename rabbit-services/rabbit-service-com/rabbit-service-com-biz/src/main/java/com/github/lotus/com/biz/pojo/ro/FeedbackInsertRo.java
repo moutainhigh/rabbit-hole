@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.ro;
 
-import com.github.lotus.common.datadict.FeedbackType;
+import com.github.lotus.common.datadict.com.FeedbackType;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

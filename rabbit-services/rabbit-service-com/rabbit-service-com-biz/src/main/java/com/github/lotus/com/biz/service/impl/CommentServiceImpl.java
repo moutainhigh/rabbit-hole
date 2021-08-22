@@ -12,7 +12,7 @@ import com.github.lotus.com.biz.pojo.vo.CommentUserVo;
 import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
 import com.github.lotus.com.biz.service.CommentService;
 import com.github.lotus.com.biz.service.CommentTargetService;
-import com.github.lotus.common.datadict.CommentTargetType;
+import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
@@ -99,7 +99,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final String refType = ro.getRefType();
         final Long refId = ro.getRefId();
 
-        final Optional<CommentTargetType> targetTypeOpt = ICode.of(refType, CommentTargetType.class);
+        final Optional<RefType> targetTypeOpt = ICode.of(refType, RefType.class);
         if (!targetTypeOpt.isPresent()) {
             return PageUtils.emptyPage(ro);
         }

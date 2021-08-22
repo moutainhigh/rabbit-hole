@@ -5,7 +5,7 @@ import com.github.lotus.com.biz.mapper.CommentTargetMapper;
 import com.github.lotus.com.biz.mapstruct.CommentTargetMapping;
 import com.github.lotus.com.biz.service.CommentTargetProxyService;
 import com.github.lotus.com.biz.service.CommentTargetService;
-import com.github.lotus.common.datadict.CommentTargetType;
+import com.github.lotus.common.datadict.common.RefType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long getOrCreate(String refType, Long refId) {
-        final CommentTargetType targetType = ICode.ofThrow(refType, CommentTargetType.class);
+        final RefType targetType = ICode.ofThrow(refType, RefType.class);
         final Optional<Long> idOpt = getIdByRefTypeAndRefId(refType, refId);
         return idOpt.orElseGet(() -> {
             final CommentTarget entity = new CommentTarget()
@@ -46,7 +46,7 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Optional<Long> getIdByRefTypeAndRefId(String refType, Long refId) {
-        final CommentTargetType targetType = ICode.ofThrow(refType, CommentTargetType.class);
+        final RefType targetType = ICode.ofThrow(refType, RefType.class);
         return this.getByRefTypeAndRefId(targetType.getCodeStr(), refId)
             .map(CommentTarget::getId);
     }

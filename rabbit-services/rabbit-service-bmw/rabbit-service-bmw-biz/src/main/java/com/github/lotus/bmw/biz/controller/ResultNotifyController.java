@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(tags = {"bmw::第三方结果通知"})
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping(BmwConstant.PAYMENT_PREFIX + "/result")
+@RequestMapping(BmwConstant.PAYMENT_PREFIX)
 public class ResultNotifyController {
     private final PaymentMchDockingService dockingService;
 

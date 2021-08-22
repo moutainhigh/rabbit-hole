@@ -1,5 +1,6 @@
 package com.github.lotus.ums.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.ums.biz.entity.Api;
@@ -17,14 +18,7 @@ import com.github.lotus.ums.biz.pojo.vo.AuthorityComplexVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityOrdinaryVo;
 import com.github.lotus.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import com.github.lotus.ums.biz.pojo.vo.UserRoleComplexVo;
-import com.github.lotus.ums.biz.service.ApiService;
-import com.github.lotus.ums.biz.service.AuthorityApiRefService;
-import com.github.lotus.ums.biz.service.AuthorityService;
-import com.github.lotus.ums.biz.service.RoleAuthorityRefService;
-import com.github.lotus.ums.biz.service.RoleService;
-import com.github.lotus.ums.biz.service.UserGroupAuthorityRefService;
-import com.github.lotus.ums.biz.service.UserGroupService;
-import com.github.lotus.ums.biz.service.UserGroupUserRefService;
+import com.github.lotus.ums.biz.service.*;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -59,6 +53,7 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
     private final RoleAuthorityRefService roleAuthorityRefService;
     private final UserGroupService userGroupService;
     private final UserGroupUserRefService userGroupUserRefService;
+    private final UserService userService;
     private final UserGroupAuthorityRefService userGroupAuthorityRefService;
 
     @Override
@@ -211,7 +206,8 @@ public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Autho
 
     private List<Authority> listAuthoritiesByProjectIdAndUserId(Long projectId, Long userId) {
         List<Authority> authorities;
-        if (RabbitUtils.isSuperAdmin(userId)) {
+        User user = Assert.notNull(userService.getById(userId));
+        if (RabbitUtils.isSuperAdmin(user.getUsername())) {
             authorities = this.listByProjectId(projectId, true);
         } else {
             authorities = baseMapper.listByProjectIdAndUserId(projectId, userId);

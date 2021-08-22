@@ -9,11 +9,10 @@ import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.SyncAccessMchTaskService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.bmw.biz.support.TaskHelper;
-import com.github.lotus.common.datadict.RefType;
-import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskStatus;
+import com.github.lotus.common.datadict.common.HandleStatus;
+import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
-import in.hocg.boot.utils.LangUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
@@ -54,7 +53,7 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
         entity.setRefType(RefType.TradeOrder.getCodeStr());
         entity.setNotifyUrl(tradeOrder.getNotifyUrl());
         entity.setCreatedAt(now);
-        entity.setStatus(SyncAccessMchTaskStatus.Init.getCodeStr());
+        entity.setStatus(HandleStatus.Init.getCodeStr());
         this.validInsert(entity);
         syncAccessMchTaskSchedule.asyncNotifyHandleError(entity);
     }
@@ -73,14 +72,14 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
         entity.setRefType(RefType.RefundRecord.getCodeStr());
         entity.setNotifyUrl(refundRecord.getNotifyUrl());
         entity.setCreatedAt(now);
-        entity.setStatus(SyncAccessMchTaskStatus.Init.getCodeStr());
+        entity.setStatus(HandleStatus.Init.getCodeStr());
         this.validInsert(entity);
         syncAccessMchTaskSchedule.asyncNotifyHandleError(entity);
     }
 
     @Override
     public List<SyncAccessMchTask> listByUnHandle() {
-        return this.lambdaQuery().eq(SyncAccessMchTask::getStatus, SyncAccessMchTaskStatus.Init.getCodeStr())
+        return this.lambdaQuery().eq(SyncAccessMchTask::getStatus, HandleStatus.Init.getCodeStr())
             .le(SyncAccessMchTask::getPlanNotifyAt, new Date()).list();
     }
 
@@ -100,7 +99,7 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
         update.setReturnBody(returnBody);
 
         update.setFinishedAt(LocalDateTime.now());
-        update.setStatus(isSuccess ? SyncAccessMchTaskStatus.Success.getCodeStr() : SyncAccessMchTaskStatus.Fail.getCodeStr());
+        update.setStatus(isSuccess ? HandleStatus.Success.getCodeStr() : HandleStatus.Fail.getCodeStr());
         this.validUpdateById(update);
     }
 
@@ -112,7 +111,7 @@ public class SyncAccessMchTaskServiceImpl extends AbstractServiceImpl<SyncAccess
         newEntity.setTaskType(preTask.getTaskType());
         int realCount = preTask.getNotifyCount() + 1;
         newEntity.setNotifyCount(realCount);
-        newEntity.setStatus(SyncAccessMchTaskStatus.Init.getCodeStr());
+        newEntity.setStatus(HandleStatus.Init.getCodeStr());
         newEntity.setRefId(preTask.getRefId());
         newEntity.setRefType(preTask.getRefType());
 

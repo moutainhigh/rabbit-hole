@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileMode;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import com.github.lotus.common.constant.GlobalConstant;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -77,7 +78,7 @@ public class CommonUtils {
         @Cleanup
         RandomAccessFile file = FileUtil.createRandomAccessFile(path, FileMode.rw);
         file.seek(file.length());
-        file.writeBytes("hocgin");
+        file.writeBytes(GlobalConstant.AUTHOR);
         file.close();
         return path;
     }

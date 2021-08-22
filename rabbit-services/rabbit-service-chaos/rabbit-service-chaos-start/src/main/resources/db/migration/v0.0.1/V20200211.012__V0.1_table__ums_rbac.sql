@@ -22,7 +22,7 @@ CREATE TABLE `ams_authority`
     --
     `created_at`      DATETIME(6)  NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT       NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -51,7 +51,7 @@ CREATE TABLE `ams_role`
     --
     `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT          NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -120,7 +120,7 @@ CREATE TABLE `ams_api`
     --
     `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT          NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -165,7 +165,7 @@ CREATE TABLE `ams_user_group`
     --
     `created_at`      DATETIME(6)     NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT          NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',

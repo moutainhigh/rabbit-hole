@@ -36,7 +36,7 @@ public abstract class AbsRequest {
     }
 
     protected String getUrlPrefix() {
-        return PageUrlHelper.getHostname();
+        return PageUrlHelper.getHostname() + BmwConstant.PAYMENT_PREFIX;
     }
 
     protected String getPaymentNotifyUrl(Long payRecordId) {
