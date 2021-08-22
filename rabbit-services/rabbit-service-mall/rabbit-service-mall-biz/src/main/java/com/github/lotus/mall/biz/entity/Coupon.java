@@ -61,6 +61,7 @@ public class Coupon extends AbstractEntity<Coupon> {
     @ApiModelProperty("优惠上限")
     @TableField("ceiling")
     private BigDecimal ceiling;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

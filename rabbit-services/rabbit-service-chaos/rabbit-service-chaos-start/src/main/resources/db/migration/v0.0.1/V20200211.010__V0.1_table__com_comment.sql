@@ -32,7 +32,7 @@ CREATE TABLE com_comment
     likes_count     BIGINT       NOT NULL DEFAULT 0
         comment '点赞数量',
     --
-    creator         BIGINT       not null
+    creator         BIGINT
         comment '评论人',
     created_at      DATETIME(6)  not null,
     last_updater    BIGINT       null,

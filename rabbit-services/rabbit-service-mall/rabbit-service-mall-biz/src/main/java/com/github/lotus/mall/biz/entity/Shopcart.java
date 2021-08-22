@@ -58,6 +58,7 @@ public class Shopcart extends AbstractEntity<Shopcart> {
     @ApiModelProperty("加入的数量")
     @TableField("add_quantity")
     private Integer addQuantity;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

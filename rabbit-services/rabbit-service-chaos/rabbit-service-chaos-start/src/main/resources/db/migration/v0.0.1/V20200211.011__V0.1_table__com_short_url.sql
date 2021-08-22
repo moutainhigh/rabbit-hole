@@ -9,7 +9,7 @@ CREATE TABLE `com_short_url`
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    creator         BIGINT        not null
+    creator         BIGINT
         comment '创建人',
     created_at      DATETIME(6)   not null,
     last_updater    BIGINT        null,

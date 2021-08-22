@@ -1,4 +1,4 @@
-package com.github.lotus.common.datadict;
+package com.github.lotus.common.datadict.com;
 
 import in.hocg.boot.utils.enums.DataDictEnum;
 import lombok.Getter;
@@ -7,18 +7,16 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Created by hocgin on 2021/8/14
+ * Created by hocgin on 2021/1/10
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Getter
 @RequiredArgsConstructor
-public enum RefType implements DataDictEnum {
-    RefundRecord("refund_record", "退款记录"),
-    TradeOrder("trade_order", "交易单"),
-    PayRecord("pay_record", "支付记录");
-
+public enum FeedbackType implements DataDictEnum {
+    Issues("issues", "问题"),
+    Propose("propose", "建议");
     private final Serializable code;
     private final String name;
 }

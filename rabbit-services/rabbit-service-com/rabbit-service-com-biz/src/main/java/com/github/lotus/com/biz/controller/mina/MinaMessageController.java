@@ -10,6 +10,7 @@ import com.github.lotus.com.biz.pojo.vo.message.MessageStatVo;
 import com.github.lotus.com.biz.service.MessageUserRefService;
 import com.github.lotus.common.utils.RabbitUtils;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
+import com.github.lotus.usercontext.ifc.vo.UserDetail;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.web.result.Result;
@@ -61,9 +62,9 @@ public class MinaMessageController {
     @ApiOperation("发送系统消息 - 我的消息")
     @PostMapping("/system/send")
     public Result<Void> sendSystemMessage(@Validated @RequestBody SendSystemMessageRo ro) {
-        Long userId = UserContextHolder.getUserIdThrow();
-        ValidUtils.isTrue(RabbitUtils.isSuperAdmin(userId));
-        ro.setUserId(userId);
+        UserDetail userDetail = UserContextHolder.getUserInfoThrow();
+        ValidUtils.isTrue(RabbitUtils.isSuperAdmin(userDetail.getUsername()));
+        ro.setUserId(userDetail.getId());
         service.sendSystemMessage(ro);
         return Result.success();
     }

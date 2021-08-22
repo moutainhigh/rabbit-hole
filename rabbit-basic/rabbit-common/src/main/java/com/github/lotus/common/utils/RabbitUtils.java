@@ -31,7 +31,4 @@ public class RabbitUtils {
         return GlobalConstant.SUPPER_ADMIN_USERNAMES.contains(username);
     }
 
-    public boolean isSuperAdmin(Long id) {
-        return GlobalConstant.SUPPER_ADMIN_USER_ID.equals(id);
-    }
 }

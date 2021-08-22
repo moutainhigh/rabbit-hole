@@ -139,8 +139,8 @@ CREATE TABLE `oms_order_refund_apply`
     `id`              bigint(20)     NOT NULL AUTO_INCREMENT,
     `refund_apply_no` VARCHAR(64)    NOT NULL
         COMMENT '退款申请编号',
-    `apply_status`    int(1)         NOT NULL DEFAULT 0
-        COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
+    `apply_status`    VARCHAR(32)    NOT NULL DEFAULT '0'
+        COMMENT '申请状态：[init=>初始化; processing=>进行中; success=>成功; fail=>已拒绝]',
     -- #退货信息
     `order_item_id`   bigint(20)     NOT NULL
         COMMENT '订单商品ID',

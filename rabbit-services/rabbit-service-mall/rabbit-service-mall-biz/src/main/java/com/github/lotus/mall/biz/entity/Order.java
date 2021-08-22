@@ -115,6 +115,7 @@ public class Order extends AbstractEntity<Order> {
     @ApiModelProperty("收货人详细地址")
     @TableField("receiver_address")
     private String receiverAddress;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

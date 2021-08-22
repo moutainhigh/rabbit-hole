@@ -61,6 +61,7 @@ public class UserCoupon extends AbstractEntity<UserCoupon> {
     @ApiModelProperty("实际抵扣金额")
     @TableField("used_amt")
     private BigDecimal usedAmt;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

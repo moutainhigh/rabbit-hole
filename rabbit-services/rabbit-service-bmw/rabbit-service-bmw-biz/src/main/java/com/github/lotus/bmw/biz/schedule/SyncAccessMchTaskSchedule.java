@@ -15,8 +15,8 @@ import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.SyncAccessMchTaskService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
 import com.github.lotus.bmw.biz.support.TaskHelper;
-import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskStatus;
 import com.github.lotus.common.datadict.bmw.SyncAccessMchTaskType;
+import com.github.lotus.common.datadict.common.HandleStatus;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class SyncAccessMchTaskSchedule extends JavaProcessor {
         // 1. 开始通知
         Long entityId = entity.getId();
         Integer realCount = LangUtils.getOrDefault(entity.getNotifyCount(), 1);
-        boolean isOk = syncAccessMchTaskService.updateStatusByIdAndStatus(entityId, entity.getStatus(), SyncAccessMchTaskStatus.Processing.getCodeStr());
+        boolean isOk = syncAccessMchTaskService.updateStatusByIdAndStatus(entityId, entity.getStatus(), HandleStatus.Processing.getCodeStr());
         if (!isOk) {
             log.warn("任务[id={}]状态不符合预期，系统终止继续执行", entityId);
             return;

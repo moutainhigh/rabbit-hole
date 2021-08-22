@@ -34,12 +34,16 @@ public class UserContextHolder {
         return Optional.ofNullable(request.getHeader(HeaderConstants.USERNAME));
     }
 
-    public Optional<UserDetail> getUserDetail() {
+    public Optional<UserDetail> getUserInfo() {
         return getUsername().map(UserContextHolder::getUserDetailUseCache);
     }
 
+    public UserDetail getUserInfoThrow() {
+        return getUserInfo().orElseThrow(UnAuthenticationException::new);
+    }
+
     public Optional<Long> getUserId() {
-        return getUserDetail().map(UserDetail::getId);
+        return getUserInfo().map(UserDetail::getId);
     }
 
     public Long getUserIdThrow() {

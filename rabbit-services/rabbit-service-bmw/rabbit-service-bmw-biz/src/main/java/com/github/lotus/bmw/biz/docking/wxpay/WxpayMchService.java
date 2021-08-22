@@ -17,7 +17,7 @@ import com.github.lotus.bmw.biz.support.payment.ConfigStorageDto;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.CloseTradeRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoPayRequest;
 import com.github.lotus.bmw.biz.support.payment.pojo.request.GoRefundRequest;
-import com.github.lotus.common.datadict.RefType;
+import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.common.datadict.bmw.PaymentMchRecordBizType;
 import in.hocg.boot.http.log.autoconfiguration.core.HttpLogBervice;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;

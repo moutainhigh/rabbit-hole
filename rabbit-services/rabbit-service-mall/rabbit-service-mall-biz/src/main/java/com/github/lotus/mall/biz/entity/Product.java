@@ -61,6 +61,7 @@ public class Product extends AbstractEntity<Product> {
     @ApiModelProperty("商品重量(克)")
     @TableField("weight")
     private BigDecimal weight;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

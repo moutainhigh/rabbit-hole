@@ -37,9 +37,12 @@ public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
     @ApiModelProperty("退款申请编号")
     @TableField("refund_apply_no")
     private String refundApplyNo;
-    @ApiModelProperty("申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]")
+    /**
+     * @see com.github.lotus.common.datadict.common.HandleStatus
+     */
+    @ApiModelProperty("申请状态")
     @TableField("apply_status")
-    private Integer applyStatus;
+    private String applyStatus;
     @ApiModelProperty("订单商品ID")
     @TableField("order_item_id")
     private Long orderItemId;
@@ -73,6 +76,7 @@ public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
     @ApiModelProperty("收货备注")
     @TableField("receive_remark")
     private String receiveRemark;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

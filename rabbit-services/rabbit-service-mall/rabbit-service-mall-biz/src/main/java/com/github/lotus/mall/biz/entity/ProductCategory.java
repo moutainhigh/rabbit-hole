@@ -53,7 +53,8 @@ public class ProductCategory extends AbstractEntity<ProductCategory> {
     private String treePath;
     @ApiModelProperty("启用状态")
     @TableField("enabled")
-    private Integer enabled;
+    private Boolean enabled;
+
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

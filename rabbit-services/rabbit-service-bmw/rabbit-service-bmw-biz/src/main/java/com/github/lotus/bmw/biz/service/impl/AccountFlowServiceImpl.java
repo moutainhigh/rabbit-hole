@@ -7,7 +7,7 @@ import com.github.lotus.bmw.biz.mapper.AccountFlowMapper;
 import com.github.lotus.bmw.biz.service.AccountFlowService;
 import com.github.lotus.bmw.biz.service.RefundRecordService;
 import com.github.lotus.bmw.biz.service.TradeOrderService;
-import com.github.lotus.common.datadict.RefType;
+import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.common.datadict.bmw.AccountFlowDire;
 import com.github.lotus.common.datadict.bmw.AccountFlowType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;

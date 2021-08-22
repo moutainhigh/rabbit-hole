@@ -44,7 +44,7 @@ CREATE TABLE `com_file`
         COMMENT '排序,默认:1000',
     created_at TIMESTAMP(6) NOT NULL
         COMMENT '创建时间',
-    creator    BIGINT       NOT NULL
+    creator    BIGINT
         COMMENT '创建人',
     --
     PRIMARY KEY (id)

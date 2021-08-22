@@ -1,6 +1,6 @@
 package com.github.lotus.com.biz.pojo.ro;
 
-import com.github.lotus.common.datadict.CommentTargetType;
+import com.github.lotus.common.datadict.com.CommentTargetType;
 import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
