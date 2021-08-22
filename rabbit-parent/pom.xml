@@ -49,7 +49,7 @@
     <weixin-java.version>4.0.0</weixin-java.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <jsoup.version>1.13.1</jsoup.version>
-    <payment.version>0.1.2-SNAPSHOT</payment.version>
+    <payment.version>1.0.0</payment.version>
     <okhttp.version>4.4.0</okhttp.version>
     <zxing.version>3.4.1</zxing.version>
   </properties>
