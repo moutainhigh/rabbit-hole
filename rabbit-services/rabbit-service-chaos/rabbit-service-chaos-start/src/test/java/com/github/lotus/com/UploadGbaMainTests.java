@@ -1,4 +1,4 @@
-package com.github;
+package com.github.lotus.com;
 
 import com.github.lotus.chaos.BootApplication;
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;

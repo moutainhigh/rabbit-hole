@@ -45,7 +45,7 @@ public class GameRoomClientController {
     @ApiOperation("创建房间")
     @PostMapping
     public Result<GameRoomComplexVo> createRoom(@Validated @RequestBody MinaGameCreateRoomRo ro) {
-        ro.setUserId(UserContextHolder.getUserId().orElse(GlobalConstant.SUPPER_ADMIN_USER_ID));
+        ro.setUserId(UserContextHolder.getUserId().orElse(null));
         return Result.success(service.createAndGet(ro));
     }
 
@@ -58,7 +58,7 @@ public class GameRoomClientController {
     @ApiOperation("加入房间")
     @PostMapping("/join")
     public Result<Void> joinRoom(@Validated @RequestBody JoinRoomRo ro) {
-        ro.setUserId(UserContextHolder.getUserId().orElse(GlobalConstant.SUPPER_ADMIN_USER_ID));
+        ro.setUserId(UserContextHolder.getUserId().orElse(null));
         service.joinUser(ro);
         return Result.success();
     }
