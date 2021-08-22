@@ -21,11 +21,13 @@ CREATE TABLE `oms_order`
     user_pay_amt            DECIMAL(10, 2) NOT NULL
         COMMENT '[计算型]应付金额（实际支付金额）',
 
-    auto_confirm_day        INT            NULL
-        COMMENT '自动确认时间（天）',
+    plan_close_at           DATETIME(6)    NULL
+        COMMENT '计划关单时间',
+    plan_confirm_at         DATETIME(6)    NULL
+        COMMENT '计划确认收货时间',
     pay_type                VARCHAR(32)
         COMMENT '支付方式：[支付宝;微信]',
-    order_status            TINYINT(1)     NOT NULL DEFAULT 'wait_pay'
+    order_status            VARCHAR(32)    NOT NULL DEFAULT 'wait_pay'
         COMMENT '订单状态：[wait_pay=>待付款；wait_ship=>待发货；wait_receipt=>待收货；received=>已收货；closed=>已关闭;]',
     confirm_flag            TINYINT(1)     NOT NULL DEFAULT 0
         COMMENT '是否确认收货',

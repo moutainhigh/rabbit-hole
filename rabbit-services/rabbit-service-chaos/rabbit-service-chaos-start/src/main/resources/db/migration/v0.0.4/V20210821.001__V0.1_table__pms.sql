@@ -69,7 +69,7 @@ CREATE TABLE `pms_sku`
     id         BIGINT AUTO_INCREMENT,
     product_id BIGINT,
     --
-    encoding   VARCHAR(128)   NOT NULL UNIQUE
+    encoding   VARCHAR(128)   NOT NULL
         COMMENT 'SKU 编码',
     unit_price DECIMAL(10, 2) NOT NULL
         COMMENT '单价(如: 12.00)',
@@ -80,14 +80,12 @@ CREATE TABLE `pms_sku`
     spec_data  JSON           NOT NULL
         COMMENT '规格属性(JSONArray, 如: [{"key":"颜色","value":"银色"}])',
     image_url  VARCHAR(255)
-        COMMENT '该特色商品图片',
+        COMMENT '特色商品图片',
     --
+    UNIQUE KEY (encoding),
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT '[商品模块] 商品SKU表';
 
--- 品类
-INSERT INTO pms_product_category(id, title, tree_path, creator, created_at)
-    VALUE (1, 'unknown', '/1', 1, NOW());

@@ -56,7 +56,6 @@ public class UserContextHolder {
         return Optional.ofNullable(request.getHeader(HeaderConstants.VERSION));
     }
 
-    @SneakyThrows(ExecutionException.class)
     private UserDetail getUserDetailUseCache(String username) {
         UserDetail userDetail = CACHE_USER.getIfPresent(username);
         if (Objects.nonNull(userDetail)) {
