@@ -147,6 +147,8 @@ boot:
         ,/mina/game/room/**
         ,/mina/*/game/_paging
         ,/mina/*/game/*
+        ,/mina/app-card/_paging
+        ,/mina/mobile-wallpaper/_paging
         ,/mina/*/app/_paging
         ,/mina/*/check-message
         ,/mina/*/check-image
