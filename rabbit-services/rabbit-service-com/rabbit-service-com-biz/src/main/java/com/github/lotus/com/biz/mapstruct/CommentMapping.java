@@ -50,6 +50,7 @@ public interface CommentMapping {
     @Mapping(target = "treePath", ignore = true)
     Comment asComment(CommentUpdateRo ro);
 
+    @Mapping(target = "datetime", source = "createdAt")
     @Mapping(target = "action", ignore = true)
     @Mapping(target = "replyId", source = "parentId")
     @Mapping(target = "likes", source = "likesCount")

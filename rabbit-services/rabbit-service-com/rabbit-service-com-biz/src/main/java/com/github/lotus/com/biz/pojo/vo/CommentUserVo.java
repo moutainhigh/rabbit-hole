@@ -17,4 +17,5 @@ public class CommentUserVo {
     private Long id;
     private String nickname;
     private String avatarUrl;
+    private String href;
 }

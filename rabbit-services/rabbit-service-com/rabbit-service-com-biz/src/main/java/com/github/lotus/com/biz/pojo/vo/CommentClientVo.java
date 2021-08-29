@@ -28,7 +28,7 @@ public class CommentClientVo {
     @ApiModelProperty("是否有人评论该评论")
     private Boolean hasReply;
     @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
+    private LocalDateTime datetime;
     @ApiModelProperty("评论人")
     private CommentUserVo author;
     @ApiModelProperty("被评论人")
