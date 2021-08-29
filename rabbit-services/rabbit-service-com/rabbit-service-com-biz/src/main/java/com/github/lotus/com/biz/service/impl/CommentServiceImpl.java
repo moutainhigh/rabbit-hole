@@ -7,6 +7,7 @@ import com.github.lotus.com.biz.mapstruct.CommentMapping;
 import com.github.lotus.com.biz.message.MessageTopic;
 import com.github.lotus.com.biz.pojo.dto.TriggerCommentedDto;
 import com.github.lotus.com.biz.pojo.ro.*;
+import com.github.lotus.com.biz.pojo.vo.CommentClientVo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
 import com.github.lotus.com.biz.pojo.vo.CommentUserVo;
 import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
@@ -16,6 +17,7 @@ import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
+import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
@@ -154,6 +156,40 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         return result.convert(this::convertComplex);
     }
 
+    @Override
+    public void commentWithClient(CommentClientRo ro) {
+        Comment entity = mapping.asComment(ro);
+        entity.setParentId(ro.getId());
+        entity.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setCreator(ro.getUserId());
+        this.validInsert(entity);
+    }
+
+    @Override
+    public IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro) {
+        ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(this::convertCommentClientVo);
+    }
+
+    private CommentClientVo convertCommentClientVo(Comment entity) {
+        CommentClientVo result = mapping.asCommentClientVo(entity);
+        result.setHasReply(this.hasReply(entity.getId()));
+
+        Long authorId = entity.getCreator();
+        if (Objects.nonNull(authorId)) {
+            result.setAuthor(getCommentUser(authorId));
+        }
+
+        Long parentId = entity.getParentId();
+        if (Objects.nonNull(parentId)) {
+            Comment comment = getById(parentId);
+            result.setReplier(getCommentUser(comment.getCreator()));
+        }
+
+        return result;
+    }
+
     private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final String content = entity.getEnabled() ? result.getContent() : "已删除";
@@ -180,7 +216,11 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
             .setNickname(entity.getNickname());
     }
 
-    public Integer countRightLikeTreePath(String treePath) {
+    private Boolean hasReply(Long id) {
+        return has(TreeEntity::getParentId, id, null);
+    }
+
+    private Integer countRightLikeTreePath(String treePath) {
         return lambdaQuery().likeRight(Comment::getTreePath, treePath).count();
     }
 

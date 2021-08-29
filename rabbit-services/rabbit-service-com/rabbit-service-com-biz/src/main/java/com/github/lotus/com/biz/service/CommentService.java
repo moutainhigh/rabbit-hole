@@ -2,12 +2,8 @@ package com.github.lotus.com.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.Comment;
-import com.github.lotus.com.biz.pojo.ro.ChildCommentPagingRo;
-import com.github.lotus.com.biz.pojo.ro.CommentInsertRo;
-import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
-import com.github.lotus.com.biz.pojo.ro.CommentPagingRo;
-import com.github.lotus.com.biz.pojo.ro.CommentUpdateRo;
-import com.github.lotus.com.biz.pojo.ro.RootCommentPagingRo;
+import com.github.lotus.com.biz.pojo.ro.*;
+import com.github.lotus.com.biz.pojo.vo.CommentClientVo;
 import com.github.lotus.com.biz.pojo.vo.CommentComplexVo;
 import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -56,4 +52,9 @@ public interface CommentService extends AbstractService<Comment> {
     void like(CommentLikeRo ro);
 
     IPage<CommentComplexVo> paging(CommentPagingRo ro);
+
+    void commentWithClient(CommentClientRo ro);
+
+    IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro);
+
 }

@@ -24,4 +24,18 @@
     FROM com_comment tc
     ORDER BY tc.created_at desc
   </select>
+
+  <select id="pagingWithClient" resultType="com.github.lotus.com.biz.entity.Comment">
+    SELECT tc.*
+    FROM com_comment tc
+    <where>
+      <if test="ro.targetId != null">
+        AND tc.target_id = #{ro.targetId}
+      </if>
+      <if test="ro.parentId != null">
+        AND tc.parent_id = #{ro.parentId}
+      </if>
+    </where>
+    ORDER BY tc.created_at DESC
+  </select>
 </mapper>
