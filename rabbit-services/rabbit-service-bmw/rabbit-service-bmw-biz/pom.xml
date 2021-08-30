@@ -50,6 +50,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.payment</groupId>
+      <artifactId>payment-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.payment</groupId>
       <artifactId>payment-module-alipay</artifactId>
     </dependency>
     <dependency>

@@ -255,6 +255,11 @@
       </dependency>
       <dependency>
         <groupId>in.hocg.payment</groupId>
+        <artifactId>payment-core</artifactId>
+        <version>${payment.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.payment</groupId>
         <artifactId>payment-module-alipay</artifactId>
         <version>${payment.version}</version>
       </dependency>
