@@ -33,7 +33,8 @@
         AND tc.target_id = #{ro.targetId}
       </if>
       <if test="ro.parentId != null">
-        AND tc.parent_id = #{ro.parentId}
+        <bind name="rightRegex" value="'/' + ro.parentId + '/%'"/>
+        AND tc.parent_id LIKE #{rightRegex}
       </if>
       <if test="ro.parentId == null">
         AND tc.parent_id IS NULL
