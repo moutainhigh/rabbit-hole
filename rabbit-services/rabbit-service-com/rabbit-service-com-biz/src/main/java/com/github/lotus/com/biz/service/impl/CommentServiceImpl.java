@@ -175,6 +175,8 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     private CommentClientVo convertCommentClientVo(Comment entity) {
         CommentClientVo result = mapping.asCommentClientVo(entity);
         result.setHasReply(this.hasReply(entity.getId()));
+        result.setLikes(0);
+        result.setDisliked(0);
 
         Long authorId = entity.getCreator();
         if (Objects.nonNull(authorId)) {
