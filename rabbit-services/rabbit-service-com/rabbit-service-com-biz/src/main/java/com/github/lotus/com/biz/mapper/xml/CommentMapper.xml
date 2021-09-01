@@ -34,7 +34,7 @@
       </if>
       <if test="ro.parentId != null">
         <bind name="rightRegex" value="'/' + ro.parentId + '/%'"/>
-        AND tc.parent_id LIKE #{rightRegex}
+        AND tc.tree_path LIKE #{rightRegex}
       </if>
       <if test="ro.parentId == null">
         AND tc.parent_id IS NULL
