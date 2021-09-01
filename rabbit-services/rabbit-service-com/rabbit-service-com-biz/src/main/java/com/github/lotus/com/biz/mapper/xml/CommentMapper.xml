@@ -35,6 +35,9 @@
       <if test="ro.parentId != null">
         AND tc.parent_id = #{ro.parentId}
       </if>
+      <if test="ro.parentId == null">
+        AND tc.parent_id IS NULL
+      </if>
     </where>
     ORDER BY tc.created_at DESC
   </select>
