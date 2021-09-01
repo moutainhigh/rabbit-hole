@@ -23,9 +23,7 @@ import java.io.Serializable;
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
 
-    IPage<Comment> pagingRootCommend(@Param("targetId") Long targetId,
-                                     @Param("enabled") Serializable enabled,
-                                     Page page);
+    IPage<Comment> pagingRootCommend(@Param("targetId") Long targetId, @Param("enabled") Serializable enabled, Page page);
 
     IPage<Comment> pagingByRegexTreePath(@Param("regexTreePath") String regexTreePath, Page page);
 
