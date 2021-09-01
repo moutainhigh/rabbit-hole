@@ -31,13 +31,12 @@ public class CommentClientController {
 
     @ApiOperation("评论")
     @PostMapping("/comment")
-    public Result<Void> comment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+    public Result<CommentClientVo> comment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
                                 @Validated @RequestBody CommentClientRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         ro.setUserId(UserContextHolder.getUserIdThrow());
-        service.commentWithClient(ro);
-        return Result.success();
+        return Result.success(service.commentWithClient(ro));
     }
 
     @ApiOperation("顶级评论 - 分页查询")

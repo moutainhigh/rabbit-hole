@@ -157,13 +157,14 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     }
 
     @Override
-    public void commentWithClient(CommentClientRo ro) {
+    public CommentClientVo commentWithClient(CommentClientRo ro) {
         Comment entity = mapping.asComment(ro);
         entity.setParentId(ro.getId());
         entity.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
         entity.setCreatedAt(LocalDateTime.now());
         entity.setCreator(ro.getUserId());
         this.validInsert(entity);
+        return this.convertCommentClientVo(getById(entity.getId()));
     }
 
     @Override
