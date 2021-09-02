@@ -41,6 +41,7 @@ public class Comment extends TreeEntity<Comment> {
     @ApiModelProperty("点赞数量")
     @TableField("likes_count")
     private Long likesCount;
+
     @ApiModelProperty("评论人")
     @TableField("creator")
     private Long creator;
@@ -50,7 +51,4 @@ public class Comment extends TreeEntity<Comment> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
-
-
 }
