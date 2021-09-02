@@ -3,6 +3,12 @@ spring:
     active: local
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins: "*"
+            allowedMethods: "*"
       discovery:
         locator:
           lowerCaseServiceId: true
