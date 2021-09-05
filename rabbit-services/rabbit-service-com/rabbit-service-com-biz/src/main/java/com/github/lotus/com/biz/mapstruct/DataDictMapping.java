@@ -16,6 +16,9 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface DataDictMapping {
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "items", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     DataDictComplexVo asComplex(DataDict entity);
 
     DataDictOrdinaryVo asOrdinary(DataDict entity);
@@ -27,5 +30,10 @@ public interface DataDictMapping {
     @Mapping(target = "createdAt", ignore = true)
     DataDict asDataDict(DataDictInsertRo ro);
 
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     DataDict asDataDict(DataDictUpdateRo ro);
 }

@@ -9,7 +9,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,34 +17,33 @@ import java.io.Serializable;
 
 /**
  * <p>
- * [通用模块] 评论表
+ * [通用模块] 用户的评论行为表
  * </p>
  *
  * @author hocgin
- * @since 2021-01-13
+ * @since 2021-09-05
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("com_comment")
-public class Comment extends TreeEntity<Comment> {
+@TableName("com_comment_user_action")
+public class CommentUserAction extends AbstractEntity<CommentUserAction> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("评论对象ID")
-    @TableField("target_id")
-    private Long targetId;
-    @ApiModelProperty("评论内容")
-    @TableField("content")
-    private String content;
-    @ApiModelProperty("点赞数量")
-    @TableField("likes_count")
-    private Long likesCount;
-    @ApiModelProperty("倒赞数量")
-    @TableField("dislikes_count")
-    private Long dislikesCount;
+    @ApiModelProperty("ID")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+    @ApiModelProperty("评论")
+    @TableField("comment_id")
+    private Long commentId;
+    @ApiModelProperty("用户")
+    @TableField("user_id")
+    private Long userId;
+    @ApiModelProperty("行为")
+    @TableField("action")
+    private String action;
 
-    @ApiModelProperty("评论人")
     @TableField("creator")
     private Long creator;
     @TableField("created_at")
@@ -54,4 +52,5 @@ public class Comment extends TreeEntity<Comment> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
+
 }

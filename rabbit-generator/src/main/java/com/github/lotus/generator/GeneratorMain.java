@@ -16,8 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.UMS, false,
-            "ums_user_address",
+            Module.COM, false,
+            "com_comment_user_action",
             "");
     }
 

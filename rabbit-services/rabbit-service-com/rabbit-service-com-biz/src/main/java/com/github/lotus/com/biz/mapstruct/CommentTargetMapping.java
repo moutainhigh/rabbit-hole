@@ -13,6 +13,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface CommentTargetMapping {
+    @Mapping(target = "refType", ignore = true)
+    @Mapping(target = "refId", ignore = true)
     @Mapping(target = "id", ignore = true)
     CommentTarget asCommentTarget(CommentTargetInsertRo ro);
 }

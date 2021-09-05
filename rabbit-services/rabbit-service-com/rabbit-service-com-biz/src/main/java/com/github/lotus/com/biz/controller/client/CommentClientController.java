@@ -3,6 +3,8 @@ package com.github.lotus.com.biz.controller.client;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.pojo.ro.CommentClientPagingRo;
 import com.github.lotus.com.biz.pojo.ro.CommentClientRo;
+import com.github.lotus.com.biz.pojo.ro.CommentDislikeRo;
+import com.github.lotus.com.biz.pojo.ro.CommentLikeRo;
 import com.github.lotus.com.biz.pojo.vo.CommentClientVo;
 import com.github.lotus.com.biz.service.CommentService;
 import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
@@ -32,7 +34,7 @@ public class CommentClientController {
     @ApiOperation("评论")
     @PostMapping("/comment")
     public Result<CommentClientVo> comment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                @Validated @RequestBody CommentClientRo ro) {
+                                           @Validated @RequestBody CommentClientRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         ro.setUserId(UserContextHolder.getUserIdThrow());
@@ -63,12 +65,20 @@ public class CommentClientController {
     @ApiOperation("点赞")
     @PostMapping("/comment/{id}/like")
     public Result<Void> like(@PathVariable("id") Long id) {
+        CommentLikeRo ro = new CommentLikeRo();
+        ro.setId(id);
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.like(ro);
         return Result.success();
     }
 
     @ApiOperation("倒赞")
     @PostMapping("/comment/{id}/dislike")
     public Result<Void> dislike(@PathVariable("id") Long id) {
+        CommentDislikeRo ro = new CommentDislikeRo();
+        ro.setId(id);
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.dislike(ro);
         return Result.success();
     }
 }
