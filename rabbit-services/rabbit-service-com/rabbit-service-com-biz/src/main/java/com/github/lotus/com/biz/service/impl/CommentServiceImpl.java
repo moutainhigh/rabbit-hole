@@ -190,6 +190,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
                 dislikesCount = isLikeAction ? null : (dislikesCount + 1);
                 likesCount = isLikeAction ? (likesCount + 1) : null;
                 updateAction = isLikeAction ? CommentUserActionType.Like : CommentUserActionType.Dislike;
+                break;
             }
             default:
                 throw new UnsupportedOperationException();
