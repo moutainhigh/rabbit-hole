@@ -63,7 +63,7 @@ public class CommentClientController {
     }
 
     @ApiOperation("点赞")
-    @PostMapping("/{id}/like")
+    @PostMapping("/comment/{id}/like")
     public Result<Void> like(@PathVariable("id") Long id) {
         CommentLikeRo ro = new CommentLikeRo();
         ro.setId(id);
@@ -73,7 +73,7 @@ public class CommentClientController {
     }
 
     @ApiOperation("倒赞")
-    @PostMapping("/{id}/dislike")
+    @PostMapping("/comment/{id}/dislike")
     public Result<Void> dislike(@PathVariable("id") Long id) {
         CommentDislikeRo ro = new CommentDislikeRo();
         ro.setId(id);
