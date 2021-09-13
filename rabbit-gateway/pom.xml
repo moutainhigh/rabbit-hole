@@ -5,11 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.lotus</groupId>
-    <artifactId>rabbit-parent</artifactId>
+    <artifactId>rabbit-hole</artifactId>
     <version>${revision}</version>
-    <relativePath>../rabbit-parent/pom.xml</relativePath>
   </parent>
-
   <name>Rabbit :: Gateway</name>
   <artifactId>rabbit-gateway</artifactId>
 

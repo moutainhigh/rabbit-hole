@@ -57,7 +57,6 @@ public interface CommentMapping {
     @Mapping(target = "replyId", source = "parentId")
     @Mapping(target = "likes", source = "likesCount")
     @Mapping(target = "disliked", source = "dislikesCount")
-    @Mapping(target = "disliked", ignore = true)
     @Mapping(target = "hasReply", ignore = true)
     @Mapping(target = "replier", ignore = true)
     @Mapping(target = "author", ignore = true)

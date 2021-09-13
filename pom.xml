@@ -17,12 +17,32 @@
 
   <properties>
     <revision>1.0.0-SNAPSHOT</revision>
+
+    <!-- Maven plugins -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>8</java.version>
+    <java.source.version>8</java.source.version>
+    <java.target.version>8</java.target.version>
+    <main-class/>
     <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
+    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+
+    <boot-dependencies.version>1.0.1</boot-dependencies.version>
+    <lombok.version>1.18.12</lombok.version>
+    <mapstruct.version>1.4.1.Final</mapstruct.version>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
 
   <modules>
     <module>rabbit-basic</module>
-    <module>rabbit-parent</module>
     <module>rabbit-services</module>
     <module>rabbit-gateway</module>
     <module>rabbit-generator</module>
@@ -30,7 +50,187 @@
     <module>rabbit-spring-boot-admin</module>
   </modules>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- 一方库 -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-usercontext-basic</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-usercontext-autoconfigure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-usercontext-interface</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-chaos-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-chaos-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-chaos-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mina-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mina-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mina-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-ums-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-ums-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-ums-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-mall-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-tpl-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-tpl-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-tpl-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-com-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-bmw-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-bmw-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-bmw-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-docking-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-docking-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-docking-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-start</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-wl-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg</groupId>
+        <artifactId>boot-dependencies</artifactId>
+        <version>${boot-dependencies.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
+    <finalName>${project.artifactId}</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -58,5 +258,51 @@
         </executions>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <fork>true</fork>
+            <source>${java.source.version}</source>
+            <target>${java.target.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+              </path>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>repackage</id>
+              <goals>
+                <goal>repackage</goal>
+                <goal>build-info</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <mainClass>${main-class}</mainClass>
+            <layers>
+              <enabled>true</enabled>
+            </layers>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
