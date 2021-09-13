@@ -28,6 +28,7 @@ public interface CommentMapping {
     @Mapping(target = "childTotal", ignore = true)
     RootCommentComplexVo asRootCommentComplexVo(CommentComplexVo entity);
 
+    @Mapping(target = "dislikesCount", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "likesCount", ignore = true)
     @Mapping(target = "targetId", ignore = true)
@@ -39,6 +40,7 @@ public interface CommentMapping {
     @Mapping(target = "treePath", ignore = true)
     Comment asComment(CommentInsertRo qo);
 
+    @Mapping(target = "dislikesCount", ignore = true)
     @Mapping(target = "likesCount", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
@@ -54,12 +56,13 @@ public interface CommentMapping {
     @Mapping(target = "action", ignore = true)
     @Mapping(target = "replyId", source = "parentId")
     @Mapping(target = "likes", source = "likesCount")
-    @Mapping(target = "disliked", ignore = true)
+    @Mapping(target = "disliked", source = "dislikesCount")
     @Mapping(target = "hasReply", ignore = true)
     @Mapping(target = "replier", ignore = true)
     @Mapping(target = "author", ignore = true)
     CommentClientVo asCommentClientVo(Comment entity);
 
+    @Mapping(target = "dislikesCount", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "treePath", ignore = true)
     @Mapping(target = "targetId", ignore = true)

@@ -2,6 +2,7 @@ package com.github.lotus.com.biz.controller;
 
 
 import com.github.lotus.com.biz.service.FileService;
+import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * <p>
@@ -29,8 +31,8 @@ public class FileController {
 
     @ApiOperation("上传文件")
     @PostMapping("/upload")
-    public String upload(@RequestPart("file") MultipartFile file) {
-        return service.upload(file);
+    public Result<String> upload(@RequestPart("file") MultipartFile file) {
+        return Result.success(service.upload(file));
     }
 }
 

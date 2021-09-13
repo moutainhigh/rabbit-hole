@@ -1,7 +1,7 @@
 name: Watch Workflow Status
 on:
   workflow_run:
-    workflows: [ "Deploy" ]
+    workflows: ["Deploy::Chaos", "Deploy::Manual"]
     types: [ completed ]
 env:
   WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}

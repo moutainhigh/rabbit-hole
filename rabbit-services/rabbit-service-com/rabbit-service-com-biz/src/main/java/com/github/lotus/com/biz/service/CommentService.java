@@ -51,10 +51,11 @@ public interface CommentService extends AbstractService<Comment> {
 
     void like(CommentLikeRo ro);
 
+    void dislike(CommentDislikeRo ro);
+
     IPage<CommentComplexVo> paging(CommentPagingRo ro);
 
     CommentClientVo commentWithClient(CommentClientRo ro);
 
     IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro);
-
 }

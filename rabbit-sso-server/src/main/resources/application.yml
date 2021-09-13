@@ -1,8 +1,8 @@
-logging:
-  level:
-    in.hocg: debug
-    com.github.lotus: debug
+server:
+  port: 20000
 spring:
+  application:
+    name: rabbit-sso
   profiles:
     active: local
   security:

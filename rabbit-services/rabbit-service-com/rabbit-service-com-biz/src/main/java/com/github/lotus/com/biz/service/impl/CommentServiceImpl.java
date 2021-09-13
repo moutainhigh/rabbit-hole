@@ -1,7 +1,9 @@
 package com.github.lotus.com.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.lotus.com.biz.entity.Comment;
+import com.github.lotus.com.biz.entity.CommentUserAction;
 import com.github.lotus.com.biz.mapper.CommentMapper;
 import com.github.lotus.com.biz.mapstruct.CommentMapping;
 import com.github.lotus.com.biz.message.MessageTopic;
@@ -13,9 +15,12 @@ import com.github.lotus.com.biz.pojo.vo.CommentUserVo;
 import com.github.lotus.com.biz.pojo.vo.RootCommentComplexVo;
 import com.github.lotus.com.biz.service.CommentService;
 import com.github.lotus.com.biz.service.CommentTargetService;
+import com.github.lotus.com.biz.service.CommentUserActionService;
+import com.github.lotus.common.datadict.com.CommentUserActionType;
 import com.github.lotus.common.datadict.common.RefType;
 import com.github.lotus.ums.api.UserServiceApi;
 import com.github.lotus.ums.api.pojo.vo.AccountVo;
+import com.github.lotus.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
@@ -23,14 +28,18 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +53,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     implements CommentService {
+    private final CommentUserActionService commentUserActionService;
     private final CommentTargetService commentTargetService;
     private final UserServiceApi accountServiceApi;
     private final CommentMapping mapping;
@@ -139,15 +149,61 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void like(CommentLikeRo ro) {
-        Long id = ro.getId();
-        Comment entity = getById(id);
-        Long likesCount = entity.getLikesCount();
+        Long commentId = ro.getId();
+        Long userId = ro.getUserId();
+        CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
+        CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
+        ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, true);
+    }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void dislike(CommentDislikeRo ro) {
+        Long commentId = ro.getId();
+        Long userId = ro.getUserId();
+        CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
+        CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
+        ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, false);
+    }
+
+    @Retryable
+    public void trigger(Long commentId, CommentUserActionType currentAction, boolean isLikeAction) {
+        Comment entity = Assert.notNull(getById(commentId), "评论不存在");
+        Long likesCount = entity.getLikesCount();
+        Long dislikesCount = entity.getDislikesCount();
+        CommentUserActionType updateAction;
+
+        switch (currentAction) {
+            case Like: {
+                dislikesCount = isLikeAction ? (null) : (dislikesCount + 1);
+                likesCount = (likesCount - 1);
+                updateAction = isLikeAction ? CommentUserActionType.None : CommentUserActionType.Dislike;
+                break;
+            }
+            case Dislike: {
+                dislikesCount = (dislikesCount - 1);
+                likesCount = isLikeAction ? (likesCount + 1) : null;
+                updateAction = isLikeAction ? CommentUserActionType.Like : CommentUserActionType.None;
+                break;
+            }
+            case None: {
+                dislikesCount = isLikeAction ? null : (dislikesCount + 1);
+                likesCount = isLikeAction ? (likesCount + 1) : null;
+                updateAction = isLikeAction ? CommentUserActionType.Like : CommentUserActionType.Dislike;
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
+        }
+
+        commentUserActionService.triggerAction(entity.getId(), updateAction.getCode());
         Comment update = new Comment();
-        update.setId(id);
-        update.setLikesCount(likesCount + 1);
+        update.setId(commentId);
+        update.setLikesCount(likesCount);
+        update.setDislikesCount(dislikesCount);
         this.validUpdateById(update);
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -176,8 +232,9 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     private CommentClientVo convertCommentClientVo(Comment entity) {
         CommentClientVo result = mapping.asCommentClientVo(entity);
         result.setHasReply(this.hasReply(entity.getId()));
-        result.setLikes(0);
-        result.setDisliked(0);
+
+        UserContextHolder.getUserId().flatMap(userId -> commentUserActionService.getActionByCommentIdAndUserId(entity.getId(), userId))
+            .ifPresent(result::setAction);
 
         Long authorId = entity.getCreator();
         if (Objects.nonNull(authorId)) {

@@ -1,57 +1,16 @@
-jasypt.encryptor.password: ${JASYPT_ENCRYPTOR_PASSWORD}
-server:
-  port: 21000
-logging:
-  level:
-    root: warn
-    in.hocg: debug
-  config: classpath:log4j2-boot-local.xml
-  file:
-    path: /data/logs/app/${spring.application.name:unknown}
-    name: ${logging.file.path}/${spring.application.name:unknown}.log
-  pattern:
-    level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
-  application:
-    name: rabbit-chaos
   cloud:
     nacos:
       config:
         contextPath: /nacos
-        password: ${NACOS_PASSWORD}
         server-addr: ${NACOS_HOST}
         username: ${NACOS_USERNAME}
-        file-extension: yaml
+        password: ${NACOS_PASSWORD}
         namespace: ${NACOS_NAMESPACE}
+        file-extension: yml
+        shared-configs: application-shared.${spring.cloud.nacos.config.file-extension}
       discovery:
-        password: ${NACOS_PASSWORD}
         server-addr: ${NACOS_HOST}
         username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
         namespace: ${NACOS_NAMESPACE}
-  jmx:
-    enabled: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
-feign:
-  hystrix:
-    enabled: false
-  okhttp:
-    enabled: true
-  httpclient:
-    enabled: false
-  client:
-    config:
-      default:
-        connectTimeout: 60000
-        readTimeout: 60000
-  compression:
-    request:
-      enabled: true
-    response:
-      enabled: true

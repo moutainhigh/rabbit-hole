@@ -1,4 +1,4 @@
-name: Deploy_Dev
+name: Deploy::Gateway:Chaos::DEV
 
 on:
   workflow_dispatch:
