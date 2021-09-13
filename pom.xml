@@ -20,9 +20,9 @@
 
     <!-- Maven plugins -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>8</java.version>
-    <java.source.version>8</java.source.version>
-    <java.target.version>8</java.target.version>
+    <java.version>11</java.version>
+    <java.source.version>11</java.source.version>
+    <java.target.version>11</java.target.version>
     <main-class/>
     <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>

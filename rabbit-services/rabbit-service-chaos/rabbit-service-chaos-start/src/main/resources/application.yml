@@ -1,26 +1,13 @@
-logging:
-  level:
-    com.alibaba.nacos: WARN
-    com.github.lotus: DEBUG
-    in.hocg: DEBUG
+server:
+  port: 21000
 spring:
+  application:
+    name: rabbit-chaos
   profiles:
     active: local
-  datasource:
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    username: ENC(kgN96yKwsSme4V5eDT/jgw==)
-    password: ENC(2mhLSKyllnmu0g04HaAZSA==)
-    druid:
-      validation-query: SELECT 1
-      test-while-idle: true
-      initial-size: 1
   redis:
     database: 0
     port: 6379
-    timeout: 10000
-    jedis:
-      pool:
-        max-active: 10
   schedulerx2:
     endpoint: acm.aliyun.com
     endpointPort: 8080
@@ -31,14 +18,6 @@ spring:
     type: redis
     redis:
       key-prefix: 'chaos::'
-jasypt:
-  encryptor:
-    poolSize: 10
-mybatis-plus:
-  mapper-locations: classpath*:/**/xml/*.xml
-feign:
-  okhttp:
-    enabled: true
 boot:
   sms:
     regionId: cn-hangzhou

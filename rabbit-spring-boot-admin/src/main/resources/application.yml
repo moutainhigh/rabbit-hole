@@ -1,4 +1,8 @@
+server:
+  port: 20002
 spring:
+  application:
+    name: rabbit-sba
   profiles:
     active: local
   security:

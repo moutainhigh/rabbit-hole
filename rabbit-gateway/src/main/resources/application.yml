@@ -1,4 +1,8 @@
+server:
+  port: 20001
 spring:
+  application:
+    name: rabbit-gateway
   profiles:
     active: local
   cloud:
