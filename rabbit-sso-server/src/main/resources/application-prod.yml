@@ -14,3 +14,5 @@ sso:
           - http://manage.hocgin.top/login/oauth2/code/custom
           - https://bmw.hocgin.top/login/oauth2/code/custom
           - http://bmw.hocgin.top/login/oauth2/code/custom
+          - https://arthas.hocgin.top/login/oauth2/code/custom
+          - http://arthas.hocgin.top/login/oauth2/code/custom

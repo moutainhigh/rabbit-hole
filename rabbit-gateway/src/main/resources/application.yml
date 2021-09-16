@@ -89,7 +89,7 @@ spring:
         max-active: 10
   security:
     oauth2:
-      shostname: http://sso.hocgin.top
+      hostname: http://sso.hocgin.top
       client:
         registration:
           custom:
@@ -99,9 +99,9 @@ spring:
             authorization-grant-type: authorization_code
         provider:
           custom:
-            user-info-uri: ${spring.security.oauth2.shostname}/oauth/user
-            authorization-uri: ${spring.security.oauth2.shostname}/oauth/authorize
-            token-uri: ${spring.security.oauth2.shostname}/oauth/token
+            user-info-uri: ${spring.security.oauth2.hostname}/oauth/user
+            authorization-uri: ${spring.security.oauth2.hostname}/oauth/authorize
+            token-uri: ${spring.security.oauth2.hostname}/oauth/token
             user-name-attribute: name
 debug: true
 boot:
