@@ -105,6 +105,11 @@ spring:
             user-name-attribute: name
 debug: true
 boot:
+  arthas:
+    telnet-port: -1
+    http-port: -1
+    disabledCommands: stop
+    session-timeout: 10000
   sso:
     client:
       authenticated-urls:
