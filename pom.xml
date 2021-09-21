@@ -28,6 +28,7 @@
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
 
     <boot-dependencies.version>1.0.1</boot-dependencies.version>
+    <boot.version>1.0.17</boot.version>
     <lombok.version>1.18.12</lombok.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
   </properties>
@@ -207,6 +208,12 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-wl-api</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <!-- 第三方 -->
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>arthas-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>in.hocg</groupId>

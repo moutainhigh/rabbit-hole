@@ -4,6 +4,7 @@ import com.github.lotus.chaos.BootApplication;
 import com.github.lotus.chaos.biz.message.TestMessageListener;
 import com.github.lotus.chaos.biz.pojo.dto.TestMessageDto;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,9 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RedisMessageTests extends AbstractSpringBootTest {
     @Autowired
-    private RedisTemplate redisTemplate;
+    RedisTemplate redisTemplate;
+    @Autowired
+    StringEncryptor stringEncryptor;
 
     @Test
     public void test() {

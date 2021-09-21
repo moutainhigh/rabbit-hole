@@ -58,3 +58,6 @@ feign:
       enabled: true
     response:
       enabled: true
+boot:
+  arthas:
+    tunnel-server: wss://arthas.hocgin.top/ws
