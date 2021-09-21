@@ -89,7 +89,7 @@ spring:
         max-active: 10
   security:
     oauth2:
-      hostname: http://sso.hocgin.top
+      hostname: https://sso.hocgin.top
       client:
         registration:
           custom:
