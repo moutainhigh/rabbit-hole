@@ -1,11 +1,11 @@
-FROM adoptopenjdk:11-jre-hotspot as builder
+FROM adoptopenjdk:11-jdk-hotspot as builder
 WORKDIR application
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 
 RUN java -Djava.security.egd=file:/dev/./urandom -Djarmode=layertools -jar application.jar extract
 
-FROM adoptopenjdk:11-jre-hotspot
+FROM adoptopenjdk:11-jdk-hotspot
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR application
