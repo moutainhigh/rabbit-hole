@@ -19,6 +19,11 @@ spring:
     redis:
       key-prefix: 'chaos::'
 boot:
+  arthas:
+    telnet-port: -1
+    http-port: -1
+    disabledCommands: stop
+    session-timeout: 10000
   sms:
     regionId: cn-hangzhou
     secretKey: ENC(0e4TdhdwQjsgJGLNDayV8yrt2GWZpjWlE29if8AZeCmtUTn7nqgzWw==)
