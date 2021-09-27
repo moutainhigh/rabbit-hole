@@ -22,8 +22,6 @@ spring:
         max-active: 10
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    username: ENC(kgN96yKwsSme4V5eDT/jgw==)
-    password: ENC(2mhLSKyllnmu0g04HaAZSA==)
     druid:
       validation-query: SELECT 1
       test-while-idle: true
