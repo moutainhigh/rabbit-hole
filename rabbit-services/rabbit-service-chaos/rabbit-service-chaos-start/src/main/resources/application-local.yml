@@ -13,6 +13,7 @@ spring:
     host: redis.hocgin.top
     port: 26379
     database: 0
+    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
 
 boot:
   flyway:

@@ -16,10 +16,10 @@ import java.sql.Driver;
 @RequiredArgsConstructor
 public enum DataSource {
     DEFAULT(DbType.MYSQL,
-        "jdbc:mysql://39.100.87.79:30962/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
+        "jdbc:mysql://mysql.hocgin.top:23306/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
         com.mysql.cj.jdbc.Driver.class, "root", "hocgin"),
     Chaos(DbType.MYSQL,
-        "jdbc:mysql://39.100.87.79:30892/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
+        "jdbc:mysql://mysql.hocgin.top:23306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
         com.mysql.cj.jdbc.Driver.class, "root", "hocgin");
     private final DbType dbType;
     private final String url;
