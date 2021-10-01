@@ -11,6 +11,7 @@ import com.github.lotus.common.utils.CommonUtils;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +31,17 @@ import java.util.function.Function;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ComServiceImpl implements ComService {
 
-    @SneakyThrows
     @Override
     public InputStream getFavicon(String url, String defUrl) {
-        Optional<String> faviconUrl = FaviconUtils.getFaviconUrl(url);
-        if (faviconUrl.isPresent()) {
-            return URLUtil.getStream(URLUtil.url(faviconUrl.get()));
-        }
-        if (StrUtil.isNotBlank(defUrl)) {
-            return URLUtil.getStream(URLUtil.url(defUrl));
+        String faviconUrl = ((ComService) AopContext.currentProxy()).getFaviconUrl(url, defUrl);
+        if (StrUtil.isNotBlank(faviconUrl)) {
+            return URLUtil.getStream(URLUtil.url(faviconUrl));
         }
         return Avatars.getAvatarAsStream(System.currentTimeMillis());
+    }
+
+    @Override
+    public String getFaviconUrl(String url, String defUrl) {
+        return FaviconUtils.getFaviconUrl(url).orElse(defUrl);
     }
 }

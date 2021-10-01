@@ -11,4 +11,6 @@ import java.io.InputStream;
 public interface ComService {
 
     InputStream getFavicon(String url, String defUrl);
+
+    String getFaviconUrl(String url, String defUrl);
 }
