@@ -13,6 +13,7 @@ spring:
     host: sv-redis.basic
     port: 6379
     database: 1
+    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
 boot:
   web:
     hostname: https://api-dev.hocgin.top
