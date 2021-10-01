@@ -10,10 +10,12 @@ import com.github.lotus.com.biz.utils.FaviconUtils;
 import com.github.lotus.common.utils.CommonUtils;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -28,12 +30,13 @@ import java.util.function.Function;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ComServiceImpl implements ComService {
 
+    @SneakyThrows
     @Override
     public InputStream getFavicon(String url, String defUrl) {
-        if (FaviconUtils.getFaviconUrl(url).isPresent()) {
-            return URLUtil.getStream(URLUtil.url(url));
+        Optional<String> faviconUrl = FaviconUtils.getFaviconUrl(url);
+        if (faviconUrl.isPresent()) {
+            return URLUtil.getStream(URLUtil.url(faviconUrl.get()));
         }
-
         if (StrUtil.isNotBlank(defUrl)) {
             return URLUtil.getStream(URLUtil.url(defUrl));
         }
