@@ -1,5 +1,6 @@
 package com.github.lotus.com.biz.utils;
 
+import cn.hutool.core.io.FileUtil;
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.GitHubAvatar;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
@@ -8,7 +9,9 @@ import lombok.experimental.UtilityClass;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -33,6 +36,12 @@ public class Avatars {
         return createAvatar(Avatars.AVATAR, code);
     }
 
+    /**
+     * 获取头像本地存储路径
+     *
+     * @param code
+     * @return
+     */
     public Path getAvatarAsPath(long code) {
         try {
             final Path filePath = Files.createTempFile("img", ".png");
@@ -41,6 +50,16 @@ public class Avatars {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 获取头像文件流
+     *
+     * @param code
+     * @return
+     */
+    public InputStream getAvatarAsStream(long code) {
+        return FileUtil.getInputStream(getAvatarAsPath(code).toFile());
     }
 
     /**
