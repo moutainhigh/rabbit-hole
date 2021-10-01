@@ -7,7 +7,6 @@ spring:
     active: local
   redis:
     database: 0
-    port: 6379
   schedulerx2:
     endpoint: acm.aliyun.com
     endpointPort: 8080

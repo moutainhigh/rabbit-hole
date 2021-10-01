@@ -3,9 +3,10 @@ spring:
     oauth2:
       hostname: http://sso.hocgin.local
   redis:
-    host: 39.100.87.79
-    port: 32079
+    host: redis.hocgin.top
+    port: 26379
     database: 0
+    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
 boot:
   sso:
     client:
