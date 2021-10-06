@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class UploadYouTubeVideoRo extends UploadYouTubeVideoDto {
-    @ApiModelProperty("视频地址")
-    private String videoUrl;
+public class BatchUploadYouTubeVideoRo extends UploadYouTubeVideoDto {
+    @ApiModelProperty("本地目录")
+    private String localDir = "/Users/hocgin/Downloads/动漫视频/一念永恒(第一季)";
 }

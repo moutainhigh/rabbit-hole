@@ -20,7 +20,6 @@ public class YouTubeServiceApiImpl implements YouTubeServiceApi {
 
     @Override
     public String upload(UploadYouTubeRo ro) {
-        service.uploadVideo(ro);
         return null;
     }
 }

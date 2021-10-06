@@ -80,6 +80,9 @@ boot:
       - application-name: simple-app
         client-id: ENC(fhFEL/IvwoTnOBC8CTu6FZY0Qvg7SZ9nZ9XSpRz5PyVvb7zC2PxsqnWgeNTLhRjqiiNSEpe0oz8H5SQhu+4fnWj8nzJ0LTAMVlUMMpeFdAbG3KB62ag5Ow==)
         client-secret: ENC(9pHlkVXaMIqfK4/KCmYqzSYjZAspJQCRraYFI+GvEmpXWtvNURlkAQ==)
+      - application-name: hl.team.wechat
+        client-id: 354771266497-qc9jmt90p9sjv79ll7f490anc7dcs1ds.apps.googleusercontent.com
+        client-secret: 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
   sentinel:
     flow-rules:
       # 发送短信限流, 24 小时只能发送 5 条

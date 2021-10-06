@@ -50,6 +50,8 @@ public class DbTaskSchedule extends JavaProcessor {
                 case YouTubeUpload: {
                     return (s) -> youTubeServiceApi.upload((UploadYouTubeRo) s);
                 }
+                default:
+                    //
             }
         }
         return s -> {
