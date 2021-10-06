@@ -73,7 +73,7 @@ public class FaviconUtils {
             return Optional.empty();
         }
         Document document = Jsoup.parse(html, baseUri);
-        String linkHref = document.selectFirst("link[rel~=(icon|shortcut icon|alternate icon|apple-touch-icon)][href]")
+        String linkHref = document.select("link[rel~=(icon|shortcut icon|alternate icon|apple-touch-icon)][href]").first()
             .attr("abs:href");
 
         if (HttpUtil.isHttp(linkHref) || HttpUtil.isHttps(linkHref)) {

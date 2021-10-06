@@ -2,6 +2,7 @@ package com.github.lotus.bmw.api.pojo.ro;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
  * @author hocgin
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Accessors(chain = true)
 public class GetRefundRo extends AccessRo {
     @ApiModelProperty(value = "退款单号(接入商户)", required = true)

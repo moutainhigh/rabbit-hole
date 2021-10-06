@@ -211,6 +211,16 @@
       </dependency>
       <!-- 第三方 -->
       <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.10.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>3.14.7</version>
+      </dependency>
+      <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>arthas-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
@@ -218,6 +228,16 @@
       <dependency>
         <groupId>in.hocg.boot</groupId>
         <artifactId>youtube-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>ffmpeg-spring-boot-starter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>in.hocg.boot</groupId>
+        <artifactId>webmagic-spring-boot-starter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
