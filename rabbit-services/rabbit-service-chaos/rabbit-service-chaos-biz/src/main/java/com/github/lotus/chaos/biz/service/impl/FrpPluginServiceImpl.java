@@ -21,31 +21,26 @@ import org.springframework.stereotype.Service;
 public class FrpPluginServiceImpl implements FrpPluginService {
 
     @Override
-    @UseLogger(value = "frp login")
     public FrpResult<?> login(LoginFrpRo ro) {
         return FrpResult.pass();
     }
 
     @Override
-    @UseLogger(value = "frp newProxy")
     public FrpResult<?> newProxy(NewProxyFrpRo ro) {
         return FrpResult.pass();
     }
 
     @Override
-    @UseLogger(value = "frp ping")
     public FrpResult<?> ping(PingFrpRo ro) {
         return FrpResult.pass();
     }
 
     @Override
-    @UseLogger(value = "frp newWorkConn")
     public FrpResult<?> newWorkConn(NewWorkConnFrpRo ro) {
         return FrpResult.pass();
     }
 
     @Override
-    @UseLogger(value = "frp newUserConn")
     public FrpResult<?> newUserConn(NewUserConnFrpRo content) {
         return FrpResult.pass();
     }
