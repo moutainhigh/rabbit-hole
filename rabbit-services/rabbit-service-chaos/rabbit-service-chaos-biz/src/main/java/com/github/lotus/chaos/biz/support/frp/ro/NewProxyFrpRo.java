@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(description = "创建代理的相关信息")
-public class NewProxyFrpRo {
+public class NewProxyFrpRo implements Serializable {
     private UserComFrpRo user;
     @JsonProperty("proxy_name")
     private String proxyName;
@@ -59,6 +60,6 @@ public class NewProxyFrpRo {
 
     @Data
     public static class Metas {
-
+        private String token;
     }
 }

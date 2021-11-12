@@ -1,5 +1,6 @@
 package com.github.lotus.chaos.biz.support.frp.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,6 +18,8 @@ import lombok.experimental.Accessors;
 public class FrpResult<T> {
     @ApiModelProperty("拒绝执行操作")
     private Boolean reject;
+    @JsonProperty("reject_reason")
+    private String rejectReason;
     @ApiModelProperty("允许且内容不需要变动")
     private Boolean unchange;
     @ApiModelProperty("允许且需要替换操作内容")
@@ -39,7 +42,16 @@ public class FrpResult<T> {
      * @return
      */
     public static FrpResult<?> reject() {
-        return result(true, true, null);
+        return reject(null);
+    }
+
+    /**
+     * 拒绝
+     *
+     * @return
+     */
+    public static FrpResult<?> reject(String rejectReason) {
+        return result(true, true, null).setRejectReason(rejectReason);
     }
 
     /**
@@ -49,6 +61,16 @@ public class FrpResult<T> {
      */
     public static FrpResult<?> pass() {
         return result(false, true, null);
+    }
+
+
+    /**
+     * 不调整
+     *
+     * @return
+     */
+    public static <T> FrpResult<T> pass(T content) {
+        return result(false, true, content);
     }
 
     public static <T> FrpResult<T> result(Boolean reject, Boolean unchange, T content) {
