@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -31,13 +32,18 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
 
     @Override
     public ProxyChannelInfoVo getChannelInfo(String channelId) {
-        ProxyChannel channel = lambdaQuery().eq(ProxyChannel::getChannelId, channelId)
-            .eq(ProxyChannel::getEnabled, true).oneOpt()
+        ProxyChannel channel = getByChannelIdAndEnabledOn(channelId)
             .orElseThrow(() -> ServiceException.wrap("渠道ID错误"));
         return proxyManager.getFrpChannel(channel);
     }
 
-    private Optional<ProxyChannel> getByChannelId(String channelId) {
-        return lambdaQuery().eq(ProxyChannel::getChannelId, channelId).oneOpt();
+    @Override
+    public Optional<ProxyChannel> getByChannelIdAndEnabledOn(String channelId) {
+        return getByChannelIdAndEnabled(channelId, true);
+    }
+
+    @Override
+    public Optional<ProxyChannel> getByChannelIdAndEnabled(String channelId, Boolean enabled) {
+        return lambdaQuery().eq(ProxyChannel::getChannelId, channelId).eq(Objects.nonNull(enabled), ProxyChannel::getEnabled, enabled).oneOpt();
     }
 }

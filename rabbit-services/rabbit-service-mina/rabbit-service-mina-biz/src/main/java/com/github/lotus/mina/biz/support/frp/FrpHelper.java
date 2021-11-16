@@ -18,7 +18,6 @@ import java.util.StringJoiner;
 public class FrpHelper {
 
     public static String toFrpcIni(ProxyChannelInfoVo.ProxyConfig config) {
-
         StringJoiner joiner = new StringJoiner(System.lineSeparator())
             .add("[common]")
             .add(StrUtil.format("server_addr = {}", config.getServerAddr()))
@@ -30,6 +29,7 @@ public class FrpHelper {
                 .add(StrUtil.format("custom_domains = {}", proxy.getCustomDomains()))
                 .add(StrUtil.format("local_ip = {}", proxy.getLocalIp()))
                 .add(StrUtil.format("local_port = {}", proxy.getLocalPort()))
+                .add(StrUtil.format("meta_token = {}", proxy.getName()))
                 .add("")
             ;
         }

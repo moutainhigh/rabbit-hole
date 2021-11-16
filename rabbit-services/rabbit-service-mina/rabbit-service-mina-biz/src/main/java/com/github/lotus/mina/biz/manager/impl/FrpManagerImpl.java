@@ -1,7 +1,12 @@
 package com.github.lotus.mina.biz.manager.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import com.github.lotus.mina.biz.cache.MinaCacheService;
+import com.github.lotus.mina.biz.entity.ProxyChannel;
 import com.github.lotus.mina.biz.manager.FrpManager;
+import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
+import com.github.lotus.mina.biz.service.ProxyChannelService;
 import com.github.lotus.mina.biz.support.frp.ro.*;
 import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
 import com.github.lotus.mina.biz.support.frp.vo.NewProxyFrpVo;
@@ -9,6 +14,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by hocgin on 2021/11/8
@@ -20,6 +30,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class FrpManagerImpl implements FrpManager {
+    private final ProxyChannelService proxyChannelService;
+    private final MinaCacheService cacheService;
 
     @Override
     public FrpResult<?> login(LoginFrpRo ro) {
@@ -28,28 +40,34 @@ public class FrpManagerImpl implements FrpManager {
 
     @Override
     public FrpResult<?> newProxy(NewProxyFrpRo ro) {
-        // 后台生成
-        String proxyName = ro.getProxyName();
-        // 后台配置
-        String proxyType = ro.getProxyType();
-        // 后台配置
+        String channelId = ro.getProxyName();
+        String type = ro.getProxyType();
+        List<String> customDomains = ro.getCustomDomains();
         String subdomain = ro.getSubdomain();
-        // 后台配置
         Integer remotePort = ro.getRemotePort();
 
+        Optional<ProxyChannel> channelOpt = proxyChannelService.getByChannelIdAndEnabledOn(channelId);
 
+        if (channelOpt.isEmpty()) {
+            return FrpResult.reject(StrUtil.format("渠道ID={}错误，未找到代理渠道", channelId));
+        }
+        ProxyChannel channel = channelOpt.get();
+
+        if (!customDomains.contains(channel.getCustomDomains())) {
+            return FrpResult.reject(StrUtil.format("渠道ID={}错误，数据校验失败", channelId));
+        }
+
+        if (!StrUtil.equals(type, channel.getType())) {
+            return FrpResult.reject(StrUtil.format("渠道ID={}错误，数据校验失败", channelId));
+        }
+        String runId = ro.getUser().getRunId();
+
+        cacheService.putProxyChannel(runId);
         NewProxyFrpRo.Metas metas = ro.getMetas();
-//        Assert.notNull(metas, "配置信息错误");
-//        String authKey = metas.getAuthKey();
-//        boolean hasPass = Objects.nonNull(authKey);
-
-//        if (!hasPass) {
-//            return FrpResult.reject("认证失败");
-//        }
 
         NewProxyFrpVo content = BeanUtil.copyProperties(ro, NewProxyFrpVo.class);
-        content.setProxyName(proxyName);
-        content.setProxyType(proxyType);
+        content.setProxyName(channelId);
+        content.setProxyType(type);
         content.setSubdomain(subdomain);
         content.setRemotePort(remotePort);
         return FrpResult.pass(content);
@@ -57,7 +75,7 @@ public class FrpManagerImpl implements FrpManager {
 
     @Override
     public FrpResult<?> ping(PingFrpRo ro) {
-        return FrpResult.pass();
+        return checkUserHeartbeat(ro.getUser());
     }
 
     @Override
@@ -66,7 +84,15 @@ public class FrpManagerImpl implements FrpManager {
     }
 
     @Override
-    public FrpResult<?> newUserConn(NewUserConnFrpRo content) {
-        return FrpResult.pass();
+    public FrpResult<?> newUserConn(NewUserConnFrpRo ro) {
+        return checkUserHeartbeat(ro.getUser());
+    }
+
+    private FrpResult<?> checkUserHeartbeat(UserComFrpRo ro) {
+        String runId = ro.getRunId();
+        if (cacheService.hasProxyChannel(runId)) {
+            return FrpResult.pass();
+        }
+        return FrpResult.reject("连接被服务端中断");
     }
 }

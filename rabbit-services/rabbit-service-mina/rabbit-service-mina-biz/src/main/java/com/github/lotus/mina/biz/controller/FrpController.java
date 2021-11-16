@@ -35,9 +35,8 @@ public class FrpController {
     @UseLogger
     @ApiOperation("创建代理(NewProxy)")
     @PostMapping("/new-proxy")
-    public FrpResult<?> newProxy(@RequestBody String ro) {
-        System.out.println("NewProxy " + ro);
-        return service.newProxy(null);
+    public FrpResult<?> newProxy(@RequestBody FrpOptRo<NewProxyFrpRo> ro) {
+        return service.newProxy(ro.getContent());
     }
 
     @UseLogger

@@ -45,8 +45,10 @@ public class ProxyManagerImpl implements ProxyManager {
     @Override
     public ProxyChannelInfoVo getFrpChannel(ProxyChannel channel) {
         ProxyChannelInfoVo.ProxyConfig config = new ProxyChannelInfoVo.ProxyConfig()
-            .setServerAddr("frps.hocgin.top")
-            .setServerPort(30902)
+//            .setServerAddr("frps.hocgin.top")
+//            .setServerPort(30902)
+            .setServerAddr("127.0.0.1")
+            .setServerPort(7000)
             .setProxies(List.of(new ProxyChannelInfoVo.ProxyConfig.Proxy()
                 .setName(channel.getChannelId())
                 .setType(channel.getType())
