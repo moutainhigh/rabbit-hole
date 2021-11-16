@@ -11,7 +11,5 @@ import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
  */
 public interface ProxyManager {
 
-    ProxyChannelInfoVo getChannelInfo(String channelId);
-
     ProxyChannelInfoVo getFrpChannel(ProxyChannel channel);
 }

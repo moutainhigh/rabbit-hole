@@ -26,29 +26,13 @@ import java.util.List;
 public class ProxyManagerImpl implements ProxyManager {
 
     @Override
-    public ProxyChannelInfoVo getChannelInfo(String channelId) {
+    public ProxyChannelInfoVo getFrpChannel(ProxyChannel channel) {
         ProxyChannelInfoVo.ProxyConfig config = new ProxyChannelInfoVo.ProxyConfig()
             .setServerAddr("frps.hocgin.top")
             .setServerPort(30902)
-            .setProxies(List.of(new ProxyChannelInfoVo.ProxyConfig.Proxy()
-                .setName(channelId)
-                .setType("http")
-                .setCustomDomains("forward.hocgin.top")
-                .setLocalIp("127.0.0.1")
-                .setLocalPort(18987))
-            );
-        return new ProxyChannelInfoVo()
-            .setMd5(Md5Utils.getMD5(JSONUtil.toJsonStr(config), "utf-8"))
-            .setConfig(config);
-    }
-
-    @Override
-    public ProxyChannelInfoVo getFrpChannel(ProxyChannel channel) {
-        ProxyChannelInfoVo.ProxyConfig config = new ProxyChannelInfoVo.ProxyConfig()
-//            .setServerAddr("frps.hocgin.top")
-//            .setServerPort(30902)
-            .setServerAddr("127.0.0.1")
-            .setServerPort(7000)
+//            本地开发环境
+//            .setServerAddr("127.0.0.1")
+//            .setServerPort(7000)
             .setProxies(List.of(new ProxyChannelInfoVo.ProxyConfig.Proxy()
                 .setName(channel.getChannelId())
                 .setType(channel.getType())
