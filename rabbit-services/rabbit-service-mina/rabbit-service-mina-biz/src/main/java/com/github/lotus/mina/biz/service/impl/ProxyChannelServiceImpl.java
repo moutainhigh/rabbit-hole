@@ -31,7 +31,9 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
 
     @Override
     public ProxyChannelInfoVo getChannelInfo(String channelId) {
-        ProxyChannel channel = getByChannelId(channelId).orElseThrow(() -> ServiceException.wrap("渠道ID错误"));
+        ProxyChannel channel = lambdaQuery().eq(ProxyChannel::getChannelId, channelId)
+            .eq(ProxyChannel::getEnabled, true).oneOpt()
+            .orElseThrow(() -> ServiceException.wrap("渠道ID错误"));
         return proxyManager.getFrpChannel(channel);
     }
 
