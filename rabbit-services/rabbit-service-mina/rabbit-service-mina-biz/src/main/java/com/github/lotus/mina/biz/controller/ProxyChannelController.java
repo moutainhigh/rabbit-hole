@@ -1,7 +1,8 @@
-package com.github.lotus.chaos.biz.controller;
+package com.github.lotus.mina.biz.controller;
 
-import com.github.lotus.chaos.biz.pojo.vo.ProxyChannelInfoVo;
-import com.github.lotus.chaos.biz.service.ProxyService;
+import com.github.lotus.mina.biz.manager.ProxyManager;
+import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
+import com.github.lotus.mina.biz.service.ProxyChannelService;
 import in.hocg.boot.web.result.Result;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "chaos::代理服务")
 @RequestMapping("/proxy")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class ProxyController {
-    private final ProxyService service;
+public class ProxyChannelController {
+    private final ProxyChannelService service;
 
     @GetMapping("/{channelId}")
     public Result<ProxyChannelInfoVo> getChannelInfo(@PathVariable("channelId") String channelId) {

@@ -1,10 +1,9 @@
-package com.github.lotus.chaos.biz.controller;
+package com.github.lotus.mina.biz.controller;
 
-import com.github.lotus.chaos.biz.service.FrpPluginService;
-import com.github.lotus.chaos.biz.support.frp.ro.*;
-import com.github.lotus.chaos.biz.support.frp.vo.FrpResult;
+import com.github.lotus.mina.biz.manager.FrpManager;
+import com.github.lotus.mina.biz.support.frp.ro.*;
+import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "chaos::frp 插件")
 @RequestMapping("/frp/opt")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class FrpPluginController {
-    private final FrpPluginService service;
+public class FrpController {
+    private final FrpManager service;
 
     @UseLogger
     @ApiOperation("登陆(Login)")

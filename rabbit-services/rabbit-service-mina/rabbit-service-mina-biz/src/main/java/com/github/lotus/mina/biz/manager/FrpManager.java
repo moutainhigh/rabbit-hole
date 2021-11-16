@@ -1,7 +1,8 @@
-package com.github.lotus.chaos.biz.service;
+package com.github.lotus.mina.biz.manager;
 
-import com.github.lotus.chaos.biz.support.frp.ro.*;
-import com.github.lotus.chaos.biz.support.frp.vo.FrpResult;
+
+import com.github.lotus.mina.biz.support.frp.ro.*;
+import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
 
 /**
  * Created by hocgin on 2021/11/8
@@ -9,7 +10,7 @@ import com.github.lotus.chaos.biz.support.frp.vo.FrpResult;
  *
  * @author hocgin
  */
-public interface FrpPluginService {
+public interface FrpManager {
 
     /**
      * 用户登录操作信息

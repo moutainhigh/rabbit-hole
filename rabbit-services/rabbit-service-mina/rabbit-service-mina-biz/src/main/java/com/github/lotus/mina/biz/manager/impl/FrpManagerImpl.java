@@ -1,18 +1,14 @@
-package com.github.lotus.chaos.biz.service.impl;
+package com.github.lotus.mina.biz.manager.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.lang.Assert;
-import com.github.lotus.chaos.biz.service.FrpPluginService;
-import com.github.lotus.chaos.biz.support.frp.ro.*;
-import com.github.lotus.chaos.biz.support.frp.vo.FrpResult;
-import com.github.lotus.chaos.biz.support.frp.vo.NewProxyFrpVo;
-import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import com.github.lotus.mina.biz.manager.FrpManager;
+import com.github.lotus.mina.biz.support.frp.ro.*;
+import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
+import com.github.lotus.mina.biz.support.frp.vo.NewProxyFrpVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 /**
  * Created by hocgin on 2021/11/8
@@ -23,7 +19,7 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class FrpPluginServiceImpl implements FrpPluginService {
+public class FrpManagerImpl implements FrpManager {
 
     @Override
     public FrpResult<?> login(LoginFrpRo ro) {

@@ -1,6 +1,6 @@
-package com.github.lotus.chaos.biz.support.frp.vo;
+package com.github.lotus.mina.biz.support.frp.vo;
 
-import com.github.lotus.chaos.biz.support.frp.ro.NewProxyFrpRo;
+import com.github.lotus.mina.biz.support.frp.ro.NewProxyFrpRo;
 
 /**
  * Created by hocgin on 2021/11/9

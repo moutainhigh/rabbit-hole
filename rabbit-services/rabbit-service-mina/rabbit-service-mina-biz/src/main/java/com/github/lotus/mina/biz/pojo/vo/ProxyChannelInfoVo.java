@@ -1,4 +1,4 @@
-package com.github.lotus.chaos.biz.pojo.vo;
+package com.github.lotus.mina.biz.pojo.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,6 +18,16 @@ import java.util.List;
 public class ProxyChannelInfoVo {
     private String md5;
     private ProxyConfig config;
+    private String cnvStr = "" +
+        "[common]\n" +
+        "server_addr = frps.hocgin.top\n" +
+        "server_port = 30902\n" +
+        "\n" +
+        "[ams-pay]\n" +
+        "type = http\n" +
+        "custom_domains = forward.hocgin.top\n" +
+        "local_ip = 127.0.0.1\n" +
+        "local_port = 21000";
 
     @Data
     @Accessors(chain = true)
