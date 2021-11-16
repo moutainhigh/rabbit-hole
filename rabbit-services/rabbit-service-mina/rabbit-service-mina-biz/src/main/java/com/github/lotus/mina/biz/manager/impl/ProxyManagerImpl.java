@@ -5,6 +5,7 @@ import com.alibaba.nacos.common.utils.Md5Utils;
 import com.github.lotus.mina.biz.entity.ProxyChannel;
 import com.github.lotus.mina.biz.manager.ProxyManager;
 import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
+import com.github.lotus.mina.biz.support.frp.FrpHelper;
 import in.hocg.boot.utils.IpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,8 @@ public class ProxyManagerImpl implements ProxyManager {
             );
         return new ProxyChannelInfoVo()
             .setMd5(Md5Utils.getMD5(JSONUtil.toJsonStr(config), "utf-8"))
-            .setConfig(config);
+            .setConfig(config)
+            .setCnvStr(FrpHelper.toFrpcIni(config));
     }
 
 }
