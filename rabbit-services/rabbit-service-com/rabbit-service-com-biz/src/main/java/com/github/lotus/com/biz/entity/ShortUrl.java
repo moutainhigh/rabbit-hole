@@ -36,9 +36,19 @@ public class ShortUrl extends AbstractEntity<ShortUrl> {
     @ApiModelProperty("原链")
     @TableField("original_url")
     private String originalUrl;
+
+
     @ApiModelProperty("启用状态")
     @TableField("enabled")
     private Boolean enabled;
+
+    // todo 调整
+    // https://zhuanlan.zhihu.com/p/102626209
+    // total_click_count：当前链接总点击次数
+    // expiration_date：失效日期
+    // suffix_url：链接除了域名外的后缀
+    // base_url：域名
+
     @ApiModelProperty("创建人")
     @TableField("creator")
     private Long creator;
@@ -48,5 +58,4 @@ public class ShortUrl extends AbstractEntity<ShortUrl> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
 }
