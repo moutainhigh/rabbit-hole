@@ -1,12 +1,17 @@
 # rabbit-hole
 > 文档
 
-## 如何启动
+## 如何使用
+### 项目启动
 1. 配置环境变量，参照`env.example`
 2. 配置DNS映射，参照`host.example`
 3. 启动对应服务
 
-## 项目基础结构
+### 查看接口文档
+API 接口文档使用的是`knife`可以按照`swagger`在服务群里面进行使用，文档的地址为`http://{网关地址:端口}/doc.html`
+
+## 项目
+### 项目基础结构
 ```shell script
 .
 ├── README.md
@@ -37,12 +42,7 @@
 |⚠️|rabbit-service-chaos|chaos|混合[闲置状态]|-|-|
 |⚠️|rabbit-service-wl|wl|物流项目[暂停状态]|-|-|
 
-### 规范
-[基础设施保留端口](./docs/design/基础设施.md)
-[服务端口分配](./docs/design/服务设施.md)
-[规范设计](./docs/design/规范设计.md)
-
-
-## 相关内容
-### API 接口文档系列
-> API 接口文档使用的是`knife`可以按照`swagger`在服务群里面进行使用，文档的地址为`http://{网关地址:端口}/doc.html`
+## 设计规范
+- [基础设施保留端口](./docs/design/基础设施.md)
+- [服务端口分配](./docs/design/服务设施.md)
+- [规范设计](./docs/design/规范设计.md)
