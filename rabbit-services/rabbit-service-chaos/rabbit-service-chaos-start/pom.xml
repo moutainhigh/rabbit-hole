@@ -47,6 +47,14 @@
       <artifactId>rabbit-service-bmw-biz</artifactId>
     </dependency>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-rcm-biz</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-aom-biz</artifactId>
+    </dependency>
+    <dependency>
       <groupId>in.hocg.boot</groupId>
       <artifactId>test-spring-boot-starter</artifactId>
       <scope>test</scope>

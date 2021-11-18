@@ -1,7 +1,7 @@
 package com.github.lotus.mina.biz.mapstruct;
 
 import com.github.lotus.mina.api.pojo.ro.UploadYouTubeRo;
-import com.github.lotus.mina.biz.pojo.ro.UploadYouTubeVideoRo;
+import com.github.lotus.mina.biz.pojo.dto.UploadYouTubeVideoDto;
 import org.mapstruct.Mapper;
 
 /**
@@ -12,5 +12,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface YouTubeMapping {
-    UploadYouTubeVideoRo asUploadYouTubeVideoRo(UploadYouTubeRo ro);
+    UploadYouTubeVideoDto asUploadYouTubeVideoRo(UploadYouTubeRo ro);
 }

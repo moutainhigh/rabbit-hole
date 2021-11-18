@@ -22,6 +22,8 @@
     <module>rabbit-service-bmw</module>
     <module>rabbit-service-mall</module>
     <module>rabbit-service-mina</module>
+    <module>rabbit-service-aom</module>
+    <module>rabbit-service-rcm</module>
   </modules>
 
 </project>
