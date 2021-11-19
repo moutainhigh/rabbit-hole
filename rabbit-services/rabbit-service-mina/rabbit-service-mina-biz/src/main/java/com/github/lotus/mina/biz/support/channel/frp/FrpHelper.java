@@ -1,9 +1,7 @@
-package com.github.lotus.mina.biz.support.frp;
+package com.github.lotus.mina.biz.support.channel.frp;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.db.sql.SqlBuilder;
 import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
-import com.google.common.base.Joiner;
 import lombok.experimental.UtilityClass;
 
 import java.util.StringJoiner;

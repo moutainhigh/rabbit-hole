@@ -87,9 +87,10 @@ public class UserGroupController {
         return Result.success();
     }
 
+    @ApiOperation("授权权限 - 用户组")
     @UseLogger("授权权限 - 用户组")
     @PostMapping("/{userGroupId}/grant/authority")
-    public Result<Void> grantAuthority(@PathVariable Long userGroupId,
+    public Result<Void> grantAuthority(@ApiParam(value = "用户组", required = true) @PathVariable Long userGroupId,
                                        @Validated @RequestBody UserGroupGrantAuthorityRo ro) {
         service.grantAuthority(userGroupId, ro);
         return Result.success();

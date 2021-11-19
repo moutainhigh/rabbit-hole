@@ -5,20 +5,18 @@ import cn.hutool.core.util.StrUtil;
 import com.github.lotus.mina.biz.cache.MinaCacheService;
 import com.github.lotus.mina.biz.entity.ProxyChannel;
 import com.github.lotus.mina.biz.manager.FrpManager;
-import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
 import com.github.lotus.mina.biz.service.ProxyChannelService;
-import com.github.lotus.mina.biz.support.frp.ro.*;
-import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
-import com.github.lotus.mina.biz.support.frp.vo.NewProxyFrpVo;
+import com.github.lotus.mina.biz.support.channel.ChannelHelper;
+import com.github.lotus.mina.biz.support.channel.frp.ro.*;
+import com.github.lotus.mina.biz.support.channel.frp.vo.FrpResult;
+import com.github.lotus.mina.biz.support.channel.frp.vo.NewProxyFrpVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Created by hocgin on 2021/11/8
@@ -52,8 +50,9 @@ public class FrpManagerImpl implements FrpManager {
             return FrpResult.reject(StrUtil.format("渠道ID={}错误，未找到代理渠道", channelId));
         }
         ProxyChannel channel = channelOpt.get();
+        String domain = ChannelHelper.getDomain(channel);
 
-        if (!customDomains.contains(channel.getCustomDomains())) {
+        if (!customDomains.contains(domain)) {
             return FrpResult.reject(StrUtil.format("渠道ID={}错误，数据校验失败", channelId));
         }
 

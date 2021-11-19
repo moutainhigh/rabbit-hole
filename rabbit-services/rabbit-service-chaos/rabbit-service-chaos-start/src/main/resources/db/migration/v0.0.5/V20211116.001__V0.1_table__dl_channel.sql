@@ -8,14 +8,16 @@ CREATE TABLE `dl_proxy_channel`
         COMMENT '拥有人',
     `channel_id`      VARCHAR(64)         NOT NULL
         COMMENT '隧道唯一标识',
-    type              VARCHAR(32)         NOT NULL
+    `type`            VARCHAR(32)         NOT NULL
         comment '隧道类型',
-    local_port        INTEGER(6)
+    `local_port`      INTEGER(6)          NOT NULL DEFAULT 8080
         comment '本地端口',
-    local_ip          INTEGER(6)
+    `local_ip`        VARCHAR(32)         NOT NULL DEFAULT '127.0.0.1'
         comment '本地IP',
-    custom_domains    VARCHAR(64)
-        comment '自定义域名',
+    `prefix`          VARCHAR(64)         NOT NULL
+        comment '域名前缀',
+    `suffix`          VARCHAR(64)         NOT NULL
+        comment '域名后缀',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
@@ -33,6 +35,7 @@ CREATE TABLE `dl_proxy_channel`
         COMMENT '更新者',
 
     CONSTRAINT idx_1 UNIQUE (`channel_id`),
+    CONSTRAINT idx_2 UNIQUE (`prefix`, `suffix`, `delete_flag`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB

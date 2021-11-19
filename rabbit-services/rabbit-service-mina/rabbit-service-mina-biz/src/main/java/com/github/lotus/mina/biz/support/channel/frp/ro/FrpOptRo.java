@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.support.frp.ro;
+package com.github.lotus.mina.biz.support.channel.frp.ro;
 
 import lombok.Data;
 

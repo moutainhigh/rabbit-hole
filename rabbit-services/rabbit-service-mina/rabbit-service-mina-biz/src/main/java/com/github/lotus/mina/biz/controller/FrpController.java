@@ -1,8 +1,8 @@
 package com.github.lotus.mina.biz.controller;
 
 import com.github.lotus.mina.biz.manager.FrpManager;
-import com.github.lotus.mina.biz.support.frp.ro.*;
-import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
+import com.github.lotus.mina.biz.support.channel.frp.ro.*;
+import com.github.lotus.mina.biz.support.channel.frp.vo.FrpResult;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
