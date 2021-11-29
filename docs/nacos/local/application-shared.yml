@@ -16,6 +16,8 @@ logging:
     level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   redis:
+    host: redis.hocgin.top
+    port: 26379
     timeout: 10000
     password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
     jedis:

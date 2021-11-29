@@ -5,8 +5,6 @@ spring:
     name: rabbit-chaos
   profiles:
     active: local
-  redis:
-    database: 0
 boot:
   cache:
     names:

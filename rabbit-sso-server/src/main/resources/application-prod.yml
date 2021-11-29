@@ -16,3 +16,6 @@ sso:
           - http://bmw.hocgin.top/login/oauth2/code/custom
           - https://arthas.hocgin.top/login/oauth2/code/custom
           - http://arthas.hocgin.top/login/oauth2/code/custom
+spring:
+  redis:
+    database: 3

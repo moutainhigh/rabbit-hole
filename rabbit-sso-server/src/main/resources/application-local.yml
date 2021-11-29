@@ -7,3 +7,6 @@ sso:
           - http://api.hocgin.local/login/oauth2/code/custom
           - http://sba.hocgin.local/login/oauth2/code/custom
           - http://logistics.hocgin.local/login/oauth2/code/custom
+spring:
+  redis:
+    database: 0

@@ -103,13 +103,7 @@ spring:
             authorization-uri: ${spring.security.oauth2.hostname}/oauth/authorize
             token-uri: ${spring.security.oauth2.hostname}/oauth/token
             user-name-attribute: name
-debug: true
 boot:
-  arthas:
-    telnet-port: -1
-    http-port: -1
-    disabledCommands: stop
-    session-timeout: 10000
   sso:
     client:
       authenticated-urls:
