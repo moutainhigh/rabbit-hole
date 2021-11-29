@@ -96,6 +96,13 @@ public class UserGroupAuthorityRefServiceImpl extends AbstractServiceImpl<UserGr
         return lambdaQuery().eq(UserGroupAuthorityRef::getUserGroupId, userGroupId).list();
     }
 
+    /**
+     * 判定用户组是否已有指定权限
+     *
+     * @param userGroupId 目标用户组
+     * @param authorityId 指定权限
+     * @return 是否具有
+     */
     private boolean hasByUserGroupIdAndAuthorityId(Long userGroupId, Long authorityId) {
         return !lambdaQuery().eq(UserGroupAuthorityRef::getUserGroupId, userGroupId)
             .eq(UserGroupAuthorityRef::getAuthorityId, authorityId)

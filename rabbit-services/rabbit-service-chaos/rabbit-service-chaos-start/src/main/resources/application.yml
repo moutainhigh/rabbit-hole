@@ -7,32 +7,7 @@ spring:
     active: local
   redis:
     database: 0
-  schedulerx2:
-    endpoint: acm.aliyun.com
-    endpointPort: 8080
-    namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
-    groupId: rabbit-hold
-    appKey: ENC(A0/FEwviqFuXaW/f0uAO+omU5vReoXzpm+1FoUSHZXbrFtzxHNFu0Q==)
-  cache:
-    type: redis
-    redis:
-      key-prefix: 'chaos::'
 boot:
-  arthas:
-    telnet-port: -1
-    http-port: -1
-    disabledCommands: stop
-    session-timeout: 10000
-  sms:
-    regionId: cn-hangzhou
-    secretKey: ENC(0e4TdhdwQjsgJGLNDayV8yrt2GWZpjWlE29if8AZeCmtUTn7nqgzWw==)
-    accessKey: ENC(iLLAsf+0aaFg6TTcx5XfkYRJUaK7J8qICdq2CSo4Ju4=)
-  oss:
-    accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
-    secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
-    space: daigou-test
-    domain: http://oss-cn-beijing.aliyuncs.com
-    type: AliYun
   cache:
     names:
       - name: GUMBALLS_GIFT
@@ -46,43 +21,6 @@ boot:
       # [BMW] 接入应用名称
       - name: GET_ACCESS_MCH_BY_ENCODING
         ttl: 1D
-  mail:
-    host: smtp.163.com
-    from: "HOCGIN 官方邮件<13600747016@163.com>"
-    user: 13600747016@163.com
-    pass: ENC(gxGSa0v45jQn5vN4j4xBh9Z/YPTHc+9UAcHSwqk9vGs=)
-  wx:
-    # https://developers.weixin.qq.com/sandbox
-    ma:
-      configs:
-        - appid: wx19d2028bfdc4decf
-          secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)
-        - appid: wxd9f7de635166d8c8
-          secret: ENC(6QRcWwHok5LUM24Mv6YZAF7JOnRfYW0ICKmV+DwAvy5Bw262JlIjto7BKXCSgHsv)
-        - appid: wx2388ca4e8e51be62
-          secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
-        - appid: wx515efe8f906a5e69
-          secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
-        - appid: wxcc688a6002bd1234
-          secret: ENC(lsQ9bNFoRfdugnXc3yo5KA57XgFhIxec9rR4A+Vgf18kIwoQRaFhSe9oQPkoxk1O)
-        - appid: wxffc9e352055986fb
-          secret: ENC(RWdsZ0+DvjwmNsy+3u1ol1TY3VmICK/mUm05bkl1E0uCmx42N68ZknOod0pGjLru)
-    # https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
-    mp:
-      configs:
-        - appid: wx6c554c6d25b19c4a
-          secret: ENC(AsBXMuX5bJLMrGbrYFv2h4x6eK+/4HA7q5GtgQG7Y+pAfqP7bFf8JvRSfWHhwF22)
-          token: ENC(btL8CAl2j2XmWoBzPm+XcynY2xw6js7P)
-  message:
-    type: redis
-  youtube:
-    clients:
-      - application-name: simple-app
-        client-id: ENC(fhFEL/IvwoTnOBC8CTu6FZY0Qvg7SZ9nZ9XSpRz5PyVvb7zC2PxsqnWgeNTLhRjqiiNSEpe0oz8H5SQhu+4fnWj8nzJ0LTAMVlUMMpeFdAbG3KB62ag5Ow==)
-        client-secret: ENC(9pHlkVXaMIqfK4/KCmYqzSYjZAspJQCRraYFI+GvEmpXWtvNURlkAQ==)
-      - application-name: hl.team.wechat
-        client-id: 354771266497-qc9jmt90p9sjv79ll7f490anc7dcs1ds.apps.googleusercontent.com
-        client-secret: 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
   sentinel:
     flow-rules:
       # 发送短信限流, 24 小时只能发送 5 条

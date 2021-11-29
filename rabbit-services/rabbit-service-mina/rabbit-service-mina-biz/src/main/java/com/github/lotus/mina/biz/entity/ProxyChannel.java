@@ -53,10 +53,16 @@ public class ProxyChannel extends AbstractEntity<ProxyChannel> {
     private Integer localPort;
     @ApiModelProperty("本地IP")
     @TableField("local_ip")
-    private Long localIp;
-    @ApiModelProperty("自定义域名")
-    @TableField("custom_domains")
-    private String customDomains;
+    private String localIp;
+    @ApiModelProperty("域名前缀")
+    @TableField("prefix")
+    private String prefix;
+    /**
+     * 例如: forward.hocgin.top
+     */
+    @ApiModelProperty("域名后缀")
+    @TableField("suffix")
+    private String suffix;
     @ApiModelProperty("开启状态")
     @TableField("enabled")
     private Boolean enabled;

@@ -22,11 +22,38 @@ import java.util.List;
 @Mapper
 public interface AuthorityMapper extends BaseMapper<Authority> {
 
+    /**
+     * 查询权限包含的用户列表
+     *
+     * @param authorityId 权限
+     * @param ro          搜索条件
+     * @param ofPage      分页条件
+     * @return 用户列表
+     */
     IPage<User> pagingUserByAuthorityId(@Param("authorityId") Long authorityId, @Param("ro") GetAuthorityUserPagingRo ro, @Param("ofPage") Page<Object> ofPage);
 
+    /**
+     * 获取用户拥有的用户组和拥有的角色的权限
+     *
+     * @param projectId 项目
+     * @param userId    用户
+     * @return 权限列表
+     */
     List<Authority> listByProjectIdAndUserId(@Param("projectId") Long projectId, @Param("userId") Long userId);
 
+    /**
+     * 查询角色拥有的权限列表
+     *
+     * @param roleId 角色
+     * @return 权限列表
+     */
     List<Authority> listByRoleId(@Param("roleId") Long roleId);
 
+    /**
+     * 查询用户组拥有的权限列表
+     *
+     * @param userGroupId 用户组
+     * @return 权限列表
+     */
     List<Authority> listByUserGroupId(@Param("userGroupId") Long userGroupId);
 }

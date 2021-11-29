@@ -2,31 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lotus.ums.biz.mapper.AuthorityMapper">
   <select id="pagingUserByAuthorityId" resultType="com.github.lotus.ums.biz.entity.User">
-    SELECT distinct ua.*
+    SELECT DISTINCT ua.*
     FROM ams_role_user_ref aur
            LEFT JOIN ams_role_authority_ref ara on aur.role_id = ara.role_id
            LEFT JOIN ums_user ua on ua.id = ara.role_id
-    WHERE ara.authority_id = #{authorityId}
-      AND aur.id IS NOT NULL
+    <where>
+      ara.authority_id = #{authorityId}
+        AND aur.id IS NOT NULL
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (ua.nickname LIKE #{keyword}
+          OR ua.phone LIKE #{keyword}
+          OR ua.email LIKE #{keyword}
+          OR ua.username LIKE #{keyword})
+      </if>
+    </where>
   </select>
 
   <select id="listByProjectIdAndUserId" resultType="com.github.lotus.ums.biz.entity.Authority">
     SELECT DISTINCT aa.*
-    FROM (SELECT DISTINCT aa.*
-          FROM ams_authority aa
-                 LEFT JOIN ams_role_authority_ref arar ON arar.authority_id = aa.id
-                 LEFT JOIN ams_role_user_ref arur ON arur.role_id = arar.role_id
-                 LEFT JOIN ams_role ar ON ar.id = arar.role_id
-          WHERE ar.enabled = 1
-            AND arur.user_id = #{userId}
-          UNION
-          SELECT DISTINCT aa.*
-          FROM ams_authority aa
-                 LEFT JOIN ams_user_group_authority_ref augar ON augar.authority_id = aa.id
-                 LEFT JOIN ams_user_group_user_ref augur ON augur.user_group_id = augar.user_group_id
-                 LEFT JOIN ams_user_group aug ON aug.id = augur.user_group_id
-          WHERE aug.enabled = 1
-            AND augur.user_id = #{userId}) aa
+      FROM (
+    <!-- 角色权限 -->
+    SELECT DISTINCT aa.*
+    FROM ams_authority aa
+           LEFT JOIN ams_role_authority_ref arar ON arar.authority_id = aa.id
+           LEFT JOIN ams_role_user_ref arur ON arur.role_id = arar.role_id
+           LEFT JOIN ams_role ar ON ar.id = arar.role_id
+    WHERE ar.enabled = 1
+      AND arur.user_id = #{userId}
+    UNION
+    <!-- 用户组权限 -->
+    SELECT DISTINCT aa.*
+    FROM ams_authority aa
+           LEFT JOIN ams_user_group_authority_ref augar ON augar.authority_id = aa.id
+           LEFT JOIN ams_user_group_user_ref augur ON augur.user_group_id = augar.user_group_id
+           LEFT JOIN ams_user_group aug ON aug.id = augur.user_group_id
+    WHERE aug.enabled = 1
+      AND augur.user_id = #{userId}) aa
     <where>
       aa.enabled = 1
       <if test="projectId != null">

@@ -1,4 +1,4 @@
-package com.github.lotus.mina.biz.support.frp.vo;
+package com.github.lotus.mina.biz.support.channel.frp.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;

@@ -98,6 +98,7 @@ public class RoleController {
         return Result.success();
     }
 
+    @ApiOperation("给角色授权权限")
     @UseLogger("给角色授权权限")
     @PostMapping("/{roleId}/grant/authority")
     public Result<Void> grantAuthority(@PathVariable Long roleId,

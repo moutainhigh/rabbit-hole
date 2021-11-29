@@ -54,9 +54,7 @@ public class RoleAuthorityRefServiceImpl extends AbstractServiceImpl<RoleAuthori
         List<RoleAuthorityRef> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
 
         // 删除
-        this.removeByIds(deleteList.parallelStream()
-            .map(RoleAuthorityRef::getId)
-            .collect(Collectors.toList()));
+        this.removeByIds(LangUtils.toList(deleteList, RoleAuthorityRef::getId));
 
         // 新增
         addList.forEach(this::validInsertOrUpdate);

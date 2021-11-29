@@ -1,8 +1,8 @@
 package com.github.lotus.mina.biz.manager;
 
 
-import com.github.lotus.mina.biz.support.frp.ro.*;
-import com.github.lotus.mina.biz.support.frp.vo.FrpResult;
+import com.github.lotus.mina.biz.support.channel.frp.ro.*;
+import com.github.lotus.mina.biz.support.channel.frp.vo.FrpResult;
 
 /**
  * Created by hocgin on 2021/11/8

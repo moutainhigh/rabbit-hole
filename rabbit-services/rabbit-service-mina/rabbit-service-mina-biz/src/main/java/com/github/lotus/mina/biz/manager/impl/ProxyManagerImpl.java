@@ -1,12 +1,13 @@
 package com.github.lotus.mina.biz.manager.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.nacos.common.utils.Md5Utils;
 import com.github.lotus.mina.biz.entity.ProxyChannel;
 import com.github.lotus.mina.biz.manager.ProxyManager;
 import com.github.lotus.mina.biz.pojo.vo.ProxyChannelInfoVo;
-import com.github.lotus.mina.biz.support.frp.FrpHelper;
-import in.hocg.boot.utils.IpUtils;
+import com.github.lotus.mina.biz.support.channel.ChannelHelper;
+import com.github.lotus.mina.biz.support.channel.frp.FrpHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +28,8 @@ public class ProxyManagerImpl implements ProxyManager {
 
     @Override
     public ProxyChannelInfoVo getFrpChannel(ProxyChannel channel) {
+        String domain = ChannelHelper.getDomain(channel);
+
         ProxyChannelInfoVo.ProxyConfig config = new ProxyChannelInfoVo.ProxyConfig()
             .setServerAddr("frps.hocgin.top")
             .setServerPort(30902)
@@ -36,8 +39,8 @@ public class ProxyManagerImpl implements ProxyManager {
             .setProxies(List.of(new ProxyChannelInfoVo.ProxyConfig.Proxy()
                 .setName(channel.getChannelId())
                 .setType(channel.getType())
-                .setCustomDomains(channel.getCustomDomains())
-                .setLocalIp(IpUtils.longToIp(channel.getLocalIp()))
+                .setCustomDomains(domain)
+                .setLocalIp(channel.getLocalIp())
                 .setLocalPort(channel.getLocalPort()))
             );
         return new ProxyChannelInfoVo()
