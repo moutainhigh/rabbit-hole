@@ -1,5 +1,5 @@
 name: 发布通用模块
-description: 发布通用模块(目前为 chaos/rabbit-basic)
+# 发布通用模块(目前为 chaos/rabbit-basic)
 
 on:
   workflow_dispatch:
