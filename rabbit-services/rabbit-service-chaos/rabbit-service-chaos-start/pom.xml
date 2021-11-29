@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>rabbit-service-chaos</artifactId>
-    <groupId>com.github.lotus</groupId>
+    <groupId>in.hocg.rabbit</groupId>
     <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -14,7 +14,7 @@
   <artifactId>rabbit-service-chaos-start</artifactId>
 
   <properties>
-    <main-class>com.github.lotus.chaos.BootApplication</main-class>
+    <main-class>in.hocg.rabbit.chaos.BootApplication</main-class>
   </properties>
 
   <dependencies>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.lotus.com.biz.mapper.ShortUrlMapper">
-
-    <select id="paging" resultType="com.github.lotus.com.biz.entity.ShortUrl">
-      SELECT csu.* FROM com_short_url csu
-      ORDER BY csu.created_at DESC
-    </select>
-</mapper>
