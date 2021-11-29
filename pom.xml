@@ -9,7 +9,7 @@
     <version>19</version>
   </parent>
 
-  <groupId>com.github.lotus</groupId>
+  <groupId>in.hocg.rabbit</groupId>
   <name>Rabbit :: Hole</name>
   <artifactId>rabbit-hole</artifactId>
   <packaging>pom</packaging>

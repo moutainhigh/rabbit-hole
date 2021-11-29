@@ -1,16 +1,9 @@
-debug: true
-logging:
-  level:
-    root: debug
 spring:
   security:
     oauth2:
       hostname: https://sso-dev.hocgin.top
   redis:
-    host: sv-redis.basic
-    port: 6379
     database: 1
-    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
 boot:
   sso:
     client:

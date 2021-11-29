@@ -6,7 +6,7 @@ logging:
   level:
     root: WARN
     com.alibaba.nacos: WARN
-    com.github.lotus: DEBUG
+    in.hocg.rabbit: DEBUG
     in.hocg: DEBUG
   config: classpath:log4j2-boot-local.xml
   file:

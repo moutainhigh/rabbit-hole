@@ -1,0 +1,32 @@
+package in.hocg.rabbit.mall.biz.service;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.rabbit.mall.biz.entity.OrderRefundApply;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderRefundApplyPagingRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.RefundApplyRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.RefundHandleRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
+import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+
+import java.util.List;
+
+/**
+ * <p>
+ * [订单模块] 退货申请 服务类
+ * </p>
+ *
+ * @author hocgin
+ * @since 2021-08-21
+ */
+public interface OrderRefundApplyService extends AbstractService<OrderRefundApply> {
+
+    IPage<OrderRefundApplyComplexVo> paging(OrderRefundApplyPagingRo ro);
+
+    OrderRefundApplyComplexVo getComplex(Long id);
+
+    void handleRefund(Long id, RefundHandleRo ro);
+
+    List<OrderRefundApplyComplexVo> listComplexByOrderItemId(Long orderItemId);
+
+    void applyRefund(RefundApplyRo ro);
+}

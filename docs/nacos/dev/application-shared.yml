@@ -6,7 +6,7 @@ logging:
   level:
     root: WARN
     com.alibaba.nacos: WARN
-    com.github.lotus: DEBUG
+    in.hocg.rabbit: DEBUG
     in.hocg: DEBUG
   config: classpath:log4j2-boot-local.xml
   file:
@@ -16,6 +16,8 @@ logging:
     level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
 spring:
   redis:
+    host: sv-redis.basic
+    port: 6379
     timeout: 10000
     password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
     jedis:

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.github.lotus</groupId>
+    <groupId>in.hocg.rabbit</groupId>
     <artifactId>rabbit-hole</artifactId>
     <version>${revision}</version>
   </parent>
@@ -12,7 +12,7 @@
   <artifactId>rabbit-gateway</artifactId>
 
   <properties>
-    <main-class>com.github.lotus.gateway.GatewayApplication</main-class>
+    <main-class>in.hocg.rabbit.gateway.GatewayApplication</main-class>
   </properties>
 
   <dependencies>

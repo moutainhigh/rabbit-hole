@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.rabbit.wl.biz.mapper.LogisticsLineMapper">
+  <select id="complete" resultType="in.hocg.rabbit.wl.biz.entity.LogisticsLine">
+    SELECT DISTINCT wll.*
+    FROM wl_logistics_line wll
+           LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
+           LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+           LEFT JOIN wl_company wc on wc.id = ww.company_id
+    <where>
+      <if test="ro.companyId != null">
+        AND wc.id = #{ro.companyId}
+      </if>
+      <if test="ro.warehouseId != null">
+        AND wspr.warehouse_id = #{ro.warehouseId}
+      </if>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND wll.remark LIKE #{keyword}
+      </if>
+    </where>
+  </select>
+
+  <select id="paging" resultType="in.hocg.rabbit.wl.biz.entity.LogisticsLine">
+    SELECT DISTINCT wll.*
+    FROM wl_logistics_line wll
+           LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
+           LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+           LEFT JOIN wl_company wc on wc.id = ww.company_id
+    <where>
+      <if test="ro.companyId != null">
+        AND wc.id = #{ro.companyId}
+      </if>
+      <if test="ro.provinceAdcode != null">
+        AND wll.province_adcode = #{ro.provinceAdcode}
+      </if>
+      <if test="ro.cityAdcode != null">
+        AND wll.city_adcode = #{ro.cityAdcode}
+      </if>
+      <if test="ro.warehouseId != null">
+        <foreach collection="ro.warehouseId" item="item" separator="," open="AND wspr.warehouse_id IN(" close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="search" resultType="in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineSearchVo">
+    SELECT DISTINCT wc.remark                                   AS company_remark,
+                    wc.title                                    AS company_name,
+                    wc.tel                                      AS company_tel,
+
+                    ww.remark                                   AS warehouse_remark,
+                    ww.title                                    AS warehouse_name,
+                    ww.province_adcode                          AS warehouse_province,
+                    ww.city_adcode                              AS warehouse_city,
+                    ww.district_adcode                          AS warehouse_district,
+
+                    wll.unit,
+                    wll.unit_price,
+                    wll.shipping_methods,
+                    wll.remark                                  AS logistics_line_remark,
+                    wll.aging,
+                    wll.province_adcode                         AS logistics_line_province,
+                    wll.city_adcode                             AS logistics_line_city,
+                    wll.district_adcode                         AS logistics_line_district,
+                    ifnull(wll.last_updated_at, wll.created_at) AS last_updated_at
+    FROM wl_logistics_line wll
+           LEFT JOIN wl_starting_point_ref wspr on wll.id = wspr.logistics_line_id
+           LEFT JOIN wl_warehouse ww on ww.id = wspr.warehouse_id
+           LEFT JOIN wl_company wc on wc.id = ww.company_id
+    <where>
+      <!--  终点  -->
+      <if test="endPoint != null">
+        <if test="endPoint.provinceAdcode != null">
+          AND wll.province_adcode = #{endPoint.provinceAdcode}
+        </if>
+        <if test="endPoint.cityAdcode != null">
+          AND wll.city_adcode = #{endPoint.cityAdcode}
+        </if>
+        <if test="endPoint.districtAdcode != null">
+          AND wll.district_adcode = #{endPoint.districtAdcode}
+        </if>
+      </if>
+      <!--  起点  -->
+      <if test="starPoint != null">
+        <if test="starPoint.provinceAdcode != null">
+          AND ww.province_adcode = #{starPoint.provinceAdcode}
+        </if>
+        <if test="starPoint.cityAdcode != null">
+          AND ww.city_adcode = #{starPoint.cityAdcode}
+        </if>
+        <if test="starPoint.districtAdcode != null">
+          AND ww.district_adcode = #{starPoint.districtAdcode}
+        </if>
+      </if>
+    </where>
+    ORDER BY wll.unit_price
+  </select>
+</mapper>

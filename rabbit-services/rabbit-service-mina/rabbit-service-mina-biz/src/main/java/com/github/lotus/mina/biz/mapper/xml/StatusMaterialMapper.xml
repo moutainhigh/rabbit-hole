@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.lotus.mina.biz.mapper.StatusMaterialMapper">
-  <select id="pagingForMina" resultType="com.github.lotus.mina.biz.entity.StatusMaterial">
-    SELECT *
-    FROM mina_status_material
-  </select>
-</mapper>
