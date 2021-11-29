@@ -31,8 +31,8 @@ jobs:
           mkdir -p ~/.m2
           echo "<settings><servers><server><id>\${env.ID}</id><username>\${env.USERNAME}</username><password>\${env.PASSWORD}</password></server></servers></settings>" > ~/.m2/settings.xml
           REPO="\${env.ID}::default::\${env.URL}"
-          mvn --batch-mode deploy rabbit-basic/rabbit-usercontext/rabbit-usercontext-autoconfigure -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
-          mvn --batch-mode deploy rabbit-services/rabbit-service-chaos/rabbit-service-chaos-api -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
+          mvn --batch-mode deploy -pl rabbit-basic/rabbit-usercontext/rabbit-usercontext-autoconfigure -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
+          mvn --batch-mode deploy -pl rabbit-services/rabbit-service-chaos/rabbit-service-chaos-api -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
         env:
           ID: sonatype-snapshots
           URL: https://oss.sonatype.org/content/repositories/snapshots
