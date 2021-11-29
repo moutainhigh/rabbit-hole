@@ -1,0 +1,129 @@
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+    poolSize: 10
+logging:
+  level:
+    root: WARN
+    com.alibaba.nacos: WARN
+    com.github.lotus: DEBUG
+    in.hocg: DEBUG
+  config: classpath:log4j2-boot-local.xml
+  file:
+    path: /data/logs/app/${spring.application.name:unknown}
+    name: ${logging.file.path}/${spring.application.name:unknown}.log
+  pattern:
+    level: '%5p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}]'
+spring:
+  redis:
+    timeout: 10000
+    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
+    jedis:
+      pool:
+        max-active: 10
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ENC(kgN96yKwsSme4V5eDT/jgw==)
+    password: ENC(2mhLSKyllnmu0g04HaAZSA==)
+    druid:
+      validation-query: SELECT 1
+      test-while-idle: true
+      initial-size: 1
+  cloud:
+    jmx:
+      enabled: true
+  schedulerx2:
+    endpoint: acm.aliyun.com
+    endpointPort: 8080
+    namespace: 6186ac89-041b-45b4-8ba2-68bca89c16df
+    groupId: rabbit-hold
+    appKey: ENC(A0/FEwviqFuXaW/f0uAO+omU5vReoXzpm+1FoUSHZXbrFtzxHNFu0Q==)
+  cache:
+    type: redis
+    redis:
+      key-prefix: '${spring.application.name}::'
+mybatis-plus:
+  mapper-locations: classpath*:/**/xml/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      external-file: ${logging.file.name}
+feign:
+  hystrix:
+    enabled: false
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+boot:
+  arthas:
+    tunnel-server: wss://arthas.hocgin.top/ws
+    telnet-port: -1
+    http-port: -1
+    disabledCommands: stop
+    session-timeout: 10000
+  sms:
+    regionId: cn-hangzhou
+    secretKey: ENC(0e4TdhdwQjsgJGLNDayV8yrt2GWZpjWlE29if8AZeCmtUTn7nqgzWw==)
+    accessKey: ENC(iLLAsf+0aaFg6TTcx5XfkYRJUaK7J8qICdq2CSo4Ju4=)
+  oss:
+    accessKey: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
+    secretKey: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
+    space: daigou-test
+    domain: http://oss-cn-beijing.aliyuncs.com
+    type: AliYun
+  mail:
+    host: smtp.163.com
+    from: "HOCGIN 官方邮件<13600747016@163.com>"
+    user: 13600747016@163.com
+    pass: ENC(gxGSa0v45jQn5vN4j4xBh9Z/YPTHc+9UAcHSwqk9vGs=)
+  wx:
+    ma:
+      configs:
+        - appid: wx19d2028bfdc4decf
+          secret: ENC(zwnmLCfv4X5OyNLHruEryAHM+Umgi3ERqJBp2JFyAi1KYDrrfYFJEEbjTEJaqz3x)
+        - appid: wxd9f7de635166d8c8
+          secret: ENC(6QRcWwHok5LUM24Mv6YZAF7JOnRfYW0ICKmV+DwAvy5Bw262JlIjto7BKXCSgHsv)
+        - appid: wx2388ca4e8e51be62
+          secret: ENC(9qBwgY0iH13XD9YQ4dJLQZOp0pcFsG8P/tkPpunJX1aJQrDHfJcqxIusofBbJv1W)
+        - appid: wx515efe8f906a5e69
+          secret: ENC(xn/zR3G6A3ROPuP2qrm3KKuw6Pc8RrECuJ7tL4XHrVBaKChMWOBFGeJSA4sQaxFK)
+        - appid: wxcc688a6002bd1234
+          secret: ENC(lsQ9bNFoRfdugnXc3yo5KA57XgFhIxec9rR4A+Vgf18kIwoQRaFhSe9oQPkoxk1O)
+        - appid: wxffc9e352055986fb
+          secret: ENC(RWdsZ0+DvjwmNsy+3u1ol1TY3VmICK/mUm05bkl1E0uCmx42N68ZknOod0pGjLru)
+    mp:
+      configs:
+        - appid: wxb4df1f0c3dc96256
+          secret: ENC(qWrZg5B1aiIwRld5B3JuCnUd0AuV9GPgTVUqA9w5lysRLncaJ0W3rfmj6yWLGHD4)
+          token: ENC(u4Zbme+gFwVMKRcU8fT+mGbdJVhsX5PF)
+  message:
+    type: redis
+  youtube:
+    clients:
+      - application-name: simple-app
+        client-id: ENC(fhFEL/IvwoTnOBC8CTu6FZY0Qvg7SZ9nZ9XSpRz5PyVvb7zC2PxsqnWgeNTLhRjqiiNSEpe0oz8H5SQhu+4fnWj8nzJ0LTAMVlUMMpeFdAbG3KB62ag5Ow==)
+        client-secret: ENC(9pHlkVXaMIqfK4/KCmYqzSYjZAspJQCRraYFI+GvEmpXWtvNURlkAQ==)
+      - application-name: hl.team.wechat
+        client-id: 354771266497-qc9jmt90p9sjv79ll7f490anc7dcs1ds.apps.googleusercontent.com
+        client-secret: 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
+  web:
+    hostname: https://api.hocgin.top

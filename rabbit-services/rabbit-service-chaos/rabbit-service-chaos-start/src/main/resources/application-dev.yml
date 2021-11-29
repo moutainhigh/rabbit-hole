@@ -7,13 +7,10 @@ spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     url: jdbc:p6spy:mysql://sv-mysql.basic:3306/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    username: ENC(kgN96yKwsSme4V5eDT/jgw==)
-    password: ENC(2mhLSKyllnmu0g04HaAZSA==)
   redis:
     host: sv-redis.basic
     port: 6379
     database: 1
-    password: ENC(arDwqcHWrnCjhYGeGX8Pzg==)
 boot:
   web:
     hostname: https://api-dev.hocgin.top
