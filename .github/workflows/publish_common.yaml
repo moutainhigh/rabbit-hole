@@ -1,4 +1,5 @@
-name: 发布API接口(chaos)
+name: 发布通用模块
+description: 发布通用模块(目前为 chaos/rabbit-basic)
 
 on:
   workflow_dispatch:
@@ -33,6 +34,7 @@ jobs:
         run: |
           SNAPSHOT_REPO="\${env.MAVEN_SERVER_ID}::default::\${env.SNAPSHOT_URL}"
           RELEASE_REPO="\${env.MAVEN_SERVER_ID}::default::\${env.RELEASE_URL}"
+          mvn --batch-mode deploy rabbit-basic/rabbit-usercontext/rabbit-usercontext-autoconfigure -P release -DaltDeploymentRepository="${RELEASE_REPO}" -DaltSnapshotDeploymentRepository="${SNAPSHOT_REPO}" -DskipTests
           mvn --batch-mode deploy rabbit-services/rabbit-service-chaos/rabbit-service-chaos-api -P release -DaltDeploymentRepository="${RELEASE_REPO}" -DaltSnapshotDeploymentRepository="${SNAPSHOT_REPO}" -DskipTests
         env:
           SNAPSHOT_URL: https://oss.sonatype.org/content/repositories/snapshots
