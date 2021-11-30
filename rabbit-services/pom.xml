@@ -12,6 +12,7 @@
 
   <name>Rabbit :: Services</name>
   <artifactId>rabbit-services</artifactId>
+
   <modules>
     <module>rabbit-service-tpl</module>
     <module>rabbit-service-com</module>

@@ -10,9 +10,9 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
 
-
   <name>Rabbit :: User Context</name>
   <artifactId>rabbit-usercontext</artifactId>
+
   <modules>
     <module>rabbit-usercontext-basic</module>
     <module>rabbit-usercontext-interface</module>

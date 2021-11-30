@@ -12,6 +12,7 @@
 
   <name>Rabbit :: Basic</name>
   <artifactId>rabbit-basic</artifactId>
+
   <modules>
     <module>rabbit-common</module>
     <module>rabbit-usercontext</module>
