@@ -32,6 +32,7 @@ jobs:
           echo "<settings><servers><server><id>\${env.ID}</id><username>\${env.USERNAME}</username><password>\${env.PASSWORD}</password></server></servers></settings>" > ~/.m2/settings.xml
           REPO="\${env.ID}::default::\${env.URL}"
           mvn install --batch-mode -Dmaven.test.skip=true
+          mvn --batch-mode deploy -pl rabbit-basic/rabbit-common -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
           mvn --batch-mode deploy -pl rabbit-basic/rabbit-usercontext/rabbit-usercontext-autoconfigure -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
           mvn --batch-mode deploy -pl rabbit-services/rabbit-service-chaos/rabbit-service-chaos-api -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
         env:
