@@ -26,7 +26,7 @@ spring:
             - StripPrefix=1
 
         - id: rabbit-bmw
-          uri: lb://rabbit-chaos
+          uri: lb://rabbit-bmw
           predicates:
             - Path=/bmw/**
           filters:
