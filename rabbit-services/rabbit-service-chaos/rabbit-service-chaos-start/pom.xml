@@ -44,10 +44,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>rabbit-service-bmw-biz</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-rcm-biz</artifactId>
     </dependency>
     <dependency>

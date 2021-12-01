@@ -12,6 +12,7 @@
 
   <name>Rabbit :: Services</name>
   <artifactId>rabbit-services</artifactId>
+
   <modules>
     <module>rabbit-service-tpl</module>
     <module>rabbit-service-com</module>
@@ -19,7 +20,6 @@
     <module>rabbit-service-chaos</module>
     <module>rabbit-service-docking</module>
     <module>rabbit-service-wl</module>
-    <module>rabbit-service-bmw</module>
     <module>rabbit-service-mall</module>
     <module>rabbit-service-mina</module>
     <module>rabbit-service-aom</module>

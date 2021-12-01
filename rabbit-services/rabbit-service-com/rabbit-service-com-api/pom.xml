@@ -13,6 +13,10 @@
   <name>Rabbit :: Service :: COM API</name>
   <artifactId>rabbit-service-com-api</artifactId>
 
+  <properties>
+    <maven.deploy.skip>false</maven.deploy.skip>
+  </properties>
+
   <dependencies>
     <!--  一方库  -->
     <dependency>
