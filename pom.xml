@@ -31,6 +31,7 @@
     <boot.version>1.0.20</boot.version>
     <lombok.version>1.18.12</lombok.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
+    <rabbit-service-bmw.version>1.0.0-SNAPSHOT</rabbit-service-bmw.version>
   </properties>
 
   <dependencies>
@@ -166,21 +167,6 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-bmw-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-bmw-biz</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-bmw-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-docking-start</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -238,6 +224,11 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-rcm-api</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-bmw-api</artifactId>
+        <version>${rabbit-service-bmw.version}</version>
       </dependency>
       <!-- 第三方 -->
       <dependency>
@@ -372,4 +363,12 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <repositories>
+    <repository>
+      <id>public</id>
+      <name>public</name>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
+  </repositories>
 </project>
