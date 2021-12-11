@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
 import io.swagger.annotations.ApiModelProperty;
@@ -48,13 +49,13 @@ public class CouponComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建人")
     private Long creator;
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("最后更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("最后更新时间")
     private Long lastUpdater;
-    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "lastUpdater", type = ChaosNamedType.Userid2Nickname)
     private String lastUpdaterName;
 
 }

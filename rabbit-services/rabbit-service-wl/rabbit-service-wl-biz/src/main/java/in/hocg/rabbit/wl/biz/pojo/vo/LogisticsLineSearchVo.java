@@ -1,13 +1,14 @@
 package in.hocg.rabbit.wl.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
 import in.hocg.rabbit.wl.biz.enumns.ShippingMethods;
 import in.hocg.rabbit.wl.biz.enumns.Unit;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,20 +44,17 @@ public class LogisticsLineSearchVo {
     private String warehouseRemark;
     @ApiModelProperty("仓库省")
     private String warehouseProvince;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "warehouseProvince", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "warehouseProvince", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.PROVINCE_CODE})
     private String warehouseProvinceName;
     @ApiModelProperty("仓库市")
     private String warehouseCity;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "warehouseCity", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "warehouseCity", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.CITY_CODE})
     private String warehouseCityName;
     @ApiModelProperty("仓库县")
     private String warehouseDistrict;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "warehouseDistrict", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "warehouseDistrict", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.DISTRICT_CODE})
     private String warehouseDistrictName;
 
@@ -64,15 +62,13 @@ public class LogisticsLineSearchVo {
     private BigDecimal unitPrice;
     @ApiModelProperty("单位(元/方)")
     private String unit;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "unit", type = NamedType.DataDict, args = {Unit.KEY})
+    @ChaosNamed(idFor = "unit", type = ChaosNamedType.DataDict, args = {Unit.KEY})
     private String unitName;
     @ApiModelProperty("时效(天)")
     private Integer aging;
     @ApiModelProperty("物流方式")
     private String shippingMethods;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "shippingMethods", type = NamedType.DataDict,
+    @ChaosNamed(idFor = "shippingMethods", type = ChaosNamedType.DataDict,
         args = {ShippingMethods.KEY})
     private String shippingMethodsName;
     @ApiModelProperty("备注")
@@ -80,20 +76,17 @@ public class LogisticsLineSearchVo {
 
     @ApiModelProperty("线路省")
     private String logisticsLineProvince;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "logisticsLineProvince", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "logisticsLineProvince", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.PROVINCE_CODE})
     private String logisticsLineProvinceName;
     @ApiModelProperty("线路市")
     private String logisticsLineCity;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "logisticsLineCity", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "logisticsLineCity", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.CITY_CODE})
     private String logisticsLineCityName;
     @ApiModelProperty("线路县")
     private String logisticsLineDistrict;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "logisticsLineDistrict", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "logisticsLineDistrict", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.DISTRICT_CODE})
     private String logisticsLineDistrictName;
 

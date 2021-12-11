@@ -2,8 +2,7 @@ package in.hocg.rabbit.chaos.biz.apiimpl;
 
 import cn.hutool.core.convert.Convert;
 import in.hocg.rabbit.bmw.api.AccessMchServiceApi;
-import in.hocg.rabbit.bmw.api.pojo.vo.AccessMchComplexVo;
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.com.api.DataDictServiceApi;
 import in.hocg.rabbit.com.api.DistrictServiceApi;
 import in.hocg.rabbit.com.api.ProjectServiceApi;
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class ChaosNamedApiImpl implements ChaosNamedApi {
+public class ChaosNamedApiImpl implements ChaosNamedServiceApi {
     private final DataDictServiceApi dataDictServiceApi;
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
@@ -90,12 +89,6 @@ public class ChaosNamedApiImpl implements ChaosNamedApi {
             default:
         }
         return this.toMap(result, DistrictComplexVo::getAdcode, DistrictComplexVo::getTitle);
-    }
-
-    @Override
-    public Map<String, Object> loadByAccessMchName(NamedArgs args) {
-        List<Long> values = getValues(args.getValues(), Long.class);
-        return this.toMap(accessMchServiceApi.listComplexById(values), AccessMchComplexVo::getId, AccessMchComplexVo::getTitle);
     }
 
     private <T> List<T> getValues(List<?> values, Class<T> clazz) {

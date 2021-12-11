@@ -2,14 +2,15 @@ package in.hocg.rabbit.wl.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
 import in.hocg.rabbit.wl.biz.enumns.ShippingMethods;
 import in.hocg.rabbit.wl.biz.enumns.Unit;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,15 +36,13 @@ public class LogisticsLineComplexVo {
     private BigDecimal unitPrice;
     @ApiModelProperty("单位(元/方)")
     private String unit;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "unit", type = NamedType.DataDict, args = {Unit.KEY})
+    @ChaosNamed(idFor = "unit", type = ChaosNamedType.DataDict, args = {Unit.KEY})
     private String unitName;
     @ApiModelProperty("时效(天)")
     private Integer aging;
     @ApiModelProperty("物流方式")
     private String shippingMethods;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "shippingMethods", type = NamedType.DataDict,
+    @ChaosNamed(idFor = "shippingMethods", type = ChaosNamedType.DataDict,
         args = {ShippingMethods.KEY})
     private String shippingMethodsName;
     @ApiModelProperty("备注")
@@ -51,20 +50,17 @@ public class LogisticsLineComplexVo {
 
     @ApiModelProperty("省区域编码")
     private String provinceAdcode;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "provinceAdcode", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "provinceAdcode", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.PROVINCE_CODE})
     private String provinceName;
     @ApiModelProperty("市区区域编码")
     private String cityAdcode;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "cityAdcode", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "cityAdcode", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.CITY_CODE})
     private String cityName;
     @ApiModelProperty("县区域编码")
     private String districtAdcode;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "districtAdcode", type = NamedType.DistrictName,
+    @ChaosNamed(idFor = "districtAdcode", type = ChaosNamedType.DistrictName,
         args = {DistrictLevelConstant.DISTRICT_CODE})
     private String districtName;
 
@@ -72,15 +68,13 @@ public class LogisticsLineComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "lastUpdater", type = ChaosNamedType.Userid2Nickname)
     private String lastUpdaterName;
 
     @ApiModelProperty("仓库")

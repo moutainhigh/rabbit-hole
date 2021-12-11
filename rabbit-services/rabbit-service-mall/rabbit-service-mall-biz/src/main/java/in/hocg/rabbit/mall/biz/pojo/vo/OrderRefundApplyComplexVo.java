@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
 import io.swagger.annotations.ApiModelProperty;
@@ -40,24 +41,24 @@ public class OrderRefundApplyComplexVo {
 
     @ApiModelProperty("处理人")
     private Long handlerId;
-    @Named(idFor = "handlerId", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "handlerId", type = ChaosNamedType.Userid2Nickname)
     private String handlerName;
     @ApiModelProperty("处理时间")
     private LocalDateTime handleAt;
 
     @ApiModelProperty("收货人")
     private Long receiverId;
-    @Named(idFor = "receiverId", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "receiverId", type = ChaosNamedType.Userid2Nickname)
     private String receiverName;
     @ApiModelProperty("收货时间")
     private LocalDateTime receiveAt;
 
     private Long creator;
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
     private LocalDateTime createdAt;
     private Long lastUpdater;
-    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "lastUpdater", type = ChaosNamedType.Userid2Nickname)
     private String lastUpdaterName;
     private LocalDateTime lastUpdatedAt;
 }

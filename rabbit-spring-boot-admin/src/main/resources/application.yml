@@ -29,7 +29,8 @@ boot:
         - /favicon.ico
         - /actuator/**
       has-any-role:
-        - 'ROLE_ADMIN'
-        - 'ROLE_SBA'
+        '[/**]':
+          - 'ROLE_ADMIN'
+          - 'ROLE_SBA'
   web:
     hostname: https://sba.hocgin.top

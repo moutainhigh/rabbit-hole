@@ -1,5 +1,7 @@
-package in.hocg.rabbit.chaos.api;
+package in.hocg.rabbit.chaos.api.named;
 
+import in.hocg.rabbit.chaos.api.ServiceName;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.boot.named.annotation.NamedService;
 import in.hocg.boot.named.ifc.NamedArgs;
@@ -17,30 +19,26 @@ import java.util.Map;
  * @author hocgin
  */
 @FeignClient(value = ServiceName.NAME)
-public interface ChaosNamedApi extends NamedService {
+public interface ChaosNamedServiceApi extends NamedService {
     String CONTEXT_ID = "ChaosNamedAPI";
 
-    @NamedHandler(NamedType.DataDict)
+    @NamedHandler(ChaosNamedType.DataDict)
     @PostMapping(value = CONTEXT_ID + "/loadByDataDict", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByDataDict(@RequestBody NamedArgs args);
 
-    @NamedHandler(NamedType.UserId2Username)
+    @NamedHandler(ChaosNamedType.UserId2Username)
     @PostMapping(value = CONTEXT_ID + "/loadByUserName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByUserName(@RequestBody NamedArgs args);
 
-    @NamedHandler(NamedType.Userid2Nickname)
+    @NamedHandler(ChaosNamedType.Userid2Nickname)
     @PostMapping(value = CONTEXT_ID + "/loadByNickname", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByNickname(@RequestBody NamedArgs args);
 
-    @NamedHandler(NamedType.ProjectName)
+    @NamedHandler(ChaosNamedType.ProjectName)
     @PostMapping(value = CONTEXT_ID + "/loadByProjectName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByProjectName(@RequestBody NamedArgs args);
 
-    @NamedHandler(NamedType.DistrictName)
+    @NamedHandler(ChaosNamedType.DistrictName)
     @PostMapping(value = CONTEXT_ID + "/loadByDistrictName", headers = GlobalConstant.FEIGN_HEADER)
     Map<String, Object> loadByDistrictName(@RequestBody NamedArgs args);
-
-    @NamedHandler(NamedType.AccessMchName)
-    @PostMapping(value = CONTEXT_ID + "/loadByAccessMchName", headers = GlobalConstant.FEIGN_HEADER)
-    Map<String, Object> loadByAccessMchName(@RequestBody NamedArgs args);
 }
