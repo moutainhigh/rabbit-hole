@@ -1,12 +1,10 @@
 package in.hocg.rabbit.com.biz.pojo.vo;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
-import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.datadict.com.integralflow.ChangeType;
 import in.hocg.rabbit.common.datadict.com.integralflow.EventType;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
 
 import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,11 +24,11 @@ import java.time.LocalDateTime;
 public class MinaIntegralFlowVo {
     @ApiModelProperty("触发事件")
     private String eventType;
-    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDict, args = {EventType.KEY})
+    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {EventType.KEY})
     private String eventTypeName;
     @ApiModelProperty("变更类型")
     private String changeType;
-    @ChaosNamed(idFor = "changeType", type = ChaosNamedType.DataDict, args = {ChangeType.KEY})
+    @ChaosNamed(idFor = "changeType", type = ChaosNamedType.DataDictName, args = {ChangeType.KEY})
     private String changeTypeName;
     @BigDecimalFormat
     @ApiModelProperty("变更值")

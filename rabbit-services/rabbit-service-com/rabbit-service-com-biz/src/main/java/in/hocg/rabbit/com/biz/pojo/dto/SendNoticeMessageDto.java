@@ -2,7 +2,7 @@ package in.hocg.rabbit.com.biz.pojo.dto;
 
 import in.hocg.rabbit.common.datadict.com.NoticeMessageEventType;
 import in.hocg.rabbit.common.datadict.com.NoticeMessageRefType;
-import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
+import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

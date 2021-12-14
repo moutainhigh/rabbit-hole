@@ -8,7 +8,7 @@ package in.hocg.rabbit.chaos.api.named;
  */
 public final class ChaosNamedType {
     public final static String ProjectName = "ProjectName";
-    public final static String DataDict = "DataDict";
+    public final static String DataDictName = "DataDictName";
     public final static String UserId2Username = "UserId2Username";
     public final static String Userid2Nickname = "Userid2Nickname";
     public final static String DistrictName = "DistrictName";

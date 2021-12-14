@@ -1,13 +1,11 @@
 package in.hocg.rabbit.wl.biz.pojo.vo;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
-import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
 import in.hocg.rabbit.wl.biz.enumns.ShippingMethods;
 import in.hocg.rabbit.wl.biz.enumns.Unit;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -62,13 +60,13 @@ public class LogisticsLineSearchVo {
     private BigDecimal unitPrice;
     @ApiModelProperty("单位(元/方)")
     private String unit;
-    @ChaosNamed(idFor = "unit", type = ChaosNamedType.DataDict, args = {Unit.KEY})
+    @ChaosNamed(idFor = "unit", type = ChaosNamedType.DataDictName, args = {Unit.KEY})
     private String unitName;
     @ApiModelProperty("时效(天)")
     private Integer aging;
     @ApiModelProperty("物流方式")
     private String shippingMethods;
-    @ChaosNamed(idFor = "shippingMethods", type = ChaosNamedType.DataDict,
+    @ChaosNamed(idFor = "shippingMethods", type = ChaosNamedType.DataDictName,
         args = {ShippingMethods.KEY})
     private String shippingMethodsName;
     @ApiModelProperty("备注")

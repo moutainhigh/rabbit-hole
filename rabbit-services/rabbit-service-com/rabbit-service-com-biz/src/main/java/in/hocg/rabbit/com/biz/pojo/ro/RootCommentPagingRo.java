@@ -2,7 +2,7 @@ package in.hocg.rabbit.com.biz.pojo.ro;
 
 import in.hocg.rabbit.common.datadict.com.CommentTargetType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.ro.PageRo;
-import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
+import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

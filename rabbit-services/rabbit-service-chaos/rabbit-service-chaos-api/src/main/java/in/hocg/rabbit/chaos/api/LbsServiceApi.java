@@ -1,7 +1,6 @@
 package in.hocg.rabbit.chaos.api;
 
 import in.hocg.rabbit.chaos.api.pojo.vo.AMapDistrictVo;
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -13,10 +12,10 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = ChaosServiceName.NAME)
 public interface LbsServiceApi {
     String CONTEXT_ID = "LbsServiceApi";
 
-    @PostMapping(value = CONTEXT_ID + "/listDistrict", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/listDistrict", headers = ChaosServiceName.FEIGN_HEADER)
     List<AMapDistrictVo> listDistrict();
 }

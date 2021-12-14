@@ -1,6 +1,5 @@
 package in.hocg.rabbit.mina.api;
 
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.mina.api.pojo.ro.UploadYouTubeRo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = MinaServiceName.NAME)
 public interface YouTubeServiceApi {
 
     String CONTEXT_ID = "YouTubeServiceApi";
 
-    @PostMapping(value = CONTEXT_ID + "/upload", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/upload", headers = MinaServiceName.FEIGN_HEADER)
     String upload(@RequestBody UploadYouTubeRo ro);
 }

@@ -1,6 +1,5 @@
 package in.hocg.rabbit.ums.api;
 
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = UmsServiceName.NAME)
 public interface AuthorityServiceApi {
     String CONTEXT_ID = "AuthorityServiceApi";
 
-    @PostMapping(value = CONTEXT_ID + "/isPassAuthorize", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/isPassAuthorize", headers = UmsServiceName.FEIGN_HEADER)
     boolean isPassAuthorize(@RequestParam("username") String username, @RequestParam("servicePrefix") String servicePrefix,
                             @RequestParam("methodName") String methodName, @RequestParam("uri") String uri);
 }

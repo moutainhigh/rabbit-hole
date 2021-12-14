@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
  * @author hocgin
  */
 @UtilityClass
-public class ServiceName {
-    public final String NAME = "rabbit-chaos";
+public class UmsServiceName {
+    public final String NAME = "rabbit-ums";
+    public final String FEIGN_HEADER = "X-Feign=Y";
 }

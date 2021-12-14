@@ -3,7 +3,6 @@ package in.hocg.rabbit.com.api;
 
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +17,16 @@ import java.util.List;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = ComServiceName.NAME)
 public interface FileServiceApi {
     String CONTEXT_ID = "FileServiceApi";
 
-    @PostMapping(value = CONTEXT_ID + "/upload", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/upload", headers = ComServiceName.FEIGN_HEADER)
     void upload(@Validated @RequestBody UploadFileRo ro);
 
-    @PostMapping(value = CONTEXT_ID + "/listFileByRefTypeAndRefId", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/listFileByRefTypeAndRefId", headers = ComServiceName.FEIGN_HEADER)
     List<FileVo> listByRefTypeAndRefId(@RequestParam("refType") String refType, @RequestParam("refId") Long refId);
 
-    @PostMapping(value = CONTEXT_ID + "/getAvatarUrl", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/getAvatarUrl", headers = ComServiceName.FEIGN_HEADER)
     String getAvatarUrl(@RequestParam("id") Long id);
 }

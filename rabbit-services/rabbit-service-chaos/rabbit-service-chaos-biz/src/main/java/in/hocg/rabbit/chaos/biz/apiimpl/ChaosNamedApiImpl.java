@@ -1,6 +1,7 @@
 package in.hocg.rabbit.chaos.biz.apiimpl;
 
 import cn.hutool.core.convert.Convert;
+import in.hocg.boot.named.autoconfiguration.core.AbsNamedServiceExpand;
 import in.hocg.rabbit.bmw.api.AccessMchServiceApi;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.com.api.DataDictServiceApi;
@@ -32,12 +33,12 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class ChaosNamedApiImpl implements ChaosNamedServiceApi {
+public class ChaosNamedApiImpl extends AbsNamedServiceExpand
+    implements ChaosNamedServiceApi {
     private final DataDictServiceApi dataDictServiceApi;
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
     private final ProjectServiceApi projectServiceApi;
-    private final AccessMchServiceApi accessMchServiceApi;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
@@ -89,15 +90,5 @@ public class ChaosNamedApiImpl implements ChaosNamedServiceApi {
             default:
         }
         return this.toMap(result, DistrictComplexVo::getAdcode, DistrictComplexVo::getTitle);
-    }
-
-    private <T> List<T> getValues(List<?> values, Class<T> clazz) {
-        return values.parallelStream().map(o -> Convert.convert(clazz, o)).collect(Collectors.toList());
-    }
-
-    private <K, V, Z> Map<String, Z> toMap(List<V> values,
-                                           Function<? super V, K> keyFunction,
-                                           Function<? super V, Z> valueFunction) {
-        return LangUtils.toMap(values, v -> String.valueOf(keyFunction.apply(v)), valueFunction);
     }
 }

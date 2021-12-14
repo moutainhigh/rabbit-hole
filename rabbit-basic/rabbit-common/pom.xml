@@ -15,7 +15,7 @@
   <dependencies>
     <dependency>
       <groupId>in.hocg.boot</groupId>
-      <artifactId>spring-boot-utils</artifactId>
+      <artifactId>utils-spring-boot-all</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jsonwebtoken</groupId>

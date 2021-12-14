@@ -16,8 +16,12 @@
   <dependencies>
     <!--  一方库  -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>rabbit-common</artifactId>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>validation-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
+      <artifactId>utils-spring-boot-annotation</artifactId>
     </dependency>
     <!--  二方库  -->
     <!--  三方库  -->

@@ -1,7 +1,7 @@
 package in.hocg.rabbit.mina.biz.pojo.ro;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import in.hocg.boot.validation.autoconfigure.group.Insert;
+import in.hocg.boot.validation.group.Insert;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

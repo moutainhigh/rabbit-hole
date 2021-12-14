@@ -1,11 +1,9 @@
 package in.hocg.rabbit.ums.biz.pojo.vo;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
-import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.datadict.ums.Gender;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,7 +39,7 @@ public class AccountComplexVo {
     private Boolean enabled;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
-    @ChaosNamed(idFor = "gender", type = ChaosNamedType.DataDict, args = {Gender.KEY})
+    @ChaosNamed(idFor = "gender", type = ChaosNamedType.DataDictName, args = {Gender.KEY})
     private String genderName;
 
     @ApiModelProperty("创建者")
