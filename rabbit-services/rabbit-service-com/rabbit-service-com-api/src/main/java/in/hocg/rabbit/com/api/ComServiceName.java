@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class ComServiceName {
-    public final String NAME = "rabbit-com";
+    public final String NAME = "rabbit-chaos";
     public final String PACKAGE = "in.hocg.rabbit.com";
     public final String FEIGN_HEADER = "X-Feign=Y";
 }

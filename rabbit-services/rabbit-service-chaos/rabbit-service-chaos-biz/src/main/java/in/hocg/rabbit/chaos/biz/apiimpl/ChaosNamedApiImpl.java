@@ -1,8 +1,6 @@
 package in.hocg.rabbit.chaos.biz.apiimpl;
 
-import cn.hutool.core.convert.Convert;
 import in.hocg.boot.named.autoconfiguration.core.AbsNamedServiceExpand;
-import in.hocg.rabbit.bmw.api.AccessMchServiceApi;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.com.api.DataDictServiceApi;
 import in.hocg.rabbit.com.api.DistrictServiceApi;
@@ -14,7 +12,6 @@ import in.hocg.rabbit.common.constant.DistrictLevelConstant;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.named.ifc.NamedArgs;
-import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/11/11
