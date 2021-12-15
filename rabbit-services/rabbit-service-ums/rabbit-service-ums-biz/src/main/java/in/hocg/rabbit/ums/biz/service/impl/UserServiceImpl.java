@@ -33,6 +33,7 @@ import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import in.hocg.rabbit.ums.biz.service.AuthorityService;
 import in.hocg.rabbit.ums.biz.service.RoleService;
 import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
@@ -351,9 +352,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<AccountComplexVo> complete(UserCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage())
-            .convert(this::convert).getRecords();
+    public List<UserCompleteVo> complete(UserCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplete).getRecords();
     }
 
     @Override
@@ -398,5 +398,9 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     private Optional<User> getAccountByPhone(String phone) {
         return lambdaQuery().eq(User::getPhone, phone).oneOpt();
+    }
+
+    private UserCompleteVo convertComplete(User entity) {
+        return mapping.asUserCompleteVo(entity);
     }
 }

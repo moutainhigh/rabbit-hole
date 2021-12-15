@@ -15,6 +15,7 @@ import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +66,7 @@ public interface UserService extends AbstractService<User> {
 
     IPage<AccountComplexVo> paging(UserPagingRo ro);
 
-    List<AccountComplexVo> complete(UserCompleteRo ro);
+    List<UserCompleteVo> complete(UserCompleteRo ro);
 
     void grantRole(Long userId, RoleGrantUserRo ro);
 

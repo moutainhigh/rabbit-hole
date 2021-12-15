@@ -41,5 +41,4 @@ public interface ProxyChannelService extends AbstractService<ProxyChannel> {
 
     ProxyChannelComplexVo getComplex(Long id);
 
-    void deleteOne(Long id);
 }

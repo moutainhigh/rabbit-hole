@@ -17,9 +17,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel(description = "代理隧道")
 public class ProxyChannelSaveRo {
+    @ApiModelProperty("隧道ID")
+    private String channelId;
     @NotNull(groups = {Insert.class}, message = "拥有人不能为空")
     @ApiModelProperty("拥有人")
-    private Long ownerId;
+    private Long userId;
     @NotNull(groups = {Insert.class}, message = "隧道类型不能为空")
     @ApiModelProperty("隧道类型")
     private String type;
@@ -28,12 +30,12 @@ public class ProxyChannelSaveRo {
     private Integer localPort;
     @NotNull(groups = {Insert.class}, message = "本地IP不能为空")
     @ApiModelProperty("本地IP")
-    private Long localIp;
+    private String localIp;
     @ApiModelProperty("域名前缀")
     private String suffix;
     @ApiModelProperty("开启状态")
     private Boolean enabled;
 
     @ApiModelProperty(value = "创建者", hidden = true)
-    private Long userId;
+    private Long requestUserId;
 }

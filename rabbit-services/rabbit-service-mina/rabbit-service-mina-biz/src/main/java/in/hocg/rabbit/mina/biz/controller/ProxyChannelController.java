@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mina.biz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.rabbit.mina.biz.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelInfoVo;
 import in.hocg.rabbit.mina.biz.service.ProxyChannelService;
 import in.hocg.rabbit.mina.biz.pojo.ro.ProxyChannelPagingRo;
@@ -53,7 +54,7 @@ public class ProxyChannelController {
     @ApiOperation("新增 - 代理隧道")
     @PostMapping
     public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setUserId(UserContextHolder.getUserIdThrow());
+        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.insertOne(ro);
         return Result.success();
     }
@@ -62,22 +63,22 @@ public class ProxyChannelController {
     @PutMapping("/{id}")
     public Result<Void> updateOne(@ApiParam(value = "代理隧道", required = true) @PathVariable Long id,
                                   @Validated({Update.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setUserId(UserContextHolder.getUserIdThrow());
+        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.updateOne(id, ro);
         return Result.success();
     }
 
 
     @ApiOperation("查询详情 - 代理隧道")
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/complex")
     public Result<ProxyChannelComplexVo> getComplex(@ApiParam(value = "代理隧道", required = true) @PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
 
     @ApiOperation("删除 - 代理隧道")
-    @DeleteMapping("/{id}")
-    public Result<Void> deleteOne(@ApiParam(value = "代理隧道", required = true) @PathVariable Long id) {
-        service.deleteOne(id);
+    @DeleteMapping
+    public Result<Void> delete(@Validated @RequestBody DeleteRo ro) {
+        service.removeByIds(ro.getId());
         return Result.success();
     }
 }

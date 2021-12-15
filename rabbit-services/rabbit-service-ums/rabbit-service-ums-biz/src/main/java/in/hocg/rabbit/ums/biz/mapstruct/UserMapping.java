@@ -5,6 +5,7 @@ import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -41,4 +42,7 @@ public interface UserMapping {
     @Mapping(target = "createdIp", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     User asAccount(UpdateAccountRo ro);
+
+    @Mapping(target = "avatar", source = "avatarUrl")
+    UserCompleteVo asUserCompleteVo(User entity);
 }

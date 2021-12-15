@@ -1,6 +1,8 @@
 package in.hocg.rabbit.mina.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mina.biz.entity.ProxyChannel;
 import in.hocg.rabbit.mina.biz.manager.ProxyManager;
@@ -61,26 +63,12 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
 
     @Override
     public void insertOne(ProxyChannelSaveRo ro) {
-        LocalDateTime now = LocalDateTime.now();
-        Long userId = ro.getUserId();
-
-        ProxyChannel entity = mapping.asProxyChannel(ro);
-        entity.setCreator(userId);
-        entity.setCreatedAt(now);
-        validInsert(entity);
+        saveOne(null, ro);
     }
 
     @Override
     public void updateOne(Long id, ProxyChannelSaveRo ro) {
-        LocalDateTime now = LocalDateTime.now();
-        Long userId = ro.getUserId();
-
-        ProxyChannel entity = mapping.asProxyChannel(ro);
-        entity.setChannelId(IdUtil.simpleUUID());
-        entity.setId(id);
-        entity.setLastUpdater(userId);
-        entity.setLastUpdatedAt(now);
-        validUpdateById(entity);
+        saveOne(id, ro);
     }
 
     @Override
@@ -88,9 +76,32 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
         return this.convertComplex(baseMapper.selectById(id));
     }
 
+    private void saveOne(Long id, ProxyChannelSaveRo ro) {
+        Long requestUserId = ro.getRequestUserId();
+
+        ProxyChannel entity = mapping.asProxyChannel(ro);
+        if (Objects.isNull(id)) {
+            if (StrUtil.isBlank(ro.getChannelId())) {
+                entity.setChannelId(IdUtil.simpleUUID());
+            }
+            entity.setCreator(requestUserId);
+        } else {
+            entity.setLastUpdater(requestUserId);
+        }
+        saveOrUpdate(entity);
+    }
+
     @Override
-    public void deleteOne(Long id) {
-        baseMapper.deleteById(id);
+    public void validEntity(ProxyChannel entity) {
+        super.validEntity(entity);
+
+        Long id = entity.getId();
+        String channelId = entity.getChannelId();
+        if (Objects.nonNull(channelId)) {
+            boolean hasChannelId = has(ProxyChannel::getChannelId, channelId, ProxyChannel::getId, id);
+            Assert.isFalse(hasChannelId, "隧道编号: {} 已存在", channelId);
+        }
+
     }
 
     private ProxyChannelOrdinaryVo convertOrdinary(ProxyChannel entity) {
