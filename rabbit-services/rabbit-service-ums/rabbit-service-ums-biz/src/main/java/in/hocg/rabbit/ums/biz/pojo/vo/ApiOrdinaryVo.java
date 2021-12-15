@@ -1,10 +1,11 @@
 package in.hocg.rabbit.ums.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -41,15 +42,13 @@ public class ApiOrdinaryVo {
 
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
     @ApiModelProperty("更新者")
     private Long lastUpdater;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "lastUpdater", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "lastUpdater", type = ChaosNamedType.Userid2Nickname)
     private String lastUpdaterName;
     @ApiModelProperty("更新时间")
     private LocalDateTime lastUpdatedAt;

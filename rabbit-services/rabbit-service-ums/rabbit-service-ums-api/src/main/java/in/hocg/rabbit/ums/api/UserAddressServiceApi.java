@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = UmsServiceName.NAME)
 public interface UserAddressServiceApi {
     String CONTEXT_ID = "UserAddressServiceApi";
 

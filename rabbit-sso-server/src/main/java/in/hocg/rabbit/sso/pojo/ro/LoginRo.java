@@ -2,7 +2,7 @@ package in.hocg.rabbit.sso.pojo.ro;
 
 import in.hocg.rabbit.common.constant.RegexpConstant;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
+import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

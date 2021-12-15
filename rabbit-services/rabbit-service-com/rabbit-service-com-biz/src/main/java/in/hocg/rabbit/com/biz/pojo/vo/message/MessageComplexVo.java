@@ -1,11 +1,10 @@
 package in.hocg.rabbit.com.biz.pojo.vo.message;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.datadict.com.MessageUserRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,13 +24,11 @@ public class MessageComplexVo {
     private Long id;
     @ApiModelProperty("消息类型")
     private String messageType;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "messageType", type = NamedType.DataDict, args = {MessageUserRefType.KEY})
+    @ChaosNamed(idFor = "messageType", type = ChaosNamedType.DataDictName, args = {MessageUserRefType.KEY})
     private String messageTypeName;
     @ApiModelProperty("接收者")
     private Long receiverUser;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "receiverUser", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "receiverUser", type = ChaosNamedType.Userid2Nickname)
     private String receiverUserName;
 
     @ApiModelProperty("读取时间")

@@ -1,12 +1,11 @@
 package in.hocg.rabbit.com.biz.pojo.vo.message;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.datadict.com.NoticeMessageEventType;
 import in.hocg.rabbit.common.datadict.com.NoticeMessageRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,11 +24,11 @@ import java.time.LocalDateTime;
 public class NoticeMessageComplexVo {
     @ApiModelProperty("事件类型")
     private String eventType;
-    @Named(idFor = "eventType", type = NamedType.DataDict, args = {NoticeMessageEventType.KEY})
+    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {NoticeMessageEventType.KEY})
     private String eventTypeName;
     @ApiModelProperty("订阅对象类型")
     private String refType;
-    @Named(idFor = "refType", type = NamedType.DataDict, args = {NoticeMessageRefType.KEY})
+    @ChaosNamed(idFor = "refType", type = ChaosNamedType.DataDictName, args = {NoticeMessageRefType.KEY})
     private String refTypeName;
     @ApiModelProperty("订阅对象")
     private RefObject refObject;
@@ -37,8 +36,7 @@ public class NoticeMessageComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
 
     @Data

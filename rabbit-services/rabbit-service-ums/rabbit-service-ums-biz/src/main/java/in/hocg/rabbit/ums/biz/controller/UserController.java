@@ -6,6 +6,7 @@ import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import in.hocg.rabbit.ums.biz.service.UserService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.web.result.Result;
@@ -48,7 +49,7 @@ public class UserController {
     @ApiOperation("查询列表 - 账号")
     @PostMapping("/_complete")
     @UseLogger("查询列表 - 账号")
-    public Result<List<AccountComplexVo>> complete(@Validated @RequestBody UserCompleteRo ro) {
+    public Result<List<UserCompleteVo>> complete(@Validated @RequestBody UserCompleteRo ro) {
         return Result.success(service.complete(ro));
     }
 

@@ -1,6 +1,5 @@
 package in.hocg.rabbit.chaos.api;
 
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = ChaosServiceName.NAME)
 public interface EmailServiceApi {
     String CONTEXT_ID = "EmailServiceApi";
 
@@ -22,16 +21,15 @@ public interface EmailServiceApi {
      * @param verifyCode
      * @return
      */
-    @PostMapping(value = CONTEXT_ID + "/validVerifyCode", headers = GlobalConstant.FEIGN_HEADER)
-    boolean validVerifyCode(@RequestParam("email") String email,
-                            @RequestParam("verifyCode") String verifyCode);
+    @PostMapping(value = CONTEXT_ID + "/validVerifyCode", headers = ChaosServiceName.FEIGN_HEADER)
+    boolean validVerifyCode(@RequestParam("email") String email, @RequestParam("verifyCode") String verifyCode);
 
     /**
      * 验证验证码
      *
      * @param email
      */
-    @PostMapping(value = CONTEXT_ID + "/sendVerifyCode", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/sendVerifyCode", headers = ChaosServiceName.FEIGN_HEADER)
     void sendVerifyCode(@RequestParam("email") String email);
 
 }

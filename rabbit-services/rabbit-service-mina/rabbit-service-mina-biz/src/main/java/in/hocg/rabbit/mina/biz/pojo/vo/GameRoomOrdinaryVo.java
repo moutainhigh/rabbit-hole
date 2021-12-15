@@ -1,9 +1,10 @@
 package in.hocg.rabbit.mina.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -28,7 +29,6 @@ public class GameRoomOrdinaryVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
 }

@@ -1,12 +1,11 @@
 package in.hocg.rabbit.com.biz.pojo.vo;
 
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
-import in.hocg.rabbit.chaos.api.NamedType;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.common.datadict.com.integralflow.ChangeType;
 import in.hocg.rabbit.common.datadict.com.integralflow.EventType;
 import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
-import in.hocg.boot.named.annotation.UseNamedService;
+
 import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,13 +24,11 @@ import java.time.LocalDateTime;
 public class MinaIntegralFlowVo {
     @ApiModelProperty("触发事件")
     private String eventType;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "eventType", type = NamedType.DataDict, args = {EventType.KEY})
+    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {EventType.KEY})
     private String eventTypeName;
     @ApiModelProperty("变更类型")
     private String changeType;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "changeType", type = NamedType.DataDict, args = {ChangeType.KEY})
+    @ChaosNamed(idFor = "changeType", type = ChaosNamedType.DataDictName, args = {ChangeType.KEY})
     private String changeTypeName;
     @BigDecimalFormat
     @ApiModelProperty("变更值")
@@ -44,7 +41,6 @@ public class MinaIntegralFlowVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     private Long creator;
-    @UseNamedService(ChaosNamedApi.class)
-    @Named(idFor = "creator", type = NamedType.Userid2Nickname)
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
     private String creatorName;
 }

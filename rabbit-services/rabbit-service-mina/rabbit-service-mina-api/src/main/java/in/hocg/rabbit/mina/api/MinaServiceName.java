@@ -1,4 +1,4 @@
-package in.hocg.rabbit.ums.api;
+package in.hocg.rabbit.mina.api;
 
 import lombok.experimental.UtilityClass;
 
@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
  * @author hocgin
  */
 @UtilityClass
-public class ServiceName {
+public class MinaServiceName {
     public final String NAME = "rabbit-chaos";
+    public final String FEIGN_HEADER = "X-Feign=Y";
 }

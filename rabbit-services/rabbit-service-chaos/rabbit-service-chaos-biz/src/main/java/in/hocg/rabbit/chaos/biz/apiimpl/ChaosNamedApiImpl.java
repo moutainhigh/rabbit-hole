@@ -1,9 +1,7 @@
 package in.hocg.rabbit.chaos.biz.apiimpl;
 
-import cn.hutool.core.convert.Convert;
-import in.hocg.rabbit.bmw.api.AccessMchServiceApi;
-import in.hocg.rabbit.bmw.api.pojo.vo.AccessMchComplexVo;
-import in.hocg.rabbit.chaos.api.ChaosNamedApi;
+import in.hocg.boot.named.autoconfiguration.core.AbsNamedServiceExpand;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedServiceApi;
 import in.hocg.rabbit.com.api.DataDictServiceApi;
 import in.hocg.rabbit.com.api.DistrictServiceApi;
 import in.hocg.rabbit.com.api.ProjectServiceApi;
@@ -14,7 +12,6 @@ import in.hocg.rabbit.common.constant.DistrictLevelConstant;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.boot.named.ifc.NamedArgs;
-import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/11/11
@@ -33,12 +28,12 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class ChaosNamedApiImpl implements ChaosNamedApi {
+public class ChaosNamedApiImpl extends AbsNamedServiceExpand
+    implements ChaosNamedServiceApi {
     private final DataDictServiceApi dataDictServiceApi;
     private final UserServiceApi userServiceApi;
     private final DistrictServiceApi districtServiceApi;
     private final ProjectServiceApi projectServiceApi;
-    private final AccessMchServiceApi accessMchServiceApi;
 
     @Override
     public Map<String, Object> loadByDataDict(NamedArgs args) {
@@ -90,21 +85,5 @@ public class ChaosNamedApiImpl implements ChaosNamedApi {
             default:
         }
         return this.toMap(result, DistrictComplexVo::getAdcode, DistrictComplexVo::getTitle);
-    }
-
-    @Override
-    public Map<String, Object> loadByAccessMchName(NamedArgs args) {
-        List<Long> values = getValues(args.getValues(), Long.class);
-        return this.toMap(accessMchServiceApi.listComplexById(values), AccessMchComplexVo::getId, AccessMchComplexVo::getTitle);
-    }
-
-    private <T> List<T> getValues(List<?> values, Class<T> clazz) {
-        return values.parallelStream().map(o -> Convert.convert(clazz, o)).collect(Collectors.toList());
-    }
-
-    private <K, V, Z> Map<String, Z> toMap(List<V> values,
-                                           Function<? super V, K> keyFunction,
-                                           Function<? super V, Z> valueFunction) {
-        return LangUtils.toMap(values, v -> String.valueOf(keyFunction.apply(v)), valueFunction);
     }
 }

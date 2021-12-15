@@ -1,6 +1,5 @@
 package in.hocg.rabbit.com.api;
 
-import in.hocg.rabbit.common.constant.GlobalConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author hocgin
  */
-@FeignClient(value = ServiceName.NAME)
+@FeignClient(value = ComServiceName.NAME)
 public interface SnCodeServiceApi {
     String CONTEXT_ID = "SnCodeServiceApi";
 
-    @PostMapping(value = CONTEXT_ID + "/getSnCode", headers = GlobalConstant.FEIGN_HEADER)
+    @PostMapping(value = CONTEXT_ID + "/getSnCode", headers = ComServiceName.FEIGN_HEADER)
     String getSnCode(@RequestParam("groupCode") String groupCode);
 }

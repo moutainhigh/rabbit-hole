@@ -1,9 +1,9 @@
 package in.hocg.rabbit.ums.biz.pojo.ro;
 
 
-import in.hocg.boot.validation.autoconfigure.core.annotation.EnumRange;
-import in.hocg.boot.validation.autoconfigure.group.Insert;
-import in.hocg.boot.validation.autoconfigure.group.Update;
+import in.hocg.boot.validation.annotation.EnumRange;
+import in.hocg.boot.validation.group.Insert;
+import in.hocg.boot.validation.group.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
