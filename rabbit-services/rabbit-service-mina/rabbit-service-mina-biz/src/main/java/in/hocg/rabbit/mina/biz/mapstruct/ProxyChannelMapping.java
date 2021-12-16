@@ -20,10 +20,12 @@ public interface ProxyChannelMapping {
     @Mapping(target = "creatorName", ignore = true)
     ProxyChannelOrdinaryVo asProxyChannelOrdinaryVo(ProxyChannel entity);
 
+    @Mapping(target = "userName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     ProxyChannelComplexVo asProxyChannelComplexVo(ProxyChannel entity);
 
     @Mapping(target = "tenantId", ignore = true)
-    @Mapping(target = "prefix", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
