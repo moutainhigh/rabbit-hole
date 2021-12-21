@@ -28,9 +28,9 @@ boot:
       ignore-urls:
         - /favicon.ico
         - /actuator/**
-#      has-any-role:
-#        '[/**]':
-#          - 'ROLE_ADMIN'
-#          - 'ROLE_SBA'
+      has-any-role:
+        '[/applications]':
+          - 'ROLE_ADMIN'
+          - 'ROLE_SBA'
   web:
     hostname: https://sba.hocgin.top
