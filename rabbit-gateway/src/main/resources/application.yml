@@ -11,6 +11,13 @@ spring:
         locator:
           lowerCaseServiceId: true
       routes:
+        - id: eagle
+          uri: lb://eagle
+          predicates:
+            - Path=/eagle/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-sso
           uri: lb://rabbit-sso
           predicates:
