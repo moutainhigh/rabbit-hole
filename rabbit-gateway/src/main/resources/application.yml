@@ -116,6 +116,7 @@ boot:
       authenticated-urls:
         - /login
       ignore-urls: >
+        ,/eagle/**
         ,/swagger-resources/configuration/ui
         ,/favicon.ico
         ,/actuator/**
