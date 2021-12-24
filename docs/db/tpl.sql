@@ -6,8 +6,10 @@ CREATE TABLE `mdl_tpl`
     --
     `tenant_id`       BIGINT      NOT NULL DEFAULT 0
         COMMENT '租户',
-    `delete_flag`     BIGINT      NOT NULL DEFAULT 0
-        COMMENT '删除状态(未删除 != 0)',
+    `deleted_at`      DATETIME(6)          DEFAULT NULL
+        COMMENT '删除时间',
+    `deleter`         BIGINT               DEFAULT NULL
+        COMMENT '删除者',
     `created_at`      DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
         COMMENT '创建时间',
     `creator`         BIGINT

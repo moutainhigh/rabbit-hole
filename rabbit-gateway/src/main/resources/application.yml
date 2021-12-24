@@ -11,6 +11,13 @@ spring:
         locator:
           lowerCaseServiceId: true
       routes:
+        - id: eagle
+          uri: lb://eagle
+          predicates:
+            - Path=/eagle/**
+          filters:
+            - StripPrefix=1
+
         - id: rabbit-sso
           uri: lb://rabbit-sso
           predicates:
@@ -109,6 +116,7 @@ boot:
       authenticated-urls:
         - /login
       ignore-urls: >
+        ,/eagle/**
         ,/swagger-resources/configuration/ui
         ,/favicon.ico
         ,/actuator/**
@@ -155,6 +163,10 @@ boot:
 
         ,/sso/account/login/qrcode
         ,/sso/account/login/token
+      has-any-role:
+        '[/doc.html]':
+          - 'ROLE_ADMIN'
+          - 'ROLE_API'
   cache:
     names:
       - name: GET_USER_DETAIL

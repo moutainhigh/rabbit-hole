@@ -16,6 +16,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelOrdinaryVo;
 import in.hocg.rabbit.mina.biz.service.ProxyChannelService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.rabbit.mina.biz.support.channel.ChannelHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -84,6 +85,7 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
             if (StrUtil.isBlank(ro.getChannelId())) {
                 entity.setChannelId(IdUtil.simpleUUID());
             }
+            ro.setSuffix(ChannelHelper.CHANNEL_SUFFIX);
             entity.setCreator(requestUserId);
         } else {
             entity.setLastUpdater(requestUserId);

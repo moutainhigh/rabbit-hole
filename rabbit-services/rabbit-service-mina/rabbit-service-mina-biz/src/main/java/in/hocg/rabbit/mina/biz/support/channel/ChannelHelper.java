@@ -12,6 +12,7 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class ChannelHelper {
+    public static final String CHANNEL_SUFFIX = "forward.hocgin.top";
 
     /**
      * 获取代理隧道的域名

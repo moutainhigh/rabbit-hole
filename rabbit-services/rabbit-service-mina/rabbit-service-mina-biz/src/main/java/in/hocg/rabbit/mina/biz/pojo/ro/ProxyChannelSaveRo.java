@@ -32,6 +32,8 @@ public class ProxyChannelSaveRo {
     @ApiModelProperty("本地IP")
     private String localIp;
     @ApiModelProperty("域名前缀")
+    private String prefix;
+    @ApiModelProperty("域名后缀")
     private String suffix;
     @ApiModelProperty("开启状态")
     private Boolean enabled;
