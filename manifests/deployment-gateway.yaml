@@ -7,11 +7,11 @@ spec:
   selector:
     matchLabels:
       app: gateway
-#  strategy:
-#    type: RollingUpdate
-#    rollingUpdate:
-#      maxSurge: 2
-#      maxUnavailable: 0
+  #  strategy:
+  #    type: RollingUpdate
+  #    rollingUpdate:
+  #      maxSurge: 2
+  #      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -23,19 +23,26 @@ spec:
           imagePullPolicy: Always
           args: [ "--spring.profiles.active=${ACTIVE}" ]
           ports:
-            - containerPort: 20001
+            - name: web-port
+              containerPort: 20001
           envFrom:
             - configMapRef:
                 name: cm-service-env
           livenessProbe:
             httpGet:
               path: "/actuator/health"
-              port: 20001
+              port: web-port
             initialDelaySeconds: 100
             periodSeconds: 10
             timeoutSeconds: 3
             successThreshold: 1
             failureThreshold: 5
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 3
+            httpGet:
+              path: "/actuator/health"
+              port: web-port
 ---
 apiVersion: v1
 kind: Service
