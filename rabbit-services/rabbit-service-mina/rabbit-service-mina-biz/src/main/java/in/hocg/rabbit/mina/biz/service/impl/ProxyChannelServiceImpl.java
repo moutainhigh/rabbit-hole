@@ -81,6 +81,7 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
         Long requestUserId = ro.getRequestUserId();
 
         ProxyChannel entity = mapping.asProxyChannel(ro);
+        entity.setId(id);
         if (Objects.isNull(id)) {
             if (StrUtil.isBlank(ro.getChannelId())) {
                 entity.setChannelId(IdUtil.simpleUUID());
