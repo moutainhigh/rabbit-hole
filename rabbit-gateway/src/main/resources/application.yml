@@ -137,6 +137,7 @@ boot:
         ,/chaos/gumballs/gift
         ,/chaos/wallpaper/**
         ,/chaos/download
+        ,/chaos/proxy/*
 
         ,/wl/logistics-line/_search
 
