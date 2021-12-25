@@ -1,4 +1,4 @@
-name: Deploy::Chaos
+name: Deploy::Gateway
 
 on:
   workflow_dispatch:
