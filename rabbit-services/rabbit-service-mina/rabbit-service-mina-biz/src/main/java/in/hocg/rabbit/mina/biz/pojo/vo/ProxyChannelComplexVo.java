@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mina.biz.pojo.vo;
 
+import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,8 +16,11 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 @Accessors(chain = true)
 public class ProxyChannelComplexVo {
+    @ApiModelProperty("ID")
+    private Long id;
     @ApiModelProperty("隧道标识(唯一)")
     private String channelId;
     @ApiModelProperty("拥有人")

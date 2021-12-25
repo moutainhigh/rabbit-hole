@@ -85,6 +85,7 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
             if (StrUtil.isBlank(ro.getChannelId())) {
                 entity.setChannelId(IdUtil.simpleUUID());
             }
+            entity.setCreatedAt(LocalDateTime.now());
             entity.setSuffix(ChannelHelper.CHANNEL_SUFFIX);
             entity.setCreator(requestUserId);
         } else {

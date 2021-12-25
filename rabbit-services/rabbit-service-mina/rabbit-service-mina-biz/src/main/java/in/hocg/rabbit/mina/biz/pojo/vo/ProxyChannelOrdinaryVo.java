@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @Data
 @InjectNamed
 public class ProxyChannelOrdinaryVo {
+    @ApiModelProperty("ID")
+    private Long id;
     @ApiModelProperty("隧道唯一标识")
     private String channelId;
     @ApiModelProperty("拥有人")
