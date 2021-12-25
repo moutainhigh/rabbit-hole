@@ -32,6 +32,5 @@ public interface ProxyChannelMapping {
     @Mapping(target = "deleteFlag", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "channelId", ignore = true)
     ProxyChannel asProxyChannel(ProxyChannelSaveRo ro);
 }
