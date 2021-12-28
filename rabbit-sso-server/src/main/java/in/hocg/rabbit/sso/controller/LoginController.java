@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author hocgin
  */
-@Api(tags = "sso::静态文件")
+@Api(tags = "sso::登陆")
 @RestController
 @RequestMapping("/login")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
-@Api(tags = "sso::顶部")
+@Api(tags = "sso::其他操作")
 @RestController
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
