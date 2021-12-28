@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @Api(tags = "chaos::通用")
-@Controller
+@RestController
 @RequestMapping
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ChaosController {
@@ -40,7 +40,6 @@ public class ChaosController {
 
     @ApiOperation("发送短信验证码")
     @PostMapping("/sms-code")
-    @ResponseBody
     @SentinelResource(SentinelKeys.GET_SMS_CODE)
     public Result<Long> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
         return Result.success(service.sendSmsCode(qo));
@@ -48,7 +47,6 @@ public class ChaosController {
 
     @ApiOperation("发送邮箱验证码")
     @PostMapping("/email-code")
-    @ResponseBody
     public Result<Void> sendEmailCode(@Validated @RequestBody SendEmailCodeRo ro) {
         service.sendEmailCode(ro);
         return Result.success();
@@ -65,7 +63,6 @@ public class ChaosController {
 
     @ApiOperation("获取当前用户的位置")
     @GetMapping("/address4ip")
-    @ResponseBody
     public Result<IpAddressVo> getCurrentAddress(HttpServletRequest request) {
         String clientIp = RequestUtils.getClientIp(request);
         return Result.success(service.getAddress4ip(clientIp));
@@ -73,7 +70,6 @@ public class ChaosController {
 
     @ApiOperation("获取数据加密后的值")
     @GetMapping("/encrypt")
-    @ResponseBody
     public Result<String> encrypt(@RequestParam(name = "data") String data) {
         return Result.success(service.encrypt(data));
     }

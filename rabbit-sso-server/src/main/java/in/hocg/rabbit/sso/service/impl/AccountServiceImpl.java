@@ -3,7 +3,6 @@ package in.hocg.rabbit.sso.service.impl;
 import in.hocg.boot.validation.core.ValidatorUtils;
 import in.hocg.rabbit.chaos.api.SmsServiceApi;
 import in.hocg.rabbit.common.utils.Rules;
-import in.hocg.rabbit.sso.mapstruct.AccountMapping;
 import in.hocg.rabbit.sso.pojo.ro.ConfirmQrcodeRo;
 import in.hocg.rabbit.sso.pojo.ro.JoinAccountRo;
 import in.hocg.rabbit.sso.pojo.ro.LoginRo;
@@ -38,7 +37,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl implements AccountService {
-    private final AccountMapping mapping;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final SmsServiceApi smsServiceApi;

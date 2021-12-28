@@ -57,14 +57,12 @@ public class AuthorityController {
 
     @ApiOperation("权限详情 - 权限")
     @GetMapping("/{id}")
-    @ResponseBody
     public Result<AuthorityComplexVo> getAuthority(@ApiParam(value = "权限", required = true) @PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
 
     @ApiOperation("新增权限 - 权限")
     @PostMapping
-    @ResponseBody
     public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody SaveAuthorityRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.insertOne(ro);
@@ -73,7 +71,6 @@ public class AuthorityController {
 
     @ApiOperation("修改权限 - 权限")
     @PutMapping("/{id}")
-    @ResponseBody
     public Result<Void> updateOne(@ApiParam(value = "权限", required = true) @PathVariable Long id,
                                   @Validated({Update.class}) @RequestBody SaveAuthorityRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
@@ -83,7 +80,6 @@ public class AuthorityController {
 
     @ApiOperation("删除权限 - 权限")
     @DeleteMapping("/{id}")
-    @ResponseBody
     public Result<Void> deleteOne(@ApiParam(value = "权限", required = true) @PathVariable Long id) {
         service.deleteOne(id);
         return Result.success();
@@ -91,21 +87,18 @@ public class AuthorityController {
 
     @ApiOperation("获取权限树 - 权限")
     @GetMapping("/tree")
-    @ResponseBody
     public Result<List<AuthorityTreeNodeVo>> tree() {
         return Result.success(service.listAuthorityTree(true));
     }
 
     @ApiOperation("获取权限树(所有) - 权限")
     @GetMapping("/tree/all")
-    @ResponseBody
     public Result<List<AuthorityTreeNodeVo>> allTree() {
         return Result.success(service.listAuthorityTree(null));
     }
 
     @ApiOperation("分页获取用户列表 - 权限")
     @PostMapping("/{id}/users")
-    @ResponseBody
     public Result<IPage<UserRoleComplexVo>> listUserByAuthorityId(@ApiParam(value = "权限", required = true) @PathVariable Long id,
                                                                   @Validated @RequestBody GetAuthorityUserPagingRo ro) {
         return Result.success(service.pagingUserByAuthorityId(id, ro));
@@ -129,12 +122,10 @@ public class AuthorityController {
 
     @ApiOperation("导出权限sql - 权限")
     @GetMapping("/export")
-    @ResponseBody
     public ResponseEntity<?> exportSql(@ApiParam(value = "文件名")
                                        @RequestParam(value = "filename", required = false, defaultValue = "all_authority_sql.sql") String filename) {
         String sql = service.generateSql();
-        return ResponseEntity
-            .ok()
+        return ResponseEntity.ok()
             .headers(new HttpHeaders() {{
                 setContentDisposition(ContentDisposition.builder("attachment").filename(filename).build());
                 setCacheControl(CacheControl.noCache());

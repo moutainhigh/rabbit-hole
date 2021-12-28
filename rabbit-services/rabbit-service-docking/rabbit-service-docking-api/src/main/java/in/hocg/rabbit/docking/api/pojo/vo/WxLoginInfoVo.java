@@ -30,7 +30,7 @@ public class WxLoginInfoVo {
         Success("success", "成功"),
         Processing("processing", "进行中"),
         Fail("fail", "失败");
-        private final Serializable code;
+        private final String code;
         private final String name;
     }
 }

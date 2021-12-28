@@ -1,8 +1,10 @@
 package in.hocg.rabbit.ums.biz.mapstruct;
 
+import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.entity.User;
+import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
@@ -45,4 +47,11 @@ public interface UserMapping {
 
     @Mapping(target = "avatar", source = "avatarUrl")
     UserCompleteVo asUserCompleteVo(User entity);
+
+    @Mapping(target = "socials", ignore = true)
+    @Mapping(target = "nickname", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "createdIp", ignore = true)
+    @Mapping(target = "avatar", ignore = true)
+    CreateAccountRo asCreateAccountRo(RegisterRo ro);
 }

@@ -8,6 +8,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.utils.enums.ICode;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
+import in.hocg.boot.web.exception.ServiceException;
 import in.hocg.rabbit.chaos.api.EmailServiceApi;
 import in.hocg.rabbit.chaos.api.SmsServiceApi;
 import in.hocg.rabbit.com.api.FileServiceApi;
@@ -16,7 +19,9 @@ import in.hocg.rabbit.com.api.pojo.vo.ProjectComplexVo;
 import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.rabbit.common.utils.RabbitUtils;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
+import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
 import in.hocg.rabbit.ums.api.pojo.ro.InsertSocialRo;
+import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
@@ -25,12 +30,7 @@ import in.hocg.rabbit.ums.biz.entity.Social;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.mapper.UserMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.UserMapping;
-import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
@@ -48,8 +48,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -83,6 +85,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private final RoleUserRefService roleUserRefService;
     private final UmsCacheService cacheService;
     private final OssFileBervice ossFileService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -152,13 +155,13 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique) {
-        return getAccountByUsernameOrEmailOrPhone(unique)
+        return getByUsernameOrEmailOrPhone(unique)
             .map(mapping::asUserDetailVo).orElse(null);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Optional<User> getAccountByUsernameOrEmailOrPhone(String unique) {
+    public Optional<User> getByUsernameOrEmailOrPhone(String unique) {
         return lambdaQuery()
             .or().eq(User::getUsername, unique)
             .or().eq(User::getEmail, unique)
@@ -394,6 +397,46 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     public void confirmQrcode(String idFlag, Long userId) {
         User user = Assert.notNull(getById(userId), "用户信息错误");
         cacheService.updateQrcodeLoginKey(idFlag, user.getUsername());
+    }
+
+    @Override
+    public void forgot(ForgotRo ro) {
+        ForgotRo.Mode mode = ICode.ofThrow(ro.getMode(), ForgotRo.Mode.class);
+        if (ForgotRo.Mode.UseEmail.equals(mode)) {
+            forgotEmail(Assert.notNull(ro.getEmailMode()));
+        } else if (ForgotRo.Mode.UsePhone.equals(mode)) {
+            forgotPhone(Assert.notNull(ro.getPhoneMode()));
+        }
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void register(RegisterRo ro) {
+        Assert.isTrue(smsServiceApi.validVerifyCode(ro.getPhone(), ro.getCode()), "验证码错误");
+        ro.setPassword(passwordEncoder.encode(ro.getPassword()));
+        CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
+        createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
+        this.createAccount(createAccountRo);
+    }
+
+    private void forgotEmail(@Validated ForgotRo.EmailMode ro) {
+        // todo 发送邮件，重置密码的链接
+        throw new UnsupportedOperationException();
+    }
+
+    private void forgotPhone(@Validated ForgotRo.PhoneMode ro) {
+        String phone = ro.getPhone();
+        String password = ro.getPassword();
+        Assert.isTrue(smsServiceApi.validVerifyCode(phone, ro.getCode()), "验证码错误");
+        User entity = getAccountByPhone(phone).orElseThrow(() -> ServiceException.wrap("手机号码不存在"));
+        updatePasswordById(entity.getId(), password);
+    }
+
+    private void updatePasswordById(Long id, String password) {
+        User update = new User();
+        update.setId(id);
+        update.setPassword(passwordEncoder.encode(password));
+        validEntity(update);
     }
 
     private Optional<User> getAccountByPhone(String phone) {

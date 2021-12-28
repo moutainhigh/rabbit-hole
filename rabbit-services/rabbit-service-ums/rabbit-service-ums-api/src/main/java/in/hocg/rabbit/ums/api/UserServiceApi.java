@@ -1,6 +1,8 @@
 package in.hocg.rabbit.ums.api;
 
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
+import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
+import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
@@ -58,4 +60,10 @@ public interface UserServiceApi {
 
     @GetMapping(value = CONTEXT_ID + "/confirmQrcode", headers = UmsServiceName.FEIGN_HEADER)
     void confirmQrcode(@RequestParam("idFlag") String idFlag, @RequestParam("userId") Long userId);
+
+    @PostMapping(value = CONTEXT_ID + "/forgot", headers = UmsServiceName.FEIGN_HEADER)
+    void forgot(@RequestBody ForgotRo ro);
+
+    @PostMapping(value = CONTEXT_ID + "/register", headers = UmsServiceName.FEIGN_HEADER)
+    void register(@RequestBody RegisterRo ro);
 }
