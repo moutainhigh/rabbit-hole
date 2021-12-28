@@ -45,7 +45,7 @@ public class WxMpIndexServiceImpl implements WxMpIndexService {
         }
         return new WxMpQrCodeVo()
             .setIdFlag(idFlag)
-            .setQrCodeUrl(qrCodeUrl);
+            .setQrcodeUrl(qrCodeUrl);
     }
 
     @Override

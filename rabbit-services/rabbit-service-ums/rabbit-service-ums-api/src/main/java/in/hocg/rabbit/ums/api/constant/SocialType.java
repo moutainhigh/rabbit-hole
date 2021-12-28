@@ -16,6 +16,6 @@ import java.io.Serializable;
 public enum SocialType {
     WxMp("wxmp", "微信公众号"),
     WxMa("wxma", "微信小程序");
-    private final Serializable code;
+    private final String code;
     private final String name;
 }

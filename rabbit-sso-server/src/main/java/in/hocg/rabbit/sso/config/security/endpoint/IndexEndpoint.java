@@ -24,19 +24,14 @@ import java.security.Principal;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class IndexEndpoint {
 
-    @RequestMapping("/login")
+    @RequestMapping({"/", "index", "login", "index.html"})
     public ModelAndView login() {
-        return new ModelAndView("login");
+        return new ModelAndView("index");
     }
 
     @RequestMapping("/logout")
     public ModelAndView logout() {
         SecurityContext.signOut();
-        return new ModelAndView("index");
-    }
-
-    @GetMapping({"/", "/index.html", "/index"})
-    public ModelAndView index() {
         return new ModelAndView("index");
     }
 

@@ -2,9 +2,7 @@ package in.hocg.rabbit.ums.biz.controller;
 
 
 import in.hocg.rabbit.ums.biz.entity.User;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.service.UserService;
@@ -44,8 +42,7 @@ public class AccountController {
     @GetMapping("/{username}:avatar")
     @ResponseBody
     public ResponseEntity<?> getAvatarUrl(@ApiParam("用户名") @PathVariable String username) {
-        return ResponseUtils.preview(service.getAccountByUsernameOrEmailOrPhone(username)
-            .map(User::getAvatarUrl).orElse(null));
+        return ResponseUtils.preview(service.getByUsernameOrEmailOrPhone(username).map(User::getAvatarUrl).orElse(null));
     }
 
     @UseLogger("获取当前用户信息")
@@ -107,7 +104,6 @@ public class AccountController {
         ro.setUpdaterId(userId);
         return Result.success(service.updateEmail(ro));
     }
-
 
 }
 

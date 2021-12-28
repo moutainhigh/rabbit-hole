@@ -2,16 +2,13 @@ package in.hocg.rabbit.ums.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
+import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
+import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.entity.User;
-import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
@@ -36,7 +33,7 @@ public interface UserService extends AbstractService<User> {
 
     UserDetailVo getUserDetailVoByUsernameOrEmailOrPhone(String unique);
 
-    Optional<User> getAccountByUsernameOrEmailOrPhone(String unique);
+    Optional<User> getByUsernameOrEmailOrPhone(String unique);
 
     List<User> listAccountById(List<Long> values);
 
@@ -77,4 +74,8 @@ public interface UserService extends AbstractService<User> {
     GetLoginQrcodeVo getLoginQrcode();
 
     void confirmQrcode(String idFlag, Long userId);
+
+    void forgot(ForgotRo ro);
+
+    void register(RegisterRo ro);
 }
