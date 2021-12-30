@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
 
-import in.hocg.rabbit.common.datadict.mall.UserCouponStatus;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 

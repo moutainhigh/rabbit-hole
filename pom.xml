@@ -48,8 +48,6 @@
     <module>rabbit-services</module>
     <module>rabbit-gateway</module>
     <module>rabbit-generator</module>
-    <module>rabbit-sso-server</module>
-    <module>rabbit-spring-boot-admin</module>
   </modules>
 
   <dependencyManagement>

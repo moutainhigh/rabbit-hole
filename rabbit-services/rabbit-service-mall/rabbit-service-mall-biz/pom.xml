@@ -17,6 +17,10 @@
     <!--  一方库  -->
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-mall-api</artifactId>
     </dependency>
     <dependency>

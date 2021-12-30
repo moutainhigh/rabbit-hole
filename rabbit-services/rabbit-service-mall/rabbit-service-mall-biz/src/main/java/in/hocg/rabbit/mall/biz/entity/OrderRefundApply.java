@@ -1,12 +1,13 @@
 package in.hocg.rabbit.mall.biz.entity;
 
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 
-import in.hocg.rabbit.common.datadict.common.HandleStatus;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
@@ -84,7 +85,6 @@ public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
     private Long lastUpdater;
     @TableField("last_updated_at")
     private LocalDateTime lastUpdatedAt;
-
 
 
 }
