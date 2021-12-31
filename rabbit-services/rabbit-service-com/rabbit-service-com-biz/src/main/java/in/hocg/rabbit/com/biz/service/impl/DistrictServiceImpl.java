@@ -12,7 +12,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.district.DistrictTreeVo;
 import in.hocg.rabbit.com.biz.service.DistrictService;
 import in.hocg.rabbit.com.biz.utils.LBSHelper;
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
-import in.hocg.rabbit.common.datadict.com.DistrictLevel;
+import in.hocg.rabbit.com.api.enums.DistrictLevel;
 import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;

@@ -3,7 +3,7 @@ package in.hocg.rabbit.com.biz.schedule;
 import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
 import com.alibaba.schedulerx.worker.processor.ProcessResult;
-import in.hocg.rabbit.common.datadict.com.TaskType;
+import in.hocg.rabbit.com.api.enums.TaskType;
 import in.hocg.rabbit.mina.api.YouTubeServiceApi;
 import in.hocg.rabbit.mina.api.pojo.ro.UploadYouTubeRo;
 import in.hocg.boot.task.autoconfiguration.core.TaskBervice;

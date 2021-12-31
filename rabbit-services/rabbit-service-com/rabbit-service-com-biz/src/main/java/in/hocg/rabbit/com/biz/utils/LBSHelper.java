@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.biz.utils;
 
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
-import in.hocg.rabbit.common.datadict.com.DistrictLevel;
+import in.hocg.rabbit.com.api.enums.DistrictLevel;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 

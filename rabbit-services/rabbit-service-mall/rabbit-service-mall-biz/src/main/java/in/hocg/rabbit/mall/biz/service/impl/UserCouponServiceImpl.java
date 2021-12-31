@@ -2,8 +2,8 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.rabbit.common.datadict.mall.CouponUseStint;
-import in.hocg.rabbit.common.datadict.mall.UserCouponStatus;
+import in.hocg.rabbit.mall.api.enums.CouponUseStint;
+import in.hocg.rabbit.mall.api.enums.UserCouponStatus;
 import in.hocg.rabbit.mall.biz.entity.Coupon;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapper.UserCouponMapper;

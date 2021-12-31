@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.pojo.ro;
 
-import in.hocg.rabbit.common.datadict.com.FeedbackType;
+import in.hocg.rabbit.com.api.enums.FeedbackType;
 import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

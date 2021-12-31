@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.entity.File;
 import in.hocg.rabbit.com.biz.mapper.FileMapper;
 import in.hocg.rabbit.com.biz.service.FileService;
 import in.hocg.rabbit.com.biz.utils.Avatars;
-import in.hocg.rabbit.common.datadict.com.FileRelType;
+import in.hocg.rabbit.com.api.enums.FileRelType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.ValidUtils;

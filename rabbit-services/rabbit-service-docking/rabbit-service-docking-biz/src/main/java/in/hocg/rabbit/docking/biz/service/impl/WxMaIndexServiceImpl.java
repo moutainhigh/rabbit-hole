@@ -14,7 +14,7 @@ import in.hocg.rabbit.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import in.hocg.rabbit.docking.biz.service.WxMaIndexService;
 import in.hocg.rabbit.ums.api.SocialServiceApi;
 import in.hocg.rabbit.ums.api.UserServiceApi;
-import in.hocg.rabbit.ums.api.constant.SocialType;
+import in.hocg.rabbit.ums.api.enums.SocialType;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;

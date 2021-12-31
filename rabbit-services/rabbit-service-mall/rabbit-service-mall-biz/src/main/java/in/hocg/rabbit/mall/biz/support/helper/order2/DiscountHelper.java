@@ -1,8 +1,8 @@
 package in.hocg.rabbit.mall.biz.support.helper.order2;
 
-import in.hocg.rabbit.common.datadict.mall.CouponType;
-import in.hocg.rabbit.common.datadict.mall.CouponUsePlatform;
-import in.hocg.rabbit.common.datadict.mall.CouponUseStint;
+import in.hocg.rabbit.mall.api.enums.CouponType;
+import in.hocg.rabbit.mall.api.enums.CouponUsePlatform;
+import in.hocg.rabbit.mall.api.enums.CouponUseStint;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;

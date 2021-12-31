@@ -5,6 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.bmw.api.BmwServiceApi;
+import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
+import in.hocg.rabbit.bmw.api.enums.TradeOrderStatus;
 import in.hocg.rabbit.bmw.api.pojo.ro.CreateTradeRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GetCashierRo;
 import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
@@ -12,13 +14,11 @@ import in.hocg.rabbit.com.api.SnCodeServiceApi;
 import in.hocg.rabbit.common.basic.PageUrlHelper;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.common.constant.SnCodePrefixConstant;
-import in.hocg.rabbit.common.datadict.bmw.SyncAccessMchTaskType;
-import in.hocg.rabbit.common.datadict.bmw.TradeOrderStatus;
 import in.hocg.rabbit.common.datadict.common.RefType;
-import in.hocg.rabbit.common.datadict.mall.CouponType;
-import in.hocg.rabbit.common.datadict.mall.OrderDiscountType;
-import in.hocg.rabbit.common.datadict.mall.OrderSource;
-import in.hocg.rabbit.common.datadict.mall.OrderStatus;
+import in.hocg.rabbit.mall.api.enums.CouponType;
+import in.hocg.rabbit.mall.api.enums.OrderDiscountType;
+import in.hocg.rabbit.mall.api.enums.OrderSource;
+import in.hocg.rabbit.mall.api.enums.OrderStatus;
 import in.hocg.rabbit.mall.biz.entity.Coupon;
 import in.hocg.rabbit.mall.biz.entity.Order;
 import in.hocg.rabbit.mall.biz.entity.OrderDiscount;
@@ -463,7 +463,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         String orderNo = tradeStatusSync.getOutTradeNo();
         String payType = tradeStatusSync.getPayType(); // todo
         Optional<Order> orderOpl = this.getByOrderNo(orderNo);
-        if (!orderOpl.isPresent()) {
+        if (orderOpl.isEmpty()) {
             throw ServiceException.wrap("订单不存在");
         }
         final Order order = orderOpl.get();

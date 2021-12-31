@@ -18,7 +18,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.NoticeMessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.PersonalMessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.SystemMessageComplexVo;
 import in.hocg.rabbit.com.biz.service.*;
-import in.hocg.rabbit.common.datadict.com.MessageUserRefType;
+import in.hocg.rabbit.com.api.enums.MessageUserRefType;
 import in.hocg.rabbit.common.utils.Rules;
 import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import in.hocg.boot.utils.LangUtils;

@@ -5,7 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
-import in.hocg.rabbit.common.datadict.com.FileRelType;
+import in.hocg.rabbit.com.api.enums.FileRelType;
 import in.hocg.rabbit.mina.biz.entity.GameCard;
 import in.hocg.rabbit.mina.biz.mapper.GameCardMapper;
 import in.hocg.rabbit.mina.biz.mapstruct.GameCardMapping;

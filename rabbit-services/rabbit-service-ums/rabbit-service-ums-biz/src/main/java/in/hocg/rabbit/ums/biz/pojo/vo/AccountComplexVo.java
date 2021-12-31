@@ -2,7 +2,7 @@ package in.hocg.rabbit.ums.biz.pojo.vo;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.rabbit.common.datadict.ums.Gender;
+import in.hocg.rabbit.ums.api.enums.Gender;
 import in.hocg.boot.named.annotation.InjectNamed;
 
 import io.swagger.annotations.ApiModel;

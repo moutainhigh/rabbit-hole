@@ -2,7 +2,7 @@ package in.hocg.rabbit.mall.biz.support.helper.order2.rule.rule;
 
 
 
-import in.hocg.rabbit.common.datadict.mall.UserCouponStatus;
+import in.hocg.rabbit.mall.api.enums.UserCouponStatus;
 import in.hocg.rabbit.mall.biz.support.helper.order2.modal.GeneralOrder;
 import in.hocg.rabbit.mall.biz.support.helper.order2.modal.GeneralProduct;
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.AbsRule;

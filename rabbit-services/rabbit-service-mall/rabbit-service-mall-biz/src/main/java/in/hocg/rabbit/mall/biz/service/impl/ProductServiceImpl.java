@@ -2,9 +2,10 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
-import in.hocg.rabbit.common.datadict.com.FileRelType;
+import in.hocg.rabbit.com.api.enums.FileRelType;
 import in.hocg.rabbit.mall.biz.entity.Product;
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.mapper.ProductMapper;
@@ -24,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -99,9 +99,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         // 设置SKU
         final List<ProductSaveRo.Sku> allSku = ro.getSku();
         if (Objects.nonNull(allSku)) {
-            List<Sku> skuList = allSku.parallelStream()
-                .map(sku -> skuMapping.asSku(sku).setProductId(productId).setSpecData(JSONUtil.toJsonStr(sku.getSpec())))
-                .collect(Collectors.toList());
+            List<Sku> skuList = LangUtils.toList(allSku, sku -> skuMapping.asSku(sku).setProductId(productId).setSpecData(JSONUtil.toJsonStr(sku.getSpec())));
             skuService.insertOrUpdateByProductId(productId, skuList);
         }
 

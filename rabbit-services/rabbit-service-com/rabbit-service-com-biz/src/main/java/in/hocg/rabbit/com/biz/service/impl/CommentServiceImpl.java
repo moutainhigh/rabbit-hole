@@ -16,7 +16,7 @@ import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.com.biz.service.CommentTargetService;
 import in.hocg.rabbit.com.biz.service.CommentUserActionService;
 import in.hocg.rabbit.com.biz.pojo.ro.*;
-import in.hocg.rabbit.common.datadict.com.CommentUserActionType;
+import in.hocg.rabbit.com.api.enums.CommentUserActionType;
 import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
