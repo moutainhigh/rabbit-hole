@@ -7,5 +7,5 @@ package in.hocg.rabbit.mall.api.named;
  * @author hocgin
  */
 public final class MallDataDictKeys {
-
+    public static final String USER_COUPON_STATUS = "UserCouponStatus";
 }

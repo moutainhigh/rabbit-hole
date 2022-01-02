@@ -30,7 +30,15 @@ public interface DataDictItemMapping {
     @Mapping(target = "createdAt", ignore = true)
     DataDictItem asDataDictItem(DataDictItemInsertRo ro);
 
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     DataDictItemComplexVo asComplex(DataDictItem entity);
 
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dictId", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     DataDictItem asDataDictItem(DataDictItemUpdateRo ro);
 }

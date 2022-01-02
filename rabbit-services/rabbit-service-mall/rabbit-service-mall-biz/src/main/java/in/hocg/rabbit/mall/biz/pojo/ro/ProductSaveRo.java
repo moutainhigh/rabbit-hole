@@ -37,6 +37,7 @@ public class ProductSaveRo {
     @ApiModelProperty("品类ID")
     @NotNull(message = "品类不能为空")
     private Long productCategoryId;
+    @Size(min = 8, message = "单位错误")
     @ApiModelProperty("单位")
     private String unit;
     @ApiModelProperty("商品重量(克)")

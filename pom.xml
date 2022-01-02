@@ -29,7 +29,7 @@
 
     <boot-dependencies.version>1.0.22</boot-dependencies.version>
     <boot.version>1.0.22</boot.version>
-    <lombok.version>1.18.22</lombok.version>
+    <lombok.version>1.18.12</lombok.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
     <rabbit-service-bmw.version>1.0.0-SNAPSHOT</rabbit-service-bmw.version>
   </properties>
@@ -85,27 +85,12 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-chaos-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-mina-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-mina-biz</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-mina-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-ums-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -120,22 +105,12 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-mall-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-mall-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-mall-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-tpl-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -150,22 +125,12 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-com-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-com-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-com-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-docking-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -180,11 +145,6 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-wl-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-wl-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -195,22 +155,12 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-aom-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-aom-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-aom-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-rcm-start</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

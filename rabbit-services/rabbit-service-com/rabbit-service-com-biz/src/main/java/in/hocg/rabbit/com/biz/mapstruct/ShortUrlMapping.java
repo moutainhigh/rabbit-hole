@@ -18,9 +18,9 @@ public interface ShortUrlMapping {
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "code", ignore = true)
-    @Mapping(target = "creator", ignore = true)
     ShortUrl asShortUrl(ShortUrlUpdateRo qo);
 
     @Mapping(target = "creatorName", ignore = true)
