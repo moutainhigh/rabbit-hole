@@ -15,7 +15,7 @@ import in.hocg.rabbit.ums.biz.service.AuthorityService;
 import in.hocg.rabbit.ums.biz.service.RoleAuthorityRefService;
 import in.hocg.rabbit.ums.biz.service.RoleService;
 import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;

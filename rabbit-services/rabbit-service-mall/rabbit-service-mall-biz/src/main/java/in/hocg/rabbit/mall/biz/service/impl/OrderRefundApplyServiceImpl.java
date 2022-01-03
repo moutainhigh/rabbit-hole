@@ -17,7 +17,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
 import in.hocg.rabbit.mall.biz.service.OrderRefundApplyService;
 import in.hocg.rabbit.mall.biz.service.OrderService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;

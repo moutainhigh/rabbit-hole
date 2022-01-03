@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.entity.Project;
 import in.hocg.rabbit.com.biz.pojo.ro.ProjectCompleteRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ProjectPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ProjectSaveRo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 import java.util.Optional;

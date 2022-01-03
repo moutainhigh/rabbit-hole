@@ -36,7 +36,7 @@ import in.hocg.rabbit.mall.biz.support.helper.order2.modal.GeneralProduct;
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.DiscountCheckResult;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;

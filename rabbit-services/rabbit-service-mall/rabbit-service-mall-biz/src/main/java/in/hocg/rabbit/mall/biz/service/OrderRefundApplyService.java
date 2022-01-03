@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.OrderRefundApplyPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.RefundApplyRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.RefundHandleRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

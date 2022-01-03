@@ -9,7 +9,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.AppCardComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.AppCardOrdinaryVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaAppCardComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

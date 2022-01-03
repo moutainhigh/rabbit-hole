@@ -1,7 +1,7 @@
 package in.hocg.rabbit.ums.biz.service;
 
 import in.hocg.rabbit.ums.biz.entity.AuthorityApiRef;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

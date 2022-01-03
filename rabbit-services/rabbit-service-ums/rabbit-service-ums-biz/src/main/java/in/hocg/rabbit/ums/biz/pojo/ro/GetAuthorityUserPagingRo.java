@@ -1,6 +1,6 @@
 package in.hocg.rabbit.ums.biz.pojo.ro;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.ro.PageRo;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

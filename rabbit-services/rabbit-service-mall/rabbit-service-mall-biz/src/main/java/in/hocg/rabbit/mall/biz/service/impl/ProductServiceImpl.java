@@ -17,7 +17,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
 import in.hocg.rabbit.mall.biz.service.ProductService;
 import in.hocg.rabbit.mall.biz.service.SkuService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

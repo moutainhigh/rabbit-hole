@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapper.OrderDiscountMapper;
 import in.hocg.rabbit.mall.biz.service.OrderDiscountService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

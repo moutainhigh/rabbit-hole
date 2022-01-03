@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductCompleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

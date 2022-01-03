@@ -13,7 +13,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.AppCardOrdinaryVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaAppCardComplexVo;
 import in.hocg.rabbit.mina.biz.service.AppCardService;
 import com.google.common.collect.Lists;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;

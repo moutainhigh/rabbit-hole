@@ -3,7 +3,7 @@ package in.hocg.rabbit.mall.biz.service.impl;
 import in.hocg.rabbit.mall.biz.entity.Shopcart;
 import in.hocg.rabbit.mall.biz.mapper.ShopcartMapper;
 import in.hocg.rabbit.mall.biz.service.ShopcartService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

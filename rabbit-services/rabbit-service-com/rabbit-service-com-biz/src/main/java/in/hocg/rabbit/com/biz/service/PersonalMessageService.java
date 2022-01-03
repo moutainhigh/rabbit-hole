@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.biz.service;
 
 import in.hocg.rabbit.com.biz.entity.PersonalMessage;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

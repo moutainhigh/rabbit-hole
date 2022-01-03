@@ -2,7 +2,7 @@ package in.hocg.rabbit.ums.biz.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

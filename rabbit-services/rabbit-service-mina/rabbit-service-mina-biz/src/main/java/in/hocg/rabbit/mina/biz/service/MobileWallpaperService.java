@@ -6,7 +6,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

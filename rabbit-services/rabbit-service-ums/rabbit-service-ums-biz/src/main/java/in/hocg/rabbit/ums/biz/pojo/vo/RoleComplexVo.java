@@ -21,7 +21,7 @@ import java.util.List;
 @ApiModel("角色列表查询")
 public class RoleComplexVo extends RoleOrdinaryVo {
     @ApiModelProperty("角色使用的用户数量")
-    private Integer useUserCount = 0;
+    private Long useUserCount = 0L;
 
     @ApiModelProperty("权限列表")
     private List<AuthorityOrdinaryVo> authorities = Collections.emptyList();

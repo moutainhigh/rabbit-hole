@@ -5,7 +5,7 @@ import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.math.BigDecimal;
 import java.util.List;

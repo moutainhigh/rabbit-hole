@@ -28,6 +28,6 @@ public class MallNamedServiceApiImpl extends AbsNamedServiceExpand implements Ma
     @Override
     public Map<String, Object> loadByDataDictName(NamedArgs args) {
         String key = args.getArgs()[0];
-        return DataDictUtils.scan(MallServiceName.PACKAGE).getOrDefault(key, Collections.emptyMap());
+        return DataDictUtils.scanMaps(MallServiceName.PACKAGE).getOrDefault(key, Collections.emptyMap());
     }
 }

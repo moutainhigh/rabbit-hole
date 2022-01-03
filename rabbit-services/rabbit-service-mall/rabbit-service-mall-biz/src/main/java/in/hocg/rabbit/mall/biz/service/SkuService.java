@@ -2,7 +2,7 @@ package in.hocg.rabbit.mall.biz.service;
 
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.pojo.vo.SkuComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

@@ -2,6 +2,8 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.entity.CommentUserAction;
 import in.hocg.rabbit.com.biz.mapper.CommentMapper;
@@ -22,9 +24,8 @@ import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
-import in.hocg.boot.mybatis.plus.autoconfiguration.utils.PageUtils;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
@@ -278,7 +279,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         return has(TreeEntity::getParentId, id, null);
     }
 
-    private Integer countRightLikeTreePath(String treePath) {
+    private Long countRightLikeTreePath(String treePath) {
         return lambdaQuery().likeRight(Comment::getTreePath, treePath).count();
     }
 

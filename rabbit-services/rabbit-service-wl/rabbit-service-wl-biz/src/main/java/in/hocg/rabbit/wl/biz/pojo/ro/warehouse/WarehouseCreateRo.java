@@ -1,6 +1,6 @@
 package in.hocg.rabbit.wl.biz.pojo.ro.warehouse;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.ro.BasicRo;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.BasicRo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

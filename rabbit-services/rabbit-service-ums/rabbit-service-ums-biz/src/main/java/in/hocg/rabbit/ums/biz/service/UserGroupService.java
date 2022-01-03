@@ -5,7 +5,7 @@ import in.hocg.rabbit.ums.biz.entity.UserGroup;
 import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserGroupComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserGroupRefUserVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

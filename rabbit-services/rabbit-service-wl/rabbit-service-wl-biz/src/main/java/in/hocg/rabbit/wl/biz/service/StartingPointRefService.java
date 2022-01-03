@@ -3,7 +3,7 @@ package in.hocg.rabbit.wl.biz.service;
 import in.hocg.rabbit.wl.biz.entity.LogisticsLine;
 import in.hocg.rabbit.wl.biz.entity.StartingPointRef;
 import in.hocg.rabbit.wl.biz.entity.Warehouse;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

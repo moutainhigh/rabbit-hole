@@ -17,7 +17,7 @@ import in.hocg.rabbit.mall.biz.service.CouponProductCategoryRefService;
 import in.hocg.rabbit.mall.biz.service.CouponProductRefService;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.exception.ServiceException;
 import org.springframework.stereotype.Service;

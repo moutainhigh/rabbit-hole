@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.mapstruct.OrderItemMapping;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderItemComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
 import in.hocg.rabbit.mall.biz.service.OrderRefundApplyService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;

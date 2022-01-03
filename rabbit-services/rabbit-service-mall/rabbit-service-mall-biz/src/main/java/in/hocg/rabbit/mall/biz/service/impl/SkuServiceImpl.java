@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.mapper.SkuMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.SkuMapping;
 import in.hocg.rabbit.mall.biz.pojo.vo.SkuComplexVo;
 import in.hocg.rabbit.mall.biz.service.SkuService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;

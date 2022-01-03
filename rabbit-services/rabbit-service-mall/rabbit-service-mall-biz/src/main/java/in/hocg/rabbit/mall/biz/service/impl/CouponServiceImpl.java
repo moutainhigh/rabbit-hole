@@ -10,7 +10,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.CouponComplexVo;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

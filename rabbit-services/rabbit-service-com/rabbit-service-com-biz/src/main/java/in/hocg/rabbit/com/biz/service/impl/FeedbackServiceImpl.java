@@ -7,7 +7,7 @@ import in.hocg.rabbit.com.biz.mapstruct.FeedbackMapping;
 import in.hocg.rabbit.com.biz.pojo.ro.FeedbackInsertRo;
 import in.hocg.rabbit.com.biz.service.FeedbackService;
 import in.hocg.rabbit.com.biz.service.ProjectService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;

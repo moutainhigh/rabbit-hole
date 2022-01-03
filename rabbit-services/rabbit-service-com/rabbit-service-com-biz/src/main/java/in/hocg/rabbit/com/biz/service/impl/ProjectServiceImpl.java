@@ -9,7 +9,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.ProjectCompleteRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ProjectPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ProjectSaveRo;
 import in.hocg.rabbit.com.biz.service.ProjectService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

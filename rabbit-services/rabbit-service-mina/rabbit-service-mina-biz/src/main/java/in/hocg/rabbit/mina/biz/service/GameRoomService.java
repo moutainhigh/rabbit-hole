@@ -7,7 +7,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaGameCreateRoomRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.RoomPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomOrdinaryVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

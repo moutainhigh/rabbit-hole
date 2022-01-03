@@ -13,7 +13,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.company.CompanyUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.CompanyComplexVo;
 import in.hocg.rabbit.wl.biz.service.CompanyService;
 import in.hocg.rabbit.wl.biz.service.WarehouseService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;

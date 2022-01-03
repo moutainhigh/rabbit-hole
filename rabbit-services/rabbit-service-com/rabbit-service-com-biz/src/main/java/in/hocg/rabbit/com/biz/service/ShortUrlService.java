@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.ShortUrlInsertRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ShortUrlPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.ShortUrlUpdateRo;
 import in.hocg.rabbit.com.biz.pojo.vo.ShortUrlComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.Optional;
 

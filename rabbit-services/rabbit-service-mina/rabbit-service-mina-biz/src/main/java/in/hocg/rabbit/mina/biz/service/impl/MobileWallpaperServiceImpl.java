@@ -9,7 +9,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
 import in.hocg.rabbit.mina.biz.service.MobileWallpaperService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

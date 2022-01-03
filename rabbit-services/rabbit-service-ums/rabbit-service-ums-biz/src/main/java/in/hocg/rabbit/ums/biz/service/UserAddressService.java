@@ -2,7 +2,7 @@ package in.hocg.rabbit.ums.biz.service;
 
 import in.hocg.rabbit.ums.biz.entity.UserAddress;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserAddressComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.Optional;
 

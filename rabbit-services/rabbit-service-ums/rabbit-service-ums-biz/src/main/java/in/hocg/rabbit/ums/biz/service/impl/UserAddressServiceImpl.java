@@ -5,7 +5,7 @@ import in.hocg.rabbit.ums.biz.mapper.UserAddressMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.UserAddressMapping;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserAddressComplexVo;
 import in.hocg.rabbit.ums.biz.service.UserAddressService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

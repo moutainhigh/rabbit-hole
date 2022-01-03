@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mall.biz.entity.Order;
 import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
 
 /**

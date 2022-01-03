@@ -18,7 +18,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.GameCardOrdinaryVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import in.hocg.rabbit.mina.biz.service.GameCardService;
 import com.google.common.collect.Lists;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;

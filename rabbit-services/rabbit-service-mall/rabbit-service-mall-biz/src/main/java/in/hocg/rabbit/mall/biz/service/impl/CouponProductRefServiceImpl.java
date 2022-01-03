@@ -5,7 +5,7 @@ import in.hocg.rabbit.mall.biz.mapper.CouponProductRefMapper;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
 import in.hocg.rabbit.mall.biz.service.CouponProductRefService;
 import in.hocg.rabbit.mall.biz.service.ProductService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;

@@ -9,7 +9,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralFlowVo;
 import in.hocg.rabbit.com.biz.service.UserIntegralFlowService;
 import in.hocg.rabbit.com.api.enums.integralflow.ChangeType;
 import in.hocg.rabbit.com.api.enums.integralflow.EventType;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -36,13 +36,13 @@ public class UserIntegralFlowServiceImpl extends AbstractServiceImpl<UserIntegra
     }
 
     @Override
-    public Integer countSignByDate(Long userId, LocalDate now) {
+    public Long countSignByDate(Long userId, LocalDate now) {
         return this.countByUserIdAndEventTypeAndLocalDate(userId, EventType.UserSign.getCodeStr(), now);
     }
 
 
     @Override
-    public Integer countWatchAdByDate(Long userId, LocalDate now) {
+    public Long countWatchAdByDate(Long userId, LocalDate now) {
         return countByUserIdAndEventTypeAndLocalDate(userId, EventType.WatchAd.getCodeStr(), now);
     }
 
@@ -54,7 +54,7 @@ public class UserIntegralFlowServiceImpl extends AbstractServiceImpl<UserIntegra
      * @param now
      * @return
      */
-    private Integer countByUserIdAndEventTypeAndLocalDate(Long userId, String eventType, LocalDate now) {
+    private Long countByUserIdAndEventTypeAndLocalDate(Long userId, String eventType, LocalDate now) {
         return lambdaQuery().eq(UserIntegralFlow::getUserId, userId)
             .eq(UserIntegralFlow::getEventType, eventType)
             .eq(UserIntegralFlow::getChangeType, ChangeType.Plus.getCodeStr())

@@ -3,7 +3,7 @@ package in.hocg.rabbit.mina.biz.service.impl;
 import in.hocg.rabbit.mina.biz.entity.GameRoomUser;
 import in.hocg.rabbit.mina.biz.mapper.GameRoomUserMapper;
 import in.hocg.rabbit.mina.biz.service.GameRoomUserService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

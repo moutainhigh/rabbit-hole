@@ -9,7 +9,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryTreeVo;
 import in.hocg.rabbit.mall.biz.service.CouponProductCategoryRefService;
 import in.hocg.rabbit.mall.biz.service.ProductCategoryService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.web.datastruct.tree.Tree;
 import in.hocg.boot.web.exception.ServiceException;
 import org.springframework.stereotype.Service;

@@ -40,7 +40,7 @@ import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
 import in.hocg.rabbit.ums.biz.service.SocialService;
 import in.hocg.rabbit.ums.biz.service.UserService;
 import com.google.common.collect.Maps;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;

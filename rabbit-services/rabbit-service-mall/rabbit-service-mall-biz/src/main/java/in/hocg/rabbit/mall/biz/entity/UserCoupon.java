@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import io.swagger.annotations.ApiModelProperty;

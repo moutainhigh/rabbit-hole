@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.*;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.RootCommentComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

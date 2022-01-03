@@ -3,7 +3,7 @@ package in.hocg.rabbit.ums.biz.service.impl;
 import in.hocg.rabbit.ums.biz.entity.AuthorityApiRef;
 import in.hocg.rabbit.ums.biz.mapper.AuthorityApiRefMapper;
 import in.hocg.rabbit.ums.biz.service.AuthorityApiRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

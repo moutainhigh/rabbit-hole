@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.experimental.UtilityClass;
 
 import java.nio.file.Path;

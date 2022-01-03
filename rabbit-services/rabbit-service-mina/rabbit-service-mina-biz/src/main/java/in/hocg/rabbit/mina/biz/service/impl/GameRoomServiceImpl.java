@@ -14,7 +14,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomOrdinaryVo;
 import in.hocg.rabbit.mina.biz.service.GameCardService;
 import in.hocg.rabbit.mina.biz.service.GameRoomService;
 import in.hocg.rabbit.mina.biz.service.GameRoomUserService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

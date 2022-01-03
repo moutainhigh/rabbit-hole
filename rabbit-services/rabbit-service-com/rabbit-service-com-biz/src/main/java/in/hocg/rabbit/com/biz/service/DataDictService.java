@@ -8,7 +8,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.DataDictPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.DataDictUpdateRo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictOrdinaryVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.boot.web.datastruct.KeyValue;
 
 import java.util.List;

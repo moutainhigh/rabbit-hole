@@ -20,7 +20,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.SystemMessageComplexVo;
 import in.hocg.rabbit.com.biz.service.*;
 import in.hocg.rabbit.com.api.enums.MessageUserRefType;
 import in.hocg.rabbit.common.utils.Rules;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;

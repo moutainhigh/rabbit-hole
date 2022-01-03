@@ -1,8 +1,8 @@
 package in.hocg.rabbit.com.biz.service;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.com.biz.entity.Feedback;
 import in.hocg.rabbit.com.biz.pojo.ro.FeedbackInsertRo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
 
 /**
  * <p>

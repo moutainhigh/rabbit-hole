@@ -8,7 +8,7 @@ import in.hocg.rabbit.ums.biz.mapper.SocialMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.SocialMapping;
 import in.hocg.rabbit.ums.biz.service.UserService;
 import in.hocg.rabbit.ums.biz.service.SocialService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
