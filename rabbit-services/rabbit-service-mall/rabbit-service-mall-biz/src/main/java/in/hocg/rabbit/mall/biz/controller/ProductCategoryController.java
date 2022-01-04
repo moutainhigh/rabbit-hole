@@ -57,7 +57,7 @@ public class ProductCategoryController {
 
     @UseLogger
     @ApiOperation("查看 - 商品品类详情")
-    @GetMapping("/{id:\\d+}/complex")
+    @GetMapping("/{id:\\d+}")
     public Result<ProductCategoryComplexVo> getComplex(@PathVariable("id") Long id) {
         return Result.success(service.getComplex(id));
     }

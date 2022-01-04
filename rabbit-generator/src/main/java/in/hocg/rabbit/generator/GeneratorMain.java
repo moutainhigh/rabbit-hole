@@ -16,8 +16,7 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MINA, false,
-            "dl_proxy_channel",
+            Module.COM, false, "boot_task_info", "boot_task_item", "boot_task_log",
             "");
     }
 

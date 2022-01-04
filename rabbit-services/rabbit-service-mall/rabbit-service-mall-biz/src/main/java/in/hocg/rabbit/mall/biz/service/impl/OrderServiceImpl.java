@@ -338,7 +338,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             .setReceiverProvince(receiver.getProvince())
             .setReceiverCity(receiver.getCity())
             .setReceiverRegion(receiver.getRegion())
-            .setReceiverAddress(null)
+            .setReceiverAddress(receiver.getAddress())
             .setReceiverAdcode(receiver.getAdcode());
 
         // 处理优惠信息

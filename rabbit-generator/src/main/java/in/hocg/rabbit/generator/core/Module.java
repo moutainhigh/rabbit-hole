@@ -25,7 +25,7 @@ public enum Module {
     MINA(Lists.newArrayList("mina_", "dl_"),
         "in.hocg.rabbit.mina.biz",
         "rabbit-services/rabbit-service-mina/rabbit-service-mina-biz"),
-    COM(Lists.newArrayList("com_", "mms_"),
+    COM(Lists.newArrayList("com_", "mms_", "boot_"),
         "in.hocg.rabbit.com.biz",
         "rabbit-services/rabbit-service-com/rabbit-service-com-biz"),
     UMS(Lists.newArrayList("ums_", "ams_"),
