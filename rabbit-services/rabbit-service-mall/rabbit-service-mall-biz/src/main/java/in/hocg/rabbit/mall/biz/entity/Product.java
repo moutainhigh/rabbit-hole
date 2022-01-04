@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,12 +26,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("pms_product")
-public class Product extends AbstractEntity<Product> {
+public class Product extends CommonEntity<Product> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("商品品类(t_product_classify)")
     @TableField("product_category_id")
     private Long productCategoryId;
@@ -58,16 +57,6 @@ public class Product extends AbstractEntity<Product> {
     @ApiModelProperty("商品重量(克)")
     @TableField("weight")
     private BigDecimal weight;
-
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-
 
 
 }

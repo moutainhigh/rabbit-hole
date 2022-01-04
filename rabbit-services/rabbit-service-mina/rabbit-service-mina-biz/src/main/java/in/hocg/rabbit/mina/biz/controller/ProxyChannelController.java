@@ -54,7 +54,6 @@ public class ProxyChannelController {
     @ApiOperation("新增 - 代理隧道")
     @PostMapping
     public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.insertOne(ro);
         return Result.success();
     }
@@ -63,7 +62,6 @@ public class ProxyChannelController {
     @PutMapping("/{id}")
     public Result<Void> updateOne(@ApiParam(value = "代理隧道", required = true) @PathVariable Long id,
                                   @Validated({Update.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.updateOne(id, ro);
         return Result.success();
     }

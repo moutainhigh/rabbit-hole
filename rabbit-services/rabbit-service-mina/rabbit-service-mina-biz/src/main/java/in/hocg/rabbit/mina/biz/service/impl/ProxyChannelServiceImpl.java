@@ -78,21 +78,15 @@ public class ProxyChannelServiceImpl extends AbstractServiceImpl<ProxyChannelMap
     }
 
     private void saveOne(Long id, ProxyChannelSaveRo ro) {
-        Long requestUserId = ro.getRequestUserId();
-
         ProxyChannel entity = mapping.asProxyChannel(ro);
         entity.setId(id);
         if (Objects.isNull(id)) {
             if (StrUtil.isBlank(ro.getChannelId())) {
                 entity.setChannelId(IdUtil.simpleUUID());
             }
-            entity.setCreatedAt(LocalDateTime.now());
             entity.setSuffix(ChannelHelper.CHANNEL_SUFFIX);
-            entity.setCreator(requestUserId);
-        } else {
-            entity.setLastUpdater(requestUserId);
         }
-        saveOrUpdate(entity);
+        validInsertOrUpdate(entity);
     }
 
     @Override

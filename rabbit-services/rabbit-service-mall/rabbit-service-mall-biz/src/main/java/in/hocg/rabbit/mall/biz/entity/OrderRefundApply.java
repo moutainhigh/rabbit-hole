@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,12 +29,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("oms_order_refund_apply")
-public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
+public class OrderRefundApply extends CommonEntity<OrderRefundApply> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("退款申请编号")
     @TableField("refund_apply_no")
     private String refundApplyNo;
@@ -76,15 +75,5 @@ public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
     @ApiModelProperty("收货备注")
     @TableField("receive_remark")
     private String receiveRemark;
-
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-
 
 }

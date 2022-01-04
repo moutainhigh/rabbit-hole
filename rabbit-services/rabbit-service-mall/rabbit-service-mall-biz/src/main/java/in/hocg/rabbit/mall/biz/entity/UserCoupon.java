@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,12 +29,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("mkt_user_coupon")
-public class UserCoupon extends AbstractEntity<UserCoupon> {
+public class UserCoupon extends CommonEntity<UserCoupon> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("拥有人")
     @TableField("user_id")
     private Long userId;
@@ -64,15 +63,5 @@ public class UserCoupon extends AbstractEntity<UserCoupon> {
     @ApiModelProperty("实际抵扣金额")
     @TableField("used_amt")
     private BigDecimal usedAmt;
-
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-
 
 }

@@ -1,13 +1,17 @@
 package in.hocg.rabbit.mall.biz.entity;
 
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
+
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,12 +29,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("mkt_coupon")
-public class Coupon extends AbstractEntity<Coupon> {
+public class Coupon extends CommonEntity<Coupon> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("优惠券名称")
     @TableField("title")
     private String title;
@@ -58,16 +60,5 @@ public class Coupon extends AbstractEntity<Coupon> {
     @ApiModelProperty("优惠上限")
     @TableField("ceiling")
     private BigDecimal ceiling;
-
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-
-
 
 }

@@ -38,6 +38,4 @@ public class ProxyChannelSaveRo {
     @ApiModelProperty("开启状态")
     private Boolean enabled;
 
-    @ApiModelProperty(value = "创建者", hidden = true)
-    private Long requestUserId;
 }

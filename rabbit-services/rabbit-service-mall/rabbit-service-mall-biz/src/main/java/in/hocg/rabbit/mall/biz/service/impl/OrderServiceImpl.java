@@ -339,10 +339,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             .setReceiverCity(receiver.getCity())
             .setReceiverRegion(receiver.getRegion())
             .setReceiverAddress(null)
-            .setReceiverAdcode(receiver.getAdcode())
-            // 创建信息
-            .setCreatedAt(now)
-            .setCreator(currentUserId);
+            .setReceiverAdcode(receiver.getAdcode());
 
         // 处理优惠信息
         if (!CollectionUtils.isEmpty(discounts)) {
@@ -396,7 +393,10 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         createTradeRo.setTradeAmt(payAmount);
         createTradeRo.setAccessCode(GlobalConstant.BMW_ACCESS_CODE);
         TradeStatusSyncVo trade = bmwServiceApi.createTrade(createTradeRo);
-        this.updateById(new Order().setId(orderId).setTradeNo(trade.getTradeNo()));
+
+        Order update = new Order().setTradeNo(trade.getTradeNo());
+        update.setId(orderId);
+        this.updateById(update);
         return orderNo;
     }
 
