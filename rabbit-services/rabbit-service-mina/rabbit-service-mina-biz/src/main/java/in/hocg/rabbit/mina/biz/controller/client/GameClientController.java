@@ -4,7 +4,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameCardComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaGameCardComplexVo;
 import in.hocg.rabbit.mina.biz.service.GameCardService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

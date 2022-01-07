@@ -1,7 +1,7 @@
 package in.hocg.rabbit.chaos.basic;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

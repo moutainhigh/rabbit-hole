@@ -2,7 +2,7 @@ package in.hocg.rabbit.chaos.biz.manager;
 
 import cn.hutool.core.util.StrUtil;
 import in.hocg.boot.mail.autoconfigure.core.MailBervice;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

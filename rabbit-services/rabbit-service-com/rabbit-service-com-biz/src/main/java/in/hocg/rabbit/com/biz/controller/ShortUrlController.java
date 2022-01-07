@@ -9,7 +9,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.ShortUrlComplexVo;
 import in.hocg.rabbit.com.biz.service.ShortUrlService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;

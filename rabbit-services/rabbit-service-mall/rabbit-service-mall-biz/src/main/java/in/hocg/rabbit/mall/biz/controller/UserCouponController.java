@@ -6,7 +6,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

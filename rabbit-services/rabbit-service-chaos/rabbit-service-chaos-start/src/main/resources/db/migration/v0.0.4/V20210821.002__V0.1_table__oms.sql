@@ -33,8 +33,6 @@ CREATE TABLE `oms_order`
         COMMENT '订单状态：[wait_pay=>待付款；wait_ship=>待发货；wait_receipt=>待收货；received=>已收货；closed=>已关闭;]',
     confirm_flag            TINYINT(1)     NOT NULL DEFAULT 0
         COMMENT '是否确认收货',
-    delete_flag             BIGINT         NOT NULL DEFAULT 0
-        COMMENT '删除状态 != 0',
     remark                  VARCHAR(500)   NULL
         COMMENT '订单备注',
     pay_at                  DATETIME(6)    NULL
@@ -63,10 +61,18 @@ CREATE TABLE `oms_order`
     receiver_address        VARCHAR(200)   NULL
         COMMENT '收货人详细地址',
     --
-    creator                 BIGINT,
-    created_at              DATETIME(6)    NOT NULL,
-    last_updater            BIGINT         NULL,
-    last_updated_at         DATETIME(6)    NULL,
+    `deleted_at`        DATETIME(6)           DEFAULT NULL
+        COMMENT '删除时间',
+    `deleter`           BIGINT                DEFAULT NULL
+        COMMENT '删除者',
+    `created_at`        DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+        COMMENT '创建时间',
+    `creator`           BIGINT
+        COMMENT '创建者',
+    `last_updated_at`   DATETIME(6)  NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
+        COMMENT '更新时间',
+    `last_updater`      BIGINT
+        COMMENT '更新者',
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

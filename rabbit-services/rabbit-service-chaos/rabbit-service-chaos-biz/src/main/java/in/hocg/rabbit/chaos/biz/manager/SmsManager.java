@@ -4,7 +4,7 @@ import in.hocg.rabbit.chaos.biz.manager.sms.SmsTpl;
 import com.google.common.collect.Maps;
 import in.hocg.boot.sms.autoconfigure.core.SmsBervice;
 import in.hocg.boot.web.autoconfiguration.properties.BootProperties;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

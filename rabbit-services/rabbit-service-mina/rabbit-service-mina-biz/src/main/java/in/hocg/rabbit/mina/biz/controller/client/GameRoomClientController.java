@@ -9,7 +9,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomOrdinaryVo;
 import in.hocg.rabbit.mina.biz.service.GameRoomService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

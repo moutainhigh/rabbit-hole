@@ -18,7 +18,7 @@ import in.hocg.rabbit.ums.api.enums.SocialType;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;

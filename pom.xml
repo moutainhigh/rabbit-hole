@@ -27,7 +27,7 @@
     <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
 
-    <boot-dependencies.version>1.0.27</boot-dependencies.version>
+    <boot-dependencies.version>1.0.29</boot-dependencies.version>
     <lombok.version>1.18.12</lombok.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
     <rabbit-service-bmw.version>1.0.0-SNAPSHOT</rabbit-service-bmw.version>
@@ -178,6 +178,16 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-rcm-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-ws-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-ws-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

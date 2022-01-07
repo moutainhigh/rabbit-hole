@@ -10,7 +10,7 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

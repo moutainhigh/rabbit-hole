@@ -7,7 +7,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.RefundHandleRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderRefundApplyService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

@@ -4,7 +4,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

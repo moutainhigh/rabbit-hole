@@ -7,7 +7,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaMobileWallpaperTagsPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaMobileWallpaperComplexVo;
 import in.hocg.rabbit.mina.biz.service.MobileWallpaperService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

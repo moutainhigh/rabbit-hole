@@ -8,7 +8,7 @@ import in.hocg.rabbit.mall.biz.support.helper.order2.modal.Product;
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.CheckResult;
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.Rule;
 import com.google.common.collect.Lists;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 
 import java.util.List;
 

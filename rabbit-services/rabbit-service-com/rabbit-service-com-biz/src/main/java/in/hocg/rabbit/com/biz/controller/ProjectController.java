@@ -11,7 +11,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.ProjectSaveRo;
 import in.hocg.rabbit.com.biz.service.ProjectService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

@@ -81,6 +81,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: rabbit-ws
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/ws/**
+          filters:
+            - StripPrefix=1
+
       default-filters:
         - name: SwaggerHeaderFilter
         - name: Logger
@@ -124,8 +131,9 @@ boot:
         ,/ignore
         ,/*/v2/api-docs
 
-        ,/com/mina/message/stat
+        ,/ws/ws
 
+        ,/com/mina/message/stat
         ,/com/district/tree
         ,/com/project/encoding:*
 

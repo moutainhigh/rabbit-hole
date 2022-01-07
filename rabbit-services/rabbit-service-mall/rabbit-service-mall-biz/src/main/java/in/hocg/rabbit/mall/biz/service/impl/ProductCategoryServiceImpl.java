@@ -11,7 +11,7 @@ import in.hocg.rabbit.mall.biz.service.CouponProductCategoryRefService;
 import in.hocg.rabbit.mall.biz.service.ProductCategoryService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.web.datastruct.tree.Tree;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryMapper, ProductCategory> implements ProductCategoryService {
     private final ProductCategoryMapping mapping;
-    private final CouponProductCategoryRefService couponProductCategoryRefService;
 
     @Override
     public void insertOne(ProductCategorySaveRo ro) {
@@ -82,18 +81,8 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
 
 
     private void saveOne(Long id, ProductCategorySaveRo ro) {
-        LocalDateTime now = LocalDateTime.now();
-        Long userId = ro.getUserId();
-
         ProductCategory entity = mapping.asProductCategory(ro);
         entity.setId(id);
-        if (Objects.isNull(id)) {
-            entity.setCreatedAt(now);
-            entity.setCreator(userId);
-        } else {
-            entity.setLastUpdatedAt(now);
-            entity.setLastUpdater(userId);
-        }
 
         validInsertOrUpdate(entity);
     }

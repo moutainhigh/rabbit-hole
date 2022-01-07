@@ -15,7 +15,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelInfoVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelOrdinaryVo;
 import in.hocg.rabbit.mina.biz.service.ProxyChannelService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.rabbit.mina.biz.support.channel.ChannelHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;

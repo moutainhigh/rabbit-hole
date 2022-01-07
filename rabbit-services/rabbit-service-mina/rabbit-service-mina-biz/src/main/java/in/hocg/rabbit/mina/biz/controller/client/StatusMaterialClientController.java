@@ -4,7 +4,7 @@ package in.hocg.rabbit.mina.biz.controller.client;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaStatusMaterialPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaStatusMaterialComplexVo;
 import in.hocg.rabbit.mina.biz.service.StatusMaterialService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

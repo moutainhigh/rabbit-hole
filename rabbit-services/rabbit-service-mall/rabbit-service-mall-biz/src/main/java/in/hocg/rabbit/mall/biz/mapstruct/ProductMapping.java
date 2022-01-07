@@ -14,12 +14,14 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface ProductMapping {
-    @Mapping(target = "deleteFlag", ignore = true)
+    @Mapping(target = "deleter", ignore = true)
+    @Mapping(target = "deletedAt", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "attrs", ignore = true)
     Product asProduct(ProductSaveRo ro);
 
     @Mapping(target = "sku", ignore = true)
@@ -29,6 +31,5 @@ public interface ProductMapping {
     @Mapping(target = "mainPhotoUrl", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
-    @Mapping(target = "deleteFlag", ignore = true)
     ProductComplexVo asProductComplexVo(Product entity);
 }

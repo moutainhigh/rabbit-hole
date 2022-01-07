@@ -8,7 +8,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.CommentLikeRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

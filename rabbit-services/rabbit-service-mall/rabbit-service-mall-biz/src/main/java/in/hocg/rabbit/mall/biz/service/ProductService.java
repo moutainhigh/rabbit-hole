@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.entity.Product;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCompleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
@@ -24,7 +25,7 @@ public interface ProductService extends AbstractService<Product> {
 
     void updateOne(Long id, ProductSaveRo ro);
 
-    void deleteOne(Long id);
+    void delete(DeleteRo ro);
 
     ProductComplexVo getComplexById(Long id);
 

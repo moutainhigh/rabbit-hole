@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.bmw.api.BmwServiceApi;
 import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
 import in.hocg.rabbit.bmw.api.enums.TradeOrderStatus;
@@ -41,7 +42,7 @@ import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.datastruct.KeyValue;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -89,11 +90,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     }
 
     @Override
-    public void deleteOne(Long id) {
-        Order update = new Order();
-        update.setDeleteFlag(id);
-        update.setLastUpdatedAt(LocalDateTime.now());
-        lambdaUpdate().eq(Order::getId, id).update(update);
+    public void delete(DeleteRo ro) {
+        removeBatchByIds(ro.getId());
     }
 
     @Override
@@ -186,7 +184,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             final SkuComplexVo sku = ValidUtils.notNull(skuService.getComplexById(skuId), "商品规格错误");
             final Long productId = sku.getProductId();
             final ProductComplexVo product = ValidUtils.notNull(productService.getComplexById(productId), "未找到商品");
-            ValidUtils.isTrue(product.getDeleteFlag(), "未找到商品");
             ValidUtils.isTrue(product.getPublishedFlag(), "商品已下架");
             skuMap.put(skuId, sku);
             productMap.put(productId, product);

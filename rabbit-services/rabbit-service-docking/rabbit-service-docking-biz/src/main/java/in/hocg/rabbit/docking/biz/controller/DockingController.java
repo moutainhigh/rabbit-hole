@@ -2,7 +2,7 @@ package in.hocg.rabbit.docking.biz.controller;
 
 
 import in.hocg.rabbit.docking.biz.service.WxMpIndexService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

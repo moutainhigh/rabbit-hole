@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.entity.Order;
 import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
@@ -21,7 +22,7 @@ public interface OrderService extends AbstractService<Order> {
 
     OrderComplexVo getComplex(Long id);
 
-    void deleteOne(Long id);
+    void delete(DeleteRo ro);
 
     void shipped(Long id, ShippedOrderRo ro);
 

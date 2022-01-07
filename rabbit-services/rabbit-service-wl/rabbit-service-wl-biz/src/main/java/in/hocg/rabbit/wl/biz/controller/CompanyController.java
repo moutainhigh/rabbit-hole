@@ -10,7 +10,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.company.CompanyPagingRo;
 import in.hocg.rabbit.wl.biz.pojo.ro.company.CompanyUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.CompanyComplexVo;
 import in.hocg.rabbit.wl.biz.service.CompanyService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

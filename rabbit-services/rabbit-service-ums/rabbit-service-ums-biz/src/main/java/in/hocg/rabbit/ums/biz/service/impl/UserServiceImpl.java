@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.rabbit.chaos.api.EmailServiceApi;
 import in.hocg.rabbit.chaos.api.SmsServiceApi;
 import in.hocg.rabbit.com.api.FileServiceApi;

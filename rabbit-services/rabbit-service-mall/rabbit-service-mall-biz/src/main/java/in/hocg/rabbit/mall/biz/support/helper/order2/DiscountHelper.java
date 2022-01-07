@@ -12,7 +12,7 @@ import in.hocg.rabbit.mall.biz.support.helper.order2.discount.coupon.FixedScaleC
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.Rule;
 import com.google.common.collect.Lists;
 import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.rabbit.mall.biz.support.helper.order2.rule.rule.*;
 import lombok.experimental.UtilityClass;
 

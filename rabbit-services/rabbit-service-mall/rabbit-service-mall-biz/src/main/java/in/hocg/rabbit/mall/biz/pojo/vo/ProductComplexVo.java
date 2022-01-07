@@ -36,8 +36,6 @@ public class ProductComplexVo {
     private String procurement;
     @ApiModelProperty("上架状态")
     private Boolean publishedFlag;
-    @ApiModelProperty("删除状态")
-    private Boolean deleteFlag;
     @ApiModelProperty("单位")
     private String unit;
     @ApiModelProperty("商品重量(克)")

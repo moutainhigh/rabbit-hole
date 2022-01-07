@@ -12,6 +12,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEnt
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.LogicDeletedEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("oms_order")
-public class Order extends CommonEntity<Order> {
+public class Order extends LogicDeletedEntity<Order> {
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty("账号ID")
@@ -74,9 +75,6 @@ public class Order extends CommonEntity<Order> {
     @ApiModelProperty("是否确认收货")
     @TableField("confirm_flag")
     private Boolean confirmFlag;
-    @ApiModelProperty("删除状态 != 0")
-    @TableField("delete_flag")
-    private Long deleteFlag;
     @ApiModelProperty("订单备注")
     @TableField("remark")
     private String remark;

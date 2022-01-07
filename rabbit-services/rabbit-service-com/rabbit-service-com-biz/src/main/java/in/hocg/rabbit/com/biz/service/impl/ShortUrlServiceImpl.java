@@ -11,7 +11,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.ShortUrlComplexVo;
 import in.hocg.rabbit.com.biz.service.ShortUrlService;
 import in.hocg.rabbit.com.biz.utils.ShortUrlUtils;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;

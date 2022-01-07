@@ -14,7 +14,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.group.Insert;
 import in.hocg.boot.validation.group.Update;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

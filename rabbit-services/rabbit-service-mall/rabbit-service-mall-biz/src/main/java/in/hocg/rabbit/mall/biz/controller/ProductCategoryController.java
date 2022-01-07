@@ -7,7 +7,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryTreeVo;
 import in.hocg.rabbit.mall.biz.service.ProductCategoryService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -41,18 +41,18 @@ public class ProductCategoryController {
     }
 
     @UseLogger
-    @ApiOperation("获取 - 商品品类树")
-    @PostMapping("/tree")
-    public Result<List<ProductCategoryTreeVo>> listTree(@Validated @RequestBody ProductCategoryTreeRo ro) {
-        return Result.success(service.listTree(ro));
-    }
-
-    @UseLogger
     @ApiOperation("更新 - 商品品类")
     @PutMapping("/{id:\\d+}")
     public Result<Void> updateOne(@PathVariable("id") Long id, @Validated @RequestBody ProductCategorySaveRo ro) {
         service.updateOne(id, ro);
         return Result.success();
+    }
+
+    @UseLogger
+    @ApiOperation("获取 - 商品品类树")
+    @PostMapping("/tree")
+    public Result<List<ProductCategoryTreeVo>> listTree(@Validated @RequestBody ProductCategoryTreeRo ro) {
+        return Result.success(service.listTree(ro));
     }
 
     @UseLogger

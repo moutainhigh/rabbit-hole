@@ -9,7 +9,7 @@ import in.hocg.rabbit.chaos.biz.pojo.vo.WallpaperComplexVo;
 import in.hocg.rabbit.chaos.biz.pojo.vo.WallpaperTopicVo;
 import in.hocg.rabbit.chaos.biz.support.http.HttpService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

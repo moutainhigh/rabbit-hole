@@ -2,11 +2,12 @@ package in.hocg.rabbit.mall.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -69,9 +70,9 @@ public class OrderController {
 
     @UseLogger
     @ApiOperation("删除 - 订单")
-    @DeleteMapping("/{id}")
-    public Result<Void> deleteOne(@PathVariable Long id) {
-        service.deleteOne(id);
+    @DeleteMapping
+    public Result<Void> delete(@Validated @RequestBody DeleteRo ro) {
+        service.delete(ro);
         return Result.success();
     }
 

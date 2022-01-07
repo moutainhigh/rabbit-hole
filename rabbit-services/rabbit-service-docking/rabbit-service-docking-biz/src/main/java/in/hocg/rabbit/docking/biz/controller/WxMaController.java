@@ -6,7 +6,7 @@ import in.hocg.rabbit.docking.biz.pojo.ro.GetMaUserTokenRo;
 import in.hocg.rabbit.docking.biz.pojo.vo.WxMaLoginVo;
 import in.hocg.rabbit.docking.biz.pojo.vo.WxMaPhoneNumberInfoVo;
 import in.hocg.rabbit.docking.biz.service.WxMaIndexService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

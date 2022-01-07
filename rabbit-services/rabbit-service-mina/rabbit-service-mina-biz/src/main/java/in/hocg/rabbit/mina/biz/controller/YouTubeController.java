@@ -4,7 +4,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.support.ytb.YouTubeService;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;

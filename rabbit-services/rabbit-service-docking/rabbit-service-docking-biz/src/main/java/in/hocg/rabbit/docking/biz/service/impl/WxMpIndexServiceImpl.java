@@ -5,7 +5,7 @@ import in.hocg.rabbit.docking.api.pojo.vo.WxLoginInfoVo;
 import in.hocg.rabbit.docking.api.pojo.vo.WxMpQrCodeVo;
 import in.hocg.rabbit.docking.biz.cache.WxMpCacheService;
 import in.hocg.rabbit.docking.biz.service.WxMpIndexService;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;

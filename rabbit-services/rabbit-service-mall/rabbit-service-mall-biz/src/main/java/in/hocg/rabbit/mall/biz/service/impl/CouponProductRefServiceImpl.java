@@ -25,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CouponProductRefServiceImpl extends AbstractServiceImpl<CouponProductRefMapper, CouponProductRef> implements CouponProductRefService {
     private final ProductService productService;
+
     @Override
     public List<ProductComplexVo> listComplexByCouponId(Long couponId) {
         return LangUtils.toList(baseMapper.listProductCategoryByCouponId(couponId), productService::convertComplex);

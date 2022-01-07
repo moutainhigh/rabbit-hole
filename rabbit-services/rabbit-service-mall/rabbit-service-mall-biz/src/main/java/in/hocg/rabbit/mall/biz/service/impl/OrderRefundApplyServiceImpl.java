@@ -21,7 +21,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

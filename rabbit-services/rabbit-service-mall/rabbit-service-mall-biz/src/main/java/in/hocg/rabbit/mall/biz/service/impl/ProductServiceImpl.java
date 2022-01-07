@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
@@ -53,11 +54,8 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     }
 
     @Override
-    public void deleteOne(Long id) {
-        Product update = new Product();
-        update.setId(id);
-        update.setDeleteFlag(id);
-        this.validUpdateById(update);
+    public void delete(DeleteRo ro) {
+        removeByIds(ro.getId());
     }
 
     @Override
@@ -77,22 +75,13 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
 
     @Override
     public ProductComplexVo convertComplex(Product entity) {
-        ProductComplexVo result = mapping.asProductComplexVo(entity);
-        result.setDeleteFlag(Objects.nonNull(entity.getDeleteFlag()));
-        return result;
+        return mapping.asProductComplexVo(entity);
     }
 
     private void saveOne(Long id, ProductSaveRo ro) {
-        LocalDateTime now = LocalDateTime.now();
         Product entity = mapping.asProduct(ro);
-        final Long userId = ro.getUserId();
-        if (Objects.isNull(id)) {
-            entity.setCreatedAt(now);
-            entity.setCreator(userId);
-        } else {
-            entity.setLastUpdatedAt(now);
-            entity.setLastUpdater(userId);
-        }
+        entity.setAttrs(JSONUtil.toJsonStr(ro.getAttrs()));
+        entity.setId(id);
         validInsertOrUpdate(entity);
         final Long productId = entity.getId();
 
@@ -108,7 +97,6 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         if (Objects.nonNull(photos)) {
             UploadFileRo uploadFileRo = new UploadFileRo()
                 .setRefType(FileRelType.Product.getCodeStr())
-                .setCreator(userId)
                 .setRefId(productId)
                 .setFiles(photos);
             fileServiceApi.upload(uploadFileRo);

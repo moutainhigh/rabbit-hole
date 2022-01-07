@@ -19,7 +19,7 @@ import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.web.exception.ServiceException;
+import in.hocg.boot.utils.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

@@ -4,7 +4,7 @@ package in.hocg.rabbit.mina.biz.controller.client;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaAppCardPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaAppCardComplexVo;
 import in.hocg.rabbit.mina.biz.service.AppCardService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,8 @@
 package in.hocg.rabbit.mina.biz.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.rabbit.mina.api.pojo.vo.GameRoomVo;
 import in.hocg.rabbit.mina.biz.entity.GameCard;
 import in.hocg.rabbit.mina.biz.entity.GameRoom;
 import in.hocg.rabbit.mina.biz.entity.GameRoomUser;
@@ -16,15 +18,17 @@ import in.hocg.rabbit.mina.biz.service.GameRoomService;
 import in.hocg.rabbit.mina.biz.service.GameRoomUserService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.rabbit.ums.api.UserServiceApi;
+import in.hocg.rabbit.ums.api.named.UmsNamedServiceApi;
+import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +46,7 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
     private final GameRoomUserService gameRoomUserService;
     private final GameCardService gameCardService;
     private final GameRoomMapping mapping;
+    private final UserServiceApi userServiceApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -97,6 +102,24 @@ public class GameRoomServiceImpl extends AbstractServiceImpl<GameRoomMapper, Gam
     @Transactional(rollbackFor = Exception.class)
     public IPage<GameRoomOrdinaryVo> paging(RoomPagingRo ro) {
         return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
+    }
+
+    @Override
+    public GameRoomVo getRoomByRoomCode(String roomCode) {
+        GameRoomComplexVo queryResult = getComplexByEncoding(roomCode);
+
+        GameRoomVo result = new GameRoomVo();
+        List<GameRoomComplexVo.PlayerUser> queryPlayers = queryResult.getPlayers();
+        List<GameRoomVo.PlayerUser> players = Collections.emptyList();
+        if (CollUtil.isNotEmpty(queryPlayers)) {
+            Map<Long, AccountVo> userMaps = LangUtils.toMap(userServiceApi.listAccountVoById(LangUtils.toList(queryPlayers, GameRoomComplexVo.PlayerUser::getUserId)), AccountVo::getId);
+            players = queryPlayers.stream().map(playerUser -> new GameRoomVo.PlayerUser()
+                    .setUserFlag(playerUser.getUserFlag())
+                    .setSignalData(LangUtils.callIfNotNull(userMaps.get(playerUser.getUserId()), AccountVo::getUsername).orElse(null))
+                    .setUserId(playerUser.getUserId()))
+                .collect(Collectors.toList());
+        }
+        return result.setPlayers(players);
     }
 
     @Override

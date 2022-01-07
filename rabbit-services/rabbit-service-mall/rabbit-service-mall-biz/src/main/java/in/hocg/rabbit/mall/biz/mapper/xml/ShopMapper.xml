@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.rabbit.mall.biz.mapper.ShopMapper">
+  <select id="paging" resultType="in.hocg.rabbit.mall.biz.entity.Shop">
+    SELECT * FROM pms_shop
+  </select>
+
+  <select id="complete" resultType="in.hocg.rabbit.mall.biz.entity.Shop">
+    SELECT * FROM pms_shop
+  </select>
+</mapper>
