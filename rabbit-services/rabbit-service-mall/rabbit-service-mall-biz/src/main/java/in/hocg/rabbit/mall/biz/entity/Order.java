@@ -8,10 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.LogicDeletedEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,7 +23,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author hocgin
- * @since 2021-08-21
+ * @since 2022-01-13
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -33,63 +32,80 @@ import lombok.experimental.Accessors;
 public class Order extends LogicDeletedEntity<Order> {
 
     private static final long serialVersionUID = 1L;
-    @ApiModelProperty("账号ID")
-    @TableField("user_id")
-    private Long userId;
+
     @ApiModelProperty("订单编号")
-    @TableField("order_no")
-    private String orderNo;
-    @ApiModelProperty("交易流水号")
+    @TableField("encoding")
+    private String encoding;
+    @ApiModelProperty("所属用户")
+    @TableField("owner_user_id")
+    private Long ownerUserId;
+    @ApiModelProperty("交易号(最终)")
     @TableField("trade_no")
     private String tradeNo;
-    @ApiModelProperty("活动抵扣金额")
-    @TableField("activity_discount_amt")
-    private BigDecimal activityDiscountAmt;
-    @ApiModelProperty("优惠券抵扣金额")
-    @TableField("coupon_discount_amt")
-    private BigDecimal couponDiscountAmt;
-    @ApiModelProperty("管理员后台调整订单使用的折扣金额")
-    @TableField("adjustment_discount_amt")
-    private BigDecimal adjustmentDiscountAmt;
-    @ApiModelProperty("运费金额")
-    @TableField("freight_amt")
-    private BigDecimal freightAmt;
-    @ApiModelProperty("[计算型]订单总金额")
-    @TableField("total_amt")
-    private BigDecimal totalAmt;
-    @ApiModelProperty("[计算型]应付金额（实际支付金额）")
-    @TableField("user_pay_amt")
-    private BigDecimal userPayAmt;
-    @ApiModelProperty("计划关单时间")
-    @TableField("plan_close_at")
-    private LocalDateTime planCloseAt;
-    @ApiModelProperty("计划确认收货时间")
-    @TableField("plan_confirm_at")
-    private LocalDateTime planConfirmAt;
-    @ApiModelProperty("支付方式：[支付宝;微信]")
-    @TableField("pay_type")
-    private String payType;
-    @ApiModelProperty("订单状态：[wait_pay=>待付款；wait_ship=>待发货；wait_receipt=>待收货；received=>已收货；closed=>已关闭;]")
-    @TableField("order_status")
-    private String orderStatus;
-    @ApiModelProperty("是否确认收货")
-    @TableField("confirm_flag")
-    private Boolean confirmFlag;
+    @ApiModelProperty("支付方式(最终)")
+    @TableField("pay_way")
+    private String payWay;
     @ApiModelProperty("订单备注")
     @TableField("remark")
     private String remark;
+
+    @ApiModelProperty("运费金额")
+    @TableField("express_amt")
+    private BigDecimal expressAmt;
+    @ApiModelProperty("订单销售总额")
+    @TableField("total_sale_amt")
+    private BigDecimal totalSaleAmt;
+    @ApiModelProperty("优惠金额")
+    @TableField("discount_amt")
+    private BigDecimal discountAmt;
+    @ApiModelProperty("调价优惠金额")
+    @TableField("adjustment_amt")
+    private BigDecimal adjustmentAmt;
+    @ApiModelProperty("实际订单总额 = 销售总额 - 优惠金额")
+    @TableField("total_real_amt")
+    private BigDecimal totalRealAmt;
+    @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")
+    @TableField("total_pay_amt")
+    private BigDecimal totalPayAmt;
+
+    @ApiModelProperty("交易状态")
+    @TableField("trade_status")
+    private String tradeStatus;
+    @ApiModelProperty("订单状态")
+    @TableField("order_status")
+    private String orderStatus;
+    @ApiModelProperty("支付状态")
+    @TableField("pay_status")
+    private String payStatus;
+    @ApiModelProperty("发货状态")
+    @TableField("delivery_status")
+    private String deliveryStatus;
+    @ApiModelProperty("收货状态")
+    @TableField("receive_status")
+    private String receiveStatus;
+    @ApiModelProperty("售后状态")
+    @TableField("refund_status")
+    private String refundStatus;
+
+    @ApiModelProperty("计划系统关单时间")
+    @TableField("plan_close_at")
+    private LocalDateTime planCloseAt;
+    @ApiModelProperty("计划系统收货时间")
+    @TableField("plan_receive_at")
+    private LocalDateTime planReceiveAt;
     @ApiModelProperty("支付时间")
     @TableField("pay_at")
     private LocalDateTime payAt;
     @ApiModelProperty("发货时间")
     @TableField("delivery_at")
     private LocalDateTime deliveryAt;
-    @ApiModelProperty("确认收货时间")
+    @ApiModelProperty("收货时间")
     @TableField("receive_at")
     private LocalDateTime receiveAt;
-    @ApiModelProperty("评价时间")
-    @TableField("commented_at")
-    private LocalDateTime commentedAt;
+    @ApiModelProperty("交易完成时间")
+    @TableField("finish_at")
+    private LocalDateTime finishAt;
+
     @ApiModelProperty("收货人姓名")
     @TableField("receiver_name")
     private String receiverName;
@@ -114,5 +130,6 @@ public class Order extends LogicDeletedEntity<Order> {
     @ApiModelProperty("收货人详细地址")
     @TableField("receiver_address")
     private String receiverAddress;
+
 
 }

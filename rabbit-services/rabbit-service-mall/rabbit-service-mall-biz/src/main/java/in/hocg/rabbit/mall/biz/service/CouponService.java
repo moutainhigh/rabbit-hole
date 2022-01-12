@@ -7,6 +7,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.CouponSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.CouponComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.mall.biz.pojo.vo.CouponOrdinaryVo;
 
 /**
  * <p>
@@ -18,9 +19,11 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
  */
 public interface CouponService extends AbstractService<Coupon> {
 
-    IPage<CouponComplexVo> paging(CouponPagingRo ro);
+    IPage<CouponOrdinaryVo> paging(CouponPagingRo ro);
 
     void insertOne(CouponSaveRo ro);
+
+    void updateOne(Long id, CouponSaveRo ro);
 
     CouponComplexVo getComplex(Long id);
 

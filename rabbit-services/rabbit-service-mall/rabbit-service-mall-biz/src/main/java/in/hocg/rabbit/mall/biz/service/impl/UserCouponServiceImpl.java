@@ -2,19 +2,24 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.rabbit.mall.api.enums.CouponUseStint;
-import in.hocg.rabbit.mall.api.enums.UserCouponStatus;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.rabbit.mall.api.enums.coupon.UserCouponStatus;
+import in.hocg.rabbit.mall.biz.convert.UserCouponConvert;
 import in.hocg.rabbit.mall.biz.entity.Coupon;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapper.UserCouponMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.UserCouponMapping;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponBuyerScrollRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponBuyerVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
-import in.hocg.rabbit.mall.biz.service.CouponProductCategoryRefService;
-import in.hocg.rabbit.mall.biz.service.CouponProductRefService;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -29,6 +34,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -39,24 +45,23 @@ import java.util.List;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(UserCouponConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper, UserCoupon>
     implements UserCouponService {
+    private final UserCouponConvert convert;
     private final CouponService couponService;
-    private final CouponProductCategoryRefService couponProductCategoryRefService;
-    private final CouponProductRefService couponProductRefService;
     private final UserCouponMapping mapping;
 
     @Override
     public IPage<UserCouponComplexVo> paging(UserCouponPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asUserCouponComplexVo);
     }
 
     @Override
     public void revokeById(Long userCouponId) {
         UserCoupon update = new UserCoupon();
         update.setStatus(UserCouponStatus.Cancelled.getCodeStr());
-        update.setLastUpdatedAt(LocalDateTime.now());
         this.lambdaUpdate().eq(UserCoupon::getId, userCouponId)
             .eq(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr())
             .update(update);
@@ -66,7 +71,6 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
     public void revokeByCouponId(Long couponId) {
         UserCoupon update = new UserCoupon();
         update.setStatus(UserCouponStatus.Cancelled.getCodeStr());
-        update.setLastUpdatedAt(LocalDateTime.now());
         this.lambdaUpdate().eq(UserCoupon::getCouponId, couponId)
             .eq(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr())
             .update(update);
@@ -77,67 +81,61 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
         Assert.notNull(couponService.getById(couponId), "优惠券模版错误");
         UserCoupon entity = mapping.asUserCoupon(ro);
         entity.setCouponId(couponId);
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setCreator(ro.getUserId());
         entity.setStatus(UserCouponStatus.UnUse.getCodeStr());
         this.validInsert(entity);
     }
 
     @Override
     public List<UserCouponComplexVo> listComplexByUserId(Long userId) {
-        return LangUtils.toList(this.listByUserId(userId), this::convertComplex);
+        return LangUtils.toList(this.listByUserId(userId), convert::asUserCouponComplexVo);
     }
 
     @Override
-    public boolean updateUsedStatus(Long userCouponId, BigDecimal usedAmt) {
-        return lambdaUpdate().set(UserCoupon::getUsedAt, LocalDateTime.now())
-            .set(UserCoupon::getStatus, UserCouponStatus.Used.getCodeStr())
-            .set(UserCoupon::getUsedAmt, usedAmt)
-            .eq(UserCoupon::getId, userCouponId)
-            .eq(UserCoupon::getUserId, UserCouponStatus.UnUse.getCodeStr()).update();
+    public boolean updateUnusedStatus(List<Long> userCouponIds) {
+        for (Long userCouponId : userCouponIds) {
+            boolean isOk = lambdaUpdate().set(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr())
+                .set(UserCoupon::getUsedAmt, null)
+                .set(UserCoupon::getUsedAt, null)
+                .eq(UserCoupon::getId, userCouponId)
+                .eq(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr()).update();
+            Assert.isTrue(isOk, "更新状态失败");
+        }
+        return true;
     }
 
     @Override
-    public void updateUnusedStatus(Long userCouponId) {
-        final UserCoupon updated = new UserCoupon();
-        updated.setId(userCouponId);
-        updated.setStatus(UserCouponStatus.UnUse.getCodeStr());
-        this.validUpdateById(updated);
+    public List<UserCoupon> listByAvailableAndOwnerUserId(Long ownerUserId) {
+        return lambdaQuery().eq(UserCoupon::getOwnerUserId, ownerUserId)
+            .eq(UserCoupon::getExpiredFlag, false)
+            .eq(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr())
+            .list();
+    }
+
+    @Override
+    public boolean updateUsedStatus(List<UserCoupon> updates) {
+        for (UserCoupon update : updates) {
+            boolean isOk = lambdaUpdate().set(UserCoupon::getUsedAt, update.getUsedAt())
+                .set(UserCoupon::getStatus, update.getStatus())
+                .set(UserCoupon::getUsedAmt, update.getUsedAmt())
+                .eq(UserCoupon::getId, update.getId())
+                .eq(UserCoupon::getStatus, UserCouponStatus.UnUse.getCodeStr()).update();
+            Assert.isTrue(isOk, "更新状态失败");
+        }
+        return true;
+    }
+
+    @Override
+    public IScroll<UserCouponBuyerVo> scrollByBuyer(UserCouponBuyerScrollRo ro) {
+        Page<UserCoupon> page = lambdaQuery().eq(UserCoupon::getOwnerUserId, ro.getOwnerUserId())
+            .eq(Objects.nonNull(ro.getExpiredFlag()), UserCoupon::getExpiredFlag, ro.getExpiredFlag())
+            .eq(Objects.nonNull(ro.getStatus()), UserCoupon::getStatus, ro.getStatus())
+            .gt(CommonEntity::getId, ro.getNextId()).orderByAsc(UserCoupon::getEndAt)
+            .page(ro.ofPage());
+        return PageUtils.fillScroll(page, UserCoupon::getId).convert(mapping::asUserCouponBuyerVo);
     }
 
     private List<UserCoupon> listByUserId(Long userId) {
-        return lambdaQuery().eq(UserCoupon::getUserId, userId).list();
+        return lambdaQuery().eq(UserCoupon::getOwnerUserId, userId).list();
     }
 
-    private UserCouponComplexVo convertComplex(UserCoupon entity) {
-        UserCouponComplexVo result = mapping.asUserCouponComplexVo(entity);
-        Long couponId = entity.getCouponId();
-        Coupon coupon = couponService.getById(couponId);
-        String useStint = coupon.getUseStint();
-        result.setTitle(coupon.getTitle());
-        result.setUseInstructions(coupon.getUseInstructions());
-        result.setUseStint(useStint);
-        result.setUsePlatform(coupon.getUsePlatform());
-        result.setCredit(coupon.getCredit());
-        result.setMinPoint(coupon.getMinPoint());
-        result.setCeiling(coupon.getCeiling());
-
-        // 指定商品
-        if (CouponUseStint.Product.eq(useStint)) {
-            final List<ProductComplexVo> products = couponProductRefService.listComplexByCouponId(couponId);
-            result.setCanUseProduct(products);
-        }
-        // 指定品类
-        else if (CouponUseStint.Category.eq(useStint)) {
-            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRefService.listComplexByCouponId(couponId);
-            result.setCanUseProductCategory(productCategory);
-        }
-        // 通用类型
-        else if (CouponUseStint.None.eq(useStint)) {
-            log.debug("通用类型的优惠券");
-        } else {
-            throw ServiceException.wrap("优惠券使用类型异常");
-        }
-        return result;
-    }
 }

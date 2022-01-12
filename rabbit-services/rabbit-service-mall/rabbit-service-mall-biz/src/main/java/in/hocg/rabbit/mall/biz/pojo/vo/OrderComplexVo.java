@@ -21,33 +21,40 @@ public class OrderComplexVo {
     @ApiModelProperty("订单ID")
     private Long id;
     @ApiModelProperty("订单拥有人ID")
-    private Long userId;
+    private Long ownerUserId;
     @ApiModelProperty("订单编号")
-    private String orderNo;
+    private String encoding;
     @ApiModelProperty("交易流水号")
     private String tradeNo;
 
     @ApiModelProperty("运费金额")
-    private BigDecimal freightAmt;
-    @ApiModelProperty("优惠券抵扣金额")
-    private BigDecimal couponDiscountAmt;
-    @ApiModelProperty("活动抵扣金额")
-    private BigDecimal activityDiscountAmt;
-    @ApiModelProperty("后台调整优惠")
-    private BigDecimal adjustmentDiscountAmt;
-    @ApiModelProperty("订单总金额")
-    private BigDecimal totalAmt;
-    @ApiModelProperty("实际支付金额")
-    private BigDecimal userPayAmt;
+    private BigDecimal expressAmt;
+    @ApiModelProperty("订单销售总额")
+    private BigDecimal totalSaleAmt;
+    @ApiModelProperty("优惠金额")
+    private BigDecimal discountAmt;
+    @ApiModelProperty("实际订单总额 = 销售总额 - 优惠金额")
+    private BigDecimal totalRealAmt;
+    @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")
+    private BigDecimal totalPayAmt;
 
-    @ApiModelProperty("支付方式")
-    private Integer payType;
+    @ApiModelProperty("支付方式(最终)")
+    private String payWay;
 
+    @ApiModelProperty("交易状态")
+    private String tradeStatus;
     @ApiModelProperty("订单状态")
     private String orderStatus;
-
-    @ApiModelProperty("确认收货状态")
-    private Boolean confirmFlag;
+    @ApiModelProperty("支付状态")
+    private String payStatus;
+    @ApiModelProperty("发货状态")
+    private String deliveryStatus;
+    @ApiModelProperty("收货状态")
+    private String receiveStatus;
+    @ApiModelProperty("售后状态")
+    private String refundStatus;
+    @ApiModelProperty("评价状态")
+    private String commentStatus;
 
     @ApiModelProperty("收货人姓名")
     private String receiverName;
@@ -67,6 +74,7 @@ public class OrderComplexVo {
     private String receiverAddress;
     @ApiModelProperty("订单备注")
     private String remark;
+
     @ApiModelProperty("支付时间")
     private LocalDateTime payAt;
     @ApiModelProperty("发货时间")

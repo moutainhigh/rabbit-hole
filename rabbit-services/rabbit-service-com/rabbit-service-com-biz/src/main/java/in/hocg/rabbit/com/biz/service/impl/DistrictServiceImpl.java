@@ -131,6 +131,11 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
         return this.convertComplex(baseMapper.selectById(id));
     }
 
+    @Override
+    public Optional<District> getByAdcode(String adcode) {
+        return lambdaQuery().eq(District::getAdcode, adcode).oneOpt();
+    }
+
     private List<District> selectListByLevel(@NonNull DistrictLevel level) {
         return lambdaQuery().eq(District::getLevel, level.getCode()).list();
     }

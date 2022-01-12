@@ -1,5 +1,8 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
+import in.hocg.rabbit.mall.biz.convert.ProductCategoryConvert;
 import in.hocg.rabbit.mall.biz.entity.ProductCategory;
 import in.hocg.rabbit.mall.biz.mapper.ProductCategoryMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.ProductCategoryMapping;
@@ -7,7 +10,6 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategorySaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategoryTreeRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryTreeVo;
-import in.hocg.rabbit.mall.biz.service.CouponProductCategoryRefService;
 import in.hocg.rabbit.mall.biz.service.ProductCategoryService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.web.datastruct.tree.Tree;
@@ -15,6 +17,7 @@ import in.hocg.boot.utils.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,9 +33,11 @@ import java.util.stream.Collectors;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(ProductCategoryConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryMapper, ProductCategory> implements ProductCategoryService {
     private final ProductCategoryMapping mapping;
+    private final ProductCategoryConvert convert;
 
     @Override
     public void insertOne(ProductCategorySaveRo ro) {
@@ -55,11 +60,16 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
 
     @Override
     public ProductCategoryComplexVo getComplex(Long id) {
-        return this.convertComplex(getById(id));
+        return convert.asProductCategoryComplexVo(getById(id));
     }
 
     @Override
-    public void deleteAllById(Long id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAll(DeleteRo ro) {
+        ro.getId().forEach(this::deleteAllById);
+    }
+
+    private void deleteAllById(Long id) {
         if (Objects.isNull(id)) {
             return;
         }
@@ -85,11 +95,6 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
         entity.setId(id);
 
         validInsertOrUpdate(entity);
-    }
-
-    @Override
-    public ProductCategoryComplexVo convertComplex(ProductCategory entity) {
-        return mapping.asProductCategoryComplexVo(entity);
     }
 
     private boolean isUsedProduct(String regexTreePath) {

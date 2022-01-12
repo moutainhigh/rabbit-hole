@@ -1,0 +1,16 @@
+package in.hocg.rabbit.mall.biz.pojo.ro;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * Created by hocgin on 2022/1/15
+ * email: hocgin@gmail.com
+ *
+ * @author hocgin
+ */
+@Data
+public class CommentClientRo {
+    @ApiModelProperty(value = "操作人", hidden = true)
+    private Long operatorId;
+}

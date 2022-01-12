@@ -1,9 +1,12 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponBuyerScrollRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponBuyerVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
@@ -46,14 +49,11 @@ public interface UserCouponService extends AbstractService<UserCoupon> {
 
     List<UserCouponComplexVo> listComplexByUserId(Long userId);
 
-    /**
-     * 更新用户优惠券为已使用
-     *
-     * @param userCouponId
-     * @param usedAmt
-     * @return
-     */
-    boolean updateUsedStatus(Long userCouponId, BigDecimal usedAmt);
+    boolean updateUnusedStatus(List<Long> userCouponId);
 
-    void updateUnusedStatus(Long userCouponId);
+    List<UserCoupon> listByAvailableAndOwnerUserId(Long ownerUserId);
+
+    boolean updateUsedStatus(List<UserCoupon> update);
+
+    IScroll<UserCouponBuyerVo> scrollByBuyer(UserCouponBuyerScrollRo ro);
 }

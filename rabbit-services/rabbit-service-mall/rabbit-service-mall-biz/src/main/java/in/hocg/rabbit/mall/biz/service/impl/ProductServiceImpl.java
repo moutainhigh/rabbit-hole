@@ -2,11 +2,13 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.enums.FileRelType;
+import in.hocg.rabbit.mall.biz.convert.ProductConvert;
 import in.hocg.rabbit.mall.biz.entity.Product;
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.mapper.ProductMapper;
@@ -16,6 +18,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductCompleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.ProductOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.ProductService;
 import in.hocg.rabbit.mall.biz.service.SkuService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -36,9 +39,11 @@ import java.util.Objects;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(ProductConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Product> implements ProductService {
     private final ProductMapping mapping;
+    private final ProductConvert convert;
     private final SkuMapping skuMapping;
     private final SkuService skuService;
     private final FileServiceApi fileServiceApi;
@@ -60,22 +65,17 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
 
     @Override
     public ProductComplexVo getComplexById(Long id) {
-        return this.convertComplex(getById(id));
+        return convert.asProductComplexVo(getById(id));
     }
 
     @Override
-    public IPage<ProductComplexVo> paging(ProductPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    public IPage<ProductOrdinaryVo> paging(ProductPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asProductOrdinaryVo);
     }
 
     @Override
-    public List<ProductComplexVo> complete(ProductCompleteRo ro) {
-        return baseMapper.complete(ro, ro.ofPage()).convert(this::convertComplex).getRecords();
-    }
-
-    @Override
-    public ProductComplexVo convertComplex(Product entity) {
-        return mapping.asProductComplexVo(entity);
+    public List<ProductOrdinaryVo> complete(ProductCompleteRo ro) {
+        return baseMapper.complete(ro, ro.ofPage()).convert(convert::asProductOrdinaryVo).getRecords();
     }
 
     private void saveOne(Long id, ProductSaveRo ro) {

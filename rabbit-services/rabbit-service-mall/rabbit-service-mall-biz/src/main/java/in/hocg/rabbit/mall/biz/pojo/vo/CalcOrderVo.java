@@ -1,8 +1,11 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
 import in.hocg.boot.web.datastruct.KeyValue;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
@@ -17,27 +20,32 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
+@Accessors(chain = true)
 public class CalcOrderVo {
     @ApiModelProperty("商品项")
     private List<OrderItem> items = Collections.emptyList();
-    @ApiModelProperty("订单总价")
-    private BigDecimal totalAmount;
-    @ApiModelProperty("应付金额")
-    private BigDecimal payAmount;
-    @ApiModelProperty("[计算型]优惠总金额")
-    private BigDecimal discountTotalAmount;
-    @ApiModelProperty("优惠券抵扣金额")
-    private BigDecimal couponDiscountAmount;
+    @ApiModelProperty("运费金额")
+    private BigDecimal expressAmt;
+    @ApiModelProperty("订单销售总额")
+    private BigDecimal totalSaleAmt;
+    @ApiModelProperty("优惠金额")
+    private BigDecimal discountAmt;
+    @ApiModelProperty("实际订单总额 = 销售总额 - 优惠金额")
+    private BigDecimal totalRealAmt;
+    @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")
+    private BigDecimal totalPayAmt;
     @ApiModelProperty("默认收货地址")
-    private UserAddressComplexVo defaultAddress;
+    private UserAddressVo defaultAddress;
 
-    @ApiModelProperty("优惠明细")
-    private List<DiscountInfo> discounts = Collections.emptyList();
-    @ApiModelProperty("优惠券列表")
-    private List<CouponVo> coupons = Collections.emptyList();
+    @ApiModelProperty("使用的优惠明细")
+    private List<DiscountVo> usedDiscounts = Collections.emptyList();
 
+    @ApiModelProperty("用户优惠券列表")
+    private List<UserCouponVo> userCoupons = Collections.emptyList();
 
     @Data
+    @ApiModel
     @Accessors(chain = true)
     public static class OrderItem {
         @ApiModelProperty("SKU ID")
@@ -48,42 +56,73 @@ public class CalcOrderVo {
         private String title;
         @ApiModelProperty("商品图片")
         private String imageUrl;
-        @ApiModelProperty("SKU编码")
+        @ApiModelProperty("商品SKU条码")
         private String skuCode;
         @ApiModelProperty("规格")
-        private String specData;
-        @ApiModelProperty("规格")
         private List<KeyValue> spec = Collections.emptyList();
+
         @ApiModelProperty("购买数量")
         private Integer quantity;
-        @ApiModelProperty("商品单价")
-        private BigDecimal price;
-        @ApiModelProperty("优惠分解金额(不含后台调价)")
-        private BigDecimal discountAmount;
-        @ApiModelProperty("原总金额")
-        private BigDecimal totalAmount;
-        @ApiModelProperty("优惠后的金额=原总金额-优惠券分解优惠的金额-管理员调整优惠的金额")
-        private BigDecimal realAmount;
+        @ApiModelProperty("销售价")
+        private BigDecimal salePrice;
+        @ApiModelProperty("[计算型]原总价=销售价格x购买数量")
+        private BigDecimal totalAmt;
+
+        @ApiModelProperty("优惠金额")
+        private BigDecimal discountAmt;
+        @ApiModelProperty("[计算型]优惠后金额=原总价-优惠金额")
+        private BigDecimal realAmt;
     }
 
     @Data
+    @ApiModel
     @Accessors(chain = true)
-    public static class DiscountInfo {
-        @ApiModelProperty("优惠信息ID")
-        private Long id;
+    public static class DiscountVo {
+        @ApiModelProperty("优惠对象")
+        private Long refId;
+        @ApiModelProperty("优惠对象类型")
+        private String refType;
         @ApiModelProperty("优惠信息类型")
         private String type;
+        @ApiModelProperty("优惠标题")
+        private String title;
         @ApiModelProperty("优惠金额")
-        private BigDecimal discountAmount;
+        private BigDecimal discountAmt;
+
     }
 
     @Data
+    @ApiModel
     @Accessors(chain = true)
-    public static class CouponVo {
+    public static class UserAddressVo {
+        @ApiModelProperty("ID")
+        private Long id;
+        @ApiModelProperty("姓名")
+        private String name;
+        @ApiModelProperty("电话")
+        private String tel;
+        @ApiModelProperty("邮编")
+        private String postcode;
+        @ApiModelProperty("区域编码")
+        private String adcode;
+        @ApiModelProperty("省份")
+        private String province;
+        @ApiModelProperty("城市")
+        private String city;
+        @ApiModelProperty("区")
+        private String region;
+        @ApiModelProperty("详细地址")
+        private String address;
+    }
+
+    @Data
+    @ApiModel
+    @Accessors(chain = true)
+    public static class UserCouponVo {
         @ApiModelProperty("用户优惠券ID")
         private Long id;
         @ApiModelProperty("优惠券编号")
-        private String couponNo;
+        private String encoding;
         @ApiModelProperty("优惠券标题")
         private String title;
         @ApiModelProperty("优惠券使用说明(优惠券可用时展示)")
@@ -97,15 +136,15 @@ public class CalcOrderVo {
         @ApiModelProperty("不可用原因，优惠券不可用时展示")
         private String reason;
         @ApiModelProperty("优惠金额文案(85或10)")
-        private String valueDesc;
+        private BigDecimal valueDesc;
         @ApiModelProperty("单位文案")
         private String unitDesc;
         @ApiModelProperty("是否可用")
         private Boolean usable = Boolean.FALSE;
         @ApiModelProperty("是否选中")
-        private Boolean selected = Boolean.FALSE;
+        private Boolean used = Boolean.FALSE;
         @ApiModelProperty("实际优惠金额(当选中时有效)")
-        private BigDecimal useAmount;
+        private BigDecimal usedAmount;
     }
 
 }

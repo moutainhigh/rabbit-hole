@@ -3,6 +3,9 @@ package in.hocg.rabbit.mall.biz.mapper;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
 
+    Optional<OrderItem> getByIdAndOwnerUserId(@Param("id") Long id, @Param("ownerUserId") Long ownerUserId);
 }

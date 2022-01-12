@@ -16,7 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MALL, false, "pms_shop",
+            Module.COM, false,
+            "com_user_address",
             "");
     }
 

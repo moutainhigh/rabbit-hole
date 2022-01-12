@@ -11,6 +11,6 @@ import lombok.Data;
  */
 @Data
 public class OrderPagingRo extends PageRo {
-    private Long userId;
+    private Long ownerUserId;
     private String orderStatus;
 }

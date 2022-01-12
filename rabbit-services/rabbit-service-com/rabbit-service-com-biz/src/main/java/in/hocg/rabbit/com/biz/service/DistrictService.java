@@ -47,4 +47,6 @@ public interface DistrictService extends AbstractService<District> {
     List<DistrictCompleteVo> complete(DistrictCompleteRo ro);
 
     DistrictComplexVo getComplexById(Long parentId);
+
+    Optional<District> getByAdcode(String adcode);
 }

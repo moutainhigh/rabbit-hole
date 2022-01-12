@@ -13,6 +13,6 @@ import lombok.Data;
 @Data
 public class ProductPagingRo extends PageRo {
     @ApiModelProperty("发布状态")
-    private Integer publishStatus;
+    private Boolean publishedFlag;
     private String keyword;
 }

@@ -18,13 +18,14 @@ import java.util.List;
  */
 @Data
 public class GiveCouponRo {
+    @NotNull(message = "请选择用户")
     @Size(min = 1, max = 100, message = "请选择用户(1~100)")
-    private List<Long> toUserId = Lists.newArrayList();
+    private List<Long> toUserId;
     @NotNull(message = "请指定生效时间")
     private LocalDateTime startAt;
     @NotNull(message = "请指定失效时间")
     private LocalDateTime endAt;
 
     @ApiModelProperty(hidden = true)
-    private Long userId;
+    private Long ownerUserId;
 }

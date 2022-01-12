@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.utils.LangUtils;
+import in.hocg.rabbit.mall.biz.convert.ProductConvert;
 import in.hocg.rabbit.mall.biz.convert.ShopConvert;
 import in.hocg.rabbit.mall.biz.entity.Shop;
 import in.hocg.rabbit.mall.biz.mapper.ShopMapper;
@@ -60,17 +61,16 @@ public class ShopServiceImpl extends AbstractServiceImpl<ShopMapper, Shop> imple
 
     @Override
     public ShopComplexVo getComplex(Long id) {
-        return as(getById(id), convert::asShopComplexVo);
+        return convert.asShopComplexVo(getById(id));
     }
 
     @Override
     public IPage<ShopOrdinaryVo> paging(ShopPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage())
-            .convert(item -> as(item, convert::asShopOrdinaryVo));
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asShopOrdinaryVo);
     }
 
     @Override
     public List<ShopOrdinaryVo> complete(ShopCompleteRo ro) {
-        return LangUtils.toList(baseMapper.complete(ro, ro.ofPage()), item -> as(item, convert::asShopOrdinaryVo));
+        return LangUtils.toList(baseMapper.complete(ro, ro.ofPage()), convert::asShopOrdinaryVo);
     }
 }

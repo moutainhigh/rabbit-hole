@@ -23,4 +23,12 @@ public interface MallNamedServiceApi extends NamedService {
     @NamedHandler(MallNamedType.DataDictName)
     @PostMapping(value = CONTEXT_ID + "/loadByDataDictName", headers = MallServiceName.FEIGN_HEADER)
     Map<String, Object> loadByDataDictName(@RequestBody NamedArgs args);
+
+    @NamedHandler(MallNamedType.ShopName)
+    @PostMapping(value = CONTEXT_ID + "/loadByShopName", headers = MallServiceName.FEIGN_HEADER)
+    Map<String, Object> loadByShopName(@RequestBody NamedArgs args);
+
+    @NamedHandler(MallNamedType.ProductCategoryName)
+    @PostMapping(value = CONTEXT_ID + "/loadByProductCategoryName", headers = MallServiceName.FEIGN_HEADER)
+    Map<String, Object> loadByProductCategoryName(@RequestBody NamedArgs args);
 }

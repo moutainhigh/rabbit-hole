@@ -11,5 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 public final class MallNamedType {
     @ApiModelProperty("数据字典")
     public static final String DataDictName = "MALL:DataDictName";
+    public static final String ShopName = "MALL:ShopName";
+    public static final String ProductCategoryName = "MALL:ProductCategoryName";
 
 }

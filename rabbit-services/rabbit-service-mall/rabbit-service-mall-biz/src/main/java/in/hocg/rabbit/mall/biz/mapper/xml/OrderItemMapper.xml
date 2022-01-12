@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.rabbit.mall.biz.mapper.OrderItemMapper">
-
+  <select id="getByIdAndOwnerUserId" resultType="in.hocg.rabbit.mall.biz.entity.OrderItem">
+    SELECT DISTINCT ooi.*
+    FROM oms_order_item ooi
+           LEFT JOIN oms_order oo ON oo.id = ooi.order_id
+    <where>
+      AND ooi.deleted_at IS NULL
+      AND ooi.id = #{id}
+      AND oo.owner_user_id = #{ownerUserId}
+    </where>
+  </select>
 </mapper>

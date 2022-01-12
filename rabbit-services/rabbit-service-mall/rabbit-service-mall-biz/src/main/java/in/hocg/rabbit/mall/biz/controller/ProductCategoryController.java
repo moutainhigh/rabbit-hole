@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.controller;
 
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategorySaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategoryTreeRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
@@ -64,9 +65,9 @@ public class ProductCategoryController {
 
     @UseLogger
     @ApiOperation("删除 - 商品品类及其子品类")
-    @DeleteMapping("/{id:\\d+}")
-    public Result<Void> deleteAll(@PathVariable("id") Long id) {
-        service.deleteAllById(id);
+    @DeleteMapping
+    public Result<Void> deleteAll(@Validated @RequestBody DeleteRo ro) {
+        service.deleteAll(ro);
         return Result.success();
     }
 

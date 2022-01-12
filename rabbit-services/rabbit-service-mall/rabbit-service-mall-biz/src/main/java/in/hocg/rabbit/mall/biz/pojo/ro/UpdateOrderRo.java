@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mall.biz.pojo.ro;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,18 +16,17 @@ public class UpdateOrderRo {
     @ApiModelProperty("收货人姓名")
     private String receiverName;
     @ApiModelProperty("收货人电话")
-    private String receiverPhone;
+    private String receiverTel;
     @ApiModelProperty("收货人邮编")
-    private String receiverPostCode;
-    @ApiModelProperty("省份/直辖市")
-    private String receiverProvince;
-    @ApiModelProperty("城市")
-    private String receiverCity;
-    @ApiModelProperty("区")
-    private String receiverRegion;
-    @ApiModelProperty("详细地址")
-    private String receiverDetailAddress;
+    private String receiverPostcode;
     @ApiModelProperty("收货人区域编码")
-    private String receiverAdCode;
-
+    private String receiverAdcode;
+    @ApiModelProperty("收货人省份/直辖市")
+    private String receiverProvince;
+    @ApiModelProperty("收货人城市")
+    private String receiverCity;
+    @ApiModelProperty("收货人区")
+    private String receiverRegion;
+    @ApiModelProperty("收货人详细地址")
+    private String receiverAddress;
 }

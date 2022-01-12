@@ -6,6 +6,7 @@ import in.hocg.rabbit.mall.biz.entity.Coupon;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.rabbit.mall.biz.pojo.ro.CouponPagingRo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -17,5 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CouponMapper extends BaseMapper<Coupon> {
-    IPage<Coupon> paging(CouponPagingRo ro, Page<Object> ofPage);
+    IPage<Coupon> paging(@Param("ro") CouponPagingRo ro, Page<Object> ofPage);
 }

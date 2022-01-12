@@ -9,6 +9,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductCompleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.ProductOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.ProductService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -70,7 +71,7 @@ public class ProductController {
     @UseLogger
     @PostMapping("/_paging")
     @ApiOperation("分页查询 - 商品")
-    public Result<IPage<ProductComplexVo>> paging(@Validated @RequestBody ProductPagingRo ro) {
+    public Result<IPage<ProductOrdinaryVo>> paging(@Validated @RequestBody ProductPagingRo ro) {
         return Result.success(service.paging(ro));
     }
 
@@ -78,7 +79,7 @@ public class ProductController {
     @UseLogger
     @PostMapping("/_complete")
     @ApiOperation("查询列表 - 商品")
-    public Result<List<ProductComplexVo>> complete(@Validated @RequestBody ProductCompleteRo qo) {
+    public Result<List<ProductOrdinaryVo>> complete(@Validated @RequestBody ProductCompleteRo qo) {
         return Result.success(service.complete(qo));
     }
 }

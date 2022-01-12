@@ -1,12 +1,17 @@
 package in.hocg.rabbit.mall.biz.entity;
 
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
 
+import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.LogicDeletedEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,63 +19,59 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * [订单模块] 订单商品表
+ * [订单模块] 订单详情表
  * </p>
  *
  * @author hocgin
- * @since 2021-08-21
+ * @since 2022-01-13
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("oms_order_item")
-public class OrderItem extends AbstractEntity<OrderItem> {
+public class OrderItem extends LogicDeletedEntity<OrderItem> {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("订单ID")
     @TableField("order_id")
     private Long orderId;
+    @ApiModelProperty("商品类型: sku=>商品")
+    @TableField("product_type")
+    private String productType;
     @ApiModelProperty("商品ID")
     @TableField("product_id")
     private Long productId;
     @ApiModelProperty("商品名称")
     @TableField("title")
     private String title;
-    @ApiModelProperty("销售单价")
-    @TableField("unit_price")
-    private BigDecimal unitPrice;
     @ApiModelProperty("购买数量")
     @TableField("quantity")
     private Integer quantity;
-    @ApiModelProperty("商品主图")
-    @TableField("image_url")
-    private String imageUrl;
-    @ApiModelProperty("商品SKU ID")
-    @TableField("sku_id")
-    private Long skuId;
-    @ApiModelProperty("商品SKU条码")
-    @TableField("sku_code")
-    private String skuCode;
-    @ApiModelProperty("商品规格:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
-    @TableField("sku_spec_data")
-    private String skuSpecData;
 
-    @ApiModelProperty("优惠分解金额(不含后台调整)")
-    @TableField("discount_amt")
-    private BigDecimal discountAmt;
-    @ApiModelProperty("后台调整优惠")
-    @TableField("adjustment_discount_amt")
-    private BigDecimal adjustmentDiscountAmt;
+    @ApiModelProperty("销售价")
+    @TableField("sale_price")
+    private BigDecimal salePrice;
     @ApiModelProperty("[计算型]原总价=销售价格x购买数量")
     @TableField("total_amt")
     private BigDecimal totalAmt;
-    @ApiModelProperty("[计算型]该商品经过优惠后的分解金额(实际支付金额)=原总价-后台调整优惠-优惠分解金额")
-    @TableField("user_pay_amt")
-    private BigDecimal userPayAmt;
+    @ApiModelProperty("优惠金额")
+    @TableField("discount_amt")
+    private BigDecimal discountAmt;
+    @ApiModelProperty("[计算型]优惠后金额=原总价-优惠金额")
+    @TableField("real_amt")
+    private BigDecimal realAmt;
 
-
+    @ApiModelProperty("评价状态")
+    @TableField("comment_status")
+    private String commentStatus;
+    @ApiModelProperty("评价时间")
+    @TableField("commented_at")
+    private LocalDateTime commentedAt;
+    @ApiModelProperty("售后状态")
+    @TableField("maintain_status")
+    private String maintainStatus;
+    @ApiModelProperty("售后截止时间")
+    @TableField("plan_maintain_at")
+    private LocalDateTime planMaintainAt;
 
 }

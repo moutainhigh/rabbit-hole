@@ -1,5 +1,6 @@
 package in.hocg.rabbit.usercontext.autoconfigure;
 
+import in.hocg.boot.utils.exception.UnAuthenticationException;
 import in.hocg.rabbit.usercontext.basic.HeaderConstants;
 import in.hocg.rabbit.usercontext.ifc.UserContextService;
 import in.hocg.rabbit.usercontext.ifc.vo.UserDetail;
@@ -7,7 +8,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
-import in.hocg.boot.web.exception.UnAuthenticationException;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +28,7 @@ public class UserContextHolder {
         .build();
 
     public Optional<String> getUsername() {
-        HttpServletRequest request = getRequest();
-        return Optional.ofNullable(request.getHeader(HeaderConstants.USERNAME));
+        return getRequest().map(item -> item.getHeader(HeaderConstants.USERNAME));
     }
 
     public Optional<UserDetail> getUserInfo() {
@@ -49,13 +48,11 @@ public class UserContextHolder {
     }
 
     public Optional<String> getSource() {
-        HttpServletRequest request = getRequest();
-        return Optional.ofNullable(request.getHeader(HeaderConstants.SOURCE));
+        return getRequest().map(item -> item.getHeader(HeaderConstants.SOURCE));
     }
 
     public Optional<String> getVersion() {
-        HttpServletRequest request = getRequest();
-        return Optional.ofNullable(request.getHeader(HeaderConstants.VERSION));
+        return getRequest().map(item -> item.getHeader(HeaderConstants.VERSION));
     }
 
     private UserDetail getUserDetailUseCache(String username) {
@@ -68,8 +65,8 @@ public class UserContextHolder {
         return userDetail;
     }
 
-    private HttpServletRequest getRequest() {
-        return SpringServletContext.getRequest().orElseThrow(IllegalArgumentException::new);
+    private Optional<HttpServletRequest> getRequest() {
+        return SpringServletContext.getRequest();
     }
 
     private UserContextService getUserContextService() {

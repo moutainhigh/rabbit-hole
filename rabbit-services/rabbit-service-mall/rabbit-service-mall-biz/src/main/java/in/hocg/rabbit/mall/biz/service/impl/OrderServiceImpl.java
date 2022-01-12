@@ -2,54 +2,53 @@ package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.rabbit.bmw.api.BmwServiceApi;
 import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
-import in.hocg.rabbit.bmw.api.enums.TradeOrderStatus;
 import in.hocg.rabbit.bmw.api.pojo.ro.CreateTradeRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GetCashierRo;
+import in.hocg.rabbit.bmw.api.pojo.ro.GoRefundRo;
 import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
 import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UserAddressServiceApi;
+import in.hocg.rabbit.com.api.enums.UserAddressType;
+import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.common.basic.PageUrlHelper;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.common.constant.SnCodePrefixConstant;
-import in.hocg.rabbit.common.datadict.common.RefType;
-import in.hocg.rabbit.mall.api.enums.CouponType;
-import in.hocg.rabbit.mall.api.enums.OrderDiscountType;
-import in.hocg.rabbit.mall.api.enums.OrderSource;
-import in.hocg.rabbit.mall.api.enums.OrderStatus;
-import in.hocg.rabbit.mall.biz.entity.Coupon;
-import in.hocg.rabbit.mall.biz.entity.Order;
-import in.hocg.rabbit.mall.biz.entity.OrderDiscount;
-import in.hocg.rabbit.mall.biz.entity.OrderItem;
+import in.hocg.rabbit.mall.api.enums.order.*;
+import in.hocg.rabbit.mall.biz.convert.OrderConvert;
+import in.hocg.rabbit.mall.biz.entity.*;
 import in.hocg.rabbit.mall.biz.mapper.OrderMapper;
+import in.hocg.rabbit.mall.biz.mapstruct.OrderItemMapping;
+import in.hocg.rabbit.mall.biz.mapstruct.OrderItemSkuMapping;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderMapping;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
 import in.hocg.rabbit.mall.biz.pojo.vo.*;
 import in.hocg.rabbit.mall.biz.service.*;
-import in.hocg.rabbit.mall.biz.support.helper.order2.DiscountHelper;
-import in.hocg.rabbit.mall.biz.support.helper.order2.OrderHelper;
-import in.hocg.rabbit.mall.biz.support.helper.order2.discount.Discount;
-import in.hocg.rabbit.mall.biz.support.helper.order2.modal.GeneralOrder;
-import in.hocg.rabbit.mall.biz.support.helper.order2.modal.GeneralProduct;
-import in.hocg.rabbit.mall.biz.support.helper.order2.rule.DiscountCheckResult;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
-import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.rabbit.mall.biz.state.order.OrderStateMachine;
+import in.hocg.rabbit.mall.biz.support.mode.Discount;
+import in.hocg.rabbit.mall.biz.support.mode.DiscountResult;
+import in.hocg.rabbit.mall.biz.support.mode.OrderContext;
+import in.hocg.rabbit.mall.biz.support.mode.OrderSupport;
+import in.hocg.rabbit.mall.biz.support.mode.def.discount.Discounts;
+import in.hocg.rabbit.mall.biz.support.order.MallOrderContext;
+import in.hocg.rabbit.mall.biz.support.order.MallHelper;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -67,26 +66,34 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@UseConvert(OrderConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> implements OrderService {
     private final OrderMapping mapping;
+    private final OrderItemMapping orderItemMapping;
+    private final OrderItemSkuMapping orderItemSkuMapping;
+    private final OrderConvert convert;
     private final OrderItemService orderItemService;
+    private final OrderItemSkuService orderItemSkuService;
     private final OrderDiscountService orderDiscountService;
     private final BmwServiceApi bmwServiceApi;
-    private final OrderRefundApplyService orderRefundApplyService;
+    private final OrderMaintainService orderMaintainService;
+    private final OrderDeliveryService orderDeliveryService;
+    private final OrderPayRecordService orderPayRecordService;
     private final UserCouponService userCouponService;
     private final SkuService skuService;
     private final ProductService productService;
     private final SnCodeServiceApi snCodeServiceApi;
+    private final UserAddressServiceApi userAddressServiceApi;
 
     @Override
-    public IPage<OrderComplexVo> paging(OrderPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(this::convertComplex);
+    public IPage<OrderOrdinaryVo> paging(OrderPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asOrderOrdinaryVo);
     }
 
     @Override
     public OrderComplexVo getComplex(Long id) {
-        return this.convertComplex(getById(id));
+        return convert.asOrderComplexVo(getById(id));
     }
 
     @Override
@@ -95,48 +102,94 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void shipped(Long id, ShippedOrderRo ro) {
-        final Long userId = ro.getUserId();
-        final Order order = ValidUtils.notNull(getById(id), "未找到订单");
-
-        if (!Lists.newArrayList(OrderStatus.WaitShip.getCodeStr()).contains(order.getOrderStatus())) {
-            throw ServiceException.wrap("发货失败，订单状态错误");
-        }
-
-        LocalDateTime now = LocalDateTime.now();
-        final Order updated = new Order();
-        updated.setId(id);
-        updated.setReceiveAt(now);
-        updated.setOrderStatus(OrderStatus.WaitReceipt.getCodeStr());
-        updated.setLastUpdater(userId);
-        updated.setLastUpdatedAt(now);
-        validUpdateById(updated);
-
-    }
-
-    @Override
     public void updateOne(Long id, UpdateOrderRo ro) {
-
+        Order update = mapping.asOrder(ro);
+        update.setId(id);
+        updateById(update);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void close(Long id, CloseOrderRo ro) {
-        final Long userId = ro.getUserId();
-        final Order order = ValidUtils.notNull(getById(id), "未找到订单");
-        if (!Lists.newArrayList(OrderStatus.WaitPay.getCodeStr()).contains(order.getOrderStatus())) {
-            throw ServiceException.wrap("取消失败，请联系客服");
-        }
+    public void refundByBuyer(Long id, RefundOrderClientRo ro) {
+        Order order = getByIdAndOwnerUser(id, ro.getOperatorId()).orElseThrow(() -> ServiceException.wrap("订单不存在"));
+        OrderStateMachine.refundByBuyer(order, ro);
 
-        final Order updated = new Order();
-        updated.setId(id);
-        updated.setOrderStatus(OrderStatus.Closed.getCodeStr());
-        updated.setLastUpdater(userId);
-        updated.setLastUpdatedAt(LocalDateTime.now());
-        validUpdateById(updated);
-        this.handleCancelOrClosedOrderAfter(id);
+        // 退还优惠券
+        handleCancelOrClosedOrderAfter(id);
 
+        // 支付退款
+        GoRefundRo goRefundRo = new GoRefundRo();
+        String orderNo = order.getEncoding();
+        goRefundRo.setOutTradeNo(orderNo);
+        goRefundRo.setRefundAmt(order.getTotalRealAmt());
+        goRefundRo.setOutRefundNo(orderNo);
+        goRefundRo.setReason(StrUtil.format("买家申请退款，订单号：{}", orderNo));
+        bmwServiceApi.goRefund(goRefundRo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refundBySeller(Long id, RefundOrderManageRo ro) {
+        Order entity = ValidUtils.notNull(getById(id), "未找到订单");
+        OrderStateMachine.refundBySeller(entity);
+
+        // 退还优惠券
+        handleCancelOrClosedOrderAfter(id);
+
+        // 支付退款
+        GoRefundRo goRefundRo = new GoRefundRo();
+        String orderNo = entity.getEncoding();
+        BigDecimal totalRealAmt = entity.getTotalRealAmt();
+        goRefundRo.setOutTradeNo(orderNo);
+        goRefundRo.setRefundAmt(totalRealAmt);
+        goRefundRo.setOutRefundNo(orderNo);
+        goRefundRo.setReason(StrUtil.format("卖家申请退款，订单号：{}", orderNo));
+        bmwServiceApi.goRefund(goRefundRo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void shipped(Long id, ShippedOrderBySellerRo ro) {
+        Order entity = ValidUtils.notNull(getById(id), "未找到订单");
+
+        // 1. 发货状态
+        OrderStateMachine.shipped(entity);
+
+        // 2. 保存发货信息
+        orderDeliveryService.create(id, ro);
+
+        // 3. 自动收货时间
+        Order update = new Order();
+        update.setId(id);
+        update.setPlanReceiveAt(LocalDateTime.now().plusDays(15));
+        updateById(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void receivedByBuyer(Long id, ReceivedOrderClientRo ro) {
+        Order order = getByIdAndOwnerUser(id, ro.getOperatorId()).orElseThrow(() -> ServiceException.wrap("订单不存在"));
+        OrderStateMachine.receivedByBuyer(order);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void closeBySeller(Long id, CloseOrderManageRo ro) {
+        Order entity = ValidUtils.notNull(getById(id), "未找到订单");
+        OrderStateMachine.closeBySeller(entity);
+
+        // 退还优惠券
+        handleCancelOrClosedOrderAfter(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void closeByBuyer(Long id, CloseOrderClientRo ro) {
+        Order order = getByIdAndOwnerUser(id, ro.getOperatorId()).orElseThrow(() -> ServiceException.wrap("未找到订单"));
+        OrderStateMachine.closeByBuyer(order);
+
+        // 退还优惠券
+        handleCancelOrClosedOrderAfter(id);
     }
 
     @Override
@@ -150,153 +203,66 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     @Override
     @Transactional(rollbackFor = Exception.class)
     public CalcOrderVo calcOrder(CalcOrderRo ro) {
-        LocalDateTime createdAt = LocalDateTime.now();
-
-        final CalcOrderVo result = new CalcOrderVo();
+        CalcOrderVo result = new CalcOrderVo();
         final Long userId = ro.getUserId();
-        final Long selectedCouponId = ro.getSelectedCouponId();
-        final List<CalcOrderRo.Item> items = ro.getItems();
+        List<Serializable> useCoupons = Lists.newArrayList();
+        final List<UserCoupon> userCoupons = Lists.newArrayList();
 
-        // 使用的优惠
-        List<Discount> useDiscounts = Lists.newArrayList();
+        final Long useCouponId = ro.getUseCouponId();
+        LangUtils.callIfNotNull(useCouponId, useCoupons::add);
 
-        final List<UserCouponComplexVo> userAllCoupons = LangUtils.callIfNotNull(userId, userCouponService::listComplexByUserId).orElse(Collections.emptyList());
-        final List<Discount> allDiscount = Lists.newArrayList();
-        final List<Discount> userAllCouponDiscount = userAllCoupons.parallelStream().map(DiscountHelper::createCoupon).collect(Collectors.toList());
-        allDiscount.addAll(userAllCouponDiscount);
-        final Map<Long, UserCouponComplexVo> userAllCouponMap = LangUtils.toMap(userAllCoupons, UserCouponComplexVo::getId);
-        final Map<Long, Discount> userAllCouponDiscountMap = LangUtils.toMap(userAllCouponDiscount, Discount::id);
-        if (Objects.nonNull(selectedCouponId)) {
-            if (!userAllCouponDiscountMap.containsKey(selectedCouponId)) {
-                throw ServiceException.wrap("选择优惠券不可用");
-            } else {
-                useDiscounts.add(userAllCouponDiscountMap.get(selectedCouponId));
-            }
+        if (Objects.nonNull(userId)) {
+            UserAddressFeignVo defAddress = userAddressServiceApi.getDefaultByUserIdAndType(userId, UserAddressType.Receiver.getCodeStr());
+            result.setDefaultAddress(mapping.asCalcOrderVoUserAddressVo(defAddress));
+            userCoupons.addAll(userCouponService.listByAvailableAndOwnerUserId(userId));
         }
 
-        // 1. 检查商品
-        Map<Long, SkuComplexVo> skuMap = Maps.newHashMap();
-        Map<Long, ProductComplexVo> productMap = Maps.newHashMap();
-
-        List<GeneralProduct> products = Lists.newArrayList();
-        for (CalcOrderRo.Item item : items) {
+        // 获取采购商品信息
+        List<MutablePair<CalcOrderVo.OrderItem, OrderSupport.Item>> orderItems = Lists.newArrayList();
+        List<CalcOrderRo.Item> itemsRo = ro.getItems();
+        for (int i = 0; i < itemsRo.size(); i++) {
+            CalcOrderRo.Item item = itemsRo.get(i);
             final Long skuId = item.getSkuId();
-            final SkuComplexVo sku = ValidUtils.notNull(skuService.getComplexById(skuId), "商品规格错误");
+            final Sku sku = ValidUtils.notNull(skuService.getById(skuId), "商品规格错误");
             final Long productId = sku.getProductId();
-            final ProductComplexVo product = ValidUtils.notNull(productService.getComplexById(productId), "未找到商品");
+            final Product product = ValidUtils.notNull(productService.getById(productId), "未找到商品");
             ValidUtils.isTrue(product.getPublishedFlag(), "商品已下架");
-            skuMap.put(skuId, sku);
-            productMap.put(productId, product);
-
-            products.add(new GeneralProduct(sku.getUnitPrice(), item.getQuantity())
-                .setProductCategoryId(product.getProductCategoryId())
-                .setProductSkuId(sku.getId()).setProductId(product.getId()));
+            CalcOrderVo.OrderItem left = MallHelper.asItem(item, product, sku);
+            orderItems.add(MutablePair.of(left, new OrderSupport.Item(i, left.getTotalAmt())));
         }
+        List<OrderSupport.Item> supportItems = orderItems.stream().map(MutablePair::getRight)
+            .collect(Collectors.toUnmodifiableList());
+        OrderSupport orderSupport = OrderSupport.create(supportItems);
 
-        // 2. 订单内容
-        GeneralOrder generalOrder = new GeneralOrder(products, userId, OrderSource.Unknown.getCodeStr(), createdAt);
+        // TODO 运费匹配, 后面再完善
+        BigDecimal expressAmt = BigDecimal.ZERO;
 
-        // 3. 使用已选中优惠
-        generalOrder = OrderHelper.use(generalOrder, useDiscounts);
-        final Map<Discount, BigDecimal> allUseDiscount = generalOrder.getAllUseDiscount();
-        final List<Serializable> useCouponIds = allUseDiscount.keySet().parallelStream()
-            .filter(discount -> discount instanceof Coupon)
-            .map(Discount::id).collect(Collectors.toList());
+        // 优惠匹配, 后面再完善(如果用户没有选择，获取可用优惠券列表，选出默认匹配的)
+        List<Discount<MallOrderContext>> discounts = userCoupons.stream().map(MallHelper::getDiscountByUserCoupon)
+            .collect(Collectors.toList());
 
-        // 如果用户选中的优惠券没有生效的话
-        if (Objects.nonNull(selectedCouponId) && !useCouponIds.contains(selectedCouponId)) {
-            throw ServiceException.wrap("选择优惠券不可用");
-        }
-
-        // 4. 检查剩下的优惠
-        final Map<Discount, DiscountCheckResult> checkResults = OrderHelper.check2(generalOrder, allDiscount);
-        final Map<Long, DiscountCheckResult> allUserCouponMap = checkResults.entrySet().parallelStream()
-            .filter(entry -> entry.getKey() instanceof Coupon)
-            .map(Map.Entry::getValue)
-            .collect(Collectors.toMap((dcr) -> dcr.getDiscount().id(), o -> o));
-
-        // 用户所有优惠券是否可用
-        final List<CalcOrderVo.CouponVo> couponVos = allUserCouponMap.values().parallelStream()
-            .map(dcr -> {
-                final Discount discount = dcr.getDiscount();
-                final Long id = discount.id();
-                final UserCouponComplexVo complexVo = userAllCouponMap.get(id);
-                final String couponSn = complexVo.getCouponNo();
-                final LocalDateTime startAt = complexVo.getStartAt();
-                final LocalDateTime endAt = complexVo.getEndAt();
-                final String instructions = complexVo.getUseInstructions();
-                String condition = StrUtil.format("满¥{}可用", complexVo.getMinPoint());
-                return new CalcOrderVo.CouponVo().setId(id)
-                    .setCondition(condition)
-                    .setTitle(complexVo.getTitle())
-                    .setValueDesc(complexVo.getCredit().toString())
-                    .setUseAmount(allUseDiscount.getOrDefault(discount, null))
-                    .setUnitDesc(CouponType.FixedAmt.eq(complexVo.getCouponType()) ? "元" : "折")
-                    .setInstructions(instructions)
-                    .setEndAt(endAt)
-                    .setStartAt(startAt)
-                    .setCouponNo(couponSn)
-                    .setReason(dcr.getFirstErrorMessage())
-                    .setUsable(dcr.isOk())
-                    .setSelected(LangUtils.equals(id, selectedCouponId));
-            }).collect(Collectors.toList());
-
-
-        final BigDecimal totalAmount = generalOrder.getTotalAmount();
-        final BigDecimal payAmount = generalOrder.getPaymentAmount();
-        final BigDecimal discountTotalAmount = generalOrder.getTotalDiscountAmount();
-
-        // 5. 获取订单项信息
-        List<CalcOrderVo.OrderItem> orderItems = generalOrder.mapProduct(item -> {
-            final SkuComplexVo skuComplexVo = skuMap.get(item.getProductSkuId());
-            final ProductComplexVo productComplexVo = productMap.get(item.getProductId());
-            final String specData = skuComplexVo.getSpecData();
-            return new CalcOrderVo.OrderItem()
-                .setSpecData(specData)
-                .setImageUrl(LangUtils.getOrDefault(skuComplexVo.getImageUrl(), productComplexVo.getMainPhotoUrl()))
-                .setSkuId(item.getProductSkuId())
-                .setSkuCode(skuComplexVo.getEncoding())
-                .setQuantity(item.getProductQuantity())
-                .setPrice(item.getProductPrice())
-                .setTitle(productComplexVo.getTitle())
-                .setProductId(item.getProductId())
-                .setDiscountAmount(item.getDiscountAmount())
-                .setRealAmount(item.getRealAmount())
-                .setSpec(JSON.parseArray(specData, KeyValue.class))
-                .setTotalAmount(item.getProductPrice().multiply(new BigDecimal(item.getProductQuantity())));
+        // 计算订单金额
+        MallOrderContext useContext = orderSupport.use(MallHelper.createContext(), discounts, useCoupons);
+        orderItems.forEach(pair -> {
+            Serializable id = pair.getRight().getId();
+            pair.getLeft().setDiscountAmt(useContext.getDiscountAmtByOrderItem(id));
+            pair.getLeft().setRealAmt(useContext.getRealAmtByOrderItem(id));
         });
-        result.setItems(orderItems);
 
-        // 6. 优惠信息
-        List<CalcOrderVo.DiscountInfo> discounts = Lists.newArrayList();
-        for (Map.Entry<Discount, BigDecimal> entry : allUseDiscount.entrySet()) {
-            final Discount discount = entry.getKey();
-            final BigDecimal value = entry.getValue();
-            final Long id = discount.id();
-            CalcOrderVo.DiscountInfo discountInfo;
-            if (discount instanceof Coupon) {
-                discountInfo = new CalcOrderVo.DiscountInfo()
-                    .setId(id)
-                    .setType(OrderDiscountType.Coupon.getCodeStr())
-                    .setDiscountAmount(value);
-            } else {
-                throw new UnsupportedOperationException("未知的优惠信息");
-            }
-            discounts.add(discountInfo);
-        }
+        result.setTotalSaleAmt(useContext.getTotalSaleAmtByOrder());
+        result.setExpressAmt(expressAmt);
+        result.setDiscountAmt(useContext.getDiscountAmtByOrder());
+        result.setTotalRealAmt(result.getTotalSaleAmt().add(result.getExpressAmt()));
+        result.setTotalPayAmt(result.getTotalRealAmt().subtract(result.getDiscountAmt()));
+        result.setItems(orderItems.stream().map(MutablePair::getLeft).collect(Collectors.toUnmodifiableList()));
 
-        final BigDecimal couponDiscountAmount = discounts.parallelStream()
-            .filter(item -> OrderDiscountType.Coupon.eq(item.getType()))
-            .map(CalcOrderVo.DiscountInfo::getDiscountAmount)
-            .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+        List<DiscountResult> discountResults = useContext.getDiscountResults();
+        result.setUsedDiscounts(discountResults.stream().map(MallHelper::asDiscountVo)
+            .collect(Collectors.toList()));
 
-        result.setDiscounts(discounts);
-        result.setTotalAmount(totalAmount);
-        result.setCouponDiscountAmount(couponDiscountAmount);
-        result.setDiscountTotalAmount(discountTotalAmount);
-        result.setPayAmount(payAmount);
-        result.setDefaultAddress(null);
-        result.setCoupons(couponVos);
+        Map<Long, UserCoupon> userCouponMaps = LangUtils.toMap(userCoupons, CommonEntity::getId);
+        result.setUserCoupons(discountResults.stream().filter(MallHelper::isUserCoupon)
+            .map(item -> MallHelper.asUserCoupon(userCouponMaps, item)).collect(Collectors.toList()));
         return result;
     }
 
@@ -304,90 +270,46 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     @Transactional(rollbackFor = Exception.class)
     public String createOrder(CreateOrderRo ro) {
         final Long currentUserId = ro.getUserId();
-        final CreateOrderRo.Receiver receiver = ro.getReceiver();
-        final Long selectedCouponId = ro.getSelectedCouponId();
+        final CalcOrderVo.UserAddressVo receiver = ro.getReceiver();
         final String remark = ro.getRemark();
 
         final CalcOrderVo calcResult = this.calcOrder(ro);
-        final List<CalcOrderVo.DiscountInfo> discounts = calcResult.getDiscounts();
-        final BigDecimal discountTotalAmount = calcResult.getDiscountTotalAmount();
-        final BigDecimal totalAmount = calcResult.getTotalAmount();
-        final BigDecimal payAmount = calcResult.getPayAmount();
-        final BigDecimal couponDiscountAmount = calcResult.getCouponDiscountAmount();
 
         String orderNo = snCodeServiceApi.getSnCode(SnCodePrefixConstant.MALL_ORDER);
         LocalDateTime now = LocalDateTime.now();
-        final Order order = new Order()
-            .setOrderNo(orderNo)
-            .setUserId(currentUserId)
-            .setOrderStatus(OrderStatus.WaitPay.getCodeStr())
-            .setPlanConfirmAt(now.plusDays(15))
+        final Order order = mapping.asOrder(calcResult)
+            .setEncoding(orderNo)
+            .setOwnerUserId(currentUserId)
+            .setOrderStatus(OrderTradeStatus.WaitPay.getCodeStr())
+            .setPlanCloseAt(now.plusDays(15))
             .setRemark(remark)
-            // 金额相关
-            .setCouponDiscountAmt(couponDiscountAmount)
-            .setFreightAmt(BigDecimal.ZERO)
-            .setTotalAmt(totalAmount)
-            .setUserPayAmt(payAmount)
             // 收货人信息
             .setReceiverName(receiver.getName())
-            .setReceiverTel(receiver.getPhone())
-            .setReceiverPostcode(receiver.getPostCode())
+            .setReceiverTel(receiver.getTel())
+            .setReceiverPostcode(receiver.getPostcode())
             .setReceiverProvince(receiver.getProvince())
             .setReceiverCity(receiver.getCity())
             .setReceiverRegion(receiver.getRegion())
             .setReceiverAddress(receiver.getAddress())
             .setReceiverAdcode(receiver.getAdcode());
 
-        // 处理优惠信息
-        if (!CollectionUtils.isEmpty(discounts)) {
-            for (CalcOrderVo.DiscountInfo discount : discounts) {
-                final OrderDiscountType discountType = ICode.ofThrow(discount.getType(), OrderDiscountType.class);
-                if (discountType == OrderDiscountType.Coupon) {
-                    final Long userCouponId = discount.getId();
-                    final BigDecimal discountAmount = discount.getDiscountAmount();
-                    if (!userCouponService.updateUsedStatus(userCouponId, discountAmount)) {
-                        throw ServiceException.wrap("优惠券已被使用");
-                    }
-                    orderDiscountService.useCoupon(order.getId(), userCouponId);
-                } else {
-                    throw ServiceException.wrap("系统繁忙，请稍后");
-                }
-            }
-        }
         validInsert(order);
         final Long orderId = order.getId();
 
-        final List<CalcOrderVo.OrderItem> orderItems = calcResult.getItems();
-        final List<OrderItem> orderItemList = orderItems.parallelStream().map(item -> new OrderItem()
-            .setUserPayAmt(item.getRealAmount())
-            .setSkuSpecData(item.getSpecData())
-            .setSkuCode(item.getSkuCode())
-            .setDiscountAmt(item.getDiscountAmount())
-            .setTotalAmt(item.getTotalAmount())
-            .setTitle(item.getTitle())
-            .setQuantity(item.getQuantity())
-            .setImageUrl(item.getImageUrl())
-            .setUnitPrice(item.getPrice())
-            .setProductId(item.getProductId())
-            .setSkuId(item.getSkuId())
-            .setOrderId(orderId)).collect(Collectors.toList());
-        for (OrderItem orderItem : orderItemList) {
-            final Long skuId = orderItem.getSkuId();
-            final Integer quantity = orderItem.getQuantity();
-            if (skuService.casValidAndSubtractStock(skuId, quantity)) {
-                orderItemService.validInsert(orderItem);
-            } else {
-                throw ServiceException.wrap("库存商品不足");
-            }
-        }
+        // 处理优惠信息(检查优惠券和标记优惠券使用状态)
+        final List<CalcOrderVo.DiscountVo> discounts = calcResult.getUsedDiscounts();
+        orderDiscountService.usedDiscount(orderId, discounts);
 
+        List<CalcOrderVo.OrderItem> items = calcResult.getItems();
+        orderItemService.saveOrderItemByOrderId(orderId, items);
 
         // 生成交易
+        BigDecimal totalPayAmt = order.getTotalPayAmt();
         String notifyUrl = PageUrlHelper.getMallOrderPayedCallbackUrl();
         CreateTradeRo createTradeRo = new CreateTradeRo();
         createTradeRo.setOutTradeNo(orderNo);
         createTradeRo.setNotifyUrl(notifyUrl);
-        createTradeRo.setTradeAmt(payAmount);
+        createTradeRo.setTradeAmt(totalPayAmt);
         createTradeRo.setAccessCode(GlobalConstant.BMW_ACCESS_CODE);
         TradeStatusSyncVo trade = bmwServiceApi.createTrade(createTradeRo);
 
@@ -399,55 +321,37 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void applyRefund(RefundApplyRo ro) {
-        orderRefundApplyService.applyRefund(ro);
+    public void adjustment(Long id, AdjustmentOrderBySellerRo ro) {
+        BigDecimal adjustmentAmt = ro.getAdjustmentAmt();
+        Order order = Assert.notNull(getById(id), "未找到订单");
+        List<OrderItem> orderItems = orderItemService.listByOrderId(id);
+
+        List<OrderSupport.Item> items = orderItems.stream().map(MallHelper::asItem).collect(Collectors.toList());
+        OrderSupport orderSupport = OrderSupport.create(items);
+        OrderContext useContext = orderSupport.use(MallHelper.createContext(), List.of(Discounts.createAdjustmentDiscount(1L, adjustmentAmt)));
+
+        // 更新订单
+        Order orderUpdate = new Order();
+        orderUpdate.setId(id);
+        orderUpdate.setAdjustmentAmt(adjustmentAmt);
+        orderUpdate.setTotalRealAmt(useContext.getTotalRealAmtByOrder());
+        orderUpdate.setTotalPayAmt(orderUpdate.getTotalRealAmt().add(order.getExpressAmt()));
+        Assert.isTrue(updateById(orderUpdate), "订单更新失败");
+
+        // 更新订单明细
+        List<OrderItem> orderItemUpdate = useContext.convertForOrderItem(item -> {
+            Serializable itemId = item.getId();
+            OrderItem result = new OrderItem();
+            result.setId((Long) itemId);
+            return result.setRealAmt(useContext.getRealAmtByOrderItem(itemId))
+                .setDiscountAmt(useContext.getDiscountAmtByOrderItem(itemId));
+        });
+        Assert.isTrue(orderItemService.updateBatchById(orderItemUpdate), "订单明细更新失败");
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void cancelOrder(CancelOrderRo ro) {
-        final Long userId = ro.getUserId();
-        final Long orderId = ro.getOrderId();
-        LocalDateTime now = LocalDateTime.now();
-
-        final Order order = ValidUtils.notNull(getById(orderId), "未找到订单");
-        if (!Lists.newArrayList(OrderStatus.WaitPay.getCodeStr()).contains(order.getOrderStatus())) {
-            throw ServiceException.wrap("取消失败，请联系客服");
-        }
-
-        final Order updated = new Order();
-        updated.setId(orderId);
-        updated.setOrderStatus(OrderStatus.Closed.getCodeStr());
-        updated.setLastUpdater(userId);
-        updated.setLastUpdatedAt(now);
-        validUpdateById(updated);
-        this.handleCancelOrClosedOrderAfter(orderId);
-
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void confirmOrder(ConfirmOrderRo ro) {
-        LocalDateTime now = LocalDateTime.now();
-        Long userId = ro.getUserId();
-        Long id = ro.getOrderId();
-
-        final Order order = this.getById(id);
-        ValidUtils.notNull(order, "未找到订单");
-        ValidUtils.isTrue(LangUtils.equals(order.getUserId(), userId), "非订单所有人，操作失败");
-
-        if (!Lists.newArrayList(OrderStatus.WaitReceipt.getCode()).contains(order.getOrderStatus())) {
-            throw ServiceException.wrap("确认失败，请联系客服");
-        }
-
-        final Order updated = new Order();
-        updated.setId(id);
-        updated.setOrderStatus(OrderStatus.Received.getCodeStr());
-        updated.setConfirmFlag(true);
-        updated.setReceiveAt(now);
-        updated.setLastUpdater(userId);
-        updated.setLastUpdatedAt(now);
-        validUpdateById(updated);
+    public Optional<Order> getByOrderItemId(Long orderItemId) {
+        return baseMapper.getByOrderItemId(orderItemId);
     }
 
     @Override
@@ -455,31 +359,28 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     public void payResult(OrderPayResultRo ro) {
         Assert.isTrue(SyncAccessMchTaskType.TradeResult.eq(ro.getSyncNotifyType()));
         TradeStatusSyncVo tradeStatusSync = ro.getTradeStatusSync();
-        Assert.isTrue(TradeOrderStatus.Payed.eq(tradeStatusSync.getStatus()));
+        Assert.isTrue(in.hocg.rabbit.bmw.api.enums.TradeOrderStatus.Payed.eq(tradeStatusSync.getStatus()));
 
         String orderNo = tradeStatusSync.getOutTradeNo();
-        String payType = tradeStatusSync.getPayType(); // todo
-        Optional<Order> orderOpl = this.getByOrderNo(orderNo);
-        if (orderOpl.isEmpty()) {
-            throw ServiceException.wrap("订单不存在");
-        }
-        final Order order = orderOpl.get();
-        if (!OrderStatus.WaitPay.eq(order.getOrderStatus())) {
+        String payType = tradeStatusSync.getPayType();
+        LocalDateTime finishedAt = tradeStatusSync.getFinishedAt();
+        Order order = this.getByOrderNo(orderNo).orElseThrow(() -> ServiceException.wrap("订单不存在"));
+        if (!OrderTradeStatus.WaitPay.eq(order.getOrderStatus())) {
             log.warn("订单[单号={}]，状态[{}]非待付款时，被调用支付成功", orderNo, order.getOrderStatus());
             return;
         }
 
-        // 更改订单状态
-        final Order update = new Order();
+        OrderStateMachine.payed(order);
+
+        Order update = new Order();
         update.setId(order.getId());
-        update.setOrderStatus(OrderStatus.WaitShip.getCodeStr());
-        update.setPayAt(LocalDateTime.now());
-        update.setPayType(payType);
-        validUpdateById(update);
+        update.setPayAt(finishedAt);
+        update.setPayWay(payType);
+        updateById(update);
     }
 
     private Optional<Order> getByOrderNo(String orderNo) {
-        return lambdaQuery().eq(Order::getOrderNo, orderNo).oneOpt();
+        return lambdaQuery().eq(Order::getEncoding, orderNo).oneOpt();
     }
 
 
@@ -493,28 +394,16 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     private void handleCancelOrClosedOrderAfter(@NonNull Long orderId) {
         final Order order = baseMapper.selectById(orderId);
         ValidUtils.notNull(order, "订单不存在");
+
         // 取消订单锁定库存
-        final List<OrderItem> orderItems = orderItemService.listByOrderId(orderId);
-        for (OrderItem orderItem : orderItems) {
-            final Long skuId = orderItem.getSkuId();
-            final Integer quantity = orderItem.getQuantity();
-            if (!skuService.casValidAndPlusStock(skuId, quantity)) {
-                throw ServiceException.wrap("系统繁忙，请稍后");
-            }
-        }
+        orderItemService.refundByOrderId(orderId);
 
         // 归还优惠券
-        List<OrderDiscount> orderDiscounts = orderDiscountService.listByOrderId(orderId);
-        for (OrderDiscount orderDiscount : orderDiscounts) {
-            if (RefType.UserCoupon.eq(orderDiscount.getRefType())) {
-                userCouponService.updateUnusedStatus(orderDiscount.getRefId());
-            }
-        }
+        orderDiscountService.refundDiscountByOrderId(orderId);
     }
 
-    private OrderComplexVo convertComplex(Order entity) {
-        OrderComplexVo result = mapping.asOrderComplexVo(entity);
-        result.setOrderItems(orderItemService.listComplexByOrderId(entity.getId()));
-        return result;
+    private Optional<Order> getByIdAndOwnerUser(Long orderId, Long ownerUserId) {
+        return lambdaQuery().eq(Order::getId, orderId).eq(Order::getOwnerUserId, ownerUserId).oneOpt();
     }
+
 }

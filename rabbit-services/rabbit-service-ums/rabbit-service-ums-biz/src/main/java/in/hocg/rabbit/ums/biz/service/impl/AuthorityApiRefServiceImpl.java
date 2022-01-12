@@ -30,7 +30,7 @@ public class AuthorityApiRefServiceImpl extends AbstractServiceImpl<AuthorityApi
     @Transactional(rollbackFor = Exception.class)
     public void grantApis(Long authorityId, List<Long> apis) {
         List<AuthorityApiRef> entities = apis.parallelStream()
-            .map(apiId -> new AuthorityApiRef().setApiId(apiId).setAuthorityId(authorityId))
+            .map(id -> new AuthorityApiRef().setApiId(id).setAuthorityId(authorityId))
             .collect(Collectors.toList());
         List<AuthorityApiRef> allData = this.listAuthorityApiByAuthorityId(authorityId);
 

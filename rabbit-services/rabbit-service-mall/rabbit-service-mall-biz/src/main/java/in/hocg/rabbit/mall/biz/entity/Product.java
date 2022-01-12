@@ -38,8 +38,8 @@ public class Product extends LogicDeletedEntity<Product> {
     @TableField("shop_id")
     private Long shopId;
     @ApiModelProperty("商品品类")
-    @TableField("product_category_id")
-    private Long productCategoryId;
+    @TableField("category_id")
+    private Long categoryId;
     @ApiModelProperty("产品名")
     @TableField("title")
     private String title;

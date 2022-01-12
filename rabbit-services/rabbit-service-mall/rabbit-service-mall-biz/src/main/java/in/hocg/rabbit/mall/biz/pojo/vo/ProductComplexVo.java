@@ -1,12 +1,16 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
+import in.hocg.rabbit.mall.api.named.MallNamed;
+import in.hocg.rabbit.mall.api.named.MallNamedType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,16 +24,25 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@Accessors(chain = true)
 @InjectNamed
 public class ProductComplexVo {
     @ApiModelProperty("ID")
     private Long id;
+    @ApiModelProperty("店铺")
+    private Long shopId;
+    @MallNamed(idFor = "shopId", type = MallNamedType.ShopName)
+    private String shopName;
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("属性")
-    private String attrs;
+    private List<KeyValue> attrs;
     @ApiModelProperty("品类")
-    private Long productCategoryId;
+    private Long categoryId;
+    @ApiModelProperty("品类名")
+    @MallNamed(idFor = "categoryId", type = MallNamedType.ProductCategoryName)
+    private String categoryName;
+
     @ApiModelProperty("视频地址")
     private String videoUrl;
     @ApiModelProperty("产地")
@@ -38,6 +51,7 @@ public class ProductComplexVo {
     private Boolean publishedFlag;
     @ApiModelProperty("单位")
     private String unit;
+    private String unitName;
     @ApiModelProperty("商品重量(克)")
     private BigDecimal weight;
 
@@ -45,15 +59,15 @@ public class ProductComplexVo {
     private List<SkuComplexVo> sku = Collections.emptyList();
 
     @ApiModelProperty("最低售卖金额")
-    private BigDecimal minPrice;
+    private BigDecimal lowestAmt;
     @ApiModelProperty("最高售卖金额")
-    private BigDecimal maxPrice;
+    private BigDecimal highestAmt;
 
     @ApiModelProperty("图片列表")
-    private List<FileVo> photos = Collections.emptyList();
+    private List<FileVo> images = Collections.emptyList();
 
     @ApiModelProperty("主图")
-    private String mainPhotoUrl;
+    private String mainImage;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;

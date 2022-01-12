@@ -8,6 +8,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.mall.biz.pojo.vo.ProductOrdinaryVo;
 
 import java.util.List;
 
@@ -29,9 +30,8 @@ public interface ProductService extends AbstractService<Product> {
 
     ProductComplexVo getComplexById(Long id);
 
-    IPage<ProductComplexVo> paging(ProductPagingRo ro);
+    IPage<ProductOrdinaryVo> paging(ProductPagingRo ro);
 
-    List<ProductComplexVo> complete(ProductCompleteRo ro);
+    List<ProductOrdinaryVo> complete(ProductCompleteRo ro);
 
-    ProductComplexVo convertComplex(Product entity);
 }

@@ -4,7 +4,7 @@ CREATE TABLE pms_product
     id                  BIGINT AUTO_INCREMENT,
     shop_id             BIGINT       NOT NULL
         COMMENT '店铺',
-    product_category_id BIGINT       NOT NULL
+    category_id BIGINT       NOT NULL
         COMMENT '商品品类',
     --
     title               VARCHAR(255) NOT NULL

@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class SnCodePrefixConstant {
-    public static final String MALL_REFUND_APPLY = "R";
+    public static final String MAINTAIN = "R";
     public static final String MALL_ORDER = "MO";
 
     public static final String TRADE_ORDER = "TO";

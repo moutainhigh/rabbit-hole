@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.biz.service;
 
 import in.hocg.rabbit.mall.biz.entity.OrderDiscount;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface OrderDiscountService extends AbstractService<OrderDiscount> {
 
     List<OrderDiscount> listByOrderId(Long orderId);
 
-    void useCoupon(Long id, Long userCouponId);
+    void usedDiscount(Long orderId, List<CalcOrderVo.DiscountVo> discounts);
+
+    void refundDiscountByOrderId(Long orderId);
 }

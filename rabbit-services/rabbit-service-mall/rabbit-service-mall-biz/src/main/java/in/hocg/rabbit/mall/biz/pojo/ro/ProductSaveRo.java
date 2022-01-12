@@ -43,7 +43,7 @@ public class ProductSaveRo {
     private String videoUrl;
     @ApiModelProperty("品类ID")
     @NotNull(groups = {Insert.class}, message = "品类不能为空")
-    private Long productCategoryId;
+    private Long categoryId;
     @NotBlank(groups = {Insert.class, Update.class}, message = "单位错误")
     @ApiModelProperty("单位")
     private String unit;

@@ -20,5 +20,6 @@ public interface SkuMapping {
     @Mapping(target = "id", ignore = true)
     Sku asSku(ProductSaveRo.Sku sku);
 
+    @Mapping(target = "spec", ignore = true)
     SkuComplexVo asSkuComplexVo(Sku entity);
 }

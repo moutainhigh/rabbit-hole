@@ -21,12 +21,12 @@ public class UserCouponComplexVo {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
     @ApiModelProperty("优惠券编号")
-    private String couponNo;
+    private String encoding;
     private Long couponId;
     @ApiModelProperty("使用状态")
     private String status;
     @ApiModelProperty("拥有人")
-    private Long userId;
+    private Long ownerUserId;
     @ApiModelProperty("优惠券生效时间")
     private LocalDateTime startAt;
     @ApiModelProperty("优惠券失效时间")

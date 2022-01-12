@@ -2,10 +2,13 @@ package in.hocg.rabbit.mall.biz.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.validation.group.Insert;
+import in.hocg.boot.validation.group.Update;
 import in.hocg.rabbit.mall.biz.pojo.ro.CouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.CouponSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.CouponComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.CouponOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -24,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  * @since 2020-03-17
  */
-@Api(tags = "mall::优惠券")
+@Api(tags = "mall::优惠券模版")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/coupon")
@@ -34,27 +37,35 @@ public class CouponController {
     @UseLogger
     @ApiOperation("分页查询 - 优惠券模版")
     @PostMapping("/_paging")
-    public Result<IPage<CouponComplexVo>> paging(@Validated @RequestBody CouponPagingRo ro) {
+    public Result<IPage<CouponOrdinaryVo>> paging(@Validated @RequestBody CouponPagingRo ro) {
         return Result.success(service.paging(ro));
     }
 
     @UseLogger
     @ApiOperation("创建 - 优惠券模版")
     @PostMapping
-    public Result<Void> insertOne(@Validated @RequestBody CouponSaveRo ro) {
+    public Result<Void> insertOne(@Validated(Insert.class) @RequestBody CouponSaveRo ro) {
         service.insertOne(ro);
         return Result.success();
     }
 
     @UseLogger
-    @ApiOperation("查看详情 - 优惠券")
+    @ApiOperation("更新 - 优惠券模版")
+    @PutMapping("/{id:\\d+}")
+    public Result<Void> updateOne(@PathVariable("id") Long id, @Validated(Update.class) @RequestBody CouponSaveRo ro) {
+        service.updateOne(id, ro);
+        return Result.success();
+    }
+
+    @UseLogger
+    @ApiOperation("查看详情 - 优惠券模版")
     @GetMapping("/{id:\\d+}/complex")
     public Result<CouponComplexVo> getComplex(@PathVariable Long id) {
         return Result.success(service.getComplex(id));
     }
 
     @UseLogger
-    @ApiOperation("赠送优惠券 - 优惠券")
+    @ApiOperation("赠送优惠券 - 优惠券模版")
     @PostMapping("/{id:\\d+}/give")
     public Result<Void> give(@PathVariable Long id, @Validated @RequestBody GiveCouponRo ro) {
         service.giveToUsers(id, ro);
@@ -62,7 +73,7 @@ public class CouponController {
     }
 
     @UseLogger
-    @ApiOperation("撤回所有未使用优惠券 - 优惠券")
+    @ApiOperation("撤回所有未使用优惠券 - 优惠券模版")
     @PostMapping("/{id:\\d+}/revoke")
     public Result<Void> revoke(@PathVariable Long id) {
         service.revoke(id);

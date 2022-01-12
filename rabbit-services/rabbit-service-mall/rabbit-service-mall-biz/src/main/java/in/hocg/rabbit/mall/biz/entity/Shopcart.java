@@ -1,21 +1,18 @@
 package in.hocg.rabbit.mall.biz.entity;
 
-import java.math.BigDecimal;
-
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.LogicDeletedEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -23,19 +20,19 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author hocgin
- * @since 2021-08-21
+ * @since 2022-01-13
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("oms_shopcart")
-public class Shopcart extends CommonEntity<Shopcart> {
+public class Shopcart extends LogicDeletedEntity<Shopcart> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("用户")
-    @TableField("user_id")
-    private Long userId;
+    @ApiModelProperty("所属用户")
+    @TableField("owner_user_id")
+    private Long ownerUserId;
     @ApiModelProperty("商品")
     @TableField("product_id")
     private Long productId;

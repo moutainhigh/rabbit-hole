@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum Module {
-    TPL(Lists.newArrayList("t_"),
+    TPL(Lists.newArrayList("t_", "oms_", "mkt_"),
         "in.hocg.rabbit.tpl.biz",
         "rabbit-services/rabbit-service-tpl/rabbit-service-tpl-biz"),
     WL(Lists.newArrayList("wl_"),
