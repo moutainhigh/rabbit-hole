@@ -52,8 +52,6 @@ public class OrderOrdinaryVo {
     private String receiveStatus;
     @ApiModelProperty("售后状态")
     private String refundStatus;
-    @ApiModelProperty("评价状态")
-    private String commentStatus;
 
     private Long ownerUserId;
     @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
@@ -67,8 +65,6 @@ public class OrderOrdinaryVo {
     private LocalDateTime deliveryAt;
     @ApiModelProperty("确认收货时间")
     private LocalDateTime receiveAt;
-    @ApiModelProperty("评价时间")
-    private LocalDateTime commentedAt;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
 }

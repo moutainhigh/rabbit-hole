@@ -1,6 +1,8 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
 import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,6 +24,8 @@ public class OrderComplexVo {
     private Long id;
     @ApiModelProperty("订单拥有人ID")
     private Long ownerUserId;
+    @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
+    private String ownerUserName;
     @ApiModelProperty("订单编号")
     private String encoding;
     @ApiModelProperty("交易流水号")

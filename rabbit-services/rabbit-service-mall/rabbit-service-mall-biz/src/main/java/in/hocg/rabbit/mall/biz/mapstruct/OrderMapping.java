@@ -17,6 +17,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface OrderMapping {
+    @Mapping(target = "ownerUserName", ignore = true)
     @Mapping(target = "orderItems", ignore = true)
     OrderComplexVo asOrderComplexVo(Order entity);
 
