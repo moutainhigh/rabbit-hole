@@ -297,7 +297,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final Order order = mapping.asOrder(calcResult)
             .setEncoding(orderNo)
             .setOwnerUserId(currentUserId)
-            .setOrderStatus(OrderTradeStatus.WaitPay.getCodeStr())
+            .setOrderStatus(OrderStatus.Create.getCodeStr())
             .setPlanCloseAt(now.plusDays(15))
             .setRemark(remark)
             // 收货人信息

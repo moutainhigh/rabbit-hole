@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.api.enums.order;
 
 import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(description = "支付状态")
+@UseDataDictKey(value = MallDataDictKeys.ORDER_PAY_STATUS, description = "支付状态")
 public enum OrderPayStatus implements DataDictEnum {
     NotPayed("not_payed", "未支付"),
     Payed("payed", "已支付"),

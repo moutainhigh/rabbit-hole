@@ -17,6 +17,13 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface OrderMapping {
+    @Mapping(target = "tradeStatusName", ignore = true)
+    @Mapping(target = "refundStatusName", ignore = true)
+    @Mapping(target = "receiveStatusName", ignore = true)
+    @Mapping(target = "payStatusName", ignore = true)
+    @Mapping(target = "orderStatusName", ignore = true)
+    @Mapping(target = "deliveryStatusName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     @Mapping(target = "ownerUserName", ignore = true)
     @Mapping(target = "orderItems", ignore = true)
     OrderComplexVo asOrderComplexVo(Order entity);

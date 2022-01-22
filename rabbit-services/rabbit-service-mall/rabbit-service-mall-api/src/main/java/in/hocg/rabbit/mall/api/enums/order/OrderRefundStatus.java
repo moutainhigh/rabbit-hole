@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.api.enums.order;
 
 import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(description = "退款状态")
+@UseDataDictKey(value = MallDataDictKeys.ORDER_REFUND_STATUS, description = "退款状态")
 public enum OrderRefundStatus implements DataDictEnum {
     NotReturned("not_returned", "未退款"),
     Refunding("refunding", "退款中"),

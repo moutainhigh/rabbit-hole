@@ -1,6 +1,6 @@
 package in.hocg.rabbit.mall.biz.state.orderitem.listener;
 
-import in.hocg.rabbit.mall.api.enums.order.OrderItemMaintainStatus;
+import in.hocg.rabbit.mall.api.enums.orderitem.OrderItemMaintainStatus;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
 import in.hocg.rabbit.mall.biz.state.orderitem.OrderItemMaintainEvent;

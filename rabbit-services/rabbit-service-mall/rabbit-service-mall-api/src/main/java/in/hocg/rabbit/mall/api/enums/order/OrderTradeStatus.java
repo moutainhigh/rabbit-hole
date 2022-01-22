@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.api.enums.order;
 
 import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(description = "交易状态")
+@UseDataDictKey(value = MallDataDictKeys.ORDER_TRADE_STATUS, description = "交易状态")
 public enum OrderTradeStatus implements DataDictEnum {
     WaitPay("wait_pay", "待支付"),
     WaitShip("wait_ship", "待发货"),

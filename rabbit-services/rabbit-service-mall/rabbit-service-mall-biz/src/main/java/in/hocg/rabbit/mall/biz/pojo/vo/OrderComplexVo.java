@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
+import in.hocg.rabbit.mall.api.named.MallNamed;
+import in.hocg.rabbit.mall.api.named.MallNamedType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -50,16 +53,28 @@ public class OrderComplexVo {
 
     @ApiModelProperty("交易状态")
     private String tradeStatus;
+    @MallNamed(idFor = "tradeStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_TRADE_STATUS})
+    private String tradeStatusName;
     @ApiModelProperty("订单状态")
     private String orderStatus;
+    @MallNamed(idFor = "orderStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_STATUS})
+    private String orderStatusName;
     @ApiModelProperty("支付状态")
     private String payStatus;
+    @MallNamed(idFor = "payStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_PAY_STATUS})
+    private String payStatusName;
     @ApiModelProperty("发货状态")
     private String deliveryStatus;
+    @MallNamed(idFor = "deliveryStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_DELIVERY_STATUS})
+    private String deliveryStatusName;
     @ApiModelProperty("收货状态")
     private String receiveStatus;
-    @ApiModelProperty("售后状态")
+    @MallNamed(idFor = "receiveStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_RECEIVE_STATUS})
+    private String receiveStatusName;
+    @ApiModelProperty("退款状态(待发货)")
     private String refundStatus;
+    @MallNamed(idFor = "refundStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_REFUND_STATUS})
+    private String refundStatusName;
 
     @ApiModelProperty("收货人姓名")
     private String receiverName;
@@ -91,4 +106,12 @@ public class OrderComplexVo {
 
     @ApiModelProperty("订单项")
     private List<OrderItemComplexVo> orderItems = Collections.emptyList();
+
+
+    @ApiModelProperty("创建者")
+    private Long creator;
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
+    private String creatorName;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime lastUpdatedAt;
 }

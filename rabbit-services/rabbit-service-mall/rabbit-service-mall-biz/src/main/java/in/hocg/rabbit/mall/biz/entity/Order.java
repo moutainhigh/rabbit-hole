@@ -83,7 +83,7 @@ public class Order extends LogicDeletedEntity<Order> {
     @ApiModelProperty("收货状态")
     @TableField("receive_status")
     private String receiveStatus;
-    @ApiModelProperty("售后状态")
+    @ApiModelProperty("退款状态(待支付时)")
     @TableField("refund_status")
     private String refundStatus;
 

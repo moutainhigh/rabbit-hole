@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mall.api.enums.order;
+package in.hocg.rabbit.mall.api.enums.orderitem;
 
 import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;

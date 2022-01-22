@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.api.enums.order;
 
 import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(description = "订单状态")
+@UseDataDictKey(value = MallDataDictKeys.ORDER_STATUS, description = "订单状态")
 public enum OrderStatus implements DataDictEnum {
     Create("create", "已创建"),
     Success("success", "交易成功"),
