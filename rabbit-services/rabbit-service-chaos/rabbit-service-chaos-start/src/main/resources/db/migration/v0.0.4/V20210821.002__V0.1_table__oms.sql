@@ -104,7 +104,7 @@ CREATE TABLE `oms_order_item`
         COMMENT '售后状态: not_started=>未开始;starting=>允许售后;processing=>处理中;expired=>已到期;maintained=>已售后',
     comment_status    VARCHAR(32)    NOT NULL DEFAULT 'not_commented'
         COMMENT '评价状态:not_commented=>未评价;commented=>已评价',
-    plan_maintain_at  DATETIME(6)    NOT NULL
+    plan_maintain_at  DATETIME(6)    NULL
         COMMENT '售后截止时间',
     commented_at      DATETIME(6)    NULL
         COMMENT '评价时间',

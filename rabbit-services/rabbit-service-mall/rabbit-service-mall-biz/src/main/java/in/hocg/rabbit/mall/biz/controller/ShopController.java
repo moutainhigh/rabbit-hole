@@ -28,7 +28,7 @@ import java.util.List;
  * @author hocgin
  * @since 2022-01-11
  */
-@Api(tags = "mall::店铺")
+@Api(tags = {"mall::店铺", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/shop")

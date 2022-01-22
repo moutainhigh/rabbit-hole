@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Api(tags = "mall::限制规则")
+@Api(tags = {"mall::限制规则", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/stint-rule")

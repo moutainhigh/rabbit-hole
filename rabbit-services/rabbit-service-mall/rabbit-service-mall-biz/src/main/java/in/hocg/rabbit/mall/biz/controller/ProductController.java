@@ -30,7 +30,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-03-10
  */
-@Api(tags = "mall::商品")
+@Api(tags = {"mall::商品", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/product")
@@ -65,7 +65,7 @@ public class ProductController {
     @GetMapping("/{id}/complex")
     @ApiOperation("查看信息 - 商品")
     public Result<ProductComplexVo> getComplexById(@PathVariable("id") Long id) {
-        return Result.success(service.getComplexById(id));
+        return Result.success(service.getComplex(id));
     }
 
     @UseLogger

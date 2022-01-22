@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.collect.Lists;
 import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.rabbit.mall.api.enums.orderitem.ProductType;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import in.hocg.rabbit.mall.biz.entity.OrderItemSku;
 import in.hocg.rabbit.mall.biz.mapper.OrderItemMapper;
@@ -75,7 +76,8 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         List<OrderItemSku> orderItemSkus = Lists.newArrayList();
         for (CalcOrderVo.OrderItem item : items) {
             long id = IdWorker.getId();
-            OrderItem orderItem = mapping.asOrderItem(item).setOrderId(orderId);
+            OrderItem orderItem = mapping.asOrderItem(item).setOrderId(orderId)
+                .setProductType(ProductType.Sku.getCodeStr());
             OrderItemSku orderItemSku = orderItemSkuMapping.asOrderItemSku(item).setOrderItemId(id)
                 .setSkuSpecData(JSONUtil.toJsonStr(item.getSpec()));
             orderItem.setId(id);

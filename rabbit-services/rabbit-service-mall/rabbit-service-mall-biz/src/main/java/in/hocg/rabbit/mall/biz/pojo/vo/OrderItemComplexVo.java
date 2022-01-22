@@ -32,9 +32,8 @@ public class OrderItemComplexVo {
     private Long skuId;
     @ApiModelProperty("商品购买时SKU 编码")
     private String skuCode;
+    @ApiModelProperty("规格")
     private List<KeyValue> spec;
-    @ApiModelProperty("商品购买规格")
-    private String skuSpecData;
 
     @ApiModelProperty("销售价")
     private BigDecimal salePrice;

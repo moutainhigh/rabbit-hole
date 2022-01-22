@@ -25,6 +25,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,11 +50,13 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private final FileServiceApi fileServiceApi;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertOne(ProductSaveRo ro) {
         this.saveOne(null, ro);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateOne(Long id, ProductSaveRo ro) {
         this.saveOne(id, ro);
     }
@@ -64,7 +67,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     }
 
     @Override
-    public ProductComplexVo getComplexById(Long id) {
+    public ProductComplexVo getComplex(Long id) {
         return convert.asProductComplexVo(getById(id));
     }
 

@@ -95,8 +95,6 @@ public class CalcOrderVo {
     @ApiModel
     @Accessors(chain = true)
     public static class UserAddressVo {
-        @ApiModelProperty("ID")
-        private Long id;
         @ApiModelProperty("姓名")
         private String name;
         @ApiModelProperty("电话")

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  * @since 2020-03-14
  */
-@Api(tags = {"mall::订单", "卖家"})
+@Api(tags = {"mall::订单(卖家)", "卖家", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/seller/order")

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
-@Api(tags = {"mall::用户优惠券", "买家"})
+@Api(tags = {"mall::用户优惠券(买家)", "买家", "mall"})
 @RestController
 @RequestMapping("/buyer/user-coupon")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))

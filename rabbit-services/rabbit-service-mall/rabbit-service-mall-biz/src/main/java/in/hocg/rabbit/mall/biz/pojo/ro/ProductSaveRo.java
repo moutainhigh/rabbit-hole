@@ -31,7 +31,7 @@ public class ProductSaveRo {
     @NotBlank(groups = {Insert.class}, message = "商品名称不能为空")
     @ApiModelProperty("商品名称")
     private String title;
-    @ApiModelProperty("属性,JSON 格式")
+    @ApiModelProperty(value = "属性,JSON 格式", example = "[]")
     private List<KeyValue> attrs;
     @ApiModelProperty("采购地")
     private String procurement;
@@ -60,6 +60,9 @@ public class ProductSaveRo {
 
     @Data
     public static class Sku {
+        @NotBlank(message = "SKU编码不能为空")
+        @ApiModelProperty("SKU编码")
+        private String encoding;
         @NotNull(message = "规格不能为空")
         @Size(min = 1, message = "规格不能为空")
         @ApiModelProperty("规格列表")
@@ -67,9 +70,6 @@ public class ProductSaveRo {
         @Min(value = 0L, message = "库存数量错误")
         @ApiModelProperty("库存数量")
         private Integer stock;
-        @NotBlank(message = "SKU编码不能为空")
-        @ApiModelProperty("SKU编码")
-        private String encoding;
         @Min(value = 0L, message = "价格错误")
         @ApiModelProperty("价格")
         private BigDecimal unitPrice;

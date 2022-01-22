@@ -23,4 +23,6 @@ public interface SkuService extends AbstractService<Sku> {
     boolean casValidAndSubtractStock(Long skuId, Integer useStock);
 
     boolean casValidAndPlusStock(Long skuId, Integer useStock);
+
+    List<Sku> listByProductId(Long productId);
 }

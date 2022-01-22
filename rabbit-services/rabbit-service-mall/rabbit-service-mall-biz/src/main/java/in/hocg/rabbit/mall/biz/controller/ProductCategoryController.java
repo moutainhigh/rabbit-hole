@@ -26,7 +26,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-03-14
  */
-@Api(tags = "mall::商品品类")
+@Api(tags = {"mall::商品品类", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/product-category")

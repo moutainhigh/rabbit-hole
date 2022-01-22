@@ -194,6 +194,23 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
     @Override
     public String getCashierUrl(String orderNo) {
+        Order order = getByOrderNo(orderNo).orElseThrow(() -> ServiceException.wrap("订单不存在"));
+        Long orderId = order.getId();
+
+        // 生成交易
+        BigDecimal totalPayAmt = order.getTotalPayAmt();
+        String notifyUrl = PageUrlHelper.getMallOrderPayedCallbackUrl();
+        CreateTradeRo createTradeRo = new CreateTradeRo();
+        createTradeRo.setOutTradeNo(orderNo);
+        createTradeRo.setNotifyUrl(notifyUrl);
+        createTradeRo.setTradeAmt(totalPayAmt);
+        createTradeRo.setAccessCode(GlobalConstant.BMW_ACCESS_CODE);
+        TradeStatusSyncVo trade = bmwServiceApi.createTrade(createTradeRo);
+
+        Order update = new Order().setTradeNo(trade.getTradeNo());
+        update.setId(orderId);
+        this.updateById(update);
+
         GetCashierRo cashierRo = new GetCashierRo();
         cashierRo.setAccessCode(GlobalConstant.BMW_ACCESS_CODE);
         cashierRo.setOutTradeNo(orderNo);
@@ -303,19 +320,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         List<CalcOrderVo.OrderItem> items = calcResult.getItems();
         orderItemService.saveOrderItemByOrderId(orderId, items);
 
-        // 生成交易
-        BigDecimal totalPayAmt = order.getTotalPayAmt();
-        String notifyUrl = PageUrlHelper.getMallOrderPayedCallbackUrl();
-        CreateTradeRo createTradeRo = new CreateTradeRo();
-        createTradeRo.setOutTradeNo(orderNo);
-        createTradeRo.setNotifyUrl(notifyUrl);
-        createTradeRo.setTradeAmt(totalPayAmt);
-        createTradeRo.setAccessCode(GlobalConstant.BMW_ACCESS_CODE);
-        TradeStatusSyncVo trade = bmwServiceApi.createTrade(createTradeRo);
-
-        Order update = new Order().setTradeNo(trade.getTradeNo());
-        update.setId(orderId);
-        this.updateById(update);
         return orderNo;
     }
 

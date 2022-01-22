@@ -1,6 +1,6 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.rabbit.mall.biz.convert.SkuConvert;
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.mapper.SkuMapper;
@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(SkuConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implements SkuService {
     private final SkuMapping mapping;
@@ -85,7 +86,8 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
         return ((SkuService) AopContext.currentProxy()).casValidAndPlusStock(skuId, useStock);
     }
 
-    private List<Sku> listByProductId(Long productId) {
+    @Override
+    public List<Sku> listByProductId(Long productId) {
         return lambdaQuery().eq(Sku::getProductId, productId).list();
     }
 }

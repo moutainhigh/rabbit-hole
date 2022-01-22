@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  * @since 2020-03-17
  */
-@Api(tags = "mall::用户优惠券")
+@Api(tags = {"mall::用户优惠券", "mall"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/user-coupon")

@@ -28,7 +28,7 @@ public interface ProductService extends AbstractService<Product> {
 
     void delete(DeleteRo ro);
 
-    ProductComplexVo getComplexById(Long id);
+    ProductComplexVo getComplex(Long id);
 
     IPage<ProductOrdinaryVo> paging(ProductPagingRo ro);
 

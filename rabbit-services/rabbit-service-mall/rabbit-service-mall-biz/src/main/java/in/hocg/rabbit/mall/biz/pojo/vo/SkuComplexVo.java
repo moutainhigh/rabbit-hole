@@ -32,8 +32,6 @@ public class SkuComplexVo {
     @ApiModelProperty("规格图片")
     private String imageUrl;
     @ApiModelProperty("规格")
-    private String specData;
-
     private List<Spec> spec = Collections.emptyList();
 
     @Data
