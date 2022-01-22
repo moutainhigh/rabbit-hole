@@ -100,7 +100,7 @@ CREATE TABLE `oms_order_item`
         COMMENT '优惠金额',
     real_amt          DECIMAL(10, 2) NOT NULL
         COMMENT '[计算型]优惠后金额 = 原总价 - 优惠金额',
-    maintain_status   VARCHAR(32)    NOT NULL DEFAULT 'wait_pay'
+    maintain_status   VARCHAR(32)    NOT NULL DEFAULT 'not_started'
         COMMENT '售后状态: not_started=>未开始;starting=>允许售后;processing=>处理中;expired=>已到期;maintained=>已售后',
     comment_status    VARCHAR(32)    NOT NULL DEFAULT 'not_commented'
         COMMENT '评价状态:not_commented=>未评价;commented=>已评价',
