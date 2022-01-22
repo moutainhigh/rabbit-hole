@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
@@ -41,6 +42,8 @@ public class OrderComplexVo {
     private BigDecimal totalRealAmt;
     @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")
     private BigDecimal totalPayAmt;
+    @ApiModelProperty("调价优惠金额")
+    private BigDecimal adjustmentAmt;
 
     @ApiModelProperty("支付方式(最终)")
     private String payWay;
