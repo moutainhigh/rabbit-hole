@@ -19,6 +19,7 @@ import java.util.List;
  */
 public interface OrderItemService extends AbstractService<OrderItem> {
 
+    @Deprecated
     List<OrderItemComplexVo> listComplexByOrderId(Long orderId);
 
     List<OrderItem> listByOrderId(Long orderId);

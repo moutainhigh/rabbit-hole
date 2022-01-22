@@ -53,8 +53,6 @@ public class OrderComplexVo {
     private String receiveStatus;
     @ApiModelProperty("售后状态")
     private String refundStatus;
-    @ApiModelProperty("评价状态")
-    private String commentStatus;
 
     @ApiModelProperty("收货人姓名")
     private String receiverName;
@@ -81,8 +79,6 @@ public class OrderComplexVo {
     private LocalDateTime deliveryAt;
     @ApiModelProperty("确认收货时间")
     private LocalDateTime receiveAt;
-    @ApiModelProperty("评价时间")
-    private LocalDateTime commentedAt;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
 

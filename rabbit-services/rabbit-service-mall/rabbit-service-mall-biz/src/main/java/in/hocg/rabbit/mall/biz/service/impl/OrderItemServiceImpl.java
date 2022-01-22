@@ -3,8 +3,10 @@ package in.hocg.rabbit.mall.biz.service.impl;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.collect.Lists;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.rabbit.mall.api.enums.orderitem.ProductType;
+import in.hocg.rabbit.mall.biz.convert.OrderItemConvert;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import in.hocg.rabbit.mall.biz.entity.OrderItemSku;
 import in.hocg.rabbit.mall.biz.mapper.OrderItemMapper;
@@ -36,6 +38,7 @@ import java.util.Optional;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(OrderItemConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, OrderItem> implements OrderItemService {
     private final OrderItemMapping mapping;
@@ -47,7 +50,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
 
     @Override
     public List<OrderItemComplexVo> listComplexByOrderId(Long orderId) {
-        return LangUtils.toList(this.listByOrderId(orderId), mapping::asOrderItemComplexVo);
+        return LangUtils.toList(this.listByOrderId(orderId), item -> as(item, OrderItemComplexVo.class));
     }
 
     @Override

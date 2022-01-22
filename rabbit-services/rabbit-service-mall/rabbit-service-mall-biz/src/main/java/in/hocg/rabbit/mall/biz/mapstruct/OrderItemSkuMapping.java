@@ -14,7 +14,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface OrderItemSkuMapping {
     @Mapping(target = "skuSpecData", ignore = true)
-    @Mapping(target = "skuCode", ignore = true)
     @Mapping(target = "orderItemId", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)

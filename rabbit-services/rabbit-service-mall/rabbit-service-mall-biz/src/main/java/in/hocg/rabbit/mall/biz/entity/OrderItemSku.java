@@ -19,6 +19,7 @@ import lombok.experimental.Accessors;
  * <p>
  * [订单模块] 订单详情(商品)表
  * </p>
+ * ID 为 oms_order_item
  *
  * @author hocgin
  * @since 2022-01-13
