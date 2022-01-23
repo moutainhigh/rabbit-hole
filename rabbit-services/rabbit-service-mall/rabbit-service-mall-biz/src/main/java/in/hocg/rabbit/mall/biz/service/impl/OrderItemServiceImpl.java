@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.utils.exception.ServiceException;
-import in.hocg.rabbit.mall.api.enums.orderitem.ProductType;
+import in.hocg.rabbit.mall.api.enums.orderitem.OrderItemProductType;
 import in.hocg.rabbit.mall.biz.convert.OrderItemConvert;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import in.hocg.rabbit.mall.biz.entity.OrderItemSku;
@@ -15,7 +15,6 @@ import in.hocg.rabbit.mall.biz.mapstruct.OrderItemSkuMapping;
 import in.hocg.rabbit.mall.biz.pojo.ro.CommentClientRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
-import in.hocg.rabbit.mall.biz.pojo.vo.OrderItemComplexVo;
 import in.hocg.rabbit.mall.biz.service.*;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
@@ -49,11 +48,6 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
     private final OrderItemSkuMapping orderItemSkuMapping;
 
     @Override
-    public List<OrderItemComplexVo> listComplexByOrderId(Long orderId) {
-        return LangUtils.toList(this.listByOrderId(orderId), item -> as(item, OrderItemComplexVo.class));
-    }
-
-    @Override
     public List<OrderItem> listByOrderId(Long orderId) {
         return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
     }
@@ -80,7 +74,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         for (CalcOrderVo.OrderItem item : items) {
             long id = IdWorker.getId();
             OrderItem orderItem = mapping.asOrderItem(item).setOrderId(orderId)
-                .setProductType(ProductType.Sku.getCodeStr());
+                .setProductType(OrderItemProductType.Sku.getCodeStr());
             OrderItemSku orderItemSku = orderItemSkuMapping.asOrderItemSku(item).setOrderItemId(id)
                 .setSkuSpecData(JSONUtil.toJsonStr(item.getSpec()));
             orderItem.setId(id);

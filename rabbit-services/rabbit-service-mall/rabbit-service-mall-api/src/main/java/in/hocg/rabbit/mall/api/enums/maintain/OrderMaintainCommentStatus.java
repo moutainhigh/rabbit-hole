@@ -14,11 +14,10 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(value = MallDataDictKeys.ORDER_MAINTAIN_STATUS, description = "售后状态")
-public enum OrderMaintainStatus implements DataDictEnum {
-    Processing("processing", "进行中"),
-    Success("success", "成功"),
-    Close("close", "关闭"),
+@UseDataDictKey(value = MallDataDictKeys.ORDER_MAINTAIN_COMMENT_STATUS, description = "评论状态")
+public enum OrderMaintainCommentStatus implements DataDictEnum {
+    NotCommented("not_commented", "未评价"),
+    Commented("commented", "已评价"),
     ;
     private final String code;
     private final String name;

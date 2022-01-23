@@ -1,10 +1,13 @@
 package in.hocg.rabbit.mall.biz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.mall.biz.entity.OrderMaintain;
 import in.hocg.rabbit.mall.biz.pojo.ro.CloseByBuyerRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
 
 /**
  * <p>
@@ -23,4 +26,8 @@ public interface OrderMaintainService extends AbstractService<OrderMaintain> {
     void closeByBuyer(Long id, CloseByBuyerRo ro);
 
     void closeBySeller(Long id);
+
+    IPage<OrderMaintainComplexVo> paging(OrderMaintainPagingRo ro);
+
+    OrderMaintainComplexVo getComplex(Long id);
 }

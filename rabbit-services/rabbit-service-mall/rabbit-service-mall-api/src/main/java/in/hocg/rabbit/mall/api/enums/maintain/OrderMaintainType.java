@@ -7,18 +7,16 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by hocgin on 2022/1/15
+ * Created by hocgin on 2022/1/23
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(value = MallDataDictKeys.ORDER_MAINTAIN_STATUS, description = "售后状态")
-public enum OrderMaintainStatus implements DataDictEnum {
-    Processing("processing", "进行中"),
-    Success("success", "成功"),
-    Close("close", "关闭"),
+@UseDataDictKey(value = MallDataDictKeys.ORDER_MAINTAIN_TYPE, description = "售后类型")
+public enum OrderMaintainType implements DataDictEnum {
+    FullRefund("full_refund", "退货退款"),
     ;
     private final String code;
     private final String name;

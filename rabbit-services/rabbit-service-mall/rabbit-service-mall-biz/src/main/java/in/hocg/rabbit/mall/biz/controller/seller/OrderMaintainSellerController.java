@@ -4,7 +4,7 @@ package in.hocg.rabbit.mall.biz.controller.seller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
-import in.hocg.rabbit.mall.biz.pojo.vo.OrderRefundApplyComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderMaintainService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -34,19 +34,19 @@ public class OrderMaintainSellerController {
     @UseLogger
     @ApiOperation("分页查询 - 订单售后")
     @PostMapping("/_paging")
-    public Result<IPage<OrderRefundApplyComplexVo>> paging(@Validated @RequestBody OrderMaintainPagingRo ro) {
-        return Result.success();
+    public Result<IPage<OrderMaintainComplexVo>> paging(@Validated @RequestBody OrderMaintainPagingRo ro) {
+        return Result.success(service.paging(ro));
     }
 
     @UseLogger
     @ApiOperation("获取 - 订单售后")
     @GetMapping("/{id}/complex")
-    public Result<OrderRefundApplyComplexVo> getComplex(@PathVariable Long id) {
-        return Result.success();
+    public Result<OrderMaintainComplexVo> getComplex(@PathVariable Long id) {
+        return Result.success(service.getComplex(id));
     }
 
     @UseLogger
-    @ApiOperation("通过 - 退费申请")
+    @ApiOperation("通过 - 订单售后")
     @PostMapping("/{id}/pass")
     public Result<Void> pass(@PathVariable Long id, @Validated @RequestBody PassOrderMaintainRo ro) {
         ro.setOperatorId(UserContextHolder.getUserIdThrow());
@@ -55,7 +55,7 @@ public class OrderMaintainSellerController {
     }
 
     @UseLogger
-    @ApiOperation("关闭 - 退费申请")
+    @ApiOperation("关闭 - 订单售后")
     @PostMapping("/{id}/close")
     public Result<Void> close(@PathVariable Long id) {
         service.closeBySeller(id);
