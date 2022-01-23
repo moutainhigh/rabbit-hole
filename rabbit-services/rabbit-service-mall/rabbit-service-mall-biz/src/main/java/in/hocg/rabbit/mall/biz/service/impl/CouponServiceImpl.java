@@ -19,6 +19,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,11 +49,13 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertOne(CouponSaveRo ro) {
         this.saveOne(null, ro);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateOne(Long id, CouponSaveRo ro) {
         this.saveOne(id, ro);
     }

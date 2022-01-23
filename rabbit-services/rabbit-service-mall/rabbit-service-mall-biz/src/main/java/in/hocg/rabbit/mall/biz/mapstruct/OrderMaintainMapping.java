@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.biz.mapstruct;
 
 import in.hocg.rabbit.mall.biz.entity.OrderMaintain;
 import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,6 +14,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface OrderMaintainMapping {
+    @Mapping(target = "commentStatus", ignore = true)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "refundQuantity", ignore = true)
@@ -31,4 +33,11 @@ public interface OrderMaintainMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     OrderMaintain asOrderMaintain(MaintainClientRo ro);
+
+    @Mapping(target = "typeName", ignore = true)
+    @Mapping(target = "statusName", ignore = true)
+    @Mapping(target = "ownerUserName", ignore = true)
+    @Mapping(target = "handlerUserName", ignore = true)
+    @Mapping(target = "commentStatusName", ignore = true)
+    OrderMaintainComplexVo asOrderMaintainComplexVo(OrderMaintain entity);
 }

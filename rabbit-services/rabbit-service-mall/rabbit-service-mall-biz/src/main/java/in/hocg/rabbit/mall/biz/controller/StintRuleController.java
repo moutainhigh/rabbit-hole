@@ -34,7 +34,6 @@ import java.util.List;
 public class StintRuleController {
     private final StintRuleService service;
 
-
     @UseLogger
     @PostMapping
     @ApiOperation("新增 - 限制规则")

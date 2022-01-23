@@ -1,17 +1,22 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.com.api.SnCodeServiceApi;
 import in.hocg.rabbit.common.constant.SnCodePrefixConstant;
 import in.hocg.rabbit.mall.api.enums.maintain.OrderMaintainStatus;
+import in.hocg.rabbit.mall.biz.convert.OrderMaintainConvert;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
 import in.hocg.rabbit.mall.biz.entity.OrderMaintain;
 import in.hocg.rabbit.mall.biz.mapper.OrderMaintainMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderMaintainMapping;
 import in.hocg.rabbit.mall.biz.pojo.ro.CloseByBuyerRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
 import in.hocg.rabbit.mall.biz.service.OrderMaintainService;
 import in.hocg.rabbit.mall.biz.state.maintain.MaintainStateMachine;
@@ -33,6 +38,7 @@ import java.util.Optional;
  * @since 2022-01-13
  */
 @Service
+@UseConvert(OrderMaintainConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainMapper, OrderMaintain> implements OrderMaintainService {
     private final OrderMaintainMapping mapping;
@@ -81,6 +87,16 @@ public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainM
     public void closeBySeller(Long id) {
         OrderMaintain entity = Assert.notNull(getById(id), "未找到售后申请");
         MaintainStateMachine.closeBySeller(entity);
+    }
+
+    @Override
+    public IPage<OrderMaintainComplexVo> paging(OrderMaintainPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(item -> as(item, OrderMaintainComplexVo.class));
+    }
+
+    @Override
+    public OrderMaintainComplexVo getComplex(Long id) {
+        return mapping.asOrderMaintainComplexVo(getById(id));
     }
 
     private Optional<OrderMaintain> getByIdAndOwnerUserId(Long id, Long ownerUserId) {
