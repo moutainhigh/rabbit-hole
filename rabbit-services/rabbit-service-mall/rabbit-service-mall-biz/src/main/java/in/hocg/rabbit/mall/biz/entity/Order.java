@@ -61,7 +61,7 @@ public class Order extends LogicDeletedEntity<Order> {
     @ApiModelProperty("调价优惠金额")
     @TableField("adjustment_amt")
     private BigDecimal adjustmentAmt;
-    @ApiModelProperty("实际订单总额 = 销售总额 - 优惠金额")
+    @ApiModelProperty("订单总额 = 销售总额 - 优惠金额 - 调价优惠金额")
     @TableField("total_real_amt")
     private BigDecimal totalRealAmt;
     @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")

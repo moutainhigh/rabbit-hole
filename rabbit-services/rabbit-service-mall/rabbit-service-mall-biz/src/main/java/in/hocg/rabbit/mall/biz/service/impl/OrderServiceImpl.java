@@ -328,6 +328,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     public void adjustment(Long id, AdjustmentOrderBySellerRo ro) {
         BigDecimal adjustmentAmt = ro.getAdjustmentAmt();
         Order order = Assert.notNull(getById(id), "未找到订单");
+        Assert.isTrue(OrderPayStatus.NotPayed.eq(order.getPayStatus()), "订单已支付，无法进行调价");
         List<OrderItem> orderItems = orderItemService.listByOrderId(id);
 
         List<OrderSupport.Item> items = orderItems.stream().map(MallHelper::asItem).collect(Collectors.toList());

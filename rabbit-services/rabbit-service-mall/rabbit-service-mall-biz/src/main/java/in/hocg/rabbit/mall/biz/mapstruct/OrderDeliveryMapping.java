@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.biz.mapstruct;
 
 import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.mall.biz.entity.OrderDelivery;
+import in.hocg.rabbit.mall.biz.pojo.ro.ShippedOrderBySellerRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -30,4 +31,15 @@ public interface OrderDeliveryMapping {
     @Mapping(target = "deliveryAddress", source = "address")
     @Mapping(target = "deliveryAdcode", source = "adcode")
     OrderDelivery asOrderDelivery(UserAddressFeignVo address);
+
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "orderId", ignore = true)
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "deleter", ignore = true)
+    @Mapping(target = "deletedAt", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    OrderDelivery asOrderDelivery(ShippedOrderBySellerRo ro);
 }

@@ -1,12 +1,18 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.rabbit.com.api.UserAddressServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
+import in.hocg.rabbit.mall.biz.convert.OrderDeliveryConvert;
 import in.hocg.rabbit.mall.biz.entity.OrderDelivery;
 import in.hocg.rabbit.mall.biz.mapper.OrderDeliveryMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderDeliveryMapping;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderDeliveryPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ShippedOrderBySellerRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.OrderDeliveryService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
@@ -31,19 +37,26 @@ import java.util.stream.Collectors;
  * @since 2022-01-13
  */
 @Service
+@UseConvert(OrderDeliveryConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderDeliveryServiceImpl extends AbstractServiceImpl<OrderDeliveryMapper, OrderDelivery> implements OrderDeliveryService {
-    private final OrderItemService orderItemService;
-    private final UserAddressServiceApi userAddressServiceApi;
     private final OrderDeliveryMapping mapping;
+    private final OrderDeliveryConvert convert;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(Long orderId, ShippedOrderBySellerRo ro) {
-        Long userAddressId = ro.getUserAddressId();
-        UserAddressFeignVo address = Assert.notNull(userAddressServiceApi.getById(userAddressId), "发货地址不存在");
-
-        OrderDelivery entity = mapping.asOrderDelivery(address);
+        OrderDelivery entity = mapping.asOrderDelivery(ro);
         validInsert(entity);
+    }
+
+    @Override
+    public IPage<OrderDeliveryOrdinaryVo> paging(OrderDeliveryPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asOrderDeliveryOrdinaryVo);
+    }
+
+    @Override
+    public OrderDeliveryComplexVo getComplex(Long id) {
+        return convert.asOrderDeliveryComplexVo(getById(id));
     }
 }
