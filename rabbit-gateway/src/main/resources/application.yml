@@ -132,7 +132,7 @@ boot:
         ,/*/v2/api-docs
 
         ,/ws/ws
-        ,/ws/ws/info
+        ,/ws/ws/**
 
         ,/com/mina/message/stat
         ,/com/district/tree
