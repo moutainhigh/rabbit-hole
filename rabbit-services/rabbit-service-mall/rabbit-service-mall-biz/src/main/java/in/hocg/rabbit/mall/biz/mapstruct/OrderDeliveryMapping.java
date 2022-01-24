@@ -3,6 +3,8 @@ package in.hocg.rabbit.mall.biz.mapstruct;
 import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.mall.biz.entity.OrderDelivery;
 import in.hocg.rabbit.mall.biz.pojo.ro.ShippedOrderBySellerRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryOrdinaryVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -32,6 +34,7 @@ public interface OrderDeliveryMapping {
     @Mapping(target = "deliveryAdcode", source = "adcode")
     OrderDelivery asOrderDelivery(UserAddressFeignVo address);
 
+    @Mapping(target = "encoding", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "orderId", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
@@ -42,4 +45,9 @@ public interface OrderDeliveryMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     OrderDelivery asOrderDelivery(ShippedOrderBySellerRo ro);
+
+    OrderDeliveryOrdinaryVo asOrderDeliveryOrdinaryVo(OrderDelivery entity);
+
+    @Mapping(target = "orderNo", ignore = true)
+    OrderDeliveryComplexVo asOrderDeliveryComplexVo(OrderDelivery entity);
 }

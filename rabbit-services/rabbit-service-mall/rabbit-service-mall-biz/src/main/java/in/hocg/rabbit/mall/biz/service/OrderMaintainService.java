@@ -8,6 +8,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainOrdinaryVo;
 
 /**
  * <p>
@@ -27,7 +28,7 @@ public interface OrderMaintainService extends AbstractService<OrderMaintain> {
 
     void closeBySeller(Long id);
 
-    IPage<OrderMaintainComplexVo> paging(OrderMaintainPagingRo ro);
+    IPage<OrderMaintainOrdinaryVo> paging(OrderMaintainPagingRo ro);
 
     OrderMaintainComplexVo getComplex(Long id);
 }

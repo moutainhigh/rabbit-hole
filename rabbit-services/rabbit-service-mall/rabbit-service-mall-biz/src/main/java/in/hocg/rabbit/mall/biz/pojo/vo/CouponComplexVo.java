@@ -5,6 +5,7 @@ import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
 public class CouponComplexVo {
     @ApiModelProperty("ID")

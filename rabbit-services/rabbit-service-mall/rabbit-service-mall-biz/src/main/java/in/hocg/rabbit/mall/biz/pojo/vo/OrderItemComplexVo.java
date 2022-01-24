@@ -6,6 +6,7 @@ import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import in.hocg.rabbit.mall.api.named.MallNamed;
 import in.hocg.rabbit.mall.api.named.MallNamedType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
 @Accessors(chain = true)
 public class OrderItemComplexVo {

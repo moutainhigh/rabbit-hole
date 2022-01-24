@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.com.api.SnCodeServiceApi;
-import in.hocg.rabbit.common.constant.SnCodePrefixConstant;
+import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.mall.api.enums.maintain.OrderMaintainStatus;
 import in.hocg.rabbit.mall.biz.convert.OrderMaintainConvert;
 import in.hocg.rabbit.mall.biz.entity.OrderItem;
@@ -17,6 +17,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.MaintainClientRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.OrderItemService;
 import in.hocg.rabbit.mall.biz.service.OrderMaintainService;
 import in.hocg.rabbit.mall.biz.state.maintain.MaintainStateMachine;
@@ -54,7 +55,7 @@ public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainM
         BigDecimal realAmt = orderItem.getRealAmt();
         OrderMaintain entity = mapping.asOrderMaintain(ro);
         entity.setOwnerUserId(ro.getOperatorId());
-        entity.setEncoding(codeServiceApi.getSnCode(SnCodePrefixConstant.MAINTAIN));
+        entity.setEncoding(codeServiceApi.getSnCode(CodeType.MaintainOrder.getCodeStr()));
         entity.setStatus(OrderMaintainStatus.Processing.getCode());
         entity.setRefundQuantity(quantity);
         entity.setRefundAmt(realAmt);
@@ -90,8 +91,8 @@ public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainM
     }
 
     @Override
-    public IPage<OrderMaintainComplexVo> paging(OrderMaintainPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(item -> as(item, OrderMaintainComplexVo.class));
+    public IPage<OrderMaintainOrdinaryVo> paging(OrderMaintainPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(item -> as(item, OrderMaintainOrdinaryVo.class));
     }
 
     @Override

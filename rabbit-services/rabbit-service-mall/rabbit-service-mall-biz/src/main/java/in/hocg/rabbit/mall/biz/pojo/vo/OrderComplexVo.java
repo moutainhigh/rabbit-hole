@@ -7,6 +7,7 @@ import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import in.hocg.rabbit.mall.api.named.MallNamed;
 import in.hocg.rabbit.mall.api.named.MallNamedType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
 public class OrderComplexVo {
     @ApiModelProperty("订单ID")

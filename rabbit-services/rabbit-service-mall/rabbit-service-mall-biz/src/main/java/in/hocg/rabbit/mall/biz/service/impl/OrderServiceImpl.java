@@ -14,11 +14,11 @@ import in.hocg.rabbit.bmw.api.pojo.ro.GoRefundRo;
 import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
 import in.hocg.rabbit.com.api.SnCodeServiceApi;
 import in.hocg.rabbit.com.api.UserAddressServiceApi;
+import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.com.api.enums.UserAddressType;
 import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.common.basic.PageUrlHelper;
 import in.hocg.rabbit.common.constant.GlobalConstant;
-import in.hocg.rabbit.common.constant.SnCodePrefixConstant;
 import in.hocg.rabbit.mall.api.enums.order.*;
 import in.hocg.rabbit.mall.biz.convert.OrderConvert;
 import in.hocg.rabbit.mall.biz.entity.*;
@@ -74,7 +74,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     private final OrderItemSkuMapping orderItemSkuMapping;
     private final OrderConvert convert;
     private final OrderItemService orderItemService;
-    private final OrderItemSkuService orderItemSkuService;
     private final OrderDiscountService orderDiscountService;
     private final BmwServiceApi bmwServiceApi;
     private final OrderMaintainService orderMaintainService;
@@ -292,7 +291,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
         final CalcOrderVo calcResult = this.calcOrder(ro);
 
-        String orderNo = snCodeServiceApi.getSnCode(SnCodePrefixConstant.MALL_ORDER);
+        String orderNo = snCodeServiceApi.getSnCode(CodeType.Order.getCodeStr());
         LocalDateTime now = LocalDateTime.now();
         final Order order = mapping.asOrder(calcResult)
             .setEncoding(orderNo)
@@ -352,6 +351,11 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
                 .setDiscountAmt(useContext.getDiscountAmtByOrderItem(itemId));
         });
         Assert.isTrue(orderItemService.updateBatchById(orderItemUpdate), "订单明细更新失败");
+    }
+
+    @Override
+    public OrderDeliveryComplexVo getDeliveryByBuyer(Long id) {
+        return orderDeliveryService.as(orderDeliveryService.getByOrderId(id), OrderDeliveryComplexVo.class);
     }
 
     @Override

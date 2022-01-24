@@ -8,6 +8,7 @@ import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
 import in.hocg.rabbit.mall.api.named.MallNamed;
 import in.hocg.rabbit.mall.api.named.MallNamedType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,8 +25,9 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@Accessors(chain = true)
+@ApiModel
 @InjectNamed
+@Accessors(chain = true)
 public class ProductComplexVo {
     @ApiModelProperty("ID")
     private Long id;

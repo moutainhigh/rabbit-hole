@@ -1,8 +1,10 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
 import in.hocg.boot.named.annotation.InjectNamed;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +18,8 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-@InjectNamed
+@ApiModel
+@Accessors(chain = true)
 public class UserCouponComplexVo {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
@@ -53,8 +56,4 @@ public class UserCouponComplexVo {
     @ApiModelProperty("优惠上限金额")
     private BigDecimal ceiling;
 
-    @ApiModelProperty("可用商品品类")
-    private List<ProductCategoryComplexVo> canUseProductCategory = Collections.emptyList();
-    @ApiModelProperty("可用商品")
-    private List<ProductComplexVo> canUseProduct = Collections.emptyList();
 }

@@ -1,8 +1,11 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import in.hocg.boot.named.annotation.InjectNamed;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,6 +16,9 @@ import java.io.Serializable;
  * @author hocgin
  */
 @Data
+@ApiModel
+@InjectNamed
+@Accessors(chain = true)
 public class ShopOrdinaryVo implements Serializable {
     @ApiModelProperty("ID")
     private Long id;

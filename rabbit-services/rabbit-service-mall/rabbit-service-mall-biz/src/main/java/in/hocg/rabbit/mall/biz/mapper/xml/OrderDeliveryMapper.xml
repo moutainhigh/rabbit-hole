@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.rabbit.mall.biz.mapper.OrderDeliveryMapper">
-
+  <select id="paging" resultType="in.hocg.rabbit.mall.biz.entity.OrderDelivery">
+    SELECT ood.*
+    FROM oms_order_delivery ood
+    <where>
+      AND ood.deleted_at IS NULL
+      <if test="ro.orderId != null">
+        AND ood.order_id = #{ro.orderId}
+      </if>
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (ood.encoding LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

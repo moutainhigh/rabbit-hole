@@ -35,6 +35,9 @@ public class OrderDelivery extends LogicDeletedEntity<OrderDelivery> {
     @ApiModelProperty("配送状态")
     @TableField("status")
     private String status;
+    @ApiModelProperty("编号")
+    @TableField("encoding")
+    private String encoding;
 
     @ApiModelProperty("发货人姓名")
     @TableField("delivery_name")

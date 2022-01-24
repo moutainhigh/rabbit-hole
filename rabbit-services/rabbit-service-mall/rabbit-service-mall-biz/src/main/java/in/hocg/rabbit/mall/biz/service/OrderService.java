@@ -7,6 +7,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderOrdinaryVo;
 
 import java.util.Optional;
@@ -52,4 +53,6 @@ public interface OrderService extends AbstractService<Order> {
     Optional<Order> getByOrderItemId(Long orderItemId);
 
     void adjustment(Long id, AdjustmentOrderBySellerRo ro);
+
+    OrderDeliveryComplexVo getDeliveryByBuyer(Long id);
 }

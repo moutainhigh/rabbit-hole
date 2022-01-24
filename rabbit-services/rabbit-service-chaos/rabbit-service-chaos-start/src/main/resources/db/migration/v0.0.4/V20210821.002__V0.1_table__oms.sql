@@ -280,6 +280,8 @@ CREATE TABLE `oms_order_delivery`
     `id`              BIGINT(20)   NOT NULL AUTO_INCREMENT,
     order_id          BIGINT(20)   NOT NULL
         COMMENT '订单',
+    `encoding`        VARCHAR(64)  NOT NULL
+        COMMENT '编号',
     status            VARCHAR(32)  NOT NULL DEFAULT 'create'
         COMMENT '物流状态:create=>已下单; =>仓库处理中;=>已揽收; =>运输中; =>派送中; =>完成配送',
     -- 发货人信息
@@ -312,6 +314,8 @@ CREATE TABLE `oms_order_delivery`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
+    UNIQUE KEY (`encoding`, `deleted_at`),
+    UNIQUE KEY (`order_id`, `deleted_at`),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -351,7 +355,7 @@ CREATE TABLE `oms_shopcart`
         COMMENT '更新时间',
     `last_updater`    BIGINT
         COMMENT '更新者',
-    UNIQUE KEY (owner_user_id, add_sku_id),
+    UNIQUE KEY (owner_user_id, add_sku_id, `deleted_at`),
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

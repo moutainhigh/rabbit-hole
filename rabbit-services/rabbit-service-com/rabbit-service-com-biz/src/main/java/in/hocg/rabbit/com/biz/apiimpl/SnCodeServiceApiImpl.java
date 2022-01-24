@@ -1,6 +1,8 @@
 package in.hocg.rabbit.com.biz.apiimpl;
 
+import in.hocg.boot.utils.enums.ICode;
 import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.com.biz.service.impl.SnCodeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -19,6 +21,6 @@ public class SnCodeServiceApiImpl implements SnCodeServiceApi {
 
     @Override
     public String getSnCode(String groupCode) {
-        return snCodeService.getSnCode(groupCode);
+        return snCodeService.getSnCode(ICode.ofThrow(groupCode, CodeType.class));
     }
 }

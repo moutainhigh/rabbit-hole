@@ -1,5 +1,7 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import in.hocg.boot.named.annotation.InjectNamed;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,6 +18,8 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
+@InjectNamed
 @Accessors(chain = true)
 public class SkuComplexVo {
     @ApiModelProperty("SKU ID")
@@ -35,6 +39,8 @@ public class SkuComplexVo {
     private List<Spec> spec = Collections.emptyList();
 
     @Data
+    @ApiModel
+    @Accessors(chain = true)
     public static class Spec {
         @ApiModelProperty("规格属性")
         private String key;

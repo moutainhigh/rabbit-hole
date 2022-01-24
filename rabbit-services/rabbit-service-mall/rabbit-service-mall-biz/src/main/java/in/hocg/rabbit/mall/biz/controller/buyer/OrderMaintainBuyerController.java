@@ -1,9 +1,15 @@
 package in.hocg.rabbit.mall.biz.controller.buyer;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.mall.biz.pojo.ro.CloseByBuyerRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderDeliveryPagingRo;
+import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryOrdinaryVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.OrderMaintainService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
@@ -27,6 +33,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/buyer/order-maintain")
 public class OrderMaintainBuyerController {
     private final OrderMaintainService service;
+
+    @UseLogger
+    @ApiOperation("分页查询 - 配送单")
+    @PostMapping("/_paging")
+    public Result<IPage<OrderMaintainOrdinaryVo>> paging(@Validated @RequestBody OrderMaintainPagingRo ro) {
+        return Result.success(PageUtils.emptyPage(ro));
+    }
+
 
     @UseLogger
     @ApiOperation("关闭售后 - 订单售后")

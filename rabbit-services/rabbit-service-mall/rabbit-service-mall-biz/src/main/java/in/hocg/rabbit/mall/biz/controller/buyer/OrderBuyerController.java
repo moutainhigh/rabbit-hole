@@ -2,6 +2,7 @@ package in.hocg.rabbit.mall.biz.controller.buyer;
 
 import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryComplexVo;
 import in.hocg.rabbit.mall.biz.service.OrderService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -82,6 +83,13 @@ public class OrderBuyerController {
     @GetMapping("/{id}/complex")
     public Result<OrderComplexVo> getOrder(@PathVariable("id") Long id) {
         return Result.success(service.getComplex(id));
+    }
+
+    @UseLogger
+    @ApiOperation("配送单")
+    @GetMapping("/{id}/delivery/complex")
+    public Result<OrderDeliveryComplexVo> getDelivery(@PathVariable("id") Long id) {
+        return Result.success(service.getDeliveryByBuyer(id));
     }
 
 }

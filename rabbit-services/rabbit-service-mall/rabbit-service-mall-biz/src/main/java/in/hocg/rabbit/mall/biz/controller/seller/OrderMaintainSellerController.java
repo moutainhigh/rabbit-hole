@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mall.biz.pojo.ro.OrderMaintainPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.PassOrderMaintainRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderMaintainOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.OrderMaintainService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -34,7 +35,7 @@ public class OrderMaintainSellerController {
     @UseLogger
     @ApiOperation("分页查询 - 订单售后")
     @PostMapping("/_paging")
-    public Result<IPage<OrderMaintainComplexVo>> paging(@Validated @RequestBody OrderMaintainPagingRo ro) {
+    public Result<IPage<OrderMaintainOrdinaryVo>> paging(@Validated @RequestBody OrderMaintainPagingRo ro) {
         return Result.success(service.paging(ro));
     }
 

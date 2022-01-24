@@ -24,4 +24,6 @@ public interface OrderDeliveryService extends AbstractService<OrderDelivery> {
     IPage<OrderDeliveryOrdinaryVo> paging(OrderDeliveryPagingRo ro);
 
     OrderDeliveryComplexVo getComplex(Long id);
+
+    OrderDelivery getByOrderId(Long orderId);
 }

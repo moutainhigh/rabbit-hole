@@ -1,10 +1,8 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.boot.named.annotation.InjectNamed;
-import in.hocg.boot.named.annotation.Named;
 import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
 import in.hocg.rabbit.mall.api.named.MallNamed;
 import in.hocg.rabbit.mall.api.named.MallNamedType;
@@ -17,7 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2020/3/26.
+ * Created by hocgin on 2022/1/24
  * email: hocgin@gmail.com
  *
  * @author hocgin
@@ -26,7 +24,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @ApiModel
 @InjectNamed
-public class OrderMaintainComplexVo {
+public class OrderMaintainOrdinaryVo {
     @ApiModelProperty("退款申请编号")
     private String encoding;
     @ApiModelProperty("售后类型")
@@ -50,8 +48,6 @@ public class OrderMaintainComplexVo {
 
     @ApiModelProperty("订单详情")
     private Long orderItemId;
-    private OrderItemComplexVo orderItem;
-
     @ApiModelProperty("退货数量")
     private Integer refundQuantity;
     @ApiModelProperty("退款金额")
