@@ -38,8 +38,6 @@ public interface UserCouponMapping {
     @Mapping(target = "minPoint", ignore = true)
     @Mapping(target = "credit", ignore = true)
     @Mapping(target = "ceiling", ignore = true)
-    @Mapping(target = "canUseProductCategory", ignore = true)
-    @Mapping(target = "canUseProduct", ignore = true)
     UserCouponComplexVo asUserCouponComplexVo(UserCoupon entity);
 
     UserCouponBuyerVo asUserCouponBuyerVo(UserCoupon entity);
