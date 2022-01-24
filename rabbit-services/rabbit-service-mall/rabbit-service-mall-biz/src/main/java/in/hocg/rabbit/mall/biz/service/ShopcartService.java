@@ -1,7 +1,7 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import in.hocg.rabbit.mall.biz.entity.Shopcart;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

@@ -3,7 +3,7 @@ package in.hocg.rabbit.ums.biz.service.impl;
 import in.hocg.rabbit.ums.biz.entity.AuthorityApiRef;
 import in.hocg.rabbit.ums.biz.mapper.AuthorityApiRefMapper;
 import in.hocg.rabbit.ums.biz.service.AuthorityApiRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -30,7 +30,7 @@ public class AuthorityApiRefServiceImpl extends AbstractServiceImpl<AuthorityApi
     @Transactional(rollbackFor = Exception.class)
     public void grantApis(Long authorityId, List<Long> apis) {
         List<AuthorityApiRef> entities = apis.parallelStream()
-            .map(apiId -> new AuthorityApiRef().setApiId(apiId).setAuthorityId(authorityId))
+            .map(id -> new AuthorityApiRef().setApiId(id).setAuthorityId(authorityId))
             .collect(Collectors.toList());
         List<AuthorityApiRef> allData = this.listAuthorityApiByAuthorityId(authorityId);
 

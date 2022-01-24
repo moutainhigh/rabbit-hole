@@ -14,5 +14,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class RootCommentComplexVo extends CommentComplexVo {
     @ApiModelProperty(value = "子评论条数")
-    private Integer childTotal = 0;
+    private Long childTotal = 0L;
 }

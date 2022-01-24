@@ -12,7 +12,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineComplexVo;
 import in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineSearchVo;
 import in.hocg.rabbit.wl.biz.service.LogisticsLineService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

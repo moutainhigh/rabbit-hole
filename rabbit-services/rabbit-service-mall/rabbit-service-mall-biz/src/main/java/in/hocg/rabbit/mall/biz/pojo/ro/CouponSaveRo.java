@@ -1,5 +1,9 @@
 package in.hocg.rabbit.mall.biz.pojo.ro;
 
+import in.hocg.boot.validation.annotation.EnumRange;
+import in.hocg.boot.validation.group.Insert;
+import in.hocg.boot.validation.group.Update;
+import in.hocg.rabbit.mall.api.enums.coupon.CouponType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,21 +23,16 @@ import java.util.List;
 @Data
 public class CouponSaveRo {
 
-    @NotBlank(message = "请输入优惠券名称")
+    @NotNull(groups = {Insert.class})
+    @NotBlank(groups = {Insert.class, Update.class}, message = "请输入优惠券名称")
     @ApiModelProperty("优惠券名称")
     private String title;
 
+    @NotNull(groups = {Insert.class})
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = CouponType.class, message = "优惠券类型错误")
     @NotBlank(message = "请选择优惠券类型")
     @ApiModelProperty("优惠券类型")
-    private String couponType;
-
-    @NotBlank(message = "请选择可用类型")
-    @ApiModelProperty("可用类型")
-    private String useStint;
-
-    @NotBlank(message = "请选择可用平台")
-    @ApiModelProperty("可用平台")
-    private String usePlatform;
+    private String type;
 
     @ApiModelProperty("优惠券使用说明")
     private String useInstructions;
@@ -41,21 +40,16 @@ public class CouponSaveRo {
     @ApiModelProperty("后台备注")
     private String remark;
 
-    @ApiModelProperty("订单最低启用金额")
-    private BigDecimal minPoint;
-
-    @NotNull(message = "请输入优惠力度")
+    @NotNull(groups = {Insert.class, Update.class}, message = "请输入优惠力度")
     @ApiModelProperty("满减金额/折扣率")
     private BigDecimal credit;
 
     @ApiModelProperty("优惠上限")
-    private BigDecimal ceiling;
+    private BigDecimal ceilingAmt;
 
-    @Size(min = 1, message = "请选择可用商品")
-    @ApiModelProperty("可用商品")
-    private List<Long> useProductId;
-    @Size(min = 1, message = "请选择可用品类")
-    @ApiModelProperty("可用品类")
-    private List<Long> useProductCategoryId;
+    @NotNull(groups = {Insert.class})
+    @Size(min = 1, groups = {Insert.class, Update.class}, message = "请选择限制规则")
+    @ApiModelProperty("限制规则")
+    private List<Long> stintRule;
 
 }

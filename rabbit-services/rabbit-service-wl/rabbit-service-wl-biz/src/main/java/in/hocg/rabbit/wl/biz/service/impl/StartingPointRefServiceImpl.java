@@ -6,7 +6,7 @@ import in.hocg.rabbit.wl.biz.entity.Warehouse;
 import in.hocg.rabbit.wl.biz.mapper.StartingPointRefMapper;
 import in.hocg.rabbit.wl.biz.mapstruct.StartingPointRefMapping;
 import in.hocg.rabbit.wl.biz.service.StartingPointRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

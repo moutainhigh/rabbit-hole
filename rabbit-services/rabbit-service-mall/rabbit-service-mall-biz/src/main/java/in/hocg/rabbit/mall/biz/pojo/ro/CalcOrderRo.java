@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mall.biz.pojo.ro;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,13 +18,16 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 public class CalcOrderRo {
     @NotNull
     @Size(min = 1)
     @ApiModelProperty("订单项")
     private List<Item> items = Collections.emptyList();
-    @ApiModelProperty("优惠券ID")
-    private Long selectedCouponId;
+    @ApiModelProperty("使用优惠券")
+    private Long useCouponId;
+    @ApiModelProperty("使用优惠活动")
+    private Long useActivityId;
 
     @Data
     public static class Item {

@@ -2,7 +2,7 @@ package in.hocg.rabbit.mall.biz.service;
 
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.pojo.vo.SkuComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 
@@ -23,4 +23,6 @@ public interface SkuService extends AbstractService<Sku> {
     boolean casValidAndSubtractStock(Long skuId, Integer useStock);
 
     boolean casValidAndPlusStock(Long skuId, Integer useStock);
+
+    List<Sku> listByProductId(Long productId);
 }

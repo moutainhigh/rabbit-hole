@@ -7,7 +7,7 @@ import in.hocg.rabbit.ums.biz.mapper.RoleUserRefMapper;
 import in.hocg.rabbit.ums.biz.service.RoleService;
 import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
 import in.hocg.rabbit.ums.biz.service.UserService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -38,7 +38,7 @@ public class RoleUserRefServiceImpl extends AbstractServiceImpl<RoleUserRefMappe
     }
 
     @Override
-    public Integer countUseByRoleId(Long roleId) {
+    public Long countUseByRoleId(Long roleId) {
         return lambdaQuery().eq(RoleUserRef::getRoleId, roleId).count();
     }
 

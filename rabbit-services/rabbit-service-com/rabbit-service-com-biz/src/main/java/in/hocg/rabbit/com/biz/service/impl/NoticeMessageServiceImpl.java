@@ -3,7 +3,7 @@ package in.hocg.rabbit.com.biz.service.impl;
 import in.hocg.rabbit.com.biz.entity.NoticeMessage;
 import in.hocg.rabbit.com.biz.mapper.NoticeMessageMapper;
 import in.hocg.rabbit.com.biz.service.NoticeMessageService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

@@ -10,7 +10,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.DataDictItemComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictItemOrdinaryVo;
 import in.hocg.rabbit.com.biz.service.DataDictItemService;
 import in.hocg.rabbit.com.biz.service.DataDictService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;

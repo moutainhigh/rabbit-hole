@@ -1,7 +1,7 @@
 package in.hocg.rabbit.gateway.utils;
 
 import cn.hutool.json.JSONUtil;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;

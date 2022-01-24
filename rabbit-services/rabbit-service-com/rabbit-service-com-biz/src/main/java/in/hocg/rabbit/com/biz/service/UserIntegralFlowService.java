@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.com.biz.entity.UserIntegralFlow;
 import in.hocg.rabbit.com.biz.pojo.ro.MinaIntegralFlowPageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralFlowVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.time.LocalDate;
 
@@ -27,7 +27,7 @@ public interface UserIntegralFlowService extends AbstractService<UserIntegralFlo
      * @param now
      * @return
      */
-    Integer countSignByDate(Long userId, LocalDate now);
+    Long countSignByDate(Long userId, LocalDate now);
 
     /**
      * 积分视频指定日期观看次数
@@ -36,5 +36,5 @@ public interface UserIntegralFlowService extends AbstractService<UserIntegralFlo
      * @param now
      * @return
      */
-    Integer countWatchAdByDate(Long userId, LocalDate now);
+    Long countWatchAdByDate(Long userId, LocalDate now);
 }

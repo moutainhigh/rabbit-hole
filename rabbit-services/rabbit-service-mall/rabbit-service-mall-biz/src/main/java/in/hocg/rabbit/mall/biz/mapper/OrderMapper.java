@@ -6,6 +6,9 @@ import in.hocg.rabbit.mall.biz.entity.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.rabbit.mall.biz.pojo.ro.OrderPagingRo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -18,5 +21,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OrderMapper extends BaseMapper<Order> {
 
-    IPage<Order> paging(OrderPagingRo ro, Page<Object> ofPage);
+    IPage<Order> paging(@Param("ro") OrderPagingRo ro, Page<Object> ofPage);
+
+    Optional<Order> getByOrderItemId(@Param("orderItemId") Long orderItemId);
 }

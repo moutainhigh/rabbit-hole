@@ -1,6 +1,8 @@
 package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.StrUtil;
+import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.com.biz.service.SnCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -17,9 +19,9 @@ import org.springframework.stereotype.Component;
 public class SnCodeServiceImpl implements SnCodeService {
     private final Snowflake snowFlake;
 
-    public String getSnCode(String type) {
+    public String getSnCode(CodeType type) {
         final long code = snowFlake.nextId();
-        return type + code;
+        return StrUtil.format("{}{}", type.getCodeStr(), code);
     }
 
 }

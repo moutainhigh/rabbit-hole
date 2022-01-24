@@ -16,7 +16,7 @@ import in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineSearchVo;
 import in.hocg.rabbit.wl.biz.service.LogisticsLineService;
 import in.hocg.rabbit.wl.biz.service.StartingPointRefService;
 import in.hocg.rabbit.wl.biz.service.WarehouseService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

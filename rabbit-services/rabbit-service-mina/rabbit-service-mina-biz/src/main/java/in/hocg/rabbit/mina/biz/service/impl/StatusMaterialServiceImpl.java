@@ -7,7 +7,7 @@ import in.hocg.rabbit.mina.biz.mapstruct.StatusMaterialMapping;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaStatusMaterialPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaStatusMaterialComplexVo;
 import in.hocg.rabbit.mina.biz.service.StatusMaterialService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

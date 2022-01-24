@@ -4,7 +4,7 @@ import in.hocg.rabbit.com.biz.entity.SystemMessage;
 import in.hocg.rabbit.com.biz.mapper.SystemMessageMapper;
 import in.hocg.rabbit.com.biz.mapstruct.SystemMessageMapping;
 import in.hocg.rabbit.com.biz.service.SystemMessageService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

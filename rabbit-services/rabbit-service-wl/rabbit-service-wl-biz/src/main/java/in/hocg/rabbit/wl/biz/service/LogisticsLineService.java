@@ -10,7 +10,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.logisticsline.LogisticsLineSearchRo;
 import in.hocg.rabbit.wl.biz.pojo.ro.logisticsline.LogisticsLineUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineComplexVo;
 import in.hocg.rabbit.wl.biz.pojo.vo.LogisticsLineSearchVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

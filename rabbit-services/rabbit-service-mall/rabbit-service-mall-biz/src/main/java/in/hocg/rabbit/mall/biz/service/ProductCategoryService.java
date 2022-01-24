@@ -1,11 +1,12 @@
 package in.hocg.rabbit.mall.biz.service;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.entity.ProductCategory;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategorySaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCategoryTreeRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryTreeVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 
@@ -27,7 +28,5 @@ public interface ProductCategoryService extends AbstractService<ProductCategory>
 
     ProductCategoryComplexVo getComplex(Long id);
 
-    void deleteAllById(Long id);
-
-    ProductCategoryComplexVo convertComplex(ProductCategory entity);
+    void deleteAll(DeleteRo ro);
 }

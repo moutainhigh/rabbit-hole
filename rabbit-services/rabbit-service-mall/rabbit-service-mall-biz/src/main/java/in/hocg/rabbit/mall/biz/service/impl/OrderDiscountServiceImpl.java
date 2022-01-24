@@ -1,17 +1,22 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import in.hocg.rabbit.common.datadict.common.RefType;
+import in.hocg.rabbit.mall.api.enums.coupon.UserCouponStatus;
 import in.hocg.rabbit.mall.biz.entity.OrderDiscount;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapper.OrderDiscountMapper;
+import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.service.OrderDiscountService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -31,15 +36,28 @@ public class OrderDiscountServiceImpl extends AbstractServiceImpl<OrderDiscountM
         return lambdaQuery().eq(OrderDiscount::getOrderId, orderId).list();
     }
 
+
     @Override
-    public void useCoupon(Long id, Long userCouponId) {
-        UserCoupon userCoupon = userCouponService.getById(userCouponId);
-        OrderDiscount orderDiscount = new OrderDiscount();
-        orderDiscount.setOrderId(id);
-        orderDiscount.setTitle(userCoupon.getCouponNo());
-        orderDiscount.setDiscountAmt(userCoupon.getUsedAmt());
-        orderDiscount.setRefId(userCouponId);
-        orderDiscount.setRefType(RefType.UserCoupon.getCodeStr());
-        this.validInsert(orderDiscount);
+    public void usedDiscount(Long orderId, List<CalcOrderVo.DiscountVo> discounts) {
+        LocalDateTime now = LocalDateTime.now();
+        List<UserCoupon> useUpdate = discounts.stream().filter(discountVo -> RefType.UserCoupon.eq(discountVo.getRefType()))
+            .map(discountVo -> {
+                UserCoupon result = new UserCoupon();
+                result.setId(discountVo.getRefId());
+                return result.setUsedAt(now).setStatus(UserCouponStatus.Used.getCodeStr())
+                    .setUsedAmt(discountVo.getDiscountAmt());
+            }).collect(Collectors.toList());
+        userCouponService.updateUsedStatus(useUpdate);
+        Assert.isTrue(discounts.size() == useUpdate.size(), "优惠信息不匹配");
+    }
+
+    @Override
+    public void refundDiscountByOrderId(Long orderId) {
+        List<OrderDiscount> discounts = this.listByOrderId(orderId);
+        List<Long> userCouponId = discounts.stream()
+            .filter(discountVo -> RefType.UserCoupon.eq(discountVo.getRefType()))
+            .map(OrderDiscount::getRefId).collect(Collectors.toList());
+        userCouponService.updateUnusedStatus(userCouponId);
+        Assert.isTrue(discounts.size() == userCouponId.size(), "优惠信息不匹配");
     }
 }

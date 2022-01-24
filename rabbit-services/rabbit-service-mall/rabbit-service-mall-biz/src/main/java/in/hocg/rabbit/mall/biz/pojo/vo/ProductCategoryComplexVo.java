@@ -4,8 +4,10 @@ import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +18,9 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
+@Accessors(chain = true)
 public class ProductCategoryComplexVo {
     @ApiModelProperty
     private Long id;

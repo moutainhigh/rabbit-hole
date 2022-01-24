@@ -1,6 +1,6 @@
 package in.hocg.rabbit.ums.biz.apiimpl;
 
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;

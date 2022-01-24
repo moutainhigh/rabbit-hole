@@ -3,7 +3,7 @@ package in.hocg.rabbit.com.biz.service;
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
 import in.hocg.rabbit.com.biz.entity.File;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;

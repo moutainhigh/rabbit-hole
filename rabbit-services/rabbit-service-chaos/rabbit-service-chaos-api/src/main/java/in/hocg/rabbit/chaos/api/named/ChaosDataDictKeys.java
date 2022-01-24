@@ -9,7 +9,6 @@ import lombok.experimental.FieldNameConstants;
  *
  * @author hocgin
  */
-@FieldNameConstants
 public final class ChaosDataDictKeys {
     @ApiModelProperty("引用类型")
     public final static String REF_TYPE = "RefType";

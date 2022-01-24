@@ -20,9 +20,9 @@ public interface ProjectMapping {
 
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "config", ignore = true)
     Project asProject(ProjectSaveRo ro);
 }

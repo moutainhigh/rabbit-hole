@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mina.biz.entity.StatusMaterial;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaStatusMaterialPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaStatusMaterialComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>

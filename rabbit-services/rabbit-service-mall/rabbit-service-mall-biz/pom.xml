@@ -17,6 +17,10 @@
     <!--  一方库  -->
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-mall-api</artifactId>
     </dependency>
     <dependency>
@@ -61,6 +65,10 @@
       <artifactId>cache-spring-boot-starter</artifactId>
     </dependency>
     <!--  三方库  -->
+    <dependency>
+      <groupId>org.springframework.statemachine</groupId>
+      <artifactId>spring-statemachine-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-sleuth</artifactId>
@@ -117,6 +125,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.5.2</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

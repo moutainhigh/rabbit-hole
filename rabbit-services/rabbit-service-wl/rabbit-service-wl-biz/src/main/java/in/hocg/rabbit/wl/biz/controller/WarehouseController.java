@@ -10,7 +10,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.warehouse.WarehousePagingRo;
 import in.hocg.rabbit.wl.biz.pojo.ro.warehouse.WarehouseUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.WarehouseComplexVo;
 import in.hocg.rabbit.wl.biz.service.WarehouseService;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

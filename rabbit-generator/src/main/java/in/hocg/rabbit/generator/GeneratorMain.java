@@ -16,8 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MINA, false,
-            "dl_proxy_channel",
+            Module.COM, false,
+            "com_user_address",
             "");
     }
 

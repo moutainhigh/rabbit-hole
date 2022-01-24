@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDateTime;
-
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +24,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("dl_proxy_channel")
-public class ProxyChannel extends AbstractEntity<ProxyChannel> {
+public class ProxyChannel extends CommonEntity<ProxyChannel> {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,18 +66,5 @@ public class ProxyChannel extends AbstractEntity<ProxyChannel> {
     @ApiModelProperty("删除状态(未删除 != 0)")
     @TableField("delete_flag")
     private Long deleteFlag;
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    @TableField("creator")
-    private Long creator;
-    @ApiModelProperty("更新时间")
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-    @ApiModelProperty("更新者")
-    @TableField("last_updater")
-    private Long lastUpdater;
-
 
 }

@@ -1,9 +1,11 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.boot.named.annotation.Named;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
 public class CouponComplexVo {
     @ApiModelProperty("ID")
@@ -25,25 +28,14 @@ public class CouponComplexVo {
     @ApiModelProperty("优惠券名称")
     private String title;
     @ApiModelProperty("折扣方式")
-    private String couponType;
-    @ApiModelProperty("可用类型")
-    private String useStint;
-    @ApiModelProperty("可用平台")
-    private String usePlatform;
+    private String type;
 
     @ApiModelProperty("优惠券使用说明")
     private String useInstructions;
-    @ApiModelProperty("订单最低启用金额")
-    private BigDecimal minPoint;
     @ApiModelProperty("满减金额/折扣率")
     private BigDecimal credit;
     @ApiModelProperty("优惠上限")
-    private BigDecimal ceiling;
-
-    @ApiModelProperty("可用商品")
-    private List<ProductComplexVo> canUseProduct;
-    @ApiModelProperty("可用商品品类")
-    private List<ProductCategoryComplexVo> canUseProductCategory;
+    private BigDecimal ceilingAmt;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;

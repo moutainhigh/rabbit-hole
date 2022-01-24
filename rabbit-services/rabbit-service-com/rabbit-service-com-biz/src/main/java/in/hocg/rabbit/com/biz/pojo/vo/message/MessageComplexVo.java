@@ -2,7 +2,7 @@ package in.hocg.rabbit.com.biz.pojo.vo.message;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.rabbit.common.datadict.com.MessageUserRefType;
+import in.hocg.rabbit.com.api.enums.MessageUserRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
 
 import io.swagger.annotations.ApiModel;

@@ -8,7 +8,7 @@ import in.hocg.rabbit.wl.biz.pojo.ro.warehouse.WarehouseDeleteRo;
 import in.hocg.rabbit.wl.biz.pojo.ro.warehouse.WarehousePagingRo;
 import in.hocg.rabbit.wl.biz.pojo.ro.warehouse.WarehouseUpdateRo;
 import in.hocg.rabbit.wl.biz.pojo.vo.WarehouseComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

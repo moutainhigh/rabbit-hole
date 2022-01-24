@@ -7,7 +7,7 @@ import in.hocg.rabbit.com.api.pojo.vo.DistrictComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.district.DistrictTreeVo;
 import in.hocg.rabbit.com.biz.service.DistrictService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

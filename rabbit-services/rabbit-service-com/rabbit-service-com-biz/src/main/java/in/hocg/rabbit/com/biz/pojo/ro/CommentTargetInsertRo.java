@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.biz.pojo.ro;
 
 import in.hocg.boot.validation.annotation.EnumRange;
-import in.hocg.rabbit.common.datadict.com.CommentTargetType;
+import in.hocg.rabbit.com.api.enums.CommentTargetType;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,9 +1,9 @@
 package in.hocg.rabbit.com.biz.service.impl;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.com.biz.entity.PersonalMessage;
 import in.hocg.rabbit.com.biz.mapper.PersonalMessageMapper;
 import in.hocg.rabbit.com.biz.service.PersonalMessageService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

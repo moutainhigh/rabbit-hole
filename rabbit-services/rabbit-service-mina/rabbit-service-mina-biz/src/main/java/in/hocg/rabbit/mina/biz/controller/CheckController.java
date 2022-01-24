@@ -3,7 +3,7 @@ package in.hocg.rabbit.mina.biz.controller;
 import in.hocg.rabbit.mina.biz.service.CheckService;
 import in.hocg.rabbit.usercontext.basic.HeaderConstants;
 import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

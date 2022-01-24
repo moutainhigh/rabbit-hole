@@ -7,7 +7,7 @@ import in.hocg.rabbit.mina.biz.pojo.ro.ProxyChannelSaveRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelInfoVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.ProxyChannelOrdinaryVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.Optional;
 

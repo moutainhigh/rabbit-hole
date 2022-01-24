@@ -12,7 +12,7 @@ import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.validation.group.Insert;
 import in.hocg.boot.validation.group.Update;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -54,7 +54,6 @@ public class ProxyChannelController {
     @ApiOperation("新增 - 代理隧道")
     @PostMapping
     public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.insertOne(ro);
         return Result.success();
     }
@@ -63,7 +62,6 @@ public class ProxyChannelController {
     @PutMapping("/{id}")
     public Result<Void> updateOne(@ApiParam(value = "代理隧道", required = true) @PathVariable Long id,
                                   @Validated({Update.class}) @RequestBody ProxyChannelSaveRo ro) {
-        ro.setRequestUserId(UserContextHolder.getUserIdThrow());
         service.updateOne(id, ro);
         return Result.success();
     }

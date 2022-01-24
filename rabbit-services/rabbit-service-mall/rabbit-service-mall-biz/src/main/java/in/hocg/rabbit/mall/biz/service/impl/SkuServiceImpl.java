@@ -1,12 +1,13 @@
 package in.hocg.rabbit.mall.biz.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
+import in.hocg.rabbit.mall.biz.convert.SkuConvert;
 import in.hocg.rabbit.mall.biz.entity.Sku;
 import in.hocg.rabbit.mall.biz.mapper.SkuMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.SkuMapping;
 import in.hocg.rabbit.mall.biz.pojo.vo.SkuComplexVo;
 import in.hocg.rabbit.mall.biz.service.SkuService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,11 @@ import java.util.stream.Collectors;
  * @since 2021-08-21
  */
 @Service
+@UseConvert(SkuConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implements SkuService {
     private final SkuMapping mapping;
+    private final SkuConvert convert;
 
     @Override
     public void insertOrUpdateByProductId(Long productId, List<Sku> entities) {
@@ -54,7 +57,7 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
 
     @Override
     public SkuComplexVo getComplexById(Long skuId) {
-        return this.convertComplex(getById(skuId));
+        return convert.asSkuComplexVo(getById(skuId));
     }
 
     @Override
@@ -65,7 +68,7 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
         if (stock < useStock) {
             return false;
         }
-        final boolean isOk = this.retBool(baseMapper.subtractStock(skuId, useStock, stock));
+        final boolean isOk = baseMapper.subtractStock(skuId, useStock, stock) > 0;
         if (isOk) {
             return true;
         }
@@ -76,20 +79,15 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
     @Transactional(propagation = Propagation.REQUIRES_NEW, timeout = 1, rollbackFor = Exception.class)
     public boolean casValidAndPlusStock(Long skuId, Integer useStock) {
         final Sku sku = baseMapper.selectById(skuId);
-        final boolean isOk = this.retBool(baseMapper.plusStock(skuId, useStock, sku.getStock()));
+        final boolean isOk = baseMapper.plusStock(skuId, useStock, sku.getStock()) > 0;
         if (isOk) {
             return true;
         }
         return ((SkuService) AopContext.currentProxy()).casValidAndPlusStock(skuId, useStock);
     }
 
-    private SkuComplexVo convertComplex(Sku entity) {
-        SkuComplexVo result = mapping.asSkuComplexVo(entity);
-        result.setSpec(JSON.parseArray(entity.getSpecData(), SkuComplexVo.Spec.class));
-        return result;
-    }
-
-    private List<Sku> listByProductId(Long productId) {
+    @Override
+    public List<Sku> listByProductId(Long productId) {
         return lambdaQuery().eq(Sku::getProductId, productId).list();
     }
 }

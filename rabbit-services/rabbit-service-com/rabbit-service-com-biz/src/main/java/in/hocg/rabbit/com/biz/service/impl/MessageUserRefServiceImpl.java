@@ -13,9 +13,9 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.rabbit.com.biz.service.MessageUserRefProxyService;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
-import in.hocg.rabbit.common.datadict.com.MessageUserRefType;
+import in.hocg.rabbit.com.api.enums.MessageUserRefType;
 import in.hocg.rabbit.ums.api.UserServiceApi;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -79,9 +79,9 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
             return result;
         }
 
-        Integer unreadNoticeCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
-        Integer unreadPersonalCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
-        Integer unreadSystemCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.SystemMessage.getCodeStr(), userId);
+        Long unreadNoticeCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.NoticeMessage.getCodeStr(), userId);
+        Long unreadPersonalCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.PersonalMessage.getCodeStr(), userId);
+        Long unreadSystemCount = this.countByUnreadAndRefTypeAndUserId(MessageUserRefType.SystemMessage.getCodeStr(), userId);
 
         result.setUnreadPersonCount(unreadPersonalCount);
         result.setUnreadNoticeCount(unreadNoticeCount);
@@ -90,7 +90,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         return result;
     }
 
-    private Integer countByUnreadAndRefTypeAndUserId(String refType, Long userId) {
+    private Long countByUnreadAndRefTypeAndUserId(String refType, Long userId) {
         return lambdaQuery().eq(MessageUserRef::getReceiverUser, userId)
             .eq(MessageUserRef::getRefType, refType)
             .isNull(MessageUserRef::getReadAt).count();

@@ -7,7 +7,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

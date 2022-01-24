@@ -12,8 +12,8 @@ import in.hocg.rabbit.com.biz.pojo.vo.district.DistrictTreeVo;
 import in.hocg.rabbit.com.biz.service.DistrictService;
 import in.hocg.rabbit.com.biz.utils.LBSHelper;
 import in.hocg.rabbit.common.constant.DistrictLevelConstant;
-import in.hocg.rabbit.common.datadict.com.DistrictLevel;
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeServiceImpl;
+import in.hocg.rabbit.com.api.enums.DistrictLevel;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.tree.Tree;
 import lombok.NonNull;
@@ -129,6 +129,11 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
     @Override
     public DistrictComplexVo getComplexById(Long id) {
         return this.convertComplex(baseMapper.selectById(id));
+    }
+
+    @Override
+    public Optional<District> getByAdcode(String adcode) {
+        return lambdaQuery().eq(District::getAdcode, adcode).oneOpt();
     }
 
     private List<District> selectListByLevel(@NonNull DistrictLevel level) {

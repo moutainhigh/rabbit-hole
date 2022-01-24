@@ -1,6 +1,13 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
+import in.hocg.rabbit.mall.api.named.MallNamed;
+import in.hocg.rabbit.mall.api.named.MallNamedType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,38 +23,60 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@ApiModel
 @InjectNamed
 public class OrderComplexVo {
     @ApiModelProperty("订单ID")
     private Long id;
     @ApiModelProperty("订单拥有人ID")
-    private Long userId;
+    private Long ownerUserId;
+    @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
+    private String ownerUserName;
     @ApiModelProperty("订单编号")
-    private String orderNo;
+    private String encoding;
     @ApiModelProperty("交易流水号")
     private String tradeNo;
 
     @ApiModelProperty("运费金额")
-    private BigDecimal freightAmt;
-    @ApiModelProperty("优惠券抵扣金额")
-    private BigDecimal couponDiscountAmt;
-    @ApiModelProperty("活动抵扣金额")
-    private BigDecimal activityDiscountAmt;
-    @ApiModelProperty("后台调整优惠")
-    private BigDecimal adjustmentDiscountAmt;
-    @ApiModelProperty("订单总金额")
-    private BigDecimal totalAmt;
-    @ApiModelProperty("实际支付金额")
-    private BigDecimal userPayAmt;
+    private BigDecimal expressAmt;
+    @ApiModelProperty("订单销售总额")
+    private BigDecimal totalSaleAmt;
+    @ApiModelProperty("优惠金额")
+    private BigDecimal discountAmt;
+    @ApiModelProperty("实际订单总额 = 销售总额 - 优惠金额")
+    private BigDecimal totalRealAmt;
+    @ApiModelProperty("实际付款总额 = 订单总额 + 运费金额")
+    private BigDecimal totalPayAmt;
+    @ApiModelProperty("调价优惠金额")
+    private BigDecimal adjustmentAmt;
 
-    @ApiModelProperty("支付方式")
-    private Integer payType;
+    @ApiModelProperty("支付方式(最终)")
+    private String payWay;
 
+    @ApiModelProperty("交易状态")
+    private String tradeStatus;
+    @MallNamed(idFor = "tradeStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_TRADE_STATUS})
+    private String tradeStatusName;
     @ApiModelProperty("订单状态")
     private String orderStatus;
-
-    @ApiModelProperty("确认收货状态")
-    private Boolean confirmFlag;
+    @MallNamed(idFor = "orderStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_STATUS})
+    private String orderStatusName;
+    @ApiModelProperty("支付状态")
+    private String payStatus;
+    @MallNamed(idFor = "payStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_PAY_STATUS})
+    private String payStatusName;
+    @ApiModelProperty("发货状态")
+    private String deliveryStatus;
+    @MallNamed(idFor = "deliveryStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_DELIVERY_STATUS})
+    private String deliveryStatusName;
+    @ApiModelProperty("收货状态")
+    private String receiveStatus;
+    @MallNamed(idFor = "receiveStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_RECEIVE_STATUS})
+    private String receiveStatusName;
+    @ApiModelProperty("退款状态(待发货)")
+    private String refundStatus;
+    @MallNamed(idFor = "refundStatus", type = MallNamedType.DataDictName, args = {MallDataDictKeys.ORDER_REFUND_STATUS})
+    private String refundStatusName;
 
     @ApiModelProperty("收货人姓名")
     private String receiverName;
@@ -67,17 +96,24 @@ public class OrderComplexVo {
     private String receiverAddress;
     @ApiModelProperty("订单备注")
     private String remark;
+
     @ApiModelProperty("支付时间")
     private LocalDateTime payAt;
     @ApiModelProperty("发货时间")
     private LocalDateTime deliveryAt;
     @ApiModelProperty("确认收货时间")
     private LocalDateTime receiveAt;
-    @ApiModelProperty("评价时间")
-    private LocalDateTime commentedAt;
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
 
     @ApiModelProperty("订单项")
     private List<OrderItemComplexVo> orderItems = Collections.emptyList();
+
+
+    @ApiModelProperty("创建者")
+    private Long creator;
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
+    private String creatorName;
+    @ApiModelProperty("更新时间")
+    private LocalDateTime lastUpdatedAt;
 }

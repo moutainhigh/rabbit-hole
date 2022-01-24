@@ -7,7 +7,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralFlowVo;
 import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralStatsVo;
 import in.hocg.rabbit.com.biz.service.UserIntegralService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

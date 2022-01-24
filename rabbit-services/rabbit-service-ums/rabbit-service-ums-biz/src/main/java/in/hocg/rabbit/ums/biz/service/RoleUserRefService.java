@@ -2,7 +2,7 @@ package in.hocg.rabbit.ums.biz.service;
 
 import in.hocg.rabbit.ums.biz.entity.Role;
 import in.hocg.rabbit.ums.biz.entity.RoleUserRef;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface RoleUserRefService extends AbstractService<RoleUserRef> {
 
     boolean hasUserByRoleId(Long roleId);
 
-    Integer countUseByRoleId(Long id);
+    Long countUseByRoleId(Long id);
 
     List<Role> listByUserId(Long userId);
 

@@ -5,7 +5,7 @@ import in.hocg.rabbit.com.biz.entity.UserIntegral;
 import in.hocg.rabbit.com.biz.pojo.ro.MinaIntegralFlowPageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralFlowVo;
 import in.hocg.rabbit.com.biz.pojo.vo.MinaIntegralStatsVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

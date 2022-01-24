@@ -15,7 +15,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.DataDictComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictOrdinaryVo;
 import in.hocg.rabbit.com.biz.service.DataDictItemService;
 import in.hocg.rabbit.com.biz.service.DataDictService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.web.datastruct.KeyValue;
 import lombok.RequiredArgsConstructor;

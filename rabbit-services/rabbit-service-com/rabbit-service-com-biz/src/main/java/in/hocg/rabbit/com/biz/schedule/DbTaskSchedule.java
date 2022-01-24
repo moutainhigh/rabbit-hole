@@ -3,11 +3,12 @@ package in.hocg.rabbit.com.biz.schedule;
 import com.alibaba.schedulerx.worker.domain.JobContext;
 import com.alibaba.schedulerx.worker.processor.JavaProcessor;
 import com.alibaba.schedulerx.worker.processor.ProcessResult;
-import in.hocg.rabbit.common.datadict.com.TaskType;
+import in.hocg.boot.task.autoconfiguration.core.entity.TaskInfo;
+import in.hocg.boot.task.autoconfiguration.core.entity.TaskItem;
+import in.hocg.rabbit.com.api.enums.TaskType;
 import in.hocg.rabbit.mina.api.YouTubeServiceApi;
 import in.hocg.rabbit.mina.api.pojo.ro.UploadYouTubeRo;
 import in.hocg.boot.task.autoconfiguration.core.TaskBervice;
-import in.hocg.boot.task.autoconfiguration.core.TaskInfo;
 import in.hocg.boot.task.autoconfiguration.core.TaskRepository;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -34,29 +36,20 @@ public class DbTaskSchedule extends JavaProcessor {
 
     @Override
     public ProcessResult process(JobContext context) throws Exception {
-        for (TaskInfo taskInfo : taskRepository.listByReady()) {
-            String taskType = taskInfo.getType();
-            String taskSn = taskInfo.getTaskSn();
-            taskBervice.runAsync(taskSn, this.getTaskFunction(taskType));
-        }
+        taskRepository.listByReady().forEach(taskItem -> taskBervice.runAsync(taskItem.getId(), this.getTaskFunction(taskItem.getType())));
         return new ProcessResult(true);
     }
 
     private Function<Object, Object> getTaskFunction(String typeCode) {
-        Optional<TaskType> taskType = ICode.of(typeCode, TaskType.class);
-        if (taskType.isPresent()) {
-            switch (taskType.get()) {
-                // 视频上传
-                case YouTubeUpload: {
-                    return (s) -> youTubeServiceApi.upload((UploadYouTubeRo) s);
-                }
-                default:
-                    //
-            }
+        Optional<TaskType> taskTypeOpt = ICode.of(typeCode, TaskType.class);
+        if (taskTypeOpt.isEmpty()) {
+            return s -> null;
         }
-        return s -> {
-            log.info("任务名称: => {}", taskType.orElse(null));
-            return null;
-        };
+
+        TaskType taskType = taskTypeOpt.get();
+        if (taskType.equals(TaskType.YouTubeUpload)) {
+            return (s) -> youTubeServiceApi.upload((UploadYouTubeRo) s);
+        }
+        return s -> null;
     }
 }

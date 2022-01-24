@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.DataDictItemInsertRo;
 import in.hocg.rabbit.com.biz.pojo.ro.DataDictItemUpdateRo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictItemComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.DataDictItemOrdinaryVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 

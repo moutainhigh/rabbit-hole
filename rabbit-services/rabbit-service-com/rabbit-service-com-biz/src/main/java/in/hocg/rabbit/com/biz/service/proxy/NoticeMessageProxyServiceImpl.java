@@ -5,7 +5,7 @@ import in.hocg.rabbit.com.biz.mapstruct.NoticeMessageMapping;
 import in.hocg.rabbit.com.biz.pojo.vo.message.NoticeMessageComplexVo;
 import in.hocg.rabbit.com.biz.service.NoticeMessageProxyService;
 import in.hocg.rabbit.com.biz.service.NoticeMessageService;
-import in.hocg.rabbit.common.datadict.com.NoticeMessageRefType;
+import in.hocg.rabbit.com.api.enums.NoticeMessageRefType;
 import in.hocg.rabbit.common.utils.Rules;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

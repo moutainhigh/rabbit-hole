@@ -1,12 +1,13 @@
 package in.hocg.rabbit.mall.biz.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.tree.TreeEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,13 +42,13 @@ public class ProductCategory extends TreeEntity<ProductCategory> {
     @TableField("priority")
     private Integer priority;
 
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
+    @TableField(value = "created_at", fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
+    @TableField(value = "creator", fill = FieldFill.INSERT)
+    private Long creator;
+    @TableField(value = "last_updated_at", fill = FieldFill.UPDATE)
     private LocalDateTime lastUpdatedAt;
+    @TableField(value = "last_updater", fill = FieldFill.UPDATE)
+    private Long lastUpdater;
 
 }

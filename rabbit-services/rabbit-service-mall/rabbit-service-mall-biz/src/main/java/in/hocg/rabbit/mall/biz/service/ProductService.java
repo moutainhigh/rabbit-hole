@@ -1,12 +1,14 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.entity.Product;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductCompleteRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductSaveRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.ProductPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.mall.biz.pojo.vo.ProductOrdinaryVo;
 
 import java.util.List;
 
@@ -24,13 +26,12 @@ public interface ProductService extends AbstractService<Product> {
 
     void updateOne(Long id, ProductSaveRo ro);
 
-    void deleteOne(Long id);
+    void delete(DeleteRo ro);
 
-    ProductComplexVo getComplexById(Long id);
+    ProductComplexVo getComplex(Long id);
 
-    IPage<ProductComplexVo> paging(ProductPagingRo ro);
+    IPage<ProductOrdinaryVo> paging(ProductPagingRo ro);
 
-    List<ProductComplexVo> complete(ProductCompleteRo ro);
+    List<ProductOrdinaryVo> complete(ProductCompleteRo ro);
 
-    ProductComplexVo convertComplex(Product entity);
 }

@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.mapstruct.CommentTargetMapping;
 import in.hocg.rabbit.com.biz.service.CommentTargetProxyService;
 import in.hocg.rabbit.com.biz.service.CommentTargetService;
 import in.hocg.rabbit.common.datadict.common.RefType;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

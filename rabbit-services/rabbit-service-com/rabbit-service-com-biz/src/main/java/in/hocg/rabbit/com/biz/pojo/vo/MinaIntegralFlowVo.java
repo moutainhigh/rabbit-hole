@@ -2,8 +2,8 @@ package in.hocg.rabbit.com.biz.pojo.vo;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.rabbit.common.datadict.com.integralflow.ChangeType;
-import in.hocg.rabbit.common.datadict.com.integralflow.EventType;
+import in.hocg.rabbit.com.api.enums.integralflow.ChangeType;
+import in.hocg.rabbit.com.api.enums.integralflow.EventType;
 import in.hocg.boot.named.annotation.InjectNamed;
 
 import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;

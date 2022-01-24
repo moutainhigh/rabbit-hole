@@ -1,13 +1,14 @@
 package in.hocg.rabbit.mina.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.rabbit.mina.api.pojo.vo.GameRoomVo;
 import in.hocg.rabbit.mina.biz.entity.GameRoom;
 import in.hocg.rabbit.mina.biz.pojo.ro.JoinRoomRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaGameCreateRoomRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.RoomPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameRoomOrdinaryVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
  * <p>
@@ -26,4 +27,6 @@ public interface GameRoomService extends AbstractService<GameRoom> {
     void joinUser(JoinRoomRo ro);
 
     IPage<GameRoomOrdinaryVo> paging(RoomPagingRo ro);
+
+    GameRoomVo getRoomByRoomCode(String roomCode);
 }

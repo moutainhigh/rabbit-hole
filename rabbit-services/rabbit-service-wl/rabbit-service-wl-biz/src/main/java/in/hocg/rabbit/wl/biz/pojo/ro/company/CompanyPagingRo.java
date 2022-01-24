@@ -1,6 +1,6 @@
 package in.hocg.rabbit.wl.biz.pojo.ro.company;
 
-import in.hocg.boot.mybatis.plus.autoconfiguration.ro.PageRo;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

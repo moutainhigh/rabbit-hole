@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.service.FeedbackService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
-import in.hocg.boot.web.result.Result;
+import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

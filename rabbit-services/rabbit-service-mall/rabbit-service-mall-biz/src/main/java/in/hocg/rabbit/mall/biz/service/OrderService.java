@@ -1,11 +1,16 @@
 package in.hocg.rabbit.mall.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.rabbit.mall.biz.entity.Order;
 import in.hocg.rabbit.mall.biz.pojo.vo.CalcOrderVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.OrderComplexVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderDeliveryComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.OrderOrdinaryVo;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -17,17 +22,13 @@ import in.hocg.rabbit.mall.biz.pojo.ro.*;
  */
 public interface OrderService extends AbstractService<Order> {
 
-    IPage<OrderComplexVo> paging(OrderPagingRo ro);
+    IPage<OrderOrdinaryVo> paging(OrderPagingRo ro);
 
     OrderComplexVo getComplex(Long id);
 
-    void deleteOne(Long id);
-
-    void shipped(Long id, ShippedOrderRo ro);
+    void delete(DeleteRo ro);
 
     void updateOne(Long id, UpdateOrderRo ro);
-
-    void close(Long id, CloseOrderRo ro);
 
     String getCashierUrl(String orderNo);
 
@@ -35,11 +36,23 @@ public interface OrderService extends AbstractService<Order> {
 
     String createOrder(CreateOrderRo ro);
 
-    void applyRefund(RefundApplyRo ro);
+    void closeBySeller(Long id, CloseOrderManageRo ro);
 
-    void cancelOrder(CancelOrderRo ro);
-
-    void confirmOrder(ConfirmOrderRo ro);
+    void closeByBuyer(Long id, CloseOrderClientRo ro);
 
     void payResult(OrderPayResultRo ro);
+
+    void refundByBuyer(Long id, RefundOrderClientRo ro);
+
+    void refundBySeller(Long id, RefundOrderManageRo ro);
+
+    void receivedByBuyer(Long id, ReceivedOrderClientRo ro);
+
+    void shipped(Long id, ShippedOrderBySellerRo ro);
+
+    Optional<Order> getByOrderItemId(Long orderItemId);
+
+    void adjustment(Long id, AdjustmentOrderBySellerRo ro);
+
+    OrderDeliveryComplexVo getDeliveryByBuyer(Long id);
 }

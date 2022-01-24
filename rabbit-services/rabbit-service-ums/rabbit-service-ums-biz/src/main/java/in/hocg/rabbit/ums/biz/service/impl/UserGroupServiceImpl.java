@@ -12,7 +12,7 @@ import in.hocg.rabbit.ums.biz.service.AuthorityService;
 import in.hocg.rabbit.ums.biz.service.UserGroupAuthorityRefService;
 import in.hocg.rabbit.ums.biz.service.UserGroupService;
 import in.hocg.rabbit.ums.biz.service.UserGroupUserRefService;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

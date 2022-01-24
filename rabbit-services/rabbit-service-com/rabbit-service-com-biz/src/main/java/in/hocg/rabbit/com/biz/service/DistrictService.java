@@ -5,7 +5,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.district.DistrictCompleteRo;
 import in.hocg.rabbit.com.biz.pojo.vo.district.DistrictCompleteVo;
 import in.hocg.rabbit.com.api.pojo.vo.DistrictComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.district.DistrictTreeVo;
-import in.hocg.boot.mybatis.plus.autoconfiguration.AbstractService;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,4 +47,6 @@ public interface DistrictService extends AbstractService<District> {
     List<DistrictCompleteVo> complete(DistrictCompleteRo ro);
 
     DistrictComplexVo getComplexById(Long parentId);
+
+    Optional<District> getByAdcode(String adcode);
 }
