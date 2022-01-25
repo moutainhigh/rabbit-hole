@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mall.biz.convert;
 
+import com.alibaba.fastjson.JSON;
 import in.hocg.rabbit.mall.biz.entity.StintRule;
 import in.hocg.rabbit.mall.biz.mapstruct.StintRuleMapping;
 import in.hocg.rabbit.mall.biz.pojo.vo.StintRuleComplexVo;
@@ -24,6 +25,7 @@ public class StintRuleConvert {
     }
 
     public StintRuleComplexVo convertStintRuleComplexVo(StintRule entity) {
-        return mapping.asStintRuleComplexVo(entity);
+        return mapping.asStintRuleComplexVo(entity)
+            .setRule(JSON.parseObject(entity.getRule()));
     }
 }

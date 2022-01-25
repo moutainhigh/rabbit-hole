@@ -39,7 +39,7 @@ public class UserCouponController {
 
     @UseLogger
     @GetMapping("/{id}/complex")
-    @ApiOperation("查看信息 - 限制规则")
+    @ApiOperation("查看信息 - 用户优惠券")
     public Result<UserCouponComplexVo> getComplexById(@PathVariable("id") Long id) {
         return Result.success(service.getComplex(id));
     }

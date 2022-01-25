@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import com.alibaba.fastjson.JSONObject;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
@@ -32,7 +33,7 @@ public class StintRuleComplexVo {
     @MallNamed(idFor = "type", type = MallNamedType.DataDictName, args = {MallDataDictKeys.STINT_RULE_TYPE})
     private String typeName;
     @ApiModelProperty("规则")
-    private String rule;
+    private JSONObject rule;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;

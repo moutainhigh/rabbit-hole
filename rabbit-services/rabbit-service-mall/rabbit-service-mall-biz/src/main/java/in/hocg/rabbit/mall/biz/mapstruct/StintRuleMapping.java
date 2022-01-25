@@ -28,6 +28,9 @@ public interface StintRuleMapping {
     @Mapping(target = "typeName", ignore = true)
     StintRuleOrdinaryVo asStintRuleOrdinaryVo(StintRule entity);
 
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     @Mapping(target = "typeName", ignore = true)
+    @Mapping(target = "rule", ignore = true)
     StintRuleComplexVo asStintRuleComplexVo(StintRule entity);
 }
