@@ -26,6 +26,7 @@ import in.hocg.rabbit.mall.biz.mapper.OrderMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderItemMapping;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderItemSkuMapping;
 import in.hocg.rabbit.mall.biz.mapstruct.OrderMapping;
+import in.hocg.rabbit.mall.biz.pojo.dto.PayedDto;
 import in.hocg.rabbit.mall.biz.pojo.ro.*;
 import in.hocg.rabbit.mall.biz.pojo.vo.*;
 import in.hocg.rabbit.mall.biz.service.*;
@@ -359,6 +360,13 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void payed(Long id, PayedOrderBySellerRo ro) {
+        Order order = Assert.notNull(getById(id), "订单不存在");
+        payed(new PayedDto().setOrder(order).setPayWay(OrderPayWay.Manual.getCodeStr()).setFinishedAt(LocalDateTime.now()));
+    }
+
+    @Override
     public Optional<Order> getByOrderItemId(Long orderItemId) {
         return baseMapper.getByOrderItemId(orderItemId);
     }
@@ -374,8 +382,18 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         String payType = tradeStatusSync.getPayType();
         LocalDateTime finishedAt = tradeStatusSync.getFinishedAt();
         Order order = this.getByOrderNo(orderNo).orElseThrow(() -> ServiceException.wrap("订单不存在"));
-        if (!OrderTradeStatus.WaitPay.eq(order.getOrderStatus())) {
-            log.warn("订单[单号={}]，状态[{}]非待付款时，被调用支付成功", orderNo, order.getOrderStatus());
+        payed(new PayedDto().setOrder(order).setPayWay(payType).setFinishedAt(finishedAt));
+    }
+
+    private void payed(PayedDto dto) {
+        Order order = dto.getOrder();
+        LocalDateTime finishedAt = dto.getFinishedAt();
+        String payWay = dto.getPayWay();
+
+        String encoding = order.getEncoding();
+        String payStatus = order.getPayStatus();
+        if (!OrderTradeStatus.WaitPay.eq(payStatus)) {
+            log.warn("订单[单号={}]，状态[{}]非待付款时，被调用支付成功", encoding, payStatus);
             return;
         }
 
@@ -384,7 +402,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         Order update = new Order();
         update.setId(order.getId());
         update.setPayAt(finishedAt);
-        update.setPayWay(payType);
+        update.setPayWay(payWay);
         updateById(update);
     }
 

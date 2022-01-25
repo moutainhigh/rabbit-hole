@@ -17,6 +17,7 @@ public final class MallDataDictKeys {
     public static final String ORDER_STATUS = "MALL__ORDER_STATUS";
     public static final String ORDER_TRADE_STATUS = "MALL__ORDER_TRADE_STATUS";
     public static final String ORDERED_SOURCE = "MALL__ORDERED_SOURCE";
+    public static final String ORDER_PAY_WAY = "MALL__ORDER_PAY_WAY";
 
     public static final String ORDER_DISCOUNT_TYPE = "MALL__ORDER_DISCOUNT_TYPE";
 
