@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 public class OrderMaintainPagingRo extends PageRo {
-    @ApiModelProperty("订单明细ID")
-    private Long orderItemId;
+    @ApiModelProperty("订单ID")
+    private Long orderId;
     private String keyword;
 }
