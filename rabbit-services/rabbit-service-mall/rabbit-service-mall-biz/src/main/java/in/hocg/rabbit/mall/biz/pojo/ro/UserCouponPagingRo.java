@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mall.biz.pojo.ro;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.PageRo;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -11,5 +12,6 @@ import lombok.Data;
  */
 @Data
 public class UserCouponPagingRo extends PageRo {
-    private Long userId;
+    @ApiModelProperty("拥有人")
+    private Long ownerUserId;
 }
