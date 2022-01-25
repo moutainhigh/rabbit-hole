@@ -4,6 +4,7 @@ import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponBuyerVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponOrdinaryVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -30,15 +31,18 @@ public interface UserCouponMapping {
     @Mapping(target = "couponId", ignore = true)
     UserCoupon asUserCoupon(GiveCouponRo ro);
 
-    @Mapping(target = "couponType", ignore = true)
-    @Mapping(target = "useStint", ignore = true)
-    @Mapping(target = "usePlatform", ignore = true)
-    @Mapping(target = "useInstructions", ignore = true)
-    @Mapping(target = "title", ignore = true)
-    @Mapping(target = "minPoint", ignore = true)
-    @Mapping(target = "credit", ignore = true)
-    @Mapping(target = "ceiling", ignore = true)
+    @Mapping(target = "statusName", ignore = true)
+    @Mapping(target = "ownerUserName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "coupon", ignore = true)
     UserCouponComplexVo asUserCouponComplexVo(UserCoupon entity);
 
     UserCouponBuyerVo asUserCouponBuyerVo(UserCoupon entity);
+
+    @Mapping(target = "statusName", ignore = true)
+    @Mapping(target = "ownerUserName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    UserCouponOrdinaryVo asUserCouponOrdinaryVo(UserCoupon entity);
 }

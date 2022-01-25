@@ -4,6 +4,7 @@ package in.hocg.rabbit.mall.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
@@ -32,8 +33,15 @@ public class UserCouponController {
     @UseLogger
     @ApiOperation("分页查询 - 用户优惠券")
     @PostMapping("/_paging")
-    public Result<IPage<UserCouponComplexVo>> paging(@Validated @RequestBody UserCouponPagingRo ro) {
+    public Result<IPage<UserCouponOrdinaryVo>> paging(@Validated @RequestBody UserCouponPagingRo ro) {
         return Result.success(service.paging(ro));
+    }
+
+    @UseLogger
+    @GetMapping("/{id}/complex")
+    @ApiOperation("查看信息 - 限制规则")
+    public Result<UserCouponComplexVo> getComplexById(@PathVariable("id") Long id) {
+        return Result.success(service.getComplex(id));
     }
 
     @UseLogger

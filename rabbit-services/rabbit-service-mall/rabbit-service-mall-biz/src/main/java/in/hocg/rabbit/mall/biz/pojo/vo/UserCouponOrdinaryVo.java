@@ -11,10 +11,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2022/1/19
+ * Created by hocgin on 2022/1/25
  * email: hocgin@gmail.com
  *
  * @author hocgin
@@ -23,16 +24,36 @@ import java.time.LocalDateTime;
 @ApiModel
 @InjectNamed
 @Accessors(chain = true)
-public class StintRuleComplexVo {
+public class UserCouponOrdinaryVo {
+
+    @ApiModelProperty("用户优惠券ID")
     private Long id;
-    @ApiModelProperty("规则名称")
-    private String title;
-    @ApiModelProperty("限制类型")
-    private String type;
-    @MallNamed(idFor = "type", type = MallNamedType.DataDictName, args = {MallDataDictKeys.STINT_RULE_TYPE})
-    private String typeName;
-    @ApiModelProperty("规则")
-    private String rule;
+    @ApiModelProperty("优惠券编号")
+    private String encoding;
+    @ApiModelProperty("优惠券")
+    private Long couponId;
+    @ApiModelProperty("使用状态")
+    private String status;
+    @MallNamed(idFor = "status", type = MallNamedType.DataDictName, args = {MallDataDictKeys.USER_COUPON_STATUS})
+    private String statusName;
+
+    @ApiModelProperty("拥有人")
+    private Long ownerUserId;
+    @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
+    private String ownerUserName;
+
+    @ApiModelProperty("过期状态")
+    private Boolean expiredFlag;
+    @ApiModelProperty("优惠券生效时间")
+    private LocalDateTime startAt;
+    @ApiModelProperty("优惠券失效时间")
+    private LocalDateTime endAt;
+
+    @ApiModelProperty("使用时间")
+    private LocalDateTime usedAt;
+    @ApiModelProperty("实际抵扣金额")
+    private BigDecimal usedAmt;
+
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;

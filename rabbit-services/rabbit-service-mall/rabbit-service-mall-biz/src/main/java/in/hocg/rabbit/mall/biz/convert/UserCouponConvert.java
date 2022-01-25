@@ -4,6 +4,7 @@ import in.hocg.rabbit.mall.biz.entity.Coupon;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapstruct.UserCouponMapping;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,11 @@ public class UserCouponConvert {
     public UserCouponComplexVo asUserCouponComplexVo(UserCoupon entity) {
         UserCouponComplexVo result = mapping.asUserCouponComplexVo(entity);
         Long couponId = entity.getCouponId();
-        Coupon coupon = couponService.getById(couponId);
-        result.setTitle(coupon.getTitle());
-        result.setUseInstructions(coupon.getUseInstructions());
-        result.setCredit(coupon.getCredit());
-
+        result.setCoupon(couponService.getComplex(couponId));
         return result;
+    }
+
+    public UserCouponOrdinaryVo asUserCouponOrdinaryVo(UserCoupon entity) {
+        return mapping.asUserCouponOrdinaryVo(entity);
     }
 }
