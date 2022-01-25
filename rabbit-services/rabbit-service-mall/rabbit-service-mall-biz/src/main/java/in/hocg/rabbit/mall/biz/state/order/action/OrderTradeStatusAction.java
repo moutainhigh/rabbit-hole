@@ -31,7 +31,7 @@ public class OrderTradeStatusAction extends CommonAction<OrderTradeStatus, Order
         OrderEvent event = getEvent(context);
         String targetCode = getTarget(context).getCodeStr();
         String sourceCode = getSource(context).getCodeStr();
-        OrderItem entity = getEntity(context);
+        Order entity = getEntity(context);
 
         Order update = new Order();
 
