@@ -20,10 +20,10 @@ public class StintRuleConvert {
     private final StintRuleMapping mapping;
 
     public StintRuleOrdinaryVo convertStintRuleOrdinaryVo(StintRule entity) {
-        return null;
+        return mapping.asStintRuleOrdinaryVo(entity);
     }
 
     public StintRuleComplexVo convertStintRuleComplexVo(StintRule entity) {
-        return null;
+        return mapping.asStintRuleComplexVo(entity);
     }
 }

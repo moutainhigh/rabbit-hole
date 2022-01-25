@@ -82,7 +82,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
 
         List<Long> stintRule = ro.getStintRule();
         if (Objects.nonNull(stintRule)) {
-            couponStintRuleRefService.saveBatchByCouponId(id, stintRule);
+            couponStintRuleRefService.saveBatchByCouponId(entity.getId(), stintRule);
         }
     }
 }

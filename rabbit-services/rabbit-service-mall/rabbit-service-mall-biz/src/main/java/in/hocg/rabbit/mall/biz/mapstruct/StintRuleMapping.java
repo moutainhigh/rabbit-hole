@@ -2,6 +2,8 @@ package in.hocg.rabbit.mall.biz.mapstruct;
 
 import in.hocg.rabbit.mall.biz.entity.StintRule;
 import in.hocg.rabbit.mall.biz.pojo.ro.StintRuleSaveRo;
+import in.hocg.rabbit.mall.biz.pojo.vo.StintRuleComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.StintRuleOrdinaryVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -22,4 +24,10 @@ public interface StintRuleMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     StintRule asStintRule(StintRuleSaveRo ro);
+
+    @Mapping(target = "typeName", ignore = true)
+    StintRuleOrdinaryVo asStintRuleOrdinaryVo(StintRule entity);
+
+    @Mapping(target = "typeName", ignore = true)
+    StintRuleComplexVo asStintRuleComplexVo(StintRule entity);
 }
