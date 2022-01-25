@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.biz.pojo.dto;
 
-import in.hocg.rabbit.com.api.enums.NoticeMessageEventType;
-import in.hocg.rabbit.com.api.enums.NoticeMessageRefType;
+import in.hocg.rabbit.com.api.enums.message.NoticeMessageEventType;
+import in.hocg.rabbit.com.api.enums.message.NoticeMessageRefType;
 import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

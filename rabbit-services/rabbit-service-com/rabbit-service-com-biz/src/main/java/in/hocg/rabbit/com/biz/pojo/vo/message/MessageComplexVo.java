@@ -2,9 +2,10 @@ package in.hocg.rabbit.com.biz.pojo.vo.message;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.rabbit.com.api.enums.MessageUserRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
 
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
+import in.hocg.rabbit.com.api.named.ComNamed;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class MessageComplexVo {
     private Long id;
     @ApiModelProperty("消息类型")
     private String messageType;
-    @ChaosNamed(idFor = "messageType", type = ChaosNamedType.DataDictName, args = {MessageUserRefType.KEY})
+    @ComNamed(idFor = "messageType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.MMS_MESSAGE_USER_REF_TYPE})
     private String messageTypeName;
     @ApiModelProperty("接收者")
     private Long receiverUser;

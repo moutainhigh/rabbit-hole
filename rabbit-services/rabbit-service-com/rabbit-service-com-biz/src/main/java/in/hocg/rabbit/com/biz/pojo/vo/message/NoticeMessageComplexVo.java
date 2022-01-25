@@ -2,10 +2,10 @@ package in.hocg.rabbit.com.biz.pojo.vo.message;
 
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
-import in.hocg.rabbit.com.api.enums.NoticeMessageEventType;
-import in.hocg.rabbit.com.api.enums.NoticeMessageRefType;
 import in.hocg.boot.named.annotation.InjectNamed;
 
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
+import in.hocg.rabbit.com.api.named.ComNamed;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,11 +24,11 @@ import java.time.LocalDateTime;
 public class NoticeMessageComplexVo {
     @ApiModelProperty("事件类型")
     private String eventType;
-    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {NoticeMessageEventType.KEY})
+    @ComNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.MMS_NOTICE_MESSAGE_EVENT_TYPE})
     private String eventTypeName;
     @ApiModelProperty("订阅对象类型")
     private String refType;
-    @ChaosNamed(idFor = "refType", type = ChaosNamedType.DataDictName, args = {NoticeMessageRefType.KEY})
+    @ComNamed(idFor = "refType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.MMS_NOTICE_MESSAGE_REF_TYPE})
     private String refTypeName;
     @ApiModelProperty("订阅对象")
     private RefObject refObject;

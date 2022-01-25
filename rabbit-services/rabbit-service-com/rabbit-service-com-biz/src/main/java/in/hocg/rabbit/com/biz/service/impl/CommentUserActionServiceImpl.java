@@ -3,7 +3,7 @@ package in.hocg.rabbit.com.biz.service.impl;
 import in.hocg.rabbit.com.biz.entity.CommentUserAction;
 import in.hocg.rabbit.com.biz.mapper.CommentUserActionMapper;
 import in.hocg.rabbit.com.biz.service.CommentUserActionService;
-import in.hocg.rabbit.com.api.enums.CommentUserActionType;
+import in.hocg.rabbit.com.api.enums.comment.CommentUserActionType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;

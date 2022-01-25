@@ -1,6 +1,8 @@
-package in.hocg.rabbit.com.api.enums;
+package in.hocg.rabbit.com.api.enums.message;
 
+import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
+@UseDataDictKey(value = ComDataDictKeys.MMS_MESSAGE_USER_REF_TYPE, description = "消息用户关联类型")
 public enum MessageUserRefType implements DataDictEnum {
     SystemMessage("system_message", "系统消息"),
     PersonalMessage("personal_message", "私信消息"),
@@ -22,5 +25,4 @@ public enum MessageUserRefType implements DataDictEnum {
     private final Serializable code;
     private final String name;
 
-    public final static String KEY = "mms_message_user_ref_type";
 }

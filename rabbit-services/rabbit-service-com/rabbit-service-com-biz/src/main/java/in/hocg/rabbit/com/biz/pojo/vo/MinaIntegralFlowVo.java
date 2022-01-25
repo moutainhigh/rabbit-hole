@@ -7,6 +7,8 @@ import in.hocg.rabbit.com.api.enums.integralflow.EventType;
 import in.hocg.boot.named.annotation.InjectNamed;
 
 import in.hocg.boot.web.autoconfiguration.jackson.bigdecimal.BigDecimalFormat;
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
+import in.hocg.rabbit.com.api.named.ComNamed;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -24,11 +26,11 @@ import java.time.LocalDateTime;
 public class MinaIntegralFlowVo {
     @ApiModelProperty("触发事件")
     private String eventType;
-    @ChaosNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {EventType.KEY})
+    @ComNamed(idFor = "eventType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.INTEGRAL_FLOW_EVENT_TYPE})
     private String eventTypeName;
     @ApiModelProperty("变更类型")
     private String changeType;
-    @ChaosNamed(idFor = "changeType", type = ChaosNamedType.DataDictName, args = {ChangeType.KEY})
+    @ComNamed(idFor = "changeType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.INTEGRAL_FLOW_CHANGE_TYPE})
     private String changeTypeName;
     @BigDecimalFormat
     @ApiModelProperty("变更值")
