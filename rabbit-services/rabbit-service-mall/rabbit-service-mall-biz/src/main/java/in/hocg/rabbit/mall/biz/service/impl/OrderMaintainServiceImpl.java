@@ -55,6 +55,7 @@ public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainM
         BigDecimal realAmt = orderItem.getRealAmt();
         OrderMaintain entity = mapping.asOrderMaintain(ro);
         entity.setOwnerUserId(ro.getOperatorId());
+        entity.setOrderItemId(orderItemId);
         entity.setEncoding(codeServiceApi.getSnCode(CodeType.MaintainOrder.getCodeStr()));
         entity.setStatus(OrderMaintainStatus.Processing.getCode());
         entity.setRefundQuantity(quantity);

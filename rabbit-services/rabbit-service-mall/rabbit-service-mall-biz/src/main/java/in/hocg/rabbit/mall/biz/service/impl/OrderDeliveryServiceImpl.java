@@ -50,6 +50,7 @@ public class OrderDeliveryServiceImpl extends AbstractServiceImpl<OrderDeliveryM
     @Transactional(rollbackFor = Exception.class)
     public void create(Long orderId, ShippedOrderBySellerRo ro) {
         OrderDelivery entity = mapping.asOrderDelivery(ro);
+        entity.setOrderId(orderId);
         entity.setEncoding(codeServiceApi.getSnCode(CodeType.DeliveryOrder.getCodeStr()));
         validInsert(entity);
     }

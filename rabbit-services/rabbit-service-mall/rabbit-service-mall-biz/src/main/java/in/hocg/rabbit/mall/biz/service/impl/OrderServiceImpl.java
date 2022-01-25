@@ -8,6 +8,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.rabbit.bmw.api.BmwServiceApi;
 import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
+import in.hocg.rabbit.bmw.api.enums.TradeOrderStatus;
 import in.hocg.rabbit.bmw.api.pojo.ro.CreateTradeRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GetCashierRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GoRefundRo;
@@ -391,9 +392,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         String payWay = dto.getPayWay();
 
         String encoding = order.getEncoding();
-        String payStatus = order.getPayStatus();
-        if (!OrderTradeStatus.WaitPay.eq(payStatus)) {
-            log.warn("订单[单号={}]，状态[{}]非待付款时，被调用支付成功", encoding, payStatus);
+        String tradeStatus = order.getTradeStatus();
+        if (!OrderTradeStatus.WaitPay.eq(tradeStatus)) {
+            log.warn("订单[单号={}]，状态[{}]非待付款时，被调用支付成功", encoding, tradeStatus);
             return;
         }
 
