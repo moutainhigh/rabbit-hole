@@ -16,6 +16,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface UserCouponMapping {
+    @Mapping(target = "startAt", ignore = true)
+    @Mapping(target = "endAt", ignore = true)
     @Mapping(target = "encoding", ignore = true)
     @Mapping(target = "deleter", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)

@@ -83,8 +83,13 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
 
     @Override
     public void giveToUsers(@NotNull Long couponId, @Validated GiveCouponRo ro) {
+        List<LocalDateTime> validityAt = ro.getValidityAt();
         Assert.notNull(couponService.getById(couponId), "优惠券模版错误");
         UserCoupon entity = mapping.asUserCoupon(ro);
+        LocalDateTime startAt = validityAt.get(0);
+        LocalDateTime endAt = validityAt.get(1);
+        entity.setStartAt(startAt);
+        entity.setEndAt(endAt);
         entity.setEncoding(codeServiceApi.getSnCode(CodeType.UserCoupon.getCodeStr()));
         entity.setCouponId(couponId);
         entity.setStatus(UserCouponStatus.UnUse.getCodeStr());

@@ -21,10 +21,9 @@ public class GiveCouponRo {
     @NotNull(message = "请选择用户")
     @Size(min = 1, max = 100, message = "请选择用户(1~100)")
     private List<Long> toUserId;
+    @Size(min = 2, max = 2, message = "请指定生效时间")
     @NotNull(message = "请指定生效时间")
-    private LocalDateTime startAt;
-    @NotNull(message = "请指定失效时间")
-    private LocalDateTime endAt;
+    private List<LocalDateTime> validityAt;
 
     @ApiModelProperty(hidden = true)
     private Long ownerUserId;
