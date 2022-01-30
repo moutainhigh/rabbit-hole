@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by hocgin on 2020/8/15
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  *
  * @author hocgin
  */
+//@EnableScheduling
 @SpringBootApplication(scanBasePackages = {
     "in.hocg.rabbit.chaos", "in.hocg.rabbit.wl",
     "in.hocg.rabbit.bmw",
