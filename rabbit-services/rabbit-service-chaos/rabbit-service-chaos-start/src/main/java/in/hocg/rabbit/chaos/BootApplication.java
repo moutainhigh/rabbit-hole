@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author hocgin
  */
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication(scanBasePackages = {
     "in.hocg.rabbit.chaos", "in.hocg.rabbit.wl",
     "in.hocg.rabbit.bmw",

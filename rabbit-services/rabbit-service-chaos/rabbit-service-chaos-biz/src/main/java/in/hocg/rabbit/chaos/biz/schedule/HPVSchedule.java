@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Slf4j
-@Component
+//@Component
 public class HPVSchedule {
     public static final String tk = "wxtoken:6831522813793b789e711158673288cf_293f66c3441d025f4ad6a752eb42b281";
     public static final String st = "d2fc97cc240ea12f6472b5bd74aeeb49";
