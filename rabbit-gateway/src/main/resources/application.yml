@@ -160,6 +160,7 @@ boot:
         ,/mina/game/room/**
         ,/mina/*/game/_paging
         ,/mina/*/game/*
+        ,/mina/face/topic
         ,/mina/app-card/_paging
         ,/mina/mobile-wallpaper/_paging
         ,/mina/*/app/_paging
