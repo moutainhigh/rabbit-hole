@@ -13,7 +13,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.rabbit.com.biz.service.MessageUserRefProxyService;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
-import in.hocg.rabbit.com.api.enums.MessageUserRefType;
+import in.hocg.rabbit.com.api.enums.message.MessageUserRefType;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.utils.ValidUtils;

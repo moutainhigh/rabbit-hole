@@ -5,8 +5,9 @@
     SELECT muc.*
     FROM mkt_user_coupon muc
     <where>
-      <if test="ro.userId != null">
-        AND muc.user_id = #{ro.userId}
+      AND muc.deleted_at IS NULL
+      <if test="ro.ownerUserId != null">
+        AND muc.owner_user_id = #{ro.ownerUserId}
       </if>
     </where>
     ORDER BY muc.created_at DESC

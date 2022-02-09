@@ -22,6 +22,7 @@ public class OrderDeliveryOrdinaryVo {
     private Long orderId;
     @ApiModelProperty("配送状态")
     private String status;
+    private String statusName;
     @ApiModelProperty("编号")
     private String encoding;
 

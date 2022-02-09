@@ -15,6 +15,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface CouponMapping {
+    @Mapping(target = "typeName", ignore = true)
+    @Mapping(target = "stintRules", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     CouponComplexVo asCouponComplexVo(Coupon entity);
@@ -28,5 +30,6 @@ public interface CouponMapping {
     @Mapping(target = "createdAt", ignore = true)
     Coupon asCoupon(CouponSaveRo ro);
 
+    @Mapping(target = "typeName", ignore = true)
     CouponOrdinaryVo asCouponOrdinaryVo(Coupon entity);
 }

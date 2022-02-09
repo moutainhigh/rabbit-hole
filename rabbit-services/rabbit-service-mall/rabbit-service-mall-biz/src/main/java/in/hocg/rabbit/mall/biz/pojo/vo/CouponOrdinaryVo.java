@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 @ApiModel
 @InjectNamed
 public class CouponOrdinaryVo {
+    private Long id;
     @ApiModelProperty("优惠券名称")
     private String title;
     @ApiModelProperty("折扣方式")

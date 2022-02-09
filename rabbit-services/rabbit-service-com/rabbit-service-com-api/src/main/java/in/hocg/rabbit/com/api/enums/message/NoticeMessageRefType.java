@@ -1,6 +1,8 @@
-package in.hocg.rabbit.com.api.enums;
+package in.hocg.rabbit.com.api.enums.message;
 
+import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
+@UseDataDictKey(value = ComDataDictKeys.MMS_NOTICE_MESSAGE_REF_TYPE, description = "通知消息类型")
 public enum NoticeMessageRefType implements DataDictEnum {
     Comment("comment", "评论"),
 //    Comment("comment", "评论")
@@ -21,5 +24,4 @@ public enum NoticeMessageRefType implements DataDictEnum {
     private final Serializable code;
     private final String name;
 
-    public final static String KEY = "mms_notice_message_ref_type";
 }

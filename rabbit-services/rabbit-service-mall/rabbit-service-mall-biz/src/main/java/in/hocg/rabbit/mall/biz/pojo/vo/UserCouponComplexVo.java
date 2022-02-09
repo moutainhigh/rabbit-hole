@@ -1,6 +1,12 @@
 package in.hocg.rabbit.mall.biz.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
+import in.hocg.rabbit.mall.api.named.MallDataDictKeys;
+import in.hocg.rabbit.mall.api.named.MallNamed;
+import in.hocg.rabbit.mall.api.named.MallNamedType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,41 +25,51 @@ import java.util.List;
  */
 @Data
 @ApiModel
+@InjectNamed
 @Accessors(chain = true)
 public class UserCouponComplexVo {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
     @ApiModelProperty("优惠券编号")
     private String encoding;
+    @ApiModelProperty("优惠券")
     private Long couponId;
     @ApiModelProperty("使用状态")
     private String status;
+    @MallNamed(idFor = "status", type = MallNamedType.DataDictName, args = {MallDataDictKeys.USER_COUPON_STATUS})
+    private String statusName;
+
     @ApiModelProperty("拥有人")
     private Long ownerUserId;
+    @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
+    private String ownerUserName;
+
+    @ApiModelProperty("优惠信息")
+    private CouponComplexVo coupon;
+
+    @ApiModelProperty("过期状态")
+    private Boolean expiredFlag;
     @ApiModelProperty("优惠券生效时间")
     private LocalDateTime startAt;
     @ApiModelProperty("优惠券失效时间")
     private LocalDateTime endAt;
-    @ApiModelProperty("优惠券使用时间")
+
+    @ApiModelProperty("使用时间")
     private LocalDateTime usedAt;
-    @ApiModelProperty("领取时间")
+    @ApiModelProperty("实际抵扣金额")
+    private BigDecimal usedAmt;
+
+
+    @ApiModelProperty("创建时间")
     private LocalDateTime createdAt;
-
-    @ApiModelProperty("折扣方式")
-    private String couponType;
-    @ApiModelProperty("优惠券标题")
-    private String title;
-    @ApiModelProperty("优惠券使用说明")
-    private String useInstructions;
-    @ApiModelProperty("使用方式")
-    private String useStint;
-    @ApiModelProperty("可用平台")
-    private String usePlatform;
-    @ApiModelProperty("满减金额/折扣率")
-    private BigDecimal credit;
-    @ApiModelProperty("最低启用金额")
-    private BigDecimal minPoint;
-    @ApiModelProperty("优惠上限金额")
-    private BigDecimal ceiling;
-
+    @ApiModelProperty("创建人")
+    private Long creator;
+    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
+    private String creatorName;
+    @ApiModelProperty("最后更新时间")
+    private LocalDateTime lastUpdatedAt;
+    @ApiModelProperty("最后更新时间")
+    private Long lastUpdater;
+    @ChaosNamed(idFor = "lastUpdater", type = ChaosNamedType.Userid2Nickname)
+    private String lastUpdaterName;
 }

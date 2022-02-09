@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.pojo.ro;
 
-import in.hocg.rabbit.com.api.enums.CommentTargetType;
+import in.hocg.rabbit.com.api.enums.comment.CommentTargetType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.PageRo;
 import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModelProperty;

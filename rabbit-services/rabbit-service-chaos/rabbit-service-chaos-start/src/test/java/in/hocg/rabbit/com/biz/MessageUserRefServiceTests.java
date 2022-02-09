@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz;
 
-import in.hocg.rabbit.TestConstant;
+import in.hocg.rabbit.Features;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
@@ -27,26 +27,26 @@ public class MessageUserRefServiceTests extends AbstractSpringBootTest {
 
     @Test
     public void getMessageStatByUserId() {
-        MessageStatVo messageStatVo = service.getMessageStatByUserId(TestConstant.SUPPER_ADMIN_USER_ID);
+        MessageStatVo messageStatVo = service.getMessageStatByUserId(Features.SUPPER_ADMIN_USER_ID);
         System.out.println(messageStatVo);
     }
 
     @Test
     public void sendPersonalMessage() {
         SendPersonalMessageRo messageRo = new SendPersonalMessageRo();
-        messageRo.setUserId(TestConstant.SUPPER_ADMIN_USER_ID);
+        messageRo.setUserId(Features.SUPPER_ADMIN_USER_ID);
         messageRo.setContent("你好");
-        messageRo.setReceiver(TestConstant.SUPPER_ADMIN_USER_ID);
+        messageRo.setReceiver(Features.SUPPER_ADMIN_USER_ID);
         service.sendPersonalMessage(messageRo);
     }
 
     @Test
     public void sendSystemMessage() {
         SendSystemMessageRo messageRo = new SendSystemMessageRo();
-        messageRo.setUserId(TestConstant.SUPPER_ADMIN_USER_ID);
+        messageRo.setUserId(Features.SUPPER_ADMIN_USER_ID);
         messageRo.setContent("你好");
         messageRo.setTitle("标题");
-        messageRo.setReceiver(Lists.newArrayList(TestConstant.SUPPER_ADMIN_USER_ID));
+        messageRo.setReceiver(Lists.newArrayList(Features.SUPPER_ADMIN_USER_ID));
         service.sendSystemMessage(messageRo);
     }
 }

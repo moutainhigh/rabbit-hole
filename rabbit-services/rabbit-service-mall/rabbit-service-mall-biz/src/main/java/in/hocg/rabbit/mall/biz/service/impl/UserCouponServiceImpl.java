@@ -7,6 +7,8 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConve
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.mall.api.enums.coupon.UserCouponStatus;
 import in.hocg.rabbit.mall.biz.convert.UserCouponConvert;
 import in.hocg.rabbit.mall.biz.entity.Coupon;
@@ -16,10 +18,7 @@ import in.hocg.rabbit.mall.biz.mapstruct.UserCouponMapping;
 import in.hocg.rabbit.mall.biz.pojo.ro.GiveCouponRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponBuyerScrollRo;
 import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
-import in.hocg.rabbit.mall.biz.pojo.vo.ProductCategoryComplexVo;
-import in.hocg.rabbit.mall.biz.pojo.vo.ProductComplexVo;
-import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponBuyerVo;
-import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
+import in.hocg.rabbit.mall.biz.pojo.vo.*;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -52,10 +51,16 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
     private final UserCouponConvert convert;
     private final CouponService couponService;
     private final UserCouponMapping mapping;
+    private final SnCodeServiceApi codeServiceApi;
 
     @Override
-    public IPage<UserCouponComplexVo> paging(UserCouponPagingRo ro) {
-        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asUserCouponComplexVo);
+    public IPage<UserCouponOrdinaryVo> paging(UserCouponPagingRo ro) {
+        return baseMapper.paging(ro, ro.ofPage()).convert(convert::asUserCouponOrdinaryVo);
+    }
+
+    @Override
+    public UserCouponComplexVo getComplex(Long id) {
+        return convert.asUserCouponComplexVo(getById(id));
     }
 
     @Override
@@ -78,16 +83,17 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
 
     @Override
     public void giveToUsers(@NotNull Long couponId, @Validated GiveCouponRo ro) {
+        List<LocalDateTime> validityAt = ro.getValidityAt();
         Assert.notNull(couponService.getById(couponId), "优惠券模版错误");
         UserCoupon entity = mapping.asUserCoupon(ro);
+        LocalDateTime startAt = validityAt.get(0);
+        LocalDateTime endAt = validityAt.get(1);
+        entity.setStartAt(startAt);
+        entity.setEndAt(endAt);
+        entity.setEncoding(codeServiceApi.getSnCode(CodeType.UserCoupon.getCodeStr()));
         entity.setCouponId(couponId);
         entity.setStatus(UserCouponStatus.UnUse.getCodeStr());
         this.validInsert(entity);
-    }
-
-    @Override
-    public List<UserCouponComplexVo> listComplexByUserId(Long userId) {
-        return LangUtils.toList(this.listByUserId(userId), convert::asUserCouponComplexVo);
     }
 
     @Override

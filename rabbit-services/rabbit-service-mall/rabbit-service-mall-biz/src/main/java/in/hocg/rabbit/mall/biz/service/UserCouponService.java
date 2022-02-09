@@ -9,6 +9,7 @@ import in.hocg.rabbit.mall.biz.pojo.ro.UserCouponPagingRo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponBuyerVo;
 import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.mall.biz.pojo.vo.UserCouponOrdinaryVo;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public interface UserCouponService extends AbstractService<UserCoupon> {
 
-    IPage<UserCouponComplexVo> paging(UserCouponPagingRo ro);
+    IPage<UserCouponOrdinaryVo> paging(UserCouponPagingRo ro);
 
     /**
      * 撤销优惠券
@@ -47,8 +48,6 @@ public interface UserCouponService extends AbstractService<UserCoupon> {
      */
     void giveToUsers(Long couponId, GiveCouponRo ro);
 
-    List<UserCouponComplexVo> listComplexByUserId(Long userId);
-
     boolean updateUnusedStatus(List<Long> userCouponId);
 
     List<UserCoupon> listByAvailableAndOwnerUserId(Long ownerUserId);
@@ -56,4 +55,6 @@ public interface UserCouponService extends AbstractService<UserCoupon> {
     boolean updateUsedStatus(List<UserCoupon> update);
 
     IScroll<UserCouponBuyerVo> scrollByBuyer(UserCouponBuyerScrollRo ro);
+
+    UserCouponComplexVo getComplex(Long id);
 }

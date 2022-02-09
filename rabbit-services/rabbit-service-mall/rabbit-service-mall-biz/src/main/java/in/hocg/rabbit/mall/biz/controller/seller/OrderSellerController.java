@@ -74,6 +74,16 @@ public class OrderSellerController {
     }
 
     @UseLogger
+    @ApiOperation("手动支付 - 订单")
+    @PostMapping("/{id}/payed")
+    public Result<Void> shipped(@PathVariable Long id, @Validated @RequestBody PayedOrderBySellerRo ro) {
+        ro.setOperatorId(UserContextHolder.getUserIdThrow());
+        service.payed(id, ro);
+        return Result.success();
+    }
+
+
+    @UseLogger
     @ApiOperation("后台调价 - 订单")
     @PostMapping("/{id}/adjustment")
     public Result<Void> adjustment(@PathVariable Long id, @Validated @RequestBody AdjustmentOrderBySellerRo ro) {

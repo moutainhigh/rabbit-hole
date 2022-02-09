@@ -1,6 +1,8 @@
 package in.hocg.rabbit.com.api.enums;
 
+import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.com.api.named.ComDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
+@UseDataDictKey(value = ComDataDictKeys.DISTRICT_LEVEL, description = "行政区划级别")
 public enum DistrictLevel implements DataDictEnum {
     Country("country", "国家"),
     Province("province", "省份"),
@@ -23,5 +26,4 @@ public enum DistrictLevel implements DataDictEnum {
     private final Serializable code;
     private final String name;
 
-    public final static String KEY = "district_level";
 }

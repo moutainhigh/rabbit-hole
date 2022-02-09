@@ -44,12 +44,10 @@ public class CouponStintRuleRefServiceImpl extends AbstractServiceImpl<CouponSti
         List<CouponStintRuleRef> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
 
         // 删除
-        this.removeByIds(deleteList.parallelStream()
-            .map(CouponStintRuleRef::getId)
-            .collect(Collectors.toList()));
+        this.removeByIds(LangUtils.toList(deleteList, CouponStintRuleRef::getId));
 
         // 新增
-        addList.forEach(this::validInsertOrUpdate);
+        this.saveBatch(addList);
 
         // 更新
         mixedList.forEach(this::validInsertOrUpdate);

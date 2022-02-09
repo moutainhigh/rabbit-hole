@@ -29,7 +29,7 @@ public class OrderMaintainAction extends CommonAction<OrderMaintainStatus, Maint
     public void execute(StateContext<OrderMaintainStatus, MaintainEvent> context) {
         String targetCode = getTarget(context).getCodeStr();
         String sourceCode = getSource(context).getCodeStr();
-        OrderItem entity = getEntity(context);
+        OrderMaintain entity = getEntity(context);
 
         OrderMaintain update = new OrderMaintain();
         update.setStatus(targetCode);

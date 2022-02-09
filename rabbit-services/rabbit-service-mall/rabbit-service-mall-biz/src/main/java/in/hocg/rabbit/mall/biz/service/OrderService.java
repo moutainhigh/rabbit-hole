@@ -55,4 +55,6 @@ public interface OrderService extends AbstractService<Order> {
     void adjustment(Long id, AdjustmentOrderBySellerRo ro);
 
     OrderDeliveryComplexVo getDeliveryByBuyer(Long id);
+
+    void payed(Long id, PayedOrderBySellerRo ro);
 }

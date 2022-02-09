@@ -12,6 +12,7 @@ import in.hocg.rabbit.mall.biz.pojo.vo.CouponOrdinaryVo;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
+import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +69,7 @@ public class CouponController {
     @ApiOperation("赠送优惠券 - 优惠券模版")
     @PostMapping("/{id:\\d+}/give")
     public Result<Void> give(@PathVariable Long id, @Validated @RequestBody GiveCouponRo ro) {
+        ro.setOwnerUserId(UserContextHolder.getUserIdThrow());
         service.giveToUsers(id, ro);
         return Result.success();
     }
