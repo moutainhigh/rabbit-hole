@@ -22,38 +22,22 @@ public class DownloadPngTests {
         String toPath = "/Users/hocgin/Desktop/图片收藏/头像/all";
 
         List<String> list = Lists.newArrayList(
-            "https://cdn.hellobeebee.com/face/chris/men-11.png",
-            "https://cdn.hellobeebee.com/face/chris/men-12.png",
-            "https://cdn.hellobeebee.com/face/chris/men-13.png",
-            "https://cdn.hellobeebee.com/face/chris/men-9.png",
-            "https://cdn.hellobeebee.com/face/chris/men-8.png",
-            "https://cdn.hellobeebee.com/face/chris/men-7.png",
-            "https://cdn.hellobeebee.com/face/chris/men-6.png",
-            "https://cdn.hellobeebee.com/face/chris/men-4.png",
-            "https://cdn.hellobeebee.com/face/chris/men-5.png",
-            "https://cdn.hellobeebee.com/face/chris/men-1.png",
-            "https://cdn.hellobeebee.com/face/chris/men-2.png",
-            "https://cdn.hellobeebee.com/face/chris/men-3.png",
-            "https://cdn.hellobeebee.com/face/chris/men-10.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-12.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-13.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-11.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-10.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-7.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-8.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-9.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-5.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-6.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-3.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-4.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-1.png",
-            "https://cdn.hellobeebee.com/face/chris/plus-2.png"
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/1.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/2.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/3.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/4.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/5.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/6.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/7.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/8.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/9.jpg",
+            "https://6d69-miniprogram-hat-4gxgmz47c042439e-1309189111.tcb.qcloud.la/puma-img/10.jpg"
         );
 
         // frame
         for (String url : list) {
             String filename = FileUtil.getName(url);
-            filename = StrUtil.format("zb_frame__{}_{}", System.currentTimeMillis(), filename);
+            filename = StrUtil.format("sd_frame__{}_{}", System.currentTimeMillis(), filename);
             HttpUtil.downloadFile(url, Path.of(toPath, filename).toFile());
         }
 
