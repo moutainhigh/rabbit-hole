@@ -107,6 +107,43 @@
         ]
     },
     {
+        "title": "虎帽子",
+        "banner": "http://cdn.hocgin.top/file/banner_20220209_tiger2.png",
+        "background": "http://cdn.hocgin.top/file/20190829_bg.png",
+        "avatar": [
+            "http://cdn.hocgin.top/file/sd_frame__1644417480936_1.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417482271_2.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417483227_3.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417483326_4.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417484162_5.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417485202_6.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417486123_7.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417487097_8.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417488570_9.jpg",
+            "http://cdn.hocgin.top/file/sd_frame__1644417489485_10.jpg"
+        ],
+        "pendant": [
+            "http://cdn.hocgin.top/file/sd_frame__20220209_1.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_2.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_3.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_4.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_5.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_6.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_7.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_8.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_9.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_10.png"
+        ],
+        "frame": [
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg1.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg2.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg3.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg4.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg5.png",
+            "http://cdn.hocgin.top/file/sd_frame__20220209_edg6.png"
+        ]
+    },
+    {
         "title": "防疫抗疫，加油",
         "banner": "http://cdn.hocgin.top/file/banner_20220209_kangyi.png",
         "background": "http://cdn.hocgin.top/file/20190829_bg.png",
