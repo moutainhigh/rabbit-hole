@@ -11,17 +11,15 @@ import lombok.Data;
  */
 @Data
 public class CommentClientRo {
-    @ApiModelProperty
+    @ApiModelProperty(hidden = true, value = "评论目标ID", required = true)
     private Long refId;
-    @ApiModelProperty
+    @ApiModelProperty(hidden = true, value = "评论目标类型", required = true)
     private String refType;
 
 
-    @ApiModelProperty
-    private Long id;
+    @ApiModelProperty("如果评论的目标是评论")
+    private Long commentId;
     @ApiModelProperty("评论内容")
     private String content;
 
-    @ApiModelProperty(required = true, hidden = true)
-    private Long userId;
 }

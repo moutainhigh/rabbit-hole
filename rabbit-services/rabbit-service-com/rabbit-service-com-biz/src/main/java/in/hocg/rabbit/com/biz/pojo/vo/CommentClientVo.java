@@ -20,8 +20,8 @@ public class CommentClientVo {
     private Integer likes;
     @ApiModelProperty("不喜欢数量")
     private Integer disliked;
-    @ApiModelProperty("登陆用户的点赞行为: liked/disliked")
-    private String action;
+    @ApiModelProperty("登陆用户的点赞行为")
+    private String action = Action.none.name();
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("是否有人评论该评论")
@@ -33,4 +33,8 @@ public class CommentClientVo {
     @ApiModelProperty("被评论人")
     private CommentUserVo replier;
 
+
+    public enum Action {
+        liked, disliked, none
+    }
 }

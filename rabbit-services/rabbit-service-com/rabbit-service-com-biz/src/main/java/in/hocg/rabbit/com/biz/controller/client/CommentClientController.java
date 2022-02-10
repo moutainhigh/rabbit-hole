@@ -1,10 +1,12 @@
 package in.hocg.rabbit.com.biz.controller.client;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentClientPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentClientRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentDislikeRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentLikeRo;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
@@ -30,27 +32,26 @@ public class CommentClientController {
     private final CommentService service;
 
     @ApiOperation("评论")
-    @PostMapping("/comment")
-    public Result<CommentClientVo> comment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                           @Validated @RequestBody CommentClientRo ro) {
+    @PostMapping("/reply")
+    public Result<CommentClientVo> reply(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                         @Validated @RequestBody CommentClientRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
-        ro.setUserId(UserContextHolder.getUserIdThrow());
-        return Result.success(service.commentWithClient(ro));
+        return Result.success(service.replyWithClient(ro));
     }
 
-    @ApiOperation("顶级评论 - 分页查询")
-    @PostMapping("/_paging")
-    public Result<IPage<CommentClientVo>> paging(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                                 @Validated @RequestBody CommentClientPagingRo ro) {
+    @ApiOperation("顶级评论 - 下拉翻页")
+    @PostMapping("/_scroll")
+    public Result<IScroll<CommentClientVo>> scroll(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                   @Validated @RequestBody CommentClientScrollRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
-        return Result.success(service.pagingWithClient(ro));
+        return Result.success(service.scrollWithClient(ro));
     }
 
     @ApiOperation("子级评论 - 分页查询")
-    @PostMapping("/comment/{parentId}/_paging")
+    @PostMapping("/_paging")
     public Result<IPage<CommentClientVo>> pagingByParentId(@PathVariable("refType") String refType, @PathVariable("refId") Long refId, @PathVariable("parentId") Long parentId,
                                                            @Validated @RequestBody CommentClientPagingRo ro) {
         ro.setParentId(parentId);
@@ -61,22 +62,16 @@ public class CommentClientController {
     }
 
     @ApiOperation("点赞")
-    @PostMapping("/comment/{id}/like")
-    public Result<Void> like(@PathVariable("id") Long id) {
-        CommentLikeRo ro = new CommentLikeRo();
-        ro.setId(id);
+    @PostMapping("/like")
+    public Result<CommentClientVo> like(@Validated @RequestBody CommentLikeRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
-        service.like(ro);
-        return Result.success();
+        return Result.success(service.like(ro));
     }
 
     @ApiOperation("倒赞")
-    @PostMapping("/comment/{id}/dislike")
-    public Result<Void> dislike(@PathVariable("id") Long id) {
-        CommentDislikeRo ro = new CommentDislikeRo();
-        ro.setId(id);
+    @PostMapping("/dislike")
+    public Result<CommentClientVo> dislike(@Validated @RequestBody CommentDislikeRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
-        service.dislike(ro);
-        return Result.success();
+        return Result.success(service.dislike(ro));
     }
 }

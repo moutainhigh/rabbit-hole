@@ -1,8 +1,10 @@
 package in.hocg.rabbit.com.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.pojo.ro.*;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.RootCommentComplexVo;
@@ -49,13 +51,15 @@ public interface CommentService extends AbstractService<Comment> {
      */
     IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingRo ro);
 
-    void like(CommentLikeRo ro);
+    CommentClientVo like(CommentLikeRo ro);
 
-    void dislike(CommentDislikeRo ro);
+    CommentClientVo dislike(CommentDislikeRo ro);
 
     IPage<CommentComplexVo> paging(CommentPagingRo ro);
 
-    CommentClientVo commentWithClient(CommentClientRo ro);
+    CommentClientVo replyWithClient(CommentClientRo ro);
 
     IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro);
+
+    IScroll<CommentClientVo> scrollWithClient(CommentClientScrollRo ro);
 }

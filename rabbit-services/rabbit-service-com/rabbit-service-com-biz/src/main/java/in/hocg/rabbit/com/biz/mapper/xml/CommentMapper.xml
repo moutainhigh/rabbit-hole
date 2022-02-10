@@ -42,4 +42,16 @@
     </where>
     ORDER BY tc.created_at DESC
   </select>
+
+  <select id="scrollWithClient" resultType="in.hocg.rabbit.com.biz.entity.Comment">
+    SELECT tc.*
+    FROM com_comment tc
+    <where>
+      <if test="ro.targetId != null">
+        AND tc.target_id = #{ro.targetId}
+      </if>
+      AND tc.parent_id IS NULL
+    </where>
+    ORDER BY tc.created_at DESC
+  </select>
 </mapper>

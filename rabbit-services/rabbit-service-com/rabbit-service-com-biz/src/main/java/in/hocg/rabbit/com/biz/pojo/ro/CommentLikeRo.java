@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by hocgin on 2021/1/14
  * email: hocgin@gmail.com
@@ -14,6 +16,7 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 public class CommentLikeRo {
-    private Long id;
+    @NotNull(message = "评论ID不能为空")
+    private Long commentId;
     private Long userId;
 }

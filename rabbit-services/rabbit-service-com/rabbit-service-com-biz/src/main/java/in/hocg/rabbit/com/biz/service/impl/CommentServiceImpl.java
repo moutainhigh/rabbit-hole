@@ -2,6 +2,7 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.com.biz.entity.Comment;
@@ -10,6 +11,7 @@ import in.hocg.rabbit.com.biz.mapper.CommentMapper;
 import in.hocg.rabbit.com.biz.mapstruct.CommentMapping;
 import in.hocg.rabbit.com.biz.message.MessageTopic;
 import in.hocg.rabbit.com.biz.pojo.dto.TriggerCommentedDto;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentUserVo;
@@ -146,22 +148,24 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void like(CommentLikeRo ro) {
-        Long commentId = ro.getId();
+    public CommentClientVo like(CommentLikeRo ro) {
+        Long commentId = ro.getCommentId();
         Long userId = ro.getUserId();
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, true);
+        return convertCommentClientVo(getById(commentId));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void dislike(CommentDislikeRo ro) {
-        Long commentId = ro.getId();
+    public CommentClientVo dislike(CommentDislikeRo ro) {
+        Long commentId = ro.getCommentId();
         Long userId = ro.getUserId();
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, false);
+        return convertCommentClientVo(getById(commentId));
     }
 
     @Retryable
@@ -211,12 +215,10 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     }
 
     @Override
-    public CommentClientVo commentWithClient(CommentClientRo ro) {
+    public CommentClientVo replyWithClient(CommentClientRo ro) {
         Comment entity = mapping.asComment(ro);
-        entity.setParentId(ro.getId());
+        entity.setParentId(ro.getCommentId());
         entity.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setCreator(ro.getUserId());
         this.validInsert(entity);
         return this.convertCommentClientVo(getById(entity.getId()));
     }
@@ -225,6 +227,13 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     public IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro) {
         ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
         return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(this::convertCommentClientVo);
+    }
+
+    @Override
+    public IScroll<CommentClientVo> scrollWithClient(CommentClientScrollRo ro) {
+        ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        return PageUtils.fillScroll(baseMapper.scrollWithClient(ro, ro.ofPage()), Comment::getId)
+            .convert(this::convertCommentClientVo);
     }
 
     private CommentClientVo convertCommentClientVo(Comment entity) {
