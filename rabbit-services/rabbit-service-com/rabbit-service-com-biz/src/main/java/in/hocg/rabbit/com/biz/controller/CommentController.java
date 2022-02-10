@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "com::评论")
 @RestController
+@Deprecated(/**新版本配合组件直接使用*/)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/comment")
 public class CommentController {
@@ -60,7 +61,7 @@ public class CommentController {
     @UseLogger("喜欢 - 评论")
     @PostMapping("/{id:\\d+}/like")
     public Result<Void> like(@PathVariable("id") Long id) {
-        CommentLikeRo ro = new CommentLikeRo().setId(id);
+        CommentLikeRo ro = new CommentLikeRo().setCommentId(id);
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
         service.like(ro);
         return Result.success();
