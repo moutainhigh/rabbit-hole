@@ -7,6 +7,8 @@ CREATE TABLE `com_comment_report`
         COMMENT '评论',
     `user_id`         BIGINT      NOT NULL
         COMMENT '用户',
+    `reason`          VARCHAR(255)
+        COMMENT '举报原因',
     --
     `created_at`      DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
         COMMENT '创建时间',
