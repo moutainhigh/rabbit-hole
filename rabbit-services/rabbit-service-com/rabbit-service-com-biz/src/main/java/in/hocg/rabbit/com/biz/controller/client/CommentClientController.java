@@ -7,6 +7,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.CommentClientRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentDislikeRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentLikeRo;
 import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentReportRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
@@ -74,4 +75,14 @@ public class CommentClientController {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.dislike(ro));
     }
+
+    @ApiOperation("举报")
+    @PostMapping("/report")
+    public Result<Void> report(@Validated @RequestBody CommentReportRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.report(ro);
+        return Result.success();
+    }
+
+
 }
