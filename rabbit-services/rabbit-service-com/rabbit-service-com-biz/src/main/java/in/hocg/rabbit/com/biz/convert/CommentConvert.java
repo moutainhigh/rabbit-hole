@@ -78,6 +78,6 @@ public class CommentConvert {
         return new CommentUserVo()
             .setId(entity.getId())
             .setAvatarUrl(entity.getAvatarUrl())
-            .setNickname(entity.getNickname());
+            .setTitle(entity.getNickname());
     }
 }

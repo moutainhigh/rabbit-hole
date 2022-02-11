@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Deprecated(/**新版本配合组件直接使用*/)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/comment")
+@RequestMapping("/old/comment")
 public class CommentController {
     private final CommentService service;
 

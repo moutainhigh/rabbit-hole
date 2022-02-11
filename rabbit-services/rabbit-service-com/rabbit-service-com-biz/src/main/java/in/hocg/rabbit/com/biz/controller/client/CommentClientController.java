@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "com::评论(Client)")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/client/comment/{refType}/{refId}")
+@RequestMapping("/comment/{refType}/{refId}")
 public class CommentClientController {
     private final CommentService service;
 
