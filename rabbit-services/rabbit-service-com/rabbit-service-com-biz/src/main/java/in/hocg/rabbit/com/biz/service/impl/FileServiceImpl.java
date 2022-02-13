@@ -11,6 +11,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     public void upload(UploadFileRo dto) {
         final Long relId = dto.getRefId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final FileRelType relType = ICode.ofThrow(dto.getRefType(), FileRelType.class);
+        final RefType relType = ICode.ofThrow(dto.getRefType(), RefType.class);
         final List<UploadFileRo.FileDto> files = dto.getFiles();
         deleteByRefTypeAndRefId(relType.getCodeStr(), relId);
         final LocalDateTime now = LocalDateTime.now();
@@ -75,8 +76,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<FileVo> listByRefTypeAndRefId(@NotNull String refType,
-                                              @NotNull Long refId) {
+    public List<FileVo> listByRefTypeAndRefId(@NotNull String refType, @NotNull Long refId) {
         return listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(refType, refId)
             .stream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))

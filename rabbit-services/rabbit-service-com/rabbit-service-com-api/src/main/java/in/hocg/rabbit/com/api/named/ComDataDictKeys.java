@@ -8,6 +8,7 @@ package in.hocg.rabbit.com.api.named;
  */
 public final class ComDataDictKeys {
     public static final String CODE_TYPE = "COM__CODE_TYPE";
+    public static final String DOC_TYPE = "COM__DOC_TYPE";
 
     public static final String INTEGRAL_FLOW_CHANGE_TYPE = "COM__INTEGRAL_FLOW_CHANGE_TYPE";
     public static final String INTEGRAL_FLOW_EVENT_TYPE = "COM__INTEGRAL_FLOW_EVENT_TYPE";
