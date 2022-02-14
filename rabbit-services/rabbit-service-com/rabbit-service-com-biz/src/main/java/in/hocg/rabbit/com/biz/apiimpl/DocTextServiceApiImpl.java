@@ -1,11 +1,10 @@
 package in.hocg.rabbit.com.biz.apiimpl;
 
-import in.hocg.rabbit.com.api.ComServiceName;
 import in.hocg.rabbit.com.api.DocTextServiceApi;
+import in.hocg.rabbit.com.api.pojo.ro.BatchPublishDocTextRo;
 import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 import in.hocg.rabbit.com.biz.service.DocTextService;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +24,18 @@ public class DocTextServiceApiImpl implements DocTextServiceApi {
     private final DocTextService docTextService;
 
     @Override
-    public void publish(PublishDocTextRo ro) {
-        docTextService.publish(ro);
+    public Long publish(PublishDocTextRo ro) {
+        return docTextService.publish(ro);
+    }
+
+    @Override
+    public DocTextVo getDocTextById(Long id) {
+        return docTextService.getDocTextById(id);
+    }
+
+    @Override
+    public void batchPublish(BatchPublishDocTextRo ro) {
+        docTextService.batchPublish(ro);
     }
 
     @Override

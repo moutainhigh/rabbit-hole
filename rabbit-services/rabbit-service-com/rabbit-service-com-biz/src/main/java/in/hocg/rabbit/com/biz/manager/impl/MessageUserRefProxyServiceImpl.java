@@ -1,10 +1,12 @@
-package in.hocg.rabbit.com.biz.service.proxy;
+package in.hocg.rabbit.com.biz.manager.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.rabbit.com.biz.convert.MessageConvert;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.entity.NoticeMessage;
 import in.hocg.rabbit.com.biz.entity.PersonalMessage;
 import in.hocg.rabbit.com.biz.entity.SystemMessage;
+import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
 import in.hocg.rabbit.com.biz.mapstruct.MessageUserRefMapping;
 import in.hocg.rabbit.com.biz.mapstruct.NoticeMessageMapping;
 import in.hocg.rabbit.com.biz.mapstruct.PersonalMessageMapping;
@@ -48,13 +50,12 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
     private final SystemMessageService systemMessageService;
     private final SystemMessageMapping systemMessageMapping;
     private final MessageUserRefService messageUserRefService;
-    private final MessageUserRefMapping messageUserRefMapping;
-    private final NoticeMessageProxyService noticeMessageProxyService;
+    private final MessageConvert convert;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MessageComplexVo getById(Long id) {
-        return this.convert(messageUserRefService.getById(id));
+        return convert.asMessageComplexVo(messageUserRefService.getById(id));
     }
 
 
@@ -63,7 +64,7 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
     public IPage<MessageComplexVo> paging(MessagePagingRo ro) {
         IPage<MessageUserRef> result = messageUserRefService.paging(ro);
         messageUserRefService.readById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
-        return result.convert(this::convert);
+        return result.convert(convert::asMessageComplexVo);
     }
 
     @Override
@@ -124,29 +125,4 @@ public class MessageUserRefProxyServiceImpl implements MessageUserRefProxyServic
         ValidUtils.isTrue(isOk);
     }
 
-    private MessageComplexVo convert(MessageUserRef entity) {
-        Long refId = entity.getRefId();
-        MessageUserRefType messageUserRefType = ICode.ofThrow(entity.getRefType(), MessageUserRefType.class);
-
-        MessageComplexVo result = messageUserRefMapping.asComplex(entity);
-        result.setMessageType(messageUserRefType.getCodeStr());
-
-        Rules.create()
-            .rule(MessageUserRefType.NoticeMessage, Rules.Runnable(() -> {
-                NoticeMessageComplexVo complex = noticeMessageProxyService.getById(refId);
-                result.setNoticeMessage(complex);
-            }))
-            .rule(MessageUserRefType.PersonalMessage, Rules.Runnable(() -> {
-                PersonalMessage message = personalMessageService.getById(refId);
-                PersonalMessageComplexVo complex = personalMessageMapping.asComplex(message);
-                result.setPersonalMessage(complex);
-            }))
-            .rule(MessageUserRefType.SystemMessage, Rules.Runnable(() -> {
-                SystemMessage message = systemMessageService.getById(refId);
-                SystemMessageComplexVo complex = systemMessageMapping.asComplex(message);
-                result.setSystemMessage(complex);
-            }))
-            .of(messageUserRefType);
-        return result;
-    }
 }

@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.api;
 
+import in.hocg.rabbit.com.api.pojo.ro.BatchPublishDocTextRo;
 import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
-import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -27,7 +26,15 @@ public interface DocTextServiceApi {
 
     @ApiOperation("发布文档")
     @PostMapping(value = CONTEXT_ID + "/publish", headers = ComServiceName.FEIGN_HEADER)
-    void publish(@Validated @RequestBody PublishDocTextRo ro);
+    Long publish(@Validated @RequestBody PublishDocTextRo ro);
+
+    @ApiOperation("查询文档")
+    @PostMapping(value = CONTEXT_ID + "/getById", headers = ComServiceName.FEIGN_HEADER)
+    DocTextVo getDocTextById(@RequestParam("id") Long id);
+
+    @ApiOperation("发布文档(批量)")
+    @PostMapping(value = CONTEXT_ID + "/batchPublish", headers = ComServiceName.FEIGN_HEADER)
+    void batchPublish(@Validated @RequestBody BatchPublishDocTextRo ro);
 
     @ApiOperation("查询文档")
     @PostMapping(value = CONTEXT_ID + "/listByRefTypeAndRefId", headers = ComServiceName.FEIGN_HEADER)

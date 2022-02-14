@@ -1,4 +1,4 @@
-package in.hocg.rabbit.com.biz.controller;
+package in.hocg.rabbit.com.biz.controller.client;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

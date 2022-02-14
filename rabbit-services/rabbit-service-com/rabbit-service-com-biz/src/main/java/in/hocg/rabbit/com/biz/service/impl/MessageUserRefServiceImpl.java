@@ -11,7 +11,7 @@ import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
-import in.hocg.rabbit.com.biz.service.MessageUserRefProxyService;
+import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
 import in.hocg.rabbit.com.api.enums.message.MessageUserRefType;
 import in.hocg.rabbit.ums.api.UserServiceApi;
@@ -59,7 +59,6 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Transactional(rollbackFor = Exception.class)
     public void sendPersonalMessage(SendPersonalMessageRo ro) {
         SendPersonalMessageDto dto = mapping.asSendPersonalMessageDto(ro);
-        dto.setCreator(ro.getUserId());
         messageUserRefProxyService.sendPersonalMessage(dto);
     }
 
@@ -67,7 +66,6 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Transactional(rollbackFor = Exception.class)
     public void sendSystemMessage(SendSystemMessageRo ro) {
         SendSystemMessageDto dto = mapping.asSendSystemMessageDto(ro);
-        dto.setCreator(ro.getUserId());
         messageUserRefProxyService.sendSystemMessage(dto);
     }
 

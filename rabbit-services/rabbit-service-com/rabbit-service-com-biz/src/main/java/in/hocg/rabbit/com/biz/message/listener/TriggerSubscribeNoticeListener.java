@@ -4,7 +4,7 @@ import in.hocg.rabbit.com.biz.entity.NoticeUserConfig;
 import in.hocg.rabbit.com.biz.message.MessageTopic;
 import in.hocg.rabbit.com.biz.pojo.dto.NoticeMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.SendNoticeMessageDto;
-import in.hocg.rabbit.com.biz.service.MessageUserRefProxyService;
+import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
 import in.hocg.rabbit.com.biz.service.NoticeUserConfigService;
 import in.hocg.boot.message.autoconfigure.service.normal.redis.RedisMessageListener;
 import io.swagger.annotations.ApiModel;

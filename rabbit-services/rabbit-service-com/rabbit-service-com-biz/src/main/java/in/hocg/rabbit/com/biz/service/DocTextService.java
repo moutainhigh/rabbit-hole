@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.service;
 
+import in.hocg.rabbit.com.api.pojo.ro.BatchPublishDocTextRo;
 import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.com.biz.entity.DocText;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
@@ -18,7 +19,11 @@ import java.util.List;
  */
 public interface DocTextService extends AbstractService<DocText> {
 
-    void publish(PublishDocTextRo ro);
+    void batchPublish(BatchPublishDocTextRo ro);
 
     List<DocTextVo> listByRefTypeAndRefId(@NotNull String refType, @NotNull Long refId);
+
+    Long publish(PublishDocTextRo ro);
+
+    DocTextVo getDocTextById(Long id);
 }

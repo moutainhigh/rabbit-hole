@@ -6,7 +6,7 @@ import in.hocg.rabbit.com.biz.pojo.dto.NoticeMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.SendNoticeMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.TriggerCommentedDto;
 import in.hocg.rabbit.com.biz.service.CommentService;
-import in.hocg.rabbit.com.biz.service.MessageUserRefProxyService;
+import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
 import in.hocg.rabbit.com.api.enums.message.NoticeMessageEventType;
 import in.hocg.rabbit.com.api.enums.message.NoticeMessageRefType;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;

@@ -10,6 +10,7 @@ import cn.hutool.extra.tokenizer.Word;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
+import in.hocg.rabbit.com.api.pojo.ro.BatchPublishDocTextRo;
 import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.com.biz.convert.DocTextConvert;
 import in.hocg.rabbit.com.biz.entity.DocText;
@@ -18,20 +19,15 @@ import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 import in.hocg.rabbit.com.biz.service.DocTextService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.common.datadict.common.RefType;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -59,10 +55,10 @@ public class DocTextServiceImpl extends AbstractServiceImpl<DocTextMapper, DocTe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void publish(PublishDocTextRo ro) {
+    public void batchPublish(BatchPublishDocTextRo ro) {
         final Long refId = ro.getRefId();
-        ValidUtils.notNull(refId, "上传失败，ID 错误");
-        List<PublishDocTextRo.TextDto> texts = ro.getTexts();
+        ValidUtils.notNull(refId, "失败，ID 错误");
+        List<BatchPublishDocTextRo.TextDto> texts = ro.getTexts();
 
         final RefType relType = ICode.ofThrow(ro.getRefType(), RefType.class);
         String refTypeCode = relType.getCodeStr();
@@ -83,6 +79,26 @@ public class DocTextServiceImpl extends AbstractServiceImpl<DocTextMapper, DocTe
         this.saveBatch(list);
     }
 
+    @Override
+    public Long publish(PublishDocTextRo ro) {
+        final Long refId = ro.getRefId();
+        ValidUtils.notNull(refId, "失败，ID 错误");
+        final RefType relType = ICode.ofThrow(ro.getRefType(), RefType.class);
+        String refTypeCode = relType.getCodeStr();
+        String text = ro.getText();
+        DocText entity = new DocText().setText(text)
+            .setKeyword(IterUtil.join(tokenizer(text), ";"))
+            .setRefType(refTypeCode)
+            .setRefId(refId)
+            .setDoctype(ro.getDoctype());
+        this.save(entity);
+        return entity.getId();
+    }
+
+    @Override
+    public DocTextVo getDocTextById(Long id) {
+        return convert.asDocTextVo(getById(id));
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

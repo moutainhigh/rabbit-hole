@@ -1,4 +1,4 @@
-package in.hocg.rabbit.com.biz.service;
+package in.hocg.rabbit.com.biz.manager;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.rabbit.com.biz.pojo.dto.SendNoticeMessageDto;
