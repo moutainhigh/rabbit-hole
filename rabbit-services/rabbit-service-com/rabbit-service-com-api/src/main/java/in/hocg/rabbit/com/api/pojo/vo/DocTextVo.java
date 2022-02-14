@@ -1,6 +1,5 @@
-package in.hocg.rabbit.com.biz.pojo.vo;
+package in.hocg.rabbit.com.api.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

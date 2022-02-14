@@ -2,9 +2,11 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.IterUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.tokenizer.Result;
 import cn.hutool.extra.tokenizer.TokenizerEngine;
 import cn.hutool.extra.tokenizer.TokenizerUtil;
+import cn.hutool.extra.tokenizer.Word;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
@@ -12,18 +14,25 @@ import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.com.biz.convert.DocTextConvert;
 import in.hocg.rabbit.com.biz.entity.DocText;
 import in.hocg.rabbit.com.biz.mapper.DocTextMapper;
-import in.hocg.rabbit.com.biz.pojo.vo.DocTextVo;
+import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 import in.hocg.rabbit.com.biz.service.DocTextService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.common.datadict.common.RefType;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * <p>
@@ -37,6 +46,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class DocTextServiceImpl extends AbstractServiceImpl<DocTextMapper, DocText> implements DocTextService {
     private final DocTextConvert convert;
+
+    public List<String> tokenizer(String text) {
+        TokenizerEngine engine = TokenizerUtil.createEngine();
+        Result result = engine.parse(text);
+        return StreamSupport.stream(result.spliterator(), false)
+            .map(Word::getText)
+            .map(StrUtil::trimToNull)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -53,18 +72,14 @@ public class DocTextServiceImpl extends AbstractServiceImpl<DocTextMapper, DocTe
             return;
         }
 
-        TokenizerEngine engine = TokenizerUtil.createEngine();
         final List<DocText> list = texts.parallelStream()
-            .map(item -> {
-                String text = item.getText();
-                Result result = engine.parse(text);
-                return new DocText()
-                    .setRefId(refId)
-                    .setRefType(refTypeCode)
-                    .setPriority(item.getPriority())
-                    .setKeyword(IterUtil.join(result.iterator(), ";"))
-                    .setText(text);
-            }).collect(Collectors.toList());
+            .map(item -> new DocText()
+                .setRefId(refId)
+                .setRefType(refTypeCode)
+                .setPriority(item.getPriority())
+                .setDoctype(item.getDoctype())
+                .setKeyword(IterUtil.join(tokenizer(item.getText()), ";"))
+                .setText(item.getText())).collect(Collectors.toList());
         this.saveBatch(list);
     }
 

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
@@ -25,10 +26,7 @@ public class PublishDocTextRo implements Serializable {
     @NotNull(message = "引用ID不能为空")
     @ApiModelProperty("引用ID")
     private Long refId;
-    @NotNull(message = "文本类型不能为空")
-    @EnumRange(enumClass = DocType.class, message = "文本类型不合法")
-    @ApiModelProperty("文本类型")
-    private String doctype;
+    @Valid
     @ApiModelProperty("文本")
     private List<TextDto> texts;
 
@@ -39,5 +37,9 @@ public class PublishDocTextRo implements Serializable {
         private Integer priority;
         @ApiModelProperty("文本")
         private String text;
+        @NotNull(message = "文本类型不能为空")
+        @EnumRange(enumClass = DocType.class, message = "文本类型不合法")
+        @ApiModelProperty("文本类型")
+        private String doctype;
     }
 }

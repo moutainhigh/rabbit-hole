@@ -2,7 +2,7 @@ package in.hocg.rabbit.com.biz.convert;
 
 import cn.hutool.core.util.StrUtil;
 import in.hocg.rabbit.com.biz.entity.DocText;
-import in.hocg.rabbit.com.biz.pojo.vo.DocTextVo;
+import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

@@ -3,8 +3,7 @@ package in.hocg.rabbit.com.biz.service;
 import in.hocg.rabbit.com.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.com.biz.entity.DocText;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
-import in.hocg.rabbit.com.biz.pojo.vo.DocTextVo;
-import org.springframework.transaction.annotation.Transactional;
+import in.hocg.rabbit.com.api.pojo.vo.DocTextVo;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
