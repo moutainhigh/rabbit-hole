@@ -16,8 +16,10 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.COM, false,
-            "com_user_address",
+            Module.RCM, false,
+            "rcm_doc",
+            "rcm_doc_content",
+            "rcm_doc_version",
             "");
     }
 
