@@ -3,6 +3,7 @@ package in.hocg.rabbit.rcm.api.pojo.ro;
 import in.hocg.boot.validation.annotation.EnumRange;
 import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.rabbit.rcm.api.enums.DocType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
+@ApiModel
 @Accessors(chain = true)
 public class PublishDocTextRo {
     @NotNull(message = "文档对象不能为空")

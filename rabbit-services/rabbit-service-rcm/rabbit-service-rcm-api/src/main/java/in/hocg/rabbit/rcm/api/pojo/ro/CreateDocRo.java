@@ -2,19 +2,22 @@ package in.hocg.rabbit.rcm.api.pojo.ro;
 
 import in.hocg.boot.validation.annotation.EnumRange;
 import in.hocg.rabbit.common.datadict.common.RefType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by hocgin on 2022/2/24
- * email: hocgin@gmail.com
+ * email:Apcgin@gmail.com
  *
  * @author hocgin
  */
 @Data
+@ApiModel
 @Accessors(chain = true)
 public class CreateDocRo {
     @NotNull(message = "引用类型不能为空")

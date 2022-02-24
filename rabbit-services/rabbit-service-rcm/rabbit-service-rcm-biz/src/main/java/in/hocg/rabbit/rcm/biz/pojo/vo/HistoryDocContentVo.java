@@ -1,5 +1,6 @@
 package in.hocg.rabbit.rcm.biz.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@ApiModel
 @Accessors(chain = true)
 public class HistoryDocContentVo {
     @ApiModelProperty("文稿内容对象")

@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -87,7 +88,8 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
 
     @Override
     public IScroll<HistoryDocContentVo> scrollByDocId(Long docId, ScrollRo ro) {
-        Page<DocContent> result = lambdaQuery().eq(DocContent::getDocId, docId).gt(CommonEntity::getId, ro.getNextId()).page(ro.ofPage());
+        Serializable nextId = ro.getNextId();
+        Page<DocContent> result = lambdaQuery().eq(DocContent::getDocId, docId).gt(Objects.nonNull(nextId), CommonEntity::getId, nextId).page(ro.ofPage());
         return as(PageUtils.fillScroll(result, CommonEntity::getId), HistoryDocContentVo.class);
     }
 

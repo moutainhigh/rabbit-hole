@@ -1,5 +1,6 @@
 package in.hocg.rabbit.rcm.biz.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
+@ApiModel
 public class CreateVersionDocRo {
     @ApiModelProperty("标题")
     private String title;

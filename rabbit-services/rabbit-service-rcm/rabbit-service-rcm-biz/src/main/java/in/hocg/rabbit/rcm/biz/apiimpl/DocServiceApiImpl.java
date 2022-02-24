@@ -4,6 +4,7 @@ import in.hocg.rabbit.rcm.api.DocServiceApi;
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.service.DocService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
+@Api(tags = {"rcm::文档", "rcm"})
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class DocServiceApiImpl implements DocServiceApi {

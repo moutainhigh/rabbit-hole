@@ -1,5 +1,6 @@
 package in.hocg.rabbit.rcm.biz.pojo.ro;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
  * @author hocgin
  */
 @Data
+@ApiModel
 @Accessors(chain = true)
 public class PushDocContentRo {
     @ApiModelProperty("文档类型")

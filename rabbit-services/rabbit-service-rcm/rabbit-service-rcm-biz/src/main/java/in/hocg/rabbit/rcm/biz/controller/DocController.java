@@ -8,6 +8,7 @@ import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.*;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  * @since 2022-02-23
  */
+@Api(tags = {"rcm::文档", "rcm"})
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/doc")
@@ -57,7 +59,7 @@ public class DocController {
     }
 
     @ApiOperation("查看编辑历史")
-    @PutMapping("/{id:\\d+}/history")
+    @PostMapping("/{id:\\d+}/history")
     public Result<IScroll<HistoryDocContentVo>> history(@PathVariable Long id, @RequestBody ScrollRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         return Result.success(service.historyByIdAndOwnerUser(id, ro, userId));
@@ -72,7 +74,7 @@ public class DocController {
     }
 
     @ApiOperation("保存为版本")
-    @PutMapping("/version/{id:\\d+}/name")
+    @PostMapping("/version/{id:\\d+}/name")
     public Result<Void> saveVersion(@PathVariable("id") Long contentId, @RequestBody CreateVersionDocRo ro) {
         Long userId = UserContextHolder.getUserIdThrow();
         service.createVersion(contentId, ro, userId);
