@@ -128,7 +128,8 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         lambdaUpdate().eq(DocContent::getDocId, docId)
             .ne(CommonEntity::getId, id)
             .isNull(DocContent::getDropFlag)
-            .set(DocContent::getDropFlag, LocalDateTime.now());
+            .set(DocContent::getDropFlag, LocalDateTime.now())
+            .update();
 
         // 草稿标记为发布
         lambdaUpdate().eq(DocContent::getId, docContent.getId())
