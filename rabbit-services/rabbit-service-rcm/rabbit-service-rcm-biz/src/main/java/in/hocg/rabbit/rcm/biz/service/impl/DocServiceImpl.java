@@ -6,6 +6,8 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
+import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.convert.DocConvert;
 import in.hocg.rabbit.rcm.biz.entity.Doc;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
@@ -38,6 +40,7 @@ import java.util.Optional;
 public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implements DocService {
     private final DocContentService docContentService;
     private final DocVersionService docVersionService;
+    private final DocMapping mapping;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -63,7 +66,7 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void pushPublishedByOwnerUser(Long id, Long ownerUserId) {
-        Doc doc = getByOwnerUser(id, ownerUserId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
+        getByOwnerUser(id, ownerUserId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
         docContentService.pushPublished(id);
     }
 
@@ -79,7 +82,7 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     public void createVersion(Long contentId, CreateVersionDocRo ro, Long userId) {
         DocContent content = Assert.notNull(docContentService.getById(contentId));
         Long docId = content.getId();
-        Doc doc = getByOwnerUser(docId, userId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
+        getByOwnerUser(docId, userId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
         docVersionService.createVersion(contentId, ro);
     }
 
@@ -88,8 +91,26 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     public void rollbackVersion(Long contentId, RollbackDocRo ro, Long ownerUserId) {
         DocContent content = Assert.notNull(docContentService.getById(contentId));
         Long docId = content.getId();
-        Doc doc = getByOwnerUser(docId, ownerUserId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
+        getByOwnerUser(docId, ownerUserId).orElseThrow(() -> ServiceException.wrap("文档不存在"));
         docContentService.rollbackVersion(contentId, ro);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long createDoc(CreateDocRo ro) {
+        Optional<Doc> docOpt = lambdaQuery().eq(Doc::getRefId, ro.getRefId()).eq(Doc::getRefType, ro.getRefType()).oneOpt();
+        if (docOpt.isPresent()) {
+            return docOpt.map(CommonEntity::getId).orElseThrow();
+        }
+        Doc entity = mapping.asDoc(ro);
+        save(entity);
+        return entity.getId();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void publishContent(PublishDocTextRo ro) {
+        docContentService.publishContent(ro);
     }
 
     private Optional<Doc> getByOwnerUser(Long docId, Long userId) {

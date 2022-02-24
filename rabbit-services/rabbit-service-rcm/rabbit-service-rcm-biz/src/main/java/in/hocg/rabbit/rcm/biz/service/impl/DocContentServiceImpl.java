@@ -2,6 +2,7 @@ package in.hocg.rabbit.rcm.biz.service.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.tokenizer.Result;
 import cn.hutool.extra.tokenizer.TokenizerEngine;
@@ -15,6 +16,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.common.constant.GlobalConstant;
+import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.convert.DocContentConvert;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
 import in.hocg.rabbit.rcm.biz.mapper.DocContentMapper;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -63,7 +66,7 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
     }
 
     @Override
-    public void pushDrafted(Long docId, PushDocContentRo ro) {
+    public Long pushDrafted(Long docId, PushDocContentRo ro) {
         String content = ro.getContent();
         String rContent = HtmlUtil.removeHtmlTag(content);
 
@@ -74,6 +77,7 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
             .setKeyword(keyword)
             .setDescription(description);
         save(entity);
+        return entity.getId();
     }
 
     @Override
@@ -101,9 +105,30 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         updatePublishedById(newContentId);
     }
 
+    @Override
+    public void publishContent(PublishDocTextRo ro) {
+        PushDocContentRo pushDocContentRo = new PushDocContentRo();
+        pushDocContentRo.setContent(ro.getContent());
+        pushDocContentRo.setDoctype(ro.getDoctype());
+        Long contentId = pushDrafted(ro.getDocId(), pushDocContentRo);
+        if (ObjectUtil.defaultIfNull(ro.getPublished(), false)) {
+            updatePublishedById(contentId);
+        }
+    }
 
     private void updatePublishedById(Long id) {
-        lambdaUpdate().eq(DocContent::getId, id)
+        DocContent docContent = getById(id);
+        Long docId = docContent.getDocId();
+
+        // 原发布内容更新为作废
+        lambdaUpdate().eq(DocContent::getDocId, docId)
+            .ne(CommonEntity::getId, id)
+            .isNull(DocContent::getDropFlag)
+            .set(DocContent::getDropFlag, LocalDateTime.now());
+
+        // 草稿标记为发布
+        lambdaUpdate().eq(DocContent::getId, docContent.getId())
+            .isNotNull(DocContent::getDropFlag)
             .set(DocContent::getDropFlag, null)
             .update();
     }

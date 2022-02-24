@@ -2,6 +2,7 @@ package in.hocg.rabbit.rcm.biz.service;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
@@ -24,11 +25,13 @@ public interface DocContentService extends AbstractService<DocContent> {
 
     Optional<DocContent> getDraftedByDocId(Long docId);
 
-    void pushDrafted(Long docId, PushDocContentRo ro);
+    Long pushDrafted(Long docId, PushDocContentRo ro);
 
     void pushPublished(Long docId);
 
     IScroll<HistoryDocContentVo> scrollByDocId(Long docId, ScrollRo ro);
 
     void rollbackVersion(Long contentId, RollbackDocRo ro);
+
+    void publishContent(PublishDocTextRo ro);
 }
