@@ -57,6 +57,11 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     }
 
     @Override
+    public DraftDocVo getDraftedById(Long id) {
+        return as(getById(id), DraftDocVo.class);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void pushDraftedByOwnerUser(Long id, PushDocContentRo ro, Long ownerUserId) {
         Doc doc = getByOwnerUser(id, ownerUserId).orElseThrow(() -> ServiceException.wrap("文档不存在"));

@@ -1,8 +1,11 @@
 package in.hocg.rabbit.rcm.biz.apiimpl;
 
+import cn.hutool.core.bean.BeanUtil;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.rcm.api.DocServiceApi;
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
+import in.hocg.rabbit.rcm.api.pojo.vo.PublishedDocVo;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +32,15 @@ public class DocServiceApiImpl implements DocServiceApi {
     @Override
     public void publishContent(PublishDocTextRo ro) {
         service.publishContent(ro);
+    }
+
+    @Override
+    public PublishedDocVo getPublishedDoc(Long id) {
+        return BeanUtil.copyProperties(service.getPublishedById(id), PublishedDocVo.class);
+    }
+
+    @Override
+    public PublishedDocVo getDraftedDoc(Long id) {
+        return BeanUtil.copyProperties(service.getDraftedById(id), PublishedDocVo.class);
     }
 }

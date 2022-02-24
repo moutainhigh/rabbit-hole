@@ -23,6 +23,8 @@ public interface DocService extends AbstractService<Doc> {
 
     DraftDocVo getDraftedById(Long id, Long userId);
 
+    DraftDocVo getDraftedById(Long id);
+
     void pushDraftedByOwnerUser(Long id, PushDocContentRo ro, Long ownerUserId);
 
     void pushPublishedByOwnerUser(Long id, Long ownerUserId);

@@ -2,11 +2,14 @@ package in.hocg.rabbit.rcm.api;
 
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
+import in.hocg.rabbit.rcm.api.pojo.vo.GetDocVo;
+import in.hocg.rabbit.rcm.api.pojo.vo.PublishedDocVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by hocgin on 2022/2/24
@@ -26,5 +29,11 @@ public interface DocServiceApi {
     @PostMapping(value = CONTEXT_ID + "/publishContent", headers = RcmServiceName.FEIGN_HEADER)
     void publishContent(@Validated @RequestBody PublishDocTextRo ro);
 
+    @ApiOperation("获取已发布的文档")
+    @PostMapping(value = CONTEXT_ID + "/getPublishedDoc", headers = RcmServiceName.FEIGN_HEADER)
+    PublishedDocVo getPublishedDoc(@RequestParam Long id);
 
+    @ApiOperation("获取待编辑的文档")
+    @PostMapping(value = CONTEXT_ID + "/getDraftedDoc", headers = RcmServiceName.FEIGN_HEADER)
+    PublishedDocVo getDraftedDoc(@RequestParam Long id);
 }
