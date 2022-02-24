@@ -89,7 +89,9 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
     @Override
     public IScroll<HistoryDocContentVo> scrollByDocId(Long docId, ScrollRo ro) {
         Serializable nextId = ro.getNextId();
-        Page<DocContent> result = lambdaQuery().eq(DocContent::getDocId, docId).gt(Objects.nonNull(nextId), CommonEntity::getId, nextId).page(ro.ofPage());
+        Page<DocContent> result = lambdaQuery().eq(DocContent::getDocId, docId).gt(Objects.nonNull(nextId), CommonEntity::getId, nextId)
+            .orderByDesc(CommonEntity::getCreatedAt)
+            .page(ro.ofPage());
         return as(PageUtils.fillScroll(result, CommonEntity::getId), HistoryDocContentVo.class);
     }
 
