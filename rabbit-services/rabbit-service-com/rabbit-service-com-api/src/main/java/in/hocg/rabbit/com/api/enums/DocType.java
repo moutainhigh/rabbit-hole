@@ -19,7 +19,8 @@ import java.io.Serializable;
 @UseDataDictKey(value = ComDataDictKeys.DOC_TYPE, description = "文档类型")
 public enum DocType implements DataDictEnum {
     Text("text", "纯文本"),
-    Rich("rich", "富文本"),
+    Html("html", "富文本"),
+    Json("json", "JSON"),
     Markdown("markdown", "Markdown"),
     ;
     private final String code;
