@@ -16,10 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.RCM, false,
-            "rcm_doc",
-            "rcm_doc_content",
-            "rcm_doc_version",
+            Module.MINA, false,
+            "mina_share_content",
             "");
     }
 
