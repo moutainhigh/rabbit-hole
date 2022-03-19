@@ -34,6 +34,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
+      <artifactId>ffmpeg-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
       <artifactId>web-spring-boot-starter</artifactId>
     </dependency>
     <dependency>

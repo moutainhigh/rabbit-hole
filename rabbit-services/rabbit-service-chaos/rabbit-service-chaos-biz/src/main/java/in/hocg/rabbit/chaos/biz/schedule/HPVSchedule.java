@@ -9,9 +9,9 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Lists;
 import in.hocg.boot.utils.struct.result.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.Lists;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
