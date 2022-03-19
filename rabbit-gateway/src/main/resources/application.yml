@@ -144,6 +144,8 @@ boot:
         ,/com/mina/message/stat
         ,/com/district/tree
         ,/com/project/encoding:*
+        ,/com/comment/*/*/_scroll
+        ,/com/comment/*/*/_paging
 
         ,/bmw/gateway/result/**
 
@@ -164,6 +166,7 @@ boot:
         ,/docking/wx/miniapp/*/token
 
         ,/ums/account/*:avatar
+        ,/ums/account
 
         ,/mina/game-card/_complete
         ,/mina/game/room/**
@@ -180,6 +183,7 @@ boot:
         ,/mina/*/mobile-wallpaper/tags/_paging
         ,/mina/youtube/authorize
         ,/mina/youtube/*/callback
+        ,/mina/share-content
 
         ,/sso/account/login/qrcode
         ,/sso/account/login/token
