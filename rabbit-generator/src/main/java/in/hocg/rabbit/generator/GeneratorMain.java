@@ -16,8 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.COM, false,
-            "com_user_address",
+            Module.MINA, false,
+            "mina_share_content",
             "");
     }
 

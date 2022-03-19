@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CommentUserVo {
     private Long id;
-    private String nickname;
+    private String title;
     private String avatarUrl;
     private String href;
 }

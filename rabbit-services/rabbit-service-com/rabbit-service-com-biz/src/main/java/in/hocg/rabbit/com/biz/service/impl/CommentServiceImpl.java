@@ -2,14 +2,18 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.rabbit.com.biz.convert.CommentConvert;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.entity.CommentUserAction;
 import in.hocg.rabbit.com.biz.mapper.CommentMapper;
 import in.hocg.rabbit.com.biz.mapstruct.CommentMapping;
 import in.hocg.rabbit.com.biz.message.MessageTopic;
 import in.hocg.rabbit.com.biz.pojo.dto.TriggerCommentedDto;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentReportRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentUserVo;
@@ -53,9 +57,9 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     implements CommentService {
     private final CommentUserActionService commentUserActionService;
     private final CommentTargetService commentTargetService;
-    private final UserServiceApi accountServiceApi;
     private final CommentMapping mapping;
     private final NormalMessageBervice messageService;
+    private final CommentConvert convert;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -63,8 +67,6 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         LocalDateTime createdAt = LocalDateTime.now();
 
         final Comment entity = mapping.asComment(ro);
-        entity.setLastUpdatedAt(createdAt);
-        entity.setLastUpdater(ro.getUserId());
         validUpdateById(entity);
     }
 
@@ -83,8 +85,6 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final Comment entity = mapping.asComment(ro);
         entity.setEnabled(true);
         entity.setTargetId(targetId);
-        entity.setCreatedAt(now);
-        entity.setCreator(creatorId);
         validInsert(entity);
         Long commentId = entity.getId();
 
@@ -110,19 +110,19 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final Long refId = ro.getRefId();
 
         final Optional<RefType> targetTypeOpt = ICode.of(refType, RefType.class);
-        if (!targetTypeOpt.isPresent()) {
+        if (targetTypeOpt.isEmpty()) {
             return PageUtils.emptyPage(ro);
         }
 
         final Optional<Long> targetIdOpt = commentTargetService.getIdByRefTypeAndRefId(refType, refId);
-        if (!targetIdOpt.isPresent()) {
+        if (targetIdOpt.isEmpty()) {
             return PageUtils.emptyPage(ro);
         }
 
         final Long targetId = targetIdOpt.get();
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, true, ro.ofPage());
         return result.convert(entity -> {
-            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
+            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(convert.convertComplex(entity));
             final String treePath = entity.getTreePath() + "/";
             item.setChildTotal(countRightLikeTreePath(treePath));
             return item;
@@ -141,27 +141,29 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         final String treePath = pComment.getTreePath();
         final String regexTreePath = String.format("%s/.*", treePath);
         final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, ro.ofPage());
-        return result.convert(this::convertComplex);
+        return result.convert(convert::convertComplex);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void like(CommentLikeRo ro) {
-        Long commentId = ro.getId();
+    public CommentClientVo like(CommentLikeRo ro) {
+        Long commentId = ro.getCommentId();
         Long userId = ro.getUserId();
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, true);
+        return convert.convertCommentClientVo(getById(commentId));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void dislike(CommentDislikeRo ro) {
-        Long commentId = ro.getId();
+    public CommentClientVo dislike(CommentDislikeRo ro) {
+        Long commentId = ro.getCommentId();
         Long userId = ro.getUserId();
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, false);
+        return convert.convertCommentClientVo(getById(commentId));
     }
 
     @Retryable
@@ -207,74 +209,38 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     @Transactional(rollbackFor = Exception.class)
     public IPage<CommentComplexVo> paging(CommentPagingRo ro) {
         IPage<Comment> result = baseMapper.paging(ro, ro.ofPage());
-        return result.convert(this::convertComplex);
+        return result.convert(convert::convertComplex);
     }
 
     @Override
-    public CommentClientVo commentWithClient(CommentClientRo ro) {
+    public CommentClientVo replyWithClient(CommentClientRo ro) {
         Comment entity = mapping.asComment(ro);
-        entity.setParentId(ro.getId());
+        entity.setParentId(ro.getCommentId());
         entity.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setCreator(ro.getUserId());
         this.validInsert(entity);
-        return this.convertCommentClientVo(getById(entity.getId()));
+        return convert.convertCommentClientVo(getById(entity.getId()));
     }
 
     @Override
     public IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro) {
         ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
-        return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(this::convertCommentClientVo);
+        return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(convert::convertCommentClientVo);
     }
 
-    private CommentClientVo convertCommentClientVo(Comment entity) {
-        CommentClientVo result = mapping.asCommentClientVo(entity);
-        result.setHasReply(this.hasReply(entity.getId()));
-
-        UserContextHolder.getUserId().flatMap(userId -> commentUserActionService.getActionByCommentIdAndUserId(entity.getId(), userId))
-            .ifPresent(result::setAction);
-
-        Long authorId = entity.getCreator();
-        if (Objects.nonNull(authorId)) {
-            result.setAuthor(getCommentUser(authorId));
-        }
-
-        Long parentId = entity.getParentId();
-        if (Objects.nonNull(parentId)) {
-            Comment comment = getById(parentId);
-            result.setReplier(getCommentUser(comment.getCreator()));
-        }
-
-        return result;
+    @Override
+    public IScroll<CommentClientVo> scrollWithClient(CommentClientScrollRo ro) {
+        ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        return PageUtils.fillScroll(baseMapper.scrollWithClient(ro, ro.ofPage()), Comment::getId)
+            .convert(convert::convertCommentClientVo);
     }
 
-    private CommentComplexVo convertComplex(Comment entity) {
-        final CommentComplexVo result = mapping.asCommentComplexVo(entity);
-        final String content = entity.getEnabled() ? result.getContent() : "已删除";
-        result.setContent(content);
-        final Long parentId = entity.getParentId();
-        if (Objects.nonNull(parentId)) {
-            final Comment pComment = baseMapper.selectById(parentId);
-            final Long pCommentCreatorId = pComment.getCreator();
-            result.setPCommenterId(pCommentCreatorId);
-            result.setPCommenter(this.getCommentUser(pCommentCreatorId));
-        }
-        result.setCommenter(this.getCommentUser(result.getCommenterId()));
-        return result;
+    @Override
+    public void report(CommentReportRo ro) {
+
     }
 
-    private CommentUserVo getCommentUser(Long userId) {
-        AccountVo entity = accountServiceApi.getById(userId);
-        if (Objects.isNull(entity)) {
-            return null;
-        }
-        return new CommentUserVo()
-            .setId(entity.getId())
-            .setAvatarUrl(entity.getAvatarUrl())
-            .setNickname(entity.getNickname());
-    }
-
-    private Boolean hasReply(Long id) {
+    @Override
+    public Boolean hasReply(Long id) {
         return has(TreeEntity::getParentId, id, null);
     }
 

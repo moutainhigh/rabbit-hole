@@ -22,6 +22,7 @@ public enum CodeType implements DataDictEnum {
     MaintainOrder("M", "售后单"),
     DeliveryOrder("D", "配送单"),
     UserCoupon("U", "用户优惠券"),
+    ShareContent("SC", "内容分享"),
     ;
     private final Serializable code;
     private final String name;

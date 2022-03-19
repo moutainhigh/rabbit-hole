@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import lombok.experimental.UtilityClass;
 
 import java.nio.file.Path;
@@ -57,7 +58,7 @@ public class CodeGenerator {
             .setControllerMappingHyphenStyle(true)
             .setRestControllerStyle(true)
             .setTablePrefix(module.getIgnoreTablePrefix().toArray(new String[]{}))
-            .setSuperEntityClass(AbstractEntity.class.getName())
+            .setSuperEntityClass(CommonEntity.class.getName())
             .setSuperServiceClass(AbstractService.class.getName())
             .setSuperServiceImplClass(AbstractServiceImpl.class.getName())
             .setNaming(NamingStrategy.underline_to_camel)

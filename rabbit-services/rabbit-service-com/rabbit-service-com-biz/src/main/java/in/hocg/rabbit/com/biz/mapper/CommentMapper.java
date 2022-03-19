@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentClientPagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentPagingRo;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,6 @@ public interface CommentMapper extends BaseMapper<Comment> {
     IPage<Comment> paging(@Param("ro") CommentPagingRo ro, @Param("page") Page page);
 
     IPage<Comment> pagingWithClient(@Param("ro") CommentClientPagingRo ro, @Param("page") Page page);
+
+    IPage<Comment> scrollWithClient(@Param("ro") CommentClientScrollRo ro, Page<Object> ofPage);
 }
