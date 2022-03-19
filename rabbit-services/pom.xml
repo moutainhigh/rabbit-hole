@@ -24,6 +24,7 @@
     <module>rabbit-service-mina</module>
     <module>rabbit-service-aom</module>
     <module>rabbit-service-rcm</module>
+    <module>rabbit-service-cv</module>
     <module>rabbit-service-ws</module>
   </modules>
 
