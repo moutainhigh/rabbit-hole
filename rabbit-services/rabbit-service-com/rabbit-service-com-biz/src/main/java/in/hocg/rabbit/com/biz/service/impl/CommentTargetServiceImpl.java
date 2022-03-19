@@ -46,9 +46,7 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Optional<Long> getIdByRefTypeAndRefId(String refType, Long refId) {
-        final RefType targetType = ICode.ofThrow(refType, RefType.class);
-        return this.getByRefTypeAndRefId(targetType.getCodeStr(), refId)
-            .map(CommentTarget::getId);
+        return this.getByRefTypeAndRefId(refType, refId).map(CommentTarget::getId);
     }
 
     private Optional<CommentTarget> getByRefTypeAndRefId(String refType, Long refId) {
