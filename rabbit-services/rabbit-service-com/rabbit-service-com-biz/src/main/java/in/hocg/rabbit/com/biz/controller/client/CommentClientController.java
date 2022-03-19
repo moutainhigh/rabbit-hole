@@ -38,6 +38,7 @@ public class CommentClientController {
                                          @Validated @RequestBody CommentClientRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
+        ro.setOptUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.replyWithClient(ro));
     }
 

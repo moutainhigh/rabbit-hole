@@ -223,13 +223,21 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     @Override
     public IPage<CommentClientVo> pagingWithClient(CommentClientPagingRo ro) {
-        ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        Optional<Long> targetOpt = commentTargetService.getIdByRefTypeAndRefId(ro.getRefType(), ro.getRefId());
+        if (targetOpt.isEmpty()) {
+            return PageUtils.emptyPage(ro);
+        }
+        ro.setTargetId(targetOpt.get());
         return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(convert::convertCommentClientVo);
     }
 
     @Override
     public IScroll<CommentClientVo> scrollWithClient(CommentClientScrollRo ro) {
-        ro.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
+        Optional<Long> targetOpt = commentTargetService.getIdByRefTypeAndRefId(ro.getRefType(), ro.getRefId());
+        if (targetOpt.isEmpty()) {
+            return PageUtils.emptyScroll();
+        }
+        ro.setTargetId(targetOpt.get());
         return PageUtils.fillScroll(baseMapper.scrollWithClient(ro, ro.ofPage()), Comment::getId)
             .convert(convert::convertCommentClientVo);
     }
