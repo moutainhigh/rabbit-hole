@@ -21,5 +21,6 @@ public class CommentClientRo {
     private Long commentId;
     @ApiModelProperty("评论内容")
     private String content;
-
+    @ApiModelProperty(value = "操作人", hidden = true)
+    private Long optUserId;
 }
