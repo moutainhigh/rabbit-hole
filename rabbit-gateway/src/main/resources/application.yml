@@ -88,6 +88,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: rabbit-rcm
+          uri: lb://rabbit-chaos
+          predicates:
+            - Path=/rcm/**
+          filters:
+            - StripPrefix=1
+
       default-filters:
         - name: SwaggerHeaderFilter
         - name: Logger
@@ -139,6 +146,8 @@ boot:
         ,/com/project/encoding:*
 
         ,/bmw/gateway/result/**
+
+        ,/rcm/doc/*
 
         ,/chaos/sms-code
         ,/chaos/address4ip
