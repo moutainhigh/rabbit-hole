@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -49,9 +50,14 @@ public class AccountController {
     @ApiOperation("获取当前用户信息")
     @GetMapping
     @ResponseBody
-    public Result<AccountComplexVo> getCurrentAccount() {
-        Long userId = UserContextHolder.getUserIdThrow();
-        return Result.success(service.getComplexById(userId));
+    public Result<AccountComplexVo> getCurrentAccount(@RequestParam(value = "force", defaultValue = "true") Boolean force) {
+        Optional<Long> userOpt;
+        if (force) {
+            userOpt = Optional.ofNullable(UserContextHolder.getUserIdThrow());
+        } else {
+            userOpt = UserContextHolder.getUserId();
+        }
+        return Result.success(userOpt.map(service::getComplexById).orElse(null));
     }
 
     @UseLogger("获取当前用户权限")

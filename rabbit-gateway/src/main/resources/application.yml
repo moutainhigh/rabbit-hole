@@ -144,6 +144,8 @@ boot:
         ,/com/mina/message/stat
         ,/com/district/tree
         ,/com/project/encoding:*
+        ,/com/comment/*/*/_scroll
+        ,/com/comment/*/*/_paging
 
         ,/bmw/gateway/result/**
 
@@ -164,6 +166,7 @@ boot:
         ,/docking/wx/miniapp/*/token
 
         ,/ums/account/*:avatar
+        ,/ums/account
 
         ,/mina/game-card/_complete
         ,/mina/game/room/**
