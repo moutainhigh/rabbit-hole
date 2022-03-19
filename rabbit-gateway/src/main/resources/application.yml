@@ -183,6 +183,7 @@ boot:
         ,/mina/*/mobile-wallpaper/tags/_paging
         ,/mina/youtube/authorize
         ,/mina/youtube/*/callback
+        ,/mina/share-content
 
         ,/sso/account/login/qrcode
         ,/sso/account/login/token
