@@ -147,6 +147,8 @@ boot:
 
         ,/bmw/gateway/result/**
 
+        ,/rcm/doc/*
+
         ,/chaos/sms-code
         ,/chaos/address4ip
         ,/chaos/logistics-line/_search
