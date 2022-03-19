@@ -2,7 +2,6 @@ package in.hocg.rabbit.rcm.api;
 
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
-import in.hocg.rabbit.rcm.api.pojo.vo.GetDocVo;
 import in.hocg.rabbit.rcm.api.pojo.vo.PublishedDocVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
