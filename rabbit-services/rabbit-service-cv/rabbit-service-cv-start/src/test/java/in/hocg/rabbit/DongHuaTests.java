@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mina;
+package in.hocg.rabbit;
 
 import cn.hutool.core.io.FileUtil;
 import in.hocg.rabbit.common.utils.CommonUtils;

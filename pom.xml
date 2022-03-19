@@ -122,6 +122,16 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-webmagic-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-webmagic-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-tpl-biz</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -188,6 +198,16 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>rabbit-service-ws-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-cv-biz</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>rabbit-service-cv-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -270,6 +290,16 @@
         <groupId>com.hankcs</groupId>
         <artifactId>hanlp</artifactId>
         <version>portable-1.8.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bytedeco</groupId>
+        <artifactId>javacv</artifactId>
+        <version>1.5.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bytedeco</groupId>
+        <artifactId>ffmpeg-platform</artifactId>
+        <version>4.2.1-1.5.2</version>
       </dependency>
       <!-- 第二方 -->
       <dependency>
