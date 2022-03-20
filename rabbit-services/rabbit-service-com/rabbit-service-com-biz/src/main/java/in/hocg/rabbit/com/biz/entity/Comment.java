@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.time.LocalDateTime;
@@ -42,12 +43,12 @@ public class Comment extends TreeEntity<Comment> {
     private Long dislikesCount;
 
     @ApiModelProperty("评论人")
-    @TableField("creator")
+    @TableField(value = "creator", fill = FieldFill.INSERT)
     private Long creator;
-    @TableField("created_at")
+    @TableField(value = "created_at", fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
-    @TableField("last_updater")
+    @TableField(value = "last_updater", fill = FieldFill.UPDATE)
     private Long lastUpdater;
-    @TableField("last_updated_at")
+    @TableField(value = "last_updated_at", fill = FieldFill.UPDATE)
     private LocalDateTime lastUpdatedAt;
 }

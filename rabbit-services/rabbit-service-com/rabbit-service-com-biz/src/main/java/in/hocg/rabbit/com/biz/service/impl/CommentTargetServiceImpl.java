@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import in.hocg.rabbit.com.biz.entity.CommentTarget;
 import in.hocg.rabbit.com.biz.mapper.CommentTargetMapper;
 import in.hocg.rabbit.com.biz.mapstruct.CommentTargetMapping;
@@ -33,11 +34,11 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long getOrCreate(String refType, Long refId) {
-        final RefType targetType = ICode.ofThrow(refType, RefType.class);
+        Assert.notBlank(refType, "评论对象类型错误");
         final Optional<Long> idOpt = getIdByRefTypeAndRefId(refType, refId);
         return idOpt.orElseGet(() -> {
             final CommentTarget entity = new CommentTarget()
-                .setRefId(refId).setRefType(targetType.getCodeStr());
+                .setRefId(refId).setRefType(refType);
             validInsert(entity);
             return entity.getId();
         });
