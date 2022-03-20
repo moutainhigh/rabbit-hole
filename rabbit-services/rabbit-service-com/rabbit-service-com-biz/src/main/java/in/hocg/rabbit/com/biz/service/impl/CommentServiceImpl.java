@@ -67,6 +67,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         LocalDateTime createdAt = LocalDateTime.now();
 
         final Comment entity = mapping.asComment(ro);
+        entity.setCreatedAt(createdAt);
         validUpdateById(entity);
     }
 
