@@ -19,6 +19,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @InjectNamed
 public class PublishedDocVo {
+    @ApiModelProperty("标题")
+    private String title;
     @ApiModelProperty("所属用户")
     private Long ownerUserId;
     @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
