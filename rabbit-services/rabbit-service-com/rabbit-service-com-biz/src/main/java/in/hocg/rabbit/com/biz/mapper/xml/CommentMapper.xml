@@ -50,8 +50,18 @@
       <if test="ro.targetId != null">
         AND tc.target_id = #{ro.targetId}
       </if>
+      <if test="ro.nextId != null">
+        <if test="ro.orderByDesc == false">
+          AND tc.id > #{ro.nextId}
+        </if>
+        <if test="ro.orderByDesc != false">
+          AND tc.id &lt; #{ro.nextId}
+        </if>
+      </if>
       AND tc.parent_id IS NULL
     </where>
-    ORDER BY tc.created_at DESC
+    <if test="ro.orderByDesc != false">
+      ORDER BY tc.created_at DESC
+    </if>
   </select>
 </mapper>

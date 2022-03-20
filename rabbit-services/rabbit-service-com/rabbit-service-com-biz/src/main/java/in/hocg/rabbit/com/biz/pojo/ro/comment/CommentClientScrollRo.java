@@ -16,6 +16,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ApiModel
 public class CommentClientScrollRo extends ScrollRo {
+
+    @ApiModelProperty("排序")
+    private Boolean orderByDesc = true;
+
     @ApiModelProperty(value = "评论对象", hidden = true)
     private Long targetId;
     @ApiModelProperty(value = "对象", hidden = true, required = true)
