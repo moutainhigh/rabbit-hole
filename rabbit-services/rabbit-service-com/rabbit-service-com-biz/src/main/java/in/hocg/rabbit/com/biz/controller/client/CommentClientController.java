@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "com::评论(Client)")
 @RestController
+@Validated
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/comment/{refType}/{refId}")
 public class CommentClientController {
@@ -35,7 +36,7 @@ public class CommentClientController {
     @ApiOperation("评论")
     @PostMapping("/reply")
     public Result<CommentClientVo> reply(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                         @Validated @RequestBody CommentClientRo ro) {
+                                         @RequestBody CommentClientRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         ro.setOptUserId(UserContextHolder.getUserIdThrow());
@@ -45,7 +46,7 @@ public class CommentClientController {
     @ApiOperation("顶级评论 - 下拉翻页")
     @PostMapping("/_scroll")
     public Result<IScroll<CommentClientVo>> scroll(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                                   @Validated @RequestBody CommentClientScrollRo ro) {
+                                                   @RequestBody CommentClientScrollRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
@@ -54,9 +55,8 @@ public class CommentClientController {
 
     @ApiOperation("子级评论 - 分页查询")
     @PostMapping("/_paging")
-    public Result<IPage<CommentClientVo>> pagingByParentId(@PathVariable("refType") String refType, @PathVariable("refId") Long refId, @PathVariable("parentId") Long parentId,
-                                                           @Validated @RequestBody CommentClientPagingRo ro) {
-        ro.setParentId(parentId);
+    public Result<IPage<CommentClientVo>> pagingByParentId(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                           @RequestBody CommentClientPagingRo ro) {
         ro.setRefType(refType);
         ro.setRefId(refId);
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
@@ -65,21 +65,21 @@ public class CommentClientController {
 
     @ApiOperation("点赞")
     @PostMapping("/like")
-    public Result<CommentClientVo> like(@Validated @RequestBody CommentLikeRo ro) {
+    public Result<CommentClientVo> like(@RequestBody CommentLikeRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.like(ro));
     }
 
     @ApiOperation("倒赞")
     @PostMapping("/dislike")
-    public Result<CommentClientVo> dislike(@Validated @RequestBody CommentDislikeRo ro) {
+    public Result<CommentClientVo> dislike(@RequestBody CommentDislikeRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.dislike(ro));
     }
 
     @ApiOperation("举报")
     @PostMapping("/report")
-    public Result<Void> report(@Validated @RequestBody CommentReportRo ro) {
+    public Result<Void> report(@RequestBody CommentReportRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.report(ro);
         return Result.success();
