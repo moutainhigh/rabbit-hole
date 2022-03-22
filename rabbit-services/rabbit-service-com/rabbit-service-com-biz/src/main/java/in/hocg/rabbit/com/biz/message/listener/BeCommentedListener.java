@@ -59,7 +59,7 @@ public class BeCommentedListener extends RedisMessageListener<Message<TriggerCom
         messageDto.setRefType(refType);
         messageDto.setCreator(creatorId);
         messageDto.setReceiver(List.of(beCommendCreator));
-        messageDto.setContent("您的评论被评论");
+        messageDto.setContent("您的评论有新的回复");
         messageUserRefProxyService.sendNoticeMessage(messageDto);
 
         // 通知其他订阅的人
