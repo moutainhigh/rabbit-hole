@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
+import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollBySenderRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollRo;
+import in.hocg.rabbit.com.biz.pojo.vo.message.ScrollBySenderVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +25,6 @@ public interface MessageUserRefMapper extends BaseMapper<MessageUserRef> {
     IPage<MessageUserRef> paging(@Param("ro") MessagePagingRo ro, @Param("page") Page page);
 
     IPage<MessageUserRef> scroll(@Param("ro") MessageScrollRo ro, Page ofPage);
+
+    IPage<ScrollBySenderVo> scrollBySender(@Param("ro") MessageScrollBySenderRo ro, Page<Object> ofPage);
 }

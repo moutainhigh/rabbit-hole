@@ -31,4 +31,23 @@
     </where>
     ORDER BY mmur.created_at desc
   </select>
+
+  <select id="scrollBySender" resultType="in.hocg.rabbit.com.biz.pojo.vo.message.ScrollBySenderVo">
+    SELECT MAX(mmur.id) AS nextId,
+           mmur.creator AS userId
+    FROM mms_message_user_ref mmur
+    <where>
+      <if test="ro.messageType != null">
+        AND mmur.message_type = #{ro.messageType}
+      </if>
+      <if test="ro.receiverUser != null">
+        AND mmur.receiver_user = #{ro.receiverUser}
+      </if>
+      <if test="ro.nextId != null">
+        AND mmur.creator NOT IN (SELECT creator FROM mms_message_user_ref WHERE id >= #{ro.nextId})
+      </if>
+    </where>
+    group by mmur.creator
+    order by MAX(id) desc
+  </select>
 </mapper>

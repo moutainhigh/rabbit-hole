@@ -15,13 +15,12 @@ import in.hocg.rabbit.com.biz.mapper.MessageUserRefMapper;
 import in.hocg.rabbit.com.biz.mapstruct.MessageUserRefMapping;
 import in.hocg.rabbit.com.biz.pojo.dto.SendPersonalMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.SendSystemMessageDto;
-import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
-import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollRo;
-import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
-import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
+import in.hocg.rabbit.com.biz.pojo.ro.message.*;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
+import in.hocg.rabbit.com.biz.pojo.vo.message.MessageScrollBySenderVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
+import in.hocg.rabbit.com.biz.pojo.vo.message.ScrollBySenderVo;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -36,6 +35,7 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -104,6 +104,18 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
             this.markReadById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
         }
         return as(PageUtils.fillScroll(result, CommonEntity::getId), MessageComplexVo.class);
+    }
+
+    @Override
+    public IScroll<MessageComplexVo> scrollBySender(MessageScrollBySenderRo ro) {
+        List<Long> id = baseMapper.scrollBySender(ro, ro.ofPage()).getRecords().stream()
+            .map(ScrollBySenderVo::getNextId).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(id)) {
+            return PageUtils.emptyScroll();
+        }
+        List<MessageUserRef> records = listByIds(id);
+        boolean hasMore = records.size() == ro.getSize();
+        return as(PageUtils.fillScroll(hasMore, records, CommonEntity::getId), MessageComplexVo.class);
     }
 
     private Long countByUnreadAndRefTypeAndUserId(String refType, Long userId) {
