@@ -23,7 +23,6 @@ public interface MessageUserRefMapping {
     @Mapping(target = "systemMessage", ignore = true)
     @Mapping(target = "personalMessage", ignore = true)
     @Mapping(target = "noticeMessage", ignore = true)
-    @Mapping(target = "messageType", ignore = true)
     MessageComplexVo asComplex(MessageUserRef entity);
 
     @Mapping(target = "creator", ignore = true)

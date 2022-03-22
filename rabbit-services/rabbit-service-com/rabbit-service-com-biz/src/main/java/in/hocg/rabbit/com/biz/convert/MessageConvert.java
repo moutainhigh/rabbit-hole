@@ -67,8 +67,6 @@ public class MessageConvert {
         MessageType refType = ICode.ofThrow(entity.getMessageType(), MessageType.class);
 
         MessageComplexVo result = messageUserRefMapping.asComplex(entity);
-        result.setMessageType(refType.getCodeStr());
-
         Rules.create().rule(RefType.NoticeMessage, Rules.Runnable(() -> {
                 NoticeMessage message = noticeMessageService.getById(refId);
                 result.setNoticeMessage(asNoticeMessageComplexVo(message));

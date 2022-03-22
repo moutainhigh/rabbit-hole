@@ -22,8 +22,6 @@ import java.time.LocalDateTime;
 @ApiModel
 @InjectNamed
 public class SystemMessageComplexVo {
-    @ApiModelProperty("标题")
-    private String title;
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("创建时间")

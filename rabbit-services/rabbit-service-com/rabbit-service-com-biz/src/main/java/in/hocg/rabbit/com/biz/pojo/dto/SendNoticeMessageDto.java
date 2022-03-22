@@ -1,8 +1,8 @@
 package in.hocg.rabbit.com.biz.pojo.dto;
 
 import in.hocg.rabbit.com.api.enums.message.NoticeMessageEventType;
-import in.hocg.rabbit.com.api.enums.message.NoticeMessageRefType;
 import in.hocg.boot.validation.annotation.EnumRange;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,7 +22,7 @@ public class SendNoticeMessageDto {
     @EnumRange(enumClass = NoticeMessageEventType.class)
     private String eventType;
     @ApiModelProperty(value = "订阅对象类型", required = true)
-    @EnumRange(enumClass = NoticeMessageRefType.class)
+    @EnumRange(enumClass = RefType.class)
     private String refType;
     @ApiModelProperty(value = "订阅对象", required = true)
     private Long refId;

@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface PersonalMessageMapping {
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     PersonalMessage asPersonalMessage(SendPersonalMessageDto dto);

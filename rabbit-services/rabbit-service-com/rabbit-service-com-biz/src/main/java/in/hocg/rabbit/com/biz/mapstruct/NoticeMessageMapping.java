@@ -16,6 +16,8 @@ import org.mapstruct.Mapping;
 public interface NoticeMessageMapping {
 
 
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     NoticeMessage asNoticeMessage(SendNoticeMessageDto dto);
