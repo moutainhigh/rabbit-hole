@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,13 +25,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_data_dict_item")
-public class DataDictItem extends AbstractEntity<DataDictItem> {
+public class DataDictItem extends CommonEntity<DataDictItem> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("ID")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("com_data_dict ID")
     @TableField("dict_id")
     private Long dictId;
@@ -49,20 +47,5 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
     @ApiModelProperty("启用状态")
     @TableField("enabled")
     private Boolean enabled;
-
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    @TableField("creator")
-    private Long creator;
-    @ApiModelProperty("更新时间")
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-    @ApiModelProperty("更新者")
-    @TableField("last_updater")
-    private Long lastUpdater;
-
-
 
 }

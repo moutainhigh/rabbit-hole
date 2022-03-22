@@ -6,6 +6,7 @@ import in.hocg.boot.named.annotation.InjectNamed;
 
 import in.hocg.rabbit.com.api.named.ComDataDictKeys;
 import in.hocg.rabbit.com.api.named.ComNamed;
+import in.hocg.rabbit.common.constant.DataDictKeys;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class NoticeMessageComplexVo {
     private String eventTypeName;
     @ApiModelProperty("订阅对象类型")
     private String refType;
-    @ComNamed(idFor = "refType", type = ChaosNamedType.DataDictName, args = {ComDataDictKeys.MMS_NOTICE_MESSAGE_REF_TYPE})
+    @ComNamed(idFor = "refType", type = ChaosNamedType.DataDictName, args = {DataDictKeys.REF_TYPE})
     private String refTypeName;
     @ApiModelProperty("订阅对象")
     private RefObject refObject;

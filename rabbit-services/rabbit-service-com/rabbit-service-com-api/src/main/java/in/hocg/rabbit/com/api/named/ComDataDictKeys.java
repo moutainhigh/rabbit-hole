@@ -18,7 +18,6 @@ public final class ComDataDictKeys {
 
     public static final String MMS_MESSAGE_USER_REF_TYPE = "COM__MMS_MESSAGE_USER_REF_TYPE";
     public static final String MMS_NOTICE_MESSAGE_EVENT_TYPE = "COM__MMS_NOTICE_MESSAGE_EVENT_TYPE";
-    public static final String MMS_NOTICE_MESSAGE_REF_TYPE = "COM__MMS_NOTICE_MESSAGE_REF_TYPE";
 
     public static final String DISTRICT_LEVEL = "COM__DISTRICT_LEVEL";
     public static final String FEEDBACK_TYPE = "COM__FEEDBACK_TYPE";

@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.service;
 
-import in.hocg.rabbit.com.biz.entity.NoticeUserConfig;
+import in.hocg.rabbit.com.biz.entity.UserSubscriberConfig;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author hocgin
  * @since 2021-03-21
  */
-public interface NoticeUserConfigService extends AbstractService<NoticeUserConfig> {
+public interface UserSubscriberConfigService extends AbstractService<UserSubscriberConfig> {
 
-    List<NoticeUserConfig> listByEventTypeAndRefIdAndRefType(String eventType, Long refId, String refType);
+    List<UserSubscriberConfig> listByEventTypeAndRefIdAndRefType(String eventType, Long refId, String refType);
 }

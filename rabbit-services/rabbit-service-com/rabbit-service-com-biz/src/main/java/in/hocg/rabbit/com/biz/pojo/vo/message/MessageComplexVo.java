@@ -6,6 +6,7 @@ import in.hocg.boot.named.annotation.InjectNamed;
 
 import in.hocg.rabbit.com.api.named.ComDataDictKeys;
 import in.hocg.rabbit.com.api.named.ComNamed;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

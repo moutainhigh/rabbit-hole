@@ -1,6 +1,6 @@
-package in.hocg.rabbit.com.biz.service.impl;
+package in.hocg.rabbit.com.biz.manager.impl;
 
-import in.hocg.rabbit.com.biz.service.CommentTargetProxyService;
+import in.hocg.rabbit.com.biz.manager.CommentTargetProxyService;
 import in.hocg.rabbit.com.biz.service.CommentTargetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

@@ -1,9 +1,9 @@
-package in.hocg.rabbit.com.biz.service.impl;
+package in.hocg.rabbit.com.biz.manager.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.StrUtil;
 import in.hocg.rabbit.com.api.enums.CodeType;
-import in.hocg.rabbit.com.biz.service.SnCodeService;
+import in.hocg.rabbit.com.biz.manager.UniqueCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SnCodeServiceImpl implements SnCodeService {
+public class UniqueCodeServiceImpl implements UniqueCodeService {
     private final Snowflake snowFlake;
 
-    public String getSnCode(CodeType type) {
+    public String getUniqueCode(CodeType type) {
         final long code = snowFlake.nextId();
         return StrUtil.format("{}{}", type.getCodeStr(), code);
     }

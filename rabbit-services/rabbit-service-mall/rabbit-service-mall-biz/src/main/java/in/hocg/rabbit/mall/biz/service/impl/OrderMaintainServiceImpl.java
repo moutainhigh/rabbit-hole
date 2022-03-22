@@ -4,7 +4,7 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
-import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.mall.api.enums.maintain.OrderMaintainStatus;
 import in.hocg.rabbit.mall.biz.convert.OrderMaintainConvert;
@@ -44,7 +44,7 @@ import java.util.Optional;
 public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainMapper, OrderMaintain> implements OrderMaintainService {
     private final OrderMaintainMapping mapping;
     private final OrderItemService orderItemService;
-    private final SnCodeServiceApi codeServiceApi;
+    private final UniqueCodeServiceApi codeServiceApi;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -56,7 +56,7 @@ public class OrderMaintainServiceImpl extends AbstractServiceImpl<OrderMaintainM
         OrderMaintain entity = mapping.asOrderMaintain(ro);
         entity.setOwnerUserId(ro.getOperatorId());
         entity.setOrderItemId(orderItemId);
-        entity.setEncoding(codeServiceApi.getSnCode(CodeType.MaintainOrder.getCodeStr()));
+        entity.setEncoding(codeServiceApi.getUniqueCode(CodeType.MaintainOrder.getCodeStr()));
         entity.setStatus(OrderMaintainStatus.Processing.getCode());
         entity.setRefundQuantity(quantity);
         entity.setRefundAmt(realAmt);

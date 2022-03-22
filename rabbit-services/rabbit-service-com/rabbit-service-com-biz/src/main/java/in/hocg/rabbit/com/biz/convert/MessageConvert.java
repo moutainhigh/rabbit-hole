@@ -1,8 +1,7 @@
 package in.hocg.rabbit.com.biz.convert;
 
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.rabbit.com.api.enums.message.MessageUserRefType;
-import in.hocg.rabbit.com.api.enums.message.NoticeMessageRefType;
+import in.hocg.rabbit.com.api.enums.message.MessageType;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.entity.NoticeMessage;
 import in.hocg.rabbit.com.biz.entity.PersonalMessage;
@@ -18,6 +17,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.SystemMessageComplexVo;
 import in.hocg.rabbit.com.biz.service.NoticeMessageService;
 import in.hocg.rabbit.com.biz.service.PersonalMessageService;
 import in.hocg.rabbit.com.biz.service.SystemMessageService;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.rabbit.common.utils.Rules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -55,33 +55,32 @@ public class MessageConvert {
         refObject.setId(refId);
 
         Rules.create()
-            .rule(NoticeMessageRefType.Comment, Rules.Runnable(() -> refObject.setTitle("评论")))
-            .of(ICode.ofThrow(entity.getRefType(), NoticeMessageRefType.class));
+            .rule(RefType.Comment, Rules.Runnable(() -> refObject.setTitle("评论")))
+            .of(ICode.ofThrow(entity.getRefType(), RefType.class));
         result.setRefObject(refObject);
         return result;
     }
 
 
     public MessageComplexVo asMessageComplexVo(MessageUserRef entity) {
-        Long refId = entity.getRefId();
-        MessageUserRefType messageUserRefType = ICode.ofThrow(entity.getRefType(), MessageUserRefType.class);
+        Long refId = entity.getMessageId();
+        MessageType refType = ICode.ofThrow(entity.getMessageType(), MessageType.class);
 
         MessageComplexVo result = messageUserRefMapping.asComplex(entity);
-        result.setMessageType(messageUserRefType.getCodeStr());
+        result.setMessageType(refType.getCodeStr());
 
-        Rules.create().rule(MessageUserRefType.NoticeMessage, Rules.Runnable(() -> {
+        Rules.create().rule(RefType.NoticeMessage, Rules.Runnable(() -> {
                 NoticeMessage message = noticeMessageService.getById(refId);
                 result.setNoticeMessage(asNoticeMessageComplexVo(message));
             }))
-            .rule(MessageUserRefType.PersonalMessage, Rules.Runnable(() -> {
+            .rule(RefType.PersonalMessage, Rules.Runnable(() -> {
                 PersonalMessage message = personalMessageService.getById(refId);
                 result.setPersonalMessage(asPersonalMessageComplexVo(message));
             }))
-            .rule(MessageUserRefType.SystemMessage, Rules.Runnable(() -> {
+            .rule(RefType.SystemMessage, Rules.Runnable(() -> {
                 SystemMessage message = systemMessageService.getById(refId);
                 result.setSystemMessage(asSystemMessageComplexVo(message));
-            }))
-            .of(messageUserRefType);
+            })).of(refType);
         return result;
     }
 }

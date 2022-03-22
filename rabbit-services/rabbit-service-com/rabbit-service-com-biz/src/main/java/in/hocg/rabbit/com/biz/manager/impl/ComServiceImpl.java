@@ -1,8 +1,8 @@
-package in.hocg.rabbit.com.biz.service.impl;
+package in.hocg.rabbit.com.biz.manager.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import in.hocg.rabbit.com.biz.service.ComService;
+import in.hocg.rabbit.com.biz.manager.ComService;
 import in.hocg.rabbit.com.biz.utils.Avatars;
 import in.hocg.rabbit.com.biz.utils.FaviconUtils;
 import lombok.RequiredArgsConstructor;

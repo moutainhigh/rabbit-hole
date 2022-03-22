@@ -21,4 +21,6 @@ public interface MessageUserRefMapper extends BaseMapper<MessageUserRef> {
 
     IPage<MessageUserRef> paging(@Param("ro") MessagePagingRo ro, @Param("page") Page page);
 
+
+    IPage<MessageUserRef> scroll(@Param("ro") MessagePagingRo ro, Page ofPage);
 }

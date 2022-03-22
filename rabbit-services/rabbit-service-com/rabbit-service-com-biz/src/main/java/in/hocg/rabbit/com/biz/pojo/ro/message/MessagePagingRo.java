@@ -1,6 +1,8 @@
 package in.hocg.rabbit.com.biz.pojo.ro.message;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.PageRo;
+import in.hocg.boot.validation.annotation.EnumRange;
+import in.hocg.rabbit.com.api.enums.message.MessageType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,9 +17,10 @@ import lombok.Data;
 @ApiModel
 public class MessagePagingRo extends PageRo {
 
+    @EnumRange(enumClass = MessageType.class)
     @ApiModelProperty("消息类型")
     private String messageType;
 
     @ApiModelProperty(hidden = true)
-    private Long userId;
+    private Long receiverUser;
 }

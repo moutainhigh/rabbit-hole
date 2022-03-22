@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * Created by hocgin on 2021/3/21
  * email: hocgin@gmail.com
@@ -27,5 +29,7 @@ public class SendNoticeMessageDto {
     @ApiModelProperty(value = "创建者", required = true)
     private Long creator;
     @ApiModelProperty(value = "接收人", required = true)
-    private Long receiver;
+    private List<Long> receiver;
+    @ApiModelProperty("通知内容")
+    private String content;
 }

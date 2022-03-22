@@ -1,4 +1,4 @@
-package in.hocg.rabbit.com.biz.service;
+package in.hocg.rabbit.com.biz.manager;
 
 /**
  * Created by hocgin on 2021/2/3

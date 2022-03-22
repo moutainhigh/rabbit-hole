@@ -8,12 +8,11 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.rabbit.bmw.api.BmwServiceApi;
 import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
-import in.hocg.rabbit.bmw.api.enums.TradeOrderStatus;
 import in.hocg.rabbit.bmw.api.pojo.ro.CreateTradeRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GetCashierRo;
 import in.hocg.rabbit.bmw.api.pojo.ro.GoRefundRo;
 import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
-import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.UserAddressServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.com.api.enums.UserAddressType;
@@ -84,7 +83,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     private final UserCouponService userCouponService;
     private final SkuService skuService;
     private final ProductService productService;
-    private final SnCodeServiceApi snCodeServiceApi;
+    private final UniqueCodeServiceApi snCodeServiceApi;
     private final UserAddressServiceApi userAddressServiceApi;
 
     @Override
@@ -293,7 +292,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
         final CalcOrderVo calcResult = this.calcOrder(ro);
 
-        String orderNo = snCodeServiceApi.getSnCode(CodeType.Order.getCodeStr());
+        String orderNo = snCodeServiceApi.getUniqueCode(CodeType.Order.getCodeStr());
         LocalDateTime now = LocalDateTime.now();
         final Order order = mapping.asOrder(calcResult)
             .setEncoding(orderNo)

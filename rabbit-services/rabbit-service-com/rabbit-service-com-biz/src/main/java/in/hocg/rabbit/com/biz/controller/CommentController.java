@@ -1,81 +1,104 @@
 package in.hocg.rabbit.com.biz.controller;
 
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.rabbit.com.biz.pojo.ro.ChildCommentPagingRo;
-import in.hocg.rabbit.com.biz.pojo.ro.CommentInsertRo;
-import in.hocg.rabbit.com.biz.pojo.ro.CommentLikeRo;
-import in.hocg.rabbit.com.biz.pojo.ro.CommentPagingRo;
-import in.hocg.rabbit.com.biz.pojo.ro.CommentUpdateRo;
-import in.hocg.rabbit.com.biz.pojo.ro.RootCommentPagingRo;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.rabbit.com.biz.pojo.ro.*;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
+import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentReportRo;
+import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.RootCommentComplexVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * <p>
- * [通用模块] 评论表 前端控制器
- * </p>
+ * Created by hocgin on 2021/8/29
+ * email: hocgin@gmail.com
  *
  * @author hocgin
- * @since 2021-01-13
  */
-@Api(tags = "com::评论")
+@Api(tags = "com::评论(Client)")
 @RestController
-@Deprecated(/**新版本配合组件直接使用*/)
+@Validated
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/old/comment")
+@RequestMapping("/comment/{refType}/{refId}")
 public class CommentController {
     private final CommentService service;
 
-    @UseLogger("更新 - 评论")
-    @PutMapping("/{id:\\d+}")
-    public Result<Void> updateOne(@PathVariable("id") Long id,
-                                  @Validated @RequestBody CommentUpdateRo ro) {
+    @ApiOperation("评论")
+    @PostMapping("/reply")
+    public Result<CommentClientVo> reply(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                         @RequestBody CommentClientRo ro) {
+        ro.setRefType(refType);
+        ro.setRefId(refId);
+        ro.setOptUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.replyWithClient(ro));
+    }
+
+    @ApiOperation("顶级评论 - 下拉翻页")
+    @PostMapping("/_scroll")
+    public Result<IScroll<CommentClientVo>> scroll(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                   @RequestBody CommentClientScrollRo ro) {
+        ro.setRefType(refType);
+        ro.setRefId(refId);
         UserContextHolder.getUserId().ifPresent(ro::setUserId);
-        service.updateOne(id, ro);
+        return Result.success(service.scrollWithClient(ro));
+    }
+
+    @ApiOperation("子级评论 - 分页查询")
+    @PostMapping("/_paging")
+    public Result<IPage<CommentClientVo>> pagingByParentId(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                           @RequestBody CommentClientPagingRo ro) {
+        ro.setRefType(refType);
+        ro.setRefId(refId);
+        UserContextHolder.getUserId().ifPresent(ro::setUserId);
+        return Result.success(service.pagingWithClient(ro));
+    }
+
+    @ApiOperation("点赞")
+    @PostMapping("/like")
+    public Result<CommentClientVo> like(@RequestBody CommentLikeRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.like(ro));
+    }
+
+    @ApiOperation("倒赞")
+    @PostMapping("/dislike")
+    public Result<CommentClientVo> dislike(@RequestBody CommentDislikeRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.dislike(ro));
+    }
+
+    @ApiOperation("举报")
+    @PostMapping("/report")
+    public Result<Void> report(@RequestBody CommentReportRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
+        service.report(ro);
         return Result.success();
     }
 
-    @UseLogger("新增 - 评论")
-    @PostMapping
-    public Result<Void> insertOne(@Validated @RequestBody CommentInsertRo ro) {
-        UserContextHolder.getUserId().ifPresent(ro::setUserId);
-        service.insertOne(ro);
-        return Result.success();
-    }
-
-    @UseLogger("喜欢 - 评论")
-    @PostMapping("/{id:\\d+}/like")
-    public Result<Void> like(@PathVariable("id") Long id) {
-        CommentLikeRo ro = new CommentLikeRo().setCommentId(id);
-        UserContextHolder.getUserId().ifPresent(ro::setUserId);
-        service.like(ro);
-        return Result.success();
-    }
 
     @UseLogger("分页查询(分级模式) - 根评论")
     @PostMapping("/level/_paging")
-    public Result<IPage<RootCommentComplexVo>> pagingRootComment(@Validated @RequestBody RootCommentPagingRo ro) {
+    public Result<IPage<RootCommentComplexVo>> pagingRootComment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                                 @RequestBody RootCommentPagingRo ro) {
+        ro.setRefType(refType);
+        ro.setRefId(refId);
         return Result.success(service.pagingRootComment(ro));
     }
 
     @UseLogger("分页查询(分级模式) - 子评论")
     @PostMapping("/level/{parentId:\\d+}/_paging")
-    public Result<IPage<CommentComplexVo>> pagingChildComment(@PathVariable("parentId") Long parentId,
+    public Result<IPage<CommentComplexVo>> pagingChildComment(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                              @PathVariable("parentId") Long parentId,
                                                               @RequestBody ChildCommentPagingRo ro) {
         ro.setParentId(parentId);
         return Result.success(service.pagingChildComment(ro));
@@ -83,8 +106,8 @@ public class CommentController {
 
     @UseLogger("分页查询(分层模式) - 层评论")
     @PostMapping("/layer/_paging")
-    public Result<IPage<CommentComplexVo>> paging(@Validated @RequestBody CommentPagingRo ro) {
+    public Result<IPage<CommentComplexVo>> paging(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
+                                                  @RequestBody CommentPagingRo ro) {
         return Result.success(service.paging(ro));
     }
 }
-

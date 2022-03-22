@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.controller.mina;
 
-import in.hocg.rabbit.com.biz.service.MinaService;
+import in.hocg.rabbit.com.biz.manager.MinaService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.ApiOperation;

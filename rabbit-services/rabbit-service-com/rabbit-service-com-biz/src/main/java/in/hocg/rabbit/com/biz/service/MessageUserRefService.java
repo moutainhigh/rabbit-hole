@@ -1,6 +1,7 @@
 package in.hocg.rabbit.com.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
@@ -23,8 +24,6 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
 
     IPage<MessageComplexVo> pagingWithSelf(MessagePagingRo ro);
 
-    IPage<MessageUserRef> paging(MessagePagingRo ro);
-
     void sendPersonalMessage(SendPersonalMessageRo ro);
 
     void readById(List<Long> ids);
@@ -33,4 +32,5 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
 
     MessageStatVo getMessageStatByUserId(Long userId);
 
+    IScroll<MessageComplexVo> scroll(MessagePagingRo ro);
 }
