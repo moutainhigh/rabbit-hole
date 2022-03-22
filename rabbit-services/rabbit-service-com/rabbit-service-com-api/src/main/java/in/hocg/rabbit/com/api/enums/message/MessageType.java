@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Getter
 @RequiredArgsConstructor
-@UseDataDictKey(value = ComDataDictKeys.MMS_MESSAGE_USER_REF_TYPE, description = "消息用户关联类型")
+@UseDataDictKey(value = ComDataDictKeys.MMS_MESSAGE_USER_REF_TYPE, description = "消息类型")
 public enum MessageType implements DataDictEnum {
     SystemMessage("system_message", "系统消息"),
     PersonalMessage("personal_message", "私信消息"),
