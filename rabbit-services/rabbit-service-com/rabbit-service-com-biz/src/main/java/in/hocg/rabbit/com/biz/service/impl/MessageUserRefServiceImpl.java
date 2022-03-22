@@ -1,6 +1,7 @@
 package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
@@ -15,6 +16,7 @@ import in.hocg.rabbit.com.biz.mapstruct.MessageUserRefMapping;
 import in.hocg.rabbit.com.biz.pojo.dto.SendPersonalMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.SendSystemMessageDto;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
+import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
@@ -55,7 +57,9 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Transactional(rollbackFor = Exception.class)
     public IPage<MessageComplexVo> pagingWithSelf(MessagePagingRo ro) {
         IPage<MessageUserRef> result = baseMapper.paging(ro, ro.ofPage());
-        this.readById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        if (ObjectUtil.defaultIfNull(ro.getMarkReady(), true)) {
+            this.markReadById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        }
         return as(result, MessageComplexVo.class);
     }
 
@@ -94,9 +98,11 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     }
 
     @Override
-    public IScroll<MessageComplexVo> scroll(MessagePagingRo ro) {
+    public IScroll<MessageComplexVo> scroll(MessageScrollRo ro) {
         IPage<MessageUserRef> result = baseMapper.scroll(ro, ro.ofPage());
-        this.readById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        if (ObjectUtil.defaultIfNull(ro.getMarkReady(), true)) {
+            this.markReadById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        }
         return as(PageUtils.fillScroll(result, CommonEntity::getId), MessageComplexVo.class);
     }
 
@@ -109,7 +115,7 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void readById(List<Long> ids) {
+    public void markReadById(List<Long> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return;
         }

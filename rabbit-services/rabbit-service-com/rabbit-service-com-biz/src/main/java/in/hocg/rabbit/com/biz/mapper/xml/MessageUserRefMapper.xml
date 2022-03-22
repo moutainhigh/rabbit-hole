@@ -25,6 +25,9 @@
       <if test="ro.receiverUser != null">
         AND mmur.receiver_user = #{ro.receiverUser}
       </if>
+      <if test="ro.nextId != null">
+        AND mmur.id > #{ro.nextId}
+      </if>
     </where>
     ORDER BY mmur.created_at desc
   </select>

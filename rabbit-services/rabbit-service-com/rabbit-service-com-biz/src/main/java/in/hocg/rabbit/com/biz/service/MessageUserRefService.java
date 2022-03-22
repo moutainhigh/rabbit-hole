@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
+import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
@@ -26,11 +27,11 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
 
     void sendPersonalMessage(SendPersonalMessageRo ro);
 
-    void readById(List<Long> ids);
+    void markReadById(List<Long> ids);
 
     void sendSystemMessage(SendSystemMessageRo ro);
 
     MessageStatVo getMessageStatByUserId(Long userId);
 
-    IScroll<MessageComplexVo> scroll(MessagePagingRo ro);
+    IScroll<MessageComplexVo> scroll(MessageScrollRo ro);
 }

@@ -4,6 +4,7 @@ package in.hocg.rabbit.com.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.pojo.ro.message.MessagePagingRo;
+import in.hocg.rabbit.com.biz.pojo.ro.message.MessageScrollRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendPersonalMessageRo;
 import in.hocg.rabbit.com.biz.pojo.ro.message.SendSystemMessageRo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
@@ -46,7 +47,7 @@ public class MessageController {
     @UseLogger("滚动查询消息 - 我的消息")
     @ApiOperation("滚动查询消息 - 我的消息")
     @PostMapping("/_scroll")
-    public Result<IScroll<MessageComplexVo>> scroll(@RequestBody MessagePagingRo ro) {
+    public Result<IScroll<MessageComplexVo>> scroll(@RequestBody MessageScrollRo ro) {
         ro.setReceiverUser(UserContextHolder.getUserIdThrow());
         return Result.success(service.scroll(ro));
     }
