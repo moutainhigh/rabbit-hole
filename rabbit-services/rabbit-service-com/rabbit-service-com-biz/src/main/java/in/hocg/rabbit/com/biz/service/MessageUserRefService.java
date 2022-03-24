@@ -5,7 +5,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.entity.MessageUserRef;
 import in.hocg.rabbit.com.biz.pojo.ro.message.*;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
-import in.hocg.rabbit.com.biz.pojo.vo.message.MessageScrollBySenderVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
@@ -33,5 +32,5 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
 
     IScroll<MessageComplexVo> scroll(MessageScrollRo ro);
 
-    IScroll<MessageComplexVo> scrollBySender(MessageScrollBySenderRo ro);
+    IScroll<MessageComplexVo> scrollByChatUser(MessageByChatUserScrollRo ro);
 }

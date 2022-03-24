@@ -20,6 +20,5 @@ public interface PersonalMessageMapping {
     @Mapping(target = "createdAt", ignore = true)
     PersonalMessage asPersonalMessage(SendPersonalMessageDto dto);
 
-    @Mapping(target = "creatorName", ignore = true)
     PersonalMessageComplexVo asComplex(PersonalMessage message);
 }

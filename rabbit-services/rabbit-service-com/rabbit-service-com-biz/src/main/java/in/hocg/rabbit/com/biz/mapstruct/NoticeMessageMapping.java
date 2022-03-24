@@ -24,7 +24,6 @@ public interface NoticeMessageMapping {
 
     @Mapping(target = "refTypeName", ignore = true)
     @Mapping(target = "eventTypeName", ignore = true)
-    @Mapping(target = "creatorName", ignore = true)
     @Mapping(target = "refObject", ignore = true)
     NoticeMessageComplexVo asComplex(NoticeMessage entity);
 }

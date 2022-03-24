@@ -24,10 +24,4 @@ import java.time.LocalDateTime;
 public class SystemMessageComplexVo {
     @ApiModelProperty("内容")
     private String content;
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    private Long creator;
-    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
-    private String creatorName;
 }

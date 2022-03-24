@@ -21,6 +21,5 @@ public interface SystemMessageMapping {
     @Mapping(target = "createdAt", ignore = true)
     SystemMessage asSystemMessage(SendSystemMessageDto dto);
 
-    @Mapping(target = "creatorName", ignore = true)
     SystemMessageComplexVo asComplex(SystemMessage message);
 }

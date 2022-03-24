@@ -9,7 +9,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ScrollBySenderVo {
+public class scrollByChatUserVo {
     private Long nextId;
     private Long userId;
 }

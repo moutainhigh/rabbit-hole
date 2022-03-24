@@ -13,12 +13,12 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class MessageScrollBySenderRo extends ScrollRo {
+public class MessageByChatUserScrollRo extends ScrollRo {
     @EnumRange(enumClass = MessageType.class)
     @ApiModelProperty("消息类型")
     private String messageType;
 
-    @ApiModelProperty(hidden = true)
-    private Long receiverUser;
+    @ApiModelProperty(value = "相关人", hidden = true)
+    private Long chatUserId;
 
 }

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.biz.pojo.ro.message.*;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
-import in.hocg.rabbit.com.biz.pojo.vo.message.MessageScrollBySenderVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
@@ -51,11 +50,11 @@ public class MessageController {
     }
 
     @UseLogger
-    @ApiOperation("最近发送人(私信+未读数量+最近一条消息) - 下拉翻页")
+    @ApiOperation("与查询人相关人的最后一条聊天记录(私信+未读数量+最近一条消息) - 下拉翻页")
     @PostMapping("/sender/_scroll")
-    public Result<IScroll<MessageComplexVo>> scrollBySender(@RequestBody MessageScrollBySenderRo ro) {
-        ro.setReceiverUser(UserContextHolder.getUserIdThrow());
-        return Result.success(service.scrollBySender(ro));
+    public Result<IScroll<MessageComplexVo>> scrollBySender(@RequestBody MessageByChatUserScrollRo ro) {
+        ro.setChatUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.scrollByChatUser(ro));
     }
 
     @UseLogger

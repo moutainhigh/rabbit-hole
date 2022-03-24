@@ -17,6 +17,7 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.SystemMessageComplexVo;
 import in.hocg.rabbit.com.biz.service.NoticeMessageService;
 import in.hocg.rabbit.com.biz.service.PersonalMessageService;
 import in.hocg.rabbit.com.biz.service.SystemMessageService;
+import in.hocg.rabbit.com.biz.support.MessageHelper;
 import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.rabbit.common.utils.Rules;
 import lombok.RequiredArgsConstructor;
@@ -67,16 +68,24 @@ public class MessageConvert {
         MessageType refType = ICode.ofThrow(entity.getMessageType(), MessageType.class);
 
         MessageComplexVo result = messageUserRefMapping.asComplex(entity);
+        result.setSendAt(entity.getCreatedAt());
+        result.setSenderUser(entity.getCreator());
         Rules.create().rule(RefType.NoticeMessage, Rules.Runnable(() -> {
                 NoticeMessage message = noticeMessageService.getById(refId);
+                result.setTitle(MessageHelper.getMessageTitle(message));
+                result.setDescription(MessageHelper.getMessageDescription(message.getContent()));
                 result.setNoticeMessage(asNoticeMessageComplexVo(message));
             }))
             .rule(RefType.PersonalMessage, Rules.Runnable(() -> {
                 PersonalMessage message = personalMessageService.getById(refId);
+                result.setTitle(MessageHelper.getMessageTitle(message));
+                result.setDescription(MessageHelper.getMessageDescription(message.getContent()));
                 result.setPersonalMessage(asPersonalMessageComplexVo(message));
             }))
             .rule(RefType.SystemMessage, Rules.Runnable(() -> {
                 SystemMessage message = systemMessageService.getById(refId);
+                result.setTitle(MessageHelper.getMessageTitle(message));
+                result.setDescription(MessageHelper.getMessageDescription(message.getContent()));
                 result.setSystemMessage(asSystemMessageComplexVo(message));
             })).of(refType);
         return result;

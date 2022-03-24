@@ -33,12 +33,6 @@ public class NoticeMessageComplexVo {
     private String refTypeName;
     @ApiModelProperty("订阅对象")
     private RefObject refObject;
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    private Long creator;
-    @ChaosNamed(idFor = "creator", type = ChaosNamedType.Userid2Nickname)
-    private String creatorName;
 
     @Data
     @ApiModel

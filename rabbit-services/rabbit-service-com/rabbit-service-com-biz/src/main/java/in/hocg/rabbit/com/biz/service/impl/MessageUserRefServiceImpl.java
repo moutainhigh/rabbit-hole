@@ -17,10 +17,9 @@ import in.hocg.rabbit.com.biz.pojo.dto.SendPersonalMessageDto;
 import in.hocg.rabbit.com.biz.pojo.dto.SendSystemMessageDto;
 import in.hocg.rabbit.com.biz.pojo.ro.message.*;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
-import in.hocg.rabbit.com.biz.pojo.vo.message.MessageScrollBySenderVo;
 import in.hocg.rabbit.com.biz.pojo.vo.message.MessageStatVo;
 import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
-import in.hocg.rabbit.com.biz.pojo.vo.message.ScrollBySenderVo;
+import in.hocg.rabbit.com.biz.pojo.vo.message.scrollByChatUserVo;
 import in.hocg.rabbit.com.biz.service.MessageUserRefService;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -31,6 +30,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
  * @since 2021-03-21
  */
 @Service
+@Validated
 @UseConvert(MessageConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRefMapper, MessageUserRef> implements MessageUserRefService {
@@ -107,9 +108,9 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     }
 
     @Override
-    public IScroll<MessageComplexVo> scrollBySender(MessageScrollBySenderRo ro) {
-        List<Long> id = baseMapper.scrollBySender(ro, ro.ofPage()).getRecords().stream()
-            .map(ScrollBySenderVo::getNextId).collect(Collectors.toList());
+    public IScroll<MessageComplexVo> scrollByChatUser(MessageByChatUserScrollRo ro) {
+        List<Long> id = baseMapper.scrollByChatUser(ro, ro.ofPage()).getRecords().stream()
+            .map(scrollByChatUserVo::getNextId).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(id)) {
             return PageUtils.emptyScroll();
         }
