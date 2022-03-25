@@ -26,5 +26,7 @@ public interface MessageUserRefMapper extends BaseMapper<MessageUserRef> {
 
     IPage<MessageUserRef> scroll(@Param("ro") MessageScrollRo ro, Page ofPage);
 
-    IPage<scrollByChatUserVo> scrollByChatUser(@Param("ro") MessageByChatUserScrollRo ro, Page<Object> ofPage);
+    IPage<scrollByChatUserVo> scrollLastByChatUser(@Param("ro") MessageByChatUserScrollRo ro, Page<Object> ofPage);
+
+    IPage<MessageUserRef> scrollBySender(@Param("ro") MessageByChatUserScrollRo ro, Page<Object> ofPage);
 }

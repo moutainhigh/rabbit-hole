@@ -32,9 +32,10 @@
     ORDER BY mmur.created_at desc
   </select>
 
-  <select id="scrollByChatUser" resultType="in.hocg.rabbit.com.biz.pojo.vo.message.scrollByChatUserVo">
-    SELECT last_mmur.*
-      FROM (
+  <select id="scrollLastByChatUser" resultType="in.hocg.rabbit.com.biz.pojo.vo.message.scrollByChatUserVo">
+    SELECT last_mmur.lx_user_id AS userId,
+           last_mmur.id         AS nextId
+    FROM (
     <!-- 与某人相关的人最近的聊天记录 -->
     SELECT mmur.*  FROM (
     <!-- 与某人相关的聊天记录 -->
@@ -62,12 +63,47 @@
       </if>
     </where>
     ) mmur
-      group by mmur.lx_user_id
-      order by MAX(created_at) desc) last_mmur
+    group by mmur.lx_user_id
+    order by MAX(created_at) desc) last_mmur
     <where>
       <if test="ro.nextId != null">
         AND last_mmur.id > #{ro.nextId}
       </if>
     </where>
+  </select>
+
+  <select id="scrollBySender" resultType="in.hocg.rabbit.com.biz.entity.MessageUserRef">
+    SELECT mmur.*  FROM (
+    <!-- 与某人相关的聊天记录 -->
+    SELECT to_mmur.receiver_user lx_user_id, to_mmur.*
+    FROM mms_message_user_ref to_mmur
+    <where>
+      <if test="ro.messageType != null">
+        AND to_mmur.message_type = #{ro.messageType}
+      </if>
+      <!-- 发送人 -->
+      <if test="ro.chatUserId != null">
+        AND to_mmur.creator = #{ro.chatUserId}
+      </if>
+    </where>
+    UNION
+    SELECT from_mmur.creator lx_user_id, from_mmur.*
+    FROM mms_message_user_ref from_mmur
+    <where>
+      <if test="ro.messageType != null">
+        AND from_mmur.message_type = #{ro.messageType}
+      </if>
+      <!-- 接收人 -->
+      <if test="ro.chatUserId != null">
+        AND from_mmur.receiver_user = #{ro.chatUserId}
+      </if>
+    </where>
+    ) mmur
+    <where>
+      <if test="ro.nextId != null">
+        AND mmur.id > #{ro.nextId}
+      </if>
+    </where>
+    ORDER BY mmur.created_at desc
   </select>
 </mapper>

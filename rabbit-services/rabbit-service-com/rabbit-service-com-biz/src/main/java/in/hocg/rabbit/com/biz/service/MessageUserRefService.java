@@ -32,5 +32,7 @@ public interface MessageUserRefService extends AbstractService<MessageUserRef> {
 
     IScroll<MessageComplexVo> scroll(MessageScrollRo ro);
 
-    IScroll<MessageComplexVo> scrollByChatUser(MessageByChatUserScrollRo ro);
+    IScroll<MessageComplexVo> scrollLastByChatUser(MessageByChatUserScrollRo ro);
+
+    IScroll<MessageComplexVo> scrollBySender(MessageByChatUserScrollRo ro);
 }

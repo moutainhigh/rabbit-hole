@@ -14,6 +14,9 @@ import lombok.Data;
  */
 @Data
 public class MessageByChatUserScrollRo extends ScrollRo {
+    @ApiModelProperty("标记已读")
+    private Boolean markReady;
+
     @EnumRange(enumClass = MessageType.class)
     @ApiModelProperty("消息类型")
     private String messageType;

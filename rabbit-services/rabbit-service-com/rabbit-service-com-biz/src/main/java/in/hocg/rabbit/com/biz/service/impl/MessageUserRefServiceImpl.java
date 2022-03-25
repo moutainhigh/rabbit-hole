@@ -108,8 +108,8 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
     }
 
     @Override
-    public IScroll<MessageComplexVo> scrollByChatUser(MessageByChatUserScrollRo ro) {
-        List<Long> id = baseMapper.scrollByChatUser(ro, ro.ofPage()).getRecords().stream()
+    public IScroll<MessageComplexVo> scrollLastByChatUser(MessageByChatUserScrollRo ro) {
+        List<Long> id = baseMapper.scrollLastByChatUser(ro, ro.ofPage()).getRecords().stream()
             .map(scrollByChatUserVo::getNextId).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(id)) {
             return PageUtils.emptyScroll();
@@ -117,6 +117,15 @@ public class MessageUserRefServiceImpl extends AbstractServiceImpl<MessageUserRe
         List<MessageUserRef> records = listByIds(id);
         boolean hasMore = records.size() == ro.getSize();
         return as(PageUtils.fillScroll(hasMore, records, CommonEntity::getId), MessageComplexVo.class);
+    }
+
+    @Override
+    public IScroll<MessageComplexVo> scrollBySender(MessageByChatUserScrollRo ro) {
+        IPage<MessageUserRef> result = baseMapper.scrollBySender(ro, ro.ofPage());
+        if (ObjectUtil.defaultIfNull(ro.getMarkReady(), true)) {
+            this.markReadById(LangUtils.toList(result.getRecords(), MessageUserRef::getId));
+        }
+        return as(PageUtils.fillScroll(result, CommonEntity::getId), MessageComplexVo.class);
     }
 
     private Long countByUnreadAndRefTypeAndUserId(String refType, Long userId) {

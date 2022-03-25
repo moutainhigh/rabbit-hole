@@ -50,11 +50,19 @@ public class MessageController {
     }
 
     @UseLogger
-    @ApiOperation("与查询人相关人的最后一条聊天记录(私信+未读数量+最近一条消息) - 下拉翻页")
-    @PostMapping("/sender/_scroll")
+    @ApiOperation("聊天记录 - 下拉翻页")
+    @PostMapping("/chat/_scroll")
     public Result<IScroll<MessageComplexVo>> scrollBySender(@RequestBody MessageByChatUserScrollRo ro) {
         ro.setChatUserId(UserContextHolder.getUserIdThrow());
-        return Result.success(service.scrollByChatUser(ro));
+        return Result.success(service.scrollBySender(ro));
+    }
+
+    @UseLogger
+    @ApiOperation("与查询人相关人的最后一条聊天记录(私信+未读数量+最近一条消息) - 下拉翻页")
+    @PostMapping("/chat/last/_scroll")
+    public Result<IScroll<MessageComplexVo>> scrollLastBySender(@RequestBody MessageByChatUserScrollRo ro) {
+        ro.setChatUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.scrollLastByChatUser(ro));
     }
 
     @UseLogger

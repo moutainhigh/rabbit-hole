@@ -25,6 +25,6 @@ public class MessageScrollRo extends ScrollRo {
     @ApiModelProperty("消息类型")
     private String messageType;
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value = "联系人(我方)", hidden = true)
     private Long receiverUser;
 }
