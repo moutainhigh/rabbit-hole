@@ -53,7 +53,7 @@ public class MessageController {
     @ApiOperation("聊天记录 - 下拉翻页")
     @PostMapping("/chat/_scroll")
     public Result<IScroll<MessageComplexVo>> scrollBySender(@RequestBody MessageByChatUserScrollRo ro) {
-        ro.setChatUserId(UserContextHolder.getUserIdThrow());
+        ro.setOptUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.scrollBySender(ro));
     }
 

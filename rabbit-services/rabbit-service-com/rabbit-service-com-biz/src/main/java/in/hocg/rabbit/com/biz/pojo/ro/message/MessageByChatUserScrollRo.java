@@ -21,7 +21,10 @@ public class MessageByChatUserScrollRo extends ScrollRo {
     @ApiModelProperty("消息类型")
     private String messageType;
 
-    @ApiModelProperty(value = "相关人", hidden = true)
+    @ApiModelProperty(value = "相关人")
     private Long chatUserId;
+
+    @ApiModelProperty(value = "登陆人", hidden = true)
+    private Long optUserId;
 
 }

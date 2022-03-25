@@ -85,6 +85,10 @@
       <if test="ro.chatUserId != null">
         AND to_mmur.creator = #{ro.chatUserId}
       </if>
+      <!-- 接收人 -->
+      <if test="ro.optUserId != null">
+        AND to_mmur.receiver_user = #{ro.optUserId}
+      </if>
     </where>
     UNION
     SELECT from_mmur.creator lx_user_id, from_mmur.*
@@ -92,6 +96,10 @@
     <where>
       <if test="ro.messageType != null">
         AND from_mmur.message_type = #{ro.messageType}
+      </if>
+      <!-- 发送人 -->
+      <if test="ro.optUserId != null">
+        AND from_mmur.creator = #{ro.optUserId}
       </if>
       <!-- 接收人 -->
       <if test="ro.chatUserId != null">
