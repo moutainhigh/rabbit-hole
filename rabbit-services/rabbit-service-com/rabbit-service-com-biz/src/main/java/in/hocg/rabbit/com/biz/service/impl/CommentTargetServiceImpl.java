@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Assert;
 import in.hocg.rabbit.com.biz.entity.CommentTarget;
 import in.hocg.rabbit.com.biz.mapper.CommentTargetMapper;
 import in.hocg.rabbit.com.biz.mapstruct.CommentTargetMapping;
-import in.hocg.rabbit.com.biz.service.CommentTargetProxyService;
 import in.hocg.rabbit.com.biz.service.CommentTargetService;
 import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -29,7 +28,6 @@ import java.util.Optional;
 public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetMapper, CommentTarget>
     implements CommentTargetService {
     private final CommentTargetMapping mapping;
-    private final CommentTargetProxyService proxyService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

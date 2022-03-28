@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author hocgin
  */
 @FeignClient(value = ComServiceName.NAME)
-public interface SnCodeServiceApi {
+public interface UniqueCodeServiceApi {
     String CONTEXT_ID = "SnCodeServiceApi";
 
     @PostMapping(value = CONTEXT_ID + "/getSnCode", headers = ComServiceName.FEIGN_HEADER)
-    String getSnCode(@RequestParam("groupCode") String groupCode);
+    String getUniqueCode(@RequestParam("groupCode") String groupCode);
 }

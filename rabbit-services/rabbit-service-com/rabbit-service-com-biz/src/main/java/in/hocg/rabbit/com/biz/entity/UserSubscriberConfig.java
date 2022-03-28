@@ -3,10 +3,13 @@ package in.hocg.rabbit.com.biz.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
+
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,15 +24,12 @@ import lombok.experimental.Accessors;
  * @since 2021-03-21
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("mms_notice_user_config")
-public class NoticeUserConfig extends AbstractEntity<NoticeUserConfig> {
+@TableName("mms_user_subscriber_config")
+public class UserSubscriberConfig extends CommonEntity<UserSubscriberConfig> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("事件类型")
     @TableField("event_type")
     private String eventType;
@@ -42,13 +42,4 @@ public class NoticeUserConfig extends AbstractEntity<NoticeUserConfig> {
     @ApiModelProperty("订阅人")
     @TableField("subscriber_user")
     private Long subscriberUser;
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    @TableField("creator")
-    private Long creator;
-
-
-
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,12 +25,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("mms_notice_message")
-public class NoticeMessage extends AbstractEntity<NoticeMessage> {
+public class NoticeMessage extends CommonEntity<NoticeMessage> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("事件类型")
     @TableField("event_type")
     private String eventType;
@@ -39,13 +38,8 @@ public class NoticeMessage extends AbstractEntity<NoticeMessage> {
     @ApiModelProperty("订阅对象")
     @TableField("ref_id")
     private Long refId;
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    @TableField("creator")
-    private Long creator;
-
-
+    @ApiModelProperty("内容")
+    @TableField("content")
+    private String content;
 
 }

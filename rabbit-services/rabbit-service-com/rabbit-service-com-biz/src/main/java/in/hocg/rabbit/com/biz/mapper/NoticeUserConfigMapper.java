@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.mapper;
 
-import in.hocg.rabbit.com.biz.entity.NoticeUserConfig;
+import in.hocg.rabbit.com.biz.entity.UserSubscriberConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021-03-21
  */
 @Mapper
-public interface NoticeUserConfigMapper extends BaseMapper<NoticeUserConfig> {
+public interface NoticeUserConfigMapper extends BaseMapper<UserSubscriberConfig> {
 
 }

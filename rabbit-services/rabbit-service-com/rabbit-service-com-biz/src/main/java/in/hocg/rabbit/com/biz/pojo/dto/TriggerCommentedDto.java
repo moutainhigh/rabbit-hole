@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 @Accessors(chain = true)
 public class TriggerCommentedDto implements Serializable {
-    @ApiModelProperty("被评论")
+    @ApiModelProperty("被评论的内容")
     private Long beCommentedId;
-    @ApiModelProperty("评论")
+    @ApiModelProperty("评论的内容")
     private Long commentId;
     @ApiModelProperty("评论人")
     private Long creatorId;

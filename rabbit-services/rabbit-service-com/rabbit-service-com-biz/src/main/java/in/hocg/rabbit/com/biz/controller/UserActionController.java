@@ -1,8 +1,8 @@
-package in.hocg.rabbit.com.biz.controller.mina;
+package in.hocg.rabbit.com.biz.controller;
 
+import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.com.biz.manager.MinaService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
-@Deprecated
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/mina")
-public class MinaController {
+@RequestMapping("/action")
+public class UserActionController {
     private final MinaService service;
 
     @ApiOperation("签到")

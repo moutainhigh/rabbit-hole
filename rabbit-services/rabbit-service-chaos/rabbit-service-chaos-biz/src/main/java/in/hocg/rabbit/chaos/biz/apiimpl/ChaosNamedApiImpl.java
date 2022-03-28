@@ -58,6 +58,13 @@ public class ChaosNamedApiImpl extends AbsNamedServiceExpand
     }
 
     @Override
+    public Map<String, Object> loadByAvatarUrl(NamedArgs args) {
+        List<Long> values = getValues(args.getValues(), Long.class);
+        final List<AccountVo> result = userServiceApi.listAccountVoById(values);
+        return this.toMap(result, AccountVo::getId, AccountVo::getAvatarUrl);
+    }
+
+    @Override
     public Map<String, Object> loadByProjectName(NamedArgs args) {
         List<Long> values = getValues(args.getValues(), Long.class);
         final List<ProjectComplexVo> result = projectServiceApi.listComplexById(values);

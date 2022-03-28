@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,12 +25,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_short_url")
-public class ShortUrl extends AbstractEntity<ShortUrl> {
+public class ShortUrl extends CommonEntity<ShortUrl> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("短链码")
     @TableField("code")
     private String code;
@@ -49,13 +48,4 @@ public class ShortUrl extends AbstractEntity<ShortUrl> {
     // suffix_url：链接除了域名外的后缀
     // base_url：域名
 
-    @ApiModelProperty("创建人")
-    @TableField("creator")
-    private Long creator;
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @TableField("last_updater")
-    private Long lastUpdater;
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
 }

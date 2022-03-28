@@ -66,4 +66,10 @@ public interface UserServiceApi {
 
     @PostMapping(value = CONTEXT_ID + "/register", headers = UmsServiceName.FEIGN_HEADER)
     void register(@RequestBody RegisterRo ro);
+
+    @PostMapping(value = CONTEXT_ID + "/isSuperAdminByUsername", headers = UmsServiceName.FEIGN_HEADER)
+    Boolean isSuperAdminByUsername(@RequestParam("username") String username);
+
+    @PostMapping(value = CONTEXT_ID + "/isSuperAdmin", headers = UmsServiceName.FEIGN_HEADER)
+    Boolean isSuperAdminByUserId(@RequestParam("userId") Long userId);
 }

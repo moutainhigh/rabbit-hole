@@ -15,6 +15,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SystemMessageMapping {
 
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     SystemMessage asSystemMessage(SendSystemMessageDto dto);

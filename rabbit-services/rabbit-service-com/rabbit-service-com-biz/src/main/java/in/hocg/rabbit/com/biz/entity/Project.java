@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,12 +25,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_project")
-public class Project extends AbstractEntity<Project> {
+public class Project extends CommonEntity<Project> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("编码")
     @TableField("encoding")
     private String encoding;
@@ -47,18 +46,5 @@ public class Project extends AbstractEntity<Project> {
     @ApiModelProperty("当前版本号")
     @TableField("version")
     private String version;
-
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建人")
-    @TableField("creator")
-    private Long creator;
-    @ApiModelProperty("更新时间")
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-    @ApiModelProperty("更新者")
-    @TableField("last_updater")
-    private Long lastUpdater;
 
 }

@@ -30,6 +30,23 @@ API 接口文档使用的是`knife`可以按照`swagger`在服务群里面进行
 ├── rabbit-services # 服务群
 │   └── rabbit-service-tpl # 单体服务案例
 │       ├── rabbit-service-tpl-api # 单体服务内部接口案例
+│       ├── rabbit-service-tpl-biz # 单体服务业务代码
+│       │   ├── apiimpl    #
+│       │   ├── basic      #
+│       │   ├── cache      # 缓存
+│       │   ├── constant   #
+│       │   ├── controller #
+│       │   ├── convert    # 业务关联(含有操作service)
+│       │   ├── entity     #
+│       │   ├── manager    # 无实体表的service
+│       │   ├── mapper     #
+│       │   ├── mapstruct  # 纯实体映射
+│       │   ├── message    # 消费消息
+│       │   ├── pojo       # ro、vo、dto
+│       │   ├── schedule   # 定时任务
+│       │   ├── service    #
+│       │   ├── support    #
+│       │   └── utils      # 
 │       └── rabbit-service-tpl-start # 单体服务业务功能案例
 └── pom.xml
 ```

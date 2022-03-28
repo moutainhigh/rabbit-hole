@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.controller;
 
-import in.hocg.rabbit.com.biz.service.ComService;
+import in.hocg.rabbit.com.biz.manager.ComService;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
 import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;

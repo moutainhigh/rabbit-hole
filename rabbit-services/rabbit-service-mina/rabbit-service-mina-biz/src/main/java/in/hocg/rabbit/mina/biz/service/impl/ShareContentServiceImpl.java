@@ -1,7 +1,7 @@
 package in.hocg.rabbit.mina.biz.service.impl;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
-import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.mina.biz.convert.ShareContentConvert;
 import in.hocg.rabbit.mina.biz.entity.ShareContent;
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @UseConvert(ShareContentConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ShareContentServiceImpl extends AbstractServiceImpl<ShareContentMapper, ShareContent> implements ShareContentService {
-    private final SnCodeServiceApi codeServiceApi;
+    private final UniqueCodeServiceApi codeServiceApi;
     private final ShareContentMapping mapping;
 
     @Override
@@ -38,7 +38,7 @@ public class ShareContentServiceImpl extends AbstractServiceImpl<ShareContentMap
     @Override
     public String create(ShareContentSaveRo ro) {
         ShareContent entity = mapping.asShareContent(ro);
-        entity.setEncoding(codeServiceApi.getSnCode(CodeType.ShareContent.getCodeStr()));
+        entity.setEncoding(codeServiceApi.getUniqueCode(CodeType.ShareContent.getCodeStr()));
         baseMapper.insert(entity);
         return entity.getEncoding();
     }

@@ -1,9 +1,9 @@
 package in.hocg.rabbit.com.biz.apiimpl;
 
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
-import in.hocg.rabbit.com.biz.service.impl.SnCodeServiceImpl;
+import in.hocg.rabbit.com.biz.manager.impl.UniqueCodeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SnCodeServiceApiImpl implements SnCodeServiceApi {
-    private final SnCodeServiceImpl snCodeService;
+public class UniqueCodeServiceApiImpl implements UniqueCodeServiceApi {
+    private final UniqueCodeServiceImpl uniqueCodeService;
 
     @Override
-    public String getSnCode(String groupCode) {
-        return snCodeService.getSnCode(ICode.ofThrow(groupCode, CodeType.class));
+    public String getUniqueCode(String groupCode) {
+        return uniqueCodeService.getUniqueCode(ICode.ofThrow(groupCode, CodeType.class));
     }
 }

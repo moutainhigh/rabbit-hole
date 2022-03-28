@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,12 +26,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("com_user_integral_flow")
-public class UserIntegralFlow extends AbstractEntity<UserIntegralFlow> {
+public class UserIntegralFlow extends CommonEntity<UserIntegralFlow> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("用户")
     @TableField("user_id")
     private Long userId;
@@ -49,19 +48,6 @@ public class UserIntegralFlow extends AbstractEntity<UserIntegralFlow> {
     @ApiModelProperty("过期时间")
     @TableField("expire_at")
     private LocalDateTime expireAt;
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
-    @TableField("creator")
-    private Long creator;
-    @ApiModelProperty("更新时间")
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-    @ApiModelProperty("更新者")
-    @TableField("last_updater")
-    private Long lastUpdater;
-
 
 
 }

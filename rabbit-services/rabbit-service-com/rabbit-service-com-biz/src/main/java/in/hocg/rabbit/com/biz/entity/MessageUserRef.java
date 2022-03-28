@@ -1,10 +1,8 @@
 package in.hocg.rabbit.com.biz.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,26 +22,21 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("mms_message_user_ref")
-public class MessageUserRef extends AbstractEntity<MessageUserRef> {
+public class MessageUserRef extends CommonEntity<MessageUserRef> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("接收人")
     @TableField("receiver_user")
     private Long receiverUser;
     @ApiModelProperty("消息类型")
-    @TableField("ref_type")
-    private String refType;
+    @TableField("message_type")
+    private String messageType;
     @ApiModelProperty("消息对象")
-    @TableField("ref_id")
-    private Long refId;
+    @TableField("message_id")
+    private Long messageId;
     @ApiModelProperty("读取时间")
     @TableField("read_at")
     private LocalDateTime readAt;
-    @ApiModelProperty("创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
 
 }

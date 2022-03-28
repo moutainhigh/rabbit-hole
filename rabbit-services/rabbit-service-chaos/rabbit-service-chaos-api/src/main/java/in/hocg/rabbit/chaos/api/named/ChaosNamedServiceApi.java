@@ -32,6 +32,10 @@ public interface ChaosNamedServiceApi extends NamedService {
     @PostMapping(value = CONTEXT_ID + "/loadByNickname", headers = ChaosServiceName.FEIGN_HEADER)
     Map<String, Object> loadByNickname(@RequestBody NamedArgs args);
 
+    @NamedHandler(ChaosNamedType.Userid2AvatarUrl)
+    @PostMapping(value = CONTEXT_ID + "/loadByAvatarUrl", headers = ChaosServiceName.FEIGN_HEADER)
+    Map<String, Object> loadByAvatarUrl(@RequestBody NamedArgs args);
+
     @NamedHandler(ChaosNamedType.ProjectName)
     @PostMapping(value = CONTEXT_ID + "/loadByProjectName", headers = ChaosServiceName.FEIGN_HEADER)
     Map<String, Object> loadByProjectName(@RequestBody NamedArgs args);

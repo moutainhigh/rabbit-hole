@@ -14,13 +14,26 @@ import in.hocg.rabbit.com.biz.pojo.vo.message.MessageComplexVo;
  * @author hocgin
  */
 public interface MessageUserRefProxyService {
-    MessageComplexVo getById(Long id);
 
-    IPage<MessageComplexVo> paging(MessagePagingRo ro);
-
+    /**
+     * 发送系统消息
+     *
+     * @param dto 消息体
+     */
     void sendSystemMessage(SendSystemMessageDto dto);
 
+    /**
+     * 发送通知消息
+     *
+     * @param dto 消息体
+     */
     void sendNoticeMessage(SendNoticeMessageDto dto);
 
+    /**
+     * 发送个人消息
+     *
+     * @param dto 消息体
+     */
     void sendPersonalMessage(SendPersonalMessageDto dto);
+
 }

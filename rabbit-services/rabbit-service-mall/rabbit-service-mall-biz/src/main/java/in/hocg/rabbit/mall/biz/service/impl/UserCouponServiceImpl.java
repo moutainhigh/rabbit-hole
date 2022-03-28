@@ -7,11 +7,10 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConve
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
-import in.hocg.rabbit.com.api.SnCodeServiceApi;
+import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.mall.api.enums.coupon.UserCouponStatus;
 import in.hocg.rabbit.mall.biz.convert.UserCouponConvert;
-import in.hocg.rabbit.mall.biz.entity.Coupon;
 import in.hocg.rabbit.mall.biz.entity.UserCoupon;
 import in.hocg.rabbit.mall.biz.mapper.UserCouponMapper;
 import in.hocg.rabbit.mall.biz.mapstruct.UserCouponMapping;
@@ -22,15 +21,12 @@ import in.hocg.rabbit.mall.biz.pojo.vo.*;
 import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.UserCouponService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
-import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.utils.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +47,7 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
     private final UserCouponConvert convert;
     private final CouponService couponService;
     private final UserCouponMapping mapping;
-    private final SnCodeServiceApi codeServiceApi;
+    private final UniqueCodeServiceApi codeServiceApi;
 
     @Override
     public IPage<UserCouponOrdinaryVo> paging(UserCouponPagingRo ro) {
@@ -90,7 +86,7 @@ public class UserCouponServiceImpl extends AbstractServiceImpl<UserCouponMapper,
         LocalDateTime endAt = validityAt.get(1);
         entity.setStartAt(startAt);
         entity.setEndAt(endAt);
-        entity.setEncoding(codeServiceApi.getSnCode(CodeType.UserCoupon.getCodeStr()));
+        entity.setEncoding(codeServiceApi.getUniqueCode(CodeType.UserCoupon.getCodeStr()));
         entity.setCouponId(couponId);
         entity.setStatus(UserCouponStatus.UnUse.getCodeStr());
         this.validInsert(entity);

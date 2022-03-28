@@ -8,9 +8,9 @@ import in.hocg.rabbit.com.biz.pojo.dto.TriggerCommentedDto;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.com.biz.manager.MessageUserRefProxyService;
 import in.hocg.rabbit.com.api.enums.message.NoticeMessageEventType;
-import in.hocg.rabbit.com.api.enums.message.NoticeMessageRefType;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
 import in.hocg.boot.message.autoconfigure.service.normal.redis.RedisMessageListener;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import io.swagger.annotations.ApiModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/4/21
@@ -31,7 +32,7 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Component
-@ApiModel("评论被评论")
+@ApiModel("评论被回复, 通知被评论的所有人")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class BeCommentedListener extends RedisMessageListener<Message<TriggerCommentedDto>> {
     private final NormalMessageBervice messageService;
@@ -48,7 +49,7 @@ public class BeCommentedListener extends RedisMessageListener<Message<TriggerCom
 
         Comment beCommend = commentService.getById(refId);
         Long beCommendCreator = beCommend.getCreator();
-        String refType = NoticeMessageRefType.Comment.getCodeStr();
+        String refType = RefType.Comment.getCodeStr();
         String eventType = NoticeMessageEventType.CommentBeEvaluated.getCodeStr();
 
         // 通知被评论人
@@ -57,7 +58,8 @@ public class BeCommentedListener extends RedisMessageListener<Message<TriggerCom
         messageDto.setRefId(refId);
         messageDto.setRefType(refType);
         messageDto.setCreator(creatorId);
-        messageDto.setReceiver(beCommendCreator);
+        messageDto.setReceiver(List.of(beCommendCreator));
+        messageDto.setContent("您的评论有新的回复");
         messageUserRefProxyService.sendNoticeMessage(messageDto);
 
         // 通知其他订阅的人

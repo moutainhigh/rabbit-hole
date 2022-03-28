@@ -1,7 +1,7 @@
-package in.hocg.rabbit.com.biz.service.impl;
+package in.hocg.rabbit.com.biz.manager.impl;
 
 import cn.hutool.core.lang.Assert;
-import in.hocg.rabbit.com.biz.service.MinaService;
+import in.hocg.rabbit.com.biz.manager.MinaService;
 import in.hocg.rabbit.com.biz.service.UserIntegralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
