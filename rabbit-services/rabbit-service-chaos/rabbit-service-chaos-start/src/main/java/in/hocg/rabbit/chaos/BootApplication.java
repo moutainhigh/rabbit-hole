@@ -1,5 +1,6 @@
 package in.hocg.rabbit.chaos;
 
+import in.hocg.boot.mybatis.plus.extensions.context.constants.GlobalConstants;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.mall.api.MallServiceName;
 import in.hocg.rabbit.rcm.api.RcmServiceName;
@@ -32,6 +33,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
     "in.hocg.rabbit.docking", "in.hocg.rabbit.ums",
     "in.hocg.rabbit.mina", "in.hocg.rabbit.com",
     RcmServiceName.PACKAGE,
+    GlobalConstants.PACKAGE_PREFIX,
     WsServiceName.PACKAGE, MallServiceName.PACKAGE})
 @EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
