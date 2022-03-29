@@ -21,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
-      <artifactId>utils-spring-boot-annotation</artifactId>
+      <artifactId>utils-annotation</artifactId>
     </dependency>
     <!--  二方库  -->
     <dependency>

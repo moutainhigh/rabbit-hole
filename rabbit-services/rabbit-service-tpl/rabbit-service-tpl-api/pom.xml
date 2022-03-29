@@ -25,7 +25,7 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
-      <artifactId>utils-spring-boot-annotation</artifactId>
+      <artifactId>utils-annotation</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
