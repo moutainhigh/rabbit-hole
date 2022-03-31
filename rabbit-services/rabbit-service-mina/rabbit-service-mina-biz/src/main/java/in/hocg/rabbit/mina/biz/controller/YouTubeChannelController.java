@@ -44,11 +44,4 @@ public class YouTubeChannelController {
     public Result<IPage<Y2bChannelCompleteVo>> paging(@RequestBody YouTubeChannelPageRo ro) {
         return Result.success(service.paging(ro));
     }
-
-    @UseLogger("新增 - YouTube 频道")
-    @GetMapping("/authorize")
-    public ResponseEntity<Void> authorize(@RequestParam("clientId") String clientId,
-                                          @RequestParam(value = "scopes", required = false, defaultValue = "https://www.googleapis.com/auth/youtube") List<String> scopes) {
-        return ResponseUtils.found(youTubeService.authorize(clientId, scopes));
-    }
 }

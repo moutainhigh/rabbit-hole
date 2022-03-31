@@ -8,7 +8,7 @@ import in.hocg.rabbit.mina.biz.constant.YouTubeConstant;
 import in.hocg.rabbit.mina.biz.entity.Y2bChannel;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadYouTubeVideoDto;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.pojo.ro.ClientYouTubeCompleteRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeClientCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import com.google.api.client.http.InputStreamContent;
@@ -121,7 +121,7 @@ public class YouTubeServiceImpl implements YouTubeService {
     }
 
     @Override
-    public List<YouTubeClientVo> clientComplete(ClientYouTubeCompleteRo ro) {
+    public List<YouTubeClientVo> clientComplete(YouTubeClientCompleteRo ro) {
         return youtubeBervice.getClientConfigs().values().stream()
             .map(clientConfig -> new YouTubeClientVo().setApplicationName(clientConfig.getApplicationName())
                 .setId(clientConfig.getClientId())).collect(Collectors.toList());

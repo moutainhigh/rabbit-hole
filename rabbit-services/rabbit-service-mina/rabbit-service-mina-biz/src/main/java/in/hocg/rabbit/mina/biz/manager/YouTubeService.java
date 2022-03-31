@@ -1,7 +1,7 @@
 package in.hocg.rabbit.mina.biz.manager;
 
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.pojo.ro.ClientYouTubeCompleteRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeClientCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.YouTubeClientVo;
 import org.springframework.scheduling.annotation.Async;
@@ -41,5 +41,5 @@ public interface YouTubeService {
     @Async
     void uploadDir(BatchUploadYouTubeVideoRo ro);
 
-    List<YouTubeClientVo> clientComplete(ClientYouTubeCompleteRo ro);
+    List<YouTubeClientVo> clientComplete(YouTubeClientCompleteRo ro);
 }

@@ -3,16 +3,12 @@ package in.hocg.rabbit.mina.biz.controller;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.pojo.ro.ClientYouTubeCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.pojo.vo.YouTubeClientVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by hocgin on 2021/6/19

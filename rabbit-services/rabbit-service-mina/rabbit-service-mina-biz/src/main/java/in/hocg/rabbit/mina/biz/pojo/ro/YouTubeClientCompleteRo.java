@@ -10,6 +10,6 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ClientYouTubeCompleteRo extends CompleteRo {
+public class YouTubeClientCompleteRo extends CompleteRo {
 
 }
