@@ -3,7 +3,7 @@ CREATE TABLE `ytb_y2b_channel`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `client_id`       VARCHAR(64)
+    `client_id`       VARCHAR(256)
         COMMENT '授权服务',
     `channel_id`      VARCHAR(32)
         COMMENT '频道ID',

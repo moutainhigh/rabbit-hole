@@ -14,6 +14,8 @@ import lombok.Data;
 @Data
 @ApiModel
 public class Y2bChannelCompleteVo {
+    @ApiModelProperty
+    private Long id;
     @ApiModelProperty("授权服务")
     private String clientId;
     @ApiModelProperty("频道ID")
