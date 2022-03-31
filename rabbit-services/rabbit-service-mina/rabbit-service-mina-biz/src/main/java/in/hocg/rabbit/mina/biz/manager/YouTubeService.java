@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mina.biz.manager;
 
+import in.hocg.boot.youtube.autoconfiguration.utils.data.YouTubeChannel;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeClientCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
@@ -42,4 +43,6 @@ public interface YouTubeService {
     void uploadDir(BatchUploadYouTubeVideoRo ro);
 
     List<YouTubeClientVo> clientComplete(YouTubeClientCompleteRo ro);
+
+    YouTubeChannel getChannel(Long channelId);
 }

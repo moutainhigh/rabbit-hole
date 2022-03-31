@@ -28,9 +28,6 @@ public class Y2bChannel extends CommonEntity<Y2bChannel> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("ID")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     @ApiModelProperty("授权服务")
     @TableField("client_id")
     private String clientId;

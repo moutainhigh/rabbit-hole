@@ -25,4 +25,5 @@ public interface Y2bChannelService extends AbstractService<Y2bChannel> {
 
     IPage<Y2bChannelCompleteVo> paging(YouTubeChannelPageRo ro);
 
+    Object ping(Long channelId);
 }

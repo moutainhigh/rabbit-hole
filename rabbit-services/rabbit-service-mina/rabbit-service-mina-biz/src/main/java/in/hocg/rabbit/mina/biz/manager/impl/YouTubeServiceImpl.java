@@ -1,8 +1,13 @@
 package in.hocg.rabbit.mina.biz.manager.impl;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import com.google.api.client.auth.oauth2.Credential;
+import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.boot.youtube.autoconfiguration.properties.YoutubeProperties;
 import in.hocg.boot.youtube.autoconfiguration.utils.YoutubeUtils;
+import in.hocg.boot.youtube.autoconfiguration.utils.data.YouTubeChannel;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.mina.biz.constant.YouTubeConstant;
 import in.hocg.rabbit.mina.biz.entity.Y2bChannel;
@@ -33,6 +38,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -56,7 +62,7 @@ public class YouTubeServiceImpl implements YouTubeService {
     @Override
     public void authorizeCallback(String clientId, List<String> scopes, String code) {
         youtubeBervice.getCredential(clientId, YouTubeHelper.getRedirectUri(clientId), scopes, code,
-            credential -> StrUtil.toString(channelService.rebind(clientId, YoutubeUtils.getYouTubeChannel(credential))));
+            credential -> YouTubeHelper.asChannelFlag(channelService.rebind(clientId, YoutubeUtils.getYouTubeChannel(credential))));
     }
 
     @SneakyThrows({MalformedURLException.class, IOException.class})
@@ -127,6 +133,13 @@ public class YouTubeServiceImpl implements YouTubeService {
                 .setId(clientConfig.getClientId())).collect(Collectors.toList());
     }
 
+    @Override
+    public YouTubeChannel getChannel(Long channelId) {
+        Credential credential = getCredential(channelService.getById(channelId))
+            .orElseThrow(() -> ServiceException.wrap("获取认证信息失败"));
+        return YoutubeUtils.getYouTubeChannel(credential);
+    }
+
     @SneakyThrows
     private void addPlaylistItem(Y2bChannel channel, String playlistId, String videoId) {
         YouTube youtube = getYoutube(channel);
@@ -167,7 +180,14 @@ public class YouTubeServiceImpl implements YouTubeService {
 
     private YouTube getYoutube(Y2bChannel channel) {
         String clientId = channel.getClientId();
-        String channelFlag = StrUtil.toString(channel.getId());
+        String channelFlag = YouTubeHelper.asChannelFlag(channel.getId());
         return youtubeBervice.youtube(clientId, channelFlag, YouTubeConstant.DEFAULT_SCOPES);
+    }
+
+    private Optional<Credential> getCredential(Y2bChannel channel) {
+        if (Objects.isNull(channel)) {
+            return Optional.empty();
+        }
+        return youtubeBervice.loadCredential(channel.getClientId(), YouTubeHelper.asChannelFlag(channel.getId()));
     }
 }

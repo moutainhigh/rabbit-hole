@@ -12,7 +12,6 @@ import in.hocg.rabbit.mina.biz.service.Y2bChannelService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,6 @@ import java.util.List;
 @RequestMapping("/youtube/channel")
 public class YouTubeChannelController {
     private final Y2bChannelService service;
-    private final YouTubeService youTubeService;
 
     @UseLogger("搜索 - YouTube 频道")
     @PostMapping("/_complete")
@@ -43,5 +41,11 @@ public class YouTubeChannelController {
     @PostMapping("/_paging")
     public Result<IPage<Y2bChannelCompleteVo>> paging(@RequestBody YouTubeChannelPageRo ro) {
         return Result.success(service.paging(ro));
+    }
+
+    @UseLogger("检查授权 - YouTube 频道")
+    @GetMapping("/{channelId}/ping")
+    public Result<Object> ping(@PathVariable Long channelId) {
+        return Result.success(service.ping(channelId));
     }
 }

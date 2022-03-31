@@ -16,4 +16,8 @@ public class YouTubeHelper {
         String hostname = SpringContext.getBootConfig().getHostname();
         return StrUtil.format("{}/mina/youtube/{}/callback", hostname, clientId);
     }
+
+    public String asChannelFlag(Long channelId) {
+        return StrUtil.format("y2b_channel:{}", channelId);
+    }
 }
