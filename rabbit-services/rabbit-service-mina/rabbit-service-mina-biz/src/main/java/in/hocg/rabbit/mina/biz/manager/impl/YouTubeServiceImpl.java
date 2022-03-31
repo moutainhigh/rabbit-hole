@@ -1,14 +1,19 @@
-package in.hocg.rabbit.mina.biz.support.ytb.impl;
+package in.hocg.rabbit.mina.biz.manager.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.api.client.auth.oauth2.Credential;
+import in.hocg.boot.youtube.autoconfiguration.utils.YoutubeUtils;
+import in.hocg.boot.youtube.autoconfiguration.utils.data.CredentialChannel;
+import in.hocg.boot.youtube.autoconfiguration.utils.data.YouTubeChannel;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.mina.biz.constant.YouTubeConstant;
+import in.hocg.rabbit.mina.biz.entity.Channel;
 import in.hocg.rabbit.mina.biz.mapstruct.YouTubeMapping;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadYouTubeVideoDto;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.support.ytb.YouTubeService;
+import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
@@ -16,6 +21,8 @@ import com.google.common.collect.Lists;
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.boot.youtube.autoconfiguration.core.YoutubeBervice;
 import in.hocg.boot.youtube.autoconfiguration.core.YoutubeHelper;
+import in.hocg.rabbit.mina.biz.service.ChannelService;
+import in.hocg.rabbit.mina.biz.support.YouTubeHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +36,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Created by hocgin on 2021/6/19
@@ -41,26 +49,28 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class YouTubeServiceImpl implements YouTubeService {
     private final YoutubeBervice youtubeBervice;
-    private final YouTubeMapping mapping;
+    private final ChannelService channelService;
 
     @Override
     public String authorize(String clientId, List<String> scopes) {
-        String redirectUri = StrUtil.format("{}/mina/youtube/{}/callback", SpringContext.getBootConfig().getHostname(), clientId);
-        return youtubeBervice.authorize(clientId, redirectUri, scopes);
+        return youtubeBervice.authorize(clientId, YouTubeHelper.getRedirectUri(clientId), scopes);
     }
 
     @Override
-    public String authorizeCallback(String clientId, List<String> scopes, String code) {
-        String redirectUri = StrUtil.format("{}/mina/youtube/{}/callback", SpringContext.getBootConfig().getHostname(), clientId);
-        return youtubeBervice.getCredential(clientId, redirectUri, scopes, code).getAccessToken();
+    public void authorizeCallback(String clientId, List<String> scopes, String code) {
+        youtubeBervice.getCredential(clientId, YouTubeHelper.getRedirectUri(clientId), scopes, code,
+            credential -> StrUtil.toString(channelService.rebind(clientId, YoutubeUtils.getYouTubeChannel(credential))));
     }
 
     @SneakyThrows({MalformedURLException.class, IOException.class})
-    private void uploadVideo(String clientId, File file, UploadYouTubeVideoDto dto) {
+    private void uploadVideo(File file, UploadYouTubeVideoDto dto) {
+        Channel channel = channelService.getById(dto.getChannelId());
+        YouTube youtube = getYoutube(channel);
+
         String thumbnailUrl = dto.getThumbUrl();
         String description = dto.getDescription();
         List<String> tags = dto.getTags();
-        String channelId = dto.getChannelId();
+        String ytbChannelId = channel.getChannelId();
         String language = dto.getLanguage();
         String categoryId = dto.getCategoryId();
         String playlistId = dto.getPlaylistId();
@@ -73,14 +83,13 @@ public class YouTubeServiceImpl implements YouTubeService {
         } else {
             is = FileUtil.getInputStream(file);
         }
-        YouTube youtube = youtubeBervice.youtube(clientId, YouTubeConstant.DEFAULT_SCOPES);
         Video video = YoutubeHelper.createVideo();
         video.setSnippet(YoutubeHelper.createVideoSnippet(title, description)
             .setThumbnails(YoutubeHelper.createThumbnailDetails(thumbnailUrl))
             .setDefaultAudioLanguage(language)
             .setCategoryId(categoryId)
             .setDefaultLanguage(language)
-            .setChannelId(channelId)
+            .setChannelId(ytbChannelId)
             .setTags(tags));
         InputStreamContent mediaContent = new InputStreamContent("video/*", is);
 
@@ -96,27 +105,27 @@ public class YouTubeServiceImpl implements YouTubeService {
 
         // 如果需要添加到[播放列表]
         if (StrUtil.isNotBlank(playlistId)) {
-            addPlaylistItem(clientId, playlistId, rtnVideo.getId());
+            addPlaylistItem(channel, playlistId, rtnVideo.getId());
         }
     }
 
     @Override
-    public void uploadVideo(String clientId, UploadYouTubeVideoRo dto) {
-        String videoUrl = dto.getVideoUrl();
-        this.uploadVideo(clientId, CommonUtils.toFile(videoUrl), dto);
+    public void uploadVideo(UploadYouTubeVideoRo ro) {
+        String videoUrl = ro.getVideoUrl();
+        this.uploadVideo(CommonUtils.toFile(videoUrl), ro);
     }
 
     @Override
-    public void uploadDir(String clientId, BatchUploadYouTubeVideoRo ro) {
+    public void uploadDir(BatchUploadYouTubeVideoRo ro) {
         String localDir = ro.getLocalDir();
         File videoDir = Paths.get(localDir).toFile();
         Lists.newArrayList(Objects.requireNonNull(videoDir.listFiles()))
-            .forEach(file -> this.uploadVideo(clientId, file, ro));
+            .forEach(file -> this.uploadVideo(file, ro));
     }
 
     @SneakyThrows
-    private void addPlaylistItem(String clientId, String playlistId, String videoId) {
-        YouTube youtube = youtubeBervice.youtube(clientId, YouTubeConstant.DEFAULT_SCOPES);
+    private void addPlaylistItem(Channel channel, String playlistId, String videoId) {
+        YouTube youtube = getYoutube(channel);
         ResourceId resourceId = new ResourceId();
         resourceId.setKind("youtube#video");
         resourceId.setVideoId(videoId);
@@ -139,16 +148,22 @@ public class YouTubeServiceImpl implements YouTubeService {
     }
 
     @SneakyThrows
-    public List<?> channels(String clientId) {
-        YouTube youtube = youtubeBervice.youtube(clientId, YouTubeConstant.DEFAULT_SCOPES);
+    public List<?> channels(Channel channel) {
+        YouTube youtube = getYoutube(channel);
         String part = StrUtil.join(",", "id", "contentDetails");
         return youtube.channels().list(part).setMine(true).execute().getItems();
     }
 
     @SneakyThrows
-    public List<?> playlists(String clientId) {
-        YouTube youtube = youtubeBervice.youtube(clientId, YouTubeConstant.DEFAULT_SCOPES);
+    public List<?> playlists(Channel channel) {
+        YouTube youtube = getYoutube(channel);
         String part = StrUtil.join(",", "id", "contentDetails");
         return youtube.playlists().list(part).setMine(true).execute().getItems();
+    }
+
+    private YouTube getYoutube(Channel channel) {
+        String clientId = channel.getClientId();
+        String channelFlag = StrUtil.toString(channel.getId());
+        return youtubeBervice.youtube(clientId, channelFlag, YouTubeConstant.DEFAULT_SCOPES);
     }
 }

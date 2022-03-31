@@ -2,7 +2,7 @@ package in.hocg.rabbit.mina.biz.apiimpl;
 
 import in.hocg.rabbit.mina.api.YouTubeServiceApi;
 import in.hocg.rabbit.mina.api.pojo.ro.UploadYouTubeRo;
-import in.hocg.rabbit.mina.biz.support.ytb.YouTubeService;
+import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;

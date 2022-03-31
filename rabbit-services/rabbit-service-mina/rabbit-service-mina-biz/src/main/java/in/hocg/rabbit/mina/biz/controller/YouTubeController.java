@@ -2,9 +2,10 @@ package in.hocg.rabbit.mina.biz.controller;
 
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.support.ytb.YouTubeService;
+import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
 import in.hocg.boot.utils.struct.result.Result;
+import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -26,29 +27,16 @@ public class YouTubeController {
     private final YouTubeService service;
 
     @ResponseBody
-    @GetMapping("/authorize")
-    public ResponseEntity<Void> authorize(@RequestParam("clientId") String clientId, @RequestParam(value = "scopes", required = false, defaultValue = "https://www.googleapis.com/auth/youtube") List<String> scopes) {
-        return ResponseUtils.found(service.authorize(clientId, scopes));
-    }
-
-    @ResponseBody
-    @GetMapping("/{clientId}/callback")
-    public Result<String> callback(@PathVariable String clientId, @RequestParam("code") String code, @RequestParam("scope") List<String> scopes) {
-        service.authorizeCallback(clientId, scopes, code);
+    @PostMapping("/upload")
+    public Result<String> upload(@RequestBody UploadYouTubeVideoRo ro) {
+        service.uploadVideo(ro);
         return Result.success();
     }
 
     @ResponseBody
-    @PostMapping("/{clientId}/upload")
-    public Result<String> upload(@PathVariable String clientId, @RequestBody UploadYouTubeVideoRo ro) {
-        service.uploadVideo(clientId, ro);
-        return Result.success();
-    }
-
-    @ResponseBody
-    @PostMapping("/{clientId}/upload/local")
-    public Result<Void> uploadLocal(@PathVariable String clientId, @RequestBody BatchUploadYouTubeVideoRo ro) {
-        service.uploadDir(clientId, ro);
+    @PostMapping("/upload/local")
+    public Result<Void> uploadLocal(@RequestBody BatchUploadYouTubeVideoRo ro) {
+        service.uploadDir(ro);
         return Result.success();
     }
 

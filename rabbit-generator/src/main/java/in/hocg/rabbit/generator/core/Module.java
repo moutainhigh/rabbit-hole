@@ -22,7 +22,7 @@ public enum Module {
     WL(Lists.newArrayList("wl_"),
         "in.hocg.rabbit.wl.biz",
         "rabbit-services/rabbit-service-wl/rabbit-service-wl-biz"),
-    MINA(Lists.newArrayList("mina_", "dl_"),
+    MINA(Lists.newArrayList("mina_", "dl_", "ytb_"),
         "in.hocg.rabbit.mina.biz",
         "rabbit-services/rabbit-service-mina/rabbit-service-mina-biz"),
     COM(Lists.newArrayList("com_", "mms_", "boot_"),

@@ -17,7 +17,7 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.MINA, false,
-            "mina_share_content",
+            "ytb_channel",
             "");
     }
 

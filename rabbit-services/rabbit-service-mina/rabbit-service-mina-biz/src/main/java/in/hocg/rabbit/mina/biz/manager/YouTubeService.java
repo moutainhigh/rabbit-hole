@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mina.biz.support.ytb;
+package in.hocg.rabbit.mina.biz.manager;
 
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
@@ -31,11 +31,11 @@ public interface YouTubeService {
      * @param code
      * @return
      */
-    String authorizeCallback(String clientId, List<String> scopes, String code);
+    void authorizeCallback(String clientId, List<String> scopes, String code);
 
     @Async
-    void uploadVideo(String clientId, UploadYouTubeVideoRo ro);
+    void uploadVideo(UploadYouTubeVideoRo ro);
 
     @Async
-    void uploadDir(String clientId, BatchUploadYouTubeVideoRo ro);
+    void uploadDir(BatchUploadYouTubeVideoRo ro);
 }

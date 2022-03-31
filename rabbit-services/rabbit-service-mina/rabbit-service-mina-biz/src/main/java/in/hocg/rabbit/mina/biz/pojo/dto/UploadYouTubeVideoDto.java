@@ -18,10 +18,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class UploadYouTubeVideoDto {
+    @ApiModelProperty("频道")
+    private Long channelId;
+
     @ApiModelProperty("图片")
     private String thumbUrl = "http://cdn.hocgin.top/file/未命名图片.png";
-    @ApiModelProperty("频道")
-    private String channelId = "UCEAVb3QTuUD6kpvvDq6N_NQ";
     @ApiModelProperty("国际化")
     private String language = "ZH-CN";
     // 视频类别: https://developers-dot-devsite-v2-prod.appspot.com/youtube/v3/docs/videoCategories/list
