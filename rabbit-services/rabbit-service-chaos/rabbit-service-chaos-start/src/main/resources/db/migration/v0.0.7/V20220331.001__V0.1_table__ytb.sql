@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `ytb_channel`;
-CREATE TABLE `ytb_channel`
+DROP TABLE IF EXISTS `ytb_y2b_channel`;
+CREATE TABLE `ytb_y2b_channel`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',

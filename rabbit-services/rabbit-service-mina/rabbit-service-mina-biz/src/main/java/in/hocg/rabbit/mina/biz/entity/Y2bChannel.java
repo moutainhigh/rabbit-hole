@@ -2,22 +2,15 @@ package in.hocg.rabbit.mina.biz.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -30,8 +23,8 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("ytb_channel")
-public class Channel extends CommonEntity<Channel> {
+@TableName("ytb_y2b_channel")
+public class Y2bChannel extends CommonEntity<Y2bChannel> {
 
     private static final long serialVersionUID = 1L;
 

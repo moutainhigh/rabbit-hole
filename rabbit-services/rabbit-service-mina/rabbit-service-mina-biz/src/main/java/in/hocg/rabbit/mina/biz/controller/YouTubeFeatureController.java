@@ -1,10 +1,10 @@
 package in.hocg.rabbit.mina.biz.controller;
 
+import in.hocg.boot.utils.struct.result.Result;
+import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.ClientYouTubeCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
-import in.hocg.rabbit.mina.biz.manager.YouTubeService;
-import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.mina.biz.pojo.vo.YouTubeClientVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +22,21 @@ import java.util.List;
  */
 @Validated
 @RestController
-@Api(tags = "mina::Y2B.通用")
+@Api(tags = "mina::Y2B.功能")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/youtube")
-public class YouTubeController {
+@RequestMapping("/youtube/feature")
+public class YouTubeFeatureController {
     private final YouTubeService service;
 
-    @PostMapping("/client/_complete")
-    public Result<List<YouTubeClientVo>> complete(@RequestBody ClientYouTubeCompleteRo ro) {
-        return Result.success(service.clientComplete(ro));
+    @PostMapping("/upload")
+    public Result<String> upload(@RequestBody UploadYouTubeVideoRo ro) {
+        service.uploadVideo(ro);
+        return Result.success();
     }
 
-    @GetMapping("/{clientId}/callback")
-    public Result<String> callback(@PathVariable String clientId,
-                                   @RequestParam("code") String code, @RequestParam("scope") List<String> scopes) {
-        service.authorizeCallback(clientId, scopes, code);
+    @PostMapping("/upload/local")
+    public Result<Void> uploadLocal(@RequestBody BatchUploadYouTubeVideoRo ro) {
+        service.uploadDir(ro);
         return Result.success();
     }
 
