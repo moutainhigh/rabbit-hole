@@ -35,7 +35,7 @@ public class YouTubeController {
         return Result.success(service.clientComplete(ro));
     }
 
-    @UseLogger("授权频道 - YouTube 频道")
+    @UseLogger("授权频道 - 服务提供者")
     @GetMapping("/authorize")
     public ResponseEntity<Void> authorize(@RequestParam("clientId") String clientId,
                                           @RequestParam(value = "scopes", required = false, defaultValue = "https://www.googleapis.com/auth/youtube") List<String> scopes) {
