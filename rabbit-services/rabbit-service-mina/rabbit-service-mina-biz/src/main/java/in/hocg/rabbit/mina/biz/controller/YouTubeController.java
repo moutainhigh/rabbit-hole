@@ -22,13 +22,13 @@ import java.util.List;
  * @author hocgin
  */
 @Validated
-@RestController
 @Api(tags = "mina::Y2B.通用")
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/youtube")
 public class YouTubeController {
     private final YouTubeService service;
 
+    @ResponseBody
     @UseLogger("检索 - 服务提供者")
     @PostMapping("/client/_complete")
     public Result<List<YouTubeClientVo>> complete(@RequestBody YouTubeClientCompleteRo ro) {
@@ -42,6 +42,7 @@ public class YouTubeController {
         return ResponseUtils.found(service.authorize(clientId, scopes));
     }
 
+    @ResponseBody
     @UseLogger("确认授权 - 服务提供者")
     @GetMapping("/{clientId}/callback")
     public Result<String> callback(@PathVariable String clientId,
