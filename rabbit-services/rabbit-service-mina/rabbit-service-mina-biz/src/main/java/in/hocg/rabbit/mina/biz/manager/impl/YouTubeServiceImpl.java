@@ -1,11 +1,9 @@
 package in.hocg.rabbit.mina.biz.manager.impl;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.google.api.client.auth.oauth2.Credential;
 import in.hocg.boot.utils.exception.ServiceException;
-import in.hocg.boot.youtube.autoconfiguration.properties.YoutubeProperties;
 import in.hocg.boot.youtube.autoconfiguration.utils.YoutubeUtils;
 import in.hocg.boot.youtube.autoconfiguration.utils.data.YouTubeChannel;
 import in.hocg.rabbit.common.utils.CommonUtils;
@@ -82,7 +80,7 @@ public class YouTubeServiceImpl implements YouTubeService {
 
         InputStream is;
         if (isModifyMd5) {
-            is = FileUtil.getInputStream(CommonUtils.modifyMD5(file.toPath()));
+            is = FileUtil.getInputStream(CommonUtils.updateFileMd5(file));
         } else {
             is = FileUtil.getInputStream(file);
         }

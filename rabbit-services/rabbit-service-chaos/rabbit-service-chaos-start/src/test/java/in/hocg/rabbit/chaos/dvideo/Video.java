@@ -5,6 +5,7 @@ import in.hocg.rabbit.chaos.dvideo.decoder.KuaiShouVideoDecoder;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -31,7 +32,8 @@ public class Video {
         return Type.DuoYin;
     }
 
-    public static String decode(String url, Type type) throws Exception {
+    @SneakyThrows
+    public static String decode(String url, Type type) {
         return getOrCreate(type.getDecoderClass()).decoding(url);
     }
 

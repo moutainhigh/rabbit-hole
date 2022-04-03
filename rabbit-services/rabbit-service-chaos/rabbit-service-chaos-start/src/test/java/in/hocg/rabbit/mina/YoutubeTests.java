@@ -32,10 +32,10 @@ public class YoutubeTests extends AbstractSpringBootTest {
 
     @SneakyThrows
     public static Path downloadFile(String formUrl) {
-        Path toPath = CommonUtils.toFile2(formUrl);
+        Path toPath = CommonUtils.downloadFile(formUrl);
         log.info("from file md5=[{}]", SecureUtil.md5(toPath.toFile()));
 
-        CommonUtils.modifyMD5(toPath);
+        CommonUtils.updateFileMd5(toPath.toFile());
 
         log.info("to file md5=[{}]", SecureUtil.md5(toPath.toFile()));
         return toPath;
