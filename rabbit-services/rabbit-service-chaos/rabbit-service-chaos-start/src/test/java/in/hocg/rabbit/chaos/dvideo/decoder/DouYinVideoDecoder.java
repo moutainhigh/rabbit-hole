@@ -41,7 +41,7 @@ public class DouYinVideoDecoder implements VideoDecoder {
 
     private static String getItemId(String url) {
         int start = url.indexOf("/video/") + 7;
-        int end = url.lastIndexOf("/");
+        int end = url.lastIndexOf("?");
         return url.substring(start, end);
     }
 

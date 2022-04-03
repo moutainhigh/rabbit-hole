@@ -8,9 +8,7 @@ package in.hocg.rabbit.chaos.dvideo;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        String newUrl = Video.decode("https://v.douyin.com/JjHGuMc/", Video.Type.DuoYin);
-        System.out.println(newUrl);
-        newUrl = Video.decode("http://v.kuaishou.com/s/mhn5haAq", Video.Type.KuaiShou);
+        String newUrl = Video.decode("https://v.douyin.com/NVENCyc", Video.Type.DuoYin);
         System.out.println(newUrl);
     }
 }
