@@ -1,11 +1,29 @@
 package in.hocg.rabbit.chaos.dvideo.decoder;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
+import com.google.api.client.util.Lists;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.chaos.dvideo.VideoDecoder;
+import in.hocg.rabbit.chaos.dvideo.dto.VideoInfo;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by hocgin on 2020/12/26
@@ -15,21 +33,27 @@ import org.jsoup.Jsoup;
  */
 @Slf4j
 public class DouYinVideoDecoder implements VideoDecoder {
-    private static final String VIDEO_PATH = "https://www.iesdouyin.com/web/api/v2/aweme/iteminfo/?item_ids=";
+    private static final String VIDEO_PATH = "https://www.iesdouyin.com/web/api/v2/aweme/iteminfo/?item_ids={}";
+    private static final String VIDEO_LIST_PATH = "https://www.iesdouyin.com/web/api/mix/item/list/?mix_id={}&count={}&cursor={}";
 
     @Override
     public String decoding(String url) throws Exception {
         Connection con = Jsoup.connect(filterUrl(url));
         Connection.Response resp = con.method(Connection.Method.GET).execute();
-        String videoUrl = VIDEO_PATH + getItemId(resp.url().toString());
+        String urlStr = resp.url().toString();
+        String itemId = StrUtil.subBetween(urlStr, "/video/", "?");
+
+        String videoUrl = StrUtil.format(VIDEO_PATH, itemId);
         String jsonStr = Jsoup.connect(videoUrl)
             .headers(headers())
             .ignoreContentType(true).execute().body();
 
-        JSONObject json = JSONObject.parseObject(jsonStr);
-        String videoAddress = json.getJSONArray("item_list").getJSONObject(0).getJSONObject("video").getJSONObject("play_addr").getJSONArray("url_list").get(0).toString();
-        String title = json.getJSONArray("item_list").getJSONObject(0).getJSONObject("share_info").getString("share_title");
+        cn.hutool.json.JSONObject json = JSONUtil.parseObj(jsonStr);
+        String videoAddress = json.getJSONArray("item_list").getJSONObject(0)
+            .getJSONObject("video").getJSONObject("play_addr").getJSONArray("url_list").get(0).toString();
+        String title = json.getJSONArray("item_list").getJSONObject(0).getJSONObject("share_info").getStr("share_title");
         videoAddress = videoAddress.replaceAll("playwm", "play");
+
 
         String noVideoUrl = HttpUtil.createGet(videoAddress)
             .addHeaders(headers())
@@ -39,10 +63,62 @@ public class DouYinVideoDecoder implements VideoDecoder {
         return noVideoUrl;
     }
 
-    private static String getItemId(String url) {
-        int start = url.indexOf("/video/") + 7;
-        int end = url.lastIndexOf("?");
-        return url.substring(start, end);
+    @SneakyThrows
+    @Override
+    public List<VideoInfo> list(String url) {
+        List<VideoInfo> result = Lists.newArrayList();
+
+        Connection con = Jsoup.connect(filterUrl(url));
+        Connection.Response resp = con.method(Connection.Method.GET).execute();
+        String urlStr = resp.url().toString();
+        String itemId = StrUtil.subBetween(urlStr, "/detail/", "/");
+
+        String toUrl;
+        int i = 0;
+        int size = 10;
+        boolean hasMore;
+        do {
+            toUrl = StrUtil.format(VIDEO_LIST_PATH, itemId, size, size * i++);
+            String jsonStr = Jsoup.connect(toUrl)
+                .headers(headers())
+                .ignoreContentType(true).execute().body();
+
+            cn.hutool.json.JSONObject data = JSONUtil.parseObj(jsonStr);
+            List<VideoInfo> collect = data.getJSONArray("aweme_list")
+                .toList(JSONObject.class).parallelStream()
+                .map(item -> {
+                    VideoInfo itemResult = new VideoInfo();
+                    String title = Optional.ofNullable(item.getJSONArray("cha_list"))
+                        .flatMap(t -> t.toJavaList(JSONObject.class).stream().map(t2 -> t2.getString("cha_name"))
+                            .collect(Collectors.toList()).stream().findFirst())
+                        .orElse(null);
+
+                    // 视频名称
+                    String desc = item.getString("desc");
+                    itemResult.setDesc(desc);
+                    itemResult.setTitle(title);
+
+                    // 关键词
+                    List<String> keywords = item.getJSONArray("text_extra").toJavaList(JSONObject.class).stream()
+                        .map(t -> t.getString("hashtag_name")).collect(Collectors.toList());
+                    itemResult.setKeywords(keywords);
+
+                    // 视频地址
+                    Optional.ofNullable(item.getJSONObject("video"))
+                        .map(i1 -> i1.getJSONObject("play_addr"))
+                        .map(i1 -> i1.getJSONArray("url_list"))
+                        .ifPresent(i1 -> itemResult.setUrl(i1.toJavaList(String.class).stream().findFirst().orElse(null)));
+
+                    // 视频时长
+                    itemResult.setDuration(item.getLong("duration"));
+                    return itemResult;
+                }).collect(Collectors.toList());
+
+            result.addAll(collect);
+            hasMore = data.getBool("has_more", false);
+        } while (hasMore);
+        return result;
     }
+
 
 }

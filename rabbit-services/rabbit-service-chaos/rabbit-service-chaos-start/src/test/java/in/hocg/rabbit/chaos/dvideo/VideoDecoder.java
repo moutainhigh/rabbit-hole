@@ -3,8 +3,12 @@ package in.hocg.rabbit.chaos.dvideo;
 import in.hocg.rabbit.chaos.dvideo.common.IPs;
 import in.hocg.rabbit.chaos.dvideo.constant.UserAgent;
 import com.google.common.collect.Maps;
+import in.hocg.rabbit.chaos.dvideo.dto.VideoInfo;
+import lombok.SneakyThrows;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,5 +40,14 @@ public interface VideoDecoder {
             return url.substring(m.start(), m.end());
         }
         return "";
+    }
+
+    /**
+     * 下载集合
+     * @param url
+     * @return
+     */
+    default List<VideoInfo> list(String url) {
+        return Collections.emptyList();
     }
 }

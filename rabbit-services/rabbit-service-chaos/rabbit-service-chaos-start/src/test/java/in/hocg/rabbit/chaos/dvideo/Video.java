@@ -28,8 +28,8 @@ public class Video {
         private final Class<? extends VideoDecoder> decoderClass;
     }
 
-    public static Type getType(String url) {
-        return Type.DuoYin;
+    public static VideoDecoder getVideoDecoder(Type type) {
+        return getOrCreate(type.getDecoderClass());
     }
 
     @SneakyThrows
