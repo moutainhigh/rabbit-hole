@@ -10,7 +10,7 @@ import in.hocg.rabbit.mina.biz.support.down.Video;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        String newUrl = Video.item("https://v.douyin.com/NVENCyc", Video.Type.DuoYin).getUrl();
+        String newUrl = Video.getVideoDecoder(Video.Type.DuoYin).item("https://v.douyin.com/NVENCyc").getUrl();
         System.out.println(newUrl);
     }
 }

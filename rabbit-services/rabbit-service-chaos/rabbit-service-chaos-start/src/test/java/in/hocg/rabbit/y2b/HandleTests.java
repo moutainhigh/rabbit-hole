@@ -50,10 +50,6 @@ public class HandleTests extends AbstractSpringBootTest {
 
 
     public static void main(String[] args) {
-        // 抖音排行榜 https://www.cnblogs.com/linn/p/12124330.html
-
-        // https://www.iesdouyin.com/web/api/mix/item/list/?mix_id=7043364295899514887&count=10&cursor=0
-
         List<Top<VideoInfo>> result = Video.getVideoDecoder(Video.Type.DuoYin).topAweme();
         System.out.println(result);
     }

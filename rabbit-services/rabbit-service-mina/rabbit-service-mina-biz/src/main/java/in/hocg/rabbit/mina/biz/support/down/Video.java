@@ -33,11 +33,6 @@ public class Video {
         return getOrCreate(type.getDecoderClass());
     }
 
-    @SneakyThrows
-    public static VideoInfo item(String url, Type type) {
-        return getOrCreate(type.getDecoderClass()).item(url);
-    }
-
     private static VideoDecoder getOrCreate(Class<? extends VideoDecoder> decoderClass) {
         String key = decoderClass.getName();
         return maps.computeIfAbsent(key, s -> {
