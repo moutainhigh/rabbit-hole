@@ -7,7 +7,9 @@ import in.hocg.rabbit.com.biz.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -24,6 +26,11 @@ public class FileServiceApiImpl implements FileServiceApi {
     @Override
     public void upload(UploadFileRo ro) {
         service.upload(ro);
+    }
+
+    @Override
+    public String upload(java.io.File file) {
+        return service.upload(file);
     }
 
     @Override

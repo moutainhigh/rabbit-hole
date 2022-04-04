@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.*;
 public class YouTubeFeatureController {
     private final YouTubeService service;
 
-    @PostMapping("/upload")
-    public Result<String> upload(@RequestBody UploadYouTubeVideoRo ro) {
-        service.uploadVideo(ro);
+    @PostMapping("/{channelId}/upload")
+    public Result<String> upload(@PathVariable Long channelId, @RequestBody UploadYouTubeVideoRo ro) {
+        service.uploadVideo(channelId, ro);
         return Result.success();
     }
 
-    @PostMapping("/upload/local")
-    public Result<Void> uploadLocal(@RequestBody BatchUploadYouTubeVideoRo ro) {
-        service.uploadDir(ro);
+    @PostMapping("/{channelId}/upload/local")
+    public Result<Void> uploadDir(@PathVariable Long channelId, @RequestBody BatchUploadYouTubeVideoRo ro) {
+        service.uploadDir(channelId, ro);
         return Result.success();
     }
 

@@ -1,4 +1,4 @@
-package in.hocg.rabbit.chaos.biz.manager.sms;
+package in.hocg.rabbit.chaos.biz.enums;
 
 import in.hocg.boot.sms.autoconfigure.impl.aliyun.SmsTemplate;
 import lombok.Getter;

@@ -5,6 +5,7 @@ import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
 import in.hocg.rabbit.mina.biz.manager.YouTubeService;
+import in.hocg.rabbit.mina.biz.pojo.ro.UploadCollectionRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeChannelCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeChannelPageRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.Y2bChannelCompleteVo;
@@ -42,6 +43,14 @@ public class YouTubeChannelController {
     public Result<IPage<Y2bChannelCompleteVo>> paging(@RequestBody YouTubeChannelPageRo ro) {
         return Result.success(service.paging(ro));
     }
+
+    @UseLogger("上传 - YouTube 频道")
+    @PostMapping("/{channelId}/collection/upload")
+    public Result<Void> uploadCollection(@PathVariable Long channelId, @RequestBody UploadCollectionRo ro) {
+        service.uploadCollection(channelId, ro);
+        return Result.success();
+    }
+
 
     @UseLogger("检查授权 - YouTube 频道")
     @GetMapping("/{channelId}/ping")

@@ -1,7 +1,5 @@
 package in.hocg.rabbit.mina.biz.mapstruct;
 
-import in.hocg.rabbit.mina.api.pojo.ro.UploadYouTubeRo;
-import in.hocg.rabbit.mina.biz.pojo.dto.UploadYouTubeVideoDto;
 import org.mapstruct.Mapper;
 
 /**
@@ -12,5 +10,4 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface YouTubeMapping {
-    UploadYouTubeVideoDto asUploadYouTubeVideoRo(UploadYouTubeRo ro);
 }

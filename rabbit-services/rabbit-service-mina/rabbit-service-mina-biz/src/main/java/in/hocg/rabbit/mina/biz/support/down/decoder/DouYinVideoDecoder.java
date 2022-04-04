@@ -1,29 +1,20 @@
-package in.hocg.rabbit.chaos.dvideo.decoder;
+package in.hocg.rabbit.mina.biz.support.down.decoder;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
-import com.google.api.client.util.Lists;
-import in.hocg.boot.utils.LangUtils;
-import in.hocg.rabbit.chaos.dvideo.VideoDecoder;
-import in.hocg.rabbit.chaos.dvideo.dto.VideoInfo;
+import com.google.common.collect.Lists;
+import in.hocg.rabbit.mina.biz.support.down.VideoDecoder;
+import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by hocgin on 2020/12/26

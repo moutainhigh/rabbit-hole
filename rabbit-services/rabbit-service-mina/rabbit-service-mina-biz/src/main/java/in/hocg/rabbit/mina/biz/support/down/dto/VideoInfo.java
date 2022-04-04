@@ -1,4 +1,4 @@
-package in.hocg.rabbit.chaos.dvideo.dto;
+package in.hocg.rabbit.mina.biz.support.down.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -26,7 +26,6 @@ public class VideoInfo {
      * 关键词
      */
     private List<String> keywords;
-
     /**
      * 描述
      */

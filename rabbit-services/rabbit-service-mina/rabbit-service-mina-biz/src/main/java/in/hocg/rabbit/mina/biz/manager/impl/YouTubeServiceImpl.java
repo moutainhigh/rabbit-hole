@@ -3,13 +3,16 @@ package in.hocg.rabbit.mina.biz.manager.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.api.client.auth.oauth2.Credential;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.boot.youtube.autoconfiguration.utils.YoutubeUtils;
 import in.hocg.boot.youtube.autoconfiguration.utils.data.YouTubeChannel;
+import in.hocg.rabbit.com.api.FileServiceApi;
+import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.mina.biz.constant.YouTubeConstant;
 import in.hocg.rabbit.mina.biz.entity.Y2bChannel;
-import in.hocg.rabbit.mina.biz.pojo.dto.UploadYouTubeVideoDto;
+import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
 import in.hocg.rabbit.mina.biz.pojo.ro.BatchUploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.YouTubeClientCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
@@ -51,6 +54,7 @@ import java.util.stream.Collectors;
 public class YouTubeServiceImpl implements YouTubeService {
     private final YoutubeBervice youtubeBervice;
     private final Y2bChannelService channelService;
+    private final FileServiceApi fileServiceApi;
 
     @Override
     public String authorize(String clientId, List<String> scopes) {
@@ -63,46 +67,46 @@ public class YouTubeServiceImpl implements YouTubeService {
             credential -> YouTubeHelper.asChannelFlag(channelService.rebind(clientId, YoutubeUtils.getYouTubeChannel(credential))));
     }
 
-    @SneakyThrows({MalformedURLException.class, IOException.class})
-    private void uploadVideo(File file, UploadYouTubeVideoDto dto) {
-        Y2bChannel channel = channelService.getById(dto.getChannelId());
+    @Override
+    @SneakyThrows
+    public void uploadVideo(Long channelId, File videoFile, UploadY2bDto dto) {
+        Y2bChannel channel = channelService.getById(channelId);
         YouTube youtube = getYoutube(channel);
 
-        String thumbnailUrl = dto.getThumbUrl();
+        String thumbnailUrl = null;
+        File thumbFile = dto.getThumbFile();
+        if (Objects.nonNull(thumbFile)) {
+            thumbnailUrl = fileServiceApi.upload(thumbFile);
+        }
+
         String description = dto.getDescription();
         List<String> tags = dto.getTags();
         String ytbChannelId = channel.getChannelId();
         String language = dto.getLanguage();
         String categoryId = dto.getCategoryId();
         String playlistId = dto.getPlaylistId();
-        Boolean isModifyMd5 = dto.getIsModifyMd5();
-        String title = StrUtil.blankToDefault(dto.getTitle(), file.getName());
+        String title = StrUtil.blankToDefault(dto.getTitle(), videoFile.getName());
 
-        InputStream is;
-        if (isModifyMd5) {
-            is = FileUtil.getInputStream(CommonUtils.updateFileMd5(file));
-        } else {
-            is = FileUtil.getInputStream(file);
-        }
         Video video = YoutubeHelper.createVideo();
         video.setSnippet(YoutubeHelper.createVideoSnippet(title, description)
-            .setThumbnails(YoutubeHelper.createThumbnailDetails(thumbnailUrl))
+            .setThumbnails(LangUtils.callIfNotNull(thumbnailUrl, YoutubeHelper::createThumbnailDetails).orElse(null))
             .setDefaultAudioLanguage(language)
             .setCategoryId(categoryId)
             .setDefaultLanguage(language)
             .setChannelId(ytbChannelId)
             .setTags(tags));
-        InputStreamContent mediaContent = new InputStreamContent("video/*", is);
+
+        InputStreamContent mediaContent = new InputStreamContent("video/*", FileUtil.getInputStream(videoFile));
 
         // 上传标记
         String parts = StrUtil.join(",", "snippet", "statistics", "status");
         Video rtnVideo = youtube.videos().insert(parts, video, mediaContent).setNotifySubscribers(true).execute();
-        System.out.println("\n================== Returned Video ==================\n");
-        System.out.println("  - Id: " + rtnVideo.getId());
-        System.out.println("  - Title: " + rtnVideo.getSnippet().getTitle());
-        System.out.println("  - Tags: " + rtnVideo.getSnippet().getTags());
-        System.out.println("  - Privacy Status: " + rtnVideo.getStatus().getPrivacyStatus());
-        System.out.println("  - Video Count: " + rtnVideo.getStatistics().getViewCount());
+        log.debug("================== Returned Video ==================");
+        log.debug("  - Id: " + rtnVideo.getId());
+        log.debug("  - Title: " + rtnVideo.getSnippet().getTitle());
+        log.debug("  - Tags: " + rtnVideo.getSnippet().getTags());
+        log.debug("  - Privacy Status: " + rtnVideo.getStatus().getPrivacyStatus());
+        log.debug("  - Video Count: " + rtnVideo.getStatistics().getViewCount());
 
         // 如果需要添加到[播放列表]
         if (StrUtil.isNotBlank(playlistId)) {
@@ -111,17 +115,17 @@ public class YouTubeServiceImpl implements YouTubeService {
     }
 
     @Override
-    public void uploadVideo(UploadYouTubeVideoRo ro) {
+    public void uploadVideo(Long channelId, UploadYouTubeVideoRo ro) {
         String videoUrl = ro.getVideoUrl();
-        this.uploadVideo(CommonUtils.toFile(videoUrl), ro);
+        this.uploadVideo(channelId, CommonUtils.toFile(videoUrl), ro);
     }
 
     @Override
-    public void uploadDir(BatchUploadYouTubeVideoRo ro) {
+    public void uploadDir(Long channelId, BatchUploadYouTubeVideoRo ro) {
         String localDir = ro.getLocalDir();
         File videoDir = Paths.get(localDir).toFile();
         Lists.newArrayList(Objects.requireNonNull(videoDir.listFiles()))
-            .forEach(file -> this.uploadVideo(file, ro));
+            .forEach(file -> this.uploadVideo(channelId, file, ro));
     }
 
     @Override

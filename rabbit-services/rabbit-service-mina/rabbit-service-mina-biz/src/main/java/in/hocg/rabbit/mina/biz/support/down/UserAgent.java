@@ -1,4 +1,4 @@
-package in.hocg.rabbit.chaos.dvideo.constant;
+package in.hocg.rabbit.mina.biz.support.down;
 
 import lombok.experimental.UtilityClass;
 

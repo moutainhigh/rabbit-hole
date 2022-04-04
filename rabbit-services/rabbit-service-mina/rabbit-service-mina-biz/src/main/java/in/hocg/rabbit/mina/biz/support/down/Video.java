@@ -1,7 +1,7 @@
-package in.hocg.rabbit.chaos.dvideo;
+package in.hocg.rabbit.mina.biz.support.down;
 
-import in.hocg.rabbit.chaos.dvideo.decoder.DouYinVideoDecoder;
-import in.hocg.rabbit.chaos.dvideo.decoder.KuaiShouVideoDecoder;
+import in.hocg.rabbit.mina.biz.support.down.decoder.DouYinVideoDecoder;
+import in.hocg.rabbit.mina.biz.support.down.decoder.KuaiShouVideoDecoder;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

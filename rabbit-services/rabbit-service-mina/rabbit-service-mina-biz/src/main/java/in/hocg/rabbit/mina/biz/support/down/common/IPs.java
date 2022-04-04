@@ -1,4 +1,4 @@
-package in.hocg.rabbit.chaos.dvideo.common;
+package in.hocg.rabbit.mina.biz.support.down.common;
 
 import java.util.Random;
 

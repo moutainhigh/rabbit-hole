@@ -1,10 +1,8 @@
-package in.hocg.rabbit.chaos.dvideo;
+package in.hocg.rabbit.mina.biz.support.down;
 
-import in.hocg.rabbit.chaos.dvideo.common.IPs;
-import in.hocg.rabbit.chaos.dvideo.constant.UserAgent;
+import in.hocg.rabbit.mina.biz.support.down.common.IPs;
 import com.google.common.collect.Maps;
-import in.hocg.rabbit.chaos.dvideo.dto.VideoInfo;
-import lombok.SneakyThrows;
+import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,6 +42,7 @@ public interface VideoDecoder {
 
     /**
      * 下载集合
+     *
      * @param url
      * @return
      */

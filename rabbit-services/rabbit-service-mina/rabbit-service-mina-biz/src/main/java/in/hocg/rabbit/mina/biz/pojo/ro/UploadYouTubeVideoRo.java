@@ -1,6 +1,6 @@
 package in.hocg.rabbit.mina.biz.pojo.ro;
 
-import in.hocg.rabbit.mina.biz.pojo.dto.UploadYouTubeVideoDto;
+import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class UploadYouTubeVideoRo extends UploadYouTubeVideoDto {
+public class UploadYouTubeVideoRo extends UploadY2bDto {
     @ApiModelProperty("视频地址")
     private String videoUrl;
 }

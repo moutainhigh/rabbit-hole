@@ -1,4 +1,4 @@
-package in.hocg.rabbit.chaos.dvideo.decoder;
+package in.hocg.rabbit.mina.biz.support.down.decoder;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
@@ -8,9 +8,9 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.rabbit.chaos.dvideo.VideoDecoder;
-import in.hocg.rabbit.chaos.dvideo.common.IPs;
-import in.hocg.rabbit.chaos.dvideo.constant.UserAgent;
+import in.hocg.rabbit.mina.biz.support.down.VideoDecoder;
+import in.hocg.rabbit.mina.biz.support.down.common.IPs;
+import in.hocg.rabbit.mina.biz.support.down.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

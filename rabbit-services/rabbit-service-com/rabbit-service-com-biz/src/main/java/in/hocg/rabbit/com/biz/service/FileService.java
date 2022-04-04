@@ -21,6 +21,8 @@ public interface FileService extends AbstractService<File> {
 
     String upload(MultipartFile file);
 
+    String upload(java.io.File file);
+
     void upload(UploadFileRo dto);
 
     String getAvatarUrl(Long id);

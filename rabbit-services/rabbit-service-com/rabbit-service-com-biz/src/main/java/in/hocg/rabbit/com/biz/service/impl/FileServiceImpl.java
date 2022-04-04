@@ -43,6 +43,11 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
     }
 
     @Override
+    public String upload(java.io.File file) {
+        return ossFileService.upload(file);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void upload(UploadFileRo dto) {
         final Long relId = dto.getRefId();
