@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.cv.api.CvServiceApi;
+import in.hocg.rabbit.cv.api.pojo.ro.MergeVideoRo;
 import in.hocg.rabbit.mina.biz.manager.VideoService;
 import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
@@ -47,8 +48,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @ApiModelProperty("0. 获取资源地址")
     public List<VideoInfo> getDownloadUrls(List<String> urls) {
-        urls.stream().map(url -> Video.getVideoDecoder(Video.Type.DuoYin).item(url)).collect(Collectors.toList());
-        return null;
+        return urls.stream().map(url -> Video.getVideoDecoder(Video.Type.DuoYin).item(url)).collect(Collectors.toList());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class VideoServiceImpl implements VideoService {
         if (files.size() == 1) {
             return FileUtil.copyFile(files.get(0), toFile);
         }
-        cvServiceApi.mergeVideo(LangUtils.toList(files, File::getAbsolutePath), toFile.getAbsolutePath());
+        cvServiceApi.mergeVideo(new MergeVideoRo().setFiles(LangUtils.toList(files, File::getAbsolutePath)).setOutput(toFile.getAbsolutePath()));
         return toFile;
     }
 

@@ -1,9 +1,11 @@
 package in.hocg.rabbit.cv.biz.apiimpl;
 
 import in.hocg.rabbit.cv.api.CvServiceApi;
+import in.hocg.rabbit.cv.api.pojo.ro.MergeVideoRo;
 import in.hocg.rabbit.cv.biz.manager.CvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class CvServiceApiImpl implements CvServiceApi {
     private final CvService cvService;
 
     @Override
-    public String mergeVideo(List<String> files, String outputFile) {
-        return cvService.mergeVideo(files, outputFile);
+    public String mergeVideo(@RequestBody MergeVideoRo ro) {
+        return cvService.mergeVideo(ro.getFiles(), ro.getOutput());
     }
 }

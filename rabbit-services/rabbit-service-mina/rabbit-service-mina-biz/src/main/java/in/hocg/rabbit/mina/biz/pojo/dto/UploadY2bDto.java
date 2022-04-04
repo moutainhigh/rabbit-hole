@@ -27,7 +27,7 @@ public class UploadY2bDto {
     private List<String> tags;
 
     @ApiModelProperty("视频公开状态(第二阶段)")
-    private String privacyStatus = "public";
+    private String privacyStatus = "private";
     @ApiModelProperty("国际化(第二阶段)")
     private String language = "ZH-CN";
     // 视频类别: https://developers-dot-devsite-v2-prod.appspot.com/youtube/v3/docs/videoCategories/list
