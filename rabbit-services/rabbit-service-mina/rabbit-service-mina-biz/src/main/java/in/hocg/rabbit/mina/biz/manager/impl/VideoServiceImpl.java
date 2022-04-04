@@ -60,10 +60,10 @@ public class VideoServiceImpl implements VideoService {
             String url = video.getUrl();
             String fileName = StrUtil.format("{}.mp4", video.getId());
             Path toFilePath = Paths.get(disk.getAbsolutePath(), fileName);
-            if (toFilePath.toFile().exists()) {
-                continue;
+            if (!toFilePath.toFile().exists()) {
+                CommonUtils.downloadFile(url, toFilePath);
             }
-            result.add(CommonUtils.downloadFile(url, toFilePath));
+            result.add(toFilePath.toFile());
         }
         return result;
     }

@@ -75,7 +75,7 @@ public class DouYinVideoDecoder implements VideoDecoder {
 
         String toUrl;
         int i = 0;
-        int size = 50;
+        int size = 20;
         boolean hasMore;
         do {
             toUrl = StrUtil.format(VIDEO_LIST_PATH, itemId, size, size * i++);
@@ -87,43 +87,41 @@ public class DouYinVideoDecoder implements VideoDecoder {
                 .execute().body();
 
             JSONObject data = JSONUtil.parseObj(jsonStr);
-            Optional.ofNullable(data.getJSONArray("aweme_list"))
-                .ifPresent(o1 -> {
-                    List<VideoInfo> collect = o1.toList(JSONObject.class).stream()
-                        .map(item -> {
-                            VideoInfo itemResult = new VideoInfo();
-                            itemResult.setId(item.getStr("item_id"));
+            Optional.ofNullable(data.get("aweme_list", JSONArray.class)).ifPresent(o1 -> {
+                List<VideoInfo> collect = o1.toList(JSONObject.class).stream()
+                    .map(item -> {
+                        VideoInfo itemResult = new VideoInfo();
+                        itemResult.setId(item.getStr("item_id"));
 
-                            String title = Optional.ofNullable(item.get("cha_list", JSONArray.class))
-                                .flatMap(t -> t.toList(JSONObject.class).stream().map(t2 -> t2.getStr("cha_name"))
-                                    .collect(Collectors.toList()).stream().findFirst())
-                                .orElse(null);
+                        String title = Optional.ofNullable(item.get("cha_list", JSONArray.class))
+                            .flatMap(t -> t.toList(JSONObject.class).stream().map(t2 -> t2.getStr("cha_name"))
+                                .collect(Collectors.toList()).stream().findFirst())
+                            .orElse(null);
 
-                            // 视频名称
-                            String desc = item.getStr("desc");
-                            itemResult.setDesc(desc);
-                            itemResult.setTitle(title);
+                        // 视频名称
+                        String desc = item.getStr("desc");
+                        itemResult.setDesc(desc);
+                        itemResult.setTitle(title);
 
-                            // 关键词
-                            Optional.ofNullable(item.get("text_extra", JSONArray.class))
-                                .ifPresent(objects -> {
-                                    List<String> keywords = objects.toList(JSONObject.class).stream()
-                                        .map(t -> t.getStr("hashtag_name")).collect(Collectors.toList());
-                                    itemResult.setKeywords(keywords);
-                                });
+                        // 关键词
+                        Optional.ofNullable(item.get("text_extra", JSONArray.class)).ifPresent(objects -> {
+                            List<String> keywords = objects.toList(JSONObject.class).stream()
+                                .map(t -> t.getStr("hashtag_name")).collect(Collectors.toList());
+                            itemResult.setKeywords(keywords);
+                        });
 
-                            // 视频地址
-                            Optional.ofNullable(item.getJSONObject("video"))
-                                .map(i1 -> i1.getJSONObject("play_addr"))
-                                .map(i1 -> i1.getJSONArray("url_list"))
-                                .ifPresent(i1 -> itemResult.setUrl(i1.toList(String.class).stream().findFirst().orElse(null)));
+                        // 视频地址
+                        Optional.ofNullable(item.getJSONObject("video"))
+                            .map(i1 -> i1.getJSONObject("play_addr"))
+                            .map(i1 -> i1.getJSONArray("url_list"))
+                            .ifPresent(i1 -> itemResult.setUrl(i1.toList(String.class).stream().findFirst().orElse(null)));
 
-                            // 视频时长
-                            itemResult.setDuration(item.getLong("duration"));
-                            return itemResult;
-                        }).collect(Collectors.toList());
-                    result.addAll(collect);
-                });
+                        // 视频时长
+                        itemResult.setDuration(item.getLong("duration"));
+                        return itemResult;
+                    }).collect(Collectors.toList());
+                result.addAll(collect);
+            });
             hasMore = data.getBool("has_more", false);
         } while (hasMore);
         return result;
