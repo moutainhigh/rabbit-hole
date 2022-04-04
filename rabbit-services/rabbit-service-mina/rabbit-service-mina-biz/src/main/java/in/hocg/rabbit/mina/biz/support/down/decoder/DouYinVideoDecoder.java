@@ -55,6 +55,7 @@ public class DouYinVideoDecoder implements VideoDecoder {
         String title = StrUtil.removeAll(item.getJSONObject("share_info").getStr("share_title"), "#");
 
         result.setId(item.getStr("aweme_id"));
+        result.setOriginalUrl(videoAddress);
         result.setDuration(item.getLong("duration"));
         result.setDesc(item.getStr("desc"));
         result.setKeywords(item.get("text_extra", JSONArray.class).toList(JSONObject.class).stream()
