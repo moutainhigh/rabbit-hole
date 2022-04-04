@@ -27,6 +27,10 @@ public class VideoInfo {
      */
     private String url;
     /**
+     * 视频地址(有水印)
+     */
+    private String originalUrl;
+    /**
      * 关键词
      */
     private List<String> keywords;

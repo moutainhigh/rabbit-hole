@@ -14,6 +14,8 @@ import in.hocg.rabbit.mina.biz.manager.impl.VideoServiceImpl;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
 import in.hocg.rabbit.mina.biz.props.MinaProperties;
 import in.hocg.rabbit.mina.biz.support.down.Video;
+import in.hocg.rabbit.mina.biz.support.down.dto.MusicInfo;
+import in.hocg.rabbit.mina.biz.support.down.dto.Top;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -51,11 +53,9 @@ public class HandleTests extends AbstractSpringBootTest {
         // 抖音排行榜 https://www.cnblogs.com/linn/p/12124330.html
 
         // https://www.iesdouyin.com/web/api/mix/item/list/?mix_id=7043364295899514887&count=10&cursor=0
-        String url = "https://v.douyin.com/NqFKLcM/";
-        HandleTests handleTests = new HandleTests();
 
-        String title = handleTests.title("《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界 #后宫", 1, 2);
-        System.out.println(title);
+        List<Top<VideoInfo>> result = Video.getVideoDecoder(Video.Type.DuoYin).topAweme();
+        System.out.println(result);
     }
 
     @Test

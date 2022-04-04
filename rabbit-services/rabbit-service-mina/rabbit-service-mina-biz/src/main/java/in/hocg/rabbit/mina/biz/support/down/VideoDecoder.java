@@ -2,7 +2,11 @@ package in.hocg.rabbit.mina.biz.support.down;
 
 import in.hocg.rabbit.mina.biz.support.down.common.IPs;
 import com.google.common.collect.Maps;
+import in.hocg.rabbit.mina.biz.support.down.dto.MusicInfo;
+import in.hocg.rabbit.mina.biz.support.down.dto.Top;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
+import in.hocg.rabbit.mina.biz.support.down.dto.WordInfo;
+import org.jsoup.Connection;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,5 +52,26 @@ public interface VideoDecoder {
         return Collections.emptyList();
     }
 
-    VideoInfo item(String url) ;
+    VideoInfo item(String url);
+
+    default List<Top<MusicInfo>> topMusic() {
+        throw new UnsupportedOperationException();
+    }
+
+    default List<Top<WordInfo>> topWord() {
+        throw new UnsupportedOperationException();
+    }
+
+    default List<Top<VideoInfo>> topAweme() {
+        throw new UnsupportedOperationException();
+    }
+
+    default Connection jsoup(Connection connect) {
+        return connect.headers(headers())
+            .headers(headers())
+            .ignoreHttpErrors(true)
+            .validateTLSCertificates(false)
+            .ignoreContentType(true);
+    }
+
 }
