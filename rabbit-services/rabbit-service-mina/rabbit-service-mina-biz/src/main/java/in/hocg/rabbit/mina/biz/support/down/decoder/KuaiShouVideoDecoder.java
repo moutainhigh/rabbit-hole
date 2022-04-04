@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import in.hocg.rabbit.mina.biz.support.down.VideoDecoder;
 import in.hocg.rabbit.mina.biz.support.down.common.IPs;
 import in.hocg.rabbit.mina.biz.support.down.UserAgent;
+import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class KuaiShouVideoDecoder implements VideoDecoder {
 
     @Override
-    public String decoding(String url) throws Exception {
+    public VideoInfo item(String url) {
         String redirectUrl = HttpUtil.createGet(filterUrl(url))
             .addHeaders(headers())
             .execute()
@@ -47,7 +48,7 @@ public class KuaiShouVideoDecoder implements VideoDecoder {
         videoUrl = videoUrl.substring(0, videoUrl.indexOf("?"));
         log.info("视频名称: [{}], 无水印链接: [{}]", title, videoUrl);
 
-        return videoUrl;
+        return new VideoInfo();
     }
 
     public static String getd(String url) {

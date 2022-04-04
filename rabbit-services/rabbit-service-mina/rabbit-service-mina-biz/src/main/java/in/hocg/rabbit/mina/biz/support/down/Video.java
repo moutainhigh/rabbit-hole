@@ -3,6 +3,7 @@ package in.hocg.rabbit.mina.biz.support.down;
 import in.hocg.rabbit.mina.biz.support.down.decoder.DouYinVideoDecoder;
 import in.hocg.rabbit.mina.biz.support.down.decoder.KuaiShouVideoDecoder;
 import com.google.common.collect.Maps;
+import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -33,8 +34,8 @@ public class Video {
     }
 
     @SneakyThrows
-    public static String decode(String url, Type type) {
-        return getOrCreate(type.getDecoderClass()).decoding(url);
+    public static VideoInfo item(String url, Type type) {
+        return getOrCreate(type.getDecoderClass()).item(url);
     }
 
     private static VideoDecoder getOrCreate(Class<? extends VideoDecoder> decoderClass) {

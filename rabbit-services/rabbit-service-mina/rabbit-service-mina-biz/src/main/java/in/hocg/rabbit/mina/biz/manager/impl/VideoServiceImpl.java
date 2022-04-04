@@ -2,7 +2,6 @@ package in.hocg.rabbit.mina.biz.manager.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.google.common.collect.Lists;
@@ -12,7 +11,6 @@ import in.hocg.rabbit.cv.api.CvServiceApi;
 import in.hocg.rabbit.mina.biz.manager.VideoService;
 import in.hocg.rabbit.mina.biz.manager.YouTubeService;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
-import in.hocg.rabbit.mina.biz.pojo.ro.UploadYouTubeVideoRo;
 import in.hocg.rabbit.mina.biz.support.down.Video;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiModelProperty;
@@ -48,18 +46,23 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     @ApiModelProperty("0. 获取资源地址")
-    public List<String> getDownloadUrls(List<String> urls) {
-        return urls.stream().map(url -> Video.decode(url, Video.Type.DuoYin)).collect(Collectors.toList());
+    public List<VideoInfo> getDownloadUrls(List<String> urls) {
+        urls.stream().map(url -> Video.getVideoDecoder(Video.Type.DuoYin).item(url)).collect(Collectors.toList());
+        return null;
     }
 
     @Override
     @ApiModelProperty("1. 下载连接")
-    public List<File> download(List<String> urls, File disk) {
+    public List<File> download(List<VideoInfo> videos, File disk) {
         FileUtil.mkdir(disk);
         List<File> result = Lists.newArrayList();
-        for (String url : urls) {
-            String fileName = StrUtil.format("{}.mp4", SecureUtil.md5(url));
+        for (VideoInfo video : videos) {
+            String url = video.getUrl();
+            String fileName = StrUtil.format("{}.mp4", video.getId());
             Path toFilePath = Paths.get(disk.getAbsolutePath(), fileName);
+            if (toFilePath.toFile().exists()) {
+                continue;
+            }
             result.add(CommonUtils.downloadFile(url, toFilePath));
         }
         return result;

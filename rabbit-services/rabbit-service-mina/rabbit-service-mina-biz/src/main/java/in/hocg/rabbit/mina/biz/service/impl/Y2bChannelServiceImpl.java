@@ -95,8 +95,7 @@ public class Y2bChannelServiceImpl extends AbstractServiceImpl<Y2bChannelMapper,
         String collectionName = videoInfo.getTitle();
 
         // 2. 下载视频
-        List<File> files = videoService.download(LangUtils.toList(videos, VideoInfo::getUrl),
-            diskPath.resolve(collectionName).toFile());
+        List<File> files = videoService.download(videos, diskPath.resolve(collectionName).toFile());
 
         // 3. 合并
         String title = StrUtil.format("{}({}~{})", collectionName, 0, files.size());

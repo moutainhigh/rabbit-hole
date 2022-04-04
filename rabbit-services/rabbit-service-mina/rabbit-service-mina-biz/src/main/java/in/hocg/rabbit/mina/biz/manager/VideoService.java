@@ -16,9 +16,9 @@ import java.util.List;
 public interface VideoService {
     List<VideoInfo> getVideoWithCollection(String url);
 
-    List<String> getDownloadUrls(List<String> urls);
+    List<VideoInfo> getDownloadUrls(List<String> urls);
 
-    List<File> download(List<String> urls, File disk);
+    List<File> download(List<VideoInfo> videos, File disk);
 
     File merge(List<File> files, File toFile);
 

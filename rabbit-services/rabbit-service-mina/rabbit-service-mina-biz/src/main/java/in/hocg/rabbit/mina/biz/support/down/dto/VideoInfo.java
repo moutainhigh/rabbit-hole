@@ -15,6 +15,10 @@ import java.util.List;
 @Accessors(chain = true)
 public class VideoInfo {
     /**
+     * 唯一标记
+     */
+    private String id;
+    /**
      * 标题
      */
     private String title;

@@ -19,8 +19,6 @@ import java.util.regex.Pattern;
  */
 public interface VideoDecoder {
 
-    String decoding(String url) throws Exception;
-
     default Map<String, String> headers() {
         HashMap<String, String> headers = Maps.newHashMap();
         headers.put("X-FORWARDED-FOR", IPs.getRandomIp());
@@ -49,4 +47,6 @@ public interface VideoDecoder {
     default List<VideoInfo> list(String url) {
         return Collections.emptyList();
     }
+
+    VideoInfo item(String url) ;
 }
