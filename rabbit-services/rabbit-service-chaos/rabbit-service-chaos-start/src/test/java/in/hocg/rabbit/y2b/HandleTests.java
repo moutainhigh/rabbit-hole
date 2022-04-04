@@ -1,5 +1,6 @@
 package in.hocg.rabbit.y2b;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -65,23 +66,40 @@ public class HandleTests extends AbstractSpringBootTest {
         String url = "https://v.douyin.com/NqFKLcM/";
         List<String> addTags = List.of("穿越", "异界", "后宫");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
-        uploadCollectUrl(channelId, url, title, addTags, thumbFile);
+        uploadCollect(channelId, url, title, addTags, thumbFile);
     }
 
     @Test
-    @ApiOperation("单个上传")
-    public void testDetail() {
+    @ApiOperation("单个(测试)上传")
+    public void upload2() {
+        String collectionName = "猫猫的日常(20220501)";
+        String title = "猫猫的日常";
+        String desc = title;
         Long channelId = 1L;
-        String collectionName = "测试";
-        String desc = "";
         List<String> urls = List.of(
             "https://v.douyin.com/NVENCyc",
             "https://v.douyin.com/NVENCyc"
         );
-        List<String> addTags = List.of();
-        File thumbFile = null;
+        List<String> addTags = List.of("猫咪");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        uploadDetail(collectionName, channelId, urls, title, desc, addTags, thumbFile);
+    }
 
-        // ===========================
+    @Test
+    @ApiOperation("已有(测试)上传")
+    public void uploadFile() {
+        String title = "猫猫的日常";
+        String desc = title;
+        Long channelId = 1L;
+        List<String> addTags = List.of("猫咪");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        File videoFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        upload(channelId, title, desc, addTags, videoFile, thumbFile);
+    }
+
+    //============================================================================================================================================================
+    @ApiOperation("单个上传")
+    private void uploadDetail(String collectionName, Long channelId, List<String> urls, String title, String desc, List<String> addTags, File thumbFile) {
         Path diskPath = Path.of(properties.getDiskPath());
 
         // 0. 获取下载地址
@@ -91,8 +109,8 @@ public class HandleTests extends AbstractSpringBootTest {
         List<File> downloadFiles = videoService.download(downloadUrls, diskPath.resolve(collectionName).toFile());
 
         // 2. 合并
-        String title = StrUtil.format("{}[{}.{}].mp4", collectionName, 0, downloadFiles.size());
-        Path mergeFile = diskPath.resolve(title);
+        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, 1, downloadFiles.size());
+        Path mergeFile = diskPath.resolve(fname);
         FeatureHelper.mergeVideo(downloadFiles, mergeFile.toFile());
 
         // 3. 调整文件
@@ -103,7 +121,13 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @ApiOperation("合集上传")
-    private void uploadCollectUrl(Long channelId, String url, String title, List<String> addTags, File thumbFile) {
+    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile) {
+        uploadCollect(channelId, url, title, addTags, thumbFile, null, null);
+    }
+
+    @ApiOperation("合集上传")
+    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile,
+                               Integer startIndex, Integer endIndex) {
         Path diskPath = Path.of(properties.getDiskPath());
 
         List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).list(url);
@@ -115,18 +139,20 @@ public class HandleTests extends AbstractSpringBootTest {
             diskPath.resolve(collectionName).toFile());
 
         // 3. 合并
-        int startIndex = 1;
-        int endIndex = files.size();
-        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex, endIndex);
+        startIndex = LangUtils.getOrDefault(startIndex, 0);
+        endIndex = LangUtils.getOrDefault(endIndex, files.size());
+        List<File> mergeFiles = CollUtil.sub(files, startIndex, endIndex);
+
+        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex + 1, endIndex);
         Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(files, mergeFile.toFile());
+        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile());
 
         // 4. 调整文件
         videoService.modifyFile(mergeFile.toFile());
 
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title(title, startIndex, endIndex));
+        options.setTitle(title(title, startIndex + 1, endIndex));
         options.setThumbFile(thumbFile);
         List<String> tags = Lists.newArrayList(videoInfo.getKeywords());
         tags.addAll(addTags);
@@ -137,12 +163,9 @@ public class HandleTests extends AbstractSpringBootTest {
 
     private String title(String tpl, Integer start, Integer end) {
         Map<String, String> params = Maps.newHashMap();
-
-        params.put("ep", (Objects.nonNull(start) && Objects.nonNull(end)) ?
-            StrUtil.format("[EP{}-{}] ", start, end) : "");
+        params.put("ep", (Objects.nonNull(start) && Objects.nonNull(end)) ? StrUtil.format("[EP{}-{}] ", start, end) : "");
         return StrUtil.format(tpl, params);
     }
-
 
     private void upload(Long channelId, File videoFile, UploadY2bDto options) {
         upload(channelId, options.getTitle(), options.getDescription(), options.getTags(), videoFile, options.getThumbFile());
