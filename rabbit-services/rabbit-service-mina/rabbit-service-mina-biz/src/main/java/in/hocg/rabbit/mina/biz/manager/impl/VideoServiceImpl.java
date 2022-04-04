@@ -42,13 +42,13 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @ApiModelProperty("0. 获取资源地址")
     public List<VideoInfo> getVideoWithCollection(String url) {
-        return Video.getVideoDecoder(Video.Type.DuoYin).list(url);
+        return Video.getVideoDecoder(Video.Type.DuoYin).listAweme(url);
     }
 
     @Override
     @ApiModelProperty("0. 获取资源地址")
     public List<VideoInfo> getDownloadUrls(List<String> urls) {
-        return urls.stream().map(url -> Video.getVideoDecoder(Video.Type.DuoYin).item(url)).collect(Collectors.toList());
+        return urls.stream().map(url -> Video.getVideoDecoder(Video.Type.DuoYin).aweme(url)).collect(Collectors.toList());
     }
 
     @Override

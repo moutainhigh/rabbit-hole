@@ -36,7 +36,7 @@ public class DouYinVideoDecoder implements VideoDecoder {
 
     @Override
     @SneakyThrows
-    public VideoInfo item(String url) {
+    public VideoInfo aweme(String url) {
         VideoInfo result = new VideoInfo();
 
         Connection con = Jsoup.connect(filterUrl(url));
@@ -156,7 +156,7 @@ public class DouYinVideoDecoder implements VideoDecoder {
 
     @Override
     @SneakyThrows
-    public List<VideoInfo> list(String url) {
+    public List<VideoInfo> listAweme(String url) {
         List<VideoInfo> result = Lists.newArrayList();
 
         Connection con = Jsoup.connect(filterUrl(url));

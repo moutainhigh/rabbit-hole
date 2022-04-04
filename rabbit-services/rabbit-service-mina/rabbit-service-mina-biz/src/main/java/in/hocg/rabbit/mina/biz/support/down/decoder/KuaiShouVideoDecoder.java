@@ -31,7 +31,7 @@ import java.util.Map;
 public class KuaiShouVideoDecoder implements VideoDecoder {
 
     @Override
-    public VideoInfo item(String url) {
+    public VideoInfo aweme(String url) {
         String redirectUrl = HttpUtil.createGet(filterUrl(url))
             .addHeaders(headers())
             .execute()

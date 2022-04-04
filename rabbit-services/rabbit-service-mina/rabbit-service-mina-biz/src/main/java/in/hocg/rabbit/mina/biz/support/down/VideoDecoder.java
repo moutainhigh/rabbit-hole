@@ -48,11 +48,11 @@ public interface VideoDecoder {
      * @param url
      * @return
      */
-    default List<VideoInfo> list(String url) {
+    default List<VideoInfo> listAweme(String url) {
         return Collections.emptyList();
     }
 
-    VideoInfo item(String url);
+    VideoInfo aweme(String url);
 
     default List<Top<MusicInfo>> topMusic() {
         throw new UnsupportedOperationException();

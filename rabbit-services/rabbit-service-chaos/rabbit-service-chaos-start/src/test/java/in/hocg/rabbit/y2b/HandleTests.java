@@ -10,11 +10,9 @@ import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.mina.biz.manager.VideoService;
-import in.hocg.rabbit.mina.biz.manager.impl.VideoServiceImpl;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
 import in.hocg.rabbit.mina.biz.props.MinaProperties;
 import in.hocg.rabbit.mina.biz.support.down.Video;
-import in.hocg.rabbit.mina.biz.support.down.dto.MusicInfo;
 import in.hocg.rabbit.mina.biz.support.down.dto.Top;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiOperation;
@@ -26,8 +24,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -126,7 +122,7 @@ public class HandleTests extends AbstractSpringBootTest {
                                Integer startIndex, Integer endIndex) {
         Path diskPath = Path.of(properties.getDiskPath());
 
-        List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).list(url);
+        List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).listAweme(url);
         VideoInfo videoInfo = videos.get(0);
         String collectionName = videoInfo.getTitle();
 
