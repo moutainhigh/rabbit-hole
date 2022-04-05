@@ -53,10 +53,10 @@ public class HandleTests extends AbstractSpringBootTest {
     @Test
     @ApiOperation("合集(全球诡异时代)上传")
     public void upload1() {
-        String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界 #后宫";
+        String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         Long channelId = 1L;
         String url = "https://v.douyin.com/NqFKLcM/";
-        List<String> addTags = List.of("穿越", "异界", "后宫");
+        List<String> addTags = List.of("穿越", "异界");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
         uploadCollect(channelId, url, title, addTags, thumbFile);
     }
@@ -80,12 +80,12 @@ public class HandleTests extends AbstractSpringBootTest {
     @Test
     @ApiOperation("已有(测试)上传")
     public void uploadFile() {
-        String title = "猫猫的日常";
+        String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         String desc = title;
         Long channelId = 1L;
-        List<String> addTags = List.of("猫咪");
+        List<String> addTags = List.of("穿越", "异界");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
-        File videoFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        File videoFile = new File("/Users/Share/k8s_nfs/basic_video/全球诡异时代(0~74)");
         upload(channelId, title, desc, addTags, videoFile, thumbFile);
     }
 
