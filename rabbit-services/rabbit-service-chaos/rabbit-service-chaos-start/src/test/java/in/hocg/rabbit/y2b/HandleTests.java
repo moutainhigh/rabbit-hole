@@ -62,6 +62,19 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
+    @ApiOperation("合集(全球诡异时代 1-25)上传")
+    public void upload12() {
+        String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NqFKLcM/";
+        List<String> addTags = List.of("穿越", "异界");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+
+        int i = 3;
+        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+    }
+
+    @Test
     @ApiOperation("单个(测试)上传")
     public void upload2() {
         String collectionName = "猫猫的日常(20220501)";
@@ -135,7 +148,7 @@ public class HandleTests extends AbstractSpringBootTest {
         endIndex = LangUtils.getOrDefault(endIndex, files.size());
         List<File> mergeFiles = CollUtil.sub(files, startIndex, endIndex);
 
-        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex + 1, endIndex);
+        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex + 1, endIndex + 1);
         Path mergeFile = diskPath.resolve(fname);
         FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile());
 
@@ -144,7 +157,7 @@ public class HandleTests extends AbstractSpringBootTest {
 
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title(title, startIndex + 1, endIndex));
+        options.setTitle(title(title, startIndex + 1, endIndex + 1));
         options.setThumbFile(thumbFile);
         List<String> tags = Lists.newArrayList(videoInfo.getKeywords());
         tags.addAll(addTags);
