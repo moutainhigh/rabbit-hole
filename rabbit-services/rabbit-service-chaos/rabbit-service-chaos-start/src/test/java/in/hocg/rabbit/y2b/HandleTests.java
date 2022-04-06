@@ -84,7 +84,7 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("古风", "玄幻");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        int i = 2;
+        int i = 3;
         uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
     }
 
@@ -164,7 +164,7 @@ public class HandleTests extends AbstractSpringBootTest {
 
         String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex + 1, endIndex + 1);
         Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile());
+        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, 3 * (1000 * 1000));
 
         // 4. 调整文件
         videoService.modifyFile(mergeFile.toFile());
