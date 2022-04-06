@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,19 +39,20 @@ class RechargeDockingServiceTest extends AbstractSpringBootTest {
     @Test
     void checkRecharge() {
         CheckRechargeRo ro = new CheckRechargeRo();
-        ro.setOutTradeNums("");
-        CheckRechargeVo checkRechargeVo = service.checkRecharge(ro);
+        ro.setOutTradeNums("4567sdhjkl");
+        List<CheckRechargeVo> result = service.checkRecharge(ro);
+        System.out.println(result);
     }
 
     @Test
     void recharge() {
         RechargeRo ro = new RechargeRo();
-        ro.setOutTradeNo("4567sdhjkl");
-        ro.setProductId("75");
+        ro.setOutTradeNum("4567sdhjkl");
+        ro.setProductId("69");
         ro.setMobile("13600747016");
         ro.setNotifyUrl("https://hocgin.forward.hocgin.top");
-        ro.setAmount(new BigDecimal("30"));
-        ro.setPrice(new BigDecimal("30"));
+        ro.setAmount(30);
+        ro.setPrice(30);
         RechargeVo result = service.recharge(ro);
         System.out.println(result);
     }

@@ -17,6 +17,6 @@ public class ResultVo<T> {
     private T data;
 
     public boolean isSuccess() {
-        return "0".equals(errno);
+        return "1".equals(errno);
     }
 }

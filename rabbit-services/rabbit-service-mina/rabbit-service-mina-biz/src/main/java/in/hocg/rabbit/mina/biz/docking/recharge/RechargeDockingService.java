@@ -5,6 +5,8 @@ import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.RechargeRo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.CheckRechargeVo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.RechargeVo;
 
+import java.util.List;
+
 /**
  * Created by hocgin on 2022/4/6
  * email: hocgin@gmail.com
@@ -15,5 +17,5 @@ public interface RechargeDockingService {
 
     RechargeVo recharge(RechargeRo ro);
 
-    CheckRechargeVo checkRecharge(CheckRechargeRo ro);
+    List<CheckRechargeVo> checkRecharge(CheckRechargeRo ro);
 }

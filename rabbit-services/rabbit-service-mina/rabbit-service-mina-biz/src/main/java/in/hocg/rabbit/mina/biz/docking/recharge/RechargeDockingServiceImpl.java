@@ -6,6 +6,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import in.hocg.boot.mybatis.plus.extensions.httplog.support.HttpLogUtils;
 import in.hocg.boot.utils.LogUtils;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,29 +39,34 @@ public class RechargeDockingServiceImpl implements RechargeDockingService {
 
     @Override
     public RechargeVo recharge(RechargeRo ro) {
-        return send(ro, "/yrapi.php/index/recharge", RechargeVo.class);
+        // 不要去掉这部分范型
+        return send(ro, "/yrapi.php/index/recharge", new TypeReference<RechargeVo>() {
+        });
     }
 
     @Override
-    public CheckRechargeVo checkRecharge(CheckRechargeRo ro) {
-        return send(ro, "/yrapi.php/index/recharge", CheckRechargeVo.class);
+    public List<CheckRechargeVo> checkRecharge(CheckRechargeRo ro) {
+        // 不要去掉这部分范型
+        return send(ro, "/yrapi.php/index/check", new TypeReference<List<CheckRechargeVo>>() {
+        });
     }
 
-    private <T> T send(BaseRo ro, String url, Class<T> clazz) {
+    private <T> T send(BaseRo ro, String url, TypeReference<T> type) {
         String baseUrl = "http://gzh.beehost.cn";
-        Map<String, Object> params = BeanUtil.beanToMap(ro);
+        JSONObject params = JSON.parseObject(JSON.toJSONString(ro));
         ro.setSign(RechargeHelper.getSign(params));
+        params.put("sign", ro.getSign());
         HttpRequest request = HttpUtil.createPost(StrUtil.format("{}{}", baseUrl, url))
-            .form(JSON.parseObject(JSON.toJSONString(ro)))
+            .form(params)
             .contentType("application/x-www-form-urlencoded;charset=utf-8");
         HttpResponse resp = LogUtils.logAsync(request::execute, HttpLogUtils.getAsyncReady(HttpLogUtils.request(request)),
             HttpLogUtils.getDefaultComplete());
-        ResultVo<T> result = JSON.parseObject(resp.body(), new TypeReference<ResultVo<T>>() {
+        ResultVo<String> result = JSON.parseObject(resp.body(), new TypeReference<>() {
         });
 
         if (result.isSuccess()) {
             throw ServiceException.wrap(result.getErrmsg());
         }
-        return result.getData();
+        return JSON.parseObject(result.getData(), type);
     }
 }
