@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -71,6 +72,19 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
 
         int i = 3;
+        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+    }
+
+    @Test
+    @ApiOperation("合集(观棋烂柯 1-25)上传")
+    public void upload13() {
+        String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NpqgRFx";
+        List<String> addTags = List.of("古风", "玄幻");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        int i = 1;
         uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
     }
 
@@ -181,7 +195,9 @@ public class HandleTests extends AbstractSpringBootTest {
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title);
         options.setThumbFile(thumbFile);
-        options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));
+        options.setTags(tags.stream().filter(Objects::nonNull)
+            .filter(s -> !StrUtil.contains(s, "抖音"))
+            .collect(Collectors.toList()));
         options.setDescription(desc);
         videoService.upload(channelId, videoFile, options);
     }
