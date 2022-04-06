@@ -58,6 +58,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
+      <artifactId>mybatis-plus-extensions-http-log-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
       <artifactId>web-spring-boot-starter</artifactId>
     </dependency>
     <dependency>
