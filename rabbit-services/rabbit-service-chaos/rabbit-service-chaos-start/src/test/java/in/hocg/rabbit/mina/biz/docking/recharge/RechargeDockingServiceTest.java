@@ -3,8 +3,12 @@ package in.hocg.rabbit.mina.biz.docking.recharge;
 import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.CheckRechargeRo;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.QueryElecityRo;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.QueryProductRo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.RechargeRo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.CheckRechargeVo;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.ElecityVo;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.ProductVo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.RechargeVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,20 @@ class RechargeDockingServiceTest extends AbstractSpringBootTest {
         CheckRechargeRo ro = new CheckRechargeRo();
         ro.setOutTradeNums("4567sdhjkl");
         List<CheckRechargeVo> result = service.checkRecharge(ro);
+        System.out.println(result);
+    }
+
+    @Test
+    void listElecity() {
+        QueryElecityRo ro = new QueryElecityRo();
+        List<ElecityVo> result = service.listElecity(ro);
+        System.out.println(result);
+    }
+
+    @Test
+    void listProduct() {
+        QueryProductRo ro = new QueryProductRo();
+        List<ProductVo> result = service.listProduct(ro);
         System.out.println(result);
     }
 

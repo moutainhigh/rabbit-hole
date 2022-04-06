@@ -11,12 +11,8 @@ import com.alibaba.fastjson.TypeReference;
 import in.hocg.boot.mybatis.plus.extensions.httplog.support.HttpLogUtils;
 import in.hocg.boot.utils.LogUtils;
 import in.hocg.boot.utils.exception.ServiceException;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.BaseRo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.CheckRechargeRo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.RechargeRo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.CheckRechargeVo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.RechargeVo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.ResultVo;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.*;
+import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.*;
 import in.hocg.rabbit.mina.biz.support.recharge.RechargeHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +44,20 @@ public class RechargeDockingServiceImpl implements RechargeDockingService {
     public List<CheckRechargeVo> checkRecharge(CheckRechargeRo ro) {
         // 不要去掉这部分范型
         return send(ro, "/yrapi.php/index/check", new TypeReference<List<CheckRechargeVo>>() {
+        });
+    }
+
+    @Override
+    public List<ProductVo> listProduct(QueryProductRo ro) {
+        // 不要去掉这部分范型
+        return send(ro, "/yrapi.php/index/product", new TypeReference<List<ProductVo>>() {
+        });
+    }
+
+    @Override
+    public List<ElecityVo> listElecity(QueryElecityRo ro) {
+        // 不要去掉这部分范型
+        return send(ro, "/yrapi.php/index/elecity", new TypeReference<List<ElecityVo>>() {
         });
     }
 
