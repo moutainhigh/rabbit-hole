@@ -89,6 +89,19 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
+    @ApiOperation("合集(我的成就有点多 1-25)上传")
+    public void upload14() {
+        String title = "《我的成就有点多》{ep}为了奖励孟凡重生前义举，获得一个系统奖励，并将他送到三个月前! #都市 #异能 #系统";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NsDEdpX/";
+        List<String> addTags = List.of("都市", "异能", "系统");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        int i = 1;
+        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+    }
+
+    @Test
     @ApiOperation("单个(测试)上传")
     public void upload2() {
         String collectionName = "猫猫的日常(20220501)";
