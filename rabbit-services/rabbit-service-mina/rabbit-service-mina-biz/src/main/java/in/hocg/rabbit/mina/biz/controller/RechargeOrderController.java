@@ -2,8 +2,10 @@ package in.hocg.rabbit.mina.biz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.utils.struct.result.Result;
+import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.rabbit.mina.api.pojo.ro.RechargeOrderRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderPageRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.RechargeProductCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeAccountVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderOrdinaryVo;
 import in.hocg.rabbit.mina.biz.service.RechargeOrderService;
@@ -17,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * Created by hocgin on 2022/4/7
@@ -52,6 +55,13 @@ public class RechargeOrderController {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.recharge(ro);
         return Result.success();
+    }
+
+    @ApiOperation("充值产品")
+    @PostMapping("/product/_complete")
+    public Result<List<KeyValue>> complete(@RequestBody RechargeProductCompleteRo ro) {
+        ro.setOpsUserId(UserContextHolder.getUserIdThrow());
+        return Result.success(service.completeWithProduct(ro));
     }
 
     @ApiOperation("触发通知")

@@ -11,6 +11,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConve
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
 import in.hocg.rabbit.common.utils.MathUtils;
@@ -34,6 +35,7 @@ import in.hocg.rabbit.mina.biz.mapper.RechargeOrderMapper;
 import in.hocg.rabbit.mina.biz.mapstruct.RechargeMapping;
 import in.hocg.rabbit.mina.biz.pojo.dto.Notify;
 import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderPageRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.RechargeProductCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeAccountVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderOrdinaryVo;
 import in.hocg.rabbit.mina.biz.schedule.RechargeNotifySchedule;
@@ -53,6 +55,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -92,15 +96,9 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
         BigDecimal productAmt = vo.getPrice();
         Assert.isTrue(Objects.isNull(maxCostAmt) || maxCostAmt.compareTo(productAmt) <= 0, "产品价格大于预估金额");
 
-
-        String productName = new StringJoiner(",")
-            .add(vo.getClassName())
-            .add(vo.getDesc())
-            .add(vo.getProductName()).toString();
-
         // 1. 保存充值单据
         RechargeOrder entity = mapping.asRechargeOrder(ro);
-        entity.setProductName(productName);
+        entity.setProductName(vo.getTitle());
         entity.setOrderNo(uniqueCode);
         entity.setTotalAmt(productAmt);
         validInsertOrUpdate(entity);
@@ -282,6 +280,17 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
     public RechargeAccountVo getAccount(Long userId) {
         RechargeAccount account = rechargeAccountService.getByOwnerUserId(userId).orElseThrow(() -> ServiceException.wrap("获取账户信息失败"));
         return mapping.asRechargeAccount(account);
+    }
+
+    @Override
+    public List<KeyValue> completeWithProduct(RechargeProductCompleteRo ro) {
+        return rechargeCacheService.listProduct(ro.getOpsUserId()).stream()
+            .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getId()))
+            .filter(keyValue -> {
+                String keyword = ro.getKeyword();
+                return StrUtil.isBlank(keyword) || StrUtil.containsIgnoreCase(StrUtil.toString(keyValue.getKey()), keyword);
+            })
+            .collect(Collectors.toList());
     }
 
 }

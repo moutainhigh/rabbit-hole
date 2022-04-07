@@ -1,10 +1,12 @@
 package in.hocg.rabbit.mina.api.pojo.vo;
 
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.StringJoiner;
 
 /**
  * Created by hocgin on 2022/4/7
@@ -25,5 +27,13 @@ public class RechargeProductVo {
     private BigDecimal price;
     @ApiModelProperty("备注信息")
     private String desc;
-//    private String remark;
+
+    public String getTitle() {
+        return new StringJoiner(",")
+            .add(this.getClassName())
+            .add(this.getDesc())
+            .add(this.getProductName())
+            .add(StrUtil.toString(this.getPrice()))
+            .toString();
+    }
 }

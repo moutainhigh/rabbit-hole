@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mina.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.web.datastruct.KeyValue;
 import in.hocg.rabbit.mina.api.pojo.ro.QueryRechargeOrderRo;
 import in.hocg.rabbit.mina.api.pojo.ro.RechargeOrderRo;
 import in.hocg.rabbit.mina.api.pojo.vo.RechargeOrderVo;
@@ -8,6 +9,7 @@ import in.hocg.rabbit.mina.api.pojo.vo.RechargeProductVo;
 import in.hocg.rabbit.mina.biz.entity.RechargeOrder;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderPageRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.RechargeProductCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeAccountVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderOrdinaryVo;
 
@@ -48,4 +50,6 @@ public interface RechargeOrderService extends AbstractService<RechargeOrder> {
     IPage<RechargeOrderOrdinaryVo> paging(RechargeOrderPageRo ro);
 
     RechargeAccountVo getAccount(Long userId);
+
+    List<KeyValue> completeWithProduct(RechargeProductCompleteRo ro);
 }
