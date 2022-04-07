@@ -29,7 +29,7 @@ import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.ProductVo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.RechargeVo;
 import in.hocg.rabbit.mina.biz.entity.RechargeAccount;
 import in.hocg.rabbit.mina.biz.entity.RechargeOrder;
-import in.hocg.rabbit.mina.biz.enums.RechargeOrderStatus;
+import in.hocg.rabbit.mina.api.enums.RechargeOrderStatus;
 import in.hocg.rabbit.mina.biz.mapper.RechargeOrderMapper;
 import in.hocg.rabbit.mina.biz.mapstruct.RechargeMapping;
 import in.hocg.rabbit.mina.biz.pojo.dto.Notify;

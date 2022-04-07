@@ -1,6 +1,8 @@
-package in.hocg.rabbit.mina.biz.enums;
+package in.hocg.rabbit.mina.api.enums;
 
+import in.hocg.boot.utils.annotation.UseDataDictKey;
 import in.hocg.boot.utils.enums.DataDictEnum;
+import in.hocg.rabbit.mina.api.named.MinaDataDictKeys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
+@UseDataDictKey(value = MinaDataDictKeys.RECHARGE_ORDER_STATUS, description = "充值单据状态")
 public enum RechargeOrderStatus implements DataDictEnum {
     Executing("executing", "执行中"),
     Success("success", "成功"),

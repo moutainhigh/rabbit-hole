@@ -34,7 +34,7 @@ public class RechargeOrderController {
     private final RechargeOrderService service;
 
     @ApiOperation("获取充值账户")
-    @PostMapping("/account")
+    @GetMapping("/account")
     public Result<RechargeAccountVo> account() {
         return Result.success(service.getAccount(UserContextHolder.getUserIdThrow()));
     }
@@ -47,7 +47,7 @@ public class RechargeOrderController {
     }
 
     @ApiOperation("充值")
-    @PostMapping("/recharge")
+    @PostMapping("/order")
     public Result<Void> recharge(@RequestBody RechargeOrderRo ro) {
         ro.setUserId(UserContextHolder.getUserIdThrow());
         service.recharge(ro);

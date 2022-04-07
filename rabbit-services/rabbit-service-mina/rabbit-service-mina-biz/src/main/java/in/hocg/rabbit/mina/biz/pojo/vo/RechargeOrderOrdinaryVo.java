@@ -1,6 +1,13 @@
 package in.hocg.rabbit.mina.biz.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import in.hocg.boot.named.annotation.InjectNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamed;
+import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
+import in.hocg.rabbit.common.constant.DataDictKeys;
+import in.hocg.rabbit.mina.api.named.MinaDataDictKeys;
+import in.hocg.rabbit.mina.api.named.MinaNamed;
+import in.hocg.rabbit.mina.api.named.MinaNamedType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,6 +22,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 @Accessors(chain = true)
 public class RechargeOrderOrdinaryVo {
     @ApiModelProperty("内部订单号")
@@ -23,6 +31,8 @@ public class RechargeOrderOrdinaryVo {
     private String outOrderNo;
     @ApiModelProperty("产品编号")
     private String productId;
+    @ApiModelProperty("产品名称")
+    private String productName;
     @ApiModelProperty("充值账号")
     private String account;
     @ApiModelProperty("通知地址")
@@ -41,6 +51,8 @@ public class RechargeOrderOrdinaryVo {
 
     @ApiModelProperty("任务状态")
     private String status;
+    @MinaNamed(idFor = "status", type = MinaNamedType.DataDictName, args = {MinaDataDictKeys.RECHARGE_ORDER_STATUS})
+    private String statusName;
     @ApiModelProperty("失败原因")
     private String failReason;
 }
