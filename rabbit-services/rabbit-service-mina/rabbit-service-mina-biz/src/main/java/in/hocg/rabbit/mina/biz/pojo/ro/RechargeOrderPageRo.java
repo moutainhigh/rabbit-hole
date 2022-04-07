@@ -12,6 +12,8 @@ import lombok.Data;
  */
 @Data
 public class RechargeOrderPageRo extends PageRo {
+    @ApiModelProperty("关键词搜索")
+    private String keyword;
 
     @ApiModelProperty(hidden = true)
     private Long opsUserId;

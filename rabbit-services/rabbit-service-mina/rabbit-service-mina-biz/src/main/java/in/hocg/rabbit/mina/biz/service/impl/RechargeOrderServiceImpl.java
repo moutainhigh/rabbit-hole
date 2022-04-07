@@ -52,6 +52,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -92,8 +93,14 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
         Assert.isTrue(Objects.isNull(maxCostAmt) || maxCostAmt.compareTo(productAmt) <= 0, "产品价格大于预估金额");
 
 
+        String productName = new StringJoiner(",")
+            .add(vo.getClassName())
+            .add(vo.getDesc())
+            .add(vo.getProductName()).toString();
+
         // 1. 保存充值单据
         RechargeOrder entity = mapping.asRechargeOrder(ro);
+        entity.setProductName(productName);
         entity.setOrderNo(uniqueCode);
         entity.setTotalAmt(productAmt);
         validInsertOrUpdate(entity);

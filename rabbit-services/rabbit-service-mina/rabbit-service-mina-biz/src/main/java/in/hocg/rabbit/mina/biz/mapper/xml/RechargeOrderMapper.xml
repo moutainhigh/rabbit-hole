@@ -6,6 +6,17 @@
     FROM mina_recharge_order mro
     <where>
       AND mro.creator = #{ro.opsUserId}
+      <if test="ro.keyword != null">
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (mro.order_no LIKE #{keyword}
+          OR mro.product_name LIKE #{keyword}
+          OR mro.product_id LIKE #{keyword}
+          OR mro.account LIKE #{keyword}
+          OR mro.out_order_no LIKE #{keyword}
+          OR mro.total_amt LIKE #{keyword}
+          OR mro.fail_reason LIKE #{keyword}
+        )
+      </if>
     </where>
   </select>
 </mapper>

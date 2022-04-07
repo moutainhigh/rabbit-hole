@@ -38,6 +38,8 @@ CREATE TABLE `mina_recharge_order`
         COMMENT '外部订单号',
     order_no           VARCHAR(32)    NOT NULL
         COMMENT '内部订单号',
+    product_name       VARCHAR(128)   NOT NULL
+        COMMENT '产品名称',
     product_id         VARCHAR(32)    NOT NULL
         COMMENT '产品编号',
     account            VARCHAR(32)    NOT NULL

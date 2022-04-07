@@ -43,6 +43,9 @@ public class RechargeOrder extends CommonEntity<RechargeOrder> {
     @ApiModelProperty("内部订单号")
     @TableField("order_no")
     private String orderNo;
+    @ApiModelProperty("产品名称")
+    @TableField("product_name")
+    private String productName;
     @ApiModelProperty("产品编号")
     @TableField("product_id")
     private String productId;
