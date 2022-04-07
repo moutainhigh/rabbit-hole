@@ -16,6 +16,8 @@ import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.*;
 import in.hocg.rabbit.mina.biz.support.recharge.RechargeHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -61,10 +63,11 @@ public class RechargeDockingServiceImpl implements RechargeDockingService {
         });
     }
 
+
     private <T> T send(BaseRo ro, String url, TypeReference<T> type) {
         String baseUrl = "http://gzh.beehost.cn";
         JSONObject params = JSON.parseObject(JSON.toJSONString(ro));
-        ro.setSign(RechargeHelper.getSign(params));
+        ro.setSign(RechargeHelper.getSign(params, RechargeHelper.API_KEY));
         params.put("sign", ro.getSign());
         HttpRequest request = HttpUtil.createPost(StrUtil.format("{}{}", baseUrl, url))
             .form(params)

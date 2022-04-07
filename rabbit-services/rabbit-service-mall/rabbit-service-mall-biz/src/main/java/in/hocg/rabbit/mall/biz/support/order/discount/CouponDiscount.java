@@ -3,7 +3,7 @@ package in.hocg.rabbit.mall.biz.support.order.discount;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.rabbit.mall.api.enums.coupon.CouponType;
 import in.hocg.rabbit.mall.biz.support.mode.*;
-import in.hocg.rabbit.mall.biz.support.mode.utils.MathUtils;
+import in.hocg.rabbit.common.utils.MathUtils;
 import in.hocg.rabbit.mall.biz.support.order.MallOrderContext;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Created by hocgin on 2022/1/20

@@ -34,4 +34,11 @@ public class CheckRechargeVo {
     @ApiModelProperty("状态")
     @JSONField(name = "state")
     private String state;
+
+    public boolean isSuccess() {
+        return "1".equals(state);
+    }
+    public boolean isFail() {
+        return "2".equals(state);
+    }
 }

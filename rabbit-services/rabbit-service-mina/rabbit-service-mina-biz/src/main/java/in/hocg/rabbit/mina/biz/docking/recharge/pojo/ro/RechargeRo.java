@@ -35,6 +35,7 @@ public class RechargeRo extends BaseRo {
     private String notifyUrl;
     @ApiModelProperty(value = "账户ID", required = true)
     private String userid = RechargeHelper.USER_ID;
+
     @ApiModelProperty("面值，（不传不校验）如果产品的面值与此参数不同，提单驳回")
     private Integer amount;
     @ApiModelProperty("最高成本，（不传不校验）如果产品成本超过这个值，提单驳回")

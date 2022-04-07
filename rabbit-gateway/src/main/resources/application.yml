@@ -184,6 +184,7 @@ boot:
         ,/mina/youtube/authorize
         ,/mina/youtube/*/callback
         ,/mina/share-content
+        ,/mina/recharge/*
 
         ,/sso/account/login/qrcode
         ,/sso/account/login/token

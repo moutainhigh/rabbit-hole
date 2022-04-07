@@ -97,7 +97,7 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("都市", "异能", "系统");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        int i = 1;
+        int i = 2;
         uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
     }
 

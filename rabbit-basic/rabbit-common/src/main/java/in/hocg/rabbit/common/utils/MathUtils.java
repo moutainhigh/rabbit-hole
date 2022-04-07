@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mall.biz.support.mode.utils;
+package in.hocg.rabbit.common.utils;
 
 import lombok.experimental.UtilityClass;
 

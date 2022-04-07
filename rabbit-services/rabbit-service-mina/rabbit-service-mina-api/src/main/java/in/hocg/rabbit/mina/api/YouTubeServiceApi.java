@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @FeignClient(value = MinaServiceName.NAME)
 public interface YouTubeServiceApi {
-
     String CONTEXT_ID = "YouTubeServiceApi";
 
     @PostMapping(value = CONTEXT_ID + "/upload", headers = MinaServiceName.FEIGN_HEADER)
