@@ -28,12 +28,4 @@ public class RechargeProductVo {
     @ApiModelProperty("备注信息")
     private String desc;
 
-    public String getTitle() {
-        return new StringJoiner(",")
-            .add(this.getClassName())
-            .add(this.getDesc())
-            .add(this.getProductName())
-            .add(StrUtil.toString(this.getPrice()))
-            .toString();
-    }
 }
