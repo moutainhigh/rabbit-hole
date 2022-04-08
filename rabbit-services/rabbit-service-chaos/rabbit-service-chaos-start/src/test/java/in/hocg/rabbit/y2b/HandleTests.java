@@ -56,7 +56,7 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("合集(全球诡异时代|2.5min)上传")
+    @ApiOperation("合集(全球诡异时代|2.5min|周二)上传")
     public void upload12() {
         String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         Long channelId = 1L;
@@ -69,7 +69,7 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("合集(观棋烂柯|3min)上传")
+    @ApiOperation("合集(观棋烂柯|3min|周三)上传")
     public void upload13() {
         String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
         Long channelId = 1L;
@@ -84,7 +84,7 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("合集(我的成就有点多|2min)上传")
+    @ApiOperation("合集(我的成就有点多|2min|周四)上传")
     public void upload14() {
         String title = "《我的成就有点多》{ep}为了奖励孟凡重生前义举，获得一个系统奖励，并将他送到三个月前! #都市 #异能 #系统";
         Long channelId = 1L;
@@ -97,7 +97,7 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("合集(我有999种异能|2.5min|30min)上传")
+    @ApiOperation("合集(我有999种异能|2.5min|周五)上传")
     public void upload15() {
         // https://www.gaoding.com/design?mode=user&id=19575703892148247
         String title = "《我有999种异能》{ep}在这个全民异能的世界，为了拯救心爱的妹妹，杨希发誓要让伤害她的人血债血偿! #都市 #异能 #系统";
