@@ -52,8 +52,9 @@
 
   <modules>
     <module>rabbit-basic</module>
-    <module>rabbit-services</module>
     <module>rabbit-gateway</module>
+    <module>rabbit-openway</module>
+    <module>rabbit-services</module>
     <module>rabbit-generator</module>
   </modules>
 

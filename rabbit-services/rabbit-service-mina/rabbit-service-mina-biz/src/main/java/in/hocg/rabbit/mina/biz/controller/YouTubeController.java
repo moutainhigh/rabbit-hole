@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @Validated
 @Api(tags = "mina::Y2B.通用")
+@Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/youtube")
 public class YouTubeController {

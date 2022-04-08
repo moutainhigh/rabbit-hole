@@ -65,12 +65,13 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
 
         Pair<Integer, Integer> pair = buildPage(1, 15, 75);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
     }
 
     @Test
     @ApiOperation("合集(观棋烂柯|3min|周三)上传")
     public void upload13() {
+        // https://www.gaoding.com/design?id=19564228136026199&simple=1&mode=user
         String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
         Long channelId = 1L;
         String url = "https://v.douyin.com/NpqgRFx";
@@ -80,7 +81,7 @@ public class HandleTests extends AbstractSpringBootTest {
         // -> 1, 14, 66 => 80
         // -> 1, 10, 80
         Pair<Integer, Integer> pair = buildPage(1, 14, 66);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
     }
 
     @Test
@@ -93,7 +94,7 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
         Pair<Integer, Integer> pair = buildPage(1, 15, 50);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
     }
 
     @Test
@@ -107,7 +108,51 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
         Pair<Integer, Integer> pair = buildPage(2, 15, 0);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+    }
+
+    @Test
+    @ApiOperation("合集(末日重启|1.5min|周五)上传")
+    public void upload16() {
+        // https://www.gaoding.com/design?mode=user&id=19581889897185313
+        String title = "《末日重启》{ep}末日爆发后奋战了三年，因为队友连累被丧尸围攻致死。再次醒来，却重生末日开始之前! #末日 #重生";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NtenCEv";
+        List<String> addTags = List.of("末日", "重生");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(2, 25, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+    }
+
+    @Test
+    @ApiOperation("合集(深渊副本已刷新|1.5min|周六.上午)上传")
+    public void upload17() {
+        // https://www.gaoding.com/design?id=19587528967596099&simple=1&mode=user
+        String title = "《深渊副本已刷新》{ep}十年前神秘建筑出现在城市上空，被选中的玩家能够进入天空城中，不断地积累声望和财富! #副本 #都市";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NtPhKsK";
+        List<String> addTags = List.of("游戏", "副本", "升级");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+    }
+
+
+    @Test
+    @ApiOperation("合集(九个女徒弟称霸后宫|2min|周六.下午)上传")
+    public void upload18() {
+        // https://www.gaoding.com/design?mode=user&id=19588056655865891
+        String title = "《九个女徒弟称霸后宫》{ep}敢在老祖头上动土？打脸打不死你！女人？我有九个！！ #后宫 #重生";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NtmohKM/";
+        List<String> addTags = List.of("热血", "后宫", "重生");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f8iRJ_DRQlwhKjKDF6h9uJE");
     }
 
     @Test
@@ -135,7 +180,14 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("穿越", "异界");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
         File videoFile = new File("/Users/Share/k8s_nfs/basic_video/全球诡异时代(0~74)");
-        upload(channelId, title, desc, addTags, videoFile, thumbFile);
+
+
+        UploadY2bDto options = new UploadY2bDto();
+        options.setTitle(title);
+        options.setThumbFile(thumbFile);
+        options.setTags(addTags);
+        options.setDescription(desc);
+        upload(channelId, videoFile, options);
     }
 
     //============================================================================================================================================================
@@ -158,12 +210,17 @@ public class HandleTests extends AbstractSpringBootTest {
         File finalFile = videoService.modifyFile(mergeFile.toFile());
 
         // 4. 上传
-        upload(channelId, title, desc, addTags, finalFile, thumbFile);
+        UploadY2bDto options = new UploadY2bDto();
+        options.setTitle(title);
+        options.setThumbFile(thumbFile);
+        options.setTags(addTags);
+        options.setDescription(desc);
+        upload(channelId, finalFile, options);
     }
 
     @ApiOperation("合集上传")
     private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile) {
-        uploadCollect(channelId, url, title, addTags, thumbFile, null, null);
+        uploadCollect(channelId, url, title, addTags, thumbFile, null, null, null);
     }
 
     /**
@@ -176,8 +233,7 @@ public class HandleTests extends AbstractSpringBootTest {
      * @param epEnd     结束(包含)
      */
     @ApiOperation("合集上传")
-    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile,
-                               Integer epStart, Integer epEnd) {
+    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd, String playlistId) {
 
 
         Path diskPath = Path.of(properties.getDiskPath());
@@ -214,6 +270,7 @@ public class HandleTests extends AbstractSpringBootTest {
         tags.addAll(addTags);
         options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));
         options.setDescription(videoInfo.getDesc());
+        options.setPlaylistId(playlistId);
         upload(channelId, mergeFile.toFile(), options);
     }
 
@@ -240,19 +297,32 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     private void upload(Long channelId, File videoFile, UploadY2bDto options) {
-        upload(channelId, options.getTitle(), options.getDescription(), options.getTags(), videoFile, options.getThumbFile());
-    }
+        List<String> tags = options.getTags();
+        String desc = options.getDescription();
+        File thumbFile = options.getThumbFile();
+        String title = options.getTitle();
 
-    private void upload(Long channelId, String title, String desc, List<String> tags, File videoFile,
-                        File thumbFile) {
-        UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title);
-        options.setThumbFile(thumbFile);
-        options.setTags(tags.stream().filter(Objects::nonNull)
-            .filter(s -> !StrUtil.contains(s, "抖音"))
-            .filter(s -> !StrUtil.contains(s, "计划"))
-            .collect(Collectors.toList()));
-        options.setDescription(desc);
-        videoService.upload(channelId, videoFile, options);
+        List<String> limitTags = tags.stream()
+            .filter(s -> StrUtil.contains(s, "抖音"))
+            .filter(s -> StrUtil.contains(s, "计划"))
+            .collect(Collectors.toList());
+
+        // 过滤掉描述里面的标签
+        String filterDesc = desc;
+        for (String limitTag : limitTags) {
+            filterDesc = StrUtil.removeAny(filterDesc, "#" + limitTag);
+        }
+        filterDesc = filterDesc.trim();
+
+        // 过滤掉标签
+        List<String> filteredTags = CollUtil.removeAny(tags, limitTags.toArray(new String[0]));
+
+        UploadY2bDto newOptions = new UploadY2bDto();
+        newOptions.setTitle(title);
+        newOptions.setThumbFile(thumbFile);
+        newOptions.setTags(filteredTags);
+        newOptions.setDescription(filterDesc);
+        newOptions.setPlaylistId(options.getPlaylistId());
+        videoService.upload(channelId, videoFile, newOptions);
     }
 }
