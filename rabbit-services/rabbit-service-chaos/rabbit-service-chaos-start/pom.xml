@@ -24,10 +24,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>rabbit-service-cv-biz</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-com-biz</artifactId>
     </dependency>
     <dependency>
@@ -61,6 +57,11 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>rabbit-service-mall-biz</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>rabbit-service-cv-biz</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
