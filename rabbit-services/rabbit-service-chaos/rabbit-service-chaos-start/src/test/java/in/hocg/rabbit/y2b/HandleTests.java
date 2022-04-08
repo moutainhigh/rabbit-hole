@@ -56,18 +56,7 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("合集(全球诡异时代)上传")
-    public void upload1() {
-        String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
-        Long channelId = 1L;
-        String url = "https://v.douyin.com/NqFKLcM/";
-        List<String> addTags = List.of("穿越", "异界");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
-        uploadCollect(channelId, url, title, addTags, thumbFile);
-    }
-
-    @Test
-    @ApiOperation("合集(全球诡异时代 1-25)上传")
+    @ApiOperation("合集(全球诡异时代|2.5min)上传")
     public void upload12() {
         String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         Long channelId = 1L;
@@ -75,7 +64,7 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("穿越", "异界");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
 
-        Pair<Integer, Integer> pair = buildPage(1, 25, 75);
+        Pair<Integer, Integer> pair = buildPage(1, 15, 75);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
@@ -88,7 +77,9 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("古风", "玄幻");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        Pair<Integer, Integer> pair = buildPage(3, 25, 0);
+        // -> 1, 14, 66 => 80
+        // -> 1, 15, 80
+        Pair<Integer, Integer> pair = buildPage(1, 14, 66);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
@@ -101,7 +92,7 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("都市", "异能", "系统");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        Pair<Integer, Integer> pair = buildPage(1, 25, 50);
+        Pair<Integer, Integer> pair = buildPage(1, 15, 50);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
