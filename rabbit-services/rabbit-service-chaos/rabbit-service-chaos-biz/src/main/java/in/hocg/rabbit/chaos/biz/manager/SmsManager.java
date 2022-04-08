@@ -1,6 +1,6 @@
 package in.hocg.rabbit.chaos.biz.manager;
 
-import in.hocg.rabbit.chaos.biz.manager.sms.SmsTpl;
+import in.hocg.rabbit.chaos.biz.enums.SmsTpl;
 import com.google.common.collect.Maps;
 import in.hocg.boot.sms.autoconfigure.core.SmsBervice;
 import in.hocg.boot.web.autoconfiguration.properties.BootProperties;

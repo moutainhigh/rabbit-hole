@@ -7,5 +7,6 @@ package in.hocg.rabbit.mina.api.named;
  * @author hocgin
  */
 public final class MinaNamedType {
+    public final static String DataDictName = "DataDictName";
 
 }

@@ -18,7 +18,7 @@ import in.hocg.rabbit.mall.biz.service.CouponService;
 import in.hocg.rabbit.mall.biz.service.StintRuleService;
 import in.hocg.rabbit.mall.biz.support.mode.*;
 import in.hocg.rabbit.mall.biz.support.mode.def.rule.Rules;
-import in.hocg.rabbit.mall.biz.support.mode.utils.MathUtils;
+import in.hocg.rabbit.common.utils.MathUtils;
 import in.hocg.rabbit.mall.biz.support.order.discount.CouponDiscount;
 import lombok.experimental.UtilityClass;
 

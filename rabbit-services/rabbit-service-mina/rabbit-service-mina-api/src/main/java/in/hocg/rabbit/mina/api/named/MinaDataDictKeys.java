@@ -7,5 +7,5 @@ package in.hocg.rabbit.mina.api.named;
  * @author hocgin
  */
 public final class MinaDataDictKeys {
-
+    public static final String RECHARGE_ORDER_STATUS = "RECHARGE_ORDER_STATUS";
 }

@@ -30,6 +30,7 @@ public enum RefType implements DataDictEnum {
     SystemMessage("system_message", "系统消息"),
     PersonalMessage("personal_message", "私信消息"),
     NoticeMessage("notice_message", "订阅消息"),
+    Post("post", "帖子"),
     ;
 
     private final Serializable code;

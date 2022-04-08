@@ -1,5 +1,7 @@
 package in.hocg.rabbit.chaos.dvideo;
 
+import in.hocg.rabbit.mina.biz.support.down.Video;
+
 /**
  * Created by hocgin on 2020/12/26
  * email: hocgin@gmail.com
@@ -8,9 +10,7 @@ package in.hocg.rabbit.chaos.dvideo;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        String newUrl = Video.decode("https://v.douyin.com/JjHGuMc/", Video.Type.DuoYin);
-        System.out.println(newUrl);
-        newUrl = Video.decode("http://v.kuaishou.com/s/mhn5haAq", Video.Type.KuaiShou);
+        String newUrl = Video.getVideoDecoder(Video.Type.DuoYin).aweme("https://v.douyin.com/NVENCyc").getUrl();
         System.out.println(newUrl);
     }
 }

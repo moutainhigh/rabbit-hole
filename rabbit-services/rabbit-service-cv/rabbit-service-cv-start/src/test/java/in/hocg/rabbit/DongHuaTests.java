@@ -1,6 +1,7 @@
 package in.hocg.rabbit;
 
 import cn.hutool.core.io.FileUtil;
+import in.hocg.boot.javacv.autoconfiguration.core.Commands;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.boot.ffmpeg.autoconfiguration.core.Commands;
 
@@ -35,7 +36,7 @@ public class DongHuaTests {
         FileUtil.mkdir(targetDir.toFile());
         for (File file : Objects.requireNonNull(videoDir.listFiles())) {
             File outFile = Commands.sub(file, LocalTime.of(0, 2, 15), LocalTime.of(0, 15, 0));
-            CommonUtils.modifyMD5(outFile.toPath());
+            CommonUtils.updateFileMd5(outFile);
             FileUtil.move(outFile, targetDir.resolve(outFile.getName()).toFile(), true);
         }
     }

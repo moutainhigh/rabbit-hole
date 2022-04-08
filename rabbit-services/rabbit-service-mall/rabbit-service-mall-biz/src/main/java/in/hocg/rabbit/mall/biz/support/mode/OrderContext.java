@@ -2,7 +2,7 @@ package in.hocg.rabbit.mall.biz.support.mode;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Maps;
-import in.hocg.rabbit.mall.biz.support.mode.utils.MathUtils;
+import in.hocg.rabbit.common.utils.MathUtils;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;

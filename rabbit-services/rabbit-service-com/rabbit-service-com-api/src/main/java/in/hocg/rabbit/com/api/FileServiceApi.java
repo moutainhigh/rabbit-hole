@@ -8,7 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -23,6 +25,9 @@ public interface FileServiceApi {
 
     @PostMapping(value = CONTEXT_ID + "/upload", headers = ComServiceName.FEIGN_HEADER)
     void upload(@Validated @RequestBody UploadFileRo ro);
+
+    @PostMapping(value = CONTEXT_ID + "/upload2", headers = ComServiceName.FEIGN_HEADER)
+    String upload(@RequestParam("file") java.io.File file);
 
     @PostMapping(value = CONTEXT_ID + "/listFileByRefTypeAndRefId", headers = ComServiceName.FEIGN_HEADER)
     List<FileVo> listByRefTypeAndRefId(@RequestParam("refType") String refType, @RequestParam("refId") Long refId);

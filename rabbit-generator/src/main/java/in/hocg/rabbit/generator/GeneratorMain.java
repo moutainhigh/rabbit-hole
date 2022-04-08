@@ -17,7 +17,8 @@ public class GeneratorMain {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
             Module.MINA, false,
-            "mina_share_content",
+            "mina_recharge_order",
+            "mina_recharge_account",
             "");
     }
 

@@ -65,21 +65,26 @@ public class CommonUtils {
     }
 
     @SneakyThrows
-    public static Path toFile2(String formUrl) {
-        InputStream inputStream = URI.create(formUrl).toURL().openStream();
+    public static Path downloadFile(String formUrl) {
         Path toPath = Files.createTempFile("_", "." + getFileName(formUrl));
-        File toFile = toPath.toFile();
-        FileUtil.writeFromStream(inputStream, toFile);
-        return toPath;
+        return downloadFile(formUrl, toPath).toPath();
     }
 
     @SneakyThrows
-    public static Path modifyMD5(Path path) {
+    public static File downloadFile(String formUrl, Path toPath) {
+        InputStream inputStream = URI.create(formUrl).toURL().openStream();
+        File toFile = toPath.toFile();
+        FileUtil.writeFromStream(inputStream, toFile);
+        return toFile;
+    }
+
+    @SneakyThrows
+    public static File updateFileMd5(File file) {
         @Cleanup
-        RandomAccessFile file = FileUtil.createRandomAccessFile(path, FileMode.rw);
-        file.seek(file.length());
-        file.writeBytes(GlobalConstant.AUTHOR);
-        file.close();
-        return path;
+        RandomAccessFile result = FileUtil.createRandomAccessFile(file, FileMode.rw);
+        result.seek(file.length());
+        result.writeBytes(GlobalConstant.AUTHOR);
+        result.close();
+        return file;
     }
 }
