@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import in.hocg.boot.javacv.autoconfiguration.support.FeatureHelper;
@@ -192,7 +193,7 @@ public class HandleTests extends AbstractSpringBootTest {
 
         List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).listAweme(url);
         VideoInfo videoInfo = videos.get(0);
-        String collectionName = videoInfo.getTitle();
+        String collectionName = SecureUtil.md5(url);
 
         // 2. 下载视频
         List<File> files = videoService.download(videos, diskPath.resolve(collectionName).toFile());
