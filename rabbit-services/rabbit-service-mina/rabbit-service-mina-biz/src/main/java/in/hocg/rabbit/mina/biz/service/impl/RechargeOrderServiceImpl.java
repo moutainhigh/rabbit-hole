@@ -51,10 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -98,7 +95,7 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
 
         // 1. 保存充值单据
         RechargeOrder entity = mapping.asRechargeOrder(ro);
-        entity.setProductName(vo.getTitle());
+        entity.setProductName(RechargeHelper.getTitle(vo));
         entity.setOrderNo(uniqueCode);
         entity.setTotalAmt(productAmt);
         validInsertOrUpdate(entity);
@@ -278,14 +275,17 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
 
     @Override
     public RechargeAccountVo getAccount(Long userId) {
-        RechargeAccount account = rechargeAccountService.getByOwnerUserId(userId).orElseThrow(() -> ServiceException.wrap("获取账户信息失败"));
-        return mapping.asRechargeAccount(account);
+        Optional<RechargeAccount> accountOpt = rechargeAccountService.getByOwnerUserId(userId);
+        if (accountOpt.isEmpty()) {
+            return new RechargeAccountVo();
+        }
+        return mapping.asRechargeAccount(accountOpt.get());
     }
 
     @Override
     public List<KeyValue> completeWithProduct(RechargeProductCompleteRo ro) {
         return rechargeCacheService.listProduct(ro.getOpsUserId()).stream()
-            .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getId()))
+            .map(item -> new KeyValue().setKey(RechargeHelper.getTitle(item)).setValue(item.getId()))
             .filter(keyValue -> {
                 String keyword = ro.getKeyword();
                 return StrUtil.isBlank(keyword) || StrUtil.containsIgnoreCase(StrUtil.toString(keyValue.getKey()), keyword);

@@ -14,6 +14,9 @@ boot:
         ttl: 1D
       - name: PAGING_TOPIC_WALLPAPER
         ttl: 1D
+      # 充值缓存产品信息
+      - name: LIST_RECHARGE_PRODUCT
+        ttl: 1D
       - name: GET_ADDRESS_BY_IP
         ttl: 1H
       # [BMW] 接入应用名称

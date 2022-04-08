@@ -9,15 +9,13 @@ import cn.hutool.http.HttpUtil;
 import com.google.common.collect.Maps;
 import in.hocg.boot.web.autoconfiguration.SpringContext;
 import in.hocg.rabbit.mina.api.pojo.ro.RechargeOrderRo;
+import in.hocg.rabbit.mina.api.pojo.vo.RechargeProductVo;
 import in.hocg.rabbit.mina.biz.constant.MinaConstant;
 import in.hocg.rabbit.mina.biz.entity.RechargeAccount;
 import in.hocg.rabbit.mina.biz.service.RechargeAccountService;
 import lombok.experimental.UtilityClass;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -74,5 +72,14 @@ public class RechargeHelper {
         params.remove("sign");
         String serverSign = getSign(params, apikey);
         Assert.isTrue(StrUtil.equalsIgnoreCase(serverSign, sign), "签名错误");
+    }
+
+    public String getTitle(RechargeProductVo vo) {
+        return new StringJoiner(",")
+            .add(vo.getClassName())
+            .add(vo.getDesc())
+            .add(vo.getProductName())
+            .add(vo.getPrice().toString())
+            .toString();
     }
 }

@@ -16,5 +16,5 @@ import java.math.BigDecimal;
 public class RechargeAccountVo {
     private String userId;
     private String apikey;
-    private BigDecimal availAmt;
+    private BigDecimal availAmt = BigDecimal.ZERO;
 }

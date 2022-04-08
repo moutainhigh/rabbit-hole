@@ -1,6 +1,7 @@
 package in.hocg.rabbit.mina.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.IdUtil;
 import in.hocg.rabbit.common.utils.MathUtils;
 import in.hocg.rabbit.mina.api.pojo.vo.RechargeProductVo;
 import in.hocg.rabbit.mina.biz.entity.RechargeAccount;
@@ -32,7 +33,16 @@ public class RechargeAccountServiceImpl extends AbstractServiceImpl<RechargeAcco
 
     @Override
     public Optional<RechargeAccount> getByOwnerUserId(Long userId) {
-        return lambdaQuery().eq(RechargeAccount::getOwnerUserId, userId).oneOpt();
+        Optional<RechargeAccount> rechargeAccountOpt = lambdaQuery().eq(RechargeAccount::getOwnerUserId, userId).oneOpt();
+        if (rechargeAccountOpt.isEmpty()) {
+            RechargeAccount entity = new RechargeAccount();
+            entity.setOwnerUserId(userId);
+            entity.setAvailAmt(BigDecimal.ZERO);
+            entity.setApikey(IdUtil.fastSimpleUUID());
+            saveOrUpdate(entity);
+            rechargeAccountOpt = Optional.ofNullable(getById(entity.getId()));
+        }
+        return rechargeAccountOpt;
     }
 
     @Override

@@ -5,8 +5,8 @@ CREATE TABLE `mina_recharge_account`
         COMMENT 'ID',
     owner_user_id     BIGINT         NOT NULL
         COMMENT '所属用户',
-    free_rate         DECIMAL(20, 2) NOT NULL DEFAULT 0
-        COMMENT '手续费率(收手续费)',
+    free_rate         DECIMAL(20, 2)
+        COMMENT '手续费率(收手续费), NULL 代表使用默认值',
     avail_amt         DECIMAL(20, 2) NOT NULL DEFAULT 0
         COMMENT '可用额度(元)',
     apikey            VARCHAR(32)    NOT NULL
