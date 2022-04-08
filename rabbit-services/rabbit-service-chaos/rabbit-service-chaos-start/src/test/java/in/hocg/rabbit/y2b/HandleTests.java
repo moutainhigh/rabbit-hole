@@ -78,7 +78,7 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
         // -> 1, 14, 66 => 80
-        // -> 1, 15, 80
+        // -> 1, 10, 80
         Pair<Integer, Integer> pair = buildPage(1, 14, 66);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
