@@ -17,6 +17,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface DocMapping {
 
+    @Mapping(target = "title", ignore = true)
     @Mapping(target = "content", ignore = true)
     @Mapping(target = "ownerUserName", ignore = true)
     @Mapping(target = "description", ignore = true)

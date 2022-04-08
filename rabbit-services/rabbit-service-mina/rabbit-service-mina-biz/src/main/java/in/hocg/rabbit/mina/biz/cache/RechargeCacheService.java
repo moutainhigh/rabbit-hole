@@ -1,10 +1,8 @@
 package in.hocg.rabbit.mina.biz.cache;
 
-import in.hocg.rabbit.mina.api.pojo.vo.RechargeProductVo;
-import in.hocg.rabbit.mina.biz.docking.recharge.pojo.vo.ProductVo;
+import in.hocg.rabbit.mina.biz.pojo.vo.RechargeProductVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by hocgin on 2022/4/7

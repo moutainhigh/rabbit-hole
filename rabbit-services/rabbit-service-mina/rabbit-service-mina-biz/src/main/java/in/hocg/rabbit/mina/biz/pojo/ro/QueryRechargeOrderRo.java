@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mina.api.pojo.ro;
+package in.hocg.rabbit.mina.biz.pojo.ro;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,10 +14,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-public class BaseRechargeRo {
-    @ApiModelProperty(value = "商户用户", required = true)
-    private Long userId;
-
-    @ApiModelProperty("签名字符串")
-    private String sign;
+public class QueryRechargeOrderRo extends BaseRechargeRo {
+    @NotNull(message = "外部单号不能为空")
+    @ApiModelProperty(value = "外部单号", required = true)
+    private String outOrderNo;
 }
