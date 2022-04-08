@@ -115,7 +115,7 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("都市", "异能", "系统");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        Pair<Integer, Integer> pair = buildPage(1, 15, 0);
+        Pair<Integer, Integer> pair = buildPage(2, 15, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
