@@ -259,6 +259,7 @@ public class HandleTests extends AbstractSpringBootTest {
         options.setThumbFile(thumbFile);
         options.setTags(tags.stream().filter(Objects::nonNull)
             .filter(s -> !StrUtil.contains(s, "抖音"))
+            .filter(s -> !StrUtil.contains(s, "计划"))
             .collect(Collectors.toList()));
         options.setDescription(desc);
         videoService.upload(channelId, videoFile, options);
