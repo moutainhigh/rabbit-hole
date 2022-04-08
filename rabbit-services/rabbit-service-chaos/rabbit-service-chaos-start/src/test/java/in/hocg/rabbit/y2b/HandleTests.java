@@ -1,6 +1,8 @@
 package in.hocg.rabbit.y2b;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -17,6 +19,7 @@ import in.hocg.rabbit.mina.biz.support.down.dto.Top;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -71,12 +74,12 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("穿越", "异界");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
 
-        int i = 3;
-        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+        Pair<Integer, Integer> pair = buildPage(1, 25, 75);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
     @Test
-    @ApiOperation("合集(观棋烂柯 1-25)上传")
+    @ApiOperation("合集(观棋烂柯|3min)上传")
     public void upload13() {
         String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
         Long channelId = 1L;
@@ -84,12 +87,12 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("古风", "玄幻");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        int i = 3;
-        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+        Pair<Integer, Integer> pair = buildPage(3, 25, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
     @Test
-    @ApiOperation("合集(我的成就有点多 1-25)上传")
+    @ApiOperation("合集(我的成就有点多|2min)上传")
     public void upload14() {
         String title = "《我的成就有点多》{ep}为了奖励孟凡重生前义举，获得一个系统奖励，并将他送到三个月前! #都市 #异能 #系统";
         Long channelId = 1L;
@@ -97,8 +100,22 @@ public class HandleTests extends AbstractSpringBootTest {
         List<String> addTags = List.of("都市", "异能", "系统");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        int i = 2;
-        uploadCollect(channelId, url, title, addTags, thumbFile, (25 * (i - 1)), (25 * i) - 1);
+        Pair<Integer, Integer> pair = buildPage(1, 25, 50);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
+    }
+
+    @Test
+    @ApiOperation("合集(我有999种异能|2.5min|30min)上传")
+    public void upload15() {
+        // https://www.gaoding.com/design?mode=user&id=19575703892148247
+        String title = "《我有999种异能》{ep}在这个全民异能的世界，为了拯救心爱的妹妹，杨希发誓要让伤害她的人血债血偿! #都市 #异能 #系统";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NsDEdpX/";
+        List<String> addTags = List.of("都市", "异能", "系统");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(1, 15, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight());
     }
 
     @Test
@@ -157,9 +174,20 @@ public class HandleTests extends AbstractSpringBootTest {
         uploadCollect(channelId, url, title, addTags, thumbFile, null, null);
     }
 
+    /**
+     * @param channelId
+     * @param url
+     * @param title
+     * @param addTags
+     * @param thumbFile
+     * @param epStart   开始(包含)
+     * @param epEnd     结束(包含)
+     */
     @ApiOperation("合集上传")
     private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile,
-                               Integer startIndex, Integer endIndex) {
+                               Integer epStart, Integer epEnd) {
+
+
         Path diskPath = Path.of(properties.getDiskPath());
 
         List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).listAweme(url);
@@ -167,30 +195,50 @@ public class HandleTests extends AbstractSpringBootTest {
         String collectionName = videoInfo.getTitle();
 
         // 2. 下载视频
-        List<File> files = videoService.download(videos,
-            diskPath.resolve(collectionName).toFile());
+        List<File> files = videoService.download(videos, diskPath.resolve(collectionName).toFile());
+
+        // 下标范围
+        int epMax = files.size();
+        epStart = LangUtils.getOrDefault(epStart, 1);
+        epEnd = Math.min(LangUtils.getOrDefault(epEnd, epMax), epMax);
+        Assert.isTrue(epStart < epEnd, "错误的下标: [{}, {}]", epStart, epEnd);
+
+        // 2.2 获取待合并视频
+        List<File> mergeFiles = CollUtil.sub(files, epStart - 1, epEnd);
 
         // 3. 合并
-        startIndex = LangUtils.getOrDefault(startIndex, 0);
-        endIndex = LangUtils.getOrDefault(endIndex, files.size());
-        List<File> mergeFiles = CollUtil.sub(files, startIndex, endIndex);
-
-        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, startIndex + 1, endIndex + 1);
+        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, epStart, epEnd);
         Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, 3 * (1000 * 1000));
+        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, Convert.toLong(2.8 * (1000 * 1000)));
 
         // 4. 调整文件
         videoService.modifyFile(mergeFile.toFile());
 
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title(title, startIndex + 1, endIndex + 1));
+        options.setTitle(title(title, epStart, epEnd));
         options.setThumbFile(thumbFile);
         List<String> tags = Lists.newArrayList(videoInfo.getKeywords());
         tags.addAll(addTags);
         options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));
         options.setDescription(videoInfo.getDesc());
         upload(channelId, mergeFile.toFile(), options);
+    }
+
+    /**
+     * 得出开始的下标和结束的下标
+     * [1, 25]
+     * [26, 50]
+     *
+     * @param page
+     * @param pageSize
+     * @param baseIdx
+     * @return [epStart, epEnd]
+     */
+    private Pair<Integer, Integer> buildPage(int page, int pageSize, int baseIdx) {
+        int startIdx = baseIdx + (pageSize * (Math.max(page, 1) - 1));
+        int endIdx = startIdx + pageSize;
+        return Pair.of(startIdx + 1, endIdx);
     }
 
     private String title(String tpl, Integer start, Integer end) {
