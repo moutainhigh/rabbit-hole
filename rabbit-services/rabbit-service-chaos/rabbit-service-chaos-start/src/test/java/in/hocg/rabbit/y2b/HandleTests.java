@@ -110,7 +110,7 @@ public class HandleTests extends AbstractSpringBootTest {
         // https://www.gaoding.com/design?mode=user&id=19575703892148247
         String title = "《我有999种异能》{ep}在这个全民异能的世界，为了拯救心爱的妹妹，杨希发誓要让伤害她的人血债血偿! #都市 #异能 #系统";
         Long channelId = 1L;
-        String url = "https://v.douyin.com/NsDEdpX/";
+        String url = "https://v.douyin.com/NGkcuvb/";
         List<String> addTags = List.of("都市", "异能", "系统");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
