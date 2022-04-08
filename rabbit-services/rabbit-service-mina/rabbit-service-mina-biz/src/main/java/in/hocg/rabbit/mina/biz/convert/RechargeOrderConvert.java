@@ -1,6 +1,6 @@
 package in.hocg.rabbit.mina.biz.convert;
 
-import in.hocg.rabbit.mina.api.pojo.vo.RechargeOrderVo;
+import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderVo;
 import in.hocg.rabbit.mina.biz.entity.RechargeOrder;
 import in.hocg.rabbit.mina.biz.mapstruct.RechargeMapping;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderOrdinaryVo;

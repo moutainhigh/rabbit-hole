@@ -1,6 +1,5 @@
 package in.hocg.rabbit.mina.biz.docking.recharge;
 
-import in.hocg.rabbit.mina.api.pojo.vo.RechargeProductVo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.CheckRechargeRo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.QueryElecityRo;
 import in.hocg.rabbit.mina.biz.docking.recharge.pojo.ro.QueryProductRo;

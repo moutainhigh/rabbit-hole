@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mina.api.pojo.ro;
+package in.hocg.rabbit.mina.biz.pojo.ro;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

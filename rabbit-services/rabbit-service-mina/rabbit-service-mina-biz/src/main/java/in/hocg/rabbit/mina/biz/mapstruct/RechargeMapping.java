@@ -1,7 +1,7 @@
 package in.hocg.rabbit.mina.biz.mapstruct;
 
-import in.hocg.rabbit.mina.api.pojo.ro.RechargeOrderRo;
-import in.hocg.rabbit.mina.api.pojo.vo.RechargeOrderVo;
+import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderRo;
+import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderVo;
 import in.hocg.rabbit.mina.biz.entity.RechargeAccount;
 import in.hocg.rabbit.mina.biz.entity.RechargeOrder;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeAccountVo;

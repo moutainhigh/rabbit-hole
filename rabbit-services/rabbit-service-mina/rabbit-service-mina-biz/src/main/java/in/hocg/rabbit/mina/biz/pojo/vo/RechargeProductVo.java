@@ -1,4 +1,4 @@
-package in.hocg.rabbit.mina.api.pojo.vo;
+package in.hocg.rabbit.mina.biz.pojo.vo;
 
 import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModelProperty;

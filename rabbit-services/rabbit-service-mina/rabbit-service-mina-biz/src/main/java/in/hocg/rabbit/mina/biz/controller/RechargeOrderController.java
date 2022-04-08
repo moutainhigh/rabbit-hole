@@ -3,7 +3,7 @@ package in.hocg.rabbit.mina.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.boot.web.datastruct.KeyValue;
-import in.hocg.rabbit.mina.api.pojo.ro.RechargeOrderRo;
+import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.RechargeOrderPageRo;
 import in.hocg.rabbit.mina.biz.pojo.ro.RechargeProductCompleteRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeAccountVo;
@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
