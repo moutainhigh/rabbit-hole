@@ -26,9 +26,4 @@ public class BootApplication {
         SpringApplication.run(BootApplication.class, args);
     }
 
-    @RequestMapping("/E12453")
-    public Result<String> hello(@RequestBody String body) {
-        log.info("body: {}", body);
-        return Result.success("hello");
-    }
 }

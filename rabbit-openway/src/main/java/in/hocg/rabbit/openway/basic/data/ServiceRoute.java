@@ -1,11 +1,9 @@
-package in.hocg.rabbit.openway.basic.route;
+package in.hocg.rabbit.openway.basic.data;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by hocgin on 2022/4/8
@@ -16,10 +14,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ServiceRoute implements Serializable {
-    private String serviceId;
-    private Api api;
-
-    public static class Api {
-
-    }
+    private String apiId;
+    private String mapTargetUri;
+    private String mapTargetPath;
 }

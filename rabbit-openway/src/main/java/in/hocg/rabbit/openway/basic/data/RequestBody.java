@@ -1,4 +1,4 @@
-package in.hocg.rabbit.openway.basic.route.data;
+package in.hocg.rabbit.openway.basic.data;
 
 import lombok.Data;
 import lombok.Getter;

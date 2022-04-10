@@ -22,6 +22,7 @@ import java.util.Map;
 class ValidRequestFilterTest {
 
     public static void main(String[] args) {
+        System.out.println("正确请求------------------");
         ToRequestBody body = new ToRequestBody();
         body.setAppid("appid");
         String method = "E12453";
@@ -35,13 +36,25 @@ class ValidRequestFilterTest {
         body.setSign(OpenwayUtils.getSign(json));
 
         String reqBody = JSONUtil.toJsonStr(body);
-        String resp = HttpUtil.post("http://127.0.0.1:20010/", reqBody);
+        String resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
 
+        System.out.println("Resp::" + resp);
         Pair<String, String> result = getBody(resp, method);
         System.out.println("Requ::" + reqBody);
-        System.out.println("Resp::" + resp);
         System.out.println("Body::" + result.getLeft());
         System.out.println("Sign::" + result.getRight());
+
+
+        System.out.println("错误请求------------------");
+        body.setAppid(null);
+        reqBody = JSONUtil.toJsonStr(body);
+        resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
+        System.out.println("Resp::" + resp);
+
+        System.out.println("不支持请求------------------");
+
+        resp = HttpUtil.get("http://127.0.0.1:20010");
+        System.out.println("Resp::" + resp);
     }
 
     public static Pair<String, String> getBody(String body, String method) {

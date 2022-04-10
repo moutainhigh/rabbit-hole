@@ -8,4 +8,5 @@ package in.hocg.rabbit.openway.constants;
  */
 public class OpenwayContants {
     public static final String SIGN = "sign";
+    public static final String SOURCE = "openway";
 }

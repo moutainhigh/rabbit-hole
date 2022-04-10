@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  *
  * @author hocgin
  */
+@Component
 public class GatewayRoutesRefresher implements ApplicationEventPublisherAware {
     private ApplicationEventPublisher publisher;
 

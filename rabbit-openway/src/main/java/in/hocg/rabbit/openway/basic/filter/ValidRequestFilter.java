@@ -5,7 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.openway.basic.context.GatewayContext;
 import in.hocg.rabbit.openway.basic.route.RouteService;
-import in.hocg.rabbit.openway.basic.route.data.RequestBody;
+import in.hocg.rabbit.openway.basic.data.RequestBody;
+import in.hocg.rabbit.openway.constants.OrderedConstants;
 import in.hocg.rabbit.openway.utils.ExceptionUtils;
 import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 1)
+@Order(OrderedConstants.VALID_REQUEST_ORDERED)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ValidRequestFilter implements WebFilter {
     private final RouteService routeService;
@@ -43,26 +44,27 @@ public class ValidRequestFilter implements WebFilter {
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
         assert context != null;
         String requestBody = context.getBody();
-        RequestBody body = JSONUtil.toBean(requestBody, RequestBody.class);
+        RequestBody body = context.getRequestBody();
+        String method = body.getMethod();
 
         // 校验必填字段
         if (!validRequired(body)) {
-            return ExceptionUtils.handleException(exchange, new RuntimeException("请求参数不能为空"));
+            return ExceptionUtils.handleException(exchange, method, new RuntimeException("必填参数不能为空"));
         }
 
         // 校验时间戳
         if (!validTimestamp(body)) {
-            return ExceptionUtils.handleException(exchange, new RuntimeException("时间戳校验失败"));
+            return ExceptionUtils.handleException(exchange, method, new RuntimeException("时间戳校验失败"));
         }
 
         // 校验接口权限
         if (!validAllow(body)) {
-            return ExceptionUtils.handleException(exchange, new RuntimeException("接口不允许访问"));
+            return ExceptionUtils.handleException(exchange, method, new RuntimeException("接口不允许访问"));
         }
 
         // 校验签名
         if (!validSign(requestBody, body)) {
-            return ExceptionUtils.handleException(exchange, new RuntimeException("签名校验失败"));
+            return ExceptionUtils.handleException(exchange, method, new RuntimeException("签名校验失败"));
         }
 
         return chain.filter(exchange);

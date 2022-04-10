@@ -1,6 +1,5 @@
 package in.hocg.rabbit.openway.basic;
 
-import in.hocg.rabbit.openway.basic.route.DefaultRouteService;
 import in.hocg.rabbit.openway.basic.route.RouteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

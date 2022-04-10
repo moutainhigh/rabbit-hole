@@ -1,6 +1,8 @@
 package in.hocg.rabbit.openway.basic.filter;
 
 import in.hocg.rabbit.openway.basic.context.GatewayContext;
+import in.hocg.rabbit.openway.constants.OrderedConstants;
+import in.hocg.rabbit.openway.utils.ExceptionUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -32,7 +34,7 @@ import java.util.List;
  * @author hocgin
  */
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(OrderedConstants.CONTEXT_ORDERED)
 public class OpenwayContextFilter implements WebFilter {
     private static final List<HttpMessageReader<?>> MESSAGE_READERS = HandlerStrategies.withDefaults().messageReaders();
 
@@ -47,9 +49,7 @@ public class OpenwayContextFilter implements WebFilter {
         if (HttpMethod.POST.equals(request.getMethod()) && MediaType.APPLICATION_JSON.includes(contentType)) {
             return handle(exchange, chain, context);
         }
-
-        // todo
-        return chain.filter(exchange);
+        return Mono.error(new Exception("不支持的请求类型"));
     }
 
     public Mono<Void> handle(ServerWebExchange exchange, WebFilterChain chain, GatewayContext context) {

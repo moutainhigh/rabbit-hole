@@ -10,8 +10,5 @@ spring:
       discovery:
         locator:
           lowerCaseServiceId: true
-      routes:
-        - id: rabbit-test
-          uri: https://www.baidu.com
-          predicates:
-            - Path=/**
+      loadbalancer:
+        use404: true
