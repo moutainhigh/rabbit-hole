@@ -173,7 +173,7 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("玄幻", "重生", "修仙");
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
 
-        Pair<Integer, Integer> pair = buildPage(1, 20, 0);
+        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
             "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", 0);
     }

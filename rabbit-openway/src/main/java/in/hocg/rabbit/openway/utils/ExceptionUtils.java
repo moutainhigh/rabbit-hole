@@ -1,8 +1,8 @@
 package in.hocg.rabbit.openway.utils;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONObject;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.openway.constants.OpenwayContants;
 import lombok.experimental.UtilityClass;
@@ -32,7 +32,7 @@ public class ExceptionUtils {
             response.setStatusCode(HttpStatus.OK);
             response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
             DataBufferFactory dataBufferFactory = response.bufferFactory();
-            DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result(method, Result.fail(StrUtil.nullToDefault(e.getMessage(), "未授权操作")))).getBytes(Charset.defaultCharset()));
+            DataBuffer buffer = dataBufferFactory.wrap(JSONUtil.toJsonStr(result(method, Result.fail(StrUtil.nullToDefault(e.getMessage(), "未授权操作")))).getBytes(Charset.defaultCharset()));
             return response.writeWith(Mono.just(buffer)).doOnError((error) -> DataBufferUtils.release(buffer));
         });
     }
@@ -42,9 +42,9 @@ public class ExceptionUtils {
     }
 
     public Map<String, Object> result(String method, String finalBody) {
-        return new HashMap<>() {{
+        return new HashMap<>(2) {{
             put(OpenwayContants.SIGN, OpenwayUtils.getSignStr(finalBody));
-            put(method, JSONUtil.toBean(finalBody, cn.hutool.json.JSONObject.class));
+            put(method, JSONUtil.toBean(finalBody, JSONObject.class));
         }};
     }
 }
