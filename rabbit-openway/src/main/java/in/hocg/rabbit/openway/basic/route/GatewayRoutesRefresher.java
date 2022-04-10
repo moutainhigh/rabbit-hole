@@ -1,4 +1,4 @@
-package in.hocg.rabbit.openway.route;
+package in.hocg.rabbit.openway.basic.route;
 
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.context.ApplicationEventPublisher;

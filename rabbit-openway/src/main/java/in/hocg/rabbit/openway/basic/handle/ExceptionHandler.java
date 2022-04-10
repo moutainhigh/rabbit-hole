@@ -1,4 +1,4 @@
-package in.hocg.rabbit.openway.handle;
+package in.hocg.rabbit.openway.basic.handle;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;

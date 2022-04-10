@@ -1,12 +1,11 @@
-package in.hocg.rabbit.openway.filter;
+package in.hocg.rabbit.openway.basic.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
-import in.hocg.rabbit.openway.context.GatewayContext;
-import in.hocg.rabbit.openway.dto.RequestBody;
-import in.hocg.rabbit.openway.route.RouteService;
+import in.hocg.rabbit.openway.basic.context.GatewayContext;
+import in.hocg.rabbit.openway.basic.route.RouteService;
+import in.hocg.rabbit.openway.basic.route.data.RequestBody;
 import in.hocg.rabbit.openway.utils.ExceptionUtils;
 import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import lombok.RequiredArgsConstructor;
@@ -70,8 +69,7 @@ public class ValidRequestFilter implements WebFilter {
     }
 
     private boolean validAllow(RequestBody body) {
-//        todo return routeService.hasAuthority(body.getAppid(), body.getMethod());
-        return true;
+        return routeService.hasAuthority(body.getAppid(), body.getMethod());
     }
 
     private boolean validSign(String requestBody, RequestBody body) {

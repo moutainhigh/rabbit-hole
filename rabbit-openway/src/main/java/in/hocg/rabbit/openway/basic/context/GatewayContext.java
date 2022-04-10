@@ -1,4 +1,4 @@
-package in.hocg.rabbit.openway.context;
+package in.hocg.rabbit.openway.basic.context;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

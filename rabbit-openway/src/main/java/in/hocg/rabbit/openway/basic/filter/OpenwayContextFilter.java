@@ -1,7 +1,6 @@
-package in.hocg.rabbit.openway.filter;
+package in.hocg.rabbit.openway.basic.filter;
 
-import in.hocg.rabbit.openway.context.GatewayContext;
-import in.hocg.rabbit.openway.handle.AccessDeniedHandler;
+import in.hocg.rabbit.openway.basic.context.GatewayContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;

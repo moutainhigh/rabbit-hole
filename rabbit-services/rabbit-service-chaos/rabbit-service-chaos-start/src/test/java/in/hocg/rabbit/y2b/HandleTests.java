@@ -43,17 +43,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @ActiveProfiles("local")
 @SpringBootTest(classes = {BootApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HandleTests extends AbstractSpringBootTest {
-    @Autowired
-    private VideoService videoService;
-    @Autowired
-    private MinaProperties properties;
-
-
-    public static void main(String[] args) {
-        List<Top<VideoInfo>> result = Video.getVideoDecoder(Video.Type.DuoYin).topAweme();
-        System.out.println(result);
-    }
+public class HandleTests extends AbsY2bUpload {
 
     @Test
     @ApiOperation("合集(全球诡异时代|2.5min|周二)上传")
@@ -81,7 +71,8 @@ public class HandleTests extends AbstractSpringBootTest {
         // -> 1, 14, 66 => 80
         // -> 1, 10, 80
         Pair<Integer, Integer> pair = buildPage(1, 14, 66);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f_5JO5R07DduMq-a4HHvMGp");
     }
 
     @Test
@@ -155,8 +146,41 @@ public class HandleTests extends AbstractSpringBootTest {
             "PLCEcFGOrM-f8iRJ_DRQlwhKjKDF6h9uJE");
     }
 
+
     @Test
-    @ApiOperation("单个(测试)上传")
+    @ApiOperation("合集(我什么时候无敌了|2min|周日.上午)上传")
+    public void upload19() {
+        // https://www.gaoding.com/design?mode=user&id=19588056655865891
+        String title = "《我什么时候无敌了》{ep}他一直以为自己是凡人，却不知院子里堆满了神器，养的鸡更是凤凰！ #玄幻 #轻松";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/Nna4Udw/";
+        List<String> addTags = List.of("玄幻", "轻松", "无敌");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f-Yr2l2mblBYInjgL1dv98X");
+    }
+
+
+    @Test
+    @ApiOperation("合集(这一世我要当至尊|2.3min|周日.下午)上传")
+    public void upload111() {
+        // https://www.gaoding.com/design?mode=user&id=19599685918795813
+        String title = "《这一世我要当至尊》{ep}十大封号武帝之一，绝世武帝古飞扬在天荡山脉陨落，于十五年后转世重生！ #玄幻 #武道";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NnXAnJK/";
+        List<String> addTags = List.of("玄幻", "重生", "修仙");
+        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+
+        Pair<Integer, Integer> pair = buildPage(1, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR");
+    }
+
+    @Test
+    @Deprecated
+    @ApiOperation("手动合集(抖音短视频拼接)上传")
     public void upload2() {
         String collectionName = "猫猫的日常(20220501)";
         String title = "猫猫的日常";
@@ -172,7 +196,8 @@ public class HandleTests extends AbstractSpringBootTest {
     }
 
     @Test
-    @ApiOperation("已有(测试)上传")
+    @Deprecated
+    @ApiOperation("单个视频(本地已有文件)上传")
     public void uploadFile() {
         String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         String desc = title;
@@ -181,148 +206,11 @@ public class HandleTests extends AbstractSpringBootTest {
         File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
         File videoFile = new File("/Users/Share/k8s_nfs/basic_video/全球诡异时代(0~74)");
 
-
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title);
         options.setThumbFile(thumbFile);
         options.setTags(addTags);
         options.setDescription(desc);
         upload(channelId, videoFile, options);
-    }
-
-    //============================================================================================================================================================
-    @ApiOperation("单个上传")
-    private void uploadDetail(String collectionName, Long channelId, List<String> urls, String title, String desc, List<String> addTags, File thumbFile) {
-        Path diskPath = Path.of(properties.getDiskPath());
-
-        // 0. 获取下载地址
-        List<VideoInfo> downloadUrls = videoService.getDownloadUrls(urls);
-
-        // 1. 下载
-        List<File> downloadFiles = videoService.download(downloadUrls, diskPath.resolve(collectionName).toFile());
-
-        // 2. 合并
-        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, 1, downloadFiles.size());
-        Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(downloadFiles, mergeFile.toFile());
-
-        // 3. 调整文件
-        File finalFile = videoService.modifyFile(mergeFile.toFile());
-
-        // 4. 上传
-        UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title);
-        options.setThumbFile(thumbFile);
-        options.setTags(addTags);
-        options.setDescription(desc);
-        upload(channelId, finalFile, options);
-    }
-
-    @ApiOperation("合集上传")
-    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile) {
-        uploadCollect(channelId, url, title, addTags, thumbFile, null, null, null);
-    }
-
-    /**
-     * @param channelId
-     * @param url
-     * @param title
-     * @param addTags
-     * @param thumbFile
-     * @param epStart   开始(包含)
-     * @param epEnd     结束(包含)
-     */
-    @ApiOperation("合集上传")
-    private void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd, String playlistId) {
-
-
-        Path diskPath = Path.of(properties.getDiskPath());
-
-        List<VideoInfo> videos = Video.getVideoDecoder(Video.Type.DuoYin).listAweme(url);
-        VideoInfo videoInfo = videos.get(0);
-        String collectionName = SecureUtil.md5(url);
-
-        // 2. 下载视频
-        List<File> files = videoService.download(videos, diskPath.resolve(collectionName).toFile());
-
-        // 下标范围
-        int epMax = files.size();
-        epStart = LangUtils.getOrDefault(epStart, 1);
-        epEnd = Math.min(LangUtils.getOrDefault(epEnd, epMax), epMax);
-        Assert.isTrue(epStart < epEnd, "错误的下标: [{}, {}]", epStart, epEnd);
-
-        // 2.2 获取待合并视频
-        List<File> mergeFiles = CollUtil.sub(files, epStart - 1, epEnd);
-
-        // 3. 合并
-        String fname = StrUtil.format("{}({}~{}).mp4", collectionName, epStart, epEnd);
-        Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, Convert.toLong(2.8 * (1000 * 1000)));
-
-        // 4. 调整文件
-        videoService.modifyFile(mergeFile.toFile());
-
-        // 4. 上传
-        UploadY2bDto options = new UploadY2bDto();
-        options.setTitle(title(title, epStart, epEnd));
-        options.setThumbFile(thumbFile);
-        List<String> tags = Lists.newArrayList(videoInfo.getKeywords());
-        tags.addAll(addTags);
-        options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));
-        options.setDescription(videoInfo.getDesc());
-        options.setPlaylistId(playlistId);
-        upload(channelId, mergeFile.toFile(), options);
-    }
-
-    /**
-     * 得出开始的下标和结束的下标
-     * [1, 25]
-     * [26, 50]
-     *
-     * @param page
-     * @param pageSize
-     * @param baseIdx
-     * @return [epStart, epEnd]
-     */
-    private Pair<Integer, Integer> buildPage(int page, int pageSize, int baseIdx) {
-        int startIdx = baseIdx + (pageSize * (Math.max(page, 1) - 1));
-        int endIdx = startIdx + pageSize;
-        return Pair.of(startIdx + 1, endIdx);
-    }
-
-    private String title(String tpl, Integer start, Integer end) {
-        Map<String, String> params = Maps.newHashMap();
-        params.put("ep", (Objects.nonNull(start) && Objects.nonNull(end)) ? StrUtil.format("[EP{}-{}] ", start, end) : "");
-        return StrUtil.format(tpl, params);
-    }
-
-    private void upload(Long channelId, File videoFile, UploadY2bDto options) {
-        List<String> tags = options.getTags();
-        String desc = options.getDescription();
-        File thumbFile = options.getThumbFile();
-        String title = options.getTitle();
-
-        List<String> limitTags = tags.stream()
-            .filter(s -> StrUtil.contains(s, "抖音"))
-            .filter(s -> StrUtil.contains(s, "计划"))
-            .collect(Collectors.toList());
-
-        // 过滤掉描述里面的标签
-        String filterDesc = desc;
-        for (String limitTag : limitTags) {
-            filterDesc = StrUtil.removeAny(filterDesc, "#" + limitTag);
-        }
-        filterDesc = filterDesc.trim();
-
-        // 过滤掉标签
-        List<String> filteredTags = CollUtil.removeAny(tags, limitTags.toArray(new String[0]));
-
-        UploadY2bDto newOptions = new UploadY2bDto();
-        newOptions.setTitle(title);
-        newOptions.setThumbFile(thumbFile);
-        newOptions.setTags(filteredTags);
-        newOptions.setDescription(filterDesc);
-        newOptions.setPlaylistId(options.getPlaylistId());
-        videoService.upload(channelId, videoFile, newOptions);
     }
 }

@@ -1,11 +1,9 @@
-package in.hocg.rabbit.openway.filter;
+package in.hocg.rabbit.openway.basic.filter;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.openway.constants.OpenwayContants;
-import in.hocg.rabbit.openway.context.GatewayContext;
-import in.hocg.rabbit.openway.dto.RequestBody;
+import in.hocg.rabbit.openway.basic.context.GatewayContext;
+import in.hocg.rabbit.openway.basic.route.data.RequestBody;
 import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +12,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.*;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -26,7 +23,6 @@ import org.springframework.web.server.WebFilterChain;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.MonoOperator;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -104,7 +100,6 @@ public class RewriteAndForwardFilter implements WebFilter {
             }
         };
 
-        log.info("rewrite request: {}", newRequest);
         return exchange.mutate().request(newRequest).build();
     }
 
