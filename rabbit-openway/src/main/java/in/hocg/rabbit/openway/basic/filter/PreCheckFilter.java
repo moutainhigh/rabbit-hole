@@ -47,6 +47,6 @@ public class PreCheckFilter implements WebFilter {
     }
 
     public boolean isPermitWhiteAllWithIp(ServerHttpRequest request, String method) {
-        return false;
+        return true;
     }
 }
