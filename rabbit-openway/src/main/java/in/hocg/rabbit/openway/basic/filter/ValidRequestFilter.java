@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.openway.basic.context.GatewayContext;
+import in.hocg.rabbit.openway.basic.data.AppInfo;
 import in.hocg.rabbit.openway.basic.route.RouteService;
 import in.hocg.rabbit.openway.basic.data.RequestBody;
 import in.hocg.rabbit.openway.constants.OrderedConstants;
@@ -21,6 +22,8 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Created by hocgin on 2022/4/9
@@ -77,8 +80,14 @@ public class ValidRequestFilter implements WebFilter {
     }
 
     private boolean validSign(String requestBody, RequestBody body) {
-        boolean hasSignType = RequestBody.SignType.MD5.getType().equals(body.getSignType());
-        return hasSignType && StrUtil.equals(OpenwayUtils.getSign(requestBody), body.getSign());
+        Optional<AppInfo> appOpt = routeService.getAppid(body.getAppid());
+        if (appOpt.isEmpty()) {
+            return false;
+        }
+        String secretKey = appOpt.get().getSecretKey();
+        RequestBody.SignType signType = RequestBody.SignType.MD5;
+        boolean hasSignType = signType.getType().equals(body.getSignType());
+        return hasSignType && StrUtil.equals(OpenwayUtils.getSign(requestBody, signType, secretKey), body.getSign());
     }
 
     private boolean validRequired(RequestBody body) {

@@ -5,6 +5,7 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
+import in.hocg.rabbit.openway.basic.data.RequestBody;
 import in.hocg.rabbit.openway.constants.OpenwayContants;
 import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -23,17 +24,18 @@ class ValidRequestFilterTest {
 
     public static void main(String[] args) {
         System.out.println("正确请求------------------");
+        RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
-        body.setAppid("appid");
+        body.setAppid("test");
         String method = "E12453";
         body.setMethod(method);
-        body.setSignType("md5");
+        body.setSignType(signType.getType().toLowerCase());
         body.setTimestamp(LocalDateTime.now());
         body.setBizContent(new HashMap<>() {{
             put("name", "hocgin");
         }});
         String json = JSONUtil.toJsonStr(body);
-        body.setSign(OpenwayUtils.getSign(json));
+        body.setSign(OpenwayUtils.getSign(json, signType, "test"));
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);

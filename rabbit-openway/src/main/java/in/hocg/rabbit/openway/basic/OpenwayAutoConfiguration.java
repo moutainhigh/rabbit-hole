@@ -19,9 +19,4 @@ import org.springframework.context.annotation.Lazy;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OpenwayAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public RouteService routeService() {
-        return new DefaultRouteService();
-    }
 }

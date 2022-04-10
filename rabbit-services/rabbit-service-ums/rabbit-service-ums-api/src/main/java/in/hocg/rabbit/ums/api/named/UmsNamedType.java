@@ -8,4 +8,5 @@ package in.hocg.rabbit.ums.api.named;
  */
 public final class UmsNamedType {
 
+    public static final String Username = "Username";
 }

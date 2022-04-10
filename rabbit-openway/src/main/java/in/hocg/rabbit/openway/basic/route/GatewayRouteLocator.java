@@ -36,9 +36,12 @@ public class GatewayRouteLocator implements RouteLocator, InitializingBean {
 
     public void clearRoutes() {
         routesBuilder = builder.routes();
+        if (Objects.isNull(route)) {
+            this.route = routesBuilder.build().getRoutes();
+        }
     }
 
-    private void loadRoutes() {
+    public void reloadRoutes() {
         clearRoutes();
         if (Objects.nonNull(routesBuilder)) {
             routeService.listAll().forEach(service -> {
@@ -49,8 +52,8 @@ public class GatewayRouteLocator implements RouteLocator, InitializingBean {
                     f.filter((exchange, chain) -> chain.filter(exchange.mutate().request(exchange.getRequest().mutate().path(mapTargetPath).build()).build()))).uri(mapTargetUri)
                 );
             });
-            this.route = routesBuilder.build().getRoutes();
         }
+        this.route = routesBuilder.build().getRoutes();
         routesRefresher.refreshRoutes();
     }
 
@@ -63,6 +66,5 @@ public class GatewayRouteLocator implements RouteLocator, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         clearRoutes();
-        loadRoutes();
     }
 }

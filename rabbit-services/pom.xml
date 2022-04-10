@@ -27,6 +27,7 @@
     <module>rabbit-service-cv</module>
     <module>rabbit-service-webmagic</module>
     <module>rabbit-service-ws</module>
+    <module>rabbit-service-owp</module>
   </modules>
 
 </project>

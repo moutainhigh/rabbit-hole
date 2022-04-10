@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Created by hocgin on 2022/4/9
@@ -73,7 +74,8 @@ public class RewriteAndForwardFilter implements WebFilter {
 
     private ServerWebExchange rewriteRequest(ServerWebExchange exchange, RequestBody body) {
         log.debug("进入 rewriteRequest");
-        String username = routeService.getAppid(body.getAppid()).map(AppInfo::getUsername).orElse(null);
+        String username = routeService.getAppid(body.getAppid()).filter(appInfo -> !appInfo.getExpired())
+            .map(AppInfo::getUsername).orElse(null);
 
         ServerHttpRequest oldRequest = exchange.getRequest();
         URI newUri = UriComponentsBuilder.fromHttpRequest(oldRequest).path(body.getMethod()).build().toUri();

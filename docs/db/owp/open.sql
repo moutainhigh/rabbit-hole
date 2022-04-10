@@ -24,26 +24,26 @@ CREATE TABLE `owp_developer`
 DROP TABLE IF EXISTS `owp_developer_app`;
 CREATE TABLE `owp_developer_app`
 (
-    `id`              BIGINT AUTO_INCREMENT
+    `id`                BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `title`           VARCHAR(16)         NOT NULL
+    `title`             VARCHAR(16)         NOT NULL
         COMMENT '应用名称',
-    `encoding`        VARCHAR(64)         NOT NULL
+    `encoding`          VARCHAR(64)         NOT NULL
         COMMENT '应用编号',
-    `secret_key`      VARCHAR(64)         NOT NULL
+    `secret_key`        VARCHAR(64)         NOT NULL
         COMMENT '应用密钥',
-    `developer_user_id`    BIGINT              NOT NULL
+    `developer_user_id` BIGINT              NOT NULL
         COMMENT '开发者',
-    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `enabled`           TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
     --
-    `created_at`      DATETIME(6)         NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+    `created_at`        DATETIME(6)         NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
         COMMENT '创建时间',
-    `creator`         BIGINT
+    `creator`           BIGINT
         COMMENT '创建者',
-    `last_updated_at` DATETIME(6)         NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
+    `last_updated_at`   DATETIME(6)         NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
         COMMENT '更新时间',
-    `last_updater`    BIGINT
+    `last_updater`      BIGINT
         COMMENT '更新者',
 
     UNIQUE KEY (`encoding`),

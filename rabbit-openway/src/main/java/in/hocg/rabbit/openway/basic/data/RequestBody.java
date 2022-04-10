@@ -44,7 +44,7 @@ public class RequestBody implements Serializable {
     @Getter
     @RequiredArgsConstructor
     public enum SignType {
-        MD5("md5", "md5");
+        MD5("md5", "MD5");
         private final String type;
         private final String name;
     }

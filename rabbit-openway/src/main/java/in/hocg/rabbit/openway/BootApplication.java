@@ -1,13 +1,11 @@
 package in.hocg.rabbit.openway;
 
-import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  */
 @Slf4j
+@EnableAsync
 @RestController
 @SpringBootApplication
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
