@@ -28,6 +28,6 @@ public class DeveloperAppServiceImpl extends AbstractServiceImpl<DeveloperAppMap
 
     @Override
     public DevAppVo getByEncoding(String encoding) {
-        return as(lambdaQuery().eq(DeveloperApp::getEncoding, encoding).one(), DevAppVo.class);
+        return as(baseMapper.getByEncoding(encoding), DevAppVo.class);
     }
 }

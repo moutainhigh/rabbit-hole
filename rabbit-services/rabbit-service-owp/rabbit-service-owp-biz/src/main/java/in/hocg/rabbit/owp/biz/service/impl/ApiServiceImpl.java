@@ -1,5 +1,6 @@
 package in.hocg.rabbit.owp.biz.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.owp.api.pojo.vo.ApiRouterVo;
 import in.hocg.rabbit.owp.biz.entity.Api;
@@ -37,6 +38,9 @@ public class ApiServiceImpl extends AbstractServiceImpl<ApiMapper, Api> implemen
 
     @Override
     public Boolean hasAuthority(String appid, String method) {
+        if (StrUtil.isBlank(appid) || StrUtil.isBlank(method)) {
+            return false;
+        }
         return Objects.nonNull(baseMapper.hasAuthority(appid, method));
     }
 }

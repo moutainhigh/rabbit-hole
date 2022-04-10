@@ -6,10 +6,11 @@
     FROM owp_api oa
            left join owp_authority_api_ref oaar ON oa.id = oaar.api_id
            left join owp_authority_app_ref oaar2 ON oaar.authority_id = oaar2.authority_id
-           left join owp_developer_app oda ON oda.id = oaar2.app_id
+           left join owp_developer_app oda ON oda.id = oaar2.app_id AND oda.enabled = true
     <where>
-      oa.encoding = #{method}
-        AND oda.encoding = #{appid}
+      AND oa.enabled = true
+            AND oa.encoding = #{method}
+            AND oda.encoding = #{appid}
     </where>
   </select>
 </mapper>

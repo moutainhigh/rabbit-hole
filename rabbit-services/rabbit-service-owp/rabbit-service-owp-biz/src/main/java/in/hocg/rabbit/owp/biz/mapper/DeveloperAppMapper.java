@@ -3,6 +3,7 @@ package in.hocg.rabbit.owp.biz.mapper;
 import in.hocg.rabbit.owp.biz.entity.DeveloperApp;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DeveloperAppMapper extends BaseMapper<DeveloperApp> {
 
+    DeveloperApp getByEncoding(@Param("encoding") String encoding);
 }
