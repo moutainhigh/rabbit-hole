@@ -32,7 +32,7 @@ CREATE TABLE `owp_developer_app`
         COMMENT '应用编号',
     `secret_key`      VARCHAR(64)         NOT NULL
         COMMENT '应用密钥',
-    `developer_id`    BIGINT              NOT NULL
+    `developer_user_id`    BIGINT              NOT NULL
         COMMENT '开发者',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
