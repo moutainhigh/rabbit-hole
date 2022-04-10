@@ -63,7 +63,7 @@ public class ValidRequestFilter implements WebFilter {
 
         // 校验接口权限
         if (!validAllow(body)) {
-            return ExceptionUtils.handleException(exchange, method, new RuntimeException("接口不允许访问"));
+            return ExceptionUtils.handleException(exchange, method, new RuntimeException("无接口访问权限"));
         }
 
         // 校验签名
