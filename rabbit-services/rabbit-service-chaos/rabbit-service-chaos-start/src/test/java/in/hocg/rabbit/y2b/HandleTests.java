@@ -1,38 +1,18 @@
 package in.hocg.rabbit.y2b;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import in.hocg.boot.javacv.autoconfiguration.support.FeatureHelper;
-import in.hocg.boot.test.autoconfiguration.core.AbstractSpringBootTest;
-import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.common.utils.CommonUtils;
-import in.hocg.rabbit.mina.biz.manager.VideoService;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
-import in.hocg.rabbit.mina.biz.props.MinaProperties;
-import in.hocg.rabbit.mina.biz.support.down.Video;
-import in.hocg.rabbit.mina.biz.support.down.dto.Top;
-import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2022/4/3
@@ -175,7 +155,7 @@ public class HandleTests extends AbsY2bUpload {
 
         Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
-            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", 0);
+            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", Convert.toLong(2.5 * (1000 * 1000)));
     }
 
     @Test
