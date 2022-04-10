@@ -41,6 +41,7 @@ public class ValidRequestFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        log.debug("ValidRequestFilter");
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
         assert context != null;
         String requestBody = context.getBody();
@@ -67,6 +68,7 @@ public class ValidRequestFilter implements WebFilter {
             return ExceptionUtils.handleException(exchange, method, new RuntimeException("签名校验失败"));
         }
 
+        log.debug("ValidRequestFilter success");
         return chain.filter(exchange);
     }
 

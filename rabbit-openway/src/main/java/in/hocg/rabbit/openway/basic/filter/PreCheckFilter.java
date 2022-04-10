@@ -4,6 +4,7 @@ import in.hocg.rabbit.openway.basic.context.GatewayContext;
 import in.hocg.rabbit.openway.basic.data.RequestBody;
 import in.hocg.rabbit.openway.constants.OrderedConstants;
 import in.hocg.rabbit.openway.utils.ExceptionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -18,11 +19,13 @@ import reactor.core.publisher.Mono;
  *
  * @author hocgin
  */
+@Slf4j
 @Component
 @Order(OrderedConstants.PRE_CHECK_ORDERED)
 public class PreCheckFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        log.debug("PreCheckFilter");
         ServerHttpRequest request = exchange.getRequest();
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
         assert context != null;

@@ -3,6 +3,7 @@ package in.hocg.rabbit.openway.basic.filter;
 import in.hocg.rabbit.openway.basic.context.GatewayContext;
 import in.hocg.rabbit.openway.constants.OrderedConstants;
 import in.hocg.rabbit.openway.utils.ExceptionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -33,6 +34,7 @@ import java.util.List;
  *
  * @author hocgin
  */
+@Slf4j
 @Component
 @Order(OrderedConstants.CONTEXT_ORDERED)
 public class OpenwayContextFilter implements WebFilter {
@@ -40,6 +42,7 @@ public class OpenwayContextFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        log.debug("OpenwayContextFilter.filter");
         ServerHttpRequest request = exchange.getRequest();
         MediaType contentType = request.getHeaders().getContentType();
 
