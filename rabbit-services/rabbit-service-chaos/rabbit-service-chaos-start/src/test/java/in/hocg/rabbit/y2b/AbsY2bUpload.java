@@ -74,6 +74,11 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
         uploadCollect(channelId, url, title, addTags, thumbFile, null, null, null);
     }
 
+    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd,
+                       String playlistId) {
+        uploadCollect(channelId, url, title, addTags, thumbFile, epStart, epEnd, playlistId, Convert.toLong(2.8 * (1000 * 1000)));
+    }
+
     /**
      * @param channelId
      * @param url
@@ -84,7 +89,8 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
      * @param epEnd     结束(包含)
      */
     @ApiOperation("合集上传")
-    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd, String playlistId) {
+    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd,
+                       String playlistId, long skipEndTimestamp) {
         Path diskPath = Path.of(properties.getDiskPath());
 
         String collectionName = SecureUtil.md5(url);
@@ -115,7 +121,7 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
         // 3. 合并
         String fname = StrUtil.format("{}({}~{}).mp4", collectionName, epStart, epEnd);
         Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, Convert.toLong(2.8 * (1000 * 1000)));
+        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
 
         // 4. 调整文件
         videoService.modifyFile(mergeFile.toFile());

@@ -175,7 +175,7 @@ public class HandleTests extends AbsY2bUpload {
 
         Pair<Integer, Integer> pair = buildPage(1, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
-            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR");
+            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", 0);
     }
 
     @Test
