@@ -1,6 +1,6 @@
 package in.hocg.rabbit.owp;
 
-import in.hocg.boot.mybatis.plus.extensions.context.constants.GlobalConstants;
+import in.hocg.boot.mybatis.plus.extensions.context.constants.MyBatisPlusExtensionsConstants;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.owp.api.OwpServiceName;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,8 +16,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  *
  * @author hocgin
  */
-@SpringBootApplication(scanBasePackages = {OwpServiceName.PACKAGE, GlobalConstants.PACKAGE_PREFIX})
-@MapperScan(annotationClass = Mapper.class, value = {OwpServiceName.PACKAGE, GlobalConstants.PACKAGE_PREFIX})
+@SpringBootApplication(scanBasePackages = {OwpServiceName.PACKAGE, MyBatisPlusExtensionsConstants.PACKAGE_PREFIX})
+@MapperScan(annotationClass = Mapper.class, value = {OwpServiceName.PACKAGE, MyBatisPlusExtensionsConstants.PACKAGE_PREFIX})
 @EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class BootApplication {

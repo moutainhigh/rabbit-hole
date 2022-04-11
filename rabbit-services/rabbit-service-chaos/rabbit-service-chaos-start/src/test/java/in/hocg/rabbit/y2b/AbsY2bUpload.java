@@ -127,7 +127,7 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
         Path mergeFile = diskPath.resolve(fname);
         log.info("合并文件:\n {}", mergeFile);
         if (!isUpload || !FileUtil.exist(mergeFile.toFile())) {
-            FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
+            FeatureHelper.mergeVideoStyle2(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
             // 4. 调整文件
             videoService.modifyFile(mergeFile.toFile());
         }
