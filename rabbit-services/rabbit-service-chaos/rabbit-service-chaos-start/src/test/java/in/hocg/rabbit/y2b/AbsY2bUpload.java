@@ -17,6 +17,7 @@ import in.hocg.rabbit.mina.biz.props.MinaProperties;
 import in.hocg.rabbit.mina.biz.support.down.Video;
 import in.hocg.rabbit.mina.biz.support.down.dto.VideoInfo;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +35,9 @@ import java.util.stream.Collectors;
  *
  * @author hocgin
  */
+@Slf4j
 public abstract class AbsY2bUpload extends AbstractSpringBootTest {
+    public static final Long DEFAULT_SKIP_TIMESTAMP = Convert.toLong(2.5 * 1000 * 1000);
     @Autowired
     private MinaProperties properties;
     @Autowired
@@ -42,7 +45,7 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
 
     //============================================================================================================================================================
     @ApiOperation("单个上传")
-    void uploadDetail(String collectionName, Long channelId, List<String> urls, String title, String desc, List<String> addTags, File thumbFile) {
+    void uploadDetail(String collectionName, Long channelId, List<String> urls, String title, String desc, List<String> addTags, String thumbFile) {
         Path diskPath = Path.of(properties.getDiskPath());
 
         // 0. 获取下载地址
@@ -62,7 +65,7 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title);
-        options.setThumbFile(thumbFile);
+        options.setThumbnailUrl(thumbFile);
         options.setTags(addTags);
         options.setDescription(desc);
         upload(channelId, finalFile, options);
@@ -70,13 +73,12 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
 
 
     @ApiOperation("合集上传")
-    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile) {
+    void uploadCollect(Long channelId, String url, String title, List<String> addTags, String thumbFile) {
         uploadCollect(channelId, url, title, addTags, thumbFile, null, null, null);
     }
 
-    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd,
-                       String playlistId) {
-        uploadCollect(channelId, url, title, addTags, thumbFile, epStart, epEnd, playlistId, Convert.toLong(2.8 * (1000 * 1000)));
+    void uploadCollect(Long channelId, String url, String title, List<String> addTags, String thumbFile, Integer epStart, Integer epEnd, String playlistId) {
+        uploadCollect(channelId, url, title, addTags, thumbFile, epStart, epEnd, playlistId, Maps.newHashMap(), DEFAULT_SKIP_TIMESTAMP, true);
     }
 
     /**
@@ -89,8 +91,10 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
      * @param epEnd     结束(包含)
      */
     @ApiOperation("合集上传")
-    void uploadCollect(Long channelId, String url, String title, List<String> addTags, File thumbFile, Integer epStart, Integer epEnd,
-                       String playlistId, long skipEndTimestamp) {
+    void uploadCollect(Long channelId, String url, String title, List<String> addTags,
+                       String thumbFile, Integer epStart, Integer epEnd, String playlistId,
+                       Map<String, UploadY2bDto.LocalTitle> localMaps,
+                       long skipEndTimestamp, boolean isUpload) {
         Path diskPath = Path.of(properties.getDiskPath());
 
         String collectionName = SecureUtil.md5(url);
@@ -121,21 +125,26 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
         // 3. 合并
         String fname = StrUtil.format("{}({}~{}).mp4", collectionName, epStart, epEnd);
         Path mergeFile = diskPath.resolve(fname);
-        FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
-
-        // 4. 调整文件
-        videoService.modifyFile(mergeFile.toFile());
+        log.info("合并文件:\n {}", mergeFile);
+        if (!isUpload || !FileUtil.exist(mergeFile.toFile())) {
+            FeatureHelper.mergeVideo(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
+            // 4. 调整文件
+            videoService.modifyFile(mergeFile.toFile());
+        }
 
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title(title, epStart, epEnd));
-        options.setThumbFile(thumbFile);
+        options.setThumbnailUrl(thumbFile);
         List<String> tags = Lists.newArrayList(keywords);
         tags.addAll(addTags);
         options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));
         options.setDescription(desc);
         options.setPlaylistId(playlistId);
-        upload(channelId, mergeFile.toFile(), options);
+        options.setLocalMaps(localMaps);
+        if (isUpload) {
+            upload(channelId, mergeFile.toFile(), options);
+        }
     }
 
     /**
@@ -163,12 +172,13 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
     void upload(Long channelId, File videoFile, UploadY2bDto options) {
         List<String> tags = options.getTags();
         String desc = options.getDescription();
-        File thumbFile = options.getThumbFile();
+        String thumbFile = options.getThumbnailUrl();
         String title = options.getTitle();
 
         List<String> limitTags = tags.stream()
-            .filter(s -> StrUtil.contains(s, "抖音"))
-            .filter(s -> StrUtil.contains(s, "计划"))
+            .filter(s -> StrUtil.contains(s, "抖音")
+                || StrUtil.contains(s, "快看")
+                || StrUtil.contains(s, "计划"))
             .collect(Collectors.toList());
 
         // 过滤掉描述里面的标签
@@ -183,10 +193,11 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
 
         UploadY2bDto newOptions = new UploadY2bDto();
         newOptions.setTitle(title);
-        newOptions.setThumbFile(thumbFile);
+        newOptions.setThumbnailUrl(thumbFile);
         newOptions.setTags(filteredTags);
         newOptions.setDescription(filterDesc);
         newOptions.setPlaylistId(options.getPlaylistId());
+        newOptions.setLocalMaps(options.getLocalMaps());
         videoService.upload(channelId, videoFile, newOptions);
     }
 }

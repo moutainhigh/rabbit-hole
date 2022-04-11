@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hocgin on 2022/4/3
@@ -18,7 +19,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class UploadY2bDto {
     @ApiModelProperty("展示图(第一阶段)")
-    private File thumbFile;
+    private String thumbnailUrl;
     @ApiModelProperty("标题(第一阶段)")
     private String title;
     @ApiModelProperty("描述(第一阶段)")
@@ -35,4 +36,15 @@ public class UploadY2bDto {
     private String categoryId = "1";
     @ApiModelProperty("播放列表(第二阶段)")
     private String playlistId;
+
+    @ApiModelProperty("本地化信息")
+    private Map<String, LocalTitle> localMaps;
+
+    @Data
+    public static class LocalTitle {
+        @ApiModelProperty("标题(第一阶段)")
+        private String title;
+        @ApiModelProperty("描述(第一阶段)")
+        private String description;
+    }
 }

@@ -1,6 +1,7 @@
 package in.hocg.rabbit.y2b;
 
 import cn.hutool.core.convert.Convert;
+import com.google.common.collect.Maps;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.common.utils.CommonUtils;
 import in.hocg.rabbit.mina.biz.pojo.dto.UploadY2bDto;
@@ -26,13 +27,43 @@ import java.util.List;
 public class HandleTests extends AbsY2bUpload {
 
     @Test
+    @ApiOperation("合集(我独自升级|2.5min|周一)上传")
+    public void upload11() {
+        // https://www.gaoding.com/design?mode=user&id=19599685918795813
+        String title = "《我独自升级》{ep}10年前，与次元连接的“门”被打开，魔物不断出现，能力各异的猎魔者随之出现，被称为“猎人”! #猎人 #异界";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NW4LTVH/";
+        List<String> addTags = List.of("猎人", "新世界", "异界");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
+
+        Pair<Integer, Integer> pair = buildPage(2, 15, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+    }
+
+    @Test
+    @ApiOperation("合集(末世盗贼行|2min|周一)上传")
+    public void upload112() {
+        // https://www.gaoding.com/design?mode=user&id=19614112742522889
+        String title = "《末世盗贼行》{ep}一场宇宙风暴带来了物种的变异。城市中的毒尸巨怪，挥动着战斧咆哮! #末世 #异能";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/N7JeWoc/";
+        List<String> addTags = List.of("末世", "新世界", "异能");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
+
+        Pair<Integer, Integer> pair = buildPage(1, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f98gSNypaNgtiQJfw0h0f13", Maps.newHashMap(),
+            AbsY2bUpload.DEFAULT_SKIP_TIMESTAMP, false);
+    }
+
+    @Test
     @ApiOperation("合集(全球诡异时代|2.5min|周二)上传")
     public void upload12() {
         String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         Long channelId = 1L;
         String url = "https://v.douyin.com/NqFKLcM/";
         List<String> addTags = List.of("穿越", "异界");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(1, 15, 75);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
@@ -46,7 +77,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NpqgRFx";
         List<String> addTags = List.of("古风", "玄幻");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         // -> 1, 14, 66 => 80
         // -> 1, 10, 80
@@ -62,7 +93,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NsDEdpX/";
         List<String> addTags = List.of("都市", "异能", "系统");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(1, 15, 50);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
@@ -76,7 +107,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NGkcuvb/";
         List<String> addTags = List.of("都市", "异能", "系统");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(2, 15, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
@@ -90,7 +121,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NtenCEv";
         List<String> addTags = List.of("末日", "重生");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(2, 25, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
@@ -104,7 +135,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NtPhKsK";
         List<String> addTags = List.of("游戏", "副本", "升级");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
@@ -119,7 +150,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NtmohKM/";
         List<String> addTags = List.of("热血", "后宫", "重生");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
@@ -135,7 +166,7 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/Nna4Udw/";
         List<String> addTags = List.of("玄幻", "轻松", "无敌");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
@@ -151,11 +182,11 @@ public class HandleTests extends AbsY2bUpload {
         Long channelId = 1L;
         String url = "https://v.douyin.com/NnXAnJK/";
         List<String> addTags = List.of("玄幻", "重生", "修仙");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
-        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
-            "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", Convert.toLong(2.5 * (1000 * 1000)));
+        Pair<Integer, Integer> pair = buildPage(1, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), "PLCEcFGOrM-f_IcDgfaOCQPtE3AAk8rCnR", Maps.newHashMap(),
+            AbsY2bUpload.DEFAULT_SKIP_TIMESTAMP, true);
     }
 
     @Test
@@ -171,7 +202,7 @@ public class HandleTests extends AbsY2bUpload {
             "https://v.douyin.com/NVENCyc"
         );
         List<String> addTags = List.of("猫咪");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
         uploadDetail(collectionName, channelId, urls, title, desc, addTags, thumbFile);
     }
 
@@ -183,12 +214,12 @@ public class HandleTests extends AbsY2bUpload {
         String desc = title;
         Long channelId = 1L;
         List<String> addTags = List.of("穿越", "异界");
-        File thumbFile = CommonUtils.toFile("http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
         File videoFile = new File("/Users/Share/k8s_nfs/basic_video/全球诡异时代(0~74)");
 
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title);
-        options.setThumbFile(thumbFile);
+        options.setThumbnailUrl(thumbFile);
         options.setTags(addTags);
         options.setDescription(desc);
         upload(channelId, videoFile, options);

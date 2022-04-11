@@ -1,6 +1,6 @@
 package in.hocg.rabbit.chaos;
 
-import in.hocg.boot.mybatis.plus.extensions.context.constants.GlobalConstants;
+import in.hocg.boot.mybatis.plus.extensions.context.constants.MyBatisPlusExtensionsConstants;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.cv.api.CvServiceName;
 import in.hocg.rabbit.mall.api.MallServiceName;
@@ -37,7 +37,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
     "in.hocg.rabbit.mina", "in.hocg.rabbit.com",
     CvServiceName.PACKAGE, RcmServiceName.PACKAGE,
     WsServiceName.PACKAGE, MallServiceName.PACKAGE,
-    GlobalConstants.PACKAGE_PREFIX})
+    MyBatisPlusExtensionsConstants.PACKAGE_PREFIX})
 @EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 @EnableFeignClients(basePackages = GlobalConstant.DEFAULT_FEIGN_BASE_PACKAGE)
 public class BootApplication {
