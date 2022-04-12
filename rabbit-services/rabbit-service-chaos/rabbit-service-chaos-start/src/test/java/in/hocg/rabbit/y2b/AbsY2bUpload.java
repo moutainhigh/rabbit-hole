@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -130,6 +131,14 @@ public abstract class AbsY2bUpload extends AbstractSpringBootTest {
             FeatureHelper.mergeVideoStyle2(mergeFiles, mergeFile.toFile(), 0, skipEndTimestamp);
             // 4. 调整文件
             videoService.modifyFile(mergeFile.toFile());
+        }
+
+        if (CollUtil.isNotEmpty(localMaps)) {
+            Integer finalEpStart = epStart;
+            Integer finalEpEnd = epEnd;
+            localMaps.forEach((key, value) -> value
+                .setDescription(title(value.getTitle(), finalEpStart, finalEpEnd))
+                .setTitle(title(value.getTitle(), finalEpStart, finalEpEnd)));
         }
 
         // 4. 上传

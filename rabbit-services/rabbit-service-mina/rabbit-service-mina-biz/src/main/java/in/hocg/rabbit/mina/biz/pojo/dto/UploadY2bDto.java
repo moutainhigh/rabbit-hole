@@ -41,6 +41,7 @@ public class UploadY2bDto {
     private Map<String, LocalTitle> localMaps;
 
     @Data
+    @Accessors(chain = true)
     public static class LocalTitle {
         @ApiModelProperty("标题(第一阶段)")
         private String title;
