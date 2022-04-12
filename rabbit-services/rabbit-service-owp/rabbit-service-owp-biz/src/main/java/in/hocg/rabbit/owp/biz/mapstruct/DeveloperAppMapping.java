@@ -14,8 +14,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DeveloperAppMapping {
-    @Mapping(target = "username", ignore = true)
-    @Mapping(target = "userId", source = "developerUserId")
-    @Mapping(target = "expired", source = "enabled")
-    DevAppVo asDevAppVo(DeveloperApp entity);
+    default DevAppVo asDevAppVo(DeveloperApp entity) {
+        return new DevAppVo()
+            .setUserId(entity.getDeveloperUserId())
+            .setExpired(!entity.getEnabled());
+    }
 }

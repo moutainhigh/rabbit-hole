@@ -41,6 +41,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -68,17 +69,23 @@ public class RewriteAndForwardFilter implements WebFilter {
         if (Objects.isNull(context)) {
             return chain.filter(exchange);
         }
-
         RequestBody body = context.getRequestBody();
-        ServerWebExchange serverWebExchange = rewriteResponse(rewriteRequest(exchange, body), body);
+        Optional<AppInfo> appOpt = routeService.getAppid(body.getAppid());
+        if (appOpt.isEmpty()) {
+            return Mono.error(new Exception("请检查应用编号是否正确"));
+        }
+        AppInfo appInfo = appOpt.get();
+        if (appInfo.getExpired()) {
+            return Mono.error(new Exception("该应用授权已过期"));
+        }
+
+        ServerWebExchange serverWebExchange = rewriteResponse(rewriteRequest(exchange, body, appInfo.getUsername()), body);
         log.debug("结束 RewriteAndForwardFilter");
         return chain.filter(serverWebExchange);
     }
 
-    private ServerWebExchange rewriteRequest(ServerWebExchange exchange, RequestBody body) {
+    private ServerWebExchange rewriteRequest(ServerWebExchange exchange, RequestBody body, String username) {
         log.debug("进入 rewriteRequest");
-        String username = routeService.getAppid(body.getAppid()).filter(appInfo -> !appInfo.getExpired())
-            .map(AppInfo::getUsername).orElse(null);
 
         ServerHttpRequest oldRequest = exchange.getRequest();
         URI newUri = UriComponentsBuilder.fromHttpRequest(oldRequest).path(body.getMethod()).build().toUri();

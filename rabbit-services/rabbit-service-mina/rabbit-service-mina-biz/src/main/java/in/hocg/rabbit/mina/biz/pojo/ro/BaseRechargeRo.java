@@ -15,8 +15,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 public class BaseRechargeRo {
-    @ApiModelProperty(value = "商户用户", required = true)
+    @ApiModelProperty(value = "商户用户", hidden = true)
     private Long userId;
-    @ApiModelProperty("签名字符串")
-    private String sign;
 }
