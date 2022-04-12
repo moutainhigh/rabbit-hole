@@ -37,21 +37,18 @@ public class RechargeApiController {
     @ApiOperation("充值操作")
     @PostMapping("/recharge")
     public Result<RechargeOrderVo> recharge(@RequestBody RechargeOrderRo ro) {
-        RechargeHelper.checkThrow(ro, ro.getUserId(), ro.getSign());
         return Result.success(rechargeOrderService.recharge(ro));
     }
 
     @ApiOperation("充值结果")
     @PostMapping("/recharge/result")
     public Result<RechargeOrderVo> queryRecharge(@RequestBody QueryRechargeOrderRo ro) {
-        RechargeHelper.checkThrow(ro, ro.getUserId(), ro.getSign());
         return Result.success(rechargeOrderService.queryRecharge(ro));
     }
 
     @ApiOperation("充值产品列表")
     @PostMapping("/recharge/product")
     public Result<List<RechargeProductVo>> listProduct(@RequestBody BaseRechargeRo ro) {
-        RechargeHelper.checkThrow(ro, ro.getUserId(), ro.getSign());
         return Result.success(rechargeOrderService.listProduct(ro.getUserId()));
     }
 }

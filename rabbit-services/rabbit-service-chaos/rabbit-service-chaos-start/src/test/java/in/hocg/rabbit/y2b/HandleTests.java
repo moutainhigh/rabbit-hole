@@ -14,10 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hocgin on 2022/4/3
  * email: hocgin@gmail.com
+ * - BCP-47
  *
  * @author hocgin
  */
@@ -66,8 +68,15 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("穿越", "异界");
         String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
 
+        Map<String, UploadY2bDto.LocalTitle> locals = Maps.newHashMap();
+        locals.put("zh-Hant", new UploadY2bDto.LocalTitle()
+            .setTitle("《全球詭異時代》{ep}穿越者，在這個詭異的世界，正在追求著超凡的力量! #穿越 #異界"));
+        locals.put("zh-Hans", new UploadY2bDto.LocalTitle()
+            .setTitle(title));
+
         Pair<Integer, Integer> pair = buildPage(1, 13, 75);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), "PLCEcFGOrM-f9R2BSfh6_QN9s93KXS1DaC");
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f9R2BSfh6_QN9s93KXS1DaC", locals, DEFAULT_SKIP_TIMESTAMP, true);
     }
 
     @Test
@@ -80,8 +89,15 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("玄幻", "轻松", "冒险");
         String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
 
+        Map<String, UploadY2bDto.LocalTitle> locals = Maps.newHashMap();
+        locals.put("zh-Hant", new UploadY2bDto.LocalTitle()
+            .setTitle("《修仙大反派》{ep}高端玩家悲慘猝死，穿越成遊戲裡受盡唾罵慘死在萬人刀下的反派大少爺，幽暗的棺材裡，美女系統開啟新人禮包，贈送萬點靈力! #玄幻 #輕鬆"));
+        locals.put("zh-Hans", new UploadY2bDto.LocalTitle()
+            .setTitle(title));
+
         Pair<Integer, Integer> pair = buildPage(3, 20, 0);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), "PLCEcFGOrM-f_V0GKDBKkAYyQiDqTX4Euc");
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            "PLCEcFGOrM-f_V0GKDBKkAYyQiDqTX4Euc", locals, DEFAULT_SKIP_TIMESTAMP, true);
     }
 
     @Test
@@ -96,7 +112,7 @@ public class HandleTests extends AbsY2bUpload {
 
         // -> 1, 14, 66 => 80
         // -> 1, 10, 80
-        Pair<Integer, Integer> pair = buildPage(1, 14, 66);
+        Pair<Integer, Integer> pair = buildPage(1, 25, 25);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
             "PLCEcFGOrM-f_5JO5R07DduMq-a4HHvMGp");
     }
@@ -138,7 +154,7 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("末日", "重生");
         String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
-        Pair<Integer, Integer> pair = buildPage(2, 25, 0);
+        Pair<Integer, Integer> pair = buildPage(1, 15, 50);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
     }
 
