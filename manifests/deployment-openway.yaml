@@ -45,8 +45,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 20001
-      targetPort: 20001
+    - port: 20010
+      targetPort: 20010
       protocol: TCP
   selector:
     app: openway
