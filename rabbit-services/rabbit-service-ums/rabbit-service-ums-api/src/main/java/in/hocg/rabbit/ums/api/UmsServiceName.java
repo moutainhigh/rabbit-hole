@@ -12,4 +12,5 @@ import lombok.experimental.UtilityClass;
 public class UmsServiceName {
     public final String NAME = "rabbit-chaos";
     public final String FEIGN_HEADER = "X-Feign=Y";
+    public final String PACKAGE = "in.hocg.rabbit.ums";
 }

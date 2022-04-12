@@ -16,9 +16,13 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.MINA, false,
-            "mina_recharge_order",
-            "mina_recharge_account",
+            Module.OWP, false,
+            "owp_developer",
+            "owp_developer_app",
+            "owp_api",
+            "owp_authority",
+            "owp_authority_api_ref",
+            "owp_authority_app_ref",
             "");
     }
 

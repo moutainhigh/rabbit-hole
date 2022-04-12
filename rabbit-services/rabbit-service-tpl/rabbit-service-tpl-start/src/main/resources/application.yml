@@ -1,19 +1,8 @@
-debug: true
-logging:
-  level:
-    root: debug
-
+server:
+  port: 21000
 spring:
-  datasource:
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://mysql.lotus.github.com:13306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    username: root
-    password: hocgin
-    druid:
-      validation-query: SELECT 1
-      test-while-idle: true
-  redis:
-    database: 0
-    host: redis.lotus.github.com
-    port: 6379
-    timeout: 100
+  application:
+    name: rabbit-tpl
+  profiles:
+    active: local
+

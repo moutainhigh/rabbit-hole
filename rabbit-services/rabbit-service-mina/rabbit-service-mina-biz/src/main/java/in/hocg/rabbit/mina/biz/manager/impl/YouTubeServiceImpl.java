@@ -1,8 +1,10 @@
 package in.hocg.rabbit.mina.biz.manager.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.common.collect.Maps;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.exception.ServiceException;
 import in.hocg.boot.youtube.autoconfiguration.utils.YoutubeUtils;
@@ -37,9 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -73,11 +74,7 @@ public class YouTubeServiceImpl implements YouTubeService {
         Y2bChannel channel = channelService.getById(channelId);
         YouTube youtube = getYoutube(channel);
 
-        String thumbnailUrl = null;
-        File thumbFile = dto.getThumbFile();
-        if (Objects.nonNull(thumbFile)) {
-            thumbnailUrl = fileServiceApi.upload(thumbFile);
-        }
+        String thumbnailUrl = dto.getThumbnailUrl();
 
         String description = dto.getDescription();
         List<String> tags = dto.getTags();
@@ -95,6 +92,13 @@ public class YouTubeServiceImpl implements YouTubeService {
             .setDefaultLanguage(language)
             .setChannelId(ytbChannelId)
             .setTags(tags));
+
+        Map<String, UploadY2bDto.LocalTitle> localMaps = dto.getLocalMaps();
+        if (CollUtil.isNotEmpty(localMaps)) {
+            HashMap<String, VideoLocalization> map = Maps.newHashMap();
+            localMaps.forEach((key, value) -> map.put(key, new VideoLocalization().setTitle(value.getTitle()).setDescription(value.getDescription())));
+            video.setLocalizations(map);
+        }
 
         InputStreamContent mediaContent = new InputStreamContent("video/*", FileUtil.getInputStream(videoFile));
 

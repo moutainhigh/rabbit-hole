@@ -13,16 +13,20 @@ import java.util.List;
  */
 @UtilityClass
 public class GlobalConstant {
+    /**
+     * 匿名用户
+     */
+    public static final Long NO_USER_ID = -1L;
+    /**
+     * 草鸡管理员列表
+     */
+    public static final List<String> SUPPER_ADMIN_USERNAMES = Lists.newArrayList("super_admin", "hocgin");
     public static final String AUTHOR = "hocgin";
     /**
      * 用户 Token 过期时长(10年)
      */
     public static final Long USER_TOKEN_TIME_EXPIRE_MILLIS = 10 * 365 * 24 * 60 * 60 * 1000L;
     public static final String SERVICE_NAME = "rabbit-chaos";
-    /**
-     * 草鸡管理员列表
-     */
-    public static final List<String> SUPPER_ADMIN_USERNAMES = Lists.newArrayList("super_admin", "hocgin");
     /**
      * [FEIGN] 请求防范机制
      */

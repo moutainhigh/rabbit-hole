@@ -1,0 +1,14 @@
+server:
+  port: 20010
+spring:
+  application:
+    name: rabbit-openway
+  profiles:
+    active: local
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+      loadbalancer:
+        use404: true

@@ -52,6 +52,10 @@ public class CodeGenerator {
             .setDriverName(dataSource.getDriverName().getName());
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig.setEntityLombokModel(true)
+            .setSuperEntityColumns("id",
+                "created_at", "creator",
+                "last_updated_at", "last_updater"
+            )
             .setEntityTableFieldAnnotationEnable(true)
             .setCapitalMode(true)
             .setEntityColumnConstant(false)

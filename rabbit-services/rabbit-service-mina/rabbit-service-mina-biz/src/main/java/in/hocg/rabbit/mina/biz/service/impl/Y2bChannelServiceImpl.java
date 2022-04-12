@@ -108,7 +108,7 @@ public class Y2bChannelServiceImpl extends AbstractServiceImpl<Y2bChannelMapper,
         // 4. 上传
         UploadY2bDto options = new UploadY2bDto();
         options.setTitle(title);
-        options.setThumbFile(null);
+        options.setThumbnailUrl(null);
         List<String> tags = Lists.newArrayList(videoInfo.getKeywords());
         tags.addAll(ro.getAddTags());
         options.setTags(tags.stream().filter(Objects::nonNull).collect(Collectors.toList()));

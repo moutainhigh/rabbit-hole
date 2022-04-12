@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.rabbit.owp.biz.mapper.DeveloperAppMapper">
+  <select id="getByEncoding" resultType="in.hocg.rabbit.owp.biz.entity.DeveloperApp">
+    SELECT oda.*
+    FROM owp_developer_app oda
+           LEFT JOIN owp_developer od ON oda.developer_user_id = od.id
+    <where>
+      AND oda.encoding = #{encoding}
+      AND od.enabled = true
+    </where>
+  </select>
+</mapper>

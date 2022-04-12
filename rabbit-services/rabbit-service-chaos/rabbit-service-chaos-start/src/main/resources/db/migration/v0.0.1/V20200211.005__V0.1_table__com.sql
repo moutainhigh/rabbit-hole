@@ -1,26 +1,34 @@
 DROP TABLE IF EXISTS `com_district`;
 CREATE TABLE `com_district`
 (
-    id        BIGINT AUTO_INCREMENT,
-    parent_id bigint,
+    id                BIGINT AUTO_INCREMENT,
+    parent_id         bigint,
     --
-    tree_path varchar(255)        NOT NULL
+    tree_path         varchar(255)        NOT NULL
         COMMENT '树路径，组成方式: /父路径/当前ID',
-    `enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',
-    adcode    VARCHAR(32)         NOT NULL
+    adcode            VARCHAR(32)         NOT NULL
         COMMENT '区域编码',
-    city_code VARCHAR(32)
+    city_code         VARCHAR(32)
         COMMENT '城市编码',
-    level     VARCHAR(32)         NOT NULL
+    level             VARCHAR(32)         NOT NULL
         COMMENT '城市规划级别',
-    lat       decimal(10, 6)
+    lat               decimal(10, 6)
         COMMENT '中心(纬度)',
-    lng       decimal(10, 6)
+    lng               decimal(10, 6)
         COMMENT '中心(经度)',
-    title     VARCHAR(32)         NOT NULL
+    title             VARCHAR(32)         NOT NULL
         COMMENT '名称',
     --
+    `created_at`      DATETIME(6)         NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+        COMMENT '创建时间',
+    `creator`         BIGINT
+        COMMENT '创建者',
+    `last_updated_at` DATETIME(6)         NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
+        COMMENT '更新时间',
+    `last_updater`    BIGINT
+        COMMENT '更新者',
     UNIQUE KEY (tree_path),
     PRIMARY KEY (id)
 )
@@ -40,7 +48,7 @@ CREATE TABLE `com_file`
         COMMENT '业务ID',
     ref_type   VARCHAR(10)  NOT NULL DEFAULT 'unknown'
         COMMENT '业务类型',
-    priority       INT      NOT NULL DEFAULT 1000
+    priority   INT          NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',
     created_at TIMESTAMP(6) NOT NULL
         COMMENT '创建时间',
@@ -96,7 +104,7 @@ CREATE TABLE `com_data_dict_item`
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
-    `priority`            INT(10)             NOT NULL DEFAULT 1000
+    `priority`        INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序, 从大到小降序',
     `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态',

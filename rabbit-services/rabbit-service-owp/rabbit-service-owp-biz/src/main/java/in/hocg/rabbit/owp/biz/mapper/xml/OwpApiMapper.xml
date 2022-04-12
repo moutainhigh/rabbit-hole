@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.rabbit.owp.biz.mapper.OwpApiMapper">
+  <select id="hasAuthority" resultType="java.lang.Integer">
+    SELECT 1
+    FROM owp_api oa
+           left join owp_authority_api_ref oaar ON oa.id = oaar.api_id
+           left join owp_authority_app_ref oaar2 ON oaar.authority_id = oaar2.authority_id
+           left join owp_developer_app oda ON oda.id = oaar2.app_id AND oda.enabled = true
+    <where>
+      AND oa.enabled = true
+            AND oa.encoding = #{method}
+            AND oda.encoding = #{appid}
+    </where>
+  </select>
+</mapper>
