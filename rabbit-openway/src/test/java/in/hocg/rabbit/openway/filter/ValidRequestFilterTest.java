@@ -42,6 +42,7 @@ class ValidRequestFilterTest {
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
+//        String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
 
         System.out.println("Resp::" + resp);
         Pair<String, String> result = getBody(resp, method);

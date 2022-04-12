@@ -38,10 +38,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -127,32 +124,29 @@ public class RewriteAndForwardFilter implements WebFilter {
         return exchange.mutate().response(new ServerHttpResponseDecorator(oldResponse) {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> withBody) {
-                Function<DataBuffer, DataBuffer> dataBufferMapHandle = dataBuffer -> {
-                    byte[] bytes = new byte[dataBuffer.readableByteCount()];
-                    dataBuffer.read(bytes);
-
-                    String responseBody = new String(bytes, StandardCharsets.UTF_8);
-                    log.debug("-服务返回-> responseBody: {}", responseBody);
-                    String finalResponseBody;
-                    if (JSONUtil.isJson(responseBody)) {
-                        finalResponseBody = JSONUtil.toJsonStr(ExceptionUtils.result(method, responseBody));
-                    } else {
-                        finalResponseBody = JSONUtil.toJsonStr(ExceptionUtils.result(method, Result.fail("系统繁忙，请稍后再试")));
-                    }
-                    log.debug("-最终返回-> finalResponseBody: {}", finalResponseBody);
-                    HttpHeaders headers = getDelegate().getHeaders();
-                    headers.setContentType(MediaType.APPLICATION_JSON);
-                    headers.setContentLength(finalResponseBody.getBytes().length);
-                    return factory.wrap(finalResponseBody.getBytes());
-                };
-
                 if (withBody instanceof Flux) {
-                    return super.writeWith(((Flux<? extends DataBuffer>) withBody).map(dataBufferMapHandle));
-                } else if (withBody instanceof Mono) {
-                    return super.writeWith(((Mono<? extends DataBuffer>) withBody).map(dataBufferMapHandle));
+                    return super.writeWith(Flux.from(withBody).buffer().map(dataBuffers -> {
+                        DefaultDataBufferFactory bufferFactory = new DefaultDataBufferFactory();
+                        DefaultDataBuffer dataBuffer = bufferFactory.join(dataBuffers);
+                        byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                        dataBuffer.read(bytes);
+
+                        String responseBody = new String(bytes, StandardCharsets.UTF_8);
+                        log.debug("-服务返回-> responseBody: {}", responseBody);
+                        String finalResponseBody;
+                        if (JSONUtil.isJson(responseBody)) {
+                            finalResponseBody = JSONUtil.toJsonStr(ExceptionUtils.result(method, responseBody));
+                        } else {
+                            finalResponseBody = JSONUtil.toJsonStr(ExceptionUtils.result(method, Result.fail("系统繁忙，请稍后再试")));
+                        }
+                        log.debug("-最终返回-> finalResponseBody: {}", finalResponseBody);
+                        HttpHeaders headers = getDelegate().getHeaders();
+                        headers.setContentType(MediaType.APPLICATION_JSON);
+                        headers.setContentLength(finalResponseBody.getBytes().length);
+                        return factory.wrap(finalResponseBody.getBytes());
+                    }));
                 }
-                log.error("不支持的类型：{}", withBody.getClass());
-                return ExceptionUtils.handleException(exchange, method, new UnsupportedOperationException("不支持操作"));
+                return ExceptionUtils.handleException(exchange, method, new UnsupportedOperationException("不支持的类型：" + withBody.getClass()));
             }
         }).build();
     }
