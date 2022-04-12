@@ -44,6 +44,12 @@ public class OpenwayContextFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         log.debug("OpenwayContextFilter.filter");
         ServerHttpRequest request = exchange.getRequest();
+
+        // 非对外网关规则
+        if (!HttpMethod.POST.equals(request.getMethod())) {
+            return chain.filter(exchange);
+        }
+
         MediaType contentType = request.getHeaders().getContentType();
 
         GatewayContext context = new GatewayContext().setPath(request.getPath().pathWithinApplication().value());
@@ -53,8 +59,7 @@ public class OpenwayContextFilter implements WebFilter {
             return handle(exchange, chain, context);
         }
 
-        return chain.filter(exchange);
-//        return Mono.error(new Exception("不支持的请求类型"));
+        return Mono.error(new Exception("不支持的请求类型"));
     }
 
     public Mono<Void> handle(ServerWebExchange exchange, WebFilterChain chain, GatewayContext context) {
