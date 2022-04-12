@@ -2,8 +2,11 @@ package in.hocg.rabbit.openway.filter;
 
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.openway.basic.data.RequestBody;
 import in.hocg.rabbit.openway.constants.OpenwayContants;
@@ -11,6 +14,7 @@ import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,16 +30,15 @@ class ValidRequestFilterTest {
         System.out.println("正确请求------------------");
         RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
-        body.setAppid("test");
-        String method = "E12453";
+        body.setAppid("all_test");
+        String method = "ER0003";
         body.setMethod(method);
         body.setSignType(signType.getType().toLowerCase());
         body.setTimestamp(LocalDateTime.now());
         body.setBizContent(new HashMap<>() {{
-            put("name", "hocgin");
         }});
         String json = JSONUtil.toJsonStr(body);
-        body.setSign(OpenwayUtils.getSign(json, signType, "test"));
+        body.setSign(OpenwayUtils.getSign(json, signType, "hocgin"));
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
@@ -67,4 +70,5 @@ class ValidRequestFilterTest {
         int startIndex = StrUtil.ordinalIndexOf(body, searchStr, 1) + searchStr.length();
         return Pair.of(StrUtil.subWithLength(body, startIndex, respBody.length()), result.get(OpenwayContants.SIGN));
     }
+
 }

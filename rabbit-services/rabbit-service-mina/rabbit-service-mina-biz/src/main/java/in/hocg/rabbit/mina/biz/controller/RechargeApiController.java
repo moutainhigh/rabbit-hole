@@ -8,6 +8,7 @@ import in.hocg.rabbit.mina.biz.pojo.vo.RechargeOrderVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.RechargeProductVo;
 import in.hocg.rabbit.mina.biz.service.RechargeOrderService;
 import in.hocg.rabbit.mina.biz.support.recharge.RechargeHelper;
+import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -37,18 +38,21 @@ public class RechargeApiController {
     @ApiOperation("充值操作")
     @PostMapping("/recharge")
     public Result<RechargeOrderVo> recharge(@RequestBody RechargeOrderRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(rechargeOrderService.recharge(ro));
     }
 
     @ApiOperation("充值结果")
     @PostMapping("/recharge/result")
     public Result<RechargeOrderVo> queryRecharge(@RequestBody QueryRechargeOrderRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(rechargeOrderService.queryRecharge(ro));
     }
 
     @ApiOperation("充值产品列表")
     @PostMapping("/recharge/product")
     public Result<List<RechargeProductVo>> listProduct(@RequestBody BaseRechargeRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(rechargeOrderService.listProduct(ro.getUserId()));
     }
 }

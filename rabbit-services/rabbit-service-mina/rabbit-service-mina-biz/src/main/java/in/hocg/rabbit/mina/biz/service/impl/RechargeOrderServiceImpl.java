@@ -211,8 +211,7 @@ public class RechargeOrderServiceImpl extends AbstractServiceImpl<RechargeOrderM
         String returnBody;
         try {
             RechargeOrderVo body = this.as(entity, RechargeOrderVo.class);
-            Notify<?> notify = Notify.create(body);
-            returnBody = HttpUtil.post(notifyUrl, JSON.toJSONString(notify), 5 * 1000);
+            returnBody = HttpUtil.post(notifyUrl, JSON.toJSONString(body), 5 * 1000);
         } catch (Exception e) {
             log.warn("通知接入商户发生错误, 同步任务编号[ID={}], 错误信息: {}", orderId, e);
             returnBody = StrUtil.format("通知接入商户发生错误: {}", e.getMessage());

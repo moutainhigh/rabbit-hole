@@ -25,6 +25,7 @@ public class OwpConvert {
     public DevAppVo asDevAppVo(DeveloperApp entity) {
         AccountVo account = userServiceApi.getById(entity.getId());
         return developerAppMapping.asDevAppVo(entity)
+            .setSecretKey(entity.getSecretKey())
             .setUsername(account.getUsername());
     }
 }
