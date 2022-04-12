@@ -85,10 +85,10 @@ public class HandleTests extends AbsY2bUpload {
     }
 
     @Test
-    @ApiOperation("合集(观棋烂柯|3min|周三)上传")
+    @ApiOperation("合集(烂柯棋缘|3min|周三)上传")
     public void upload13() {
         // https://www.gaoding.com/design?id=19564228136026199&simple=1&mode=user
-        String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
+        String title = "《烂柯棋缘》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
         Long channelId = 1L;
         String url = "https://v.douyin.com/NpqgRFx";
         List<String> addTags = List.of("古风", "玄幻");
@@ -138,7 +138,7 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("末日", "重生");
         String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
-        Pair<Integer, Integer> pair = buildPage(2, 25, 0);
+        Pair<Integer, Integer> pair = buildPage(1, 15, 50);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
     }
 
