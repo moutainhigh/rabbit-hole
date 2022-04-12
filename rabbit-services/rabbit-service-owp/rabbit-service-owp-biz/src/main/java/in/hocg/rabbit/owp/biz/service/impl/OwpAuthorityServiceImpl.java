@@ -1,8 +1,8 @@
 package in.hocg.rabbit.owp.biz.service.impl;
 
-import in.hocg.rabbit.owp.biz.entity.Authority;
-import in.hocg.rabbit.owp.biz.mapper.AuthorityMapper;
-import in.hocg.rabbit.owp.biz.service.AuthorityService;
+import in.hocg.rabbit.owp.biz.entity.OwpAuthority;
+import in.hocg.rabbit.owp.biz.mapper.OwpAuthorityMapper;
+import in.hocg.rabbit.owp.biz.service.OwpAuthorityService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
@@ -18,6 +18,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
+public class OwpAuthorityServiceImpl extends AbstractServiceImpl<OwpAuthorityMapper, OwpAuthority> implements OwpAuthorityService {
 
 }

@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class OwpServiceName {
-    public final String NAME = "rabbit-owp";
+    public final String NAME = "rabbit-chaos";
     public final String PACKAGE = "in.hocg.rabbit.owp";
     public final String FEIGN_HEADER = "X-Feign=Y";
 }

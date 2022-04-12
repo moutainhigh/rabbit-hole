@@ -1,6 +1,6 @@
 package in.hocg.rabbit.owp.biz.mapper;
 
-import in.hocg.rabbit.owp.biz.entity.Api;
+import in.hocg.rabbit.owp.biz.entity.OwpApi;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @since 2022-04-10
  */
 @Mapper
-public interface ApiMapper extends BaseMapper<Api> {
+public interface OwpApiMapper extends BaseMapper<OwpApi> {
 
     Integer hasAuthority(@Param("appid") String appid, @Param("method") String method);
 }

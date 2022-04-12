@@ -1,8 +1,8 @@
 package in.hocg.rabbit.owp.biz.service.impl;
 
-import in.hocg.rabbit.owp.biz.entity.AuthorityApiRef;
-import in.hocg.rabbit.owp.biz.mapper.AuthorityApiRefMapper;
-import in.hocg.rabbit.owp.biz.service.AuthorityApiRefService;
+import in.hocg.rabbit.owp.biz.entity.OwpAuthorityAppRef;
+import in.hocg.rabbit.owp.biz.mapper.OwpAuthorityAppRefMapper;
+import in.hocg.rabbit.owp.biz.service.OwpAuthorityAppRefService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * <p>
- * [开放平台] 权限x接口表 服务实现类
+ * [开放平台] 权限x应用表 服务实现类
  * </p>
  *
  * @author hocgin
@@ -18,6 +18,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AuthorityApiRefServiceImpl extends AbstractServiceImpl<AuthorityApiRefMapper, AuthorityApiRef> implements AuthorityApiRefService {
+public class OwpAuthorityAppRefServiceImpl extends AbstractServiceImpl<OwpAuthorityAppRefMapper, OwpAuthorityAppRef> implements OwpAuthorityAppRefService {
 
 }

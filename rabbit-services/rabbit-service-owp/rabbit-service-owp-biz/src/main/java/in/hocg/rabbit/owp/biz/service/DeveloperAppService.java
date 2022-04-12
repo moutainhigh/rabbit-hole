@@ -4,8 +4,6 @@ import in.hocg.rabbit.owp.api.pojo.vo.DevAppVo;
 import in.hocg.rabbit.owp.biz.entity.DeveloperApp;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
-import java.util.Optional;
-
 /**
  * <p>
  * [开放平台] 开发者应用表 服务类

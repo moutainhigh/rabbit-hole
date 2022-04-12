@@ -1,7 +1,7 @@
 package in.hocg.rabbit.owp.biz.service;
 
 import in.hocg.rabbit.owp.api.pojo.vo.ApiRouterVo;
-import in.hocg.rabbit.owp.biz.entity.Api;
+import in.hocg.rabbit.owp.biz.entity.OwpApi;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author hocgin
  * @since 2022-04-10
  */
-public interface ApiService extends AbstractService<Api> {
+public interface OwpApiService extends AbstractService<OwpApi> {
 
     List<ApiRouterVo> listAll();
 

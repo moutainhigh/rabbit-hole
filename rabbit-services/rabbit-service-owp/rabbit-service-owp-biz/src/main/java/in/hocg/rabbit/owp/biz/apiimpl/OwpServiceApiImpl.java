@@ -3,7 +3,7 @@ package in.hocg.rabbit.owp.biz.apiimpl;
 import in.hocg.rabbit.owp.api.OwpServiceApi;
 import in.hocg.rabbit.owp.api.pojo.vo.ApiRouterVo;
 import in.hocg.rabbit.owp.api.pojo.vo.DevAppVo;
-import in.hocg.rabbit.owp.biz.service.ApiService;
+import in.hocg.rabbit.owp.biz.service.OwpApiService;
 import in.hocg.rabbit.owp.biz.service.DeveloperAppService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -11,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by hocgin on 2022/4/10
@@ -23,7 +22,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OwpServiceApiImpl implements OwpServiceApi {
-    private final ApiService apiService;
+    private final OwpApiService apiService;
     private final DeveloperAppService developerAppService;
 
     @Override

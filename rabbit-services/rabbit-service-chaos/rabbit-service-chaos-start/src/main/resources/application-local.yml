@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:p6spy:mysql://mysql.hocgin.top:23306/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql://mysql.hocgin.top:23306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
   redis:
     database: 0
 
 boot:
-  flyway:
-    repair-on-migrate: true
+#  flyway:
+#    repair-on-migrate: true
   web:
     hostname: http://127.0.0.1:20001
   sentinel:

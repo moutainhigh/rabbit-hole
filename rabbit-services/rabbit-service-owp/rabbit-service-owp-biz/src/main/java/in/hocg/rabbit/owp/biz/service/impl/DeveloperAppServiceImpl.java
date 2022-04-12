@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 /**
  * <p>
  * [开放平台] 开发者应用表 服务实现类

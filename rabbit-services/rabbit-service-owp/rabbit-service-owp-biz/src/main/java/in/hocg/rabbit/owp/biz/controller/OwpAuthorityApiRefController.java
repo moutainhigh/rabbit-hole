@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * [开放平台] 接口表 前端控制器
+ * [开放平台] 权限x接口表 前端控制器
  * </p>
  *
  * @author hocgin
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api")
-public class ApiController {
+@RequestMapping("/authority-api-ref")
+public class OwpAuthorityApiRefController {
 
 }
 

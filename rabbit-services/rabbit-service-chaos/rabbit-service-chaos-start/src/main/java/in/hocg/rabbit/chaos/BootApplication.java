@@ -1,10 +1,18 @@
 package in.hocg.rabbit.chaos;
 
 import in.hocg.boot.mybatis.plus.extensions.context.constants.MyBatisPlusExtensionsConstants;
+import in.hocg.rabbit.bmw.api.BmwServiceName;
+import in.hocg.rabbit.chaos.api.ChaosServiceName;
+import in.hocg.rabbit.chaos.biz.service.ChaosService;
+import in.hocg.rabbit.com.api.ComServiceName;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.cv.api.CvServiceName;
+import in.hocg.rabbit.docking.api.DockingServiceName;
 import in.hocg.rabbit.mall.api.MallServiceName;
+import in.hocg.rabbit.mina.api.MinaServiceName;
+import in.hocg.rabbit.owp.api.OwpServiceName;
 import in.hocg.rabbit.rcm.api.RcmServiceName;
+import in.hocg.rabbit.ums.api.UmsServiceName;
 import in.hocg.rabbit.ws.api.WsServiceName;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
@@ -24,17 +32,19 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableRetry
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = {
-    "in.hocg.rabbit.chaos", "in.hocg.rabbit.wl",
-    "in.hocg.rabbit.bmw",
-    "in.hocg.rabbit.docking", "in.hocg.rabbit.ums",
-    "in.hocg.rabbit.mina", "in.hocg.rabbit.com",
+    "in.hocg.rabbit.wl",
+    BmwServiceName.PACKAGE,
+    ChaosServiceName.PACKAGE, DockingServiceName.PACKAGE,
+    MinaServiceName.PACKAGE, UmsServiceName.PACKAGE,
+    OwpServiceName.PACKAGE, ComServiceName.PACKAGE,
     CvServiceName.PACKAGE, RcmServiceName.PACKAGE,
     WsServiceName.PACKAGE, MallServiceName.PACKAGE})
 @MapperScan(annotationClass = Mapper.class, value = {
-    "in.hocg.rabbit.chaos", "in.hocg.rabbit.wl",
-    "in.hocg.rabbit.bmw",
-    "in.hocg.rabbit.docking", "in.hocg.rabbit.ums",
-    "in.hocg.rabbit.mina", "in.hocg.rabbit.com",
+    "in.hocg.rabbit.wl",
+    BmwServiceName.PACKAGE,
+    ChaosServiceName.PACKAGE, DockingServiceName.PACKAGE,
+    MinaServiceName.PACKAGE, UmsServiceName.PACKAGE,
+    OwpServiceName.PACKAGE, ComServiceName.PACKAGE,
     CvServiceName.PACKAGE, RcmServiceName.PACKAGE,
     WsServiceName.PACKAGE, MallServiceName.PACKAGE,
     MyBatisPlusExtensionsConstants.PACKAGE_PREFIX})

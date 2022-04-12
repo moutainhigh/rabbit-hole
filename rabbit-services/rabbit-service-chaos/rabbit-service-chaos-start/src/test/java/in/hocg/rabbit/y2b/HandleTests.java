@@ -50,7 +50,7 @@ public class HandleTests extends AbsY2bUpload {
         List<String> addTags = List.of("末世", "新世界", "异能");
         String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
 
-        Pair<Integer, Integer> pair = buildPage(1, 20, 0);
+        Pair<Integer, Integer> pair = buildPage(2, 20, 0);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
             "PLCEcFGOrM-f98gSNypaNgtiQJfw0h0f13", Maps.newHashMap(),
             AbsY2bUpload.DEFAULT_SKIP_TIMESTAMP, false);
@@ -59,14 +59,29 @@ public class HandleTests extends AbsY2bUpload {
     @Test
     @ApiOperation("合集(全球诡异时代|2.5min|周二)上传")
     public void upload12() {
+        // https://www.gaoding.com/design?id=19564240767035404&simple=1&mode=user
         String title = "《全球诡异时代》{ep}穿越者，在这个诡异的世界，正在追求着超凡的力量! #穿越 #异界";
         Long channelId = 1L;
         String url = "https://v.douyin.com/NqFKLcM/";
         List<String> addTags = List.of("穿越", "异界");
         String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
 
-        Pair<Integer, Integer> pair = buildPage(1, 15, 75);
-        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), null);
+        Pair<Integer, Integer> pair = buildPage(1, 13, 75);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), "PLCEcFGOrM-f9R2BSfh6_QN9s93KXS1DaC");
+    }
+
+    @Test
+    @ApiOperation("合集(修仙大反派|1.5min|周二)上传")
+    public void upload121() {
+        // https://www.gaoding.com/design?mode=user&id=19620551659896897
+        String title = "《修仙大反派》{ep}高端玩家悲惨猝死，穿越成游戏里受尽唾骂惨死在万人刀下的反派大少爷，幽暗的棺材里，美女系统开启新人礼包，赠送万点灵力! #玄幻 #轻松";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/N7mow5e/";
+        List<String> addTags = List.of("玄幻", "轻松", "冒险");
+        String thumbFile = "http://cdn.hocgin.top/file/bf9e20b1ba43467ba20c8b1c4f3e0a4c.jpeg";
+
+        Pair<Integer, Integer> pair = buildPage(3, 20, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(), "PLCEcFGOrM-f_V0GKDBKkAYyQiDqTX4Euc");
     }
 
     @Test

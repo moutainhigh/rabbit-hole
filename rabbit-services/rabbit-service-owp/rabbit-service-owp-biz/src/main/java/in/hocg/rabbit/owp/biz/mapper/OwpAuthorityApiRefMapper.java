@@ -1,6 +1,6 @@
 package in.hocg.rabbit.owp.biz.mapper;
 
-import in.hocg.rabbit.owp.biz.entity.AuthorityApiRef;
+import in.hocg.rabbit.owp.biz.entity.OwpAuthorityApiRef;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-04-10
  */
 @Mapper
-public interface AuthorityApiRefMapper extends BaseMapper<AuthorityApiRef> {
+public interface OwpAuthorityApiRefMapper extends BaseMapper<OwpAuthorityApiRef> {
 
 }

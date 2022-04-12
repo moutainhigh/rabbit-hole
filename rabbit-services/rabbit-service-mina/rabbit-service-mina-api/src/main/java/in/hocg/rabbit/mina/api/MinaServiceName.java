@@ -12,5 +12,5 @@ import lombok.experimental.UtilityClass;
 public class MinaServiceName {
     public final String NAME = "rabbit-chaos";
     public final String FEIGN_HEADER = "X-Feign=Y";
-    public final String PACKAGE = "in.hocg.rabbit.chaos";
+    public final String PACKAGE = "in.hocg.rabbit.mina";
 }

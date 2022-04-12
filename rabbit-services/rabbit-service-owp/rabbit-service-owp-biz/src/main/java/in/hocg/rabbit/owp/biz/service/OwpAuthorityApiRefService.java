@@ -1,6 +1,6 @@
 package in.hocg.rabbit.owp.biz.service;
 
-import in.hocg.rabbit.owp.biz.entity.AuthorityApiRef;
+import in.hocg.rabbit.owp.biz.entity.OwpAuthorityApiRef;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 
 /**
@@ -11,6 +11,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractSer
  * @author hocgin
  * @since 2022-04-10
  */
-public interface AuthorityApiRefService extends AbstractService<AuthorityApiRef> {
+public interface OwpAuthorityApiRefService extends AbstractService<OwpAuthorityApiRef> {
 
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/authority-app-ref")
-public class AuthorityAppRefController {
+public class OwpAuthorityAppRefController {
 
 }
 
