@@ -1,4 +1,4 @@
-name: Deploy::Gateway
+name: Deploy::Openway
 
 on:
   workflow_dispatch:
