@@ -65,7 +65,10 @@ public class RewriteAndForwardFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         log.debug("进入 RewriteAndForwardFilter");
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
-        assert context != null;
+        if (Objects.isNull(context)) {
+            return chain.filter(exchange);
+        }
+
         RequestBody body = context.getRequestBody();
         ServerWebExchange serverWebExchange = rewriteResponse(rewriteRequest(exchange, body), body);
         log.debug("结束 RewriteAndForwardFilter");

@@ -13,6 +13,8 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 /**
  * Created by hocgin on 2022/4/10
  * email: hocgin@gmail.com
@@ -26,9 +28,11 @@ public class PreCheckFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         log.debug("PreCheckFilter");
-        ServerHttpRequest request = exchange.getRequest();
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
-        assert context != null;
+        if (Objects.isNull(context)) {
+            return chain.filter(exchange);
+        }
+        ServerHttpRequest request = exchange.getRequest();
         RequestBody body = context.getRequestBody();
         String method = body.getMethod();
 

@@ -22,6 +22,7 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -46,7 +47,9 @@ public class ValidRequestFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         log.debug("ValidRequestFilter");
         GatewayContext context = exchange.getAttribute(GatewayContext.NAME);
-        assert context != null;
+        if (Objects.isNull(context)) {
+            return chain.filter(exchange);
+        }
         String requestBody = context.getBody();
         RequestBody body = context.getRequestBody();
         String method = body.getMethod();
