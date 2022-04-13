@@ -112,10 +112,10 @@ public class HandleTests extends AbsY2bUpload {
         String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
         Map<String, UploadY2bDto.LocalTitle> locals = Maps.newHashMap();
-        locals.put("zh-Hant", new UploadY2bDto.LocalTitle()
-            .setTitle("《觀棋爛柯》{ep}爛柯旁棋局落葉，老樹間對弈無人。傳說中的故事居然是真的! #古風 #玄幻"));
-        locals.put("zh-Hans", new UploadY2bDto.LocalTitle()
-            .setTitle(title));
+//        locals.put("zh-Hant", new UploadY2bDto.LocalTitle()
+//            .setTitle("《觀棋爛柯》{ep}爛柯旁棋局落葉，老樹間對弈無人。傳說中的故事居然是真的! #古風 #玄幻"));
+//        locals.put("zh-Hans", new UploadY2bDto.LocalTitle()
+//            .setTitle(title));
         Pair<Integer, Integer> pair = buildPage(1, 10, 80);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
             "PLCEcFGOrM-f_5JO5R07DduMq-a4HHvMGp", locals, DEFAULT_SKIP_TIMESTAMP, true);
