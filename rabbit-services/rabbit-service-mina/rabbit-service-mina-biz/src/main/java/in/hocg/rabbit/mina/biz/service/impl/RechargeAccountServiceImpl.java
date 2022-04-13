@@ -47,7 +47,7 @@ public class RechargeAccountServiceImpl extends AbstractServiceImpl<RechargeAcco
     public boolean subtract(Long id, BigDecimal totalAmt) {
         BigDecimal oldAmt = getById(id).getAvailAmt();
         BigDecimal newAmt = oldAmt.subtract(totalAmt);
-        Assert.isTrue(newAmt.compareTo(BigDecimal.ZERO) < 0, "余额不足");
+        Assert.isTrue(newAmt.compareTo(BigDecimal.ZERO) >= 0, "余额不足");
 
         RechargeAccount update = new RechargeAccount();
         update.setAvailAmt(newAmt);
