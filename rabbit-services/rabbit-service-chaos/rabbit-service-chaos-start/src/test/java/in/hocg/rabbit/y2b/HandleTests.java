@@ -1,6 +1,7 @@
 package in.hocg.rabbit.y2b;
 
 import cn.hutool.core.convert.Convert;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.common.utils.CommonUtils;
@@ -105,7 +106,7 @@ public class HandleTests extends AbsY2bUpload {
     public void upload13() {
         // https://www.gaoding.com/design?id=19564228136026199&simple=1&mode=user
         String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
-        Long channelId = 1L;
+        Long channelId = getChannelId();
         String url = "https://v.douyin.com/NpqgRFx";
         List<String> addTags = List.of("古风", "玄幻");
         String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
@@ -272,5 +273,13 @@ public class HandleTests extends AbsY2bUpload {
         options.setTags(addTags);
         options.setDescription(desc);
         upload(channelId, videoFile, options);
+    }
+
+    private Long getChannelId() {
+        return Lists.newArrayList(
+            1L,
+            1513887745225306113L,
+            1513891389962240001L
+        ).get(1);
     }
 }
