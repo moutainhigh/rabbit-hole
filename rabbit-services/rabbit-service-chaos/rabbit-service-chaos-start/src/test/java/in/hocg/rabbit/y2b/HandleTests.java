@@ -1,6 +1,7 @@
 package in.hocg.rabbit.y2b;
 
 import cn.hutool.core.convert.Convert;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import in.hocg.rabbit.chaos.BootApplication;
 import in.hocg.rabbit.common.utils.CommonUtils;
@@ -105,16 +106,34 @@ public class HandleTests extends AbsY2bUpload {
     public void upload13() {
         // https://www.gaoding.com/design?id=19564228136026199&simple=1&mode=user
         String title = "《观棋烂柯》{ep}烂柯旁棋局落叶，老树间对弈无人。传说中的故事居然是真的! #古风 #玄幻";
-        Long channelId = 1L;
+        Long channelId = getChannelId();
         String url = "https://v.douyin.com/NpqgRFx";
         List<String> addTags = List.of("古风", "玄幻");
         String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
 
-        // -> 1, 14, 66 => 80
-        // -> 1, 10, 80
-        Pair<Integer, Integer> pair = buildPage(1, 25, 25);
+        Map<String, UploadY2bDto.LocalTitle> locals = Maps.newHashMap();
+//        locals.put("zh-Hant", new UploadY2bDto.LocalTitle()
+//            .setTitle("《觀棋爛柯》{ep}爛柯旁棋局落葉，老樹間對弈無人。傳說中的故事居然是真的! #古風 #玄幻"));
+//        locals.put("zh-Hans", new UploadY2bDto.LocalTitle()
+//            .setTitle(title));
+        Pair<Integer, Integer> pair = buildPage(1, 10, 80);
         uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
-            "PLCEcFGOrM-f_5JO5R07DduMq-a4HHvMGp");
+            "PLCEcFGOrM-f_5JO5R07DduMq-a4HHvMGp", locals, DEFAULT_SKIP_TIMESTAMP, true);
+    }
+
+    @Test
+    @ApiOperation("合集(我能看到成功率|3.5min|周三)上传")
+    public void upload132() {
+        // https://www.gaoding.com/design?id=19564228136026199&simple=1&mode=user
+        String title = "《我能看到成功率》{ep}现实世界生活失意的白武突然获得了看到事件成功率的异能？从此摇身一变百万富翁？美女对他一见钟情？利用成功率走向人生巅峰！ #异能 #都市";
+        Long channelId = 1L;
+        String url = "https://v.douyin.com/NvHfpQ6/";
+        List<String> addTags = List.of("异能", "都市");
+        String thumbFile = "http://cdn.hocgin.top/file/4889082bdf1a4d78877d7b8a24590479.jpeg";
+
+        Pair<Integer, Integer> pair = buildPage(1, 10, 0);
+        uploadCollect(channelId, url, title, addTags, thumbFile, pair.getLeft(), pair.getRight(),
+            null);
     }
 
     @Test
@@ -254,5 +273,13 @@ public class HandleTests extends AbsY2bUpload {
         options.setTags(addTags);
         options.setDescription(desc);
         upload(channelId, videoFile, options);
+    }
+
+    private Long getChannelId() {
+        return Lists.newArrayList(
+            1L,
+            1513887745225306113L,
+            1513891389962240001L
+        ).get(1);
     }
 }
