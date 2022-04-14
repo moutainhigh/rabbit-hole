@@ -29,8 +29,8 @@ public class RechargeController {
 
     @PostMapping(MinaConstant.RECHARGE_CALLBACK_URI)
     @ApiOperation("充值回调通知")
-    public Result<String> rechargeNotify(@PathVariable("orderNo") String orderNo) {
+    public String rechargeNotify(@PathVariable("orderNo") String orderNo) {
         service.rechargeNotify(orderNo);
-        return Result.success();
+        return "success";
     }
 }
