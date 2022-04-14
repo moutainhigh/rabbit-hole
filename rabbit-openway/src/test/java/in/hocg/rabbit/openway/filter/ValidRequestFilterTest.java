@@ -8,9 +8,6 @@ import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import in.hocg.rabbit.openway.basic.data.RequestBody;
-import in.hocg.rabbit.openway.constants.OpenwayContants;
-import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
@@ -28,21 +25,21 @@ import java.util.Map;
 class ValidRequestFilterTest {
     String APP_ID = "--使用你的APPID--";
     String SECRET_KEY = "--使用你的 SECRET KEY--";
+    String signType = "md5";
 
     @Test
     public void queryProduct() {
         System.out.println("查询产品------------------");
-        RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
         body.setAppid(APP_ID);
         String method = "ER0003";
         body.setMethod(method);
-        body.setSignType(signType.getType().toLowerCase());
+        body.setSignType(signType.toLowerCase());
         body.setTimestamp(LocalDateTime.now());
         body.setBizContent(new HashMap<>() {{
         }});
         String json = JSONUtil.toJsonStr(body);
-        body.setSign(OpenwayUtils.getSign(json, signType, SECRET_KEY));
+        body.setSign(getSign(json, signType, SECRET_KEY));
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
@@ -56,18 +53,17 @@ class ValidRequestFilterTest {
     @Test
     public void queryRechargeResult() {
         System.out.println("查询充值结果------------------");
-        RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
         body.setAppid(APP_ID);
         String method = "ER0002";
         body.setMethod(method);
-        body.setSignType(signType.getType().toLowerCase());
+        body.setSignType(signType.toLowerCase());
         body.setTimestamp(LocalDateTime.now());
         body.setBizContent(new HashMap<>() {{
             put("outOrderNo", "--填写单号--");
         }});
         String json = JSONUtil.toJsonStr(body);
-        body.setSign(OpenwayUtils.getSign(json, signType, SECRET_KEY));
+        body.setSign(getSign(json, signType, SECRET_KEY));
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
@@ -80,12 +76,11 @@ class ValidRequestFilterTest {
 
     @Test
     public void recharge() {
-        RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
         body.setAppid(APP_ID);
         String method = "ER0001";
         body.setMethod(method);
-        body.setSignType(signType.getType().toLowerCase());
+        body.setSignType(signType.toLowerCase());
         body.setTimestamp(LocalDateTime.now());
         body.setBizContent(new HashMap<>() {{
             put("outOrderNo", "TEST_" + System.currentTimeMillis());
@@ -95,7 +90,7 @@ class ValidRequestFilterTest {
             put("notifyUrl", null);
         }});
         String json = JSONUtil.toJsonStr(body);
-        body.setSign(OpenwayUtils.getSign(json, signType, SECRET_KEY));
+        body.setSign(getSign(json, signType, SECRET_KEY));
 
         String reqBody = JSONUtil.toJsonStr(body);
         String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
@@ -114,10 +109,10 @@ class ValidRequestFilterTest {
         String respBody = result.get(method);
         String searchStr = "\"" + method + "\":";
         int startIndex = StrUtil.ordinalIndexOf(body, searchStr, 1) + searchStr.length();
-        return Pair.of(StrUtil.subWithLength(body, startIndex, respBody.length()), result.get(OpenwayContants.SIGN));
+        return Pair.of(StrUtil.subWithLength(body, startIndex, respBody.length()), result.get("sign"));
     }
 
-    public String getSign(String requestBody, RequestBody.SignType signType, String secretKey) {
+    public String getSign(String requestBody, String signType, String secretKey) {
         JSONObject params = JSONUtil.toBean(requestBody, JSONObject.class);
         String signStr = params.keySet().stream().sorted(Comparator.comparing(o -> o))
             .filter(StrUtil::isNotBlank)
