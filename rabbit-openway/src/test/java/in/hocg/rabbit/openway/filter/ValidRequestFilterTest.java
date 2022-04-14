@@ -12,6 +12,7 @@ import in.hocg.rabbit.openway.basic.data.RequestBody;
 import in.hocg.rabbit.openway.constants.OpenwayContants;
 import in.hocg.rabbit.openway.utils.OpenwayUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -26,8 +27,8 @@ import java.util.Map;
  */
 class ValidRequestFilterTest {
 
-    public static void main(String[] args) {
-        System.out.println("正确请求------------------");
+    public void queryProduct() {
+        System.out.println("查询产品------------------");
         RequestBody.SignType signType = RequestBody.SignType.MD5;
         ToRequestBody body = new ToRequestBody();
         body.setAppid("all_test");
@@ -41,27 +42,67 @@ class ValidRequestFilterTest {
         body.setSign(OpenwayUtils.getSign(json, signType, "hocgin"));
 
         String reqBody = JSONUtil.toJsonStr(body);
-        String resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
-//        String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
-
+        String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
         System.out.println("Resp::" + resp);
         Pair<String, String> result = getBody(resp, method);
         System.out.println("Requ::" + reqBody);
         System.out.println("Body::" + result.getLeft());
         System.out.println("Sign::" + result.getRight());
-
-
-//        System.out.println("错误请求------------------");
-//        body.setAppid(null);
-//        reqBody = JSONUtil.toJsonStr(body);
-//        resp = HttpUtil.post("http://127.0.0.1:20010", reqBody);
-//        System.out.println("Resp::" + resp);
-//
-//        System.out.println("不支持请求------------------");
-//
-//        resp = HttpUtil.get("http://127.0.0.1:20010");
-//        System.out.println("Resp::" + resp);
     }
+
+    @Test
+    public void queryRechargeResult() {
+        System.out.println("查询充值结果------------------");
+        RequestBody.SignType signType = RequestBody.SignType.MD5;
+        ToRequestBody body = new ToRequestBody();
+        body.setAppid("all_test");
+        String method = "ER0002";
+        body.setMethod(method);
+        body.setSignType(signType.getType().toLowerCase());
+        body.setTimestamp(LocalDateTime.now());
+        body.setBizContent(new HashMap<>() {{
+            put("outOrderNo", "9gxtqehm1ivb2z5m");
+        }});
+        String json = JSONUtil.toJsonStr(body);
+        body.setSign(OpenwayUtils.getSign(json, signType, "hocgin"));
+
+        String reqBody = JSONUtil.toJsonStr(body);
+        String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
+        System.out.println("Resp::" + resp);
+        Pair<String, String> result = getBody(resp, method);
+        System.out.println("Requ::" + reqBody);
+        System.out.println("Body::" + result.getLeft());
+        System.out.println("Sign::" + result.getRight());
+    }
+
+    @Test
+    public void recharge() {
+        RequestBody.SignType signType = RequestBody.SignType.MD5;
+        ToRequestBody body = new ToRequestBody();
+        body.setAppid("all_test");
+        String method = "ER0001";
+        body.setMethod(method);
+        body.setSignType(signType.getType().toLowerCase());
+        body.setTimestamp(LocalDateTime.now());
+        body.setBizContent(new HashMap<>() {{
+            put("outOrderNo", "TEST_" + System.currentTimeMillis());
+            put("productId", "5");
+            put("account", "13600747016");
+            put("maxCostAmt", null);
+            put("notifyUrl", null);
+        }});
+        String json = JSONUtil.toJsonStr(body);
+        body.setSign(OpenwayUtils.getSign(json, signType, "hocgin"));
+
+        String reqBody = JSONUtil.toJsonStr(body);
+        String resp = HttpUtil.post("https://openapi.hocgin.top", reqBody);
+        System.out.println("Resp::" + resp);
+        Pair<String, String> result = getBody(resp, method);
+        System.out.println("Requ::" + reqBody);
+        System.out.println("Body::" + result.getLeft());
+        System.out.println("Sign::" + result.getRight());
+    }
+
 
     public static Pair<String, String> getBody(String body, String method) {
         Map<String, String> result = JSONUtil.toBean(body, new TypeReference<>() {
