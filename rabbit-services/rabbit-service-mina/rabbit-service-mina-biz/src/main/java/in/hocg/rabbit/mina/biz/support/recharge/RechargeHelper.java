@@ -54,7 +54,7 @@ public class RechargeHelper {
         params.put("hostname", hostname);
         params.put("orderNo", orderNo);
 
-        return StrUtil.format("{hostname}" + MinaConstant.RECHARGE_CALLBACK_URI, params);
+        return StrUtil.format("{hostname}/mina" + MinaConstant.RECHARGE_CALLBACK_URI, params);
     }
 
     public static void checkThrow(Object ro, Long userId, String sign) {
