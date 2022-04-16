@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -30,5 +31,10 @@ public class PostCategoryServiceImpl extends AbstractServiceImpl<PostCategoryMap
     @Override
     public List<PostCategoryOrdinaryVo> listMain() {
         return new ArrayList<>(as(list(), PostCategoryOrdinaryVo.class));
+    }
+
+    @Override
+    public Optional<PostCategory> getByEncoding(String encoding) {
+        return lambdaQuery().eq(PostCategory::getEncoding, encoding).oneOpt();
     }
 }

@@ -10,6 +10,7 @@ import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
@@ -78,4 +79,6 @@ public interface UserService extends AbstractService<User> {
     void forgot(ForgotRo ro);
 
     void register(RegisterRo ro);
+
+    UserInfoMeVo getMeUserInfoById(Long id);
 }

@@ -4,6 +4,7 @@ package in.hocg.rabbit.ums.biz.controller;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.service.UserService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
@@ -46,10 +47,20 @@ public class AccountController {
         return ResponseUtils.preview(service.getByUsernameOrEmailOrPhone(username).map(User::getAvatarUrl).orElse(null));
     }
 
+    @UseLogger
+    @ResponseBody
+    @GetMapping("/me")
+    @ApiOperation("获取当前用户信息")
+    public Result<UserInfoMeVo> getMeUserInfo(@RequestParam(value = "force", defaultValue = "true") Boolean force) {
+        Optional<Long> userIdOpt = force ? Optional.ofNullable(UserContextHolder.getUserIdThrow()) : UserContextHolder.getUserId();
+        return Result.success(userIdOpt.map(service::getMeUserInfoById).orElse(null));
+    }
+
     @UseLogger("获取当前用户信息")
     @ApiOperation("获取当前用户信息")
     @GetMapping
     @ResponseBody
+    @Deprecated(/**⚠️即将废弃⚠️ 请考虑使用 getMeUserInfo **/)
     public Result<AccountComplexVo> getCurrentAccount(@RequestParam(value = "force", defaultValue = "true") Boolean force) {
         Optional<Long> userOpt;
         if (force) {

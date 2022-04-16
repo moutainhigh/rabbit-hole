@@ -34,6 +34,7 @@ import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
 import in.hocg.rabbit.ums.biz.service.AuthorityService;
 import in.hocg.rabbit.ums.biz.service.RoleService;
 import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
@@ -417,6 +418,11 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
         this.createAccount(createAccountRo);
+    }
+
+    @Override
+    public UserInfoMeVo getMeUserInfoById(Long id) {
+        return mapping.asUserInfoMeVo(getById(id));
     }
 
     private void forgotEmail(@Validated ForgotRo.EmailMode ro) {

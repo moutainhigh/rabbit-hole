@@ -8,6 +8,7 @@ import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -54,4 +55,7 @@ public interface UserMapping {
     @Mapping(target = "createdIp", ignore = true)
     @Mapping(target = "avatar", ignore = true)
     CreateAccountRo asCreateAccountRo(RegisterRo ro);
+
+    @Mapping(target = "genderName", ignore = true)
+    UserInfoMeVo asUserInfoMeVo(User entity);
 }
