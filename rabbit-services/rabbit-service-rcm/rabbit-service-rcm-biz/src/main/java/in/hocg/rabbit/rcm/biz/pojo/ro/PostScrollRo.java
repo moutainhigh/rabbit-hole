@@ -17,11 +17,11 @@ import lombok.experimental.Accessors;
 public class PostScrollRo extends ScrollRo {
     @ApiModelProperty("类目")
     private String category;
+
     @ApiModelProperty("草稿状态")
     private Boolean drafted;
     @ApiModelProperty("启用状态")
     private Boolean enabled;
-
     @ApiModelProperty(value = "类目", hidden = true)
     private Long categoryId;
 }
