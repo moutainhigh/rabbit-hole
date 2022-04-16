@@ -1,5 +1,6 @@
 package in.hocg.rabbit.rcm.biz.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
@@ -8,14 +9,19 @@ import cn.hutool.extra.tokenizer.Result;
 import cn.hutool.extra.tokenizer.TokenizerEngine;
 import cn.hutool.extra.tokenizer.TokenizerUtil;
 import cn.hutool.extra.tokenizer.Word;
+import cn.hutool.extra.tokenizer.engine.hanlp.HanLPEngine;
+import cn.hutool.extra.tokenizer.engine.hanlp.HanLPWord;
 import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hankcs.hanlp.HanLP;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.common.constant.GlobalConstant;
+import in.hocg.rabbit.common.utils.TextUtils;
+import in.hocg.rabbit.common.utils.tokenizer.PostKeywordFilter;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.convert.DocContentConvert;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
@@ -36,6 +42,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -71,8 +78,8 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         String content = ro.getContent();
         String rContent = HtmlUtil.removeHtmlTag(content);
 
-        String description = StrUtil.sub(rContent, 0, 200);
-        String keyword = IterUtil.join(tokenizer(rContent), ";");
+        String description = TextUtils.getSummary(rContent, 200);
+        String keyword = CollUtil.join(TextUtils.getKeyword(rContent, 5), ";");
         DocContent entity = mapping.asDocContent(ro)
             .setDocId(docId)
             .setKeyword(keyword)
@@ -138,14 +145,4 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
             .update();
     }
 
-    public List<String> tokenizer(String text) {
-        TokenizerEngine engine = TokenizerUtil.createEngine();
-        Result result = engine.parse(text);
-        return StreamSupport.stream(result.spliterator(), false)
-            .map(Word::getText)
-            .map(StrUtil::trimToNull)
-            .filter(Objects::nonNull)
-            .limit(10)
-            .collect(Collectors.toList());
-    }
 }
