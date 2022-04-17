@@ -31,7 +31,12 @@ public class PostCategoryServiceImpl extends AbstractServiceImpl<PostCategoryMap
 
     @Override
     public List<PostCategoryOrdinaryVo> listMain() {
-        return new ArrayList<>(as(list(), PostCategoryOrdinaryVo.class));
+        PostCategory recommend = new PostCategory();
+        recommend.setTitle("推荐");
+        recommend.setEncoding("recommend");
+        List<PostCategory> list = List.of(recommend);
+        list.addAll(list());
+        return new ArrayList<>(as(list, PostCategoryOrdinaryVo.class));
     }
 
     @Override
