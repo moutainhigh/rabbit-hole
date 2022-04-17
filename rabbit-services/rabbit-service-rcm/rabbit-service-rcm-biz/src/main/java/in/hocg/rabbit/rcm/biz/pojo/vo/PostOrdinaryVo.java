@@ -66,12 +66,15 @@ public class PostOrdinaryVo implements Serializable {
     private Long replyCount;
 
     @Data
+    @InjectNamed
     @ApiModel(description = "回复人")
     public static class ReplyUser implements Serializable {
         private Long replyUserId;
         @ApiModelProperty("名称")
+        @ChaosNamed(idFor = "replyUserId", type = ChaosNamedType.Userid2Nickname)
         private String replyUserName;
         @ApiModelProperty("头像")
+        @ChaosNamed(idFor = "replyUserId", type = ChaosNamedType.Userid2AvatarUrl)
         private String replyUserAvatarUrl;
     }
 }
