@@ -62,7 +62,7 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
     @Transactional(rollbackFor = Exception.class)
     public Long create(PostCreateRo ro) {
         Post entity = mapping.asPost(ro);
-        entity.setTags(CollUtil.join(ro.getTags(), ","));
+        entity.setTags(StrUtil.emptyToDefault(CollUtil.join(CollUtil.sub(ro.getTags(), 0, 4), ","), "讨论"));
         entity.setEnabled(true);
         saveOrUpdate(entity);
 
