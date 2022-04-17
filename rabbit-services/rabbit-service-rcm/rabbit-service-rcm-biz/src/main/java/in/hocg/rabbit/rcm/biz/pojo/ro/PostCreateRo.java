@@ -28,7 +28,7 @@ public class PostCreateRo {
     @ApiModelProperty("类目")
     private Long categoryId;
     @ApiModelProperty("附件图片")
-    private List<String> fileUrls;
+    private List<String> files;
     @ApiModelProperty("草稿状态")
     private Boolean drafted = true;
 }

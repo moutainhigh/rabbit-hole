@@ -4,6 +4,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConve
 import in.hocg.rabbit.rcm.biz.convert.PostCategoryConvert;
 import in.hocg.rabbit.rcm.biz.entity.PostCategory;
 import in.hocg.rabbit.rcm.biz.mapper.PostCategoryMapper;
+import in.hocg.rabbit.rcm.biz.pojo.ro.PostCategoryCompleteRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostCategoryOrdinaryVo;
 import in.hocg.rabbit.rcm.biz.service.PostCategoryService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
@@ -36,5 +37,10 @@ public class PostCategoryServiceImpl extends AbstractServiceImpl<PostCategoryMap
     @Override
     public Optional<PostCategory> getByEncoding(String encoding) {
         return lambdaQuery().eq(PostCategory::getEncoding, encoding).oneOpt();
+    }
+
+    @Override
+    public List<PostCategoryOrdinaryVo> complete(PostCategoryCompleteRo ro) {
+        return as(baseMapper.complete(ro, ro.ofPage()), PostCategoryOrdinaryVo.class).getRecords();
     }
 }

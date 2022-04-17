@@ -2,6 +2,7 @@ package in.hocg.rabbit.rcm.biz.service;
 
 import in.hocg.rabbit.rcm.biz.entity.PostCategory;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.rcm.biz.pojo.ro.PostCategoryCompleteRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostCategoryOrdinaryVo;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface PostCategoryService extends AbstractService<PostCategory> {
     List<PostCategoryOrdinaryVo> listMain();
 
     Optional<PostCategory> getByEncoding(String encoding);
+
+    List<PostCategoryOrdinaryVo> complete(PostCategoryCompleteRo ro);
 }

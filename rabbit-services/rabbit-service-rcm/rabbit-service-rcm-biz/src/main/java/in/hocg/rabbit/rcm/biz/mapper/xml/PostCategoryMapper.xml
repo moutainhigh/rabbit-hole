@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.rabbit.rcm.biz.mapper.PostCategoryMapper">
-
+  <select id="complete" resultType="in.hocg.rabbit.rcm.biz.entity.PostCategory">
+    SELECT rpc.*
+    FROM rcm_post_category rpc
+    <where>
+      AND rpc.deleted_at IS NULL
+      <if test="ro.keyword != null">
+        AND (rpc.encoding = #{ro.keyword}
+          OR rpc.title = #{ro.keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

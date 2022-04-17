@@ -22,6 +22,7 @@ import java.util.List;
 @InjectNamed
 @Accessors(chain = true)
 public class PostOrdinaryVo implements Serializable {
+    private Long id;
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("简介")
