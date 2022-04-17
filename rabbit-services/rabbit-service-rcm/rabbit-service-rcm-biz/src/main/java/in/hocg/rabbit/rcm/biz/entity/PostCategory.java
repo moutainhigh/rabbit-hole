@@ -5,6 +5,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.Com
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.LogicDeletedEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,8 +22,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("rcm_post_classify")
-public class PostCategory extends CommonEntity<PostCategory> {
+@TableName("rcm_post_category")
+public class PostCategory extends LogicDeletedEntity<PostCategory> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,12 +33,6 @@ public class PostCategory extends CommonEntity<PostCategory> {
     @ApiModelProperty("标题")
     @TableField("title")
     private String title;
-    @ApiModelProperty("删除时间")
-    @TableField("deleted_at")
-    private LocalDateTime deletedAt;
-    @ApiModelProperty("删除者")
-    @TableField("deleter")
-    private Long deleter;
 
 
 
