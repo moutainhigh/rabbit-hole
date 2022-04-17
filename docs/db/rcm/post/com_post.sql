@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `rcm_post_classify`;
-CREATE TABLE `rcm_post_classify`
+DROP TABLE IF EXISTS `rcm_post_category`;
+CREATE TABLE `rcm_post_category`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
@@ -39,7 +39,7 @@ CREATE TABLE `rcm_post`
         COMMENT '文章内容',
     `tags`            VARCHAR(512)
         COMMENT '文章标签',
-    `classify_id`     BIGINT       NOT NULL
+    `category_id`     BIGINT       NOT NULL
         COMMENT '类目',
     `image_url`       VARCHAR(256)
         COMMENT '展览图',
