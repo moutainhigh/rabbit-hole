@@ -8,4 +8,5 @@ package in.hocg.rabbit.rcm.api.named;
  */
 public final class RcmNamedType {
     public final static String DataDictName = "DataDictName";
+    public final static String CategoryName = "CategoryName";
 }

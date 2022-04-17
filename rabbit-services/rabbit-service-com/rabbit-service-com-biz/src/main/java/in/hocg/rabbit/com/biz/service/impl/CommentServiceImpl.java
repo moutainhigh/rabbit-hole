@@ -2,9 +2,12 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.convert.CommentConvert;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.entity.CommentUserAction;
@@ -40,8 +43,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static in.hocg.rabbit.common.constant.GlobalConstant.SQL_LAST_ROW;
 
 /**
  * <p>
@@ -52,6 +59,7 @@ import java.util.Optional;
  * @since 2021-01-13
  */
 @Service
+@UseConvert(CommentConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     implements CommentService {
@@ -251,6 +259,15 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     @Override
     public Boolean hasReply(Long id) {
         return has(TreeEntity::getParentId, id, null);
+    }
+
+    @Override
+    public List<LastCommentVo> listLastComment(String refType, Long refId, Integer limit) {
+        final Long targetId = commentTargetService.getOrCreate(refType, refId);
+        List<Comment> result = lambdaQuery().eq(Comment::getTargetId, targetId)
+            .orderByDesc(CommonEntity::getCreatedAt)
+            .last("LIMIT " + limit).list();
+        return new ArrayList<>(as(result, LastCommentVo.class));
     }
 
     private Long countRightLikeTreePath(String treePath) {

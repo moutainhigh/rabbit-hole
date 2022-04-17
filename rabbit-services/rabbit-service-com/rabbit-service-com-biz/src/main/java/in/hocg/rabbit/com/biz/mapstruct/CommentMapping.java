@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.mapstruct;
 
+import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentClientRo;
 import in.hocg.rabbit.com.biz.pojo.ro.CommentInsertRo;
@@ -74,4 +75,6 @@ public interface CommentMapping {
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     Comment asComment(CommentClientRo ro);
+
+    LastCommentVo asLastCommentVo(Comment entity);
 }
