@@ -170,6 +170,7 @@ boot:
 
         ,/ums/account/*:avatar
         ,/ums/account
+        ,/ums/account/me
 
         ,/mina/game-card/_complete
         ,/mina/game/room/**
