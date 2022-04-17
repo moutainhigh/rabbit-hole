@@ -24,4 +24,8 @@ public interface RcmNamedServiceApi extends NamedService {
     @PostMapping(value = CONTEXT_ID + "/loadByDataDict", headers = RcmServiceName.FEIGN_HEADER)
     Map<String, Object> loadByDataDict(@RequestBody NamedArgs args);
 
+    @NamedHandler(RcmNamedType.CategoryName)
+    @PostMapping(value = CONTEXT_ID + "/loadByCategoryName", headers = RcmServiceName.FEIGN_HEADER)
+    Map<String, Object> loadByCategoryName(@RequestBody NamedArgs args);
+
 }
