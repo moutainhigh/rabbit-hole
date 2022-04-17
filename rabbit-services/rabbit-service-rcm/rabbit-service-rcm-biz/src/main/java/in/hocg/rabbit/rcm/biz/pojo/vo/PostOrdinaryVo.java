@@ -3,6 +3,7 @@ package in.hocg.rabbit.rcm.biz.pojo.vo;
 import in.hocg.boot.named.annotation.InjectNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamed;
 import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
+import in.hocg.rabbit.rcm.api.named.RcmNamed;
 import in.hocg.rabbit.rcm.api.named.RcmNamedType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,7 +35,7 @@ public class PostOrdinaryVo implements Serializable {
     private List<String> tags;
     @ApiModelProperty("类目")
     private Long categoryId;
-    @ChaosNamed(idFor = "categoryId", type = RcmNamedType.CategoryName)
+    @RcmNamed(idFor = "categoryId", type = RcmNamedType.CategoryName)
     private String categoryName;
 
     @ApiModelProperty("展览图")
