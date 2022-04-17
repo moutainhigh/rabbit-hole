@@ -30,7 +30,7 @@ public class PostCreateRo {
     @ApiModelProperty("附件图片")
     private List<String> files;
     @ApiModelProperty("草稿状态")
-    private Boolean drafted = true;
+    private Boolean drafted = false;
 
     @ApiModelProperty(hidden = true)
     private Long userId;
