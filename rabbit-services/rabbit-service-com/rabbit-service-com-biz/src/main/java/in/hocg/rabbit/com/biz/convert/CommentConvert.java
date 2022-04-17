@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.convert;
 
+import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.entity.UserAddress;
@@ -33,6 +34,9 @@ public class CommentConvert {
     private final UserServiceApi accountServiceApi;
     private final CommentUserActionService commentUserActionService;
 
+    public LastCommentVo asLastCommentVo(Comment entity) {
+        return mapping.asLastCommentVo(entity);
+    }
 
     public CommentClientVo convertCommentClientVo(Comment entity) {
         CommentClientVo result = mapping.asCommentClientVo(entity);

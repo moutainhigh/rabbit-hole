@@ -2,6 +2,7 @@ package in.hocg.rabbit.com.biz.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.pojo.ro.*;
 import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
@@ -10,6 +11,8 @@ import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.RootCommentComplexVo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -67,4 +70,6 @@ public interface CommentService extends AbstractService<Comment> {
     void report(CommentReportRo ro);
 
     Boolean hasReply(Long id);
+
+    List<LastCommentVo> listLastComment(String refType, Long refId, Integer limit);
 }
