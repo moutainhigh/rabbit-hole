@@ -31,4 +31,7 @@ public class PostCreateRo {
     private List<String> files;
     @ApiModelProperty("草稿状态")
     private Boolean drafted = true;
+
+    @ApiModelProperty(hidden = true)
+    private Long userId;
 }

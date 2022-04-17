@@ -6,7 +6,9 @@ import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.rabbit.common.datadict.common.RefType;
 import in.hocg.rabbit.rcm.api.enums.DocType;
+import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.convert.PostConvert;
 import in.hocg.rabbit.rcm.biz.entity.Post;
@@ -63,11 +65,18 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
         entity.setTags(CollUtil.join(ro.getTags(), ","));
         entity.setEnabled(true);
         saveOrUpdate(entity);
+
+        CreateDocRo createDocRo = new CreateDocRo();
+        createDocRo.setRefId(entity.getId());
+        createDocRo.setRefType(RefType.Post.getCodeStr());
+        createDocRo.setOwnerUserId(ro.getUserId());
+        Long docId = docService.createDoc(createDocRo);
+
         PublishDocTextRo docTextRo = new PublishDocTextRo();
         docTextRo.setContent(ro.getContent());
-        docTextRo.setDoctype(DocType.Rich.getCode());
+        docTextRo.setDoctype(DocType.Html.getCode());
         docTextRo.setPublished(!entity.getDrafted());
-        docTextRo.setDocId(entity.getId());
+        docTextRo.setDocId(docId);
         docService.publishContent(docTextRo);
         return entity.getId();
     }

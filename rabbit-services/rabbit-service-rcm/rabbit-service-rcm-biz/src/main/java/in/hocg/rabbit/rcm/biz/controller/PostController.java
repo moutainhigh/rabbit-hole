@@ -7,6 +7,7 @@ import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostScrollRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
 import in.hocg.rabbit.rcm.biz.service.PostService;
+import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,7 @@ public class PostController {
     @ApiOperation("创建 - 贴文")
     @PostMapping("/create")
     public Result<Long> create(@RequestBody PostCreateRo ro) {
+        ro.setUserId(UserContextHolder.getUserIdThrow());
         return Result.success(service.create(ro));
     }
 }

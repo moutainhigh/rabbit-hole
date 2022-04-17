@@ -122,7 +122,7 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         pushDocContentRo.setContent(ro.getContent());
         pushDocContentRo.setDoctype(ro.getDoctype());
         Long contentId = pushDrafted(ro.getDocId(), pushDocContentRo);
-        if (ObjectUtil.defaultIfNull(ro.getPublished(), false)) {
+        if (!ObjectUtil.defaultIfNull(ro.getPublished(), false)) {
             updatePublishedById(contentId);
         }
     }

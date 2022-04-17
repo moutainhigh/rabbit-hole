@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @UseDataDictKey(value = RcmDataDictKeys.DOC_TYPE, description = "文档类型")
 public enum DocType implements DataDictEnum {
     Text("text", "纯文本"),
+    Html("html", "富文本"),
     Rich("rich", "富文本"),
     Markdown("markdown", "Markdown"),
     ;
