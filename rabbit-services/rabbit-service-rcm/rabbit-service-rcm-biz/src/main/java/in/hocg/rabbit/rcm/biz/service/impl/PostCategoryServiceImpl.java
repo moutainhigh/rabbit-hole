@@ -1,5 +1,6 @@
 package in.hocg.rabbit.rcm.biz.service.impl;
 
+import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.rabbit.rcm.biz.convert.PostCategoryConvert;
 import in.hocg.rabbit.rcm.biz.entity.PostCategory;
@@ -34,7 +35,7 @@ public class PostCategoryServiceImpl extends AbstractServiceImpl<PostCategoryMap
         PostCategory recommend = new PostCategory();
         recommend.setTitle("推荐");
         recommend.setEncoding("recommend");
-        List<PostCategory> list = List.of(recommend);
+        List<PostCategory> list = Lists.newArrayList(recommend);
         list.addAll(list());
         return new ArrayList<>(as(list, PostCategoryOrdinaryVo.class));
     }

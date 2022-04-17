@@ -2,6 +2,7 @@ package in.hocg.rabbit.rcm.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
@@ -24,6 +25,9 @@ import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * [内容模块] 帖文表 服务实现类
@@ -43,7 +47,8 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
     @Override
     public IScroll<PostOrdinaryVo> scroll(PostScrollRo ro) {
         String category = ro.getCategory();
-        if (StrUtil.isNotBlank(category)) {
+        List<String> customCategory = Lists.newArrayList("recommend", "hot");
+        if (StrUtil.isNotBlank(category) && !customCategory.contains(category)) {
             PostCategory postCategory = postCategoryService.getByEncoding(category)
                 .orElseThrow(() -> new IllegalArgumentException("分类不存在"));
             ro.setCategoryId(postCategory.getId());
