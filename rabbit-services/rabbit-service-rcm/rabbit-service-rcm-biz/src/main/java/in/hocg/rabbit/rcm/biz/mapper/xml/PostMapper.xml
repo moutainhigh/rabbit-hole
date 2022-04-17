@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.rabbit.rcm.biz.mapper.PostMapper">
+  <select id="scroll" resultType="in.hocg.rabbit.rcm.biz.entity.Post">
+    SELECT rp.*
+    FROM rcm_post rp
+    <where>
+      <if test="ro.categoryId != null">
+        AND rp.category_id = #{ro.categoryId}
+      </if>
+      <if test="ro.drafted != null">
+        AND rp.drafted = #{ro.drafted}
+      </if>
+      <if test="ro.enabled != null">
+        AND rp.enabled = #{ro.enabled}
+      </if>
+    </where>
+    ORDER BY rp.created_at DESC
+  </select>
+</mapper>

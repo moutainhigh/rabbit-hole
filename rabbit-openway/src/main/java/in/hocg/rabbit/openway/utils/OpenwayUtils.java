@@ -29,7 +29,7 @@ public class OpenwayUtils {
             .reduce((a, b) -> StrUtil.format("{}&{}", a, b))
             .map(s -> s + "&secretKey=" + secretKey)
             .orElseThrow();
-        return OpenwayUtils.getSignStr(signStr);
+        return getSignStr(signStr);
     }
 
     public String getSignStr(String str) {

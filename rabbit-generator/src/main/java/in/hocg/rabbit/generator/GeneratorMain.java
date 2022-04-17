@@ -16,13 +16,9 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.OWP, false,
-            "owp_developer",
-            "owp_developer_app",
-            "owp_api",
-            "owp_authority",
-            "owp_authority_api_ref",
-            "owp_authority_app_ref",
+            Module.RCM, false,
+            "rcm_post_classify",
+            "rcm_post",
             "");
     }
 
