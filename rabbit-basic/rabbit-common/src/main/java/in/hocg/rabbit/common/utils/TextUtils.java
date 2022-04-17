@@ -9,6 +9,7 @@ import com.hankcs.hanlp.seg.common.Term;
 import in.hocg.rabbit.common.utils.tokenizer.PostKeywordFilter;
 import lombok.experimental.UtilityClass;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -23,12 +24,18 @@ import java.util.stream.Collectors;
 public class TextUtils {
 
     public List<String> getKeyword(String text, int maxLength) {
+        if (StrUtil.isBlank(text)) {
+            return Collections.emptyList();
+        }
         return HanLP.segment(text).stream().filter(PostKeywordFilter.FILTER::shouldInclude).map(term -> term.word)
             .distinct().limit(maxLength)
             .collect(Collectors.toList());
     }
 
     public String getSummary(String text, int maxLength) {
+        if (StrUtil.isBlank(text)) {
+            return null;
+        }
         String rContent = HtmlUtil.removeHtmlTag(text);
         return StrUtil.sub(rContent, 0, maxLength);
     }
