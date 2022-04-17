@@ -151,8 +151,8 @@ boot:
 
         ,/rcm/doc/*
         ,/rcm/post/_scroll
-        ,/rcm/post/create
         ,/rcm/post-category/main
+        ,/rcm/post-category/_complete
 
         ,/chaos/sms-code
         ,/chaos/address4ip
