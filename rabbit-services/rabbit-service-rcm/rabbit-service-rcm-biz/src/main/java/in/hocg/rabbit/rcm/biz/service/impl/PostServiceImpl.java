@@ -84,7 +84,7 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
         update.setId(entity.getId());
         update.setDocTextId(docId);
         saveOrUpdate(update);
-        return entity.getId();
+        return docId;
     }
 
 }
