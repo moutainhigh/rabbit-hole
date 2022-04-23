@@ -73,6 +73,7 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
         Long docId = docService.createDoc(createDocRo);
 
         PublishDocTextRo docTextRo = new PublishDocTextRo();
+        docTextRo.setTitle(ro.getTitle());
         docTextRo.setContent(ro.getContent());
         docTextRo.setDoctype(DocType.Html.getCode());
         docTextRo.setPublished(!entity.getDrafted());

@@ -107,6 +107,7 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
     @Override
     public void publishContent(PublishDocTextRo ro) {
         PushDocContentRo pushDocContentRo = new PushDocContentRo();
+        pushDocContentRo.setTitle(ro.getTitle());
         pushDocContentRo.setContent(ro.getContent());
         pushDocContentRo.setDoctype(ro.getDoctype());
         Long contentId = pushDrafted(ro.getDocId(), pushDocContentRo);
