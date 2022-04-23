@@ -1,6 +1,7 @@
 package in.hocg.rabbit.rcm.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
@@ -135,7 +136,7 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 200))
     public void incrementViewCount(Long docId) {
         Doc doc = getById(docId);
-        Integer viewCount = doc.getViewCount();
+        Long viewCount = ObjectUtil.defaultIfNull(doc.getViewCount(), 0L);
         Assert.isTrue(lambdaUpdate().eq(Doc::getId, docId).eq(Doc::getViewCount, viewCount).set(Doc::getViewCount, (viewCount + 1)).update());
     }
 

@@ -1,11 +1,7 @@
 package in.hocg.rabbit.com.biz.convert;
 
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
-import in.hocg.rabbit.com.api.pojo.vo.UserAddressFeignVo;
 import in.hocg.rabbit.com.biz.entity.Comment;
-import in.hocg.rabbit.com.biz.entity.UserAddress;
 import in.hocg.rabbit.com.biz.mapstruct.CommentMapping;
-import in.hocg.rabbit.com.biz.mapstruct.UserAddressMapping;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentUserVo;

@@ -9,7 +9,6 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.Com
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.convert.CommentConvert;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.entity.CommentUserAction;

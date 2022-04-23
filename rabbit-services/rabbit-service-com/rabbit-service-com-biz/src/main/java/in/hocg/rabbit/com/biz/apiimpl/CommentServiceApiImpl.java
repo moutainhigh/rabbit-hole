@@ -2,7 +2,6 @@ package in.hocg.rabbit.com.biz.apiimpl;
 
 import in.hocg.rabbit.com.api.CommentServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

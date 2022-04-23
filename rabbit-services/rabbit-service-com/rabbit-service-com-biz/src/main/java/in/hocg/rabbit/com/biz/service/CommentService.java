@@ -3,7 +3,6 @@ package in.hocg.rabbit.com.biz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.pojo.ro.*;
 import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
