@@ -6,17 +6,16 @@ import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostScrollRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostViewVo;
 import in.hocg.rabbit.rcm.biz.service.PostService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.sql.ResultSet;
 
 /**
  * <p>

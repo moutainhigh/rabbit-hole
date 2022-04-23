@@ -14,13 +14,13 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface DocContentMapping {
+    @Mapping(target = "keyword", ignore = true)
+    @Mapping(target = "summary", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "keyword", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dropFlag", ignore = true)
     @Mapping(target = "docId", ignore = true)
-    @Mapping(target = "description", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     DocContent asDocContent(PushDocContentRo ro);

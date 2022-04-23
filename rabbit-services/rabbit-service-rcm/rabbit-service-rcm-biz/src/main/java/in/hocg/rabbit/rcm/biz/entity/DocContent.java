@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractEntity;
+
 import java.io.Serializable;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
@@ -14,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -45,9 +49,12 @@ public class DocContent extends CommonEntity<DocContent> {
     @TableField("content")
     private String content;
     @ApiModelProperty("概述")
-    @TableField("description")
-    private String description;
-    @ApiModelProperty("关键词(;分割)")
+    @TableField("summary")
+    private String summary;
+    @ApiModelProperty("标题")
+    @TableField("title")
+    private String title;
+    @ApiModelProperty("关键词")
     @TableField("keyword")
     private String keyword;
 }

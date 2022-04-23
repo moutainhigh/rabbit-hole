@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * Created by hocgin on 2022/2/23
  * email: hocgin@gmail.com
@@ -28,7 +30,9 @@ public class DraftDocVo {
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("概述")
-    private String description;
+    private String summary;
+    @ApiModelProperty("关键词")
+    private List<String> keyword;
     @ApiModelProperty("是否草稿")
     private Boolean draft;
 }

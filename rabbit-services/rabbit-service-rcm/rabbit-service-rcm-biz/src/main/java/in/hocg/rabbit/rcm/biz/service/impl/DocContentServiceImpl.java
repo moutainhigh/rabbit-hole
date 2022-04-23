@@ -1,27 +1,18 @@
 package in.hocg.rabbit.rcm.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.tokenizer.Result;
-import cn.hutool.extra.tokenizer.TokenizerEngine;
-import cn.hutool.extra.tokenizer.TokenizerUtil;
-import cn.hutool.extra.tokenizer.Word;
-import cn.hutool.extra.tokenizer.engine.hanlp.HanLPEngine;
-import cn.hutool.extra.tokenizer.engine.hanlp.HanLPWord;
 import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hankcs.hanlp.HanLP;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.common.constant.GlobalConstant;
+import in.hocg.rabbit.common.utils.DbUtils;
 import in.hocg.rabbit.common.utils.TextUtils;
-import in.hocg.rabbit.common.utils.tokenizer.PostKeywordFilter;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.convert.DocContentConvert;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
@@ -29,7 +20,7 @@ import in.hocg.rabbit.rcm.biz.mapper.DocContentMapper;
 import in.hocg.rabbit.rcm.biz.mapstruct.DocContentMapping;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.HistoryDocContentVo;
-import in.hocg.rabbit.rcm.biz.pojo.vo.RollbackDocRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 import in.hocg.rabbit.rcm.biz.service.DocContentService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
@@ -38,13 +29,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * <p>
@@ -78,12 +64,13 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         String content = ro.getContent();
         String rContent = HtmlUtil.removeHtmlTag(content);
 
-        String description = TextUtils.getSummary(rContent, 200);
-        String keyword = CollUtil.join(TextUtils.getKeyword(rContent, 5), ";");
-        DocContent entity = mapping.asDocContent(ro)
-            .setDocId(docId)
+        String summary = TextUtils.getSummary(rContent, 200);
+        String keyword = DbUtils.toString(TextUtils.getKeyword(rContent, 5));
+        String title = ro.getTitle();
+        DocContent entity = mapping.asDocContent(ro).setDocId(docId)
             .setKeyword(keyword)
-            .setDescription(description);
+            .setTitle(title)
+            .setSummary(summary);
         save(entity);
         return entity.getId();
     }
@@ -107,7 +94,8 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
         DocContent content = Assert.notNull(getById(contentId), "文档内容不存在");
         DocContent entity = new DocContent();
         entity.setContent(content.getContent());
-        entity.setDescription(content.getDescription());
+        entity.setSummary(content.getSummary());
+        entity.setTitle(content.getTitle());
         entity.setKeyword(content.getKeyword());
         entity.setDoctype(content.getDoctype());
         entity.setDocId(content.getDocId());
@@ -119,10 +107,11 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
     @Override
     public void publishContent(PublishDocTextRo ro) {
         PushDocContentRo pushDocContentRo = new PushDocContentRo();
+        pushDocContentRo.setTitle(ro.getTitle());
         pushDocContentRo.setContent(ro.getContent());
         pushDocContentRo.setDoctype(ro.getDoctype());
         Long contentId = pushDrafted(ro.getDocId(), pushDocContentRo);
-        if (!ObjectUtil.defaultIfNull(ro.getPublished(), false)) {
+        if (ObjectUtil.defaultIfNull(ro.getPublished(), false)) {
             updatePublishedById(contentId);
         }
     }

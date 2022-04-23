@@ -28,6 +28,8 @@ public class PublishDocTextRo {
     @EnumRange(enumClass = DocType.class, message = "文本类型不合法")
     @ApiModelProperty("文本类型")
     private String doctype;
+    @ApiModelProperty("标题")
+    private String title;
     @ApiModelProperty("文本")
     private String content;
     @NotNull(message = "发布状态不能为空")

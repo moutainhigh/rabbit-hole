@@ -5,6 +5,7 @@ import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.rcm.api.DocServiceApi;
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
+import in.hocg.rabbit.rcm.api.pojo.vo.DraftDocVo;
 import in.hocg.rabbit.rcm.api.pojo.vo.PublishedDocVo;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import io.swagger.annotations.Api;
@@ -40,7 +41,7 @@ public class DocServiceApiImpl implements DocServiceApi {
     }
 
     @Override
-    public PublishedDocVo getDraftedDoc(Long id) {
-        return BeanUtil.copyProperties(service.getDraftedById(id), PublishedDocVo.class);
+    public DraftDocVo getDraftedDoc(Long id) {
+        return BeanUtil.copyProperties(service.getDraftedById(id), DraftDocVo.class);
     }
 }

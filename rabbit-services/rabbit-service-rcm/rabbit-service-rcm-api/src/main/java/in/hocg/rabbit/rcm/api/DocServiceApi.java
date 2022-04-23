@@ -2,6 +2,7 @@ package in.hocg.rabbit.rcm.api;
 
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
+import in.hocg.rabbit.rcm.api.pojo.vo.DraftDocVo;
 import in.hocg.rabbit.rcm.api.pojo.vo.PublishedDocVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -34,5 +35,5 @@ public interface DocServiceApi {
 
     @ApiOperation("获取待编辑的文档")
     @PostMapping(value = CONTEXT_ID + "/getDraftedDoc", headers = RcmServiceName.FEIGN_HEADER)
-    PublishedDocVo getDraftedDoc(@RequestParam Long id);
+    DraftDocVo getDraftedDoc(@RequestParam Long id);
 }

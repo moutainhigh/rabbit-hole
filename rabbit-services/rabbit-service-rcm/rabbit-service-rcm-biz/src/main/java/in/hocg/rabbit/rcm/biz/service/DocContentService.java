@@ -7,7 +7,7 @@ import in.hocg.rabbit.rcm.biz.entity.DocContent;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.HistoryDocContentVo;
-import in.hocg.rabbit.rcm.biz.pojo.vo.RollbackDocRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 
 import java.util.Optional;
 

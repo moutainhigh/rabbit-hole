@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by hocgin on 2022/2/23
  * email: hocgin@gmail.com
@@ -21,12 +24,15 @@ import lombok.experimental.Accessors;
 public class PublishedDocVo {
     @ApiModelProperty("标题")
     private String title;
+    @ApiModelProperty("概述")
+    private String summary;
+    @ApiModelProperty("关键词")
+    private List<String> keyword;
+    @ApiModelProperty("内容")
+    private String content;
+
     @ApiModelProperty("所属用户")
     private Long ownerUserId;
     @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
     private String ownerUserName;
-    @ApiModelProperty("内容")
-    private String content;
-    @ApiModelProperty("概述")
-    private String description;
 }

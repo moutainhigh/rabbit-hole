@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.api;
 
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
+import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +23,8 @@ public interface CommentServiceApi {
      * @param limit 最新几条
      * @return
      */
-    @PostMapping(value = CONTEXT_ID + "/listLastComment", headers = ComServiceName.FEIGN_HEADER)
-    List<LastCommentVo> listLastComment(@RequestParam("refType") String refType,
-                                        @RequestParam("refId") Long refId,
-                                        @RequestParam("limit") Integer limit);
+    @PostMapping(value = CONTEXT_ID + "/getSummary", headers = ComServiceName.FEIGN_HEADER)
+    CommentSummaryVo getSummary(@RequestParam("refType") String refType, @RequestParam("refId") Long refId,
+                                @RequestParam("limit") Integer limit);
+
 }

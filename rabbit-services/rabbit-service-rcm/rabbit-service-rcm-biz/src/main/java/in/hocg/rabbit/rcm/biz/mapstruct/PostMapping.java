@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface PostMapping {
+    @Mapping(target = "viewCount", ignore = true)
+    @Mapping(target = "likeCount", ignore = true)
     @Mapping(target = "replyCount", ignore = true)
     @Mapping(target = "lastReplyUsers", ignore = true)
     @Mapping(target = "lastReplyAt", ignore = true)
@@ -23,14 +25,11 @@ public interface PostMapping {
     @Mapping(target = "tags", ignore = true)
     PostOrdinaryVo asPostOrdinaryVo(Post entity);
 
-    @Mapping(target = "viewCount", ignore = true)
     @Mapping(target = "originalLink", ignore = true)
-    @Mapping(target = "likeCount", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tags", ignore = true)
-    @Mapping(target = "heatIdx", ignore = true)
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "docTextId", ignore = true)
     @Mapping(target = "deleter", ignore = true)

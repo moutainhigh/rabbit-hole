@@ -2,8 +2,7 @@ package in.hocg.rabbit.rcm.biz.service;
 
 import in.hocg.rabbit.rcm.biz.entity.DocVersion;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
-import in.hocg.rabbit.rcm.biz.pojo.vo.CreateVersionDocRo;
-import in.hocg.rabbit.rcm.biz.pojo.vo.RollbackDocRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 
 import java.util.Optional;
 

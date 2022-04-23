@@ -1,6 +1,7 @@
 package in.hocg.rabbit.rcm.biz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.ScrollRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
@@ -13,12 +14,18 @@ import in.hocg.rabbit.rcm.biz.entity.Doc;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
 import in.hocg.rabbit.rcm.biz.mapper.DocMapper;
 import in.hocg.rabbit.rcm.biz.mapstruct.DocMapping;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.*;
 import in.hocg.rabbit.rcm.biz.service.DocContentService;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.rcm.biz.service.DocVersionService;
+import org.springframework.aop.framework.AopContext;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +53,7 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Transactional(rollbackFor = Exception.class)
     public PublishedDocVo getPublishedById(Long docId) {
         Doc doc = Assert.notNull(getById(docId), "文档不存在");
+        ((DocServiceImpl) AopContext.currentProxy()).incrementViewCount(docId);
         return as(doc, PublishedDocVo.class);
     }
 
@@ -116,6 +124,24 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Transactional(rollbackFor = Exception.class)
     public void publishContent(PublishDocTextRo ro) {
         docContentService.publishContent(ro);
+    }
+
+    @Override
+    public Optional<PostSummaryVo> getSummary(String refType, Long refId) {
+        Optional<Doc> docOpt = getByRefTypeAndRefId(refType, refId);
+        return docOpt.map(doc -> as(doc, PostSummaryVo.class));
+    }
+
+    @Async
+    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 200))
+    public void incrementViewCount(Long docId) {
+        Doc doc = getById(docId);
+        Long viewCount = ObjectUtil.defaultIfNull(doc.getViewCount(), 0L);
+        Assert.isTrue(lambdaUpdate().eq(Doc::getId, docId).eq(Doc::getViewCount, viewCount).set(Doc::getViewCount, (viewCount + 1)).update());
+    }
+
+    private Optional<Doc> getByRefTypeAndRefId(String refType, Long refId) {
+        return lambdaQuery().eq(Doc::getRefId, refId).eq(Doc::getRefType, refType).oneOpt();
     }
 
     private Optional<Doc> getByOwnerUser(Long docId, Long userId) {

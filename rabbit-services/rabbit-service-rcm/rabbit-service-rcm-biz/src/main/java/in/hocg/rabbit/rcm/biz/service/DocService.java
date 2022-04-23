@@ -6,8 +6,13 @@ import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.entity.Doc;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.*;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -103,4 +108,13 @@ public interface DocService extends AbstractService<Doc> {
      * @param ro
      */
     void publishContent(PublishDocTextRo ro);
+
+    /**
+     * 概要内容
+     *
+     * @param refType
+     * @param refId
+     * @return
+     */
+    Optional<PostSummaryVo> getSummary(String refType, Long refId);
 }

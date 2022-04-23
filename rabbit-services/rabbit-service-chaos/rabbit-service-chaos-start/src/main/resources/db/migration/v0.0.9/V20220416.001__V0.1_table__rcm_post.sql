@@ -45,12 +45,6 @@ CREATE TABLE `rcm_post`
         COMMENT '类目',
     `thumbnail_url`   VARCHAR(256)
         COMMENT '展览图',
-    `view_count`      INT(11)      NOT NULL DEFAULT 0
-        COMMENT '观看次数',
-    `like_count`      INT(11)      NOT NULL DEFAULT 0
-        COMMENT '喜欢次数',
-    `heat_idx`        INT(11)      NOT NULL DEFAULT 0
-        COMMENT '热度指数',
     `original_link`   VARCHAR(256)
         COMMENT '原文链接',
     `drafted`         BOOLEAN      NOT NULL DEFAULT true

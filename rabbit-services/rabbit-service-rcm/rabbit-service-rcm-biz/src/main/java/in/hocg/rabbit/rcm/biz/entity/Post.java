@@ -52,15 +52,6 @@ public class Post extends LogicDeletedEntity<Post> {
     @ApiModelProperty("展览图")
     @TableField("thumbnail_url")
     private String thumbnailUrl;
-    @ApiModelProperty("观看次数")
-    @TableField("view_count")
-    private Integer viewCount;
-    @ApiModelProperty("喜欢次数")
-    @TableField("like_count")
-    private Integer likeCount;
-    @ApiModelProperty("热度指数")
-    @TableField("heat_idx")
-    private Integer heatIdx;
     @ApiModelProperty("原文链接")
     @TableField("original_link")
     private String originalLink;
