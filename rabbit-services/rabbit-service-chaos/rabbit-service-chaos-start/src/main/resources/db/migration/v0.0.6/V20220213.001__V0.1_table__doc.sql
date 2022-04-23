@@ -8,6 +8,10 @@ CREATE TABLE `rcm_doc`
         comment '引用对象',
     owner_user_id     BIGINT      NOT NULL
         comment '拥有人',
+    `view_count`      INT(11)     NOT NULL DEFAULT 0
+        COMMENT '观看次数',
+    `like_count`      INT(11)     NOT NULL DEFAULT 0
+        COMMENT '喜欢次数',
     --
     `created_at`      DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
         COMMENT '创建时间',
@@ -37,10 +41,12 @@ CREATE TABLE `rcm_doc_content`
         comment '文本类型: text=>普通文本;rich=>富文本;markdown=>.md',
     `content`         TEXT
         COMMENT '内容',
-    `description`     TEXT
+    `summary`         VARCHAR(512)
         COMMENT '概述',
-    `keyword`         VARCHAR(512)
-        COMMENT '关键词(;分割)',
+    `title`           VARCHAR(32)
+        COMMENT '标题',
+    `keyword`         VARCHAR(256)
+        COMMENT '关键词(,分割)',
     --
     `created_at`      DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
         COMMENT '创建时间',

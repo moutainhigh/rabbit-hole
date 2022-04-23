@@ -6,7 +6,9 @@ import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
 import in.hocg.rabbit.rcm.biz.entity.Doc;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.*;
 
 /**

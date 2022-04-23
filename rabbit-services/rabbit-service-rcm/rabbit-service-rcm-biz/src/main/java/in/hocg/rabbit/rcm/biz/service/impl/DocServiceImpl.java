@@ -13,12 +13,18 @@ import in.hocg.rabbit.rcm.biz.entity.Doc;
 import in.hocg.rabbit.rcm.biz.entity.DocContent;
 import in.hocg.rabbit.rcm.biz.mapper.DocMapper;
 import in.hocg.rabbit.rcm.biz.mapstruct.DocMapping;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PushDocContentRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.RollbackDocRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.*;
 import in.hocg.rabbit.rcm.biz.service.DocContentService;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.rabbit.rcm.biz.service.DocVersionService;
+import org.springframework.aop.framework.AopContext;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +52,7 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Transactional(rollbackFor = Exception.class)
     public PublishedDocVo getPublishedById(Long docId) {
         Doc doc = Assert.notNull(getById(docId), "文档不存在");
+        ((DocServiceImpl) AopContext.currentProxy()).incrementViewCount(docId);
         return as(doc, PublishedDocVo.class);
     }
 
@@ -116,6 +123,14 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
     @Transactional(rollbackFor = Exception.class)
     public void publishContent(PublishDocTextRo ro) {
         docContentService.publishContent(ro);
+    }
+
+    @Async
+    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 200))
+    public void incrementViewCount(Long docId) {
+        Doc doc = getById(docId);
+        Integer viewCount = doc.getViewCount();
+        Assert.isTrue(lambdaUpdate().eq(Doc::getId, docId).eq(Doc::getViewCount, viewCount).set(Doc::getViewCount, (viewCount + 1)).update());
     }
 
     private Optional<Doc> getByOwnerUser(Long docId, Long userId) {

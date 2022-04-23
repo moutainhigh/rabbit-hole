@@ -3,7 +3,7 @@ package in.hocg.rabbit.rcm.biz.service.impl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.rabbit.rcm.biz.entity.DocVersion;
 import in.hocg.rabbit.rcm.biz.mapper.DocVersionMapper;
-import in.hocg.rabbit.rcm.biz.pojo.vo.CreateVersionDocRo;
+import in.hocg.rabbit.rcm.biz.pojo.ro.CreateVersionDocRo;
 import in.hocg.rabbit.rcm.biz.service.DocVersionService;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;

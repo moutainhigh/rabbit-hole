@@ -1,11 +1,13 @@
 package in.hocg.rabbit.rcm.biz.service;
 
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
+import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.rcm.biz.entity.Post;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostScrollRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostViewVo;
 
 /**
  * <p>
@@ -32,4 +34,6 @@ public interface PostService extends AbstractService<Post> {
      * @return
      */
     Long create(PostCreateRo ro);
+
+    PostViewVo getPostViewVoById(Long id);
 }

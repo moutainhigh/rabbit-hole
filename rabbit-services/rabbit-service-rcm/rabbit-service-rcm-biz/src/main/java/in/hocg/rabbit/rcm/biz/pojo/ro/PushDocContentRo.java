@@ -5,6 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by hocgin on 2022/2/23
  * email: hocgin@gmail.com
@@ -17,6 +20,8 @@ import lombok.experimental.Accessors;
 public class PushDocContentRo {
     @ApiModelProperty("文档类型")
     private String doctype;
-    @ApiModelProperty("文本")
+    @ApiModelProperty("标题")
+    private String title;
+    @ApiModelProperty(value = "文本")
     private String content;
 }

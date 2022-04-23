@@ -17,14 +17,16 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface DocMapping {
 
+    @Mapping(target = "summary", ignore = true)
+    @Mapping(target = "keyword", ignore = true)
     @Mapping(target = "title", ignore = true)
     @Mapping(target = "content", ignore = true)
     @Mapping(target = "ownerUserName", ignore = true)
-    @Mapping(target = "description", ignore = true)
     PublishedDocVo asPublishedDocVo(Doc doc);
 
+    @Mapping(target = "summary", ignore = true)
+    @Mapping(target = "keyword", ignore = true)
     @Mapping(target = "draft", ignore = true)
-    @Mapping(target = "description", ignore = true)
     @Mapping(target = "contentId", ignore = true)
     @Mapping(target = "ownerUserName", ignore = true)
     @Mapping(target = "content", ignore = true)

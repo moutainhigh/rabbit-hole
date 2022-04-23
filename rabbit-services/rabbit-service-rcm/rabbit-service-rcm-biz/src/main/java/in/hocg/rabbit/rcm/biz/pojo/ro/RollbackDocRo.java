@@ -1,4 +1,4 @@
-package in.hocg.rabbit.rcm.biz.pojo.vo;
+package in.hocg.rabbit.rcm.biz.pojo.ro;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
