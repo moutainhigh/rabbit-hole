@@ -25,7 +25,7 @@ public class DraftDocVo {
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("概述")
-    private String description;
+    private String summary;
     @ApiModelProperty("是否草稿")
     private Boolean draft;
 }

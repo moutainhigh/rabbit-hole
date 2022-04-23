@@ -24,5 +24,5 @@ public class PublishedDocVo {
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("概述")
-    private String description;
+    private String summary;
 }
