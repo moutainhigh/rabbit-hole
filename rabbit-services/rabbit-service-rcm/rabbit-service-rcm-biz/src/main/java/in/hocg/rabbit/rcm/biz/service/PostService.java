@@ -35,5 +35,4 @@ public interface PostService extends AbstractService<Post> {
      */
     Long create(PostCreateRo ro);
 
-    PostViewVo getPostViewVoById(Long id);
 }

@@ -40,12 +40,6 @@ public class PostOrdinaryVo implements Serializable {
 
     @ApiModelProperty("展览图")
     private String thumbnailUrl;
-    @ApiModelProperty("观看次数")
-    private Integer viewCount;
-    @ApiModelProperty("喜欢次数")
-    private Integer likeCount;
-    @ApiModelProperty("热度指数")
-    private Integer heatIdx;
     @ApiModelProperty("原文链接")
     private String originalLink;
 
@@ -63,6 +57,10 @@ public class PostOrdinaryVo implements Serializable {
     private List<ReplyUser> lastReplyUsers;
     @ApiModelProperty("最后回复时间")
     private LocalDateTime lastReplyAt;
+    @ApiModelProperty("观看次数")
+    private Long viewCount;
+    @ApiModelProperty("喜欢次数")
+    private Long likeCount;
     @ApiModelProperty("回复数量")
     private Long replyCount;
 

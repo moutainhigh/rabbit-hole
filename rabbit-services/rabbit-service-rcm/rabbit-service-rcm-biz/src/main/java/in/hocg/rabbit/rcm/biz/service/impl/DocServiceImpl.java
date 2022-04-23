@@ -125,12 +125,22 @@ public class DocServiceImpl extends AbstractServiceImpl<DocMapper, Doc> implemen
         docContentService.publishContent(ro);
     }
 
+    @Override
+    public Optional<PostSummaryVo> getSummary(String refType, Long refId) {
+        Optional<Doc> docOpt = getByRefTypeAndRefId(refType, refId);
+        return docOpt.map(doc -> as(doc, PostSummaryVo.class));
+    }
+
     @Async
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 200))
     public void incrementViewCount(Long docId) {
         Doc doc = getById(docId);
         Integer viewCount = doc.getViewCount();
         Assert.isTrue(lambdaUpdate().eq(Doc::getId, docId).eq(Doc::getViewCount, viewCount).set(Doc::getViewCount, (viewCount + 1)).update());
+    }
+
+    private Optional<Doc> getByRefTypeAndRefId(String refType, Long refId) {
+        return lambdaQuery().eq(Doc::getRefId, refId).eq(Doc::getRefType, refType).oneOpt();
     }
 
     private Optional<Doc> getByOwnerUser(Long docId, Long userId) {

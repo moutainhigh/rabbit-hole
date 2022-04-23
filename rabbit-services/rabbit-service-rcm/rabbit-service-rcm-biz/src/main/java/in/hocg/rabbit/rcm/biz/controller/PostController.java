@@ -33,12 +33,6 @@ public class PostController {
     private final PostService service;
 
     @ApiOperation("滚动查询 - 贴文")
-    @PostMapping("/{id}")
-    public Result<PostViewVo> getById(@PathVariable Long id) {
-        return Result.success(service.getPostViewVoById(id));
-    }
-
-    @ApiOperation("滚动查询 - 贴文")
     @PostMapping("/_scroll")
     public Result<IScroll<PostOrdinaryVo>> scroll(@RequestBody PostScrollRo ro) {
         ro.setDrafted(false);

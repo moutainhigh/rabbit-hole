@@ -24,7 +24,7 @@ public class DbUtils {
      * @return
      */
     public List<String> toList(String str) {
-        return Lists.newArrayList(StrUtil.splitToArray(str, ','));
+        return StrUtil.split(str, ',', true, true);
     }
 
     /**

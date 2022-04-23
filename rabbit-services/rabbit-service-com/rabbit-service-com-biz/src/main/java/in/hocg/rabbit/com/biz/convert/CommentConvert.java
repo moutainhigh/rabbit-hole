@@ -34,10 +34,6 @@ public class CommentConvert {
     private final UserServiceApi accountServiceApi;
     private final CommentUserActionService commentUserActionService;
 
-    public LastCommentVo asLastCommentVo(Comment entity) {
-        return mapping.asLastCommentVo(entity);
-    }
-
     public CommentClientVo convertCommentClientVo(Comment entity) {
         CommentClientVo result = mapping.asCommentClientVo(entity);
         result.setHasReply(commentService.hasReply(entity.getId()));

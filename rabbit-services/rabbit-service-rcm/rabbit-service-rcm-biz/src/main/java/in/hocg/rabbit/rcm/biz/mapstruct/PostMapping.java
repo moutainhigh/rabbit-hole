@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface PostMapping {
+    @Mapping(target = "viewCount", ignore = true)
+    @Mapping(target = "likeCount", ignore = true)
     @Mapping(target = "replyCount", ignore = true)
     @Mapping(target = "lastReplyUsers", ignore = true)
     @Mapping(target = "lastReplyAt", ignore = true)

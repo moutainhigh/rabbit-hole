@@ -1,6 +1,7 @@
 package in.hocg.rabbit.com.biz.apiimpl;
 
 import in.hocg.rabbit.com.api.CommentServiceApi;
+import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
 import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class CommentServiceApiImpl implements CommentServiceApi {
     private final CommentService service;
 
     @Override
-    public List<LastCommentVo> listLastComment(String refType, Long refId, Integer limit) {
-        return service.listLastComment(refType, refId, limit);
+    public CommentSummaryVo getSummary(String refType, Long refId, Integer limit) {
+        return service.getSummary(refType, refId, limit);
     }
 }

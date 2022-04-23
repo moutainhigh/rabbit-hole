@@ -1,20 +1,22 @@
 package in.hocg.rabbit.rcm.biz.convert;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import in.hocg.rabbit.com.api.CommentServiceApi;
-import in.hocg.rabbit.com.api.pojo.vo.LastCommentVo;
+import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
 import in.hocg.rabbit.common.datadict.common.RefType;
+import in.hocg.rabbit.common.utils.DbUtils;
 import in.hocg.rabbit.rcm.biz.entity.Post;
 import in.hocg.rabbit.rcm.biz.mapstruct.PostMapping;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostSummaryVo;
+import in.hocg.rabbit.rcm.biz.service.DocService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -28,19 +30,27 @@ import java.util.stream.Collectors;
 public class PostConvert {
     private final PostMapping mapping;
     private final CommentServiceApi commentServiceApi;
+    private final DocService docService;
 
     public PostOrdinaryVo asPostOrdinaryVo(Post entity) {
-        List<LastCommentVo> lastReply = commentServiceApi.listLastComment(RefType.Post.getCodeStr(), entity.getId(), 3);
+        Long postId = entity.getId();
+        CommentSummaryVo commentSummary = commentServiceApi.getSummary(RefType.Post.getCodeStr(), postId, 3);
+        CommentSummaryVo.LastCommentVo lastReply = commentSummary.getLastReply();
+        List<CommentSummaryVo.LastCommentVo> lastReplyList = commentSummary.getLastReplyList();
         LocalDateTime lastReplyAt = null;
-        if (CollUtil.isNotEmpty(lastReply)) {
-            lastReplyAt = lastReply.get(0).getCreatedAt();
+        if (Objects.nonNull(lastReply)) {
+            lastReplyAt = lastReply.getCreatedAt();
         }
+        Optional<PostSummaryVo> summary = docService.getSummary(RefType.Post.getCodeStr(), postId);
 
-        List<String> tags = StrUtil.split(entity.getTags(), ',', true, true);
+        List<String> tags = DbUtils.toList(entity.getTags());
         return mapping.asPostOrdinaryVo(entity)
-            .setLastReplyUsers(lastReply.stream()
+            .setLastReplyUsers(lastReplyList.stream()
                 .map(entity1 -> new PostOrdinaryVo.ReplyUser().setReplyUserId(entity1.getCreator()))
                 .collect(Collectors.toList()))
+            .setLikeCount(summary.map(PostSummaryVo::getLikeCount).orElse(0L))
+            .setViewCount(summary.map(PostSummaryVo::getViewCount).orElse(0L))
+            .setReplyCount(commentSummary.getTotalReply())
             .setLastReplyAt(lastReplyAt)
             .setTags(tags);
     }

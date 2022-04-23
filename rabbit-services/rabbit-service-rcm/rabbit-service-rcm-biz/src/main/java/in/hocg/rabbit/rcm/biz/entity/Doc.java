@@ -46,8 +46,8 @@ public class Doc extends CommonEntity<Doc> {
     private Long ownerUserId;
     @ApiModelProperty("浏览次数")
     @TableField("view_count")
-    private Integer viewCount;
+    private Long viewCount;
     @ApiModelProperty("喜欢次数")
     @TableField("like_count")
-    private Integer likeCount;
+    private Long likeCount;
 }
