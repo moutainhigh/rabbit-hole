@@ -28,6 +28,7 @@ public class TextUtils {
             return Collections.emptyList();
         }
         return HanLP.segment(text).stream().filter(PostKeywordFilter.FILTER::shouldInclude).map(term -> term.word)
+            .filter(s -> StrUtil.nullToEmpty(s).length() <= 6)
             .distinct().limit(maxLength)
             .collect(Collectors.toList());
     }
