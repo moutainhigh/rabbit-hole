@@ -44,10 +44,11 @@ public class PostConvert {
         Optional<PostSummaryVo> summary = docService.getSummary(RefType.Post.getCodeStr(), postId);
 
         List<String> tags = DbUtils.toList(entity.getTags());
+        List<PostOrdinaryVo.ReplyUser> lastReplyUsers = lastReplyList.stream()
+            .map(entity1 -> new PostOrdinaryVo.ReplyUser().setReplyUserId(entity1.getCreator()))
+            .collect(Collectors.toList());
         return mapping.asPostOrdinaryVo(entity)
-            .setLastReplyUsers(lastReplyList.stream()
-                .map(entity1 -> new PostOrdinaryVo.ReplyUser().setReplyUserId(entity1.getCreator()))
-                .collect(Collectors.toList()))
+            .setLastReplyUsers(lastReplyUsers)
             .setLikeCount(summary.map(PostSummaryVo::getLikeCount).orElse(0L))
             .setViewCount(summary.map(PostSummaryVo::getViewCount).orElse(0L))
             .setReplyCount(commentSummary.getTotalReply())
