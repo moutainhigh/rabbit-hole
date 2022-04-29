@@ -5,6 +5,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostScrollRo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostOptVo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostPublishedVo;
 import in.hocg.rabbit.rcm.biz.service.PostService;
@@ -14,6 +15,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,6 +32,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/post")
 public class PostController {
     private final PostService service;
+
+    @ApiOperation("热议 - 贴文")
+    @PostMapping("/hot")
+    public Result<List<PostOptVo>> hot() {
+        return Result.success();
+    }
 
     @ApiOperation("详情 - 贴文")
     @PostMapping("/{id}")
