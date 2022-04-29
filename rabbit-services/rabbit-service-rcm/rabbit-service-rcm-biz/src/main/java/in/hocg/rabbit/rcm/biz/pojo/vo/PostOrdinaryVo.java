@@ -30,7 +30,7 @@ public class PostOrdinaryVo implements Serializable {
     @ApiModelProperty("简介")
     private String summary;
     @ApiModelProperty("内容")
-    private Long docTextId;
+    private Long docId;
     @ApiModelProperty("标签")
     private List<String> tags;
     @ApiModelProperty("类目")

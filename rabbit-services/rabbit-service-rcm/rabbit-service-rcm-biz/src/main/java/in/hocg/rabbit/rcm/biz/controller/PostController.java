@@ -42,7 +42,7 @@ public class PostController {
     @ApiOperation("详情 - 贴文")
     @PostMapping("/{id}")
     public Result<PostPublishedVo> id(@PathVariable Long id) {
-        return Result.success(service.getPostVoById(id));
+        return Result.success(service.getPostPublishedVoById(id));
     }
 
     @ApiOperation("滚动查询 - 贴文")

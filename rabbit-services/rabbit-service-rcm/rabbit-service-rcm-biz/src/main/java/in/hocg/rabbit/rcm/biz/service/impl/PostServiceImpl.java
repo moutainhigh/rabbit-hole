@@ -91,7 +91,7 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
     }
 
     @Override
-    public PostPublishedVo getPostVoById(Long id) {
+    public PostPublishedVo getPostPublishedVoById(Long id) {
         Post entity = getById(id);
         return as(entity, PostPublishedVo.class);
     }

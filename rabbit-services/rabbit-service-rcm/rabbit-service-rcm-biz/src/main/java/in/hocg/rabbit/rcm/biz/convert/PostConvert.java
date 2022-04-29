@@ -66,7 +66,6 @@ public class PostConvert {
             return null;
         }
         result.setTags(DbUtils.toList(entity.getTags()));
-        result.setOwnerUserId(entity.getCreator());
 
         PublishedDocVo doc = docService.getPublishedById(docId);
         if (Objects.nonNull(doc)) {
