@@ -8,7 +8,10 @@ import in.hocg.rabbit.rcm.biz.entity.Post;
 import in.hocg.rabbit.rcm.biz.mapstruct.PostMapping;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostSummaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostPublishedVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PublishedDocVo;
 import in.hocg.rabbit.rcm.biz.service.DocService;
+import in.hocg.rabbit.rcm.biz.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -45,7 +48,7 @@ public class PostConvert {
 
         List<String> tags = DbUtils.toList(entity.getTags());
         List<PostOrdinaryVo.ReplyUser> lastReplyUsers = lastReplyList.stream()
-            .map(entity1 -> new PostOrdinaryVo.ReplyUser().setReplyUserId(entity1.getCreator()))
+            .map(replyUser -> new PostOrdinaryVo.ReplyUser().setReplyUserId(replyUser.getCreator()))
             .collect(Collectors.toList());
         return mapping.asPostOrdinaryVo(entity)
             .setLastReplyUsers(lastReplyUsers)
@@ -54,5 +57,23 @@ public class PostConvert {
             .setReplyCount(commentSummary.getTotalReply())
             .setLastReplyAt(lastReplyAt)
             .setTags(tags);
+    }
+
+    public PostPublishedVo asPostPublishedVo(Post entity) {
+        PostPublishedVo result = mapping.asPostPublishedVo(entity);
+        Long docId = entity.getDocId();
+        if (Objects.isNull(docId)) {
+            return null;
+        }
+        result.setTags(DbUtils.toList(entity.getTags()));
+        result.setOwnerUserId(entity.getCreator());
+
+        PublishedDocVo doc = docService.getPublishedById(docId);
+        if (Objects.nonNull(doc)) {
+            result.setContent(doc.getContent());
+            result.setViewCount(doc.getViewCount());
+            result.setLikeCount(doc.getLikeCount());
+        }
+        return result;
     }
 }

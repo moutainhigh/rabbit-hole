@@ -34,6 +34,10 @@ public class DbUtils {
      * @return
      */
     public String toString(List<String> list) {
-        return ArrayUtil.join(list.toArray(), ",");
+        List<String> result = CollUtil.removeBlank(list);
+        if (CollUtil.isEmpty(result)) {
+            return null;
+        }
+        return ArrayUtil.join(result.toArray(), ",");
     }
 }

@@ -303,6 +303,11 @@
         <version>portable-1.8.2</version>
       </dependency>
       <dependency>
+        <groupId>com.github.houbb</groupId>
+        <artifactId>sensitive-word</artifactId>
+        <version>0.2.0</version>
+      </dependency>
+      <dependency>
         <groupId>org.bytedeco</groupId>
         <artifactId>javacv</artifactId>
         <version>1.5.2</version>

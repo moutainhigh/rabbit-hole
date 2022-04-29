@@ -41,8 +41,8 @@ public class Post extends LogicDeletedEntity<Post> {
     @TableField("summary")
     private String summary;
     @ApiModelProperty("内容")
-    @TableField("doc_text_id")
-    private Long docTextId;
+    @TableField("doc_id")
+    private Long docId;
     @ApiModelProperty("标签")
     @TableField("tags")
     private String tags;

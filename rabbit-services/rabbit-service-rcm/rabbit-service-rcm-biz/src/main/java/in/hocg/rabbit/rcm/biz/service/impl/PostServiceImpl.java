@@ -7,6 +7,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConve
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
 import in.hocg.rabbit.common.datadict.common.RefType;
+import in.hocg.rabbit.common.utils.DbUtils;
 import in.hocg.rabbit.rcm.api.enums.DocType;
 import in.hocg.rabbit.rcm.api.pojo.ro.CreateDocRo;
 import in.hocg.rabbit.rcm.api.pojo.ro.PublishDocTextRo;
@@ -18,6 +19,7 @@ import in.hocg.rabbit.rcm.biz.mapstruct.PostMapping;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostScrollRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostPublishedVo;
 import in.hocg.rabbit.rcm.biz.service.DocService;
 import in.hocg.rabbit.rcm.biz.service.PostCategoryService;
 import in.hocg.rabbit.rcm.biz.service.PostService;
@@ -27,7 +29,6 @@ import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +63,9 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
     @Transactional(rollbackFor = Exception.class)
     public Long create(PostCreateRo ro) {
         Post entity = mapping.asPost(ro);
-        entity.setTags(StrUtil.emptyToDefault(CollUtil.join(CollUtil.sub(ro.getTags(), 0, 4), ","), "讨论"));
+        List<String> tags = CollUtil.defaultIfEmpty(CollUtil.sub(ro.getTags(), 0, 4), List.of("讨论"));
+
+        entity.setTags(DbUtils.toString(tags));
         entity.setEnabled(true);
         saveOrUpdate(entity);
 
@@ -82,9 +85,15 @@ public class PostServiceImpl extends AbstractServiceImpl<PostMapper, Post> imple
 
         Post update = new Post();
         update.setId(entity.getId());
-        update.setDocTextId(docId);
+        update.setDocId(docId);
         saveOrUpdate(update);
-        return docId;
+        return entity.getId();
+    }
+
+    @Override
+    public PostPublishedVo getPostVoById(Long id) {
+        Post entity = getById(id);
+        return as(entity, PostPublishedVo.class);
     }
 
 }

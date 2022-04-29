@@ -6,28 +6,27 @@ import in.hocg.rabbit.chaos.api.named.ChaosNamedType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
-import java.util.Collections;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Created by hocgin on 2022/2/23
+ * Created by hocgin on 2022/4/29
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @ApiModel
-@Accessors(chain = true)
 @InjectNamed
-public class PublishedDocVo {
+public class PostPublishedVo implements Serializable {
     @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("概述")
     private String summary;
     @ApiModelProperty("关键词")
-    private List<String> keyword;
+    private List<String> tags;
     @ApiModelProperty("内容")
     private String content;
     @ApiModelProperty("浏览次数")
@@ -35,8 +34,13 @@ public class PublishedDocVo {
     @ApiModelProperty("喜欢次数")
     private Long likeCount;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime lastUpdatedAt;
+
     @ApiModelProperty("所属用户")
     private Long ownerUserId;
     @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2Nickname)
     private String ownerUserName;
+    @ChaosNamed(idFor = "ownerUserId", type = ChaosNamedType.Userid2AvatarUrl)
+    private String ownerUserAvatarUrl;
 }
