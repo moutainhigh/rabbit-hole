@@ -150,6 +150,7 @@ boot:
         ,/bmw/gateway/result/**
 
         ,/rcm/doc/*
+        ,/rcm/post/*
         ,/rcm/post/_scroll
         ,/rcm/post-category/main
         ,/rcm/post-category/_complete

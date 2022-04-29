@@ -3,6 +3,7 @@ package in.hocg.rabbit.rcm.biz.mapstruct;
 import in.hocg.rabbit.rcm.biz.entity.Post;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
 import in.hocg.rabbit.rcm.biz.pojo.vo.PostOrdinaryVo;
+import in.hocg.rabbit.rcm.biz.pojo.vo.PostPublishedVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -31,10 +32,19 @@ public interface PostMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tags", ignore = true)
     @Mapping(target = "enabled", ignore = true)
-    @Mapping(target = "docTextId", ignore = true)
+    @Mapping(target = "docId", ignore = true)
     @Mapping(target = "deleter", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     Post asPost(PostCreateRo ro);
+
+    @Mapping(target = "viewCount", ignore = true)
+    @Mapping(target = "tags", ignore = true)
+    @Mapping(target = "ownerUserName", ignore = true)
+    @Mapping(target = "ownerUserId", ignore = true)
+    @Mapping(target = "ownerUserAvatarUrl", ignore = true)
+    @Mapping(target = "likeCount", ignore = true)
+    @Mapping(target = "content", ignore = true)
+    PostPublishedVo asPostPublishedVo(Post entity);
 }

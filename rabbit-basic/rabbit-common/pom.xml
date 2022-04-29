@@ -33,6 +33,10 @@
       <groupId>com.hankcs</groupId>
       <artifactId>hanlp</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.houbb</groupId>
+      <artifactId>sensitive-word</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -62,10 +62,9 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
     @Override
     public Long pushDrafted(Long docId, PushDocContentRo ro) {
         String content = ro.getContent();
-        String rContent = HtmlUtil.cleanHtmlTag(content);
 
-        String summary = TextUtils.getSummary(rContent, 200);
-        String keyword = DbUtils.toString(TextUtils.getKeyword(rContent, 5));
+        String summary = TextUtils.getSummary(content, 200);
+        String keyword = DbUtils.toString(TextUtils.getKeyword(content, 5));
         String title = ro.getTitle();
         DocContent entity = mapping.asDocContent(ro).setDocId(docId)
             .setKeyword(keyword)

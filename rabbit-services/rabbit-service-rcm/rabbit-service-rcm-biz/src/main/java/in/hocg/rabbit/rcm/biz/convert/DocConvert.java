@@ -31,11 +31,15 @@ public class DocConvert {
     }
 
     public PublishedDocVo asPublishedDocVo(Doc entity) {
-        Optional<DocContent> content = docContentService.getPublishedByDocId(entity.getId());
-        return mapping.asPublishedDocVo(entity)
-            .setKeyword(content.map(DocContent::getKeyword).map(DbUtils::toList).orElse(null))
-            .setSummary(content.map(DocContent::getSummary).orElse(null))
-            .setContent(content.map(DocContent::getContent).orElse(null));
+        PublishedDocVo result = mapping.asPublishedDocVo(entity);
+        Optional<DocContent> contentOpt = docContentService.getPublishedByDocId(entity.getId());
+        if (contentOpt.isPresent()) {
+            DocContent docContent = contentOpt.get();
+            result.setKeyword(DbUtils.toList(docContent.getKeyword()));
+            result.setSummary(docContent.getSummary());
+            result.setContent(docContent.getContent());
+        }
+        return result;
     }
 
     public DraftDocVo asDraftDocVo(Doc entity) {
