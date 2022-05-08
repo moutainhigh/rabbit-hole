@@ -7,8 +7,9 @@
     <where>
       AND rpc.deleted_at IS NULL
       <if test="ro.keyword != null">
-        AND (rpc.encoding = #{ro.keyword}
-          OR rpc.title = #{ro.keyword})
+        <bind name="keyword" value="'%' + ro.keyword + '%'"/>
+        AND (rpc.encoding = #{keyword}
+          OR rpc.title = #{keyword})
       </if>
     </where>
   </select>

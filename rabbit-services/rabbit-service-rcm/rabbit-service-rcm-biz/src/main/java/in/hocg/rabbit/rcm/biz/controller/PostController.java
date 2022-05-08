@@ -1,6 +1,7 @@
 package in.hocg.rabbit.rcm.biz.controller;
 
 
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.rcm.biz.pojo.ro.PostCreateRo;
@@ -45,6 +46,7 @@ public class PostController {
         return Result.success(service.getPostPublishedVoById(id));
     }
 
+    @UseLogger
     @ApiOperation("滚动查询 - 贴文")
     @PostMapping("/_scroll")
     public Result<IScroll<PostOrdinaryVo>> scroll(@RequestBody PostScrollRo ro) {
