@@ -39,11 +39,11 @@ public interface PostMapping {
     @Mapping(target = "createdAt", ignore = true)
     Post asPost(PostCreateRo ro);
 
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "creatorAvatarUrl", ignore = true)
+    @Mapping(target = "categoryName", ignore = true)
     @Mapping(target = "viewCount", ignore = true)
     @Mapping(target = "tags", ignore = true)
-    @Mapping(target = "ownerUserName", ignore = true)
-    @Mapping(target = "ownerUserId", ignore = true)
-    @Mapping(target = "ownerUserAvatarUrl", ignore = true)
     @Mapping(target = "likeCount", ignore = true)
     @Mapping(target = "content", ignore = true)
     PostPublishedVo asPostPublishedVo(Post entity);

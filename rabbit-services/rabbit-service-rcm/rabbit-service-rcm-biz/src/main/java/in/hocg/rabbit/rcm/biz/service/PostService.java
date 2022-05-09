@@ -40,5 +40,5 @@ public interface PostService extends AbstractService<Post> {
      * @param id
      * @return
      */
-    PostPublishedVo getPostVoById(Long id);
+    PostPublishedVo getPostPublishedVoById(Long id);
 }
