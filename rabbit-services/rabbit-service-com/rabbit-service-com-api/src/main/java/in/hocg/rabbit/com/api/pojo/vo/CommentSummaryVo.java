@@ -3,6 +3,7 @@ package in.hocg.rabbit.com.api.pojo.vo;
 import in.hocg.boot.named.annotation.InjectNamed;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class CommentSummaryVo implements Serializable {
     private Long totalReply;
 
     @Data
+    @Accessors(chain = true)
     public static class LastCommentVo implements Serializable {
         private Long creator;
         private LocalDateTime createdAt;
