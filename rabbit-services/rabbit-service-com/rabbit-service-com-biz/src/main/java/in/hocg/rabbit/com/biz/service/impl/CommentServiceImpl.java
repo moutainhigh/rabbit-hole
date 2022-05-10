@@ -2,12 +2,18 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
+import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
 import in.hocg.rabbit.com.biz.convert.CommentConvert;
 import in.hocg.rabbit.com.biz.entity.Comment;
@@ -45,6 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
 
 import static in.hocg.rabbit.common.constant.GlobalConstant.SQL_LAST_ROW;
 
@@ -265,9 +272,12 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         List<CommentSummaryVo.LastCommentVo> replyList = Collections.emptyList();
         final Long targetId = commentTargetService.getOrCreate(refType, refId);
         if (limit > 0) {
-            replyList = new ArrayList<>(as(lambdaQuery().eq(Comment::getTargetId, targetId)
+            List<Comment> limitList = lambdaQuery().eq(Comment::getTargetId, targetId)
                 .orderByDesc(CommonEntity::getCreatedAt)
-                .last("LIMIT " + limit).list(), CommentSummaryVo.LastCommentVo.class));
+                .last("LIMIT " + limit).list();
+            replyList = LangUtils.toList(limitList, comment -> new CommentSummaryVo.LastCommentVo()
+                .setCreator(comment.getCreator())
+                .setCreatedAt(comment.getCreatedAt()));
         }
         result.setLastReplyList(replyList);
         result.setLastReply(CollUtil.getFirst(replyList));
