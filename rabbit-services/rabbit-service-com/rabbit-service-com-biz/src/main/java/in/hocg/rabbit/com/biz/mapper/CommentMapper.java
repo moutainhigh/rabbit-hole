@@ -31,5 +31,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
 
     IPage<Comment> pagingWithClient(@Param("ro") CommentClientPagingRo ro, @Param("page") Page page);
 
-    IPage<Comment> scrollWithClient(@Param("ro") CommentClientScrollRo ro, Page<Object> ofPage);
+    IPage<Comment> scrollWithKanban(@Param("ro") CommentClientScrollRo ro, Page<Object> ofPage);
+
+    IPage<Comment> scrollWithList(@Param("ro") CommentClientScrollRo ro, Page<Object> ofPage);
 }

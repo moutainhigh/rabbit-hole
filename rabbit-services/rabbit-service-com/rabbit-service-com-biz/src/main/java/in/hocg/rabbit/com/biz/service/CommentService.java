@@ -39,22 +39,6 @@ public interface CommentService extends AbstractService<Comment> {
      */
     void insertOne(CommentInsertRo ro);
 
-    /**
-     * 查询根级评论
-     *
-     * @param ro ro
-     * @return
-     */
-    IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingRo ro);
-
-    /**
-     * 查询根评论的子评论
-     *
-     * @param ro 父级评论ID
-     * @return
-     */
-    IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingRo ro);
-
     CommentClientVo like(CommentLikeRo ro);
 
     CommentClientVo dislike(CommentDislikeRo ro);
@@ -72,4 +56,6 @@ public interface CommentService extends AbstractService<Comment> {
     Boolean hasReply(Long id);
 
     CommentSummaryVo getSummary(String refType, Long refId, Integer limit);
+
+    List<CommentClientVo> relatedWithClient(Long id, Long userId);
 }

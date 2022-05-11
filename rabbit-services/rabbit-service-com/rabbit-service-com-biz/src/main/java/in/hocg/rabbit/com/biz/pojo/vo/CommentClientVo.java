@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/8/29
@@ -20,6 +22,8 @@ public class CommentClientVo {
     private Integer likes;
     @ApiModelProperty("不喜欢数量")
     private Integer disliked;
+    @ApiModelProperty("层级")
+    private Integer idx;
     @ApiModelProperty("登陆用户的点赞行为")
     private String action = Action.none.name();
     @ApiModelProperty("内容")
@@ -32,9 +36,17 @@ public class CommentClientVo {
     private CommentUserVo author;
     @ApiModelProperty("被评论人")
     private CommentUserVo replier;
-
+    @ApiModelProperty("当前登陆人是评论的作者")
+    private Boolean isCommenter;
+    @ApiModelProperty("该评论是评论的发起人")
+    private Boolean isInitiator = false;
+    @ApiModelProperty("标记")
+    private List<String> userBadges = Collections.emptyList();
 
     public enum Action {
         liked, disliked, none
+    }
+
+    public enum UserBadge {
     }
 }

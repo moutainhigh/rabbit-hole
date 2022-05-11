@@ -2,17 +2,14 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
-import com.google.common.collect.Lists;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.vo.IScroll;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeServiceImpl;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.PageUtils;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.utils.TreeUtils;
 import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.api.pojo.vo.CommentSummaryVo;
 import in.hocg.rabbit.com.biz.convert.CommentConvert;
@@ -26,7 +23,6 @@ import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentClientScrollRo;
 import in.hocg.rabbit.com.biz.pojo.ro.comment.CommentReportRo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentComplexVo;
-import in.hocg.rabbit.com.biz.pojo.vo.CommentUserVo;
 import in.hocg.rabbit.com.biz.pojo.vo.RootCommentComplexVo;
 import in.hocg.rabbit.com.biz.service.CommentService;
 import in.hocg.rabbit.com.biz.service.CommentTargetService;
@@ -34,9 +30,6 @@ import in.hocg.rabbit.com.biz.service.CommentUserActionService;
 import in.hocg.rabbit.com.biz.pojo.ro.*;
 import in.hocg.rabbit.com.api.enums.comment.CommentUserActionType;
 import in.hocg.rabbit.common.datadict.common.RefType;
-import in.hocg.rabbit.ums.api.UserServiceApi;
-import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
-import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
 import in.hocg.boot.message.autoconfigure.service.normal.NormalMessageBervice;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
 import in.hocg.boot.utils.ValidUtils;
@@ -51,9 +44,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.function.Function;
-
-import static in.hocg.rabbit.common.constant.GlobalConstant.SQL_LAST_ROW;
 
 /**
  * <p>
@@ -119,54 +109,13 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingRo ro) {
-        final String refType = ro.getRefType();
-        final Long refId = ro.getRefId();
-
-        final Optional<RefType> targetTypeOpt = ICode.of(refType, RefType.class);
-        if (targetTypeOpt.isEmpty()) {
-            return PageUtils.emptyPage(ro);
-        }
-
-        final Optional<Long> targetIdOpt = commentTargetService.getIdByRefTypeAndRefId(refType, refId);
-        if (targetIdOpt.isEmpty()) {
-            return PageUtils.emptyPage(ro);
-        }
-
-        final Long targetId = targetIdOpt.get();
-        final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, true, ro.ofPage());
-        return result.convert(entity -> {
-            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(convert.convertComplex(entity));
-            final String treePath = entity.getTreePath() + "/";
-            item.setChildTotal(countRightLikeTreePath(treePath));
-            return item;
-        });
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingRo ro) {
-        final Comment pComment = baseMapper.selectById(ro.getParentId());
-        if (Objects.isNull(pComment) || Objects.isNull(pComment.getParentId())
-            || Boolean.FALSE.equals(pComment.getEnabled())) {
-            return PageUtils.emptyPage(ro);
-        }
-
-        final String treePath = pComment.getTreePath();
-        final String regexTreePath = String.format("%s/.*", treePath);
-        final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, ro.ofPage());
-        return result.convert(convert::convertComplex);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public CommentClientVo like(CommentLikeRo ro) {
         Long commentId = ro.getCommentId();
         Long userId = ro.getUserId();
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, true);
-        return convert.convertCommentClientVo(getById(commentId));
+        return convert.asCommentClientVo(getById(commentId));
     }
 
     @Override
@@ -177,7 +126,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         CommentUserAction userAction = commentUserActionService.getOrCreate(commentId, userId);
         CommentUserActionType currentUserAction = ICode.ofThrow(userAction.getAction(), CommentUserActionType.class);
         ((CommentServiceImpl) AopContext.currentProxy()).trigger(commentId, currentUserAction, false);
-        return convert.convertCommentClientVo(getById(commentId));
+        return convert.asCommentClientVo(getById(commentId));
     }
 
     @Retryable
@@ -223,7 +172,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
     @Transactional(rollbackFor = Exception.class)
     public IPage<CommentComplexVo> paging(CommentPagingRo ro) {
         IPage<Comment> result = baseMapper.paging(ro, ro.ofPage());
-        return result.convert(convert::convertComplex);
+        return result.convert(convert::asComplex);
     }
 
     @Override
@@ -232,7 +181,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         entity.setParentId(ro.getCommentId());
         entity.setTargetId(commentTargetService.getOrCreate(ro.getRefType(), ro.getRefId()));
         this.validInsert(entity);
-        return convert.convertCommentClientVo(getById(entity.getId()));
+        return convert.asCommentClientVo(getById(entity.getId()));
     }
 
     @Override
@@ -242,7 +191,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
             return PageUtils.emptyPage(ro);
         }
         ro.setTargetId(targetOpt.get());
-        return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(convert::convertCommentClientVo);
+        return baseMapper.pagingWithClient(ro, ro.ofPage()).convert(convert::asCommentClientVo);
     }
 
     @Override
@@ -252,8 +201,23 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
             return PageUtils.emptyScroll();
         }
         ro.setTargetId(targetOpt.get());
-        return PageUtils.fillScroll(baseMapper.scrollWithClient(ro, ro.ofPage()), Comment::getId)
-            .convert(convert::convertCommentClientVo);
+        String showType = ro.getShowType();
+        IScroll<Comment> queryResult;
+
+        if (CommentClientScrollRo.ShowType.list.name().equals(showType)) {
+            queryResult = scrollWithList(ro);
+        } else {
+            queryResult = scrollWithKanban(ro);
+        }
+        return queryResult.convert(convert::asCommentClientVo);
+    }
+
+    private IScroll<Comment> scrollWithList(CommentClientScrollRo ro) {
+        return PageUtils.fillScroll(baseMapper.scrollWithList(ro, ro.ofPage()), Comment::getId);
+    }
+
+    private IScroll<Comment> scrollWithKanban(CommentClientScrollRo ro) {
+        return PageUtils.fillScroll(baseMapper.scrollWithKanban(ro, ro.ofPage()), Comment::getId);
     }
 
     @Override
@@ -272,17 +236,22 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
         List<CommentSummaryVo.LastCommentVo> replyList = Collections.emptyList();
         final Long targetId = commentTargetService.getOrCreate(refType, refId);
         if (limit > 0) {
-            List<Comment> limitList = lambdaQuery().eq(Comment::getTargetId, targetId)
-                .orderByDesc(CommonEntity::getCreatedAt)
-                .last("LIMIT " + limit).list();
+            List<Comment> limitList = limit(lambdaQuery().eq(Comment::getTargetId, targetId).orderByDesc(CommonEntity::getCreatedAt), limit);
             replyList = LangUtils.toList(limitList, comment -> new CommentSummaryVo.LastCommentVo()
-                .setCreator(comment.getCreator())
-                .setCreatedAt(comment.getCreatedAt()));
+                .setCreator(comment.getCreator()).setCreatedAt(comment.getCreatedAt()));
         }
         result.setLastReplyList(replyList);
         result.setLastReply(CollUtil.getFirst(replyList));
         result.setTotalReply(this.countByTargetId(targetId));
         return result;
+    }
+
+    @Override
+    public List<CommentClientVo> relatedWithClient(Long id, Long userId) {
+        // 该评论 2位用户 在此之前的所有
+        Comment comment = getById(id);
+        List<Long> pathId = TreeUtils.toPath(comment.getTreePath());
+        return as(listByIds(pathId), convert::asCommentClientVo);
     }
 
     private Long countByTargetId(Long targetId) {
