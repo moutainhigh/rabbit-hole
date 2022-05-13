@@ -35,6 +35,7 @@ import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.tree.TreeEntity;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.support.MessageBuilder;
@@ -53,6 +54,7 @@ import java.util.*;
  * @author hocgin
  * @since 2021-01-13
  */
+@Slf4j
 @Service
 @UseConvert(CommentConvert.class)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
@@ -222,7 +224,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment>
 
     @Override
     public void report(CommentReportRo ro) {
-
+        log.info("report comment, commentId={}, reason={}", ro.getCommentId(), ro.getReason());
     }
 
     @Override
