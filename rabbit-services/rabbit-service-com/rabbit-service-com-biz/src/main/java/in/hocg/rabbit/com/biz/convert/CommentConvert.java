@@ -1,5 +1,6 @@
 package in.hocg.rabbit.com.biz.convert;
 
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.com.biz.entity.Comment;
 import in.hocg.rabbit.com.biz.mapstruct.CommentMapping;
 import in.hocg.rabbit.com.biz.pojo.vo.CommentClientVo;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2022/1/13
@@ -30,12 +32,15 @@ public class CommentConvert {
     private final UserServiceApi accountServiceApi;
     private final CommentUserActionService commentUserActionService;
 
-    public CommentClientVo convertCommentClientVo(Comment entity) {
+    public CommentClientVo asCommentClientVo(Comment entity) {
         CommentClientVo result = mapping.asCommentClientVo(entity);
         result.setHasReply(commentService.hasReply(entity.getId()));
 
-        UserContextHolder.getUserId().flatMap(userId -> commentUserActionService.getActionByCommentIdAndUserId(entity.getId(), userId))
+        Optional<Long> userIdOpt = UserContextHolder.getUserId();
+        userIdOpt.flatMap(userId -> commentUserActionService.getActionByCommentIdAndUserId(entity.getId(), userId))
             .ifPresent(result::setAction);
+        userIdOpt.ifPresent(aLong -> result.setIsCommenter(LangUtils.equal(aLong, entity.getCreator())));
+
 
         Long authorId = entity.getCreator();
         if (Objects.nonNull(authorId)) {
@@ -51,7 +56,7 @@ public class CommentConvert {
         return result;
     }
 
-    public CommentComplexVo convertComplex(Comment entity) {
+    public CommentComplexVo asComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final String content = entity.getEnabled() ? result.getContent() : "已删除";
         result.setContent(content);

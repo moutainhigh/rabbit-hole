@@ -43,7 +43,7 @@
     ORDER BY tc.created_at DESC
   </select>
 
-  <select id="scrollWithClient" resultType="in.hocg.rabbit.com.biz.entity.Comment">
+  <select id="scrollWithKanban" resultType="in.hocg.rabbit.com.biz.entity.Comment">
     SELECT tc.*
     FROM com_comment tc
     <where>
@@ -51,16 +51,37 @@
         AND tc.target_id = #{ro.targetId}
       </if>
       <if test="ro.nextId != null">
-        <if test="ro.orderByDesc == false">
+        <if test="ro.orderDesc == false">
           AND tc.id > #{ro.nextId}
         </if>
-        <if test="ro.orderByDesc != false">
+        <if test="ro.orderDesc != false">
           AND tc.id &lt; #{ro.nextId}
         </if>
       </if>
       AND tc.parent_id IS NULL
     </where>
-    <if test="ro.orderByDesc != false">
+    <if test="ro.orderDesc != false">
+      ORDER BY tc.created_at DESC
+    </if>
+  </select>
+
+  <select id="scrollWithList" resultType="in.hocg.rabbit.com.biz.entity.Comment">
+    SELECT tc.*
+    FROM com_comment tc
+    <where>
+      <if test="ro.targetId != null">
+        AND tc.target_id = #{ro.targetId}
+      </if>
+      <if test="ro.nextId != null">
+        <if test="ro.orderDesc == false">
+          AND tc.id > #{ro.nextId}
+        </if>
+        <if test="ro.orderDesc != false">
+          AND tc.id &lt; #{ro.nextId}
+        </if>
+      </if>
+    </where>
+    <if test="ro.orderDesc != false">
       ORDER BY tc.created_at DESC
     </if>
   </select>

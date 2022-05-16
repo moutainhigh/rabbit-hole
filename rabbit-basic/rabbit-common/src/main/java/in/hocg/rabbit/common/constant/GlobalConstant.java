@@ -40,5 +40,4 @@ public class GlobalConstant {
      */
     public static final String BMW_ACCESS_CODE = "rabbit";
 
-    public static final String SQL_LAST_ROW = "LIMIT 1";
 }

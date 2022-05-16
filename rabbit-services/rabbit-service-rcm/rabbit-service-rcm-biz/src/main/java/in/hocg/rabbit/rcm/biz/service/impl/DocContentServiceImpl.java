@@ -54,9 +54,8 @@ public class DocContentServiceImpl extends AbstractServiceImpl<DocContentMapper,
 
     @Override
     public Optional<DocContent> getDraftedByDocId(Long docId) {
-        return lambdaQuery().eq(DocContent::getDocId, docId)
-            .orderByDesc(CommonEntity::getCreatedAt)
-            .last(GlobalConstant.SQL_LAST_ROW).oneOpt();
+        return first(lambdaQuery().eq(DocContent::getDocId, docId)
+            .orderByDesc(CommonEntity::getCreatedAt));
     }
 
     @Override
