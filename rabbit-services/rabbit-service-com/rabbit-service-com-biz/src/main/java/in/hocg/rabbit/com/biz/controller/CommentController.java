@@ -58,7 +58,7 @@ public class CommentController {
     @ApiOperation("回溯(查询某评论之前的相关评论) - 列表")
     @GetMapping("/history/{id}")
     public Result<List<CommentClientVo>> related(@PathVariable("refType") String refType, @PathVariable("refId") Long refId,
-                                                 @RequestParam("id") Long id) {
+                                                 @PathVariable("id") Long id) {
         Long userId = UserContextHolder.getUserId().orElse(null);
         return Result.success(service.relatedWithClient(id, userId));
     }

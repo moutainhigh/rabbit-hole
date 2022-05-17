@@ -146,6 +146,8 @@ boot:
         ,/com/project/encoding:*
         ,/com/comment/*/*/_scroll
         ,/com/comment/*/*/_paging
+        ,/com/comment/*/*/history/*
+        ,/com/comment/*/*/like
 
         ,/bmw/gateway/result/**
 
