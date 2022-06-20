@@ -67,7 +67,7 @@ public class ResultUtils {
 
     public Mono<Void> expired(ServerWebExchange exchange) {
         if (CommonUtils.isAjaxRequest(exchange)) {
-            return result(exchange, HttpStatus.BAD_REQUEST, Result.fail("登陆过期"));
+            return result(exchange, HttpStatus.UNAUTHORIZED, Result.fail("登陆过期"));
         }
         log.warn("暂未配置[登陆过期]的页面");
         throw new RuntimeException("暂未配置[登陆过期]的页面");
