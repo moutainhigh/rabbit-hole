@@ -1,7 +1,7 @@
 package in.hocg.rabbit.spider.agefans;
 
 import com.google.common.collect.Lists;
-import in.hocg.boot.webmagic.autoconfiguration.processor.AbsPageProcessor;
+import in.hocg.boot.webmagic.autoconfiguration.core.AbsPageProcessor;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.selector.Html;
