@@ -40,6 +40,9 @@ public interface UserServiceApi {
     @PostMapping(value = CONTEXT_ID + "/getUserToken", headers = UmsServiceName.FEIGN_HEADER)
     String getUserToken(@RequestParam("username") String username);
 
+    @PostMapping(value = CONTEXT_ID + "/renewToken", headers = UmsServiceName.FEIGN_HEADER)
+    String renewToken(@RequestParam("token") String token);
+
     @PostMapping(value = CONTEXT_ID + "/getUsername", headers = UmsServiceName.FEIGN_HEADER)
     String getUsername(@RequestParam("token") String token);
 
