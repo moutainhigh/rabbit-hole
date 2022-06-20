@@ -2,6 +2,7 @@ package in.hocg.rabbit.gateway.filter.authentication;
 
 import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.boot.sso.client.autoconfigure.core.BearerTokenAuthentication;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -22,15 +23,20 @@ import java.util.Collections;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthenticationTokenFilter implements BearerTokenAuthentication {
 
+    public static final String EXPIRED_TOKEN = ":expired_token";
+
     @Override
     public Authentication authentication(String token) {
         String username;
         try {
             username = JwtUtils.decode(token);
+        } catch (ExpiredJwtException e) {
+            log.warn("Jwt Expired: {}", token);
+            return new UsernamePasswordAuthenticationToken(EXPIRED_TOKEN, null, Collections.emptyList());
         } catch (Exception e) {
             log.warn("用户登陆鉴权失败 token=[{}], 失败: {}", token, e);
-            return new UsernamePasswordAuthenticationToken("", null, Collections.emptyList());
+            return new UsernamePasswordAuthenticationToken("", token, Collections.emptyList());
         }
-        return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(username, token, Collections.emptyList());
     }
 }

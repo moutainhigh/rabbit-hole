@@ -184,6 +184,11 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     }
 
     @Override
+    public String renewToken(String token) {
+        return JwtUtils.encode(JwtUtils.decode(token));
+    }
+
+    @Override
     public String getUsername(String token) {
         return JwtUtils.decode(token);
     }

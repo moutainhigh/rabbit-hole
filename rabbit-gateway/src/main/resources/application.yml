@@ -196,6 +196,7 @@ boot:
 
         ,/sso/account/login/qrcode
         ,/sso/account/login/token
+        ,/sso/account/token/renew
       has-any-role:
         '[/doc.html]':
           - 'ROLE_ADMIN'

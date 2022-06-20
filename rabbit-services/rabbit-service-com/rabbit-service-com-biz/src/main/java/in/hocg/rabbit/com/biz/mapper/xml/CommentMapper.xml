@@ -40,7 +40,7 @@
         AND tc.parent_id IS NULL
       </if>
     </where>
-    ORDER BY tc.created_at DESC
+    ORDER BY tc.created_at ASC
   </select>
 
   <select id="scrollWithKanban" resultType="in.hocg.rabbit.com.biz.entity.Comment">

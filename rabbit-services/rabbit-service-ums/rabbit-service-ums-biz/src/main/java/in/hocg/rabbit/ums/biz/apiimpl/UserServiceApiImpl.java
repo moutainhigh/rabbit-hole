@@ -1,6 +1,5 @@
 package in.hocg.rabbit.ums.biz.apiimpl;
 
-import in.hocg.boot.utils.struct.result.Result;
 import in.hocg.rabbit.common.utils.RabbitUtils;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
@@ -11,12 +10,8 @@ import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
 import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.service.UserService;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -56,6 +51,11 @@ public class UserServiceApiImpl implements UserServiceApi {
     @Override
     public String getUserToken(String username) {
         return service.getToken(username);
+    }
+
+    @Override
+    public String renewToken(String token) {
+        return service.renewToken(token);
     }
 
     @Override

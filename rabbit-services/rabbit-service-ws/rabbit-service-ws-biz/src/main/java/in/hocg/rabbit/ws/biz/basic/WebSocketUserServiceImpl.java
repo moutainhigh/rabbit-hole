@@ -1,7 +1,7 @@
 package in.hocg.rabbit.ws.biz.basic;
 
 import in.hocg.boot.utils.context.security.UserPrincipal;
-import in.hocg.boot.ws.autoconfiguration.core.service.WebSocketUserService;
+import in.hocg.boot.ws.autoconfiguration.core.service.SocketUserService;
 import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.security.Principal;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class WebSocketUserServiceImpl implements WebSocketUserService {
+public class WebSocketUserServiceImpl implements SocketUserService {
 
     @Override
     public Principal loadUserByTicket(String ticket) {

@@ -40,6 +40,8 @@ public interface UserService extends AbstractService<User> {
 
     String getToken(String username);
 
+    String renewToken(String token);
+
     String getUsername(String token);
 
     UserDetailVo getUserByPhone(String phone);

@@ -1,6 +1,7 @@
 package in.hocg.rabbit.common.utils;
 
 import in.hocg.rabbit.common.constant.GlobalConstant;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.experimental.UtilityClass;
@@ -49,5 +50,22 @@ public class JwtUtils {
             .parseClaimsJws(token)
             .getBody()
             .getSubject();
+    }
+
+    /**
+     * 强制解析，忽略过期时间
+     *
+     * @param token
+     * @return
+     */
+    public String decodeNoExpired(String token) {
+        try {
+            return Jwts.parser().setSigningKey(KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().getSubject();
+        }
     }
 }

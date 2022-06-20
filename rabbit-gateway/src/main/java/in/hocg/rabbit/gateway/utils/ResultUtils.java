@@ -25,8 +25,9 @@ public class ResultUtils {
 
     /**
      * 处理异常
+     *
      * @param exchange exchange
-     * @param e e
+     * @param e        e
      * @return _
      */
     public Mono<Void> handleException(ServerWebExchange exchange, Exception e) {
@@ -62,6 +63,14 @@ public class ResultUtils {
         }
         log.warn("暂未配置[账号错误]的页面");
         throw new RuntimeException("暂未配置[账号错误]的页面");
+    }
+
+    public Mono<Void> expired(ServerWebExchange exchange) {
+        if (CommonUtils.isAjaxRequest(exchange)) {
+            return result(exchange, HttpStatus.UNAUTHORIZED, Result.fail("登陆过期"));
+        }
+        log.warn("暂未配置[登陆过期]的页面");
+        throw new RuntimeException("暂未配置[登陆过期]的页面");
     }
 
     public Mono<Void> result(ServerWebExchange exchange, Object result) {
