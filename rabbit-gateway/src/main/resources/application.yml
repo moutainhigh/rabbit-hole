@@ -138,8 +138,8 @@ boot:
         ,/ignore
         ,/*/v2/api-docs
 
-        ,/ws/ws
-        ,/ws/ws/**
+        ,/ws/.socket
+        ,/ws/ws/info
 
         ,/com/message/stat
         ,/com/district/tree
