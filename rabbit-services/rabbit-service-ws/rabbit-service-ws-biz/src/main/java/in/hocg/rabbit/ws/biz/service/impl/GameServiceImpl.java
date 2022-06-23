@@ -11,6 +11,7 @@ import in.hocg.boot.ws.autoconfiguration.core.event.SocketClosedEvent;
 import in.hocg.rabbit.ws.biz.pojo.dto.GameRoom;
 import in.hocg.rabbit.ws.biz.pojo.dto.MessageCmdDto;
 import in.hocg.rabbit.ws.biz.pojo.ro.GameCmdRo;
+import in.hocg.rabbit.ws.biz.pojo.ro.RoomPeerRo;
 import in.hocg.rabbit.ws.biz.pojo.ro.RoomSignalRo;
 import in.hocg.rabbit.ws.biz.pojo.vo.GameCmdVo;
 import in.hocg.rabbit.ws.biz.service.GameService;
@@ -25,6 +26,7 @@ import java.security.Principal;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Created by hocgin on 2022/6/8
@@ -306,6 +308,19 @@ public class GameServiceImpl implements GameService {
         });
     }
 
+    @Override
+    public void handleRoomPeer(String roomId, Object ro, String username) {
+        getConnectedRoom(roomId).ifPresent(room -> {
+            String mirror = room.getMirror();
+            String master = room.getMaster();
+            if (StrUtil.equals(master, username) && StrUtil.isNotBlank(mirror)) {
+                sendRoomPeerRequestToUser(mirror, ro);
+            } else if (StrUtil.equals(mirror, username) && StrUtil.isNotBlank(master)) {
+                sendRoomPeerRequestToUser(master, ro);
+            }
+        });
+    }
+
     private void sendRoomRequestToUser(String username, GameCmdVo vo) {
         messagingTemplate.convertAndSendToUser(username, MessageHelper.toUser("/game/result"), new MessageCmdDto()
             .setName("room")
@@ -316,5 +331,11 @@ public class GameServiceImpl implements GameService {
         messagingTemplate.convertAndSendToUser(username, MessageHelper.toUser("/game/result"), new MessageCmdDto()
             .setName("room.signal")
             .setValue(signal));
+    }
+
+    private void sendRoomPeerRequestToUser(String username, Object vo) {
+        messagingTemplate.convertAndSendToUser(username, MessageHelper.toUser("/game/result"), new MessageCmdDto()
+            .setName("room.peer")
+            .setValue(vo));
     }
 }

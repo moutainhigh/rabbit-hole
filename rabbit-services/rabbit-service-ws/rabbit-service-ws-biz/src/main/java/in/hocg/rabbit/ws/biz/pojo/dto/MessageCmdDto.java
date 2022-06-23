@@ -18,4 +18,5 @@ public class MessageCmdDto implements Serializable {
     @ApiModelProperty(required = true, value = "类型: room/room.signal")
     private String name;
     private Object value;
+    private String roomId;
 }

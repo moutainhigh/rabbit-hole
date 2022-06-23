@@ -1,6 +1,7 @@
 package in.hocg.rabbit.ws.biz.service;
 
 import in.hocg.rabbit.ws.biz.pojo.ro.GameCmdRo;
+import in.hocg.rabbit.ws.biz.pojo.ro.RoomPeerRo;
 import in.hocg.rabbit.ws.biz.pojo.ro.RoomSignalRo;
 
 /**
@@ -13,4 +14,6 @@ public interface GameService {
     void handleRoomRequest(GameCmdRo ro);
 
     void handleRoomSignal(RoomSignalRo ro, String username);
+
+    void handleRoomPeer(String roomId, Object ro, String username);
 }
