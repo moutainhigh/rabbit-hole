@@ -3,6 +3,7 @@ package in.hocg.rabbit.ws.biz.controller;
 import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.ws.biz.pojo.dto.MessageCmdDto;
 import in.hocg.rabbit.ws.biz.pojo.ro.GameCmdRo;
+import in.hocg.rabbit.ws.biz.pojo.ro.RoomPeerRo;
 import in.hocg.rabbit.ws.biz.pojo.ro.RoomSignalRo;
 import in.hocg.rabbit.ws.biz.service.GameService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,10 @@ public class GameController {
             }
             case "room.signal": {
                 service.handleRoomSignal(JSONUtil.toBean(JSONUtil.toJsonStr(dto.getValue()), RoomSignalRo.class), principal.getName());
+                return;
+            }
+            case "room.peer": {
+                service.handleRoomPeer(dto.getRoomId(), dto.getValue(), principal.getName());
                 return;
             }
             default: {
