@@ -133,6 +133,7 @@ boot:
         ,/eagle/**
         ,/swagger-resources/configuration/ui
         ,/favicon.ico
+        ,/reboot.txt
         ,/actuator/**
         ,/webjars/**
         ,/ignore
