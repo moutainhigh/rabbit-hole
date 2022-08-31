@@ -413,7 +413,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         } else if (ForgotRo.Mode.UsePhone.equals(mode)) {
             forgotPhone(Assert.notNull(ro.getPhoneMode()));
         }
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(StrUtil.format("找回密码的方式[{}]暂不支持", ro.getMode()));
     }
 
     @Override
