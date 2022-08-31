@@ -432,7 +432,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     private void forgotEmail(@Validated ForgotRo.EmailMode ro) {
         // todo 发送邮件，重置密码的链接
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("发送邮件，重置密码的链接(暂未实现)");
     }
 
     private void forgotPhone(@Validated ForgotRo.PhoneMode ro) {
