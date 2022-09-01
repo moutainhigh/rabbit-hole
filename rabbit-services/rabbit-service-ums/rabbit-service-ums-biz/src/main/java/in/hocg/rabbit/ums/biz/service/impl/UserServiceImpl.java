@@ -8,11 +8,17 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Maps;
+import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
+import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
+import in.hocg.boot.utils.LangUtils;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
-import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.boot.utils.exception.ServiceException;
-import in.hocg.rabbit.chaos.api.EmailServiceApi;
-import in.hocg.rabbit.chaos.api.SmsServiceApi;
+import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
+import in.hocg.rabbit.chaos.api.ChaosServiceApi;
+import in.hocg.rabbit.chaos.api.enums.VerifyCodeDeviceType;
+import in.hocg.rabbit.chaos.api.pojo.vo.ValidVerifyCodeVo;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.ProjectServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.ProjectComplexVo;
@@ -35,16 +41,7 @@ import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
-import in.hocg.rabbit.ums.biz.service.AuthorityService;
-import in.hocg.rabbit.ums.biz.service.RoleService;
-import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
-import in.hocg.rabbit.ums.biz.service.SocialService;
-import in.hocg.rabbit.ums.biz.service.UserService;
-import com.google.common.collect.Maps;
-import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
-import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
-import in.hocg.boot.utils.LangUtils;
-import in.hocg.boot.utils.ValidUtils;
+import in.hocg.rabbit.ums.biz.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
@@ -77,8 +74,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     implements UserService {
     private final UserMapping mapping;
     private final SocialService socialService;
-    private final SmsServiceApi smsServiceApi;
-    private final EmailServiceApi emailServiceApi;
+    private final ChaosServiceApi chaosServiceApi;
     private final FileServiceApi fileServiceApi;
     private final ProjectServiceApi projectServiceApi;
     private final AuthorityService authorityService;
@@ -232,14 +228,13 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Transactional(rollbackFor = Exception.class)
     public Long updatePhone(UpdateAccountPhoneRo ro) {
         Long id = ro.getId();
-        String phone = ro.getPhone();
+        String serialNo = ro.getSerialNo();
         String verifyCode = ro.getVerifyCode();
         Long updaterId = ro.getUpdaterId();
         LocalDateTime now = LocalDateTime.now();
 
-        if (!smsServiceApi.validVerifyCode(phone, verifyCode)) {
-            ValidUtils.fail("验证码错误");
-        }
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
+        String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);
 
         User updated = new User()
             .setId(id)
@@ -254,14 +249,13 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Transactional(rollbackFor = Exception.class)
     public Long updateEmail(UpdateAccountEmailRo ro) {
         Long id = ro.getId();
-        String email = ro.getEmail();
+        String serialNo = ro.getSerialNo();
         String verifyCode = ro.getVerifyCode();
         Long updaterId = ro.getUpdaterId();
         LocalDateTime now = LocalDateTime.now();
 
-        if (!emailServiceApi.validVerifyCode(email, verifyCode)) {
-            ValidUtils.fail("验证码错误");
-        }
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
+        String email = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Email);
 
         User updated = new User()
             .setId(id)
@@ -418,9 +412,15 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     @Override
     public void register(RegisterRo ro) {
-        Assert.isTrue(smsServiceApi.validVerifyCode(ro.getPhone(), ro.getCode()), "验证码错误");
+        String serialNo = ro.getSerialNo();
+        String verifyCode = ro.getCode();
+
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
+        String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);
+
         ro.setPassword(passwordEncoder.encode(ro.getPassword()));
         CreateAccountRo createAccountRo = mapping.asCreateAccountRo(ro);
+        createAccountRo.setPhone(phone);
         createAccountRo.setCreatedIp(SpringServletContext.getClientIp().orElse(null));
         this.createAccount(createAccountRo);
     }
@@ -430,15 +430,26 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         return mapping.asUserInfoMeVo(getById(id));
     }
 
-    private void forgotEmail(@Validated ForgotRo.EmailMode ro) {
-        // todo 发送邮件，重置密码的链接
-        throw new UnsupportedOperationException("发送邮件，重置密码的链接(暂未实现)");
+    private void forgotEmail(@Validated ForgotRo.Mode.UseEmailRo ro) {
+        String serialNo = ro.getSerialNo();
+        String password = ro.getPassword();
+        String verifyCode = ro.getCode();
+
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
+        String email = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Email);
+
+        User entity = lambdaQuery().eq(User::getEmail, email).oneOpt().orElseThrow(() -> ServiceException.wrap("邮箱不存在"));
+        updatePasswordById(entity.getId(), password);
     }
 
-    private void forgotPhone(@Validated ForgotRo.PhoneMode ro) {
-        String phone = ro.getPhone();
+    private void forgotPhone(@Validated ForgotRo.Mode.UsePhoneRo ro) {
+        String serialNo = ro.getSerialNo();
         String password = ro.getPassword();
-        Assert.isTrue(smsServiceApi.validVerifyCode(phone, ro.getCode()), "验证码错误");
+        String verifyCode = ro.getCode();
+
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
+        String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);
+
         User entity = getAccountByPhone(phone).orElseThrow(() -> ServiceException.wrap("手机号码不存在"));
         updatePasswordById(entity.getId(), password);
     }

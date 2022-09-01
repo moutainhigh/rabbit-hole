@@ -1,8 +1,9 @@
 package in.hocg.rabbit.chaos.biz.service;
 
 
-import in.hocg.rabbit.chaos.biz.pojo.ro.SendEmailCodeRo;
-import in.hocg.rabbit.chaos.biz.pojo.ro.SendSmsCodeRo;
+import in.hocg.rabbit.chaos.api.pojo.ro.SendVerifyCodeRo;
+import in.hocg.rabbit.chaos.api.pojo.vo.ValidVerifyCodeVo;
+import in.hocg.rabbit.chaos.api.pojo.vo.GetVerifyCodeVo;
 import in.hocg.rabbit.chaos.biz.pojo.vo.IpAddressVo;
 
 /**
@@ -13,11 +14,11 @@ import in.hocg.rabbit.chaos.biz.pojo.vo.IpAddressVo;
  */
 public interface ChaosService {
 
-    Long sendSmsCode(SendSmsCodeRo ro);
-
     IpAddressVo getAddress4ip(String ip);
 
-    void sendEmailCode(SendEmailCodeRo ro);
-
     String encrypt(String data);
+
+    GetVerifyCodeVo sendVerifyCode(SendVerifyCodeRo ro);
+
+    ValidVerifyCodeVo validVerifyCode(String serialNo, String verifyCode);
 }

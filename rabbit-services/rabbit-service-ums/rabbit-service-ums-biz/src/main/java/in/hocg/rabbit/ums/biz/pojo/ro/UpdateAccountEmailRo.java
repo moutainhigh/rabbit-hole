@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -18,10 +17,9 @@ import javax.validation.constraints.NotBlank;
 public class UpdateAccountEmailRo {
     @ApiModelProperty(hidden = true)
     private Long id;
-    @Email(message = "邮箱号错误")
-    @NotBlank(message = "邮箱号不能为空")
-    @ApiModelProperty("邮箱号")
-    private String email;
+    @NotBlank(message = "验证码序列号不能为空")
+    @ApiModelProperty("验证码序列号错误")
+    private String serialNo;
     @NotBlank(message = "验证码不能为空")
     @ApiModelProperty("验证码")
     private String verifyCode;

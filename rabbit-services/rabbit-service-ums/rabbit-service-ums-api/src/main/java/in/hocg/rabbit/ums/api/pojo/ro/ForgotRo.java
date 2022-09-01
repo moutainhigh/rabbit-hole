@@ -7,8 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -26,29 +26,9 @@ public class ForgotRo {
     @ApiModelProperty(value = "找回方式", required = true)
     private String mode;
     @ApiModelProperty("手机模式")
-    private PhoneMode phoneMode;
+    private Mode.UsePhoneRo phoneMode;
     @ApiModelProperty("邮件模式")
-    private EmailMode emailMode;
-
-    @Data
-    public static class PhoneMode {
-        @NotBlank(message = "新密码错误")
-        @ApiModelProperty("新密码")
-        private String password;
-        @NotBlank(message = "手机号码错误")
-        @ApiModelProperty("手机号")
-        private String phone;
-        @NotBlank(message = "验证码错误")
-        @ApiModelProperty("验证码")
-        private String code;
-    }
-
-    @Data
-    public static class EmailMode {
-        @Email(message = "邮箱地址错误")
-        @ApiModelProperty("邮箱地址")
-        private String email;
-    }
+    private Mode.UseEmailRo emailMode;
 
     @Getter
     @RequiredArgsConstructor
@@ -56,5 +36,37 @@ public class ForgotRo {
         UsePhone("use_phone"),
         UseEmail("use_email");
         private final String code;
+
+        @Getter
+        @Setter
+        @ApiModel(description = "短信模式")
+        public class UsePhoneRo {
+            @NotBlank(message = "短信序列号不能为空")
+            @ApiModelProperty("短信序列号")
+            private String serialNo;
+            @NotBlank(message = "验证码错误")
+            @ApiModelProperty("验证码")
+            private String code;
+
+            @NotBlank(message = "新密码错误")
+            @ApiModelProperty("新密码")
+            private String password;
+        }
+
+        @Getter
+        @Setter
+        @ApiModel(description = "邮箱模式")
+        public class UseEmailRo {
+            @NotBlank(message = "短信序列号不能为空")
+            @ApiModelProperty("短信序列号")
+            private String serialNo;
+            @NotBlank(message = "验证码错误")
+            @ApiModelProperty("验证码")
+            private String code;
+
+            @NotBlank(message = "新密码错误")
+            @ApiModelProperty("新密码")
+            private String password;
+        }
     }
 }
