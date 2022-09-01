@@ -413,7 +413,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         } else if (ForgotRo.Mode.UsePhone.equals(mode)) {
             forgotPhone(Assert.notNull(ro.getPhoneMode()));
         }
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(StrUtil.format("找回密码的方式[{}]暂不支持", ro.getMode()));
     }
 
     @Override
@@ -432,7 +432,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     private void forgotEmail(@Validated ForgotRo.EmailMode ro) {
         // todo 发送邮件，重置密码的链接
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("发送邮件，重置密码的链接(暂未实现)");
     }
 
     private void forgotPhone(@Validated ForgotRo.PhoneMode ro) {
