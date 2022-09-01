@@ -433,7 +433,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private void forgotEmail(@Validated ForgotRo.Mode.UseEmailRo ro) {
         String serialNo = ro.getSerialNo();
         String password = ro.getPassword();
-        String verifyCode = ro.getCode();
+        String verifyCode = ro.getVerifyCode();
 
         ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
         String email = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Email);
@@ -445,7 +445,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private void forgotPhone(@Validated ForgotRo.Mode.UsePhoneRo ro) {
         String serialNo = ro.getSerialNo();
         String password = ro.getPassword();
-        String verifyCode = ro.getCode();
+        String verifyCode = ro.getVerifyCode();
 
         ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
         String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);

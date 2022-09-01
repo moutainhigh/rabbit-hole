@@ -46,7 +46,7 @@ public class ForgotRo {
             private String serialNo;
             @NotBlank(message = "验证码错误")
             @ApiModelProperty("验证码")
-            private String code;
+            private String verifyCode;
 
             @NotBlank(message = "新密码错误")
             @ApiModelProperty("新密码")
@@ -62,7 +62,7 @@ public class ForgotRo {
             private String serialNo;
             @NotBlank(message = "验证码错误")
             @ApiModelProperty("验证码")
-            private String code;
+            private String verifyCode;
 
             @NotBlank(message = "新密码错误")
             @ApiModelProperty("新密码")
