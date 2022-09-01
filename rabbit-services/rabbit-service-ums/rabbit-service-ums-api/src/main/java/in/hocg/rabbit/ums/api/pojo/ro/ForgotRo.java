@@ -4,7 +4,6 @@ import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.validation.annotation.EnumRange;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,8 +17,9 @@ import javax.validation.constraints.NotNull;
  *
  * @author hocgin
  */
-@Data
-@ApiModel
+@Getter
+@Setter
+@ApiModel(description = "忘记密码")
 public class ForgotRo {
     @NotNull(message = "方式暂不支持")
     @EnumRange(message = "方式暂不支持", enumClass = ForgotRo.Mode.class)

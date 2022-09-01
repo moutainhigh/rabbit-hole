@@ -36,12 +36,21 @@ import in.hocg.rabbit.ums.biz.entity.Social;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.mapper.UserMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.UserMapping;
-import in.hocg.rabbit.ums.biz.pojo.ro.*;
+import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
-import in.hocg.rabbit.ums.biz.service.*;
+import in.hocg.rabbit.ums.biz.service.AuthorityService;
+import in.hocg.rabbit.ums.biz.service.RoleService;
+import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
+import in.hocg.rabbit.ums.biz.service.SocialService;
+import in.hocg.rabbit.ums.biz.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
@@ -49,7 +58,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -57,7 +65,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -403,9 +415,9 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     public void forgot(ForgotRo ro) {
         ForgotRo.Mode mode = ICode.ofThrow(ro.getMode(), ForgotRo.Mode.class);
         if (ForgotRo.Mode.UseEmail.equals(mode)) {
-            forgotEmail(Assert.notNull(ro.getEmailMode()));
+            forgotEmail(ro.getEmailMode());
         } else if (ForgotRo.Mode.UsePhone.equals(mode)) {
-            forgotPhone(Assert.notNull(ro.getPhoneMode()));
+            forgotPhone(ro.getPhoneMode());
         }
         throw new UnsupportedOperationException(StrUtil.format("找回密码的方式[{}]暂不支持", ro.getMode()));
     }
@@ -413,7 +425,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     @Override
     public void register(RegisterRo ro) {
         String serialNo = ro.getSerialNo();
-        String verifyCode = ro.getCode();
+        String verifyCode = ro.getVerifyCode();
 
         ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(serialNo, verifyCode);
         String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);
@@ -430,7 +442,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         return mapping.asUserInfoMeVo(getById(id));
     }
 
-    private void forgotEmail(@Validated ForgotRo.Mode.UseEmailRo ro) {
+    private void forgotEmail(ForgotRo.Mode.UseEmailRo ro) {
+        Assert.notNull(ro, "邮箱模式参数错误");
         String serialNo = ro.getSerialNo();
         String password = ro.getPassword();
         String verifyCode = ro.getVerifyCode();
@@ -442,7 +455,8 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
         updatePasswordById(entity.getId(), password);
     }
 
-    private void forgotPhone(@Validated ForgotRo.Mode.UsePhoneRo ro) {
+    private void forgotPhone(ForgotRo.Mode.UsePhoneRo ro) {
+        Assert.notNull(ro, "手机号模式参数错误");
         String serialNo = ro.getSerialNo();
         String password = ro.getPassword();
         String verifyCode = ro.getVerifyCode();
