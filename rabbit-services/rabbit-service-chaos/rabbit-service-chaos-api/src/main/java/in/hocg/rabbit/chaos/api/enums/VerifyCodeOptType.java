@@ -18,9 +18,9 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @UseDataDictKey(value = ChaosDataDictKeys.GET_VERIFY_CODE_OPT_TYPE, description = "操作类型")
 public enum VerifyCodeOptType implements DataDictEnum {
-    Register("Register", "注册账号"),
-    Forgot("Forgot", "忘记密码"),
-    Other("Other", "其他"),
+    Register("register", "注册账号"),
+    Forgot("forgot", "忘记密码"),
+    Other("other", "其他"),
     ;
     private final Serializable code;
     private final String name;
