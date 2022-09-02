@@ -1,7 +1,8 @@
 package in.hocg.rabbit.chaos.api.pojo.vo;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Data
+@Getter
+@Setter
 public class AMapDistrictVo {
     @ApiModelProperty("城市编码")
     private String citycode;

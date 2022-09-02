@@ -24,7 +24,6 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LbsManager {
-    private final RedisManager redisManager;
 
     /**
      * 根据IP获取地址

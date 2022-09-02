@@ -17,9 +17,9 @@ import javax.validation.constraints.NotBlank;
 public class UpdateAccountPhoneRo {
     @ApiModelProperty(hidden = true)
     private Long id;
-    @NotBlank(message = "手机号码不能为空")
-    @ApiModelProperty("手机号码")
-    private String phone;
+    @NotBlank(message = "验证码序列号不能为空")
+    @ApiModelProperty("验证码序列号错误")
+    private String serialNo;
     @NotBlank(message = "验证码不能为空")
     @ApiModelProperty("验证码")
     private String verifyCode;

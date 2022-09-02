@@ -2,8 +2,6 @@ package in.hocg.rabbit.chaos.biz.manager;
 
 import cn.hutool.core.util.StrUtil;
 import in.hocg.boot.mail.autoconfigure.core.MailBervice;
-import in.hocg.boot.utils.exception.ServiceException;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class EmailManager {
-    private final RedisManager redisManager;
     private final MailBervice service;
 
     private void sendEmail(String email, String text) {
@@ -28,14 +25,6 @@ public class EmailManager {
     }
 
     public void sendVerifyCode(String email, String code) {
-        if (Boolean.TRUE.compareTo(redisManager.exitsVerifyCodeByEmail(email)) == 0) {
-            throw ServiceException.wrap("验证码已发送，请注意查收");
-        }
         this.sendEmail(email, StrUtil.format("验证码: {}", code));
-        redisManager.setVerifyCodeByEmail(email, code);
-    }
-
-    public boolean validVerifyCode(@NonNull String email, @NonNull String code) {
-        return redisManager.validVerifyCodeByEmail(email, code);
     }
 }

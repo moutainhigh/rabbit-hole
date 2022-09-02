@@ -4,7 +4,9 @@ import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.*;
+import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
+import in.hocg.rabbit.com.biz.pojo.dto.LinkDetailDto;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -79,6 +81,12 @@ public class FaviconUtils {
         }
 
         return Optional.empty();
+    }
+
+    public LinkDetailDto getLinkDetail(String link) {
+        String responseBody = HttpUtil.get(StrUtil.format("https://www.yuque.com/api/editor/link_detail?url={}&ctoken=IYPdHkTh_CkPdQHe_uOAacx4", link));
+        String dataStr = JSONUtil.parseObj(responseBody).getStr("data");
+        return JSONUtil.toBean(dataStr, LinkDetailDto.class);
     }
 
 }

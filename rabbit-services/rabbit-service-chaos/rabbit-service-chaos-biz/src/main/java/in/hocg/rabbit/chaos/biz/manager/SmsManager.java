@@ -1,11 +1,9 @@
 package in.hocg.rabbit.chaos.biz.manager;
 
-import in.hocg.rabbit.chaos.biz.enums.SmsTpl;
 import com.google.common.collect.Maps;
 import in.hocg.boot.sms.autoconfigure.core.SmsBervice;
 import in.hocg.boot.web.autoconfiguration.properties.BootProperties;
-import in.hocg.boot.utils.exception.ServiceException;
-import lombok.NonNull;
+import in.hocg.rabbit.chaos.biz.enums.SmsTpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -23,7 +21,6 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SmsManager {
-    private final RedisManager redisManager;
     private final SmsBervice smsBervice;
     private final BootProperties bootProperties;
 
@@ -39,15 +36,7 @@ public class SmsManager {
         smsBervice.sendSms(phone, tpl.getSignName(), tpl.getTemplateCode(), vars);
     }
 
-    public Long sendVerifyCode(String phone, String code) {
-        if (Boolean.TRUE.compareTo(redisManager.exitsVerifyCodeByPhone(phone)) == 0) {
-            throw ServiceException.wrap("验证码已发送，请注意查收");
-        }
+    public void sendVerifyCode(String phone, String code) {
         this.sendSmsVerifyCode(phone, code);
-        return redisManager.setVerifyCodeByPhone(phone, code);
-    }
-
-    public boolean validVerifyCode(@NonNull String phone, @NonNull String smsCode) {
-        return redisManager.validVerifyCodeByPhone(phone, smsCode);
     }
 }
