@@ -24,8 +24,8 @@ boot:
         ttl: 1D
   sentinel:
     flow-rules:
-      # 发送短信限流, 24 小时只能发送 5 条
+      # 发送短信限流(每秒1)
       - resource: GET_SMS_CODE
         grade: 1
-        count: 0.01
+        count: 1
 
