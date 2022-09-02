@@ -1,10 +1,9 @@
 package in.hocg.rabbit.ums.api.pojo.ro;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by hocgin on 2020/11/30
@@ -12,7 +11,8 @@ import javax.validation.constraints.NotNull;
  *
  * @author hocgin
  */
-@Data
+@Getter
+@Setter
 @Accessors(chain = true)
 public class InsertSocialRo {
     @ApiModelProperty("账号")
