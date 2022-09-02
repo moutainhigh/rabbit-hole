@@ -43,7 +43,7 @@ public class ChaosCacheServiceImpl implements ChaosCacheService {
         }
 
         Long expire = ObjectUtil.defaultIfNull(redisTemplate.getExpire(serialNo, TimeUnit.SECONDS), 0L);
-        return expire > ChaosConstants.LIMIT_REUSE_EXPIRED;
+        return expire < ChaosConstants.LIMIT_REUSE_EXPIRED;
     }
 
     @Override
