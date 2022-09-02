@@ -76,7 +76,7 @@ public class ChaosCacheServiceImpl implements ChaosCacheService {
     @Override
     public Triple<String, String, Duration> getOrCreateVerifyCode(VerifyCodeOptType optType, VerifyCodeDeviceType deviceType,
                                                                   String toDevice, Duration duration) {
-        ValidUtils.isTrue(this.canReSendVerifyCode(optType, toDevice), "验证码已发送");
+        ValidUtils.isTrue(this.canReSendVerifyCode(optType, toDevice), "验证码已发送,请勿重复点击");
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
         Pair<String, Duration> cacheState = getVerifyCode(serialNo);
         Duration expired = cacheState.getValue();
