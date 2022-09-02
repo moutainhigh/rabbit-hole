@@ -40,7 +40,7 @@ public class ForgotRo {
         @Getter
         @Setter
         @ApiModel(description = "短信模式")
-        public class UsePhoneRo {
+        public static class UsePhoneRo {
             @NotBlank(message = "短信序列号不能为空")
             @ApiModelProperty("短信序列号")
             private String serialNo;
@@ -56,7 +56,7 @@ public class ForgotRo {
         @Getter
         @Setter
         @ApiModel(description = "邮箱模式")
-        public class UseEmailRo {
+        public static class UseEmailRo {
             @NotBlank(message = "短信序列号不能为空")
             @ApiModelProperty("短信序列号")
             private String serialNo;
