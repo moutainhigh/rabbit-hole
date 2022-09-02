@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 public class ChaosConstants {
 
     /**
-     * 验证码重用的限定时间
+     * 验证码重用的限定时间 2 分钟
      */
-    public static final long LIMIT_REUSE_EXPIRED = 2L;
+    public static final long LIMIT_REUSE_EXPIRED = 2 * 60L;
 }
