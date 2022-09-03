@@ -1,6 +1,9 @@
 package in.hocg.rabbit.ums.biz.controller;
 
 
+import in.hocg.boot.utils.exception.UnAuthenticationException;
+import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
+import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
@@ -122,5 +125,26 @@ public class AccountController {
         return Result.success(service.updateEmail(ro));
     }
 
+    @ApiOperation(value = "忘记密码", notes = "免登陆")
+    @PostMapping("/forgot")
+    @ResponseBody
+    public Result<Void> forgot(@Validated @RequestBody ForgotRo ro) {
+        service.forgot(ro);
+        return Result.success();
+    }
+
+    @ApiOperation(value = "注册", notes = "免登陆")
+    @PostMapping("/register")
+    @ResponseBody
+    public Result<Void> register(@Validated @RequestBody RegisterRo ro) {
+        service.register(ro);
+        return Result.success();
+    }
+
+    @ApiOperation(value = "获取当前账户 Token")
+    @GetMapping("/token")
+    public Result<String> getToken() {
+        return Result.success(service.getToken(UserContextHolder.getUsername().orElseThrow(UnAuthenticationException::new)));
+    }
 }
 
