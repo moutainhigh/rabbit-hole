@@ -1,19 +1,21 @@
 package in.hocg.rabbit.ums.biz.controller;
 
 
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.boot.utils.exception.UnAuthenticationException;
+import in.hocg.boot.utils.struct.result.Result;
+import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
 import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
 import in.hocg.rabbit.ums.api.pojo.ro.RegisterRo;
 import in.hocg.rabbit.ums.biz.entity.User;
-import in.hocg.rabbit.ums.biz.pojo.ro.*;
-import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
-import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
+import in.hocg.rabbit.ums.biz.pojo.ro.JoinAccountRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
+import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
 import in.hocg.rabbit.ums.biz.service.UserService;
 import in.hocg.rabbit.usercontext.autoconfigure.UserContextHolder;
-import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
-import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
-import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,7 +24,13 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,21 +65,6 @@ public class AccountController {
     public Result<UserInfoMeVo> getMeUserInfo(@RequestParam(value = "force", defaultValue = "true") Boolean force) {
         Optional<Long> userIdOpt = force ? Optional.ofNullable(UserContextHolder.getUserIdThrow()) : UserContextHolder.getUserId();
         return Result.success(userIdOpt.map(service::getMeUserInfoById).orElse(null));
-    }
-
-    @UseLogger("获取当前用户信息")
-    @ApiOperation("获取当前用户信息")
-    @GetMapping
-    @ResponseBody
-    @Deprecated(/**⚠️即将废弃⚠️ 请考虑使用 getMeUserInfo **/)
-    public Result<AccountComplexVo> getCurrentAccount(@RequestParam(value = "force", defaultValue = "true") Boolean force) {
-        Optional<Long> userOpt;
-        if (force) {
-            userOpt = Optional.ofNullable(UserContextHolder.getUserIdThrow());
-        } else {
-            userOpt = UserContextHolder.getUserId();
-        }
-        return Result.success(userOpt.map(service::getComplexById).orElse(null));
     }
 
     @UseLogger("获取当前用户权限")
