@@ -175,6 +175,9 @@ boot:
 
         ,/ums/account/*:avatar
         ,/ums/account
+        ,/ums/account/register
+        ,/ums/account/forgot
+        ,/ums/account/register-after-login
         ,/ums/account/me
 
         ,/mina/game-card/_complete
