@@ -141,6 +141,13 @@ public class AccountController {
         return Result.success();
     }
 
+    @ApiOperation(value = "注册账号并登录(返回token)", notes = "免登陆")
+    @PostMapping("/register-after-login")
+    public Result<String> registerAfterLogin(@Validated @RequestBody JoinAccountRo ro) {
+        return Result.success(service.registerAfterLogin(ro));
+    }
+
+
     @ApiOperation(value = "获取当前账户 Token")
     @GetMapping("/token")
     public Result<String> getToken() {
