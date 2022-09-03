@@ -7,11 +7,11 @@ on:
         description: '是否使用 Maven 缓存'
         required: true
         default: 'true'
-  push:
-    branches:
-      - develop
-      - rls-*
-  #      - features-*
+#  push:
+#    branches:
+#      - develop
+#      - rls-*
+#      - features-*
   create:
     tags:
       - v*.*.*
