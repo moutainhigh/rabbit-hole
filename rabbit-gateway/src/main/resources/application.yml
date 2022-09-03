@@ -159,7 +159,7 @@ boot:
         ,/rcm/post-category/main
         ,/rcm/post-category/_complete
 
-        ,/chaos/sms-code
+        ,/chaos/verify-code
         ,/chaos/address4ip
         ,/chaos/logistics-line/_search
         ,/chaos/gumballs/gift

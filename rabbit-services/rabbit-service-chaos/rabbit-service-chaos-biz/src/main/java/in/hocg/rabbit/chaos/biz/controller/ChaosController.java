@@ -1,5 +1,6 @@
 package in.hocg.rabbit.chaos.biz.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.boot.utils.struct.result.Result;
@@ -7,6 +8,7 @@ import in.hocg.boot.web.autoconfiguration.utils.web.RequestUtils;
 import in.hocg.boot.web.autoconfiguration.utils.web.ResponseUtils;
 import in.hocg.rabbit.chaos.api.pojo.ro.SendVerifyCodeRo;
 import in.hocg.rabbit.chaos.api.pojo.vo.GetVerifyCodeVo;
+import in.hocg.rabbit.chaos.biz.constant.SentinelKeys;
 import in.hocg.rabbit.chaos.biz.pojo.vo.IpAddressVo;
 import in.hocg.rabbit.chaos.biz.service.ChaosService;
 import io.swagger.annotations.Api;
@@ -37,7 +39,7 @@ public class ChaosController {
 
     @ApiOperation("发送验证码")
     @PostMapping("/verify-code")
-    // @SentinelResource(SentinelKeys.GET_SMS_CODE)
+    @SentinelResource(SentinelKeys.GET_SMS_CODE)
     public Result<GetVerifyCodeVo> sendVerifyCode(@Validated @RequestBody SendVerifyCodeRo ro, HttpServletRequest request) {
         ro.setOptIp(RequestUtils.getClientIp(request));
         return Result.success(service.sendVerifyCode(ro));

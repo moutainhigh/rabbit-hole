@@ -32,51 +32,55 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ChaosCacheServiceImpl implements ChaosCacheService {
-    private final RedisTemplate template;
+    private final RedisTemplate redisTemplate;
 
 
     @Override
     public boolean canReSendVerifyCode(VerifyCodeOptType optType, String toDevice) {
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
-        Long expire = ObjectUtil.defaultIfNull(template.getExpire(serialNo, TimeUnit.MINUTES), 0L);
-        return expire > ChaosConstants.LIMIT_REUSE_EXPIRED;
+        if (!redisTemplate.hasKey(serialNo)) {
+            return true;
+        }
+
+        Long expire = ObjectUtil.defaultIfNull(redisTemplate.getExpire(serialNo, TimeUnit.SECONDS), 0L);
+        return expire < ChaosConstants.LIMIT_REUSE_EXPIRED;
     }
 
     @Override
     public ValidVerifyCodeVo validVerifyCode(String serialNo, String verifyCode) {
         ValidVerifyCodeVo result = new ValidVerifyCodeVo();
-        ValueOperations<String, VerifyCodeDto> opsForValue = template.opsForValue();
-        VerifyCodeDto value = opsForValue.get(serialNo);
+        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+        VerifyCodeDto value = (VerifyCodeDto) opsForValue.get(serialNo);
         boolean isSuccess = Objects.nonNull(value) && StrUtil.equals(value.getVerifyCode(), verifyCode);
         if (isSuccess) {
             result.setVerifyCode(value.getVerifyCode());
             result.setOptType(value.getOptType());
             result.setDeviceType(value.getDeviceType());
             result.setToDevice(value.getToDevice());
-            template.delete(serialNo);
+            redisTemplate.delete(serialNo);
         }
         return result.setSuccess(isSuccess);
     }
 
     @Override
     public Pair<String, Duration> getVerifyCode(String serialNo) {
-        ValueOperations<String, VerifyCodeDto> opsForValue = template.opsForValue();
-        VerifyCodeDto value = opsForValue.get(serialNo);
+        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+        VerifyCodeDto value = (VerifyCodeDto) opsForValue.get(serialNo);
         if (Objects.isNull(value)) {
             return new Pair<>(null, Duration.ZERO);
         }
-        Long expire = template.getExpire(serialNo, TimeUnit.SECONDS);
-        return new Pair<>(value.getVerifyCode(), Duration.of(ObjectUtil.defaultIfNull(expire, 0L), ChronoUnit.MINUTES));
+        Long expire = redisTemplate.getExpire(serialNo, TimeUnit.SECONDS);
+        return new Pair<>(value.getVerifyCode(), Duration.of(ObjectUtil.defaultIfNull(expire, 0L), ChronoUnit.SECONDS));
     }
 
     @Override
     public Triple<String, String, Duration> getOrCreateVerifyCode(VerifyCodeOptType optType, VerifyCodeDeviceType deviceType,
                                                                   String toDevice, Duration duration) {
-        ValidUtils.isTrue(this.canReSendVerifyCode(optType, toDevice), "验证码已发送");
+        ValidUtils.isTrue(this.canReSendVerifyCode(optType, toDevice), "验证码已发送,请勿重复点击");
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
         Pair<String, Duration> cacheState = getVerifyCode(serialNo);
         Duration expired = cacheState.getValue();
-        if (expired.get(ChronoUnit.MINUTES) > ChaosConstants.LIMIT_REUSE_EXPIRED) {
+        if (expired.get(ChronoUnit.SECONDS) > ChaosConstants.LIMIT_REUSE_EXPIRED) {
             String verifyCode = cacheState.getKey();
             log.debug("获取旧验证码[操作类型: {}, 设备: {}, 验证码: {}, 序列号: {}]", optType, toDevice, verifyCode, serialNo);
             return Triple.of(serialNo, verifyCode, expired);
@@ -89,7 +93,7 @@ public class ChaosCacheServiceImpl implements ChaosCacheService {
                                                              String toDevice, Duration duration) {
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
         String verifyCode = RandomUtil.randomNumbers(4);
-        ValueOperations<String, VerifyCodeDto> opsForValue = template.opsForValue();
+        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
         VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
         verifyCodeDto.setVerifyCode(verifyCode);
         verifyCodeDto.setOptType(optType.getCodeStr());

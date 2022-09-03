@@ -55,7 +55,7 @@ public class SendVerifyCodeRo {
         @Getter
         @Setter
         @ApiModel(description = "手机号模式")
-        public class UseSmsRo {
+        public static class UseSmsRo {
             @NotNull(message = "手机号不能为空")
             @NotEmpty(message = "手机号不能为空")
             private String phone;
@@ -64,7 +64,7 @@ public class SendVerifyCodeRo {
         @Getter
         @Setter
         @ApiModel(description = "邮箱模式")
-        public class UseEmailRo {
+        public static class UseEmailRo {
             @NotNull(message = "邮箱不能为空")
             @NotEmpty(message = "邮箱不能为空")
             @Email(message = "邮箱格式错误")
