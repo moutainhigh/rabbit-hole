@@ -4,6 +4,8 @@ name: 发布 Sonatype
 on:
   workflow_dispatch:
   push:
+    branches:
+      - develop
     tags:
       - 'v*'
     paths-ignore:
