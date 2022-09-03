@@ -83,4 +83,6 @@ public interface UserService extends AbstractService<User> {
     void register(RegisterRo ro);
 
     UserInfoMeVo getMeUserInfoById(Long id);
+
+    String registerAfterLogin(JoinAccountRo ro);
 }
