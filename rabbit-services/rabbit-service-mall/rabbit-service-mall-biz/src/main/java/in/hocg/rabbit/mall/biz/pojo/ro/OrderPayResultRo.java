@@ -1,6 +1,6 @@
 package in.hocg.rabbit.mall.biz.pojo.ro;
 
-import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
+import in.hocg.rabbit.pay.api.pojo.vo.TradeStatusSyncVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

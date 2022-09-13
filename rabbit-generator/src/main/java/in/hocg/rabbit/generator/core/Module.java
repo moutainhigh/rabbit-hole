@@ -35,7 +35,7 @@ public enum Module {
         "in.hocg.rabbit.ums.biz",
         "rabbit-services/rabbit-service-ums/rabbit-service-ums-biz"),
     BMW(Lists.newArrayList("bmw_"),
-        "in.hocg.rabbit.bmw.biz",
+        "in.hocg.rabbit.pay.biz",
         "rabbit-services/rabbit-service-bmw/rabbit-service-bmw-biz"),
     RCM(Lists.newArrayList("rcm_"),
         "in.hocg.rabbit.rcm.biz",
