@@ -15,6 +15,7 @@ import in.hocg.boot.utils.LangUtils;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.boot.utils.enums.ICode;
 import in.hocg.boot.utils.exception.ServiceException;
+import in.hocg.boot.validation.core.ValidatorUtils;
 import in.hocg.boot.web.autoconfiguration.servlet.SpringServletContext;
 import in.hocg.rabbit.chaos.api.ChaosServiceApi;
 import in.hocg.rabbit.chaos.api.enums.VerifyCodeDeviceType;
@@ -24,6 +25,7 @@ import in.hocg.rabbit.com.api.ProjectServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.ProjectComplexVo;
 import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.rabbit.common.utils.RabbitUtils;
+import in.hocg.rabbit.common.utils.Rules;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
 import in.hocg.rabbit.ums.api.pojo.ro.ForgotRo;
 import in.hocg.rabbit.ums.api.pojo.ro.InsertSocialRo;
@@ -36,6 +38,7 @@ import in.hocg.rabbit.ums.biz.entity.Social;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.mapper.UserMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.UserMapping;
+import in.hocg.rabbit.ums.biz.pojo.ro.JoinAccountRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
 import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
@@ -441,6 +444,55 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     public UserInfoMeVo getMeUserInfoById(Long id) {
         return mapping.asUserInfoMeVo(getById(id));
     }
+
+    @Override
+    public String registerAfterLogin(JoinAccountRo ro) {
+        Optional<String> resultOpt = Rules.create()
+            .rule(JoinAccountRo.Mode.UsePhone, Rules.Supplier(() -> this.joinUsePhone(ro.getPhoneMode())))
+            .rule(JoinAccountRo.Mode.UseUsername, Rules.Supplier(() -> this.joinUseUsername(ro.getUsernameMode())))
+            .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> this.joinUseEmail(ro.getEmailMode())))
+            .of(ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class));
+        return resultOpt.orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持"));
+    }
+
+
+    private String joinUseUsername(JoinAccountRo.Mode.UseUsernameRo ro) {
+        ValidatorUtils.validThrow(Assert.notNull(ro, "账号模式参数错误"));
+        String username = ro.getUsername();
+        String password = ro.getPassword();
+
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setPassword(passwordEncoder.encode(password))
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setUsername(username);
+        UserDetailVo userDetailVo = this.createAccount(newRo);
+        return this.getToken(userDetailVo.getUsername());
+    }
+
+    private String joinUsePhone(JoinAccountRo.Mode.UsePhoneRo ro) {
+        ValidatorUtils.validThrow(Assert.notNull(ro, "手机号模式参数错误"));
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(ro.getSerialNo(), ro.getVerifyCode());
+        String phone = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Phone);
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setPhone(phone);
+        UserDetailVo userDetailVo = this.createAccount(newRo);
+        return this.getToken(userDetailVo.getUsername());
+    }
+
+    private String joinUseEmail(JoinAccountRo.Mode.UseEmailRo ro) {
+        ValidatorUtils.validThrow(Assert.notNull(ro, "邮箱模式参数错误"));
+        ValidVerifyCodeVo validResult = chaosServiceApi.validVerifyCode(ro.getSerialNo(), ro.getVerifyCode());
+        String email = validResult.getDeviceNoThrow(VerifyCodeDeviceType.Email);
+        String password = ro.getPassword();
+        CreateAccountRo newRo = new CreateAccountRo()
+            .setPassword(passwordEncoder.encode(password))
+            .setCreatedIp(SpringServletContext.getClientIp().orElse(null))
+            .setEmail(email);
+        UserDetailVo userDetailVo = this.createAccount(newRo);
+        return this.getToken(userDetailVo.getUsername());
+    }
+
 
     private void forgotEmail(ForgotRo.Mode.UseEmailRo ro) {
         Assert.notNull(ro, "邮箱模式参数错误");

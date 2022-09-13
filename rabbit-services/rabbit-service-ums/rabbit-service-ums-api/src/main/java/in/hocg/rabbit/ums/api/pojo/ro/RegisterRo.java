@@ -1,7 +1,8 @@
 package in.hocg.rabbit.ums.api.pojo.ro;
 
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
@@ -11,7 +12,8 @@ import javax.validation.constraints.NotBlank;
  *
  * @author hocgin
  */
-@Data
+@Getter
+@Setter
 @ApiModel
 public class RegisterRo {
     @NotBlank(message = "短信序列号不能为空")
