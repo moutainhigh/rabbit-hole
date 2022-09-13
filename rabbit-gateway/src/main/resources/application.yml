@@ -32,10 +32,10 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: rabbit-bmw
-          uri: lb://rabbit-bmw
+        - id: rabbit-pay
+          uri: lb://rabbit-pay
           predicates:
-            - Path=/bmw/**
+            - Path=/pay/**
           filters:
             - StripPrefix=1
 
