@@ -30,7 +30,7 @@
     <boot-dependencies.version>1.0.45</boot-dependencies.version>
     <lombok.version>1.18.12</lombok.version>
     <mapstruct.version>1.4.1.Final</mapstruct.version>
-    <rabbit-service-bmw.version>1.0.0-SNAPSHOT</rabbit-service-bmw.version>
+    <rabbit-service-pay.version>1.0.0-SNAPSHOT</rabbit-service-pay.version>
     <spring-boot-admin-starter.version>2.3.1</spring-boot-admin-starter.version>
     <velocity-engine-core.version>2.2</velocity-engine-core.version>
     <mybatis-plus.version>3.3.0</mybatis-plus.version>
@@ -223,8 +223,8 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>rabbit-service-bmw-api</artifactId>
-        <version>${rabbit-service-bmw.version}</version>
+        <artifactId>rabbit-service-pay-api</artifactId>
+        <version>${rabbit-service-pay.version}</version>
       </dependency>
       <!-- 第三方 -->
       <dependency>

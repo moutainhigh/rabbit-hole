@@ -6,12 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.enhance.convert.UseConvert;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.pojo.ro.DeleteRo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.enhance.CommonEntity;
-import in.hocg.rabbit.bmw.api.BmwServiceApi;
-import in.hocg.rabbit.bmw.api.enums.SyncAccessMchTaskType;
-import in.hocg.rabbit.bmw.api.pojo.ro.CreateTradeRo;
-import in.hocg.rabbit.bmw.api.pojo.ro.GetCashierRo;
-import in.hocg.rabbit.bmw.api.pojo.ro.GoRefundRo;
-import in.hocg.rabbit.bmw.api.pojo.vo.TradeStatusSyncVo;
+import in.hocg.rabbit.pay.api.PayServiceApi;
+import in.hocg.rabbit.pay.api.enums.SyncAccessMchTaskType;
+import in.hocg.rabbit.pay.api.pojo.ro.CreateTradeRo;
+import in.hocg.rabbit.pay.api.pojo.ro.GetCashierRo;
+import in.hocg.rabbit.pay.api.pojo.ro.GoRefundRo;
+import in.hocg.rabbit.pay.api.pojo.vo.TradeStatusSyncVo;
 import in.hocg.rabbit.com.api.UniqueCodeServiceApi;
 import in.hocg.rabbit.com.api.UserAddressServiceApi;
 import in.hocg.rabbit.com.api.enums.CodeType;
@@ -76,7 +76,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     private final OrderConvert convert;
     private final OrderItemService orderItemService;
     private final OrderDiscountService orderDiscountService;
-    private final BmwServiceApi bmwServiceApi;
+    private final PayServiceApi bmwServiceApi;
     private final OrderMaintainService orderMaintainService;
     private final OrderDeliveryService orderDeliveryService;
     private final OrderPayRecordService orderPayRecordService;
@@ -376,7 +376,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     public void payResult(OrderPayResultRo ro) {
         Assert.isTrue(SyncAccessMchTaskType.TradeResult.eq(ro.getSyncNotifyType()));
         TradeStatusSyncVo tradeStatusSync = ro.getTradeStatusSync();
-        Assert.isTrue(in.hocg.rabbit.bmw.api.enums.TradeOrderStatus.Payed.eq(tradeStatusSync.getStatus()));
+        Assert.isTrue(in.hocg.rabbit.pay.api.enums.TradeOrderStatus.Payed.eq(tradeStatusSync.getStatus()));
 
         String orderNo = tradeStatusSync.getOutTradeNo();
         String payType = tradeStatusSync.getPayType();

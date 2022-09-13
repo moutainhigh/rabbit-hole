@@ -1,9 +1,7 @@
 package in.hocg.rabbit.chaos;
 
 import in.hocg.boot.mybatis.plus.extensions.context.constants.MyBatisPlusExtensionsConstants;
-import in.hocg.rabbit.bmw.api.BmwServiceName;
 import in.hocg.rabbit.chaos.api.ChaosServiceName;
-import in.hocg.rabbit.chaos.biz.service.ChaosService;
 import in.hocg.rabbit.com.api.ComServiceName;
 import in.hocg.rabbit.common.constant.GlobalConstant;
 import in.hocg.rabbit.cv.api.CvServiceName;
@@ -11,6 +9,7 @@ import in.hocg.rabbit.docking.api.DockingServiceName;
 import in.hocg.rabbit.mall.api.MallServiceName;
 import in.hocg.rabbit.mina.api.MinaServiceName;
 import in.hocg.rabbit.owp.api.OwpServiceName;
+import in.hocg.rabbit.pay.api.PayServiceName;
 import in.hocg.rabbit.rcm.api.RcmServiceName;
 import in.hocg.rabbit.ums.api.UmsServiceName;
 import in.hocg.rabbit.ws.api.WsServiceName;
@@ -33,7 +32,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = {
     "in.hocg.rabbit.wl",
-    BmwServiceName.PACKAGE,
+    PayServiceName.PACKAGE,
     ChaosServiceName.PACKAGE, DockingServiceName.PACKAGE,
     MinaServiceName.PACKAGE, UmsServiceName.PACKAGE,
     OwpServiceName.PACKAGE, ComServiceName.PACKAGE,
@@ -41,7 +40,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
     WsServiceName.PACKAGE, MallServiceName.PACKAGE})
 @MapperScan(annotationClass = Mapper.class, value = {
     "in.hocg.rabbit.wl",
-    BmwServiceName.PACKAGE,
+    PayServiceName.PACKAGE,
     ChaosServiceName.PACKAGE, DockingServiceName.PACKAGE,
     MinaServiceName.PACKAGE, UmsServiceName.PACKAGE,
     OwpServiceName.PACKAGE, ComServiceName.PACKAGE,
