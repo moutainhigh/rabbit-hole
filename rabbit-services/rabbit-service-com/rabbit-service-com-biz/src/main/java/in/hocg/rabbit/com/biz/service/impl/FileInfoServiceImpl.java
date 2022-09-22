@@ -2,11 +2,10 @@ package in.hocg.rabbit.com.biz.service.impl;
 
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
-import in.hocg.rabbit.com.biz.entity.File;
-import in.hocg.rabbit.com.biz.mapper.FileMapper;
-import in.hocg.rabbit.com.biz.service.FileService;
+import in.hocg.rabbit.com.biz.entity.FileInfo;
+import in.hocg.rabbit.com.biz.mapper.FileInfoMapper;
+import in.hocg.rabbit.com.biz.service.FileInfoService;
 import in.hocg.rabbit.com.biz.utils.Avatars;
-import in.hocg.rabbit.com.api.enums.FileRelType;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractServiceImpl;
 import in.hocg.boot.oss.autoconfigure.core.OssFileBervice;
 import in.hocg.boot.utils.ValidUtils;
@@ -34,7 +33,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> implements FileService {
+public class FileInfoServiceImpl extends AbstractServiceImpl<FileInfoMapper, FileInfo> implements FileInfoService {
     private final OssFileBervice ossFileService;
 
     @Override
@@ -60,8 +59,8 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
         if (CollectionUtils.isEmpty(files)) {
             return;
         }
-        final List<File> list = files.parallelStream()
-            .map(item -> new File()
+        final List<FileInfo> list = files.parallelStream()
+            .map(item -> new FileInfo()
                 .setRefId(relId)
                 .setRefType(relType.getCodeStr())
                 .setPriority(item.getPriority())
@@ -88,11 +87,11 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File> imple
             .collect(Collectors.toList());
     }
 
-    private List<File> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@NotNull String relType, @NotNull Long relId) {
+    private List<FileInfo> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@NotNull String relType, @NotNull Long relId) {
         return baseMapper.listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(relType, relId);
     }
 
     private void deleteByRefTypeAndRefId(@NotNull String relType, @NotNull Long relId) {
-        lambdaUpdate().eq(File::getRefType, relType).eq(File::getRefId, relId).remove();
+        lambdaUpdate().eq(FileInfo::getRefType, relType).eq(FileInfo::getRefId, relId).remove();
     }
 }

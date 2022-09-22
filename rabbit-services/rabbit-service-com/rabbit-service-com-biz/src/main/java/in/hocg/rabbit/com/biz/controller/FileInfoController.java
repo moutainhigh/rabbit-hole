@@ -1,7 +1,7 @@
 package in.hocg.rabbit.com.biz.controller;
 
 
-import in.hocg.rabbit.com.biz.service.FileService;
+import in.hocg.rabbit.com.biz.service.FileInfoService;
 import in.hocg.boot.utils.struct.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,8 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/file")
-public class FileController {
-    private final FileService service;
+public class FileInfoController {
+    private final FileInfoService service;
 
     @ApiOperation("上传文件")
     @PostMapping("/upload")

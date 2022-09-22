@@ -16,9 +16,8 @@ public class GeneratorMain {
     public static void main(String[] args) {
         //
         CodeGenerator.generateByTables(DataSource.DEFAULT,
-            Module.RCM, false,
-            "rcm_post_classify",
-            "rcm_post",
+            Module.COM, false,
+            "com_bank_info",
             "");
     }
 
