@@ -39,6 +39,9 @@ public class BankInfoTests extends AbstractSpringBootTest {
             if (count == 0) {
                 return;
             }
+            if (StrUtil.isBlank(line)) {
+                return;
+            }
 
             // 支付行号&行号状态&行别代码&城市代码&行名全称&清算行号&
             List<String> data = StrUtil.split(line, '&', 7);
@@ -75,6 +78,9 @@ public class BankInfoTests extends AbstractSpringBootTest {
         FileUtil.readLines(svcFile, Charset.forName("GB2312"), (LineHandler) line -> {
             int count = i.getAndIncrement();
             if (count == 0) {
+                return;
+            }
+            if (StrUtil.isBlank(line)) {
                 return;
             }
 
