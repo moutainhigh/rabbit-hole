@@ -36,10 +36,7 @@ public class BankInfoTests extends AbstractSpringBootTest {
         AtomicInteger i = new AtomicInteger();
         FileUtil.readLines(svcFile, Charset.forName("GB2312"), (LineHandler) line -> {
             int count = i.getAndIncrement();
-            if (count == 0) {
-                return;
-            }
-            if (StrUtil.isBlank(line)) {
+            if (count == 0 || StrUtil.isBlank(line)) {
                 return;
             }
 
@@ -77,10 +74,7 @@ public class BankInfoTests extends AbstractSpringBootTest {
         AtomicInteger i = new AtomicInteger();
         FileUtil.readLines(svcFile, Charset.forName("GB2312"), (LineHandler) line -> {
             int count = i.getAndIncrement();
-            if (count == 0) {
-                return;
-            }
-            if (StrUtil.isBlank(line)) {
+            if (count == 0 || StrUtil.isBlank(line)) {
                 return;
             }
 
