@@ -3,13 +3,11 @@ package in.hocg.rabbit.com.biz.apiimpl;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
-import in.hocg.rabbit.com.biz.service.FileService;
+import in.hocg.rabbit.com.biz.service.FileInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -21,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class FileServiceApiImpl implements FileServiceApi {
-    private final FileService service;
+    private final FileInfoService service;
 
     @Override
     public void upload(UploadFileRo ro) {

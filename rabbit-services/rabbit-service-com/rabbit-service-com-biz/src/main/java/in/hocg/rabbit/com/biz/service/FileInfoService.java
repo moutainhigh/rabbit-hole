@@ -2,7 +2,7 @@ package in.hocg.rabbit.com.biz.service;
 
 import in.hocg.rabbit.com.api.pojo.ro.UploadFileRo;
 import in.hocg.rabbit.com.api.pojo.vo.FileVo;
-import in.hocg.rabbit.com.biz.entity.File;
+import in.hocg.rabbit.com.biz.entity.FileInfo;
 import in.hocg.boot.mybatis.plus.autoconfiguration.core.struct.basic.AbstractService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author hocgin
  * @since 2020-11-11
  */
-public interface FileService extends AbstractService<File> {
+public interface FileInfoService extends AbstractService<FileInfo> {
 
     String upload(MultipartFile file);
 

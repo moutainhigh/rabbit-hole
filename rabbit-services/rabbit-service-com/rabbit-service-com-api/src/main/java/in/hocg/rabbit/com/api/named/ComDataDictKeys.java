@@ -24,5 +24,6 @@ public final class ComDataDictKeys {
     public static final String FILE_REL_TYPE = "COM__FILE_REL_TYPE";
     public static final String TASK_TYPE = "COM__TASK_TYPE";
     public static final String USER_ADDRESS_TYPE = "COM__USER_ADDRESS_TYPE";
+    public static final String BANK_INFO_TYPE = "COM__BANK_INFO_TYPE";
 
 }

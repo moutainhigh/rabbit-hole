@@ -1,6 +1,6 @@
 package in.hocg.rabbit.com.biz.mapper;
 
-import in.hocg.rabbit.com.biz.entity.File;
+import in.hocg.rabbit.com.biz.entity.FileInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2020-11-11
  */
 @Mapper
-public interface FileMapper extends BaseMapper<File> {
+public interface FileInfoMapper extends BaseMapper<FileInfo> {
 
-    List<File> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@Param("refType") Serializable code, @Param("refId") Long relId);
+    List<FileInfo> listByRefTypeAndRefIdOrderBySortDescAndCreatedAtDesc(@Param("refType") Serializable code, @Param("refId") Long relId);
 }
