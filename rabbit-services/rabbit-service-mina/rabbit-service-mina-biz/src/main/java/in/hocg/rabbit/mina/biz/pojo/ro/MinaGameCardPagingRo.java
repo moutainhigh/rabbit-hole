@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Data
 @ApiModel(description = "游戏")
 public class MinaGameCardPagingRo extends PageRo {
+    private String gameType;
     private String keyword;
     private Serializable enabled;
 }

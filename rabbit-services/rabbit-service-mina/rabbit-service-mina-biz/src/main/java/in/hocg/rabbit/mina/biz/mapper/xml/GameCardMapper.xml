@@ -12,6 +12,9 @@
       <if test="ro.enabled != null">
         AND mgc.enabled = #{ro.enabled}
       </if>
+      <if test="ro.gameType != null">
+        AND mgc.game_type = #{ro.gameType}
+      </if>
     </where>
     ORDER BY mgc.heat DESC, mgc.priority DESC, mgc.created_at DESC
   </select>
