@@ -1,5 +1,7 @@
 package in.hocg.rabbit.mina.biz.controller.client;
 
+import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Lists;
 import in.hocg.rabbit.mina.biz.pojo.ro.MinaGameCardPagingRo;
 import in.hocg.rabbit.mina.biz.pojo.vo.GameCardComplexVo;
 import in.hocg.rabbit.mina.biz.pojo.vo.MinaGameCardComplexVo;
@@ -31,6 +33,16 @@ public class GameClientController {
     @ApiOperation("游戏 - 分页查询")
     public Result<List<MinaGameCardComplexVo>> paging(@PathVariable(required = false) String appid,
                                                       @Validated @RequestBody MinaGameCardPagingRo ro) {
+        if (StrUtil.isNotBlank(ro.getAppid())) {
+            boolean isNes = Lists.newArrayList("wxf417c3b59678535c").contains(ro.getAppid());
+            boolean isGba = Lists.newArrayList("wxe0ed785a16b11075").contains(ro.getAppid());
+            if (isNes) {
+                ro.setGameType("nes");
+            } else if (isGba) {
+                ro.setGameType("gba");
+                return Result.success(List.of(service.getMinaById(705L)));
+            }
+        }
         return Result.success(service.pagingForMina(ro).getRecords());
     }
 

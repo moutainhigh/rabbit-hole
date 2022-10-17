@@ -54,6 +54,11 @@ public class GameCardServiceImpl extends AbstractServiceImpl<GameCardMapper, Gam
     }
 
     @Override
+    public MinaGameCardComplexVo getMinaById(Long id) {
+        return this.convertComplexForMina(baseMapper.selectById(id));
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<GameCardOrdinaryVo> paging(GameCardPagingRo ro) {
         return baseMapper.paging(ro, ro.ofPage()).convert(this::convertOrdinary);
