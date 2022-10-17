@@ -25,6 +25,8 @@ public interface GameCardService extends AbstractService<GameCard> {
 
     IPage<MinaGameCardComplexVo> pagingForMina(MinaGameCardPagingRo ro);
 
+    MinaGameCardComplexVo getMinaById(Long id);
+
     IPage<GameCardOrdinaryVo> paging(GameCardPagingRo ro);
 
     List<GameCardOrdinaryVo> complete(GameCardCompleteRo ro);
