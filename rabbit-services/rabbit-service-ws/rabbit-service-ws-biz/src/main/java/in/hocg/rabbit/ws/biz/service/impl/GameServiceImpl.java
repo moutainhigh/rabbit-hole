@@ -11,7 +11,6 @@ import in.hocg.boot.ws.autoconfiguration.core.event.SocketClosedEvent;
 import in.hocg.rabbit.ws.biz.pojo.dto.GameRoom;
 import in.hocg.rabbit.ws.biz.pojo.dto.MessageCmdDto;
 import in.hocg.rabbit.ws.biz.pojo.ro.GameCmdRo;
-import in.hocg.rabbit.ws.biz.pojo.ro.RoomPeerRo;
 import in.hocg.rabbit.ws.biz.pojo.ro.RoomSignalRo;
 import in.hocg.rabbit.ws.biz.pojo.vo.GameCmdVo;
 import in.hocg.rabbit.ws.biz.service.GameService;
@@ -26,7 +25,6 @@ import java.security.Principal;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * Created by hocgin on 2022/6/8
@@ -57,6 +55,7 @@ public class GameServiceImpl implements GameService {
 
         GameRoom room = new GameRoom();
         room.setMaster(username)
+            .setId(IdUtil.randomUUID())
             .setType(GameRoom.Type.Open)
             .setGame(gameName);
 
@@ -252,6 +251,7 @@ public class GameServiceImpl implements GameService {
             case Open: {
                 sendRoomRequestToUser(username, new GameCmdVo()
                     .setStatus("created")
+                    .setId(result.getId())
                     .setGame(result.getGame())
                     .setPasscode(result.getPasscode())
                     .setThiz(result.getMaster()));
