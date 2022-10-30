@@ -251,6 +251,7 @@ public class GameServiceImpl implements GameService {
             case Open: {
                 sendRoomRequestToUser(username, new GameCmdVo()
                     .setStatus("created")
+                    .setId(result.getId())
                     .setGame(result.getGame())
                     .setPasscode(result.getPasscode())
                     .setThiz(result.getMaster()));
