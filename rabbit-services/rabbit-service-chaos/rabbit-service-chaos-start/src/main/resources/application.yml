@@ -22,6 +22,9 @@ boot:
       # [BMW] 接入应用名称
       - name: GET_ACCESS_MCH_BY_ENCODING
         ttl: 1D
+      # [MINA] 返利商品
+      - name: GET_PRIVILEGE_LINK
+        ttl: 1D
   sentinel:
     flow-rules:
       # 发送短信限流(每秒1)
