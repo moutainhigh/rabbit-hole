@@ -31,4 +31,8 @@ boot:
       - resource: GET_SMS_CODE
         grade: 1
         count: 1
-
+  cps:
+    da-tao-ke:
+      app-key: 63660afa87791
+      secret: bcaa96a7f1f6c645db310a151f82782f
+      jd-union-id: 1003815318
