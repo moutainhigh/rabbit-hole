@@ -8,4 +8,5 @@ package in.hocg.rabbit.mina.biz.constant;
  */
 public class CacheKeys {
     public static final String LIST_RECHARGE_PRODUCT = "LIST_RECHARGE_PRODUCT";
+    public static final String GET_PRIVILEGE_LINK = "GET_PRIVILEGE_LINK";
 }

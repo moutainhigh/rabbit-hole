@@ -1,9 +1,9 @@
 package in.hocg.rabbit.ws.biz.controller;
 
 import cn.hutool.json.JSONUtil;
+import in.hocg.boot.utils.LangUtils;
 import in.hocg.rabbit.ws.biz.pojo.dto.MessageCmdDto;
 import in.hocg.rabbit.ws.biz.pojo.ro.GameCmdRo;
-import in.hocg.rabbit.ws.biz.pojo.ro.RoomPeerRo;
 import in.hocg.rabbit.ws.biz.pojo.ro.RoomSignalRo;
 import in.hocg.rabbit.ws.biz.service.GameService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,8 @@ public class GameController {
 
     @MessageMapping("/game")
     public void room(@RequestBody MessageCmdDto dto, Principal principal) {
-        switch (dto.getName()) {
+        String name = LangUtils.callIfNotNull(dto, MessageCmdDto::getName).orElse("");
+        switch (name) {
             case "room": {
                 service.handleRoomRequest(JSONUtil.toBean(JSONUtil.toJsonStr(dto.getValue()), GameCmdRo.class));
                 return;
@@ -44,7 +45,7 @@ public class GameController {
                 return;
             }
             default: {
-                log.warn("未知指令: {}", dto.getName());
+                log.warn("未知指令: {}", name);
             }
         }
     }

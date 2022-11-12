@@ -22,10 +22,17 @@ boot:
       # [BMW] 接入应用名称
       - name: GET_ACCESS_MCH_BY_ENCODING
         ttl: 1D
+      # [MINA] 返利商品
+      - name: GET_PRIVILEGE_LINK
+        ttl: 1D
   sentinel:
     flow-rules:
       # 发送短信限流(每秒1)
       - resource: GET_SMS_CODE
         grade: 1
         count: 1
-
+  cps:
+    da-tao-ke:
+      app-key: 63660afa87791
+      secret: bcaa96a7f1f6c645db310a151f82782f
+      jd-union-id: 1003815318
