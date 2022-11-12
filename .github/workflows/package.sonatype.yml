@@ -1,4 +1,4 @@
-name: 发布 Sonatype
+name: Deploy::Sonatype
 # 发布通用模块(目前为 chaos/rabbit-basic)
 
 on:
