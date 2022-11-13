@@ -13,6 +13,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class CacheKeys {
     public static final String GUMBALLS_GIFT = "GUMBALLS_GIFT";
+    public static final String TODAY_WALLPAPER = "TODAY_WALLPAPER";
     public static final String PAGING_WALLPAPER = "PAGING_WALLPAPER";
     public static final String GET_ADDRESS_BY_IP = "GET_ADDRESS_BY_IP";
     public static final String PAGING_TOPIC_WALLPAPER = "PAGING_TOPIC_WALLPAPER";

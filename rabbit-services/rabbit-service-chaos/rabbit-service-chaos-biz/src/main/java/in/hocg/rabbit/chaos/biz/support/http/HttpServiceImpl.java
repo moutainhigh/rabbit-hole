@@ -1,5 +1,10 @@
 package in.hocg.rabbit.chaos.biz.support.http;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import in.hocg.rabbit.chaos.biz.constant.CacheKeys;
 import in.hocg.rabbit.chaos.biz.manager.LangManager;
 import in.hocg.rabbit.chaos.biz.manager.UnsplashManager;
@@ -61,6 +66,19 @@ public class HttpServiceImpl implements HttpService {
         String password = ro.getPassword();
         Integer count = ro.getCount();
         langManager.uploadMiStep(username, password, count);
+    }
+
+    @Override
+    @Cacheable(cacheNames = CacheKeys.TODAY_WALLPAPER, unless = "#result == null")
+    public String today() {
+        String host = "https://cn.bing.com";
+        JSONObject result = JSONUtil.parseObj(HttpUtil.get(StrUtil.format("{}/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN", host)));
+        JSONArray images = result.getJSONArray("images");
+        if (images.size() > 0) {
+            String imageUrl = images.getJSONObject(0).getStr("url");
+            return StrUtil.format("{}{}", host, imageUrl);
+        }
+        return null;
     }
 
     @Override
