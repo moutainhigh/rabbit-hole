@@ -40,6 +40,13 @@ import java.util.List;
 public class HttpController {
     private final HttpService service;
 
+    @UseLogger("每日壁纸 - 壁纸")
+    @ApiOperation("每日壁纸 - 壁纸")
+    @GetMapping("/wallpaper/today")
+    public Result<String> today() {
+        return Result.success(service.today());
+    }
+
     @UseLogger("获取主题 - 壁纸")
     @ApiOperation("获取主题 - 壁纸")
     @GetMapping("/wallpaper/topic")

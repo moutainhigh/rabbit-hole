@@ -30,4 +30,6 @@ public interface HttpService {
     WallpaperComplexVo random();
 
     void uploadMiStep(UploadMiStepRo ro);
+
+    String today();
 }
