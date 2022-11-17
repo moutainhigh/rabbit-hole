@@ -38,10 +38,10 @@ public class GameClientController {
             boolean isGba = Lists.newArrayList("wxe0ed785a16b11075").contains(ro.getAppid());
             if (isNes) {
                 ro.setGameType("nes");
-                return Result.success(List.of(service.getMinaById(705L)));
+                return Result.success(List.of(service.getMinaById(1756L)));
             } else if (isGba) {
                 ro.setGameType("gba");
-                return Result.success(List.of(service.getMinaById(705L)));
+                return Result.success(List.of(service.getMinaById(1756L)));
             }
         }
         return Result.success(service.pagingForMina(ro).getRecords());
