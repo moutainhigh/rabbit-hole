@@ -29,7 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Cacheable(cacheNames = CacheKeys.IS_PASS_AUTHORIZE, key = "#username + #servicePrefix + #methodName + #uri", unless = "#result == null")
     public boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri) {
-        return authorityServiceApi.isPassAuthorize(username, servicePrefix, methodName, uri);
+        return true;
+//        todo 如果要开启，需要给每个用户配置接口权限
+//        return authorityServiceApi.isPassAuthorize(username, servicePrefix, methodName, uri);
     }
 
     @Override
