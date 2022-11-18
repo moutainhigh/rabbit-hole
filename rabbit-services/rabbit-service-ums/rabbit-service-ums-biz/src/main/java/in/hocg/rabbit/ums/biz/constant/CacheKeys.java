@@ -9,14 +9,14 @@ import lombok.experimental.UtilityClass;
  * @author hocgin
  */
 @UtilityClass
-public class CacheConstant {
+public class CacheKeys {
     public enum Prefix {
-        Token,
+        UserToken,
         QrcodeIdFlag,
     }
 
-    public String getTokenKey(String token) {
-        return prefix(Prefix.Token, token);
+    public String getUserTokenKey(String token) {
+        return prefix(Prefix.UserToken, token);
     }
 
     public String getQrcodeIdFlag(String idFlag) {

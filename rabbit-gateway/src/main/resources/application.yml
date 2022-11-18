@@ -214,6 +214,8 @@ boot:
         ttl: 5M
       - name: GET_AUTHORITIES
         ttl: 5M
+      - name: GET_USERNAME
+        ttl: 15M
       - name: IS_PASS_AUTHORIZE
         ttl: 1M
 rabbit:

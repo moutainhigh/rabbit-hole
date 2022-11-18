@@ -23,7 +23,6 @@ import in.hocg.rabbit.chaos.api.pojo.vo.ValidVerifyCodeVo;
 import in.hocg.rabbit.com.api.FileServiceApi;
 import in.hocg.rabbit.com.api.ProjectServiceApi;
 import in.hocg.rabbit.com.api.pojo.vo.ProjectComplexVo;
-import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.rabbit.common.utils.RabbitUtils;
 import in.hocg.rabbit.common.utils.Rules;
 import in.hocg.rabbit.ums.api.pojo.ro.CreateAccountRo;
@@ -34,27 +33,18 @@ import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.cache.UmsCacheService;
+import in.hocg.rabbit.ums.biz.cache.UserTokenService;
 import in.hocg.rabbit.ums.biz.entity.Role;
 import in.hocg.rabbit.ums.biz.entity.Social;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.mapper.UserMapper;
 import in.hocg.rabbit.ums.biz.mapstruct.UserMapping;
-import in.hocg.rabbit.ums.biz.pojo.ro.JoinAccountRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.RoleGrantUserRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountEmailRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountPhoneRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UpdateAccountRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserCompleteRo;
-import in.hocg.rabbit.ums.biz.pojo.ro.UserPagingRo;
+import in.hocg.rabbit.ums.biz.pojo.ro.*;
 import in.hocg.rabbit.ums.biz.pojo.vo.AccountComplexVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.AuthorityTreeNodeVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserCompleteVo;
 import in.hocg.rabbit.ums.biz.pojo.vo.UserInfoMeVo;
-import in.hocg.rabbit.ums.biz.service.AuthorityService;
-import in.hocg.rabbit.ums.biz.service.RoleService;
-import in.hocg.rabbit.ums.biz.service.RoleUserRefService;
-import in.hocg.rabbit.ums.biz.service.SocialService;
-import in.hocg.rabbit.ums.biz.service.UserService;
+import in.hocg.rabbit.ums.biz.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
@@ -69,11 +59,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -99,6 +85,7 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
     private final UmsCacheService cacheService;
     private final OssFileBervice ossFileService;
     private final PasswordEncoder passwordEncoder;
+    private final UserTokenService userTokenService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -192,17 +179,17 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
 
     @Override
     public String getToken(String username) {
-        return JwtUtils.encode(username);
+        return userTokenService.getUserToken(username);
     }
 
     @Override
     public String renewToken(String token) {
-        return JwtUtils.encode(JwtUtils.decode(token));
+        return userTokenService.renewUserToken(token);
     }
 
     @Override
     public String getUsername(String token) {
-        return JwtUtils.decode(token);
+        return userTokenService.getUsername(token);
     }
 
     @Override

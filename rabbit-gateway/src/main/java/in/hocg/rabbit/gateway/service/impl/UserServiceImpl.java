@@ -1,12 +1,10 @@
 package in.hocg.rabbit.gateway.service.impl;
 
-import in.hocg.rabbit.common.utils.JwtUtils;
+import in.hocg.boot.utils.ValidUtils;
 import in.hocg.rabbit.gateway.constant.CacheKeys;
 import in.hocg.rabbit.gateway.service.UserService;
-import in.hocg.rabbit.ums.api.AuthorityServiceApi;
 import in.hocg.rabbit.ums.api.UserServiceApi;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
-import in.hocg.boot.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
@@ -23,7 +21,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserServiceImpl implements UserService {
-    private final AuthorityServiceApi authorityServiceApi;
     private final UserServiceApi userServiceApi;
 
     @Override
@@ -47,7 +44,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(cacheNames = CacheKeys.GET_USERNAME, key = "#token", unless = "#result == null")
     public String getUsername(String token) {
-        return JwtUtils.decode(token);
+        return userServiceApi.getUsername(token);
     }
 }

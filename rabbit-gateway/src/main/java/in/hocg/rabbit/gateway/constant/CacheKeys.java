@@ -13,5 +13,6 @@ public final class CacheKeys {
     public static final String GET_USER_DETAIL = "GET_USER_DETAIL";
     public static final String IS_PASS_AUTHORIZE = "IS_PASS_AUTHORIZE";
     public static final String GET_AUTHORITIES = "GET_AUTHORITIES";
+    public static final String GET_USERNAME = "GET_USERNAME";
 
 }
