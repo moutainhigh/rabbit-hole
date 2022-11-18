@@ -70,6 +70,10 @@
     </dependency>
     <dependency>
       <groupId>in.hocg.boot</groupId>
+      <artifactId>cps-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>in.hocg.boot</groupId>
       <artifactId>logging-spring-boot-starter</artifactId>
     </dependency>
     <dependency>

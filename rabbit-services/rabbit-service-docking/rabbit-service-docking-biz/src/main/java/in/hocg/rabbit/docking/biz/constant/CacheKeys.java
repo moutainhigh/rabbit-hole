@@ -1,5 +1,6 @@
 package in.hocg.rabbit.docking.biz.constant;
 
+import in.hocg.boot.cache.autoconfiguration.utils.CacheUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -9,21 +10,18 @@ import lombok.experimental.UtilityClass;
  * @author hocgin
  */
 @UtilityClass
-public class CacheConstant {
+public class CacheKeys {
     public enum Prefix {
         WxMpLogin,
         WxMaSession
     }
 
     public String getWxMaSessionKey(String sessionKey) {
-        return prefix(Prefix.WxMaSession, sessionKey);
+        return CacheUtils.useKey(Prefix.WxMaSession, sessionKey);
     }
 
     public String getWxMpLoginKey(String randomStr) {
-        return prefix(Prefix.WxMpLogin, randomStr);
+        return CacheUtils.useKey(Prefix.WxMpLogin, randomStr);
     }
 
-    private String prefix(Prefix prefix, String suffix) {
-        return String.format("%s::%s", prefix.name(), suffix);
-    }
 }

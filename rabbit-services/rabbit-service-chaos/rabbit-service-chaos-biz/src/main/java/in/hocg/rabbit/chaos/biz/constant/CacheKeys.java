@@ -2,6 +2,7 @@ package in.hocg.rabbit.chaos.biz.constant;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import in.hocg.boot.cache.autoconfiguration.utils.CacheUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -23,24 +24,21 @@ public final class CacheKeys {
     }
 
     public String getVerifyCodeKey(String optType, String toDevice) {
-        return SecureUtil.md5(prefix(Prefix.VerifyCode, StrUtil.format("{}_{}", optType, toDevice)));
+        return SecureUtil.md5(CacheUtils.useKey(Prefix.VerifyCode, StrUtil.format("{}_{}", optType, toDevice)));
     }
 
 
     public String getEmailKey(String email) {
-        return prefix(Prefix.EMAIL, email);
+        return CacheUtils.useKey(Prefix.EMAIL, email);
     }
 
     public String getTokenKey(String username) {
-        return prefix(Prefix.TOKEN, username);
+        return CacheUtils.useKey(Prefix.TOKEN, username);
     }
 
     public String getSmsKey(String phone) {
-        return prefix(Prefix.SMS, phone);
+        return CacheUtils.useKey(Prefix.SMS, phone);
     }
 
 
-    private String prefix(Prefix prefix, String suffix) {
-        return String.format("%s::%s", prefix.name(), suffix);
-    }
 }

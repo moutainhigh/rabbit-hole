@@ -9,12 +9,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hocgin on 2020/12/14
@@ -26,8 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UmsCacheService implements UserTokenService {
-    private final StringRedisTemplate template;
-    private final CacheRepository cacheRepository;
+    private final CacheRepository repository;
 
 
     /**
@@ -36,9 +32,8 @@ public class UmsCacheService implements UserTokenService {
      * @param idFlag qrcode
      */
     public void applyQrcodeLoginKey(@NonNull String idFlag) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
         String key = CacheKeys.getQrcodeIdFlag(idFlag);
-        opsForValue.set(key, "", 1, TimeUnit.MINUTES);
+        repository.setExpire(key, "", Duration.ofMinutes(1));
         log.debug("初始化微信扫码登陆的KEY: [{}]", key);
     }
 
@@ -49,9 +44,8 @@ public class UmsCacheService implements UserTokenService {
      * @return username
      */
     public String getQrcodeLoginKey(@NonNull String idFlag) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
         String key = CacheKeys.getQrcodeIdFlag(idFlag);
-        return opsForValue.get(key);
+        return repository.get(key);
     }
 
     /**
@@ -61,20 +55,19 @@ public class UmsCacheService implements UserTokenService {
      * @param username username
      */
     public void updateQrcodeLoginKey(@NonNull String idFlag, @NonNull String username) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
         String key = CacheKeys.getQrcodeIdFlag(idFlag);
-        Assert.isTrue(template.hasKey(key), "二维码已失效");
-        opsForValue.set(key, username);
+        Assert.isTrue(repository.exists(key), "二维码已失效");
+        repository.setExpire(key, username, Duration.ofHours(1));
     }
 
     @Override
     public String getUsername(String token) {
         String key = CacheKeys.getUserTokenKey(token);
-        String username = cacheRepository.get(key);
+        String username = repository.get(key);
         if (StrUtil.isBlank(username)) {
             return null;
         }
-        cacheRepository.setExpire(key, username, Duration.ofDays(31));
+        repository.setExpire(key, username, Duration.ofDays(31));
         return username;
     }
 
@@ -89,12 +82,12 @@ public class UmsCacheService implements UserTokenService {
     public String getUserToken(String username) {
         String token = JwtUtils.encode(username);
         String key = CacheKeys.getUserTokenKey(token);
-        cacheRepository.setExpire(key, username, Duration.ofDays(31));
+        repository.setExpire(key, username, Duration.ofDays(31));
         return token;
     }
 
     @Override
     public void removeUserToken(String token) {
-        cacheRepository.del(CacheKeys.getUserTokenKey(token));
+        repository.del(CacheKeys.getUserTokenKey(token));
     }
 }

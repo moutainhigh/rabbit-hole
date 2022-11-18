@@ -1,5 +1,6 @@
 package in.hocg.rabbit.ums.biz.constant;
 
+import in.hocg.boot.cache.autoconfiguration.utils.CacheUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -16,14 +17,11 @@ public class CacheKeys {
     }
 
     public String getUserTokenKey(String token) {
-        return prefix(Prefix.UserToken, token);
+        return CacheUtils.useKey(Prefix.UserToken, token);
     }
 
     public String getQrcodeIdFlag(String idFlag) {
-        return prefix(Prefix.QrcodeIdFlag, idFlag);
+        return CacheUtils.useKey(Prefix.QrcodeIdFlag, idFlag);
     }
 
-    private String prefix(Prefix prefix, String suffix) {
-        return String.format("Ums::%s::%s", prefix.name(), suffix);
-    }
 }

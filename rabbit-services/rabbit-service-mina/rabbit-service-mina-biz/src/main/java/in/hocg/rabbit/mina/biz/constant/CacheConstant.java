@@ -1,5 +1,6 @@
 package in.hocg.rabbit.mina.biz.constant;
 
+import in.hocg.boot.cache.autoconfiguration.utils.CacheUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -15,10 +16,7 @@ public class CacheConstant {
     }
 
     public String getProxyChannelKey(String token) {
-        return prefix(Prefix.ProxyChannel, token);
+        return CacheUtils.useKey(Prefix.ProxyChannel, token);
     }
 
-    private String prefix(Prefix prefix, String suffix) {
-        return String.format("Mina::%s::%s", prefix.name(), suffix);
-    }
 }

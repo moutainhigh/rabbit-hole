@@ -6,14 +6,13 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import in.hocg.rabbit.chaos.biz.support.I2ProxyHttpClient;
 import in.hocg.rabbit.chaos.biz.support.MiSupport;
-import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LangManager {
-    private final StringRedisTemplate redisTemplate;
 
     /**
      * 获取冈布奥每日密令

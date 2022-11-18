@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Pair;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import in.hocg.boot.cache.autoconfiguration.repository.CacheRepository;
 import in.hocg.boot.utils.ValidUtils;
 import in.hocg.rabbit.chaos.api.enums.VerifyCodeDeviceType;
 import in.hocg.rabbit.chaos.api.enums.VerifyCodeOptType;
@@ -16,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -32,44 +31,41 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ChaosCacheServiceImpl implements ChaosCacheService {
-    private final RedisTemplate redisTemplate;
+    private final CacheRepository repository;
 
 
     @Override
     public boolean canReSendVerifyCode(VerifyCodeOptType optType, String toDevice) {
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
-        if (!redisTemplate.hasKey(serialNo)) {
+        if (!repository.exists(serialNo)) {
             return true;
         }
-
-        Long expire = ObjectUtil.defaultIfNull(redisTemplate.getExpire(serialNo, TimeUnit.SECONDS), 0L);
+        Long expire = ObjectUtil.defaultIfNull(repository.getExpire(serialNo, TimeUnit.SECONDS), 0L);
         return expire < ChaosConstants.LIMIT_REUSE_EXPIRED;
     }
 
     @Override
     public ValidVerifyCodeVo validVerifyCode(String serialNo, String verifyCode) {
         ValidVerifyCodeVo result = new ValidVerifyCodeVo();
-        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
-        VerifyCodeDto value = (VerifyCodeDto) opsForValue.get(serialNo);
+        VerifyCodeDto value = repository.get(serialNo);
         boolean isSuccess = Objects.nonNull(value) && StrUtil.equals(value.getVerifyCode(), verifyCode);
         if (isSuccess) {
             result.setVerifyCode(value.getVerifyCode());
             result.setOptType(value.getOptType());
             result.setDeviceType(value.getDeviceType());
             result.setToDevice(value.getToDevice());
-            redisTemplate.delete(serialNo);
+            repository.del(serialNo);
         }
         return result.setSuccess(isSuccess);
     }
 
     @Override
     public Pair<String, Duration> getVerifyCode(String serialNo) {
-        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
-        VerifyCodeDto value = (VerifyCodeDto) opsForValue.get(serialNo);
+        VerifyCodeDto value = repository.get(serialNo);
         if (Objects.isNull(value)) {
             return new Pair<>(null, Duration.ZERO);
         }
-        Long expire = redisTemplate.getExpire(serialNo, TimeUnit.SECONDS);
+        Long expire = repository.getExpire(serialNo, TimeUnit.SECONDS);
         return new Pair<>(value.getVerifyCode(), Duration.of(ObjectUtil.defaultIfNull(expire, 0L), ChronoUnit.SECONDS));
     }
 
@@ -93,13 +89,12 @@ public class ChaosCacheServiceImpl implements ChaosCacheService {
                                                              String toDevice, Duration duration) {
         String serialNo = CacheKeys.getVerifyCodeKey(optType.getCodeStr(), toDevice);
         String verifyCode = RandomUtil.randomNumbers(4);
-        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
         VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
         verifyCodeDto.setVerifyCode(verifyCode);
         verifyCodeDto.setOptType(optType.getCodeStr());
         verifyCodeDto.setDeviceType(deviceType.getCodeStr());
         verifyCodeDto.setToDevice(toDevice);
-        opsForValue.set(serialNo, verifyCodeDto, duration);
+        repository.setExpire(serialNo, verifyCodeDto, duration);
         log.debug("创建新验证码[操作类型: {}, 设备: {}, 验证码: {}, 序列号: {}]", optType, toDevice, verifyCode, serialNo);
         return Triple.of(serialNo, verifyCode, duration);
     }
