@@ -1,5 +1,6 @@
 package in.hocg.rabbit.gateway.filter.authentication;
 
+import cn.hutool.core.lang.Assert;
 import in.hocg.boot.sso.client.autoconfigure.core.BearerTokenAuthentication;
 import in.hocg.rabbit.gateway.service.UserService;
 import in.hocg.rabbit.gateway.utils.CommonUtils;
@@ -30,7 +31,7 @@ public class AuthenticationTokenFilter implements BearerTokenAuthentication {
     @Override
     public Authentication authentication(String token) {
         try {
-            String username = userService.getUsername(token);
+            String username = Assert.notBlank(userService.getUsername(token), "鉴权失败");
             return new UsernamePasswordAuthenticationToken(username, token, CommonUtils.asGrantedAuthority(userService.getAuthorities(username)));
         } catch (ExpiredJwtException e) {
             log.warn("Jwt Expired: {}", token);
