@@ -1,5 +1,6 @@
 package in.hocg.rabbit.gateway.service.impl;
 
+import in.hocg.rabbit.common.utils.JwtUtils;
 import in.hocg.rabbit.gateway.constant.CacheKeys;
 import in.hocg.rabbit.gateway.service.UserService;
 import in.hocg.rabbit.ums.api.AuthorityServiceApi;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by hocgin on 2021/1/20
@@ -24,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserServiceApi userServiceApi;
 
     @Override
+    @Cacheable(cacheNames = CacheKeys.IS_PASS_AUTHORIZE, key = "#username + #servicePrefix + #methodName + #uri", unless = "#result == null")
     public boolean isPassAuthorize(String username, String servicePrefix, String methodName, String uri) {
         return authorityServiceApi.isPassAuthorize(username, servicePrefix, methodName, uri);
     }
@@ -32,5 +36,16 @@ public class UserServiceImpl implements UserService {
     @Cacheable(cacheNames = CacheKeys.GET_USER_DETAIL, key = "#username", unless = "#result == null")
     public UserDetailVo getUserDetail(String username) {
         return ValidUtils.notNull(userServiceApi.getUserByUsername(username), "用户不存在");
+    }
+
+    @Override
+    @Cacheable(cacheNames = CacheKeys.GET_AUTHORITIES, key = "#username", unless = "#result == null")
+    public List<String> getAuthorities(String username) {
+        return userServiceApi.getAuthorities(username);
+    }
+
+    @Override
+    public String getUsername(String token) {
+        return JwtUtils.decode(token);
     }
 }

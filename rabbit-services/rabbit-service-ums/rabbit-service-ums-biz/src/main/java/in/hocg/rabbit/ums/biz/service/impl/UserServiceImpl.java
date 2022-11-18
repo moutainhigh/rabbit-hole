@@ -34,6 +34,7 @@ import in.hocg.rabbit.ums.api.pojo.vo.AccountVo;
 import in.hocg.rabbit.ums.api.pojo.vo.GetLoginQrcodeVo;
 import in.hocg.rabbit.ums.api.pojo.vo.UserDetailVo;
 import in.hocg.rabbit.ums.biz.cache.UmsCacheService;
+import in.hocg.rabbit.ums.biz.entity.Role;
 import in.hocg.rabbit.ums.biz.entity.Social;
 import in.hocg.rabbit.ums.biz.entity.User;
 import in.hocg.rabbit.ums.biz.mapper.UserMapper;
@@ -453,6 +454,12 @@ public class UserServiceImpl extends AbstractServiceImpl<UserMapper, User>
             .rule(JoinAccountRo.Mode.UseEmail, Rules.Supplier(() -> this.joinUseEmail(ro.getEmailMode())))
             .of(ICode.ofThrow(ro.getMode(), JoinAccountRo.Mode.class));
         return resultOpt.orElseThrow(() -> ServiceException.wrap("该注册方式暂不支持"));
+    }
+
+    @Override
+    public List<String> getAuthorities(String username) {
+        return getByUsername(username).map(User::getId).map(roleUserRefService::listByUserId).orElse(Collections.emptyList())
+            .stream().map(Role::getEncoding).collect(Collectors.toList());
     }
 
 

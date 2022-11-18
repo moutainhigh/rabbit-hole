@@ -113,4 +113,9 @@ public class UserServiceApiImpl implements UserServiceApi {
         User user = service.getById(userId);
         return Objects.nonNull(user) && isSuperAdminByUsername(user.getUsername());
     }
+
+    @Override
+    public List<String> getAuthorities(String username) {
+        return service.getAuthorities(username);
+    }
 }

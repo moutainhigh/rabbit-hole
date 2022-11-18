@@ -212,6 +212,10 @@ boot:
     names:
       - name: GET_USER_DETAIL
         ttl: 5M
+      - name: GET_AUTHORITIES
+        ttl: 5M
+      - name: IS_PASS_AUTHORIZE
+        ttl: 1M
 rabbit:
   gateway:
     authorize:
