@@ -1,5 +1,6 @@
 package in.hocg.rabbit.gateway.filter.authorize;
 
+import in.hocg.rabbit.common.utils.RabbitUtils;
 import in.hocg.rabbit.gateway.filter.authentication.DefaultUserDetailsChecker;
 import in.hocg.rabbit.gateway.service.UserService;
 import in.hocg.rabbit.gateway.utils.ResultUtils;
@@ -62,11 +63,10 @@ public class AuthorizeFilter extends BaseAuthorizeFilter {
             return ResultUtils.handleException(exchange, e);
         }
 
-//        todo 如果要开启，需要给每个用户配置接口权限
-//        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
-//            log.warn("username:[{}], 访问URL=[{}]", username, uri);
-//            return ResultUtils.accessDenied(exchange);
-//        }
+        if (!isPassAuthorize(request, username) && !RabbitUtils.isSuperAdmin(username)) {
+            log.warn("username:[{}], 访问URL=[{}]", username, uri);
+            return ResultUtils.accessDenied(exchange);
+        }
 
         return chain.filter(exchange);
     }

@@ -1,7 +1,9 @@
 package in.hocg.rabbit.gateway.filter.authentication;
 
-import in.hocg.rabbit.common.utils.JwtUtils;
+import cn.hutool.core.lang.Assert;
 import in.hocg.boot.sso.client.autoconfigure.core.BearerTokenAuthentication;
+import in.hocg.rabbit.gateway.service.UserService;
+import in.hocg.rabbit.gateway.utils.CommonUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +26,13 @@ import java.util.Collections;
 public class AuthenticationTokenFilter implements BearerTokenAuthentication {
 
     public static final String EXPIRED_TOKEN = ":expired_token";
+    private final UserService userService;
 
     @Override
     public Authentication authentication(String token) {
-        String username;
         try {
-            username = JwtUtils.decode(token);
+            String username = Assert.notBlank(userService.getUsername(token), "鉴权失败");
+            return new UsernamePasswordAuthenticationToken(username, token, CommonUtils.asGrantedAuthority(userService.getAuthorities(username)));
         } catch (ExpiredJwtException e) {
             log.warn("Jwt Expired: {}", token);
             return new UsernamePasswordAuthenticationToken(EXPIRED_TOKEN, null, Collections.emptyList());
@@ -37,6 +40,5 @@ public class AuthenticationTokenFilter implements BearerTokenAuthentication {
             log.warn("用户登陆鉴权失败 token=[{}], 失败: {}", token, e);
             return new UsernamePasswordAuthenticationToken("", token, Collections.emptyList());
         }
-        return new UsernamePasswordAuthenticationToken(username, token, Collections.emptyList());
     }
 }

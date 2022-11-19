@@ -1,6 +1,5 @@
 package in.hocg.rabbit.mina.biz.cache;
 
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * Created by hocgin on 2021/11/16

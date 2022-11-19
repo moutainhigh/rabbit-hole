@@ -1,13 +1,14 @@
 package in.hocg.rabbit.docking.biz.cache;
 
-import in.hocg.rabbit.docking.biz.constant.CacheConstant;
+import in.hocg.boot.cache.autoconfiguration.repository.CacheRepository;
+import in.hocg.rabbit.docking.biz.constant.CacheKeys;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 /**
  * Created by hocgin on 2020/12/6
@@ -19,17 +20,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMaCacheService {
-    private final StringRedisTemplate template;
-
-    public String getWxMaSessionUser(@NonNull String sessionKey) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
-        String key = CacheConstant.getWxMaSessionKey(sessionKey);
-        return opsForValue.get(key);
-    }
+    private final CacheRepository repository;
 
     public void updateWxMaSessionUser(@NonNull String ssessionKey, @NonNull String username) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
-        String key = CacheConstant.getWxMaSessionKey(ssessionKey);
-        opsForValue.set(key, username);
+        repository.setExpire(CacheKeys.getWxMaSessionKey(ssessionKey), username, Duration.ofDays(1));
     }
 }

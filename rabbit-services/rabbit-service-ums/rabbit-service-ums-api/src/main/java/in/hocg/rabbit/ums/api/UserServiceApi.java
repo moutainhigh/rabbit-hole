@@ -75,4 +75,7 @@ public interface UserServiceApi {
 
     @PostMapping(value = CONTEXT_ID + "/isSuperAdmin", headers = UmsServiceName.FEIGN_HEADER)
     Boolean isSuperAdminByUserId(@RequestParam("userId") Long userId);
+
+    @PostMapping(value = CONTEXT_ID + "/getAuthorities", headers = UmsServiceName.FEIGN_HEADER)
+    List<String> getAuthorities(@RequestParam("username") String username);
 }

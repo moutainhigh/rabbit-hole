@@ -1,13 +1,13 @@
 package in.hocg.rabbit.mina.biz.cache.impl;
 
+import in.hocg.boot.cache.autoconfiguration.repository.CacheRepository;
 import in.hocg.rabbit.mina.biz.cache.MinaCacheService;
 import in.hocg.rabbit.mina.biz.constant.CacheConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 /**
  * Created by hocgin on 2021/11/16
@@ -18,17 +18,17 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MinaCacheServiceImpl implements MinaCacheService {
-    private final StringRedisTemplate template;
+    private final CacheRepository repository;
 
     @Override
     public void putProxyChannel(String channelId) {
         String key = CacheConstant.getProxyChannelKey(channelId);
-        template.opsForValue().set(key, channelId, 5, TimeUnit.MINUTES);
+        repository.setExpire(key, channelId, Duration.ofMinutes(5));
     }
 
     @Override
     public boolean hasProxyChannel(String channelId) {
         String key = CacheConstant.getProxyChannelKey(channelId);
-        return Boolean.TRUE.equals(template.hasKey(key));
+        return repository.exists(key);
     }
 }
