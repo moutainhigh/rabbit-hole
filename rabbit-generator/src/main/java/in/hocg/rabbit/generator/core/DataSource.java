@@ -15,12 +15,7 @@ import java.sql.Driver;
 @Getter
 @RequiredArgsConstructor
 public enum DataSource {
-    DEFAULT(DbType.MYSQL,
-        "jdbc:mysql://mysql.hocgin.top:23306/db_chaos_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
-        com.mysql.cj.jdbc.Driver.class, "root", "hocgin"),
-    Chaos(DbType.MYSQL,
-        "jdbc:mysql://mysql.hocgin.top:23306/db_chaos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
-        com.mysql.cj.jdbc.Driver.class, "root", "hocgin");
+    DEFAULT(DbType.MYSQL, "db_url", com.mysql.cj.jdbc.Driver.class, "username", "password");
     private final DbType dbType;
     private final String url;
     private final Class<? extends Driver> driverName;
