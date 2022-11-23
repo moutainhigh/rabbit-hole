@@ -1,8 +1,0 @@
-server:
-  port: 21000
-spring:
-  application:
-    name: rabbit-tpl
-  profiles:
-    active: local
-

@@ -1,8 +1,0 @@
-server:
-  port: 21004
-spring:
-  application:
-    name: rabbit-owp
-  profiles:
-    active: local
-
